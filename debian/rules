@@ -22,25 +22,28 @@ export DH_OPTIONS
 #   (easier to clean up, and to find the libraries that got built)
 
 # Boost does not guarantee any ABI, so we use full version in SONAME version
-SOVERSION=1.27
+SOVERSION=1.28.0
 
 # Locations of static libs.
 static_regex = debian-build/libs/regex/build/bin/libboost_regex.a/debian/release/runtime-link-dynamic/libboost_regex.a
-static_thread = debian-build/libs/thread/build/bin/libboost_thread/debian/release/runtime-link-dynamic/threading-multi/libboost_thread.a
+static_thread = debian-build/libs/thread/build/bin/libboost_thread.a/debian/release/runtime-link-dynamic/threading-multi/libboost_thread.a
 static_graph = libs/graph/src/libbgl-viz.a
 
 # locations of shared libs.
 shared_regex = debian-build/libs/regex/build/bin/libboost_regex.so/debian/release/runtime-link-dynamic/shared-linkable-true/libboost_regex.so
-shared_python = debian-build/libs/python/build/bin/libboost_python/debian/release/runtime-link-dynamic/shared-linkable-true/libboost_python.so
+shared_python = debian-build/libs/python/build/bin/libboost_python.so/debian/release/runtime-link-dynamic/shared-linkable-true/libboost_python.so
 shared_graph = libs/graph/src/libbgl-viz.so.$(SOVERSION)
 
 
 htmldir = debian/libboost-doc/usr/share/doc/libboost-doc/HTML
 
-JAM = tools/build/jam_src/bin/jam -sTOOLS="debian" -sBUILD=release -sBOOST_ROOT=. -d2
+JAM = tools/build/jam_src/bin/jam -sTOOLS="debian" -sBUILD=release \
+	-sBOOST_ROOT=. -sALL_LOCATE_TARGET=`pwd`/debian-build \
+	-sPYTHON_VERSION=2.1 -sPYTHON_ROOT=/usr \
+	-d2
 
 tools/build/jam_src/bin/jam:
-	$(MAKE) -C tools/build/jam_src LOCATE_TARGET=bin
+	$(MAKE) -C tools/build/jam_src LOCATE_TARGET=bin YACC=
 
 build: build-stamp
 build-stamp: tools/build/jam_src/bin/jam
@@ -53,7 +56,7 @@ build-stamp: tools/build/jam_src/bin/jam
 #	mv libs/config/user.hpp boost/config
 
 # Build most of the stuff with jam
-	$(JAM) -sALL_LOCATE_TARGET=`pwd`/debian-build -sPYTHON_VERSION=2.1 -sPYTHON_ROOT=/usr -sSOVERSION=$(SOVERSION)
+	$(JAM) 
 
 # Build the graph library with upstream makefile
 	$(MAKE) -C libs/graph/src libbgl-viz.a
@@ -78,7 +81,6 @@ clean:
 #	rm -f boost/config/user.hpp
 	rm -f libs/config/config.{log,status}
 	rm -f libs/graph/src/graphviz_parser.tab.{c,h}
-#	rm -f tools/build/jam_src/jamgram.{c,h}
 
 	dh_clean
 

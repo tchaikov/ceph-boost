@@ -1,3 +1,14 @@
+boost (1.28.0-1) unstable; urgency=low
+  
+  * New upstream version.
+
+  * Set YACC= in debian/rules to inhibit regenerating jam parser source.
+    This makes for smaller debian diffs (thanks, David Abrahams).
+
+  * Drop the examples package.  Code examples are in the doc package.
+  
+ -- Steve M. Robbins <smr@debian.org>  Fri, 17 May 2002 20:46:44 -0400
+
 boost (1.27.0-4) unstable; urgency=low
 
   * libs/graph/src/Makefile: build graph lib with optimization.

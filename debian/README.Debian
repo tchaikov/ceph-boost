@@ -9,8 +9,17 @@ the stlport library.  You can use commands similar to this one:
   g++ -I/usr/include/stlport foo.cc -lboost_thread -lstlport
 
 There is extensive documentation available in the libboost-doc
-package and at www.boost.org.  See also the libboost-examples
-package.
+package and at www.boost.org.
+
+
+
+		Examples Package
+		----------------
+
+Example code was previously available in a libboost-examples package.
+These code examples are integrated with the documentation, so either
+install the -doc package or visit boost.org to get them.
+
 
 
 		STLPort and GCC 3
@@ -25,25 +34,9 @@ packages depend on the STLPort packages.
 
 See http://www.boost.org/status/cs-linux.html.
 
-It is also true that GCC 3.0.1 passes the regression testing, so when
+It is also true that GCC 3 passes the regression testing, so when
 that is default everywhere I'll no longer build with stlport.
 
 If you prefer to use Boost with GCC 3, you need to get the sources and
 rebuild it yourself.  I'm afraid that requires hacking the following
 files: debian/control, debian/rules, and tools/build/debian-tools.jam.
-
-
-
-		Upgrade from 1.21.1 Packages
-		----------------------------
-
-The upstream build system has radically changed (from "make" to "jam")
-between the first Debian packages of 1.21.1, and the current packages.
-
-The shared library for conceptcheck is no longer built upstream.
-
-The debug version of the regex library, libboost-regex-dbg, is no
-longer built.
-
-The dir_it library is labelled "beta", is not a part of boost, and
-so is no longer built.

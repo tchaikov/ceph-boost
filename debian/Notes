@@ -1,20 +1,12 @@
 	Changes to Upstream Sources
 	---------------------------
 
-* project "status" is not built; there are many
-  build failures there that need to be investigated
-
 * boost/detail/limits.hpp
   - use <endian.h>
-
-* libs/thread/src/once.cpp
-  - add closing brace fix, taken from CVS
 
 * libs/graph/src/graphviz_digraph_parser.cpp
 * libs/graph/src/graphviz_graph_parser.cpp
 * libs/graph/src/graphviz_parser.h
-* tools/build/jam_src/jamgram.c
-* tools/build/jam_src/jamgram.h
   - bogus changes, due to running bison at build time
 
 
