@@ -47,7 +47,7 @@ htmldir = debian/libboost-doc/usr/share/doc/libboost-doc/HTML
 
 bjam = tools/build/jam_src/bjam
 
-JAM = $(bjam) -sTOOLS=gcc -sBUILD=release \
+JAM = $(bjam) -sTOOLS=gcc -sBUILD="release <define>_REENTRANT" \
 	-sBOOST_ROOT=. -sALL_LOCATE_TARGET=`pwd`/dbuild \
 	-sPYTHON_VERSION=2.2 -sPYTHON_ROOT=/usr \
 	-d2

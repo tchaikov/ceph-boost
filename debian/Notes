@@ -16,6 +16,15 @@ package.
 [1] built but not useful, thus not distributed.
 
 
+	Thread Support
+	--------------
+
+All debian libraries are supposed to be built with _REENTRANT
+defined (policy 10.2).  For the jam-built libraries, use
+"<define>_REENTRANT" on command line in debian/rules.  For
+graph library, set in Makefile.
+
+
 	Changes to Upstream Sources
 	---------------------------
 
