@@ -90,6 +90,7 @@ install: build
 
 	dh_installdirs --all usr/include/boost
 
+
 	# package libboost-dev
 	dh_install -plibboost-dev \
 	   debian/tmp/usr/include/boost-$(boost_version)/boost usr/include
@@ -98,13 +99,13 @@ install: build
 	# package libboost-doc
 	rm -rf $(htmldir)
 	mkdir -p $(htmldir)
-#	cat debian/documentation-files \
+	cat debian/documentation-files \
 	    | xargs cp --parents --target-directory=$(htmldir)
 	mkdir -p $(exampledir)
-#	cat debian/example-files \
+	cat debian/example-files \
 	    | xargs cp -a --parents --target-directory=$(exampledir)
-#	find $(exampledir) -type f | xargs chmod 644
-#	find $(exampledir) -name .cvsignore | xargs rm
+	find $(exampledir) -type f | xargs chmod 644
+	find $(exampledir) -name .cvsignore | xargs rm
 
 
 	# package libboost-date-time$(SOVERSION)
