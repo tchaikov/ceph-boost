@@ -1,8 +1,7 @@
-// Copyright David Abrahams 2002. Permission to copy, use,
-// modify, sell and distribute this software is granted provided this
-// copyright notice appears in all copies. This software is provided
-// "as is" without express or implied warranty, and with no claim as
-// to its suitability for any purpose.
+// Copyright David Abrahams 2002.
+// Distributed under the Boost Software License, Version 1.0. (See
+// accompanying file LICENSE_1_0.txt or copy at
+// http://www.boost.org/LICENSE_1_0.txt)
 #ifndef INDIRECT_TRAITS_DWA2002131_HPP
 # define INDIRECT_TRAITS_DWA2002131_HPP
 # include <boost/type_traits/is_function.hpp>
@@ -17,11 +16,7 @@
 # include <boost/type_traits/remove_pointer.hpp>
 
 # include <boost/type_traits/detail/ice_and.hpp>
-
 # include <boost/detail/workaround.hpp>
-# if 0 &&  BOOST_WORKAROUND(__MWERKS__, <= 0x2407)
-#  include <boost/type_traits/is_enum.hpp>
-# endif 
 
 # include <boost/mpl/if.hpp>
 # include <boost/mpl/bool.hpp>
@@ -30,7 +25,7 @@
 # include <boost/mpl/aux_/lambda_support.hpp>
 
 #  ifdef BOOST_NO_TEMPLATE_PARTIAL_SPECIALIZATION
-#   include <boost/python/detail/is_function_ref_tester.hpp>
+#   include <boost/detail/is_function_ref_tester.hpp>
 #  endif 
 
 namespace boost { namespace detail {
@@ -203,6 +198,8 @@ struct is_pointer_to_class
 };
 
 #  else
+
+using namespace boost::detail::is_function_ref_tester_;
 
 typedef char (&inner_yes_type)[3];
 typedef char (&inner_no_type)[2];
@@ -469,6 +466,10 @@ struct is_pointer_to_class
 };
 #  endif // BOOST_NO_TEMPLATE_PARTIAL_SPECIALIZATION 
 
-}}} // namespace boost::python::detail
+}
+
+using namespace indirect_traits;
+
+}} // namespace boost::python::detail
 
 #endif // INDIRECT_TRAITS_DWA2002131_HPP
