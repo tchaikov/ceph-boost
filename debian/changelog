@@ -5,8 +5,10 @@ boost (1.31.0-2) unstable; urgency=low
 
   * Added symlink to allow dynamic linking to boost-filesystem shared
     library.
+  
+  * Updated Debian standards version to 3.6.1.
 
- -- Domenico Andreoli <cavok@debian.org>  Mon, 22 Mar 2004 00:43:40 +0100
+ -- Domenico Andreoli <cavok@debian.org>  Mon, 22 Mar 2004 02:34:25 +0100
 
 boost (1.31.0-1) unstable; urgency=low
 
