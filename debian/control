@@ -11,11 +11,14 @@ Architecture: any
 Section: devel
 Depends: ${shlibs:Depends}
 Description: Software build tool
- Boost.Jam is a portable build tool with its own interpreted language, which
- allows to implement rather complex logic in a readable way and without
+ Boost.Jam (BJam) is a portable build tool with its own interpreted language,
+ which allows to implement rather complex logic in a readable way and without
  resorting to external programs. It is a descendant of Jam/MR tool modified to
  suit the needs of Boost.Build. In particular, modules and rule parameters
  were added, as well as several new builtins.
+ .
+ For more information on Boost.Jam visit the project homepage
+ http://www.boost.org/tools/build/jam_src/index.html .
 
 Package: libboost-dev
 Architecture: any
@@ -56,7 +59,7 @@ Description: Boost.org libraries documentation
  so it is suggested to install the latter as well.
  .
  For more information on boost visit the project homepage
- http://www.boost.org/ .
+ http://www.boost.org/libs/libraries.htm .
 
 Package: libboost-date-time1.31.0
 Architecture: any
