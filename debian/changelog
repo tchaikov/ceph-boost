@@ -1,3 +1,10 @@
+boost (1.32.0-3) unstable; urgency=low
+
+  * debian/control: libboost-dev now suggests also
+    libboost-program-options-dev.
+
+ --
+
 boost (1.32.0-2) unstable; urgency=low
 
   * debian/rules: debug libraries are now really installed in package
