@@ -2,11 +2,23 @@
 		---------------
 
 Boost for Debian is linked with the STLPort standard C++ libraries.
-Your boost-using code must also use STLPort, so do not forget to add
-/usr/include/stlport to the compiler's search path, and link against
-the stlport library.  You can use commands similar to this one:
+Your boost-using code must also be built using STLPort.  Failure to do
+so typically results in missing symbols at link time.
 
-  g++ -I/usr/include/stlport foo.cc -lboost_thread -lstlport
+You need to use "-I/usr/include/stlport" for compilation, and
+"-lstlport" on the link step.  In addition, the following Boost
+components have a compiled library and need a corresponding "-l" flag
+at link time:
+
+	Boost.Python	-lboost_python
+	Boost.Regex	-lboost_regex
+	Boost.Signals	-lboost_signals
+	Boost.Thread	-lboost_thread
+
+Note that "-lstlport" must come *after* any "-lboost_..." used.
+
+Finally, the Boost Graph Library (BGL) has a compiled library that is
+only necessary for visualization routines.  See the BGL documentation.
 
 There is extensive documentation available in the libboost-doc
 package and at www.boost.org.

@@ -2,7 +2,7 @@ boost (1.29.0-1) unstable; urgency=low
 
   * New upstream version.  Closes: #164830.
 
- -- Steve M. Robbins <smr@debian.org>  Fri, 25 Oct 2002 21:30:47 -0400
+ -- Steve M. Robbins <smr@debian.org>  Sat, 26 Oct 2002 15:11:17 -0400
 
 boost (1.28.0-4) unstable; urgency=low
 
