@@ -22,31 +22,13 @@ files: debian/control, debian/rules, and tools/build/debian-tools.jam.
 		Upgrade from 1.21.1 Packages
 		----------------------------
 
-The upstream build system has radically changed between the first
-Debian packages of 1.21.1, and the second packages based on 1.26.0.
+The upstream build system has radically changed (from "make" to "jam")
+between the first Debian packages of 1.21.1, and the current packages.
 
-One of the main casualties is that shared libraries are no
-longer built.  I hope they will come back at some point, but
-for now, only the static libraries are shipped.  The following
-packages are no longer built:
+The shared library for conceptcheck is no longer built upstream.
 
-    libboost-conceptcheck1.21
-    libboost-dirit1.21
-    libboost-graph1.21
-    libboost-python1.21
-    libboost-regex304
+The debug version of the regex library, libboost-regex-dbg, is no
+longer built.
 
-The debug version of the regex library,
-
-    libboost-regex-dbg
-
-is no longer built.  In addition, the dir_it library is labelled
-"beta", not a part of boost, so the package is no longer built:
-
-    libboost-dirit-dev
-
-
-The shared libraries *will* return, hopefully soon.  My plan at the moment
-is to put all the shared libs into one libboost package.  Let me know if
-you'd prefer them all split up.
-
+The dir_it library is labelled "beta", is not a part of boost, and
+so is no longer built.

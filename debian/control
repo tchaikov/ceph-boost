@@ -45,11 +45,10 @@ Description: Boost.org libraries examples collection
  For more information on boost visit the project homepage
  http://www.boost.org/ .
 
-Package: libboost-regex-dev
+Package: libboost-regex1.27
 Architecture: any
 Section: devel
-Suggests: libboost-regex-dbg
-Depends: libboost-dev (= ${Source-Version})
+Depends: ${shlibs:Depends}
 Description: Regular expression library for C++
  Part of the Boost.org library collection.
  .
@@ -67,10 +66,52 @@ Description: Regular expression library for C++
  For more information on regex visit the project homepage
  http://www.boost.org/libs/regex/ .
 
+Package: libboost-regex-dev
+Architecture: any
+Section: devel
+Depends: libboost-dev (= ${Source-Version}), libboost-regex1.27 (= ${Source-Version})
+Description: Regular expression library for C++
+ Part of the Boost.org library collection.
+ .
+ Regular expressions are a form of pattern-matching that are often
+ used in text processing; many users will be familiar with the Unix
+ utilities grep, sed and awk, and the programming language perl, each
+ of which make extensive use of regular expressions. Traditionally C++
+ users have been limited to the POSIX C APIs for manipulating regular
+ expressions, and while regex does provide these APIs, they do not
+ represent the best way to use the library. For example regex can cope
+ with wide character strings, or search and replace operations (in a
+ manner analogous to either sed or perl), something that traditional C
+ libraries can not do.
+ .
+ For more information on regex visit the project homepage
+ http://www.boost.org/libs/regex/ .
+
+Package: libboost-python1.27
+Section: devel
+Architecture: any
+Depends: ${shlibs:Depends}
+Description: Boost Python Library 
+ Part of the Boost.org library collection.
+ .
+ The Boost Python Library is used to quickly and easily export a C++
+ library to Python such that the Python interface is very similar to
+ the C++ interface. It is designed to be minimally intrusive on your
+ C++ design. In most cases, you should not have to alter your C++
+ classes in any way in order to use them with Boost.Python.  The
+ system should simply "reflect" your C++ classes and functions into
+ Python. The major features of Boost.Python include support for:
+ Subclassing extension types in Python, Overriding virtual functions
+ in Python, Member function Overloading, Automatic wrapping of
+ numeric operators among others.
+ .
+ For more information on python library visit the project homepage
+ http://www.boost.org/libs/python/ .
+
 Package: libboost-python-dev
 Section: devel
 Architecture: any
-Depends: libboost-dev (=${Source-Version}), python2.1-dev
+Depends: libboost-dev (=${Source-Version}), libboost-python1.27 (=${Source-Version}), python2.1-dev
 Description: The Boost Python Library development files
  Part of the Boost.org library collection.
  .
@@ -88,10 +129,26 @@ Description: The Boost Python Library development files
  For more information on python library visit the project homepage
  http://www.boost.org/libs/python/ .
 
+Package: libboost-graph1.27
+Section: devel
+Architecture: any
+Depends: ${shlibs:Depends}
+Description: Generic graph components and algorithms in C++
+ Part of the Boost.org library collection.
+ .
+ Graphs are mathematical abstractions that are useful for solving
+ many types of problems in computer science. Consequently, these
+ abstractions must also be represented in computer programs. A
+ standardized generic interface for traversing graphs is of utmost
+ importance to encourage reuse of graph algorithms and data structures.
+ .
+ For more information on graph visit the project homepage
+ http://www.boost.org/libs/graph/doc/index.html .
+
 Package: libboost-graph-dev
 Section: devel
 Architecture: any
-Depends: libboost-dev (=${Source-Version})
+Depends: libboost-dev (=${Source-Version}), libboost-graph1.27 (=${Source-Version})
 Description: Generic graph components and algorithms in C++
  Part of the Boost.org library collection.
  .

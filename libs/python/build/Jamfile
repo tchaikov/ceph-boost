@@ -84,7 +84,7 @@ local CPP_SOURCES =
 lib libboost_python_static : ../src/$(CPP_SOURCES).cpp
     # requirements
     : $(BOOST_PYTHON_INCLUDES)
-    <shared-linkable>true
+    <shared-linkable>false
       <define>BOOST_PYTHON_STATIC_LIB=1
     $(PYTHON_PROPERTIES) ;
 

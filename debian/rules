@@ -21,11 +21,18 @@ export DH_OPTIONS
 # - build libraries into subdirectory rooted at "debian-build"
 #   (easier to clean up, and to find the libraries that got built)
 
+# Boost does not guarantee any ABI, so we use full version in SONAME version
+SOVERSION=1.27
+
 # Locations of static libs.
 static_regex = debian-build/libs/regex/build/bin/libboost_regex.a/debian/release/runtime-link-dynamic/libboost_regex.a
 static_thread = debian-build/libs/thread/build/bin/libboost_thread/debian/release/runtime-link-dynamic/threading-multi/libboost_thread.a
-static_python = debian-build/libs/python/build/bin/libboost_python_static/debian/release/runtime-link-dynamic/shared-linkable-true/libboost_python_static.a
 static_graph = libs/graph/src/libbgl-viz.a
+
+# locations of shared libs.
+shared_regex = debian-build/libs/regex/build/bin/libboost_regex.so/debian/release/runtime-link-dynamic/shared-linkable-true/libboost_regex.so
+shared_python = debian-build/libs/python/build/bin/libboost_python/debian/release/runtime-link-dynamic/shared-linkable-true/libboost_python.so
+shared_graph = libs/graph/src/libbgl-viz.so.$(SOVERSION)
 
 
 htmldir = debian/libboost-dev/usr/share/doc/libboost-dev/HTML
@@ -39,15 +46,19 @@ build: build-stamp
 build-stamp: tools/build/jam_src/bin/jam
 	dh_testdir
 
+	echo GCC version `g++ --version`
+
 # This seems like a good idea, but it messed up when I tried it.
 #	cd libs/config && ./configure
 #	mv libs/config/user.hpp boost/config
 
 # Build most of the stuff with jam
-	$(JAM) -sALL_LOCATE_TARGET=`pwd`/debian-build -sPYTHON_VERSION=2.1 -sPYTHON_ROOT=/usr
+	$(JAM) -sALL_LOCATE_TARGET=`pwd`/debian-build -sPYTHON_VERSION=2.1 -sPYTHON_ROOT=/usr -sSOVERSION=$(SOVERSION)
 
 # Build the graph library with upstream makefile
 	$(MAKE) -C libs/graph/src libbgl-viz.a
+	cd libs/graph/src && rm -f *.o *.output graphviz_digraph_parser.cpp graphviz_graph_parser.cpp graphviz_lex.cpp graphviz_parser.h
+	$(MAKE) -C libs/graph/src EXTRAFLAGS='-fPIC' GRAPH_SONAME_VERSION=$(SOVERSION) libbgl-viz.so
 
 	touch build-stamp
 
@@ -78,6 +89,7 @@ install: build
 	dh_clean -k
 	dh_installdirs --all usr/include usr/lib
 
+	# package libboost-dev
 	rm -rf   debian/libboost-dev/usr/include/boost
 	cp -a boost debian/libboost-dev/usr/include/boost
 	rm -f debian/libboost-dev/usr/include/boost/pool/detail/*.bat
@@ -89,20 +101,40 @@ install: build
 	find * -name '*.htm' | xargs cp -a --parents --target-directory=$(htmldir)
 	cp -a c++boost.gif more people $(htmldir)
 
+	# package libboost-regex$(SOVERSION)
+	cp $(shared_regex) \
+	   debian/libboost-regex$(SOVERSION)/usr/lib/libboost_regex.so.$(SOVERSION)
+
+	# package libboost-regex-dev
 	mkdir -p debian/libboost-regex-dev/usr/include/boost
 	mv debian/libboost-dev/usr/include/boost/*regex* \
 	   debian/libboost-regex-dev/usr/include/boost
 	cp $(static_regex) debian/libboost-regex-dev/usr/lib
+	ln -s libboost_regex.so.$(SOVERSION) \
+	   debian/libboost-regex-dev/usr/lib/libboost_regex.so
 
+	# package libboost-python$(SOVERSION)
+	cp $(shared_python) \
+	 debian/libboost-python$(SOVERSION)/usr/lib/libboost_python.so.$(SOVERSION)
+
+	# package libboost-python-dev
 	mkdir -p debian/libboost-python-dev/usr/include/boost
 	mv debian/libboost-dev/usr/include/boost/python \
 	   debian/libboost-python-dev/usr/include/boost
-	cp $(static_python) debian/libboost-python-dev/usr/lib
+	ln -s libboost_python.so.$(SOVERSION) \
+	   debian/libboost-python-dev/usr/lib/libboost_python.so
 
+	# package libboost-graph$(SOVERSION)
+	cp $(shared_graph) \
+	  debian/libboost-graph$(SOVERSION)/usr/lib/libbgl-viz.so.$(SOVERSION)
+
+	# package libboost-graph-dev
 	mkdir -p debian/libboost-graph-dev/usr/include/boost
 	mv debian/libboost-dev/usr/include/boost/graph \
 	   debian/libboost-graph-dev/usr/include/boost
 	cp $(static_graph) debian/libboost-graph-dev/usr/lib
+	ln -s libbgl-viz.so.$(SOVERSION) \
+	   debian/libboost-graph-dev/usr/lib/libbgl-viz.so
 
 
 # This single target is used to build all the packages, all at once, or
@@ -121,6 +153,7 @@ binary-common:
 	dh_link
 	dh_compress
 	dh_fixperms
+	dh_makeshlibs
 	dh_installdeb
 	dh_shlibdeps
 	dh_gencontrol
