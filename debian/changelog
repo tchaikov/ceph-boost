@@ -1,3 +1,10 @@
+boost (1.31.0-7) unstable; urgency=high
+
+  * boost/spirit/core/assert.hpp: fixed typo in BOOST_SPIRIT_ASSERT
+    macro definition (from upstream CVS).  Closes: #267991.
+
+ --
+
 boost (1.31.0-6) unstable; urgency=low
 
   * debian/rules: removed package bjam as it is now built from a separate
@@ -7,8 +14,8 @@ boost (1.31.0-6) unstable; urgency=low
     of is_xxx.hpp (from upstream CVS).
 
   * debian/control: libboost-dev does not depend on libboost-python-dev
-    any more
-  
+    any more.
+
   * boost/date_time/posix_time/ptime.hpp: Add constructor from special_values
     type; upstream bug fix
     (http://lists.boost.org/MailArchives/boost-users/msg06801.php)
@@ -18,23 +25,23 @@ boost (1.31.0-6) unstable; urgency=low
 boost (1.31.0-5) unstable; urgency=low
 
   * libs/python/build/Jamfile: boost-python shared library is now linked
-    to libpython2.3 (closes: #243089).
+    to libpython2.3.  Closes: #243089.
 
   * boost/graph/isomorphism.hpp: changed type of u1 and u2 in edge_cmp
     from vertex1_t to int (from upstream CVS).
     boost/graph/detail/adjacency_list.hpp: fixed bug with regards to
     in_edge_list for undirected graphs (from upstream CVS).
-    (closes: #245390)
+    Closes: #245390.
 
   * boost/format/internals.hpp: changed format_item::truncate_ 's type
-    from int to streamsize (from upstream CVS) (closes: #247643).
+    from int to streamsize (from upstream CVS).  Closes: #247643.
 
  -- Domenico Andreoli <cavok@debian.org>  Wed, 19 May 2004 22:19:32 +0200
 
 boost (1.31.0-4) unstable; urgency=low
 
   * debian/control: libboost-python-dev now replaces old
-    libboost-dev. Closes: #243432.
+    libboost-dev.  Closes: #243432.
 
  -- Domenico Andreoli <cavok@debian.org>  Tue, 13 Apr 2004 20:55:24 +0200
 
