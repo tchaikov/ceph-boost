@@ -1,0 +1,46 @@
+boost (1.26.0-4) unstable; urgency=low
+
+  * control(source): build-depend on libstlport4.5-dev.
+  * control(libboost-dev): depend on libstlport4.5-dev.
+    - new stlport package just got into the archive
+  * control(libboost-examples): remove dependency on libboost-dev.
+    - depending on arch "any" package will hold it up until the latter
+      is built on all arches.
+  * document reason for depending on STLPort.  Closes: #131516.
+
+ -- Steve M. Robbins <smr@debian.org>  Sat,  2 Feb 2002 08:11:28 -0500
+
+boost (1.26.0-3) unstable; urgency=low
+
+  * control: change libboost-regex-dgb package to priority extra,
+    to agree with ftp override file.
+  * Don't build dir_it library, as it is not part of Boost.
+    - don't build-depend on unzip. Closes:  #130290.
+
+ -- Steve M. Robbins <smr@debian.org>  Sat, 26 Jan 2002 11:08:31 -0500
+
+boost (1.26.0-2) unstable; urgency=low
+
+  * boost/detail/limits.hpp: determine endianness using <endian.h>
+    Thanks to Daniel Jacobowitz for the tip.
+
+ -- Steve M. Robbins <smr@debian.org>  Tue, 22 Jan 2002 11:38:43 -0500
+
+boost (1.26.0-1) unstable; urgency=low
+
+  * New maintainer.  Closes: #123483.
+  * New upstream version.  Closes: #117106, #107802.
+  * Build-depend on flex, bison, and texinfo.  Closes: #98979.
+  * Ship all the boost headers, including all of boost/pending.
+    Closes: #108922, #108925.
+  * Fixed up the descriptions.
+    Closes: #97947, #109193, #124899, #124900, #124901, #125620, #125621.
+  * Register docs with doc-base.  Closes: #99396.
+
+ -- Steve M. Robbins <smr@debian.org>  Sun, 20 Jan 2002 23:10:28 -0500
+
+boost (1.21.1-1) unstable; urgency=low
+
+  * First upstream version.
+
+ -- Raphael Bossek <bossekr@debian.org>  Mon, 12 Mar 2001 23:37:49 +0100

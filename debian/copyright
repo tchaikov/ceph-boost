@@ -1,0 +1,35 @@
+This software is a collection of libraries from the Boost.org site.
+The libraries use various licenses, but all follow these guidelines:
+
+License requirements
+
+    Must be simple to read and understand. 
+
+    Must grant permission to copy, use and modify the software for any
+    use (commercial and non-commercial) for no fee.
+
+    Must require that the license appear on all copies of the software
+    source code.
+
+    Must not require that the license appear with executables or other
+    binary uses of the library.
+
+    Must not require that the source code be available for execution
+    or other binary uses of the library.
+
+    May restrict the use of the name and description of the library to
+    the standard version found on the Boost web site.
+
+
+The individual copyright and license statements appear in the headers,
+in /usr/include/boost.  
+
+In general, the licenses tend to be BSD-inspired with language such
+as the following example:
+
+// (C) Copyright Jens Maurer 2001. Permission to copy, use,
+// modify, sell and distribute this software is granted provided this
+// copyright notice appears in all copies. This software is provided
+// "as is" without express or implied warranty, and with no claim as
+// to its suitability for any purpose.
+

@@ -1,0 +1,44 @@
+		STLPort and GCC 3
+		-----------------
+
+The Boost libraries depend on a conforming stdc++ library.  I tried
+building boost using GCC 2.95.x (the default on most Debian
+architectures as of this writing), and it fails some of the regression
+tests.  However, using the same compiler plus STLPort suffices to pass
+the regression tests.  Thus Boost is built using STLPort and the
+packages depend on the STLPort packages.
+
+See http://www.boost.org/status/cs-linux.html.
+
+It is also true that GCC 3.0.1 passes the regression testing, so when
+that is default everywhere I'll no longer build with stlport.
+
+If you prefer to use Boost with GCC 3, you need to get the sources and
+rebuild it yourself.  I'm afraid that requires hacking the following
+files: debian/control, debian/rules, and tools/build/debian-tools.jam.
+
+
+
+		Upgrade from 1.21.1 Packages
+		----------------------------
+
+The upstream build system has radically changed between the first
+Debian packages of 1.21.1, and the second packages based on 1.26.0.
+
+One of the main casualties is that shared libraries are no
+longer built.  I hope they will come back at some point, but
+for now, only the static libraries are shipped.  The following
+packages are no longer built:
+
+    libboost-conceptcheck1.21
+    libboost-dirit1.21
+    libboost-graph1.21
+    libboost-python1.21
+    libboost-regex304
+
+Do let me know if you wish to see the shared lib packages return.
+
+In addition, the dir_it library is labelled "beta", not a part
+of boost, so the package is no longer built:
+
+    libboost-dirit-dev

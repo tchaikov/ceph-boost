@@ -1,0 +1,15 @@
+# Debian-specific rule set, adapted from gcc-stlport-tools.jam.
+
+# this is simply an extension to the gcc toolset. 
+extends-toolset gcc ;
+
+
+STDHDRS = ;
+STDLIBPATH = ;
+flags debian STDHDRS : /usr/include/stlport $(GCC_INCLUDE_DIRECTORY) ;
+flags debian STDLIBPATH : $(GCC_STDLIB_DIRECTORY) ;
+
+flags debian DEFINES  <runtime-build>debug  : _STLP_DEBUG ;
+flags debian CFLAGS   <runtime-link>dynamic : -D_STLP_USE_DYNAMIC_LIB ;
+flags debian FINDLIBS stlport_gcc ;
+

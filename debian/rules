@@ -1,0 +1,152 @@
+#!/usr/bin/make -f
+# Sample debian/rules that uses debhelper.
+# This file is public domain software, originally written by Joey Hess.
+#
+# This version is for a multibinary package. It also allows you to build any
+# of the binary packages independantly, via binary-<package> targets.
+
+# Uncomment this to turn on verbose mode. 
+#export DH_VERBOSE=1
+
+# This is the debhelper compatibility version to use.
+export DH_COMPAT=3
+
+# This has to be exported to make some magic below work.
+export DH_OPTIONS
+
+# Changes from a standard boost build include:
+#
+# - build jam binary in fixed location, rather than in .../bin.${SYSTEM}
+# - use modified version of gcc-stlport-tools.jam file
+# - build libraries into subdirectory rooted at "debian-build"
+#   (easier to clean up, and to find the libraries that got built)
+# - libs/dir_it is built
+
+
+htmldir = debian/libboost-dev/usr/share/doc/libboost-dev/HTML
+
+JAM = tools/build/jam_src/bin/jam -sTOOLS="debian" -sBOOST_ROOT=.
+
+tools/build/jam_src/bin/jam:
+	$(MAKE) -C tools/build/jam_src LOCATE_TARGET=bin
+
+build: build-stamp
+build-stamp: tools/build/jam_src/bin/jam
+	dh_testdir
+
+# This seems like a good idea, but it messed up when I tried it.
+#	cd libs/config && ./configure
+#	mv libs/config/user.hpp boost/config
+
+# Build most of the stuff with jam
+	$(JAM) -sALL_LOCATE_TARGET=`pwd`/debian-build -sPYTHON_VERSION=2.1
+
+# Build the graph library with upstream makefile
+	$(MAKE) -C libs/graph/src
+
+# Build the dirit library using makefile from Raphael
+#	$(MAKE) -C libs/dir_it
+
+	touch build-stamp
+
+clean:
+	dh_testdir
+	dh_testroot
+	rm -f build-stamp
+
+	-$(JAM) clean
+	rm -rf tools/build/jam_src/bin
+	rm -f tools/build/jam_src/jam0
+	rm -rf debian-build
+
+	$(MAKE) -C libs/graph/src clean
+	$(MAKE) -C libs/dir_it clean
+
+# Do not need to track changes done to built files.
+#	rm -f boost/config/user.hpp
+	rm -f libs/config/config.{log,status}
+	rm -f libs/graph/src/graphviz_parser.tab.{c,h}
+#	rm -f tools/build/jam_src/jamgram.{c,h}
+
+	dh_clean
+
+install: DH_OPTIONS=
+install: build
+	dh_testdir
+	dh_testroot
+	dh_clean -k
+	dh_installdirs --all usr/include usr/lib
+
+	rm -rf   debian/libboost-dev/usr/include/boost
+	cp -a boost debian/libboost-dev/usr/include/boost
+	rm -f debian/libboost-dev/usr/include/boost/pool/detail/*.bat
+	rm -f debian/libboost-dev/usr/include/boost/pool/detail/*.m4
+	rm -f debian/libboost-dev/usr/include/boost/pool/detail/*.sh
+	cp debian-build/libs/thread/build/bin/libboost_thread/debian/release/runtime-link-dynamic/threading-multi/libboost_thread.a debian/libboost-dev/usr/lib
+	mkdir -p $(htmldir)
+	find * -name '*.html' | xargs cp -a --parents --target-directory=$(htmldir)
+	find * -name '*.htm' | xargs cp -a --parents --target-directory=$(htmldir)
+	cp -a c++boost.gif more people $(htmldir)
+
+	mkdir -p debian/libboost-regex-dev/usr/include/boost
+	mv debian/libboost-dev/usr/include/boost/*regex* \
+	   debian/libboost-regex-dev/usr/include/boost
+	cp debian-build/libs/regex/build/bin/libboost_regex.a/debian/release/runtime-link-dynamic/libboost_regex.a debian/libboost-regex-dev/usr/lib
+
+	mkdir -p debian/libboost-regex-dbg/usr/lib/debug
+	cp debian-build/libs/regex/build/bin/libboost_regex.a/debian/debug/runtime-link-dynamic/libboost_regex.a debian/libboost-regex-dbg/usr/lib/debug/libboost_regex_debug.a
+
+	mkdir -p debian/libboost-python-dev/usr/include/boost
+	mv debian/libboost-dev/usr/include/boost/python \
+	   debian/libboost-python-dev/usr/include/boost
+	cp debian-build/libs/python/build/bin/libboost_python/debian/debug/runtime-link-dynamic/shared-linkable-true/libboost_python.a debian/libboost-python-dev/usr/lib
+
+#	mkdir -p debian/libboost-dirit-dev/usr/include/boost
+#	cp -a libs/dir_it/archive/boost/directory.h \
+#	   debian/libboost-dirit-dev/usr/include/boost
+#	cp libs/dir_it/archive/libboost-dirit.a debian/libboost-dirit-dev/usr/lib
+
+	mkdir -p debian/libboost-graph-dev/usr/include/boost
+	mv debian/libboost-dev/usr/include/boost/graph \
+	   debian/libboost-graph-dev/usr/include/boost
+	cp libs/graph/src/libbgl-viz.a \
+	   debian/libboost-graph-dev/usr/lib
+
+
+# This single target is used to build all the packages, all at once, or
+# one at a time. So keep in mind: any options passed to commands here will
+# affect _all_ packages. Anything you want to only affect one package
+# should be put in another target, such as the install target.
+binary-common:
+	dh_testdir
+	dh_testroot
+#	dh_installdebconf
+	dh_installdocs README
+	dh_installexamples
+	dh_installinfo
+	dh_installchangelogs
+	dh_strip
+	dh_link
+	dh_compress
+	dh_fixperms
+	dh_installdeb
+	dh_shlibdeps
+	dh_gencontrol
+	dh_md5sums
+	dh_builddeb
+
+# Build architecture independant packages using the common target.
+binary-indep: build install
+# (Uncomment this next line if you have such packages.)
+	$(MAKE) -f debian/rules DH_OPTIONS=-i binary-common
+
+# Build architecture dependant packages using the common target.
+binary-arch: build install
+	$(MAKE) -f debian/rules DH_OPTIONS=-a binary-common
+
+# Any other binary targets build just one binary package at a time.
+binary-%: build install
+	make -f debian/rules binary-common DH_OPTIONS=-p$*
+
+binary: binary-indep binary-arch
+.PHONY: build clean binary-indep binary-arch binary install

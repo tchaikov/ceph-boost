@@ -1,0 +1,6 @@
+
+The set of files is based on the files installed by the 1.21.1-1
+Debian package.  Unfortunately, one of the casualties of the change in
+build procedure was the nice directory layout and Makefiles supplied
+by Raphael Bossek.
+

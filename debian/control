@@ -1,0 +1,127 @@
+Source: boost
+Section: libs
+Priority: optional
+Maintainer: Steve M. Robbins <smr@debian.org>
+Standards-Version: 3.5.2
+Build-Depends: libstlport4.5-dev, python2.1-dev, debhelper, flex, bison, texinfo
+
+Package: libboost-dev
+Architecture: any
+Section: devel
+Depends: libstdc++-dev, libstlport4.5-dev
+Suggests: libboost-regex-dev, libboost-python-dev, libboost-graph-dev
+Description: Boost.org libraries development files
+ The Boost web site provides free, peer-reviewed, portable C++ source
+ libraries. The emphasis is on libraries which work well with the C++
+ Standard Library. One goal is to establish "existing practice" and
+ provide reference implementations so that the Boost libraries are
+ suitable for eventual standardization. Some of the libraries have
+ already been proposed for inclusion in the C++ Standards Committee's
+ upcoming C++ Standard Library Technical Report.
+ .
+ For the following subprojects separate packages exist: regex, python,
+ graph.
+ .
+ For more information on boost visit the project homepage
+ http://www.boost.org/ .
+
+Package: libboost-examples
+Architecture: all
+Section: devel
+Description: Boost.org libraries examples collection
+ Example code that uses the Boost libraries.
+ .
+ The Boost web site provides free, peer-reviewed, portable C++ source
+ libraries. The emphasis is on libraries which work well with the C++
+ Standard Library. One goal is to establish "existing practice" and
+ provide reference implementations so that the Boost libraries are
+ suitable for eventual standardization. Some of the libraries have
+ already been proposed for inclusion in the C++ Standards Committee's
+ upcoming C++ Standard Library Technical Report.
+ .
+ For the following subprojects separate packages exist: regex, python,
+ graph.
+ .
+ For more information on boost visit the project homepage
+ http://www.boost.org/ .
+
+Package: libboost-regex-dev
+Architecture: any
+Section: devel
+Suggests: libboost-regex-dbg
+Depends: libboost-dev (= ${Source-Version})
+Description: Regular expression library for C++
+ Part of the Boost.org library collection.
+ .
+ Regular expressions are a form of pattern-matching that are often
+ used in text processing; many users will be familiar with the Unix
+ utilities grep, sed and awk, and the programming language perl, each
+ of which make extensive use of regular expressions. Traditionally C++
+ users have been limited to the POSIX C APIs for manipulating regular
+ expressions, and while regex does provide these APIs, they do not
+ represent the best way to use the library. For example regex can cope
+ with wide character strings, or search and replace operations (in a
+ manner analogous to either sed or perl), something that traditional C
+ libraries can not do.
+ .
+ For more information on regex visit the project homepage
+ http://www.boost.org/libs/regex/ .
+
+Package: libboost-regex-dbg
+Architecture: any
+Section: devel
+Priority: extra
+Depends: libboost-regex-dev (= ${Source-Version})
+Description: Regular expression library for C++ (debug version)
+ Part of the Boost.org library collection.
+ .
+ Regular expressions are a form of pattern-matching that are often
+ used in text processing; many users will be familiar with the Unix
+ utilities grep, sed and awk, and the programming language perl, each
+ of which make extensive use of regular expressions. Traditionally C++
+ users have been limited to the POSIX C APIs for manipulating regular
+ expressions, and while regex does provide these APIs, they do not
+ represent the best way to use the library. For example regex can cope
+ with wide character strings, or search and replace operations (in a
+ manner analogous to either sed or perl), something that traditional C
+ libraries can not do.
+ .
+ For more information on regex visit the project homepage
+ http://www.boost.org/libs/regex/ .
+
+Package: libboost-python-dev
+Section: devel
+Architecture: any
+Depends: libboost-dev (=${Source-Version}), python2.1-dev
+Description: The Boost Python Library development files
+ Part of the Boost.org library collection.
+ .
+ The Boost Python Library is used to quickly and easily export a C++
+ library to Python such that the Python interface is very similar to
+ the C++ interface. It is designed to be minimally intrusive on your
+ C++ design. In most cases, you should not have to alter your C++
+ classes in any way in order to use them with Boost.Python.  The
+ system should simply "reflect" your C++ classes and functions into
+ Python. The major features of Boost.Python include support for:
+ Subclassing extension types in Python, Overriding virtual functions
+ in Python, Member function Overloading, Automatic wrapping of
+ numeric operators among others.
+ .
+ For more information on python library visit the project homepage
+ http://www.boost.org/libs/python/ .
+
+Package: libboost-graph-dev
+Section: devel
+Architecture: any
+Depends: libboost-dev (=${Source-Version})
+Description: Generic graph components and algorithms in C++
+ Part of the Boost.org library collection.
+ .
+ Graphs are mathematical abstractions that are useful for solving
+ many types of problems in computer science. Consequently, these
+ abstractions must also be represented in computer programs. A
+ standardized generic interface for traversing graphs is of utmost
+ importance to encourage reuse of graph algorithms and data structures.
+ .
+ For more information on graph visit the project homepage
+ http://www.boost.org/libs/graph/doc/index.html .

@@ -1,0 +1,132 @@
+diff -ru archive.orig/Makefile.in archive/Makefile.in
+--- archive.orig/Makefile.in	Sun Apr 29 11:18:53 2001
++++ archive/Makefile.in	Sun Apr 29 11:19:14 2001
+@@ -35,7 +35,8 @@
+ INFO_FILES = $(MFDFILES:doc/mfd/%.mfd=doc/info/%.info)
+ HTML_FILES = $(MFDFILES:doc/mfd/%.mfd=doc/html/%.html) doc/html/c++boost.jpg doc/html/sidebar.jpg
+ 
+-OFILES = $(CXXFILES:.cpp=.o)
++STATIC_OFILES = $(subst src,src/static,$(CXXFILES:.cpp=.o))
++SHARED_OFILES = $(subst src,src/shared,$(CXXFILES:.cpp=.o))
+ 
+ # --- compiler setting ----------------------------------------------------- 
+ 
+@@ -51,38 +52,49 @@
+ 
+ CXX      = @CXX@
+ CC       = $(CXX)
+-CXXFLAGS = -I. @CXXFLAGS@ @BOOST_CXXFLAGS@
++CXXFLAGS = -I. -I../../.. -D_GNU_SOURCE @CXXFLAGS@ @BOOST_CXXFLAGS@
+ 
+-MKDEPEND = @BOOST_MKXXDEPEND@
++MKDEPEND = @BOOST_MKXXDEPEND@ $(CXXFLAGS)
+ 
+ INSTALL      = @INSTALL@
+ INSTALL_DATA = @INSTALL_DATA@
+ 
+ # --- make rules ----------------------------------------------------------- 
+ 
+-default: libboost.a mfdbin $(MAN3_FILES) $(INFO_FILES) $(HTML_FILES)
++default: libboost-dirit.a libboost-dirit.so mfdbin $(MAN3_FILES) $(INFO_FILES) $(HTML_FILES)
+ 
+ mfdbin:
+ 	-@chmod a+x bin/mfd2roff bin/mfd2html bin/mfd2texi bin/mfd2latex
+ 
+-libboost.a: $(OFILES)
+-	$(AR) rc $@ $(OFILES)
++libboost-dirit.a: $(STATIC_OFILES)
++	$(AR) rc $@ $^
+ 	@RANLIB@ $@
+ 
++libboost-dirit.so:	$(SHARED_OFILES)
++	$(CXX) -shared -Wl,-soname -Wl,$@.$(DIRIT_SONAME_VERSION) -o $@.$(DIRIT_SONAME_VERSION) $^
++	ln -s $@.$(DIRIT_SONAME_VERSION) $@
++
+ install:
+ 	$(INSTALL) -m 755 -d $(includedir)/boost $(libdir) $(mandir)/man3 $(infodir) $(htmldir)
+ 	$(INSTALL_DATA) $(HFILES) $(includedir)/boost
+-	$(INSTALL_DATA) libboost.a $(libdir)
+-	@RANLIB@ $(libdir)/libboost.a
++	$(INSTALL_DATA) libboost-dirit.a $(libdir)
++	@RANLIB@ $(libdir)/libboost-dirit.a
++	$(INSTALL_DATA) libboost-dirit.so.$(DIRIT_SONAME_VERSION) $(libdir)
++	ln -s libboost-dirit.so.$(DIRIT_SONAME_VERSION) $(libdir)/libboost-dirit.so
+ 	$(INSTALL_DATA) $(MAN3_FILES) $(mandir)/man3
+ 	$(INSTALL_DATA) $(INFO_FILES) $(infodir)
+ 	$(INSTALL_DATA) $(HTML_FILES) $(htmldir)
+ 
+ # --- suffix rules --------------------------------------------------------- 
+ 
+-.cpp.o:
++src/static/%.o:	src/%.cpp
++	mkdir -p src/static
+ 	$(CXX) -c -o $@ $(CXXFLAGS) $<
+ 
++src/shared/%.o:	src/%.cpp
++	mkdir -p src/shared
++	$(CXX) -fPIC -DPIC -c -o $@ $(CXXFLAGS) $<
++
+ doc/man/man3/%.3: doc/mfd/%.mfd
+ 	bin/mfd2roff $< > $@
+ 
+@@ -98,9 +110,10 @@
+ # --- cleaning up ---------------------------------------------------------- 
+ 
+ clean:
+-	$(RM) *~ #*#
+-	$(RM) $(OFILES)
+-	$(RM) mkerr
++	$(RM) -rf *~ #*#
++	$(RM) -rf $(OFILES)
++	$(RM) -rf mkerr
++	$(RM) -rf *.so* *.a src/shared src/static
+ 
+ distclean: clean
+ 	$(RM) libboost.a
+diff -ru archive.orig/boost/directory.h archive/boost/directory.h
+--- archive.orig/boost/directory.h	Sun Apr 29 11:18:53 2001
++++ archive/boost/directory.h	Sun Apr 29 11:18:42 2001
+@@ -22,7 +22,9 @@
+ 
+ // --------------------------------------------------------------------------
+ 
+-#include <iterator>
++#include <asm/types.h>
++#include <sys/stat.h>
++#include <boost/iterator.hpp>
+ #include <string>
+ #include <ctime>
+ #include <stdexcept>
+@@ -50,7 +52,7 @@
+ 		template <class Property> class set;
+ #endif
+ 
+-		class BOOST_DECL dir_it: public std::iterator<std::input_iterator_tag, std::string>
++		class BOOST_DECL dir_it: public iterator<std::input_iterator_tag, std::string>
+ 		{
+ #if defined(__GNUG__)
+ 			template <class Property>
+@@ -295,12 +297,12 @@
+ 		};
+ 		struct uname { typedef string value_type; };
+ 		template<> string get<uname>(dir_it const &);
+-		template<> void set<uname>(dir_it const &, string const &);
++		template<> void set<uname>(dir_it const &, string );
+ 
+ 		class unknown_gid: public invalid_argument
+ 		{
+ 		public:
+-			unknown_gid(gid_t g): std::invalid_argument("unknown group ID"), m_gid(g) {}
++			unknown_gid(gid_t g): invalid_argument("unknown group ID"), m_gid(g) {}
+ 			gid_t gid() const { return m_gid; }
+ 		private:
+ 			gid_t m_gid;
+@@ -318,7 +320,7 @@
+ 		};
+ 		struct gname { typedef string value_type; };
+ 		template<> string get<gname>(dir_it const &);
+-		template<> void set<gname>(dir_it const &, string const &);
++		template<> void set<gname>(dir_it const &, string);
+ 
+ #endif
+ 

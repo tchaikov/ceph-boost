@@ -47,10 +47,11 @@
 #include <cwchar> // for WCHAR_MIN and WCHAR_MAX
 #endif
 
-#if defined(__sparc) || defined(__sparc__) || defined(__powerpc__) || defined(__ppc__) || defined(__hppa) || defined(_MIPSEB)
-#define BOOST_BIG_ENDIAN
-#elif defined(__i386__)
-#define BOOST_LITTLE_ENDIAN
+#include <endian.h>
+#if __BYTE_ORDER == __BIG_ENDIAN
+#  define BOOST_BIG_ENDIAN
+#elif __BYTE_ORDER == __LITTLE_ENDIAN
+#  define BOOST_LITTLE_ENDIAN
 #else
 #error The file boost/detail/limits.hpp needs to be set up for your CPU type.
 #endif
@@ -337,16 +338,14 @@ class numeric_limits<unsigned long>
 // Some compilers have long long, but don't define the
 // LONGLONG_MIN and LONGLONG_MAX macros in limits.h.  This
 // assumes that long long is 64 bits.
-#if !defined(LONGLONG_MAX) && !defined(ULONGLONG_MAX)
+#if !defined(LONGLONG_MIN) && !defined(LONGLONG_MAX) \
+                           && !defined(ULONGLONG_MAX)
 
-# define ULONGLONG_MAX 0xffffffffffffffffLLU
-# define LONGLONG_MAX 0x7fffffffffffffffLL
+#define ULONGLONG_MAX 0xffffffffffffffffLLU
+#define LONGLONG_MAX 0x7fffffffffffffffLL
+#define LONGLONG_MIN (-LONGLONG_MAX - 1)
 
 #endif
-
-#if !defined(LONGLONG_MIN)
-# define LONGLONG_MIN (-LONGLONG_MAX - 1)
-#endif 
 
 template<>
 class numeric_limits<long long>
