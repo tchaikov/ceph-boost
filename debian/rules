@@ -177,7 +177,7 @@ install: build
 
 
 	# package libboost-python-dev
-	mv debian/libboost-dev/usr/include/boost/python \
+	mv debian/libboost-dev/usr/include/boost/python* \
 	   debian/libboost-python-dev/usr/include/boost
 	dh_install -plibboost-python-dev --autodest \
 	   debian/tmp/usr/lib/libboost_python$(suffix).so

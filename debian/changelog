@@ -1,3 +1,13 @@
+boost (1.31.0-3) unstable; urgency=low
+
+  * debian/control: libboost-dev depends on libboost-python-dev.  A
+  few header files include headers in <boost/python/detail/...>,
+  for some strange reason.  Closes: #242714, 242801.
+  
+  * Move <boost/python.hpp> to libboost-python-dev package.
+
+ --
+
 boost (1.31.0-2) unstable; urgency=low
 
   * Added symlinks in -dev packages to ease linking of programs which

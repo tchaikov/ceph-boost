@@ -23,7 +23,7 @@ Description: Software build tool
 Package: libboost-dev
 Architecture: any
 Section: libdevel
-Depends: libstdc++-dev
+Depends: libstdc++-dev, libboost-python-dev
 Suggests: libboost-doc, libboost-date-time-dev, libboost-filesystem-dev, libboost-graph-dev, libboost-python-dev, libboost-regex-dev, libboost-signals-dev, libboost-test-dev, libboost-thread-dev
 Description: Boost.org libraries development files
  The Boost web site provides free, peer-reviewed, portable C++ source
