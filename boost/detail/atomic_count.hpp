@@ -93,10 +93,6 @@ typedef long atomic_count;
 
 #include <boost/detail/atomic_count_win32.hpp>
 
-#elif defined(linux) || defined(__linux) || defined(__linux__)
-
-#include <boost/detail/atomic_count_linux.hpp>
-
 #elif defined(BOOST_HAS_PTHREADS)
 
 #include <boost/detail/atomic_count_pthreads.hpp>

@@ -18,7 +18,7 @@ LEX		= flex
 YACC		= bison
 MV		= /bin/mv
 
-EXTRAFLAGS 	= -g 
+EXTRAFLAGS 	=
 
 INCLUDES	= -I$(BOOST)
 

@@ -1,3 +1,12 @@
+boost (1.27.0-2) unstable; urgency=low
+
+  * boost/detail/atomic_count.hpp: Do not use atomic_count_linux.hpp; the
+    latter mistakenly uses <asm/atomic.h> which turns out to be a bad idea.
+  * libs/graph/src/Makefile: do not use "-g" flag; some of the symbols
+    are so large as to upset the assembler on the alpha.
+  
+ -- Steve M. Robbins <smr@debian.org>  Thu, 28 Feb 2002 18:45:06 -0500
+
 boost (1.27.0-1) unstable; urgency=low
 
   * New upstream version.

@@ -1,0 +1,65 @@
+On the advice of Peter Dimov, I have disabled the use of
+<asm/atomic.h>.  Other followups amplified the pitfalls
+of using that header.
+
+
+To: <boost@yahoogroups.com>
+From: "Peter Dimov" <pdimov@mmltd.net>
+Date: Thu, 28 Feb 2002 14:39:39 +0200
+Subject: Re: [boost] boost/detail/atomic_count_linux.hpp
+
+From: "Steve M. Robbins" <steven.robbins@videotron.ca>
+> Hi,
+>
+> This file includes <asm/atomic.h>, apparently hoping to find the
+> definition of ATOMIC_INIT().  This works on my i368 machine, but not
+> on the Debian sparc or powerpc builders.  Is it kernel version
+> dependent?  If so, in what version did it appear?
+
+I don't know. I am not a Linux kernel expert by any means, and there is no
+definitive documentation that I know of. :-(
+
+Another strong case for ./configure. (HAVE_ASM_ATOMIC_H.)
+
+> Is it safe to just
+> substitute the pthreads version in
+<boost/detail/atomic_count_pthreads.hpp>?
+
+Yes.
+
+> The arm, alpha and hppa builders fail for other reasons.  Full logs
+> available at http://buildd.debian.org/build.php?arch=&pkg=boost.
+
+All except the alpha build fail because they don't have a working
+asm/atomic.h. Most don't define atomic_read, atomic_inc, atomic_dec_and_test
+at all, while HPPA uses 'new' as a variable name, apparently.
+
+Looks like I'll have to disable atomic_count_linux.hpp and lwm_linux.hpp by
+default, using pthreads instead... Ideas?
+
+
+
+Info: http://www.boost.org  Send unsubscribe requests to: <mailto:boost-unsubscribe@yahoogroups.com> 
+
+Your use of Yahoo! Groups is subject to http://docs.yahoo.com/info/terms/ 
+
+
+
+Index: boost/detail/atomic_count.hpp
+===================================================================
+RCS file: /home/steve/lib/cvs/debian/boost/boost/detail/atomic_count.hpp,v
+retrieving revision 1.1.1.1
+diff -u -b -B -r1.1.1.1 atomic_count.hpp
+--- boost/detail/atomic_count.hpp	7 Feb 2002 15:26:13 -0000	1.1.1.1
++++ boost/detail/atomic_count.hpp	28 Feb 2002 23:33:32 -0000
+@@ -93,10 +93,6 @@
+ 
+ #include <boost/detail/atomic_count_win32.hpp>
+ 
+-#elif defined(linux) || defined(__linux) || defined(__linux__)
+-
+-#include <boost/detail/atomic_count_linux.hpp>
+-
+ #elif defined(BOOST_HAS_PTHREADS)
+ 
+ #include <boost/detail/atomic_count_pthreads.hpp>
