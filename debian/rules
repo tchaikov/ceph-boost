@@ -153,7 +153,9 @@ binary-common:
 	dh_installchangelogs
 	dh_strip
 	dh_link
-	dh_compress -Nlibboost-doc
+# There is only one binary independent package now (-doc), and
+# the next line will kill the build without || true.
+	dh_compress -Nlibboost-doc || true
 	dh_fixperms
 	dh_makeshlibs
 	dh_installdeb
