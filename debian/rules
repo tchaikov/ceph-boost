@@ -105,7 +105,9 @@ install: build
 	cat debian/example-files \
 	    | xargs cp -a --parents --target-directory=$(exampledir)
 	find $(exampledir) -type f | xargs chmod 644
-	find $(exampledir) -name .cvsignore | xargs rm
+
+
+	# package libboost-dbg
 
 
 	# package libboost-date-time$(SOVERSION)
@@ -157,6 +159,21 @@ install: build
 	   libs/graph/src/libbgl-viz.a \
 	   libs/graph/src/libbgl-viz.so \
 	   usr/lib
+
+
+	# package libboost-program-options$(SOVERSION)
+	dh_install -plibboost-program-options$(SOVERSION) --autodest \
+	   debian/tmp/usr/lib/libboost_program_options$(suffix).so.[0-9]*
+
+
+	# package libboost-program-options-dev
+	mv debian/libboost-dev/usr/include/boost/program_options* \
+	   debian/libboost-program-options-dev/usr/include/boost
+	dh_install -plibboost-program-options-dev --autodest \
+	   debian/tmp/usr/lib/libboost_program_options$(suffix).so
+	dh_link -plibboost-program-options-dev \
+	   usr/lib/libboost_program_options$(suffix).so \
+	   usr/lib/libboost_program_options.so
 
 
 	# package libboost-python$(SOVERSION)
@@ -214,7 +231,7 @@ install: build
 	dh_install -plibboost-test$(SOVERSION) --autodest \
 	   debian/tmp/usr/lib/libboost_prg_exec_monitor$(suffix).so.[0-9]* \
 	   debian/tmp/usr/lib/libboost_test_exec_monitor$(suffix).so.[0-9]* \
-	   debian/tmp/usr/lib/libboost_unit_test_framework$(suffix).so.[0-9]* 
+	   debian/tmp/usr/lib/libboost_unit_test_framework$(suffix).so.[0-9]*
 
 
 	# package libboost-test-dev
@@ -244,7 +261,7 @@ install: build
 
 	# package libboost-thread$(SOVERSION)
 	dh_install -plibboost-thread$(SOVERSION) --autodest \
-	   debian/tmp/usr/lib/libboost_thread$(suffix).so.[0-9]* 
+	   debian/tmp/usr/lib/libboost_thread$(suffix).so.[0-9]*
 
 
 	# package libboost-thread-dev
