@@ -17,6 +17,17 @@ signals	static	shared
 * boost/detail/limits.hpp
   - use <endian.h>
 
+* libs/graph/src/Makefile
+  - build using -I/usr/include/stlport, optimization and no debugging
+  - disable rules that invoke yacc
+  - do not clean the yacc-built files
+
+* libs/graph/src/graphviz_digraph_parser.cpp
+* libs/graph/src/graphviz_graph_parser.cpp
+  - add std:: prefix
+
+* tools/build/gcc-stlport-tools.jam
+  - use "-lstlport" for static linking
 
 
 
