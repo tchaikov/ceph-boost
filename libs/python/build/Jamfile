@@ -61,6 +61,7 @@ if [ check-python-config ]
       $(bpl-linkflags)
         <msvc-stlport><release>$(msvc-stlport-workarounds)
         <darwin><*><linkflags>-bind_at_load
+        <gcc><*><linkflags>-lpython$(PYTHON_VERSION)
       ;
 
   template extension
