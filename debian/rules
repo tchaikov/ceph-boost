@@ -114,7 +114,7 @@ install: build
 	mkdir -p $(htmldir)
 	cat debian/documentation-files \
 	    | xargs cp --parents --target-directory=$(htmldir)
-	ln -s /usr/include/boost $(htmldir)/boost
+	#ln -s /usr/include/boost $(htmldir)/boost
 	mkdir -p $(exampledir)
 	cat debian/example-files \
 	    | xargs cp -a --parents --target-directory=$(exampledir)

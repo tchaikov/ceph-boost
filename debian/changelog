@@ -7,9 +7,9 @@ boost (1.30.0-4) unstable; urgency=low
     - Fix broken links.  Closes: #199646.
     - Use symlink to /usr/include/boost, rather than duplicating
       header files.  Suggest libboost-dev.  Closes: #174979, #175444.
-    - Include libs/*/examples? not included in HTML.  Closes: #191704.
+    - Include libs/*/examples not already included in HTML.  Closes: #191704.
   
- -- Steve M. Robbins <smr@debian.org>  Sun,  6 Jul 2003 23:51:15 -0400
+ -- Steve M. Robbins <smr@debian.org>  Fri, 11 Jul 2003 18:13:32 -0400
 
 boost (1.30.0-3) unstable; urgency=low
 

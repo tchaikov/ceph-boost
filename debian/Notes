@@ -46,6 +46,10 @@ localhost to get the source tree
 	test -f /usr/local/src/devel/boost/boost-cvs-local/$f && echo $f; 
     done > documentation-files
 
+* need to symlink .../HTML/boost to /usr/include/boost; when put the symlink
+  into the deb, it got converted to a directory during installation; use
+  postinst script to do it
+
 * use -Nlibboost-doc with dh_compress to inhibit compressing files in the HTML
   tree
 

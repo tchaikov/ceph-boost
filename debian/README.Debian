@@ -37,6 +37,23 @@ There is extensive documentation available in the libboost-doc
 package and at www.boost.org.
 
 
+		Example Code
+		------------
+
+All example code is shipped in libboost-doc package.
+
+Some of the example code is linked to by the documentation, and thus
+appears in a directory named
+
+  /usr/share/doc/libboost-doc/HTML/libs/*/example
+
+Example code that is not linked from the documentation appears in a
+directory under
+
+  /usr/share/doc/libboost-doc/examples/libs/
+
+
+
 		STLport
 		-------
 
@@ -91,4 +108,4 @@ Either you use only GCC 2 or only GCC 3.  This goes for all your
 libraries.
 
 
- -- Steve M. Robbins <smr@debian.org>, Sat Jun 28 08:51:20 2003
+ -- Steve M. Robbins <smr@debian.org>, Fri Jul 11 18:02:02 2003

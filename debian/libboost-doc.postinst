@@ -1,0 +1,12 @@
+#! /bin/sh
+
+set -e
+
+#DEBHELPER#
+
+if [ "$1" = "configure" ]; then
+    cd /usr/share/doc/libboost-doc/HTML
+    rm -rf boost
+    ln -s /usr/include/boost
+fi
+
