@@ -232,7 +232,7 @@
       char buf[256];
       sprintf(buf, "default%i\0", i);
       ++i;
-      return  string(buf);
+      return std::string(buf);
 #else
       std::stringstream out;
       out << "default" << i;

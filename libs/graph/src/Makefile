@@ -72,15 +72,15 @@ graphviz_digraph_lex.cpp: graphviz_lex.l
 	rm -rf graphviz_digraph_lex.cpp
 	sed -f ./sed-dir lex.yy.c > graphviz_digraph_lex.cpp
 
-graphviz_graph_parser.cpp: graphviz_parser.y
+disable_graphviz_graph_parser.cpp: graphviz_parser.y
 	$(YACC) -p bgl_undir_ -d -v graphviz_parser.y
 	sed -f ./sed-undir graphviz_parser.tab.c > graphviz_graph_parser.cpp
 
-graphviz_digraph_parser.cpp: graphviz_parser.y
+disable_graphviz_digraph_parser.cpp: graphviz_parser.y
 	$(YACC) -p bgl_dir_ -d -v graphviz_parser.y
 	sed -f ./sed-dir graphviz_parser.tab.c > graphviz_digraph_parser.cpp
 
-graphviz_parser.h: graphviz_digraph_parser.cpp
+disable_graphviz_parser.h: graphviz_digraph_parser.cpp
 	$(MV) graphviz_parser.tab.h graphviz_parser.h
 
 dist:
@@ -101,4 +101,8 @@ dist:
 
 
 clean:
-	/bin/rm -rf	*.o *.a *.so* *.output graphviz_digraph_parser.cpp graphviz_graph_parser.cpp graphviz_lex.cpp graphviz_parser.h
+	/bin/rm -rf	*.o *.a *.so* *.output 
+
+# Do not clean the following.  I have modified the .cpp files and want those changes
+# to be tracked in the debian diff file.
+#graphviz_digraph_parser.cpp graphviz_graph_parser.cpp graphviz_lex.cpp graphviz_parser.h

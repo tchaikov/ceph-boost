@@ -14,25 +14,21 @@ export DH_COMPAT=3
 # This has to be exported to make some magic below work.
 export DH_OPTIONS
 
-# Changes from a standard boost build include:
-#
-# - build jam binary in fixed location, rather than in .../bin.${SYSTEM}
-# - use modified version of gcc-stlport-tools.jam file
-# - build libraries into subdirectory rooted at "debian-build"
-#   (easier to clean up, and to find the libraries that got built)
 
 # Boost does not guarantee any ABI, so we use full version in SONAME version
 SOVERSION=1.29.0
 
 # Locations of static libs.
-static_regex = debian-build/libs/regex/build/bin-stage/libboost_regex.a
-static_thread = debian-build/libs/thread/build/bin/libboost_thread.a/debian/release/runtime-link-dynamic/threading-multi/libboost_thread.a
 static_graph = libs/graph/src/libbgl-viz.a
+static_regex = dbuild/libs/regex/build/bin-stage/libboost_regex.a
+static_thread = dbuild/libs/thread/build/bin/libboost_thread.a/gcc-stlport/release/runtime-link-dynamic/threading-multi/libboost_thread.a
+static_signals = dbuild/libs/signals/build/bin/libboost_signals.a/gcc-stlport/release/runtime-link-dynamic/libboost_signals.a
 
 # locations of shared libs.
-shared_regex = debian-build/libs/regex/build/bin/libboost_regex.so/debian/release/runtime-link-dynamic/shared-linkable-true/libboost_regex.so
-shared_python = debian-build/libs/python/build/bin/libboost_python.so
 shared_graph = libs/graph/src/libbgl-viz.so.$(SOVERSION)
+shared_python = dbuild/libs/python/build/bin-stage/libboost_python.so.$(SOVERSION)
+shared_regex = dbuild/libs/regex/build/bin-stage/libboost_regex.so.$(SOVERSION)
+shared_signals = dbuild/libs/signals/build/bin/libboost_signals.so/gcc-stlport/release/runtime-link-dynamic/shared-linkable-true/libboost_signals.so.$(SOVERSION)
 
 
 htmldir = debian/libboost-doc/usr/share/doc/libboost-doc/HTML
@@ -40,7 +36,7 @@ htmldir = debian/libboost-doc/usr/share/doc/libboost-doc/HTML
 bjam = tools/build/jam_src/bin/bjam
 
 JAM = $(bjam) -sTOOLS=gcc-stlport -sBUILD=release \
-	-sBOOST_ROOT=. -sALL_LOCATE_TARGET=`pwd`/debian/tmp \
+	-sBOOST_ROOT=. -sALL_LOCATE_TARGET=`pwd`/dbuild \
 	-sPYTHON_VERSION=2.2 -sPYTHON_ROOT=/usr \
 	-d2
 
@@ -61,7 +57,7 @@ build-stamp: $(bjam)
 
 # Build the graph library with upstream makefile
 	$(MAKE) -C libs/graph/src libbgl-viz.a
-	cd libs/graph/src && rm -f *.o *.output graphviz_digraph_parser.cpp graphviz_graph_parser.cpp graphviz_lex.cpp graphviz_parser.h
+	rm -f libs/graph/src/*.o 
 	$(MAKE) -C libs/graph/src EXTRAFLAGS='-fPIC' GRAPH_SONAME_VERSION=$(SOVERSION) libbgl-viz.so
 
 	touch build-stamp
@@ -74,14 +70,14 @@ clean:
 	-$(JAM) clean
 	rm -rf tools/build/jam_src/bin
 	rm -f tools/build/jam_src/jam0
-	rm -rf debian-build
+	rm -rf dbuild
 
 	$(MAKE) -C libs/graph/src clean
 
 # Do not need to track changes done to built files.
 #	rm -f boost/config/user.hpp
 	rm -f libs/config/config.{log,status}
-	rm -f libs/graph/src/graphviz_parser.tab.{c,h}
+#	rm -f libs/graph/src/graphviz_parser.tab.{c,h}
 
 	dh_clean
 
@@ -91,6 +87,7 @@ install: build
 	dh_testroot
 	dh_clean -k
 	dh_installdirs --all usr/include usr/lib
+
 
 	# package libboost-dev
 	rm -rf   debian/libboost-dev/usr/include/boost
@@ -104,9 +101,29 @@ install: build
 	mkdir -p $(htmldir)
 	cat debian/libboost-doc.htmlfiles | xargs cp --target-directory=$(htmldir) --parents
 
+	# package libboost-graph$(SOVERSION)
+	cp $(shared_graph) debian/libboost-graph$(SOVERSION)/usr/lib
+
+	# package libboost-graph-dev
+	mkdir -p debian/libboost-graph-dev/usr/include/boost
+	mv debian/libboost-dev/usr/include/boost/graph \
+	   debian/libboost-graph-dev/usr/include/boost
+	cp $(static_graph) debian/libboost-graph-dev/usr/lib
+	ln -s libbgl-viz.so.$(SOVERSION) \
+	   debian/libboost-graph-dev/usr/lib/libbgl-viz.so
+
+	# package libboost-python$(SOVERSION)
+	cp $(shared_python) debian/libboost-python$(SOVERSION)/usr/lib
+
+	# package libboost-python-dev
+	mkdir -p debian/libboost-python-dev/usr/include/boost
+	mv debian/libboost-dev/usr/include/boost/python \
+	   debian/libboost-python-dev/usr/include/boost
+	ln -s libboost_python.so.$(SOVERSION) \
+	   debian/libboost-python-dev/usr/lib/libboost_python.so
+
 	# package libboost-regex$(SOVERSION)
-	cp $(shared_regex) \
-	   debian/libboost-regex$(SOVERSION)/usr/lib/libboost_regex.so.$(SOVERSION)
+	cp $(shared_regex) debian/libboost-regex$(SOVERSION)/usr/lib
 
 	# package libboost-regex-dev
 	mkdir -p debian/libboost-regex-dev/usr/include/boost
@@ -116,28 +133,16 @@ install: build
 	ln -s libboost_regex.so.$(SOVERSION) \
 	   debian/libboost-regex-dev/usr/lib/libboost_regex.so
 
-	# package libboost-python$(SOVERSION)
-	cp $(shared_python) \
-	 debian/libboost-python$(SOVERSION)/usr/lib/libboost_python.so.$(SOVERSION)
+	# package libboost-signals$(SOVERSION)
+	cp $(shared_signals) debian/libboost-signals$(SOVERSION)/usr/lib
 
-	# package libboost-python-dev
-	mkdir -p debian/libboost-python-dev/usr/include/boost
-	mv debian/libboost-dev/usr/include/boost/python \
-	   debian/libboost-python-dev/usr/include/boost
-	ln -s libboost_python.so.$(SOVERSION) \
-	   debian/libboost-python-dev/usr/lib/libboost_python.so
-
-	# package libboost-graph$(SOVERSION)
-	cp $(shared_graph) \
-	  debian/libboost-graph$(SOVERSION)/usr/lib/libbgl-viz.so.$(SOVERSION)
-
-	# package libboost-graph-dev
-	mkdir -p debian/libboost-graph-dev/usr/include/boost
-	mv debian/libboost-dev/usr/include/boost/graph \
-	   debian/libboost-graph-dev/usr/include/boost
-	cp $(static_graph) debian/libboost-graph-dev/usr/lib
-	ln -s libbgl-viz.so.$(SOVERSION) \
-	   debian/libboost-graph-dev/usr/lib/libbgl-viz.so
+	# package libboost-signals-dev
+	mkdir -p debian/libboost-signals-dev/usr/include/boost
+	mv debian/libboost-dev/usr/include/boost/*signal* \
+	   debian/libboost-signals-dev/usr/include/boost
+	cp $(static_signals) debian/libboost-signals-dev/usr/lib
+	ln -s libboost_signals.so.$(SOVERSION) \
+	   debian/libboost-signals-dev/usr/lib/libboost_signals.so
 
 
 # This single target is used to build all the packages, all at once, or

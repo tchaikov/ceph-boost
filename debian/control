@@ -3,13 +3,13 @@ Section: libs
 Priority: optional
 Maintainer: Steve M. Robbins <smr@debian.org>
 Standards-Version: 3.5.2
-Build-Depends: libstlport4.5-dev, python2.2-dev, debhelper, flex, bison
+Build-Depends: libstlport4.5-full, python2.2-dev, debhelper
 
 Package: libboost-dev
 Architecture: any
 Section: devel
-Depends: libstdc++-dev, libstlport4.5-dev
-Suggests: libboost-doc, libboost-regex-dev, libboost-python-dev, libboost-graph-dev
+Depends: libstdc++-dev, libstlport4.5-full
+Suggests: libboost-doc, libboost-graph-dev, libboost-python-dev, libboost-regex-dev, libboost-signals-dev
 Description: Boost.org libraries development files
  The Boost web site provides free, peer-reviewed, portable C++ source
  libraries. The emphasis is on libraries which work well with the C++
@@ -19,8 +19,8 @@ Description: Boost.org libraries development files
  already been proposed for inclusion in the C++ Standards Committee's
  upcoming C++ Standard Library Technical Report.
  .
- For the following subprojects separate packages exist: regex, python,
- graph.
+ For the following subprojects separate packages exist: 
+ graph, python, regex, and signals.
  .
  For more information on boost visit the project homepage
  http://www.boost.org/ .
@@ -43,7 +43,81 @@ Description: Boost.org libraries documentation
  For more information on boost visit the project homepage
  http://www.boost.org/ .
 
-Package: libboost-regex1.28.0
+Package: libboost-graph1.29.0
+Section: devel
+Architecture: any
+Depends: ${shlibs:Depends}
+Description: Generic graph components and algorithms in C++
+ Part of the Boost.org library collection.
+ .
+ Graphs are mathematical abstractions that are useful for solving
+ many types of problems in computer science. Consequently, these
+ abstractions must also be represented in computer programs. A
+ standardized generic interface for traversing graphs is of utmost
+ importance to encourage reuse of graph algorithms and data structures.
+ .
+ For more information on graph visit the project homepage
+ http://www.boost.org/libs/graph/doc/index.html .
+
+Package: libboost-graph-dev
+Section: devel
+Architecture: any
+Depends: libboost-dev (=${Source-Version}), libboost-graph1.29.0 (=${Source-Version})
+Description: Generic graph components and algorithms in C++
+ Part of the Boost.org library collection.
+ .
+ Graphs are mathematical abstractions that are useful for solving
+ many types of problems in computer science. Consequently, these
+ abstractions must also be represented in computer programs. A
+ standardized generic interface for traversing graphs is of utmost
+ importance to encourage reuse of graph algorithms and data structures.
+ .
+ For more information on graph visit the project homepage
+ http://www.boost.org/libs/graph/doc/index.html .
+
+Package: libboost-python1.29.0
+Section: devel
+Architecture: any
+Depends: ${shlibs:Depends}
+Description: Boost Python Library 
+ Part of the Boost.org library collection.
+ .
+ The Boost Python Library is used to quickly and easily export a C++
+ library to Python such that the Python interface is very similar to
+ the C++ interface. It is designed to be minimally intrusive on your
+ C++ design. In most cases, you should not have to alter your C++
+ classes in any way in order to use them with Boost.Python.  The
+ system should simply "reflect" your C++ classes and functions into
+ Python. The major features of Boost.Python include support for:
+ Subclassing extension types in Python, Overriding virtual functions
+ in Python, Member function Overloading, Automatic wrapping of
+ numeric operators among others.
+ .
+ For more information on python library visit the project homepage
+ http://www.boost.org/libs/python/ .
+
+Package: libboost-python-dev
+Section: devel
+Architecture: any
+Depends: libboost-dev (=${Source-Version}), libboost-python1.29.0 (=${Source-Version}), python2.2-dev
+Description: The Boost Python Library development files
+ Part of the Boost.org library collection.
+ .
+ The Boost Python Library is used to quickly and easily export a C++
+ library to Python such that the Python interface is very similar to
+ the C++ interface. It is designed to be minimally intrusive on your
+ C++ design. In most cases, you should not have to alter your C++
+ classes in any way in order to use them with Boost.Python.  The
+ system should simply "reflect" your C++ classes and functions into
+ Python. The major features of Boost.Python include support for:
+ Subclassing extension types in Python, Overriding virtual functions
+ in Python, Member function Overloading, Automatic wrapping of
+ numeric operators among others.
+ .
+ For more information on python library visit the project homepage
+ http://www.boost.org/libs/python/ .
+
+Package: libboost-regex1.29.0
 Architecture: any
 Section: devel
 Depends: ${shlibs:Depends}
@@ -67,7 +141,7 @@ Description: Regular expression library for C++
 Package: libboost-regex-dev
 Architecture: any
 Section: devel
-Depends: libboost-dev (= ${Source-Version}), libboost-regex1.28.0 (= ${Source-Version})
+Depends: libboost-dev (= ${Source-Version}), libboost-regex1.29.0 (= ${Source-Version})
 Description: Regular expression library for C++
  Part of the Boost.org library collection.
  .
@@ -85,78 +159,34 @@ Description: Regular expression library for C++
  For more information on regex visit the project homepage
  http://www.boost.org/libs/regex/ .
 
-Package: libboost-python1.28.0-python2.2
-Section: devel
+Package: libboost-signals1.29.0
 Architecture: any
+Section: devel
 Depends: ${shlibs:Depends}
-Conflicts: libboost-python1.28.0
-Replaces: libboost-python1.28.0
-Description: Boost Python Library 
+Description: Managed signals and slots library for C++
  Part of the Boost.org library collection.
  .
- The Boost Python Library is used to quickly and easily export a C++
- library to Python such that the Python interface is very similar to
- the C++ interface. It is designed to be minimally intrusive on your
- C++ design. In most cases, you should not have to alter your C++
- classes in any way in order to use them with Boost.Python.  The
- system should simply "reflect" your C++ classes and functions into
- Python. The major features of Boost.Python include support for:
- Subclassing extension types in Python, Overriding virtual functions
- in Python, Member function Overloading, Automatic wrapping of
- numeric operators among others.
+ Signals represent callbacks with multiple targets, and are also
+ called publishers or events in similar systems. Signals are connected
+ to some set of slots, which are callback receivers (also called event
+ targets or subscribers), which are called when the signal is
+ "emitted."
  .
- For more information on python library visit the project homepage
- http://www.boost.org/libs/python/ .
+ For more information on signals visit the project homepage
+ http://www.boost.org/libs/signals/ .
 
-Package: libboost-python-dev
-Section: devel
+Package: libboost-signals-dev
 Architecture: any
-Depends: libboost-dev (=${Source-Version}), libboost-python1.28.0-python2.2 (=${Source-Version}), python2.2-dev
-Description: The Boost Python Library development files
+Section: devel
+Depends: libboost-dev (= ${Source-Version}), libboost-signals1.29.0 (= ${Source-Version})
+Description: Managed signals and slots library for C++
  Part of the Boost.org library collection.
  .
- The Boost Python Library is used to quickly and easily export a C++
- library to Python such that the Python interface is very similar to
- the C++ interface. It is designed to be minimally intrusive on your
- C++ design. In most cases, you should not have to alter your C++
- classes in any way in order to use them with Boost.Python.  The
- system should simply "reflect" your C++ classes and functions into
- Python. The major features of Boost.Python include support for:
- Subclassing extension types in Python, Overriding virtual functions
- in Python, Member function Overloading, Automatic wrapping of
- numeric operators among others.
+ Signals represent callbacks with multiple targets, and are also
+ called publishers or events in similar systems. Signals are connected
+ to some set of slots, which are callback receivers (also called event
+ targets or subscribers), which are called when the signal is
+ "emitted."
  .
- For more information on python library visit the project homepage
- http://www.boost.org/libs/python/ .
-
-Package: libboost-graph1.28.0
-Section: devel
-Architecture: any
-Depends: ${shlibs:Depends}
-Description: Generic graph components and algorithms in C++
- Part of the Boost.org library collection.
- .
- Graphs are mathematical abstractions that are useful for solving
- many types of problems in computer science. Consequently, these
- abstractions must also be represented in computer programs. A
- standardized generic interface for traversing graphs is of utmost
- importance to encourage reuse of graph algorithms and data structures.
- .
- For more information on graph visit the project homepage
- http://www.boost.org/libs/graph/doc/index.html .
-
-Package: libboost-graph-dev
-Section: devel
-Architecture: any
-Depends: libboost-dev (=${Source-Version}), libboost-graph1.28.0 (=${Source-Version})
-Description: Generic graph components and algorithms in C++
- Part of the Boost.org library collection.
- .
- Graphs are mathematical abstractions that are useful for solving
- many types of problems in computer science. Consequently, these
- abstractions must also be represented in computer programs. A
- standardized generic interface for traversing graphs is of utmost
- importance to encourage reuse of graph algorithms and data structures.
- .
- For more information on graph visit the project homepage
- http://www.boost.org/libs/graph/doc/index.html .
+ For more information on signals visit the project homepage
+ http://www.boost.org/libs/signals/ .
