@@ -1,10 +1,15 @@
 boost (1.31.0-6) unstable; urgency=low
 
-  * debian/control:
-  * debian/rules: Remove package bjam as it is is now built from a separate
+  * debian/rules: removed package bjam as it is now built from a separate
     source package, boost-jam.
 
- -- 
+  * boost/iterator/iterator_adaptor.hpp: removed the useless inclusion
+    of is_xxx.hpp (from upstream CVS).
+
+  * debian/control: libboost-dev does not depend on libboost-python-dev
+    any more
+
+ --
 
 boost (1.31.0-5) unstable; urgency=low
 
