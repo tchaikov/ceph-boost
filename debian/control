@@ -18,7 +18,7 @@ Description: Software build tool
  were added, as well as several new builtins.
  .
  For more information on Boost.Jam visit the project homepage
- http://www.boost.org/tools/build/jam_src/index.html .
+ http://www.boost.org/tools/build/jam_src/ .
 
 Package: libboost-dev
 Architecture: any
@@ -59,7 +59,7 @@ Description: Boost.org libraries documentation
  so it is suggested to install the latter as well.
  .
  For more information on boost visit the project homepage
- http://www.boost.org/libs/libraries.htm .
+ http://www.boost.org/libs/ .
 
 Package: libboost-date-time1.31.0
 Architecture: any
@@ -72,7 +72,7 @@ Description: Set of date-time libraries based on generic programming concepts
  almost as simple and natural as programming with strings and integers.
  .
  For more information on Date-Time visit the project homepage
- http://www.boost.org/libs/date_time/doc/index.html .
+ http://www.boost.org/libs/date_time/ .
 
 Package: libboost-date-time-dev
 Architecture: any
@@ -86,7 +86,7 @@ Description: Set of date-time libraries based on generic programming concepts
  almost as simple and natural as programming with strings and integers.
  .
  For more information on Date-Time visit the project homepage
- http://www.boost.org/libs/date_time/doc/index.html .
+ http://www.boost.org/libs/date_time/ .
 
 Package: libboost-filesystem1.31.0
 Architecture: any
@@ -100,7 +100,7 @@ Description: Filesystem operations (portable paths, iteration over directories, 
  facilitate portable script-like operations from within C++ programs.
  .
  For more information visit the project homepage
- http://boost.org/libs/filesystem/doc/index.htm .
+ http://boost.org/libs/filesystem/ .
 
 Package: libboost-filesystem-dev
 Architecture: any
@@ -114,7 +114,7 @@ Description: Filesystem operations (portable paths, iteration over directories, 
  facilitate portable script-like operations from within C++ programs.
  .
  For more information visit the project homepage
- http://boost.org/libs/filesystem/doc/index.htm .
+ http://boost.org/libs/filesystem/ .
 
 Package: libboost-graph1.31.0
 Architecture: any
@@ -130,7 +130,7 @@ Description: Generic graph components and algorithms in C++
  importance to encourage reuse of graph algorithms and data structures.
  .
  For more information on graph visit the project homepage
- http://www.boost.org/libs/graph/doc/index.html .
+ http://www.boost.org/libs/graph/ .
 
 Package: libboost-graph-dev
 Architecture: any
@@ -146,7 +146,7 @@ Description: Generic graph components and algorithms in C++
  importance to encourage reuse of graph algorithms and data structures.
  .
  For more information on graph visit the project homepage
- http://www.boost.org/libs/graph/doc/index.html .
+ http://www.boost.org/libs/graph/ .
 
 Package: libboost-python1.31.0
 Architecture: any
@@ -277,7 +277,7 @@ Description: Components for writing and executing test suites
   * Unit test framework to simplify writing test cases.
  .
  For more information on Boost.Test visit the project homepage
- http://www.boost.org/libs/test/doc/index.htm .
+ http://www.boost.org/libs/test/ .
 
 Package: libboost-test-dev
 Architecture: any
@@ -293,7 +293,7 @@ Description: Components for writing and executing test suites
   * Unit test framework to simplify writing test cases.
  .
  For more information on Boost.Test visit the project homepage
- http://www.boost.org/libs/test/doc/index.htm .
+ http://www.boost.org/libs/test/ .
 
 Package: libboost-thread1.31.0
 Architecture: any
@@ -308,7 +308,7 @@ Description: Portable C++ multi-threading
  registers.
  .
  For more information on Boost.Threads visit the project homepage
- http://www.boost.org/libs/thread/doc/index.html .
+ http://www.boost.org/libs/thread/ .
 
 Package: libboost-thread-dev
 Architecture: any
@@ -324,4 +324,4 @@ Description: Portable C++ multi-threading
  registers.
  .
  For more information on Boost.Threads visit the project homepage
- http://www.boost.org/libs/thread/doc/index.html .
+ http://www.boost.org/libs/thread/ .
