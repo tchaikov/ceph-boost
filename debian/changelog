@@ -1,3 +1,10 @@
+boost (1.32.0-2) unstable; urgency=low
+
+  * debian/rules: debug libraries are now really installed in package
+    libboost-dbg.
+
+ -- Domenico Andreoli <cavok@debian.org>  Mon, 10 Jan 2005 01:36:46 +0100
+
 boost (1.32.0-1) experimental; urgency=low
 
   * New upstream version.  Closes: #282871.
