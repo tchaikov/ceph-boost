@@ -1,6 +1,12 @@
+boost (1.32.0-1) unstable; urgency=low
+
+  * New upstream version.  Closes: #282871.
+
+ --
+
 boost (1.31.0-9) unstable; urgency=low
 
-  * More things fixed for indirect_traits in boost/detail. 
+  * More things fixed for indirect_traits in boost/detail.
 
  -- Domenico Andreoli <cavok@debian.org>  Thu, 11 Nov 2004 16:59:04 +0100
 
