@@ -1,0 +1,29 @@
+Index: libs/date_time/doc/class_date.html
+===================================================================
+RCS file: /home/steve/lib/cvs/debian/boost/libs/date_time/doc/class_date.html,v
+retrieving revision 1.1.1.3
+diff -u -b -B -r1.1.1.3 class_date.html
+--- a/libs/date_time/doc/class_date.html	20 Jan 2004 04:58:22 -0000	1.1.1.3
++++ b/libs/date_time/doc/class_date.html	6 Mar 2004 05:32:07 -0000
+@@ -65,8 +65,8 @@
+ 	<td class="nowrap">date d1(neg_infin);<br>
+                            date d2(pos_infin);<br>
+                            date d3(not_a_date_time);<br>
+-                           date d4(max_date);<br>
+-                           date d5(min_date);
++                           date d4(max_date_time);<br>
++                           date d5(min_date_time);
+         </td></tr>
+ 
+ </table>
+@@ -242,9 +242,7 @@
+ 
+ <hr>
+ <address><small>
+-<!-- hhmts start -->
+-Last modified: Mon Jan 19 21:34:44 MST 2004
+-<!-- hhmts end -->
++<!-- hhmts start -->Last modified: Sat Mar  6 00:32:03 EST 2004 <!-- hhmts end -->
+  by <a href="mailto:jeff&#64;crystalclearsoftware.com">Jeff Garland</a> &copy; 2000-2002
+ </small></address>
+ </body>

@@ -87,4 +87,4 @@ Debian now uses GCC 3.2 (or newer).  The standard C++ library has
 improved enough to use with boost, so STLport is not longer used.
 
 
- -- Steve M. Robbins <smr@debian.org>, Sat Feb 21 16:21:30 2004
+ -- Steve M. Robbins <smr@debian.org>, Fri Mar  5 22:42:23 2004

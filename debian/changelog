@@ -1,6 +1,9 @@
 boost (1.31.0-1) unstable; urgency=low
 
-  * New upstream version.
+  * New upstream version.  Closes: #231951, #236016.
+    - builds with Python 2.3.  Closes: #206083.
+  
+  * libs/date_time/doc/class_date.html: Fix doc typo.  Closes: #223236.
 
  -- Steve M. Robbins <smr@debian.org>  Sat, 21 Feb 2004 01:10:21 -0500
 

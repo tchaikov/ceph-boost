@@ -49,11 +49,8 @@ license statement was taken is indicated, where applicable.
  * warranty, and with no claim as to its suitability for any purpose.
 
 
-	mem_fn <boost/bind.hpp>
-	-----------------------
-
-	bind <boost/bind.hpp>
-	---------------------
+	bind and mem_fn <boost/bind.hpp>
+	--------------------------------
 
 //  Copyright (c) 2001, 2002 Peter Dimov and Multi Media Ltd.
 //  Copyright (c) 2001 David Abrahams
@@ -67,10 +64,11 @@ license statement was taken is indicated, where applicable.
 	call_traits <boost/call_traits.hpp>
 	-----------------------------------
 
-//  (C) Copyright Boost.org 2000. Permission to copy, use, modify, sell and
-//  distribute this software is granted provided this copyright notice appears
-//  in all copies. This software is provided "as is" without express or implied
-//  warranty, and with no claim as to its suitability for any purpose.
+//  (C) Copyright Steve Cleary, Beman Dawes, Howard Hinnant & John Maddock 2000.
+//  Use, modification and distribution are subject to the Boost Software License,
+//  Version 1.0.  
+
+Terms of the Boost Software License appear later in this file.
 
 
 	compatibility <boost/compatibility/*>
@@ -87,23 +85,14 @@ following license.
 # suitability for any purpose.
 
 
-	compose <boost/compose.hpp>
-	---------------------------
-
- * (C) Copyright Nicolai M. Josuttis 1999.
- * Permission to copy, use, modify, sell and distribute this software
- * is granted provided this copyright notice appears in all copies.
- * This software is provided "as is" without express or implied
- * warranty, and with no claim as to its suitability for any purpose.
-
-
 	compressed_pair <boost/compressed_pair.hpp>
 	-------------------------------------------
 
-//  (C) Copyright Boost.org 2000. Permission to copy, use, modify, sell and
-//  distribute this software is granted provided this copyright notice appears
-//  in all copies. This software is provided "as is" without express or implied
-//  warranty, and with no claim as to its suitability for any purpose.
+//  (C) Copyright Steve Cleary, Beman Dawes, Howard Hinnant & John Maddock 2000.
+//  Use, modification and distribution are subject to the Boost Software License,
+//  Version 1.0.
+
+Terms of the Boost Software License appear later in this file.
  
 
 	concept_check <boost/concept_check.hpp>
@@ -119,10 +108,11 @@ following license.
 	config <boost/config.hpp>
 	-------------------------
 
-//  (C) Copyright Boost.org 2001. Permission to copy, use, modify, sell and
-//  distribute this software is granted provided this copyright notice appears
-//  in all copies. This software is provided "as is" without express or implied
-//  warranty, and with no claim as to its suitability for any purpose.
+//  (C) Copyright John Maddock 2002.
+//  Use, modification and distribution are subject to the
+//  Boost Software License, Version 1.0.
+
+Terms of the Boost Software License appear later in this file.
 
 
 	conversion <boost/cast.hpp>
@@ -133,41 +123,25 @@ following license.
 //  notice appears in all copies. This software is provided "as is" without
 //  express or implied warranty, and with no claim as to its suitability for
 //  any purpose.
- 
-
-	conversion <boost/lexical_cast.hpp>
-	-----------------------------------
-
-// Copyright Kevlin Henney, 2000-2003. All rights reserved.
-//
-// Permission to use, copy, modify, and distribute this software for any
-// purpose is hereby granted without fee, provided that this copyright and
-// permissions notice appear in all copies and derivatives.
 
 
 	crc <boost/crc.hpp>
 	-------------------
 
-//  (C) Copyright Daryle Walker 2001.  Permission to copy, use, modify, sell and
-//  distribute this software is granted provided this copyright notice appears
-//  in all copies.  This software is provided "as is" without express or
-//  implied warranty, and with no claim as to its suitability for any purpose.
+//  Copyright 2001 Daryle Walker.  Use, modification, and distribution are
+//  subject to the Boost Software License, Version 1.0.
+
+Terms of the Boost Software License appear later in this file.
 
 
 	date_time <boost/date_time/date.hpp>
 	------------------------------------
 
-/* Copyright (c) 2000
- * CrystalClear Software, Inc.
- *
- * Permission to use, copy, modify, distribute and sell this software
- * and its documentation for any purpose is hereby granted without fee,
- * provided that the above copyright notice appear in all copies and
- * that both that copyright notice and this permission notice appear
- * in supporting documentation.  CrystalClear Software makes no
- * representations about the suitability of this software for any
- * purpose.  It is provided "as is" without express or implied warranty.
- */
+/* Copyright (c) 2002,2003 CrystalClear Software, Inc.
+ * Use, modification and distribution is subject to the
+ * Boost Software License, Version 1.0.
+
+Terms of the Boost Software License appear later in this file.
 
 
 	dynamic_bitset <boost/dynamic_bitset.hpp>
@@ -182,25 +156,31 @@ following license.
 // purpose.
 
 
-	enable_if
-	---------
+	enable_if <boost/utility/enable_if.hpp>
+	---------------------------------------
 
+// Copyright 2003 © The Trustees of Indiana University.
+
+// Use, modification, and distribution is subject to the Boost Software
+// License, Version 1.0.
+
+Terms of the Boost Software License appear later in this file.
 
 
 	filesystem <boost/filesystem/path.hpp>
 	--------------------------------------
 
-//  (C) Copyright Beman Dawes 2002. Permission to copy, use, modify, sell and
-//  distribute this software is granted provided this copyright notice appears
-//  in all copies. This software is provided "as is" without express or implied
-//  warranty, and with no claim as to its suitability for any purpose.
+//  © Copyright Beman Dawes 2002-2003
+//  Use, modification, and distribution is subject to the Boost Software
+//  License, Version 1.0.
+
+Terms of the Boost Software License appear later in this file.
  
  
 	format <boost/format.hpp>
 	-------------------------
 
 //  (C) Samuel Krempp 2001
-//                  krempp@crans.ens-cachan.fr
 //  Permission to copy, use, modify, sell and
 //  distribute this software is granted provided this copyright notice appears
 //  in all copies. This software is provided "as is" without express or implied
@@ -210,16 +190,11 @@ following license.
 	function <boost/function.hpp>
 	-----------------------------
 
-// Copyright (C) 2001, 2002 Doug Gregor (gregod@cs.rpi.edu)
-//
-// Permission to copy, use, sell and distribute this software is granted
-// provided this copyright notice appears in all copies.
-// Permission to modify the code and to distribute modified code is granted
-// provided this copyright notice appears in all copies, and a notice
-// that the code was modified is included with the copyright notice.
-//
-// This software is provided "as is" without express or implied warranty,
-// and with no claim as to its suitability for any purpose.
+//  Copyright Doug Gregor 2001-2003. Use, modification and
+//  distribution is subject to the Boost Software License, Version
+//  1.0.
+
+Terms of the Boost Software License appear later in this file.
 
 
 	functional <boost/functional.hpp>
@@ -248,11 +223,10 @@ Boost.Graph are hereby placed in the Public Domain.
 	integer <boost/integer.hpp>
 	---------------------------
 
-//  (C) Copyright Beman Dawes 1999. Permission to copy, use, modify, sell
-//  and distribute this software is granted provided this copyright
-//  notice appears in all copies. This software is provided "as is" without
-//  express or implied warranty, and with no claim as to its suitability for
-//  any purpose.
+//  Copyright Beman Dawes 1999.
+//  See accompanying license for terms and conditions of use.
+
+Terms of the Boost Software License appear later in this file.
 
 
 	interval <boost/numeric/interval.hpp>
@@ -273,27 +247,19 @@ Boost.Graph are hereby placed in the Public Domain.
 	io_state_savers <boost/io/ios_state.hpp>
 	----------------------------------------
 
-//  (C) Copyright Daryle Walker 2002.  Permission to copy, use, modify, sell and
-//  distribute this software is granted provided this copyright notice appears
-//  in all copies.  This software is provided "as is" without express or implied
-//  warranty, and with no claim as to its suitability for any purpose.
+//  Copyright 2002 Daryle Walker.  Use, modification, and distribution are
+//  subject to the Boost Software License, Version 1.0.
+
+Terms of the Boost Software License appear later in this file.
  
 
-	iterators
-	---------
-
-rename of following?
-
-	iterator_adaptors <boost/iterator_adaptors.hpp>
+	iterators <boost/iterator/iterator_adaptor.hpp>
 	-----------------------------------------------
 
-// (C) Copyright David Abrahams 2000. Permission to copy, use,
-// modify, sell and distribute this software is granted provided this
-// copyright notice appears in all copies. This software is provided
-// "as is" without express or implied warranty, and with no claim as
-// to its suitability for any purpose.
-//
-// (C) Copyright Jeremy Siek 2000. Permission to copy, use, modify,
+// (C) Copyright David Abrahams 2002.
+// (C) Copyright Jeremy Siek    2002.
+// (C) Copyright Thomas Witt    2002.
+// Permission to copy, use, modify,
 // sell and distribute this software is granted provided this
 // copyright notice appears in all copies. This software is provided
 // "as is" without express or implied warranty, and with no claim as
@@ -380,16 +346,12 @@ rename of following?
 	multi_array <boost/multi_array.hpp>
 	-----------------------------------
 
-// Copyright (C) 2002 Ronald Garcia
-//
-// Permission to copy, use, sell and distribute this software is granted
-// provided this copyright notice appears in all copies.
-// Permission to modify the code and to distribute modified code is granted
-// provided this copyright notice appears in all copies, and a notice
-// that the code was modified is included with the copyright notice.
-//
-// This software is provided "as is" without express or implied warranty,
-// and with no claim as to its suitability for any purpose.
+// Copyright 2002 The Trustees of Indiana University.
+
+// Use, modification and distribution is subject to the Boost Software
+// License, Version 1.0.
+
+Terms of the Boost Software License appear later in this file.
 
 
 	operators <boost/operators.hpp>
@@ -405,37 +367,28 @@ rename of following?
 	optional <boost/optional.hpp>
 	-----------------------------
 
-// (C) 2003, Fernando Luis Cacciola Carballal.
-//
-// This material is provided "as is", with absolutely no warranty expressed
-// or implied. Any use is at your own risk.
-//
-// Permission to use or copy this software for any purpose is hereby granted
-// without fee, provided the above notices are retained on all copies.
-// Permission to modify the code and to distribute modified code is granted,
-// provided the above notices are retained, and a notice that the code was
-// modified is included with the above copyright notice.
+// Use, modification, and distribution is subject to the Boost Software
+// License, Version 1.0.
+
+Terms of the Boost Software License appear later in this file.
 
 
-	pool
-	----
+	pool (libs/pool/doc/copyright.html)
+	-----------------------------------
 
-Copyright © 2000 Stephen Cleary (shammah@voyager.net) 
+// Copyright (C) 2000, 2001 Stephen Cleary
 
-Permission to copy, use, and distribute this software and its
-documentation is granted, provided that the above copyright notice
-appears in all copies and that that copyright notice appear in
-supporting documentation.
+  Permission to copy, use, and distribute this software and its
+  documentation is granted, provided that the above copyright notice
+  appears in all copies and that that copyright notice appear in
+  supporting documentation.
 
-Permission to modify the software and its documentation, and to
-distribute modified software and documentation is granted, provided
-that: the above copyright notice appears in all copies AND that
-copyright notice appears in supporting documentation, AND a notice
-that the software was modified appears with the copyright notice.
-
-This software and its documentation is provided "as is" without
-express or implied warranty, and with no claim as to its suitability
-for any purpose.
+  Permission to modify the software and its documentation, and to
+  distribute modified software and documentation is granted, provided
+  that: the above copyright notice appears in all copies
+  <STRONG>AND</STRONG> that copyright notice appears in supporting
+  documentation, <STRONG>AND</STRONG> a notice that the software was
+  modified appears with the copyright notice.
 
 
 	preprocessor <boost/preprocessor.hpp>
@@ -516,34 +469,27 @@ for any purpose.
  * Copyright (c) 1998-2002
  * Dr John Maddock
  *
- * Permission to use, copy, modify, distribute and sell this software
- * and its documentation for any purpose is hereby granted without fee,
- * provided that the above copyright notice appear in all copies and
- * that both that copyright notice and this permission notice appear
- * in supporting documentation.  Dr John Maddock makes no representations
- * about the suitability of this software for any purpose.
- * It is provided "as is" without express or implied warranty.
+ * Use, modification and distribution are subject to the
+ * Boost Software License, Version 1.0.
+
+Terms of the Boost Software License appear later in this file.
 
 
 	signals <boost/signal.hpp>
 	--------------------------
 
-// Copyright (C) 2001-2002 Doug Gregor (gregod@cs.rpi.edu)
-//
-// Permission to copy, use, sell and distribute this software is granted
-// provided this copyright notice appears in all copies.
-// Permission to modify the code and to distribute modified code is granted
-// provided this copyright notice appears in all copies, and a notice
-// that the code was modified is included with the copyright notice.
-//
-// This software is provided "as is" without express or implied warranty,
-// and with no claim as to its suitability for any purpose.
+// Copyright Doug Gregor 2001-2003. Use, modification and
+// distribution is subject to the Boost Software License, Version
+// 1.0.
+
+Terms of the Boost Software License appear later in this file.
 
 
 	smart_ptr <boost/smart_ptr.hpp>
 	-------------------------------
 
 //  Copyright (c) 1998-2002 boost.org
+//  Copyright (c) 2003 Peter Dimov
 //
 //  Permission to copy, use, modify, sell and distribute this software
 //  is granted provided this copyright notice appears in all copies.
@@ -555,10 +501,10 @@ for any purpose.
 	---------------------------------------
 
 //  (C) Copyright John Maddock 2000.
-//  Permission to copy, use, modify, sell and
-//  distribute this software is granted provided this copyright notice appears
-//  in all copies. This software is provided "as is" without express or implied
-//  warranty, and with no claim as to its suitability for any purpose.
+//  Use, modification and distribution are subject to the
+//  Boost Software License, Version 1.0.
+
+Terms of the Boost Software License appear later in this file.
 
 
 	spirit <boost/spirit.hpp>
@@ -572,23 +518,26 @@ for any purpose.
     Copyright (c) 2002 Raghavendra Satish
     Copyright (c) 2002 Jeff Westfahl
     Copyright (c) 2001 Bruce Florman
+    Copyright (c) 2003 Giovanni Bajo
+    Copyright (c) 2003 Vaclav Vesely
+    Copyright (c) 2003 Jonathan de Halleux
     http://spirit.sourceforge.net/
- 
-    Permission to copy, use, modify, sell and distribute this software is
-    granted provided this copyright notice appears in all copies. This
-    software is provided "as is" without express or implied warranty, and
-    with no claim as to its suitability for any purpose.
+
+    Use, modification and distribution is subject to the Boost Software
+    License, Version 1.0.
+
+Terms of the Boost Software License appear later in this file.
 
 
 	test <boost/test/test_tools.hpp>
 	--------------------------------
 
-//  (C) Copyright Gennadiy Rozental 2001-2002.
+//  (C) Copyright Gennadiy Rozental 2001-2003.
 //  (C) Copyright Ullrich Koethe 2001.
-//  Permission to copy, use, modify, sell and distribute this software
-//  is granted provided this copyright notice appears in all copies.
-//  This software is provided "as is" without express or implied warranty,
-//  and with no claim as to its suitability for any purpose.
+//  Use, modification, and distribution are subject to the
+//  Boost Software License, Version 1.0.
+
+Terms of the Boost Software License appear later in this file.
 
 
 	thread <boost/thread.hpp>
@@ -609,10 +558,10 @@ for any purpose.
 	timer <boost/timer.hpp>
 	-----------------------
 
-//  (C) Copyright Beman Dawes 1994-99. Permission to copy, use, modify, sell and
-//  distribute this software is granted provided this copyright notice appears
-//  in all copies. This software is provided "as is" without express or implied
-//  warranty, and with no claim as to its suitability for any purpose.
+//  Copyright Beman Dawes 1994-99.
+//  See accompanying license for terms and conditions of use.
+
+Terms of the Boost Software License appear later in this file.
 
 
 	tokenizer <boost/tokenizer.hpp>
@@ -645,38 +594,94 @@ for any purpose.
 	type_traits <boost/type_traits.hpp>
 	-----------------------------------
 
-//  (C) Copyright Boost.org 2000. Permission to copy, use, modify, sell and
-//  distribute this software is granted provided this copyright notice appears
-//  in all copies. This software is provided "as is" without express or implied
-//  warranty, and with no claim as to its suitability for any purpose.
+//  (C) Copyright John Maddock 2000.
+//  Use, modification and distribution are subject to the Boost Software License,
+//  Version 1.0.
+
+Terms of the Boost Software License appear later in this file.
 
 
-	uBLAS 
-	-----
+	uBLAS <boost/numeric/ublas/blas.hpp>
+	------------------------------------
 
-Copyright (©) 2000-2002 Joerg Walter, Mathias Koch 
-Permission to copy, use, modify, sell and distribute this document is
-granted provided this copyright notice appears in all copies. This
-document is provided ``as is'' without express or implied warranty,
-and with no claim as to its suitability for any purpose.
+//  Copyright (c) 2000-2002
+//  Joerg Walter, Mathias Koch
+//
+//  Permission to use, copy, modify, distribute and sell this software
+//  and its documentation for any purpose is hereby granted without fee,
+//  provided that the above copyright notice appear in all copies and
+//  that both that copyright notice and this permission notice appear
+//  in supporting documentation.  The authors make no representations
+//  about the suitability of this software for any purpose.
+//  It is provided "as is" without express or implied warranty.
 
 
 	utility <boost/utility.hpp>
 	---------------------------
 
-//  (C) Copyright Boost.org 1999-2003. Permission to copy, use, modify, sell
-//  and distribute this software is granted provided this copyright
-//  notice appears in all copies. This software is provided "as is" without
-//  express or implied warranty, and with no claim as to its suitability for
-//  any purpose.
+//  Copyright 1999-2003 Boost.org.  Use, modification, and distribution are
+//  subject to the Boost Software License, Version 1.0.
+
+Terms of the Boost Software License appear later in this file.
 
 
-	value_initialized
-	-----------------
+	value_initialized <boost/utility/value_init.hpp
+	-----------------------------------------------
 
-	variant
-	-------
+// (C) 2002, Fernando Luis Cacciola Carballal.
+//
+// This material is provided "as is", with absolutely no warranty expressed
+// or implied. Any use is at your own risk.
+//
+// Permission to use or copy this software for any purpose is hereby granted
+// without fee, provided the above notices are retained on all copies.
+// Permission to modify the code and to distribute modified code is granted,
+// provided the above notices are retained, and a notice that the code was
+// modified is included with the above copyright notice.
 
+
+	variant <boost/variant.hpp>
+	---------------------------
+
+// Copyright (c) 2003
+// Eric Friedman, Itay Maman
+//
+// Permission to use, copy, modify, distribute and sell this software
+// and its documentation for any purpose is hereby granted without fee,
+// provided that the above copyright notice appears in all copies and
+// that both the copyright notice and this permission notice appear in
+// supporting documentation. No representations are made about the
+// suitability of this software for any purpose. It is provided "as is"
+// without express or implied warranty.
+
+
+
+	Boost Software License - Version 1.0
+	------------------------------------
+
+Boost Software License - Version 1.0 - August 17th, 2003
+
+Permission is hereby granted, free of charge, to any person or organization
+obtaining a copy of the software and accompanying documentation covered by
+this license (the "Software") to use, reproduce, display, distribute,
+execute, and transmit the Software, and to prepare derivative works of the
+Software, and to permit third-parties to whom the Software is furnished to
+do so, all subject to the following:
+
+The copyright notices in the Software and this entire statement, including
+the above license grant, this restriction and the following disclaimer,
+must be included in all copies of the Software, in whole or in part, and
+all derivative works of the Software, unless such copies or derivative
+works are solely in the form of machine-executable object code generated by
+a source language processor.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE, TITLE AND NON-INFRINGEMENT. IN NO EVENT
+SHALL THE COPYRIGHT HOLDERS OR ANYONE DISTRIBUTING THE SOFTWARE BE LIABLE
+FOR ANY DAMAGES OR OTHER LIABILITY, WHETHER IN CONTRACT, TORT OR OTHERWISE,
+ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
+DEALINGS IN THE SOFTWARE.
 
 
 	Boost.Graph Licence

@@ -31,10 +31,14 @@ graph library, set in Makefile.
 
 CVS normally ignores certain files, including ones named "core".  This
 meant that "cvs-upgrade" did not import the directory
-boost/spirit/core.
+boost/spirit/core.  
 
-I fixed that up by unpacking the boost sources, and
-running
+Originally, I did not realise that this was happening.  I did realise
+that some files were not properly imported, so I added them to my
+local repository and "cvs add"ed them by hand.  The files for which I
+did so then appear only on the main trunk and not on the "source-dist"
+branch.  For the 1_31_0 distribution, I figured out the problem and
+imported the whole of the upstream sources by hand,
 
 	cvs import -I '!' -ko -d -m'Imported upstream version 1.31.0.' 
 	    debian/boost source-dist upstream_version_1_31_0
@@ -47,8 +51,10 @@ many files in spirit/core, but
 
 seems to have fixed them up.
 
-I then did the same merge in my checked-out debian version of
-boost.
+I then did the same merge in my checked-out debian version of boost.
+Finally, I had to remove some files in spirit/core that no longer
+appear in 1_31_0, but were not properly removed by the merge
+(cvs update -jupstream...).
 
 
 	Changes to Upstream Sources
@@ -56,15 +62,6 @@ boost.
 
 * boost/detail/limits.hpp
   - use <endian.h>
-
-* boost/math/quaternion.hpp
-  - patch in bug #199270. 
-
-* boost/python/converter/as_to_python_function.hpp
-  - patch in bug #192481.
-
-* boost/python/object/make_ptr_instance.hpp
-  - patch in bug #198524.
 
 * libs/graph/src/Makefile
   - build using optimization and no debugging
