@@ -79,6 +79,9 @@ appear in 1_31_0, but were not properly removed by the merge
 * libs/graph/src/graphviz_graph_parser.cpp
   - insert std:: qualifier.
 
+* boost/date_time/posix_time/ptime.hpp
+  - include upstream changes between revision 1.3 and 1.4
+    to fix bug http://lists.boost.org/MailArchives/boost-users/msg06801.php
 
 	STLPort and GCC 3
 	-----------------

@@ -6,7 +6,7 @@
  * Boost Software License, Version 1.0. (See accompanying
  * file LICENSE-1.0 or http://www.boost.org/LICENSE-1.0)
  * Author: Jeff Garland 
- * $Date: 2003/11/23 02:37:57 $
+ * $Date: 2004/04/03 23:20:34 $
  */
 
 #include "boost/date_time/posix_time/posix_time_system.hpp"
@@ -45,6 +45,10 @@ namespace posix_time {
     ptime(const time_rep_type& rhs):
       date_time::base_time<time_type,time_system_type>(rhs)
     {}
+    //! Construct from special value
+    ptime(const special_values sv) : date_time::base_time<time_type,time_system_type>(gregorian::date(sv), time_duration_type(sv))
+    {}
+      
   };
 
 

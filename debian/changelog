@@ -8,8 +8,12 @@ boost (1.31.0-6) unstable; urgency=low
 
   * debian/control: libboost-dev does not depend on libboost-python-dev
     any more
+  
+  * boost/date_time/posix_time/ptime.hpp: Add constructor from special_values
+    type; upstream bug fix
+    (http://lists.boost.org/MailArchives/boost-users/msg06801.php)
 
- --
+ -- Steve M. Robbins <smr@debian.org>  Sun, 25 Jul 2004 09:41:03 -0400
 
 boost (1.31.0-5) unstable; urgency=low
 
