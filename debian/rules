@@ -22,34 +22,35 @@ export DH_OPTIONS
 #   (easier to clean up, and to find the libraries that got built)
 
 # Boost does not guarantee any ABI, so we use full version in SONAME version
-SOVERSION=1.28.0
+SOVERSION=1.29.0
 
 # Locations of static libs.
-static_regex = debian-build/libs/regex/build/bin/libboost_regex.a/debian/release/runtime-link-dynamic/libboost_regex.a
+static_regex = debian-build/libs/regex/build/bin-stage/libboost_regex.a
 static_thread = debian-build/libs/thread/build/bin/libboost_thread.a/debian/release/runtime-link-dynamic/threading-multi/libboost_thread.a
 static_graph = libs/graph/src/libbgl-viz.a
 
 # locations of shared libs.
 shared_regex = debian-build/libs/regex/build/bin/libboost_regex.so/debian/release/runtime-link-dynamic/shared-linkable-true/libboost_regex.so
-shared_python = debian-build/libs/python/build/bin/libboost_python.so/debian/release/runtime-link-dynamic/shared-linkable-true/libboost_python.so
+shared_python = debian-build/libs/python/build/bin/libboost_python.so
 shared_graph = libs/graph/src/libbgl-viz.so.$(SOVERSION)
 
 
 htmldir = debian/libboost-doc/usr/share/doc/libboost-doc/HTML
 
-JAM = tools/build/jam_src/bin/jam -sTOOLS="debian" -sBUILD=release \
-	-sBOOST_ROOT=. -sALL_LOCATE_TARGET=`pwd`/debian-build \
+bjam = tools/build/jam_src/bin/bjam
+
+JAM = $(bjam) -sTOOLS=gcc-stlport -sBUILD=release \
+	-sBOOST_ROOT=. -sALL_LOCATE_TARGET=`pwd`/debian/tmp \
 	-sPYTHON_VERSION=2.2 -sPYTHON_ROOT=/usr \
 	-d2
 
-tools/build/jam_src/bin/jam:
+$(bjam):
 	$(MAKE) -C tools/build/jam_src LOCATE_TARGET=bin YACC=
 
 build: build-stamp
-build-stamp: tools/build/jam_src/bin/jam
+build-stamp: $(bjam)
 	dh_testdir
 
-	echo GCC version `g++ --version`
 
 # This seems like a good idea, but it messed up when I tried it.
 #	cd libs/config && ./configure
@@ -115,9 +116,9 @@ install: build
 	ln -s libboost_regex.so.$(SOVERSION) \
 	   debian/libboost-regex-dev/usr/lib/libboost_regex.so
 
-	# package libboost-python$(SOVERSION)-python2.2
+	# package libboost-python$(SOVERSION)
 	cp $(shared_python) \
-	 debian/libboost-python$(SOVERSION)-python2.2/usr/lib/libboost_python.so.$(SOVERSION)
+	 debian/libboost-python$(SOVERSION)/usr/lib/libboost_python.so.$(SOVERSION)
 
 	# package libboost-python-dev
 	mkdir -p debian/libboost-python-dev/usr/include/boost
