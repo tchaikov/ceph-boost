@@ -1,3 +1,16 @@
+boost (1.30.2-1) unstable; urgency=low
+
+  * New upstream version.  Closes: #211715.
+
+  * boost/numeric/interval/detail/c99_rounding_control.hpp: fix typo.
+    Closes: #203358.
+  
+  * boost/filesystem/exception.hpp:
+  * libs/filesystem/src/exception.cpp: Add implementation of who(), path1(),
+    and path2().  (Thanks, Benjamin Dauvergne).  Closes: #196830.
+  
+ -- Steve M. Robbins <smr@debian.org>  Sun, 12 Oct 2003 12:11:00 -0400
+
 boost (1.30.0-4) unstable; urgency=low
 
   * boost/math/quaternion.hpp: Apply supplied patch to fix a GCC 3.3

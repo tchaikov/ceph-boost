@@ -1,0 +1,175 @@
+Index: libs/filesystem/src/exception.cpp
+===================================================================
+RCS file: /home/steve/lib/cvs/debian/boost/libs/filesystem/src/exception.cpp,v
+retrieving revision 1.1.1.1
+diff -u -b -B -r1.1.1.1 exception.cpp
+--- libs/filesystem/src/exception.cpp	4 Jan 2003 15:18:10 -0000	1.1.1.1
++++ libs/filesystem/src/exception.cpp	11 Oct 2003 20:51:15 -0000
+@@ -179,12 +179,26 @@
+       + system_message( sys_err_code );
+   }
+ 
++  const fs::path empty_path;
++  const std::string empty_string;
+ } // unnamed namespace
+ 
+ namespace boost
+ {
+   namespace filesystem
+   {
++//  filesystem_error m_imp class  --------------------------------------------//
++//  see www.boost.org/more/error_handling.html for implemenation rationale
++
++    class filesystem_error::m_imp
++    {
++    public:
++      std::string     m_who;
++      path            m_path1;
++      path            m_path2;
++      std::string     m_what;
++    };
++
+ 
+ //  filesystem_error implementation  -----------------------------------------//
+ 
+@@ -193,8 +207,16 @@
+       const std::string & message )
+       : std::runtime_error(
+           other_error_prep( who, message ).c_str() ),
+-        m_sys_err(0), m_err(other_error), m_who(who)
+-    {}
++	  m_sys_err(0), m_err(other_error)
++    {
++      try
++      {
++        m_imp_ptr.reset( new m_imp );
++        m_imp_ptr->m_who = who;
++        m_imp_ptr->m_what = other_error_prep( who, message );
++      }
++      catch (...) { m_imp_ptr.reset(); }
++    }
+  
+     filesystem_error::filesystem_error(
+       const std::string & who,
+@@ -202,8 +224,17 @@
+       const std::string & message )
+       : std::runtime_error(
+           other_error_prep( who, path1, message ).c_str() ),
+-        m_sys_err(0), m_err(other_error), m_who(who), m_path1(path1)
+-    {}
++	  m_sys_err(0), m_err(other_error)
++    {
++      try
++      {
++        m_imp_ptr.reset( new m_imp );
++        m_imp_ptr->m_who = who;
++        m_imp_ptr->m_what = other_error_prep( who, path1, message );
++        m_imp_ptr->m_path1 = path1;
++      }
++      catch (...) { m_imp_ptr.reset(); }
++    }
+  
+     filesystem_error::filesystem_error(
+       const std::string & who,
+@@ -211,9 +242,17 @@
+       int sys_err_code )
+       : std::runtime_error(
+           system_error_prep( who, path1, sys_err_code ).c_str() ),
+-        m_sys_err(sys_err_code), m_err(lookup_error(sys_err_code)),
+-        m_who(who), m_path1(path1)
+-    {}
++	  m_sys_err(sys_err_code), m_err(lookup_error(sys_err_code))
++    {
++      try
++      {
++        m_imp_ptr.reset( new m_imp );
++        m_imp_ptr->m_who = who;
++        m_imp_ptr->m_what = system_error_prep( who, path1, sys_err_code );
++        m_imp_ptr->m_path1 = path1;
++      }
++      catch (...) { m_imp_ptr.reset(); }
++    }
+ 
+     filesystem_error::filesystem_error(
+       const std::string & who,
+@@ -222,14 +261,44 @@
+       int sys_err_code )
+       : std::runtime_error(
+           system_error_prep( who, path1, path2, sys_err_code ).c_str() ),
+-        m_sys_err(sys_err_code), m_err(lookup_error(sys_err_code)),
+-        m_who(who), m_path1(path1), m_path2(path2)
+-    {}
++	  m_sys_err(sys_err_code), m_err(lookup_error(sys_err_code))
++    {
++      try
++      {
++        m_imp_ptr.reset( new m_imp );
++        m_imp_ptr->m_who = who;
++        m_imp_ptr->m_what = system_error_prep( who, path1, path2, sys_err_code );
++        m_imp_ptr->m_path1 = path1;
++        m_imp_ptr->m_path2 = path2;
++      }
++      catch (...) { m_imp_ptr.reset(); }
++    }
+ 
+     filesystem_error::~filesystem_error() throw()
+     {
+     }
+ 
++    const std::string & filesystem_error::who() const
++    {
++      return m_imp_ptr.get() == 0 ? empty_string : m_imp_ptr->m_who;
++    }
++
++    const path & filesystem_error::path1() const
++    {
++      return m_imp_ptr.get() == 0 ? empty_path : m_imp_ptr->m_path1;
++    }
++
++    const path & filesystem_error::path2() const
++    {
++      return m_imp_ptr.get() == 0 ? empty_path : m_imp_ptr->m_path2;
++    }
++
++    const char * filesystem_error::what() const throw()
++    {
++      return m_imp_ptr.get() == 0 ? empty_string.c_str()
++                                  : m_imp_ptr->m_what.c_str();
++    }
++
+     namespace detail
+     {
+       int system_error_code() // artifact of POSIX and WINDOWS error reporting
+Index: boost/filesystem/exception.hpp
+===================================================================
+RCS file: /home/steve/lib/cvs/debian/boost/boost/filesystem/exception.hpp,v
+retrieving revision 1.1.1.1
+diff -u -b -B -r1.1.1.1 exception.hpp
+--- boost/filesystem/exception.hpp	30 Dec 2002 19:14:41 -0000	1.1.1.1
++++ boost/filesystem/exception.hpp	11 Oct 2003 20:52:32 -0000
+@@ -24,6 +24,8 @@
+ 
+ #include <string>
+ #include <stdexcept>
++#include <exception>
++#include <boost/shared_ptr.hpp>
+ 
+ //----------------------------------------------------------------------------// 
+ 
+@@ -91,12 +93,13 @@
+       const path &    path1() const; // argument 1 to who; may be empty()
+       const path &    path2() const; // argument 2 to who; may be empty()
+ 
++      const char *    what() const throw();
++
+     private:
++      class             m_imp;
++      shared_ptr<m_imp> m_imp_ptr;
+       int             m_sys_err;
+       error_code      m_err;
+-      std::string     m_who;
+-      path            m_path1;
+-      path            m_path2;
+     };
+ 
+   } // namespace filesystem

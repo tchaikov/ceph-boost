@@ -16,7 +16,7 @@ export DH_OPTIONS
 
 
 # Boost does not guarantee any ABI, so we use full version in SONAME version
-SOVERSION=1.30.0
+SOVERSION=1.30.2
 
 # Locations of static libs.
 static_date_time = dbuild/libs/date_time/build/bin/libboost_date_time.a/gcc/release/runtime-link-dynamic/libboost_date_time.a

@@ -24,6 +24,8 @@
 
 #include <string>
 #include <stdexcept>
+#include <exception>
+#include <boost/shared_ptr.hpp>
 
 //----------------------------------------------------------------------------// 
 
@@ -91,12 +93,13 @@ namespace boost
       const path &    path1() const; // argument 1 to who; may be empty()
       const path &    path2() const; // argument 2 to who; may be empty()
 
+      const char *    what() const throw();
+
     private:
+      class             m_imp;
+      shared_ptr<m_imp> m_imp_ptr;
       int             m_sys_err;
       error_code      m_err;
-      std::string     m_who;
-      path            m_path1;
-      path            m_path2;
     };
 
   } // namespace filesystem
