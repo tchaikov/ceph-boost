@@ -15,15 +15,14 @@
 #include <iosfwd>                                    // for the "<<" and ">>" operators
 #include <sstream>                                    // for the "<<" operator
 
-#ifdef    BOOST_NO_STD_LOCALE
-#else
+#include <boost/config.hpp> // for BOOST_NO_STD_LOCALE
+#ifndef    BOOST_NO_STD_LOCALE
     #include <locale>                                    // for the "<<" operator
 #endif /* BOOST_NO_STD_LOCALE */
 
 #include <valarray>
 
 
-#include <boost/config.hpp>
 
 #include <boost/math/special_functions/sinc.hpp>    // for the Sinus cardinal
 #include <boost/math/special_functions/sinhc.hpp>    // for the Hyperbolic Sinus cardinal
@@ -436,7 +435,7 @@ namespace boost
         template<>    class quaternion<long double>;
         
         
-        // helper templates for converting copy constructors
+        // helper templates for converting copy constructors (declaration)
         
         namespace detail
         {
@@ -1894,7 +1893,10 @@ namespace boost
                 return(pow(quaternion<T>(1)/q,-n));
             }
         }
-
+        
+        
+        // helper templates for converting copy constructors (definition)
+        
         namespace detail
         {
             
@@ -1907,7 +1909,7 @@ namespace boost
                                         static_cast<T>(rhs.R_component_2()),
                                         static_cast<T>(rhs.R_component_3()),
                                         static_cast<T>(rhs.R_component_4())));
-            };
+            }
         }
     }
 }

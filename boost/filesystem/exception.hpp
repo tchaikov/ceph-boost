@@ -1,31 +1,27 @@
 //  boost/filesystem/exception.hpp  ------------------------------------------//
 
-// < ----------------------------------------------------------------------- > 
-// <   Copyright © 2002 Beman Dawes                                          > 
-// <   Copyright © 2001 Dietmar Kühl, All Rights Reserved                    > 
-// <                                                                         > 
-// <   Permission to use, copy, modify, distribute and sell this             > 
-// <   software for any purpose is hereby granted without fee, provided      > 
-// <   that the above copyright notice appears in all copies and that        > 
-// <   both that copyright notice and this permission notice appear in       > 
-// <   supporting documentation. The authors make no representations about   > 
-// <   the suitability of this software for any purpose. It is provided      > 
-// <   "as is" without express or implied warranty.                          > 
-// < ----------------------------------------------------------------------- > 
+//  Copyright © 2002 Beman Dawes                                          
+//  Copyright © 2001 Dietmar Kühl                                         
+//                                                                        
+//  Use, modification, and distribution is subject to the Boost Software 
+//  License, Version 1.0. (See accompanying file LICENSE_1_0.txt or copy 
+//  at http://www.boost.org/LICENSE_1_0.txt)                             
 
-//  See http://www.boost.org/libs/filesystem for documentation.
+//  See library home page at http://www.boost.org/libs/filesystem
 
 //----------------------------------------------------------------------------// 
 
 #ifndef BOOST_FILESYSTEM_EXCEPTION_HPP
 #define BOOST_FILESYSTEM_EXCEPTION_HPP
 
+#include <boost/filesystem/config.hpp>
 #include <boost/filesystem/path.hpp>
 
 #include <string>
-#include <stdexcept>
 #include <exception>
 #include <boost/shared_ptr.hpp>
+
+#include <boost/config/abi_prefix.hpp> // must be the last header
 
 //----------------------------------------------------------------------------// 
 
@@ -35,7 +31,7 @@ namespace boost
   {
     namespace detail
     {
-      int system_error_code(); // artifact of POSIX and WINDOWS error reporting
+      BOOST_FILESYSTEM_DECL int system_error_code(); // artifact of POSIX and WINDOWS error reporting
     }
 
     enum error_code
@@ -60,7 +56,7 @@ namespace boost
     };
 
 
-    class filesystem_error : public std::runtime_error
+    class BOOST_FILESYSTEM_DECL filesystem_error : public std::exception
     {
     public:
 
@@ -86,6 +82,8 @@ namespace boost
 
       ~filesystem_error() throw();
 
+      virtual const char * what() const throw();
+
       int             native_error() const { return m_sys_err; }
       // Note: a value of 0 implies a library (rather than system) error
       error_code      error() const { return m_err; }
@@ -93,16 +91,15 @@ namespace boost
       const path &    path1() const; // argument 1 to who; may be empty()
       const path &    path2() const; // argument 2 to who; may be empty()
 
-      const char *    what() const throw();
-
     private:
       class             m_imp;
       shared_ptr<m_imp> m_imp_ptr;
-      int             m_sys_err;
-      error_code      m_err;
+      int               m_sys_err;
+      error_code        m_err;
     };
 
   } // namespace filesystem
 } // namespace boost
 
+#include <boost/config/abi_suffix.hpp> // pops abi_suffix.hpp pragmas
 #endif // BOOST_FILESYSTEM_EXCEPTION_HPP
