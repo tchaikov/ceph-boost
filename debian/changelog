@@ -1,3 +1,13 @@
+boost (1.31.0-2) unstable; urgency=low
+
+  * Added symlinks in -dev packages to ease linking of programs which
+    use Boost libraries.
+
+  * Added symlink to allow dynamic linking to boost-filesystem shared
+    library.
+
+ -- Domenico Andreoli <cavok@debian.org>  Mon, 22 Mar 2004 00:43:40 +0100
+
 boost (1.31.0-1) unstable; urgency=low
 
   * New upstream version.  Closes: #231951, #236016.
