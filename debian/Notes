@@ -25,6 +25,32 @@ defined (policy 10.2).  For the jam-built libraries, use
 graph library, set in Makefile.
 
 
+	Debian cvs-upgrade and spirit/core
+	----------------------------------
+
+
+CVS normally ignores certain files, including ones named "core".  This
+meant that "cvs-upgrade" did not import the directory
+boost/spirit/core.
+
+I fixed that up by unpacking the boost sources, and
+running
+
+	cvs import -I '!' -ko -d -m'Imported upstream version 1.31.0.' 
+	    debian/boost source-dist upstream_version_1_31_0
+
+which is basically what "cvs-upgrade" does ("cvs-upgrade -n" shows the
+steps).  This appears to have worked.  It complained about conflicts on
+many files in spirit/core, but
+
+	cvs update -jupstream_version_1_30_2 -jupstream_version_1_31_0
+
+seems to have fixed them up.
+
+I then did the same merge in my checked-out debian version of
+boost.
+
+
 	Changes to Upstream Sources
 	---------------------------
 
