@@ -42,6 +42,7 @@ shared_thread = dbuild/libs/thread/build/bin/libboost_thread.so/gcc/release/runt
 
 
 
+exampledir = debian/libboost-doc/usr/share/doc/libboost-doc/examples
 htmldir = debian/libboost-doc/usr/share/doc/libboost-doc/HTML
 
 bjam = tools/build/jam_src/bjam
@@ -109,7 +110,14 @@ install: build
 
 	cp $(static_filesystem) debian/libboost-dev/usr/lib
 
-	# package libboost-doc (moved to binary-indep)
+	# package libboost-doc 
+	mkdir -p $(htmldir)
+	cat debian/documentation-files \
+	    | xargs cp --parents --target-directory=$(htmldir)
+	ln -s /usr/include/boost $(htmldir)/boost
+	mkdir -p $(exampledir)
+	cat debian/example-files \
+	    | xargs cp -a --parents --target-directory=$(exampledir)
 
 	# package libboost-date-time$(SOVERSION)
 	cp $(shared_date_time) debian/libboost-date-time$(SOVERSION)/usr/lib
@@ -222,15 +230,6 @@ binary-common:
 
 # Build architecture independant packages using the common target.
 binary-indep: build install
-	# package libboost-doc
-	mkdir -p `dirname $(htmldir)`
-	rm -rf dbuild/docs
-# -q == no questions - quiet mode
-# -Q == no log
-# -C0 == no cache
-	httrack --mirror -q -Q -C0 -O dbuild/docs --footer '' file://`pwd`/index.htm
-	d=`find dbuild/docs -name google_logo_40wht.gif`; d=`dirname $$d`; \
-	    mv $$d $(htmldir)
 	$(MAKE) -f debian/rules DH_OPTIONS=-i binary-common
 
 # Build architecture dependant packages using the common target.

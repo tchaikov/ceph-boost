@@ -1,0 +1,39 @@
+--- /usr/include/boost/math/quaternion.hpp~	2003-03-01 19:09:53.000000000 +0100
++++ /usr/include/boost/math/quaternion.hpp	2003-06-29 18:35:48.000000000 +0200
+@@ -444,13 +444,7 @@
+             template<   typename T,
+                         typename U
+                     >
+-            quaternion<T>    quaternion_type_converter(quaternion<U> const & rhs)
+-            {
+-                return(quaternion<T>(   static_cast<T>(rhs.R_component_1()),
+-                                        static_cast<T>(rhs.R_component_2()),
+-                                        static_cast<T>(rhs.R_component_3()),
+-                                        static_cast<T>(rhs.R_component_4())));
+-            };
++            quaternion<T>    quaternion_type_converter(quaternion<U> const & rhs);
+         }
+         
+         
+@@ -1900,6 +1894,21 @@
+                 return(pow(quaternion<T>(1)/q,-n));
+             }
+         }
++
++        namespace detail
++        {
++            
++            template<   typename T,
++                        typename U
++                    >
++            quaternion<T>    quaternion_type_converter(quaternion<U> const & rhs)
++            {
++                return(quaternion<T>(   static_cast<T>(rhs.R_component_1()),
++                                        static_cast<T>(rhs.R_component_2()),
++                                        static_cast<T>(rhs.R_component_3()),
++                                        static_cast<T>(rhs.R_component_4())));
++            };
++        }
+     }
+ }
+ 

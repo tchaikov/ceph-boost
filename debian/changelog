@@ -1,3 +1,16 @@
+boost (1.30.0-4) unstable; urgency=low
+
+  * boost/math/quaternion.hpp: Apply supplied patch to fix a GCC 3.3
+    compile problem.  (Thanks, Marcelo E. Magallon).  Closes: #199270.
+  
+  * libboost-doc: 
+    - Fix broken links.  Closes: #199646.
+    - Use symlink to /usr/include/boost, rather than duplicating
+      header files.  Suggest libboost-dev.  Closes: #174979, #175444.
+    - Include libs/*/examples? not included in HTML.  Closes: #191704.
+  
+ -- Steve M. Robbins <smr@debian.org>  Sun,  6 Jul 2003 23:51:15 -0400
+
 boost (1.30.0-3) unstable; urgency=low
 
   * boost/config/compiler/gcc.hpp: Do not warn about GCC 3.3.

@@ -444,13 +444,7 @@ namespace boost
             template<   typename T,
                         typename U
                     >
-            quaternion<T>    quaternion_type_converter(quaternion<U> const & rhs)
-            {
-                return(quaternion<T>(   static_cast<T>(rhs.R_component_1()),
-                                        static_cast<T>(rhs.R_component_2()),
-                                        static_cast<T>(rhs.R_component_3()),
-                                        static_cast<T>(rhs.R_component_4())));
-            };
+            quaternion<T>    quaternion_type_converter(quaternion<U> const & rhs);
         }
         
         
@@ -1899,6 +1893,21 @@ namespace boost
             {
                 return(pow(quaternion<T>(1)/q,-n));
             }
+        }
+
+        namespace detail
+        {
+            
+            template<   typename T,
+                        typename U
+                    >
+            quaternion<T>    quaternion_type_converter(quaternion<U> const & rhs)
+            {
+                return(quaternion<T>(   static_cast<T>(rhs.R_component_1()),
+                                        static_cast<T>(rhs.R_component_2()),
+                                        static_cast<T>(rhs.R_component_3()),
+                                        static_cast<T>(rhs.R_component_4())));
+            };
         }
     }
 }

@@ -4,7 +4,6 @@ Priority: optional
 Maintainer: Steve M. Robbins <smr@debian.org>
 Standards-Version: 3.5.2
 Build-Depends: python2.2-dev, debhelper (>= 3), flex, bison
-Build-Depends-Indep: httrack
 
 Package: libboost-dev
 Architecture: any
@@ -30,6 +29,7 @@ Package: libboost-doc
 Architecture: all
 Section: doc
 Replaces: libboost-dev (<< 1.27.0-4)
+Suggests: libboost-dev (=${Source-Version})
 Description: Boost.org libraries documentation
  The Boost web site provides free, peer-reviewed, portable C++ source
  libraries. The emphasis is on libraries which work well with the C++
@@ -39,7 +39,9 @@ Description: Boost.org libraries documentation
  already been proposed for inclusion in the C++ Standards Committee's
  upcoming C++ Standard Library Technical Report.
  .
- This is documentation for the libboost-dev package.
+ This is documentation for the libboost-dev package in HTML format.
+ Some pages point to header files provided in libboost-dev package,
+ so it is suggested to install the latter as well.
  .
  For more information on boost visit the project homepage
  http://www.boost.org/ .
