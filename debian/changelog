@@ -1,3 +1,11 @@
+boost (1.28.0-2) unstable; urgency=low
+
+  * libs/graph/src/Makefile: revert patch to that used in 1.27.0-4,
+    so that the shared libs are also built with optimization.
+    Closes: #148056.
+
+ -- Steve M. Robbins <smr@debian.org>  Fri, 24 May 2002 14:04:58 -0400
+
 boost (1.28.0-1) unstable; urgency=low
   
   * New upstream version.

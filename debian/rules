@@ -147,15 +147,13 @@ binary-common:
 	dh_testdir
 	dh_testroot
 #	dh_installdebconf
-	dh_installdocs README
+	dh_installdocs --all debian/README.Debian
 	dh_installexamples
 	dh_installinfo
 	dh_installchangelogs
 	dh_strip
 	dh_link
-# There is only one binary independent package now (-doc), and
-# the next line will kill the build without || true.
-	dh_compress -Nlibboost-doc || true
+	dh_compress -Xlibboost-doc/HTML
 	dh_fixperms
 	dh_makeshlibs
 	dh_installdeb
