@@ -1,14 +1,14 @@
 	Built Libraries
 	---------------
 
-New?  date_time filesystem
-
-graph	static 	shared
-python		shared
-regex	static	shared
-signals	static	shared
-test    static
-thread	static
+date_time	static	shared
+filesystem	static	-
+graph		static 	shared
+python		-	shared
+regex		static	shared
+signals		static	shared
+test    	static	shared
+thread		-	shared
 
 The static-only libs are incorporated into boost-dev
 package.
@@ -22,7 +22,7 @@ package.
 
 * libs/graph/src/Makefile
   - build using optimization and no debugging
-
+  - set -DYYSTYPE_IS_DECLARED=1
 
 
 	STLPort and GCC 3
@@ -47,6 +47,9 @@ I'd like to use httrack to do the copy, since it cleans up a bunch of
 sloppy links, e.g. adding slash to href="foo.bla.com/".  Alas it ain't
 part of debian.  So I used the copied files to generate the list
 debian/libboost-doc.docs.
+
+New use?
+httrack --mirror -C0 -O dbuild/docs --footer '' file://`pwd`/index.htm
 
 
 * use -Nlibboost-doc with dh_compress to inhibit compressing files in the HTML

@@ -1,8 +1,11 @@
 boost (1.30.0-1) unstable; urgency=low
 
-  * New upstream.
+  * New upstream.  Closes: #186256.
+  
+  * debian/copyright: Include copyright and license statement for each
+    library.  Closes: #183153.
 
- -- Steve M. Robbins <smr@debian.org>  Sat, 22 Mar 2003 16:53:59 -0500
+ -- Steve M. Robbins <smr@debian.org>  Sun, 30 Mar 2003 23:50:57 -0500
 
 boost (1.29.0-3) unstable; urgency=low
 

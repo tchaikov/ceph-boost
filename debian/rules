@@ -16,28 +16,35 @@ export DH_OPTIONS
 
 
 # Boost does not guarantee any ABI, so we use full version in SONAME version
-SOVERSION=1.29.0
+SOVERSION=1.30.0
 
 # Locations of static libs.
+static_date_time = dbuild/libs/date_time/build/bin/libboost_date_time.a/gcc/release/runtime-link-dynamic/libboost_date_time.a
+static_filesystem = dbuild/libs/filesystem/build/bin/libboost_filesystem.a/gcc/release/runtime-link-dynamic/libboost_filesystem.a
 static_graph = libs/graph/src/libbgl-viz.a
 static_regex = dbuild/libs/regex/build/bin-stage/libboost_regex.a
-static_thread = dbuild/libs/thread/build/bin/libboost_thread.a/gcc/release/runtime-link-dynamic/threading-multi/libboost_thread.a
 static_signals = dbuild/libs/signals/build/bin/libboost_signals.a/gcc/release/runtime-link-dynamic/libboost_signals.a
-static_test1 = dbuild/libs/test/build/bin/libprg_exec_monitor.a/gcc/release/runtime-link-dynamic/libprg_exec_monitor.a
-static_test2 = dbuild/libs/test/build/bin/libtest_exec_monitor.a/gcc/release/runtime-link-dynamic/libtest_exec_monitor.a
-static_test3 = dbuild/libs/test/build/bin/libunit_test_framework.a/gcc/release/runtime-link-dynamic/libunit_test_framework.a
+static_test1 = dbuild/libs/test/build/bin/libboost_prg_exec_monitor.a/gcc/release/runtime-link-dynamic/libboost_prg_exec_monitor.a
+static_test2 = dbuild/libs/test/build/bin/libboost_test_exec_monitor.a/gcc/release/runtime-link-dynamic/libboost_test_exec_monitor.a
+static_test3 = dbuild/libs/test/build/bin/libboost_unit_test_framework.a/gcc/release/runtime-link-dynamic/libboost_unit_test_framework.a
 
 
 # locations of shared libs.
+shared_date_time = dbuild/libs/date_time/build/bin/libboost_date_time.so/gcc/release/runtime-link-dynamic/shared-linkable-true/libboost_date_time.so.$(SOVERSION)
 shared_graph = libs/graph/src/libbgl-viz.so.$(SOVERSION)
 shared_python = dbuild/libs/python/build/bin-stage/libboost_python.so.$(SOVERSION)
 shared_regex = dbuild/libs/regex/build/bin-stage/libboost_regex.so.$(SOVERSION)
 shared_signals = dbuild/libs/signals/build/bin/libboost_signals.so/gcc/release/runtime-link-dynamic/shared-linkable-true/libboost_signals.so.$(SOVERSION)
+shared_test1 = dbuild/libs/test/build/bin/libboost_prg_exec_monitor.so/gcc/release/runtime-link-dynamic/shared-linkable-true/libboost_prg_exec_monitor.so.$(SOVERSION)
+shared_test2 = dbuild/libs/test/build/bin/libboost_test_exec_monitor.so/gcc/release/runtime-link-dynamic/shared-linkable-true/libboost_test_exec_monitor.so.$(SOVERSION)
+shared_test3 = dbuild/libs/test/build/bin/libboost_unit_test_framework.so/gcc/release/runtime-link-dynamic/shared-linkable-true/libboost_unit_test_framework.so.$(SOVERSION)
+shared_thread = dbuild/libs/thread/build/bin/libboost_thread.so/gcc/release/runtime-link-dynamic/shared-linkable-true/threading-multi/libboost_thread.so.$(SOVERSION)
+
 
 
 htmldir = debian/libboost-doc/usr/share/doc/libboost-doc/HTML
 
-bjam = tools/build/jam_src/bin/bjam
+bjam = tools/build/jam_src/bjam
 
 JAM = $(bjam) -sTOOLS=gcc -sBUILD=release \
 	-sBOOST_ROOT=. -sALL_LOCATE_TARGET=`pwd`/dbuild \
@@ -45,12 +52,11 @@ JAM = $(bjam) -sTOOLS=gcc -sBUILD=release \
 	-d2
 
 $(bjam):
-	$(MAKE) -C tools/build/jam_src LOCATE_TARGET=bin YACC=
+	cd tools/build/jam_src && sh build.sh gcc && mv bin.*/bjam .
 
 build: build-stamp
 build-stamp: $(bjam)
 	dh_testdir
-
 
 # This seems like a good idea, but it messed up when I tried it.
 #	cd libs/config && ./configure
@@ -72,8 +78,9 @@ clean:
 	rm -f build-stamp
 
 	-$(JAM) clean
-	rm -rf tools/build/jam_src/bin
-	rm -f tools/build/jam_src/jam0
+	rm -rf tools/build/jam_src/bootstrap.gcc
+	rm -rf tools/build/jam_src/bin.*
+	rm -f tools/build/jam_src/bjam
 	rm -rf dbuild
 
 	$(MAKE) -C libs/graph/src clean
@@ -99,17 +106,34 @@ install: build
 	rm -f debian/libboost-dev/usr/include/boost/pool/detail/*.bat
 	rm -f debian/libboost-dev/usr/include/boost/pool/detail/*.m4
 	rm -f debian/libboost-dev/usr/include/boost/pool/detail/*.sh
-	cp $(static_thread) debian/libboost-dev/usr/lib
-	cp $(static_test1) debian/libboost-dev/usr/lib
-	cp $(static_test2) debian/libboost-dev/usr/lib
-	cp $(static_test3) debian/libboost-dev/usr/lib
+
+	cp $(static_filesystem) debian/libboost-dev/usr/lib
 
 	# package libboost-doc
-	mkdir -p $(htmldir)
-	cat debian/libboost-doc.htmlfiles | xargs cp --target-directory=$(htmldir) --parents
+	mkdir -p `dirname $(htmldir)`
+	rm -rf dbuild/docs
+# -q == no questions - quiet mode
+# -Q == no log
+# -C0 == no cache
+	httrack --mirror -q -Q -C0 -O dbuild/docs --footer '' file://`pwd`/index.htm
+	d=`find dbuild/docs -name google_logo_40wht.gif`; d=`dirname $$d`; \
+	    mv $$d $(htmldir)
+
+	# package libboost-date-time$(SOVERSION)
+	cp $(shared_date_time) debian/libboost-date-time$(SOVERSION)/usr/lib
+
+	# package libboost-date-time-dev
+	mkdir -p debian/libboost-date-time-dev/usr/include/boost
+	mv debian/libboost-dev/usr/include/boost/date_time \
+	   debian/libboost-date-time-dev/usr/include/boost
+	cp $(static_date_time) debian/libboost-date-time-dev/usr/lib
+	ln -s libboost_date_time.so.$(SOVERSION) \
+	   debian/libboost-date-time-dev/usr/lib/libboost_date_time.so
 
 	# package libboost-graph$(SOVERSION)
-	cp $(shared_graph) debian/libboost-graph$(SOVERSION)c102/usr/lib
+	cp $(shared_graph) debian/libboost-graph$(SOVERSION)/usr/lib
+	mkdir -p debian/libboost-graph$(SOVERSION)/usr/share/doc/libboost-graph$(SOVERSION)
+	cp libs/graph/LICENSE debian/libboost-graph$(SOVERSION)/usr/share/doc/libboost-graph$(SOVERSION)
 
 	# package libboost-graph-dev
 	mkdir -p debian/libboost-graph-dev/usr/include/boost
@@ -120,7 +144,7 @@ install: build
 	   debian/libboost-graph-dev/usr/lib/libbgl-viz.so
 
 	# package libboost-python$(SOVERSION)
-	cp $(shared_python) debian/libboost-python$(SOVERSION)c102/usr/lib
+	cp $(shared_python) debian/libboost-python$(SOVERSION)/usr/lib
 
 	# package libboost-python-dev
 	mkdir -p debian/libboost-python-dev/usr/include/boost
@@ -130,7 +154,7 @@ install: build
 	   debian/libboost-python-dev/usr/lib/libboost_python.so
 
 	# package libboost-regex$(SOVERSION)
-	cp $(shared_regex) debian/libboost-regex$(SOVERSION)c102/usr/lib
+	cp $(shared_regex) debian/libboost-regex$(SOVERSION)/usr/lib
 
 	# package libboost-regex-dev
 	mkdir -p debian/libboost-regex-dev/usr/include/boost
@@ -141,7 +165,7 @@ install: build
 	   debian/libboost-regex-dev/usr/lib/libboost_regex.so
 
 	# package libboost-signals$(SOVERSION)
-	cp $(shared_signals) debian/libboost-signals$(SOVERSION)c102/usr/lib
+	cp $(shared_signals) debian/libboost-signals$(SOVERSION)/usr/lib
 
 	# package libboost-signals-dev
 	mkdir -p debian/libboost-signals-dev/usr/include/boost
@@ -150,6 +174,35 @@ install: build
 	cp $(static_signals) debian/libboost-signals-dev/usr/lib
 	ln -s libboost_signals.so.$(SOVERSION) \
 	   debian/libboost-signals-dev/usr/lib/libboost_signals.so
+
+	# package libboost-test$(SOVERSION)
+	cp $(shared_test1) debian/libboost-test$(SOVERSION)/usr/lib
+	cp $(shared_test2) debian/libboost-test$(SOVERSION)/usr/lib
+	cp $(shared_test3) debian/libboost-test$(SOVERSION)/usr/lib
+
+	# package libboost-test-dev
+	mkdir -p debian/libboost-test-dev/usr/include/boost
+	mv debian/libboost-dev/usr/include/boost/test \
+	   debian/libboost-test-dev/usr/include/boost
+	cp $(static_test1) debian/libboost-test-dev/usr/lib
+	cp $(static_test2) debian/libboost-test-dev/usr/lib
+	cp $(static_test3) debian/libboost-test-dev/usr/lib
+	ln -s libboost_prg_exec_monitor.so.$(SOVERSION) \
+	   debian/libboost-test-dev/usr/lib/libboost_prg_exec_monitor.so
+	ln -s libboost_test_exec_monitor.so.$(SOVERSION) \
+	   debian/libboost-test-dev/usr/lib/libboost_test_exec_monitor.so
+	ln -s libboost_unit_test_framework.so.$(SOVERSION) \
+	   debian/libboost-test-dev/usr/lib/libboost_unit_test_framework.so
+
+	# package libboost-thread$(SOVERSION)
+	cp $(shared_thread) debian/libboost-thread$(SOVERSION)/usr/lib
+
+	# package libboost-thread-dev
+	mkdir -p debian/libboost-thread-dev/usr/include/boost
+	mv debian/libboost-dev/usr/include/boost/thread* \
+	   debian/libboost-thread-dev/usr/include/boost
+	ln -s libboost_thread.so.$(SOVERSION) \
+	   debian/libboost-thread-dev/usr/lib/libboost_thread.so
 
 
 # This single target is used to build all the packages, all at once, or
@@ -189,4 +242,4 @@ binary-%: build install
 	make -f debian/rules binary-common DH_OPTIONS=-p$*
 
 binary: binary-indep binary-arch
-.PHONY: build clean binary-indep binary-arch binary install
+.PHONY: build clean binary-indep binary-arch binary-common binary install
