@@ -1,0 +1,11 @@
+Use of boost/nondet_random.hpp
+------------------------------
+
+The use of this header file is subject to the availability of class
+boost::random_device::impl. Boost libraries provide only an example
+implementation which the user may use to fit her needs.
+
+Such implementation is distributed by libboost-dev Debian package in
+file /usr/share/doc/libboost-dev/examples/random_device.cpp. This file is
+generally good enough for most linux users. Please add it to your build
+process before filing another bug report agains Boost Debian packages.
