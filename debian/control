@@ -27,7 +27,7 @@ Description: Boost.org libraries development files
 
 Package: libboost-doc
 Architecture: all
-Section: devel
+Section: doc
 Replaces: libboost-dev (<< 1.27.0-4)
 Description: Boost.org libraries documentation
  The Boost web site provides free, peer-reviewed, portable C++ source

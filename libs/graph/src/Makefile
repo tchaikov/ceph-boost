@@ -20,7 +20,7 @@ MV		= /bin/mv
 
 EXTRAFLAGS 	=
 
-INCLUDES	= -I$(BOOST)
+INCLUDES	= -I$(BOOST) -I/usr/include/stlport
 
 CXXFLAGS	= $(INCLUDES) $(EXTRAFLAGS) -O
 

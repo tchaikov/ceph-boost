@@ -1,3 +1,13 @@
+boost (1.28.0-3) unstable; urgency=low
+
+  * libs/graph/src/Makefile: build using -I/usr/include/stlport.
+    Closes: #150002.
+
+  * debian/control: change section of -doc package to match ftp
+    overrides.
+  
+ -- Steve M. Robbins <smr@debian.org>  Fri, 14 Jun 2002 18:19:09 -0400
+
 boost (1.28.0-2) unstable; urgency=low
 
   * libs/graph/src/Makefile: revert patch to that used in 1.27.0-4,
