@@ -3,6 +3,9 @@ boost (1.31.0-7) unstable; urgency=high
   * boost/spirit/core/assert.hpp: fixed typo in BOOST_SPIRIT_ASSERT
     macro definition (from upstream CVS).  Closes: #267991.
 
+  * libs/graph/src/Makefile: uses -O3 instead of -O to work around
+    gcc-3.3 bug #248207 on amd64.  Closes: #270156.
+
  --
 
 boost (1.31.0-6) unstable; urgency=low
