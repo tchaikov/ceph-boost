@@ -6,7 +6,7 @@ boost (1.32.0-5) unstable; urgency=low
   * debian/control, debian/rules: added package libboost-serialization-dev.
     closes: #292596.
 
- -- Domenico Andreoli <cavok@debian.org>  Fri, 28 Jan 2005 11:03:21 +0100
+ -- Domenico Andreoli <cavok@debian.org>  Wed, 30 Mar 2005 17:56:57 +0200
 
 boost (1.32.0-4) unstable; urgency=low
 
