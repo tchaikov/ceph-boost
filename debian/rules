@@ -1,11 +1,6 @@
-#!/usr/bin/make -f
-# Sample debian/rules that uses debhelper.
-# This file is public domain software, originally written by Joey Hess.
-#
-# This version is for a multibinary package. It also allows you to build any
-# of the binary packages independantly, via binary-<package> targets.
+#! /usr/bin/make -f
 
-# Uncomment this to turn on verbose mode. 
+# Uncomment this to turn on verbose mode.
 #export DH_VERBOSE=1
 
 # This has to be exported to make some magic below work.
@@ -16,7 +11,7 @@ export DH_OPTIONS
 # major and minor version numbers joined by an underscore.  This label
 # appears in some of the filenames.
 #
-boost_version = 1_31
+boost_version = 1_32
 
 # Library suffix
 # Boost libraries encode build information in the resulting library
@@ -26,21 +21,18 @@ suffix = -gcc-mt-$(boost_version)
 
 # Boost does not guarantee any ABI, so we use full version in SONAME version
 #
-SOVERSION = 1.31.0
-
-
+SOVERSION = 1.32.0
 
 exampledir = debian/libboost-doc/usr/share/doc/libboost-doc/examples
 htmldir = debian/libboost-doc/usr/share/doc/libboost-doc/HTML
 
 bjam = tools/build/jam_src/bjam
-bjam_man = debian/bjam.1
 
 JAM = $(bjam) -d2 \
 	-sTOOLS=gcc \
 	-sGCC=gcc \
 	-sGXX=g++ \
-	-sBUILD="release <define>_REENTRANT <threading>multi" \
+	-sBUILD="debug release <define>_REENTRANT <threading>multi" \
 	-sPYTHON_VERSION=2.3 \
 	-sPYTHON_ROOT=/usr
 
@@ -48,7 +40,7 @@ $(bjam):
 	cd tools/build/jam_src && sh build.sh gcc && mv bin.*/bjam .
 
 build: build-stamp
-build-stamp: $(bjam) 
+build-stamp: $(bjam)
 	dh_testdir
 
 # This seems like a good idea, but it messed up when I tried it.
@@ -106,13 +98,13 @@ install: build
 	# package libboost-doc
 	rm -rf $(htmldir)
 	mkdir -p $(htmldir)
-	cat debian/documentation-files \
+#	cat debian/documentation-files \
 	    | xargs cp --parents --target-directory=$(htmldir)
 	mkdir -p $(exampledir)
-	cat debian/example-files \
+#	cat debian/example-files \
 	    | xargs cp -a --parents --target-directory=$(exampledir)
-	find $(exampledir) -type f | xargs chmod 644
-	find $(exampledir) -name .cvsignore | xargs rm
+#	find $(exampledir) -type f | xargs chmod 644
+#	find $(exampledir) -name .cvsignore | xargs rm
 
 
 	# package libboost-date-time$(SOVERSION)
@@ -122,7 +114,7 @@ install: build
 
 	# package libboost-date-time-dev
 	mv debian/libboost-dev/usr/include/boost/date_time \
-           debian/libboost-date-time-dev/usr/include/boost
+	   debian/libboost-date-time-dev/usr/include/boost
 	dh_install -plibboost-date-time-dev --autodest \
 	   debian/tmp/usr/lib/libboost_date_time$(suffix).a \
 	   debian/tmp/usr/lib/libboost_date_time$(suffix).so
@@ -159,7 +151,7 @@ install: build
 
 	# package libboost-graph-dev
 	mv debian/libboost-dev/usr/include/boost/graph \
-           debian/libboost-graph-dev/usr/include/boost
+	   debian/libboost-graph-dev/usr/include/boost
 	dh_install -plibboost-graph-dev \
 	   libs/graph/src/libbgl-viz.a \
 	   libs/graph/src/libbgl-viz.so \
@@ -271,7 +263,6 @@ install: build
 binary-common:
 	dh_testdir
 	dh_testroot
-#	dh_installdebconf
 	dh_installdocs --all debian/README.Debian
 	dh_installexamples
 	dh_installinfo
