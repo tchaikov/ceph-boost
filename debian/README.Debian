@@ -35,3 +35,47 @@ libstlport.  This is no longer the case.
 If you have old boost-using code, you will need to change your build
 process, removing any -I/usr/include/stlport or -llstport options.
 
+	Why the change?
+	---------------
+
+Until January 2003, Debian's default compiler was GCC 2.95.x.  The
+standard C++ library that came with GCC 2.x was sufficiently buggy to
+cause problems with boost.  STLport was a better implementation of STL
+and enabled boost to function.
+
+Debian now uses GCC 3.2.  The standard C++ library has improved enough
+to use with boost, so I dropped STLport.  
+
+
+	But I need the GCC 2 packages
+	-----------------------------
+
+The old boost packages are gone from the archive.  If you need boost
+1.29.0-2, you can find a copy of the sources and i386 debs at
+
+    http://people.debian.org/~smr/boost
+
+If you're on an i386 machine, just take all the debs and install them.
+
+If you're on a different architecture, take these three files
+
+    boost_1.29.0.orig.tar.gz
+    boost_1.29.0-2.diff.gz
+    boost_1.29.0-2.dsc 
+
+and run
+
+    dpkg-source -x boost_1.29.0-2.dsc 
+    cd boost-1.29.0
+    debuild -b
+
+to generate the debs.
+
+Before you install the old debs, you'll need to remove the "c102"
+packages first.  You also need to downgrade the STLport packages
+to the last GCC 2 version.
+
+You cannot link together code compiled with different C++ compilers.
+Either you use only GCC 2 or only GCC 3.  This goes for all your
+libraries.
+

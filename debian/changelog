@@ -1,3 +1,9 @@
+boost (1.30.0-1) unstable; urgency=low
+
+  * New upstream.
+
+ -- Steve M. Robbins <smr@debian.org>  Sat, 22 Mar 2003 16:53:59 -0500
+
 boost (1.29.0-3) unstable; urgency=low
 
   * Migrate to GCC 3.2.  Closes: #167030, #176269.

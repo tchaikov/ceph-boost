@@ -1,6 +1,8 @@
 	Built Libraries
 	---------------
 
+New?  date_time filesystem
+
 graph	static 	shared
 python		shared
 regex	static	shared
@@ -20,12 +22,6 @@ package.
 
 * libs/graph/src/Makefile
   - build using optimization and no debugging
-  - disable rules that invoke yacc
-  - do not clean the yacc-built files
-
-* libs/graph/src/graphviz_digraph_parser.cpp
-* libs/graph/src/graphviz_graph_parser.cpp
-  - add std:: prefix
 
 
 
