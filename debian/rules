@@ -230,6 +230,10 @@ install: build
 	dh_link -plibboost-python-dev \
 	   usr/lib/libboost_python$(release_suffix).so \
 	   usr/lib/libboost_python.so
+	mkdir -p debian/libboost-python-dev/usr/share/lintian/overrides
+	install -m644 \
+	   debian/libboost-python-dev.lintian-overrides \
+	   debian/libboost-python-dev/usr/share/lintian/overrides/libboost-python-dev
 
 
 	# package libboost-regex$(SOVERSION)
