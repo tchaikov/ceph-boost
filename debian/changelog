@@ -1,4 +1,4 @@
-boost (1.31.0-8) unstable; urgency=medium
+boost (1.31.0-8) unstable; urgency=low
 
   * Moved indirect_traits to boost/detail. Fixed things here and
     there (from upstream CVS).  Closes: #278889.
