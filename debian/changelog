@@ -1,3 +1,9 @@
+boost (1.27.0-1) unstable; urgency=low
+
+  * New upstream version.
+  
+ -- Steve M. Robbins <smr@debian.org>  Mon, 25 Feb 2002 18:53:58 -0500
+
 boost (1.26.0-4) unstable; urgency=low
 
   * control(source): build-depend on libstlport4.5-dev.

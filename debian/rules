@@ -20,12 +20,17 @@ export DH_OPTIONS
 # - use modified version of gcc-stlport-tools.jam file
 # - build libraries into subdirectory rooted at "debian-build"
 #   (easier to clean up, and to find the libraries that got built)
-# - libs/dir_it is built
+
+# Locations of static libs.
+static_regex = debian-build/libs/regex/build/bin/libboost_regex.a/debian/release/runtime-link-dynamic/libboost_regex.a
+static_thread = debian-build/libs/thread/build/bin/libboost_thread/debian/release/runtime-link-dynamic/threading-multi/libboost_thread.a
+static_python = debian-build/libs/python/build/bin/libboost_python_static/debian/release/runtime-link-dynamic/shared-linkable-true/libboost_python_static.a
+static_graph = libs/graph/src/libbgl-viz.a
 
 
 htmldir = debian/libboost-dev/usr/share/doc/libboost-dev/HTML
 
-JAM = tools/build/jam_src/bin/jam -sTOOLS="debian" -sBOOST_ROOT=.
+JAM = tools/build/jam_src/bin/jam -sTOOLS="debian" -sBUILD=release -sBOOST_ROOT=. -d2
 
 tools/build/jam_src/bin/jam:
 	$(MAKE) -C tools/build/jam_src LOCATE_TARGET=bin
@@ -39,13 +44,10 @@ build-stamp: tools/build/jam_src/bin/jam
 #	mv libs/config/user.hpp boost/config
 
 # Build most of the stuff with jam
-	$(JAM) -sALL_LOCATE_TARGET=`pwd`/debian-build -sPYTHON_VERSION=2.1
+	$(JAM) -sALL_LOCATE_TARGET=`pwd`/debian-build -sPYTHON_VERSION=2.1 -sPYTHON_ROOT=/usr
 
 # Build the graph library with upstream makefile
-	$(MAKE) -C libs/graph/src
-
-# Build the dirit library using makefile from Raphael
-#	$(MAKE) -C libs/dir_it
+	$(MAKE) -C libs/graph/src libbgl-viz.a
 
 	touch build-stamp
 
@@ -60,7 +62,6 @@ clean:
 	rm -rf debian-build
 
 	$(MAKE) -C libs/graph/src clean
-	$(MAKE) -C libs/dir_it clean
 
 # Do not need to track changes done to built files.
 #	rm -f boost/config/user.hpp
@@ -82,7 +83,7 @@ install: build
 	rm -f debian/libboost-dev/usr/include/boost/pool/detail/*.bat
 	rm -f debian/libboost-dev/usr/include/boost/pool/detail/*.m4
 	rm -f debian/libboost-dev/usr/include/boost/pool/detail/*.sh
-	cp debian-build/libs/thread/build/bin/libboost_thread/debian/release/runtime-link-dynamic/threading-multi/libboost_thread.a debian/libboost-dev/usr/lib
+	cp $(static_thread) debian/libboost-dev/usr/lib
 	mkdir -p $(htmldir)
 	find * -name '*.html' | xargs cp -a --parents --target-directory=$(htmldir)
 	find * -name '*.htm' | xargs cp -a --parents --target-directory=$(htmldir)
@@ -91,26 +92,17 @@ install: build
 	mkdir -p debian/libboost-regex-dev/usr/include/boost
 	mv debian/libboost-dev/usr/include/boost/*regex* \
 	   debian/libboost-regex-dev/usr/include/boost
-	cp debian-build/libs/regex/build/bin/libboost_regex.a/debian/release/runtime-link-dynamic/libboost_regex.a debian/libboost-regex-dev/usr/lib
-
-	mkdir -p debian/libboost-regex-dbg/usr/lib/debug
-	cp debian-build/libs/regex/build/bin/libboost_regex.a/debian/debug/runtime-link-dynamic/libboost_regex.a debian/libboost-regex-dbg/usr/lib/debug/libboost_regex_debug.a
+	cp $(static_regex) debian/libboost-regex-dev/usr/lib
 
 	mkdir -p debian/libboost-python-dev/usr/include/boost
 	mv debian/libboost-dev/usr/include/boost/python \
 	   debian/libboost-python-dev/usr/include/boost
-	cp debian-build/libs/python/build/bin/libboost_python/debian/debug/runtime-link-dynamic/shared-linkable-true/libboost_python.a debian/libboost-python-dev/usr/lib
-
-#	mkdir -p debian/libboost-dirit-dev/usr/include/boost
-#	cp -a libs/dir_it/archive/boost/directory.h \
-#	   debian/libboost-dirit-dev/usr/include/boost
-#	cp libs/dir_it/archive/libboost-dirit.a debian/libboost-dirit-dev/usr/lib
+	cp $(static_python) debian/libboost-python-dev/usr/lib
 
 	mkdir -p debian/libboost-graph-dev/usr/include/boost
 	mv debian/libboost-dev/usr/include/boost/graph \
 	   debian/libboost-graph-dev/usr/include/boost
-	cp libs/graph/src/libbgl-viz.a \
-	   debian/libboost-graph-dev/usr/lib
+	cp $(static_graph) debian/libboost-graph-dev/usr/lib
 
 
 # This single target is used to build all the packages, all at once, or

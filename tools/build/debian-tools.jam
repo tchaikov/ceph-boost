@@ -11,5 +11,7 @@ flags debian STDLIBPATH : $(GCC_STDLIB_DIRECTORY) ;
 
 flags debian DEFINES  <runtime-build>debug  : _STLP_DEBUG ;
 flags debian CFLAGS   <runtime-link>dynamic : -D_STLP_USE_DYNAMIC_LIB ;
-flags debian FINDLIBS stlport_gcc ;
-
+flags debian FINDLIBS <runtime-link>static/<runtime-build>debug : stlport_gcc_stldebug ;
+flags debian FINDLIBS <runtime-link>static/<runtime-build>release : stlport_gcc ;
+flags debian FINDLIBS <runtime-link>dynamic/<runtime-build>debug : stlport_gcc_stldebug ;
+flags debian FINDLIBS <runtime-link>dynamic/<runtime-build>release : stlport_gcc ;

@@ -3,7 +3,7 @@ Section: libs
 Priority: optional
 Maintainer: Steve M. Robbins <smr@debian.org>
 Standards-Version: 3.5.2
-Build-Depends: libstlport4.5-dev, python2.1-dev, debhelper, flex, bison, texinfo
+Build-Depends: libstlport4.5-dev, libstlport4.5-dbg (>>4.5.1-0.1), python2.1-dev, debhelper, flex, bison, texinfo
 
 Package: libboost-dev
 Architecture: any
@@ -51,28 +51,6 @@ Section: devel
 Suggests: libboost-regex-dbg
 Depends: libboost-dev (= ${Source-Version})
 Description: Regular expression library for C++
- Part of the Boost.org library collection.
- .
- Regular expressions are a form of pattern-matching that are often
- used in text processing; many users will be familiar with the Unix
- utilities grep, sed and awk, and the programming language perl, each
- of which make extensive use of regular expressions. Traditionally C++
- users have been limited to the POSIX C APIs for manipulating regular
- expressions, and while regex does provide these APIs, they do not
- represent the best way to use the library. For example regex can cope
- with wide character strings, or search and replace operations (in a
- manner analogous to either sed or perl), something that traditional C
- libraries can not do.
- .
- For more information on regex visit the project homepage
- http://www.boost.org/libs/regex/ .
-
-Package: libboost-regex-dbg
-Architecture: any
-Section: devel
-Priority: extra
-Depends: libboost-regex-dev (= ${Source-Version})
-Description: Regular expression library for C++ (debug version)
  Part of the Boost.org library collection.
  .
  Regular expressions are a form of pattern-matching that are often

@@ -36,9 +36,17 @@ packages are no longer built:
     libboost-python1.21
     libboost-regex304
 
-Do let me know if you wish to see the shared lib packages return.
+The debug version of the regex library,
 
-In addition, the dir_it library is labelled "beta", not a part
-of boost, so the package is no longer built:
+    libboost-regex-dbg
+
+is no longer built.  In addition, the dir_it library is labelled
+"beta", not a part of boost, so the package is no longer built:
 
     libboost-dirit-dev
+
+
+The shared libraries *will* return, hopefully soon.  My plan at the moment
+is to put all the shared libs into one libboost package.  Let me know if
+you'd prefer them all split up.
+
