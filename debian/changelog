@@ -1,3 +1,11 @@
+boost (1.28.0-4) unstable; urgency=low
+
+  * Build with python 2.2.  Closes: #159533.
+    The shared lib ABI changes, but the soname cannot, so introduce
+    conflicting/replacing package for libboost-python.
+  
+ -- Steve M. Robbins <smr@debian.org>  Fri, 13 Sep 2002 22:54:25 -0400
+
 boost (1.28.0-3) unstable; urgency=low
 
   * libs/graph/src/Makefile: build using -I/usr/include/stlport.

@@ -3,7 +3,7 @@ Section: libs
 Priority: optional
 Maintainer: Steve M. Robbins <smr@debian.org>
 Standards-Version: 3.5.2
-Build-Depends: libstlport4.5-dev, python2.1-dev, debhelper, flex, bison
+Build-Depends: libstlport4.5-dev, python2.2-dev, debhelper, flex, bison
 
 Package: libboost-dev
 Architecture: any
@@ -85,10 +85,12 @@ Description: Regular expression library for C++
  For more information on regex visit the project homepage
  http://www.boost.org/libs/regex/ .
 
-Package: libboost-python1.28.0
+Package: libboost-python1.28.0-python2.2
 Section: devel
 Architecture: any
 Depends: ${shlibs:Depends}
+Conflicts: libboost-python1.28.0
+Replaces: libboost-python1.28.0
 Description: Boost Python Library 
  Part of the Boost.org library collection.
  .
@@ -109,7 +111,7 @@ Description: Boost Python Library
 Package: libboost-python-dev
 Section: devel
 Architecture: any
-Depends: libboost-dev (=${Source-Version}), libboost-python1.28.0 (=${Source-Version}), python2.1-dev
+Depends: libboost-dev (=${Source-Version}), libboost-python1.28.0-python2.2 (=${Source-Version}), python2.2-dev
 Description: The Boost Python Library development files
  Part of the Boost.org library collection.
  .

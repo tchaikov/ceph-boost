@@ -12,6 +12,18 @@ There is extensive documentation available in the libboost-doc
 package and at www.boost.org.
 
 
+		Python 2.2
+		----------
+
+The default python version in Debian switched from 2.1 to 2.2 on
+2002-08-24, and Boost.Python has followed suit.  The shared library
+package was renamed, but the actual library name (and soname)
+cannot be changed, so the new libboost-python1.28.0-python2.2
+conflicts and replaces the old shared library package.  
+
+Installing the new shared library is likely to break your code.
+Presumably only a recompile will be needed.
+
 
 		Examples Package
 		----------------

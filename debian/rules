@@ -39,7 +39,7 @@ htmldir = debian/libboost-doc/usr/share/doc/libboost-doc/HTML
 
 JAM = tools/build/jam_src/bin/jam -sTOOLS="debian" -sBUILD=release \
 	-sBOOST_ROOT=. -sALL_LOCATE_TARGET=`pwd`/debian-build \
-	-sPYTHON_VERSION=2.1 -sPYTHON_ROOT=/usr \
+	-sPYTHON_VERSION=2.2 -sPYTHON_ROOT=/usr \
 	-d2
 
 tools/build/jam_src/bin/jam:
@@ -115,9 +115,9 @@ install: build
 	ln -s libboost_regex.so.$(SOVERSION) \
 	   debian/libboost-regex-dev/usr/lib/libboost_regex.so
 
-	# package libboost-python$(SOVERSION)
+	# package libboost-python$(SOVERSION)-python2.2
 	cp $(shared_python) \
-	 debian/libboost-python$(SOVERSION)/usr/lib/libboost_python.so.$(SOVERSION)
+	 debian/libboost-python$(SOVERSION)-python2.2/usr/lib/libboost_python.so.$(SOVERSION)
 
 	# package libboost-python-dev
 	mkdir -p debian/libboost-python-dev/usr/include/boost
