@@ -1,4 +1,4 @@
-boost (1.32.0-3) unstable; urgency=low
+boost (1.32.0-5) unstable; urgency=low
 
   * debian/control: libboost-dev now suggests also
     libboost-program-options-dev and libboost-serialization-dev.
@@ -7,6 +7,16 @@ boost (1.32.0-3) unstable; urgency=low
     closes: #292596.
 
  -- Domenico Andreoli <cavok@debian.org>  Fri, 28 Jan 2005 11:03:21 +0100
+
+boost (1.32.0-4) unstable; urgency=low
+
+  * debian/rules: symbolic link to HTML/boost documentation directory
+    is now properly installed.  Closes: #290333.
+
+  * boost/test/detail/wrap_stringstream.hpp: fixed workaround (from
+    upstream CVS).  Closes: #300330.
+
+ -- Domenico Andreoli <cavok@debian.org>  Tue, 22 Mar 2005 16:44:31 +0100
 
 boost (1.32.0-2) unstable; urgency=low
 
