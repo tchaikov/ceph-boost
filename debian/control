@@ -23,8 +23,7 @@ Description: Boost.org libraries development files
  For the following subprojects separate packages exist: 
  date-time, filesystem, graph, python, regex, signals, test, and thread.
  .
- For more information on boost visit the project homepage
- http://www.boost.org/ .
+  Homepage: http://www.boost.org/
 
 Package: libboost-doc
 Architecture: all
@@ -44,8 +43,7 @@ Description: Boost.org libraries documentation
  Some pages point to header files provided in libboost-dev package,
  so it is suggested to install the latter as well.
  .
- For more information on boost visit the project homepage
- http://www.boost.org/libs/ .
+  Homepage: http://www.boost.org/libs/
 
 Package: libboost-date-time1.31.0
 Architecture: any
@@ -57,8 +55,7 @@ Description: Set of date-time libraries based on generic programming concepts
  These libraries are intended to make programming with dates and times
  almost as simple and natural as programming with strings and integers.
  .
- For more information on Date-Time visit the project homepage
- http://www.boost.org/libs/date_time/ .
+  Homepage: http://www.boost.org/libs/date_time/
 
 Package: libboost-date-time-dev
 Architecture: any
@@ -71,8 +68,7 @@ Description: Set of date-time libraries based on generic programming concepts
  These libraries are intended to make programming with dates and times
  almost as simple and natural as programming with strings and integers.
  .
- For more information on Date-Time visit the project homepage
- http://www.boost.org/libs/date_time/ .
+  Homepage: http://www.boost.org/libs/date_time/
 
 Package: libboost-filesystem1.31.0
 Architecture: any
@@ -85,8 +81,7 @@ Description: Filesystem operations (portable paths, iteration over directories, 
  manipulate paths, files, and directories.  The goal is to
  facilitate portable script-like operations from within C++ programs.
  .
- For more information visit the project homepage
- http://boost.org/libs/filesystem/ .
+  Homepage: http://boost.org/libs/filesystem/
 
 Package: libboost-filesystem-dev
 Architecture: any
@@ -100,8 +95,7 @@ Description: Filesystem operations (portable paths, iteration over directories, 
  manipulate paths, files, and directories.  The goal is to
  facilitate portable script-like operations from within C++ programs.
  .
- For more information visit the project homepage
- http://boost.org/libs/filesystem/ .
+  Homepage: http://boost.org/libs/filesystem/
 
 Package: libboost-graph1.31.0
 Architecture: any
@@ -116,8 +110,7 @@ Description: Generic graph components and algorithms in C++
  standardized generic interface for traversing graphs is of utmost
  importance to encourage reuse of graph algorithms and data structures.
  .
- For more information on graph visit the project homepage
- http://www.boost.org/libs/graph/ .
+  Homepage: http://www.boost.org/libs/graph/
 
 Package: libboost-graph-dev
 Architecture: any
@@ -132,8 +125,7 @@ Description: Generic graph components and algorithms in C++
  standardized generic interface for traversing graphs is of utmost
  importance to encourage reuse of graph algorithms and data structures.
  .
- For more information on graph visit the project homepage
- http://www.boost.org/libs/graph/ .
+  Homepage: http://www.boost.org/libs/graph/
 
 Package: libboost-python1.31.0
 Architecture: any
@@ -153,8 +145,7 @@ Description: Boost Python Library
  in Python, Member function Overloading, Automatic wrapping of
  numeric operators among others.
  .
- For more information on python library visit the project homepage
- http://www.boost.org/libs/python/ .
+  Homepage: http://www.boost.org/libs/python/
 
 Package: libboost-python-dev
 Architecture: any
@@ -175,8 +166,7 @@ Description: The Boost Python Library development files
  in Python, Member function Overloading, Automatic wrapping of
  numeric operators among others.
  .
- For more information on python library visit the project homepage
- http://www.boost.org/libs/python/ .
+  Homepage: http://www.boost.org/libs/python/
 
 Package: libboost-regex1.31.0
 Architecture: any
@@ -196,8 +186,7 @@ Description: Regular expression library for C++
  manner analogous to either sed or perl), something that traditional C
  libraries can not do.
  .
- For more information on regex visit the project homepage
- http://www.boost.org/libs/regex/ .
+  Homepage: http://www.boost.org/libs/regex/
 
 Package: libboost-regex-dev
 Architecture: any
@@ -217,8 +206,7 @@ Description: Regular expression library for C++
  manner analogous to either sed or perl), something that traditional C
  libraries can not do.
  .
- For more information on regex visit the project homepage
- http://www.boost.org/libs/regex/ .
+  Homepage: http://www.boost.org/libs/regex/
 
 Package: libboost-signals1.31.0
 Architecture: any
@@ -233,8 +221,7 @@ Description: Managed signals and slots library for C++
  targets or subscribers), which are called when the signal is
  "emitted."
  .
- For more information on signals visit the project homepage
- http://www.boost.org/libs/signals/ .
+  Homepage: http://www.boost.org/libs/signals/
 
 Package: libboost-signals-dev
 Architecture: any
@@ -249,8 +236,7 @@ Description: Managed signals and slots library for C++
  targets or subscribers), which are called when the signal is
  "emitted."
  .
- For more information on signals visit the project homepage
- http://www.boost.org/libs/signals/ .
+  Homepage: http://www.boost.org/libs/signals/
 
 Package: libboost-test1.31.0
 Architecture: any
@@ -264,8 +250,7 @@ Description: Components for writing and executing test suites
   * Facilities to monitor program execution and produce error reports.
   * Unit test framework to simplify writing test cases.
  .
- For more information on Boost.Test visit the project homepage
- http://www.boost.org/libs/test/ .
+  Homepage: http://www.boost.org/libs/test/
 
 Package: libboost-test-dev
 Architecture: any
@@ -280,8 +265,7 @@ Description: Components for writing and executing test suites
   * Facilities to monitor program execution and produce error reports.
   * Unit test framework to simplify writing test cases.
  .
- For more information on Boost.Test visit the project homepage
- http://www.boost.org/libs/test/ .
+  Homepage: http://www.boost.org/libs/test/
 
 Package: libboost-thread1.31.0
 Architecture: any
@@ -295,8 +279,7 @@ Description: Portable C++ multi-threading
  own machine state including program instruction counter and
  registers.
  .
- For more information on Boost.Threads visit the project homepage
- http://www.boost.org/libs/thread/ .
+  Homepage: http://www.boost.org/libs/thread/
 
 Package: libboost-thread-dev
 Architecture: any
@@ -311,5 +294,4 @@ Description: Portable C++ multi-threading
  own machine state including program instruction counter and
  registers.
  .
- For more information on Boost.Threads visit the project homepage
- http://www.boost.org/libs/thread/ .
+  Homepage: http://www.boost.org/libs/thread/
