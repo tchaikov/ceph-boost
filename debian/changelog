@@ -7,6 +7,8 @@ boost (1.31.0-3) unstable; urgency=low
   * debian/control: libboost-dev suggests all the libboost-*-dev
     packages.  Closes: #242335.
 
+  * debian/rules: proper bjam man page is created.
+
   * Move <boost/python.hpp> to libboost-python-dev package.
 
  -- Domenico Andreoli <cavok@debian.org>  Sat, 10 Apr 2004 16:59:35 +0200
