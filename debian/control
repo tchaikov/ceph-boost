@@ -48,7 +48,7 @@ Description: Boost.org libraries documentation
 Package: libboost-dbg
 Architecture: any
 Section: libdevel
-Depends: libboost-dev
+Suggests: libboost-dev
 Description: Boost.org libraries with debug symbols
  Part of the Boost.org library collection.
  .
