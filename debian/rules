@@ -45,13 +45,8 @@ JAM = $(bjam) -d2 \
 $(bjam):
 	cd tools/build/jam_src && sh build.sh gcc && mv bin.*/bjam .
 
-$(bjam_man):
-	docbook-to-man tools/build/jam_src/debian/jam.man.sgml > $(bjam_man).tmp
-	sed -e 's/jam /bjam /g' -e 's/JAM /BJAM /g' -e 's#doc/jam#doc/bjam#g' < $(bjam_man).tmp > $(bjam_man)
-	rm -f $(bjam_man).tmp
-
 build: build-stamp
-build-stamp: $(bjam) $(bjam_man)
+build-stamp: $(bjam) 
 	dh_testdir
 
 # This seems like a good idea, but it messed up when I tried it.
@@ -77,7 +72,6 @@ clean:
 	rm -rf tools/build/jam_src/bootstrap.gcc
 	rm -rf tools/build/jam_src/bin.*
 	rm -f tools/build/jam_src/bjam
-	rm -f $(bjam_man)
 	rm -rf bin
 
 	$(MAKE) -C libs/graph/src clean
@@ -101,10 +95,6 @@ install: build
 	find debian -empty -type f | xargs rm -f
 
 	dh_installdirs --all usr/include/boost
-
-	# package bjam
-	dh_install -pbjam $(bjam) usr/bin
-	dh_install -pbjam $(bjam_man) usr/share/man/man1
 
 	# package libboost-dev
 	dh_install -plibboost-dev \

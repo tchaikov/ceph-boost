@@ -1,3 +1,11 @@
+boost (1.31.0-6) unstable; urgency=low
+
+  * debian/control:
+  * debian/rules: Remove package bjam as it is is now built from a separate
+    source package, boost-jam.
+
+ -- 
+
 boost (1.31.0-5) unstable; urgency=low
 
   * libs/python/build/Jamfile: boost-python shared library is now linked
