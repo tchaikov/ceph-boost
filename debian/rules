@@ -120,6 +120,7 @@ install: build
 	cat debian/example-files \
 	    | xargs cp -a --parents --target-directory=$(exampledir)
 	find $(exampledir) -type f | xargs chmod 644
+	find $(exampledir) -name .cvsignore | xargs rm
 
 
 	# package libboost-date-time$(SOVERSION)
