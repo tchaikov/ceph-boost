@@ -1,3 +1,14 @@
+		Help Save the World
+		-------------------
+
+Boost is a fairly extensive set of libraries, of which I personally
+use but a very small part.  I greatly appreciate folks that send
+patches to the BTS.  Please do have a look at the outstanding bug
+reports and send me hints or patches if you have extra information.
+If you're a Debian developer and wish to help out as a co-maintainer,
+do let me know!
+
+
 		Getting Started
 		---------------
 
@@ -19,7 +30,7 @@ static) and the corresponding "-l" flag.
   Boost.Thread	-lboost_thread		static
 
 Most of Boost is installed using the package libboost-dev.  
-However, the packages with a shared library have separate -dev packages.
+The components with a shared library have separate -dev packages.
 
 
 There is extensive documentation available in the libboost-doc
@@ -79,3 +90,5 @@ You cannot link together code compiled with different C++ compilers.
 Either you use only GCC 2 or only GCC 3.  This goes for all your
 libraries.
 
+
+ -- Steve M. Robbins <smr@debian.org>, Sat Jun 28 08:51:20 2003

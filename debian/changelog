@@ -1,3 +1,18 @@
+boost (1.30.0-3) unstable; urgency=low
+
+  * boost/config/compiler/gcc.hpp: Do not warn about GCC 3.3.
+    Closes: #193862.
+  
+  * boost/python/object/make_ptr_instance.hpp: Add typename keyword,
+    suggested by Dave Abrahams posting referenced in bug report 
+    (thanks, Ben Burton).  Closes: #198524.
+  
+  * boost/python/converter/as_to_python_function.hpp: Qualify function
+    call; workaround for apparent bug in GCC 3.3.  (Thanks, Romain
+    Lerallut).  Closes: #192481.
+
+ -- Steve M. Robbins <smr@debian.org>  Mon, 26 May 2003 19:17:45 -0400
+
 boost (1.30.0-2) unstable; urgency=low
 
   * debian/rules: Move httrack call to binary-indep.  Closes: #187740.
