@@ -106,6 +106,7 @@ Package: libboost-filesystem-dev
 Architecture: any
 Section: libdevel
 Depends: libboost-dev (=${Source-Version}), libboost-filesystem1.31.0 (=${Source-Version})
+Replaces: libboost-dev (<< 1.31.0-1)
 Description: Filesystem operations (portable paths, iteration over directories, etc) in C++
  Part of the Boost.org library collection.
  .
