@@ -176,10 +176,7 @@ install: build
 	   usr/lib
 	dh_install -plibboost-dbg \
 	   libs/graph/src/libbgl-viz.so.$(SOVERSION) \
-	   usr/lib
-	dh_link -plibboost-dbg \
-	   usr/lib/libbgl-viz.so.$(SOVERSION) \
-	   usr/lib/debug/usr/lib/libbgl-viz.so.$(SOVERSION)
+	   usr/lib/debug/usr/lib
 
 
 	# package libboost-graph-dev
