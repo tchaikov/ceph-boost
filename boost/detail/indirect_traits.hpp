@@ -33,7 +33,7 @@
 #   include <boost/python/detail/is_function_ref_tester.hpp>
 #  endif 
 
-namespace boost { namespace python { namespace detail { 
+namespace boost { namespace detail { 
 
 #  ifndef BOOST_NO_TEMPLATE_PARTIAL_SPECIALIZATION
 template <class T>
