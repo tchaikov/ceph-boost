@@ -1,8 +1,16 @@
-boost (1.32.0-1) unstable; urgency=low
+boost (1.32.0-1) experimental; urgency=low
 
   * New upstream version.  Closes: #282871.
+    - boost/pool/detail/pool_construct.inc and
+      boost/pool/detail/pool_construct_simple.inc are correctly installed
+      by package libboost-dev.  Closes: #284076.
 
- --
+  * debian/control, debian/rules: added package libboost-dbg.
+    Closes: #279883.
+
+  * debian/control, debian/rules: added packages for Boost.Program_options.
+
+ -- Domenico Andreoli <cavok@debian.org>  Tue,  7 Dec 2004 15:22:49 +0100
 
 boost (1.31.0-9) unstable; urgency=low
 
