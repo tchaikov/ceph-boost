@@ -2,10 +2,12 @@ boost (1.31.0-1) unstable; urgency=low
 
   * New upstream version.  Closes: #231951, #236016.
     - builds with Python 2.3.  Closes: #206083.
+    - new bjam package (thanks, Vladimir Prus)
+    - new package for shared libboost-filesystem 
   
   * libs/date_time/doc/class_date.html: Fix doc typo.  Closes: #223236.
 
- -- Steve M. Robbins <smr@debian.org>  Sat, 21 Feb 2004 01:10:21 -0500
+ -- Steve M. Robbins <smr@debian.org>  Mon,  8 Mar 2004 23:10:37 -0500
 
 boost (1.30.2-3) unstable; urgency=low
 
