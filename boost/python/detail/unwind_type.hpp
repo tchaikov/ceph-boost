@@ -137,7 +137,7 @@ unwind_type(boost::type<U>*p = 0, Generator* = 0)
 {
     BOOST_STATIC_CONSTANT(int, indirection
                           = (is_pointer<U>::value ? pointer_ : 0)
-                          + (is_reference_to_pointer<U>::value
+                          + (indirect_traits::is_reference_to_pointer<U>::value
                              ? reference_to_pointer_
                              : is_reference<U>::value
                              ? reference_
