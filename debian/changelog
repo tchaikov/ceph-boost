@@ -1,12 +1,15 @@
 boost (1.31.0-3) unstable; urgency=low
 
-  * debian/control: libboost-dev depends on libboost-python-dev.  A
-  few header files include headers in <boost/python/detail/...>,
-  for some strange reason.  Closes: #242714, 242801.
-  
+  * debian/control: libboost-dev depends on libboost-python-dev.
+    A few header files include headers in <boost/python/detail/...>,
+    for some strange reason.  Closes: #242714, #242801.
+
+  * debian/control: libboost-dev suggests all the libboost-*-dev
+    packages.  Closes: #242335.
+
   * Move <boost/python.hpp> to libboost-python-dev package.
 
- --
+ -- Domenico Andreoli <cavok@debian.org>  Sat, 10 Apr 2004 16:59:35 +0200
 
 boost (1.31.0-2) unstable; urgency=low
 
@@ -15,7 +18,7 @@ boost (1.31.0-2) unstable; urgency=low
 
   * Added symlink to allow dynamic linking to boost-filesystem shared
     library.
-  
+
   * Updated Debian standards version to 3.6.1.
 
  -- Domenico Andreoli <cavok@debian.org>  Mon, 22 Mar 2004 02:34:25 +0100
@@ -25,8 +28,8 @@ boost (1.31.0-1) unstable; urgency=low
   * New upstream version.  Closes: #231951, #236016.
     - builds with Python 2.3.  Closes: #206083.
     - new bjam package (thanks, Vladimir Prus)
-    - new package for shared libboost-filesystem 
-  
+    - new package for shared libboost-filesystem
+
   * libs/date_time/doc/class_date.html: Fix doc typo.  Closes: #223236.
 
  -- Steve M. Robbins <smr@debian.org>  Mon,  8 Mar 2004 23:10:37 -0500
@@ -35,7 +38,7 @@ boost (1.30.2-3) unstable; urgency=low
 
   * debian/rules: Build "<threading>multi" libraries.  Thanks to
     Domenico Andreoli for the patch.
-  
+
   * README.Debian: Document -D_REENTRANT required for threaded
     applications.
 
@@ -44,7 +47,7 @@ boost (1.30.2-3) unstable; urgency=low
 boost (1.30.2-2) unstable; urgency=low
 
   * debian/control(Uploaders): Add Domenico Andreoli.
-  
+
   * debian/rules:
     libs/graph/src/Makefile: Define _REENTRANT, per policy 10.2.
 
@@ -56,35 +59,35 @@ boost (1.30.2-1) unstable; urgency=low
 
   * boost/numeric/interval/detail/c99_rounding_control.hpp: fix typo.
     Closes: #203358.
-  
+
   * boost/filesystem/exception.hpp:
   * libs/filesystem/src/exception.cpp: Add implementation of who(), path1(),
     and path2().  (Thanks, Benjamin Dauvergne).  Closes: #196830.
-  
+
  -- Steve M. Robbins <smr@debian.org>  Sun, 12 Oct 2003 12:11:00 -0400
 
 boost (1.30.0-4) unstable; urgency=low
 
   * boost/math/quaternion.hpp: Apply supplied patch to fix a GCC 3.3
     compile problem.  (Thanks, Marcelo E. Magallon).  Closes: #199270.
-  
-  * libboost-doc: 
+
+  * libboost-doc:
     - Fix broken links.  Closes: #199646.
     - Use symlink to /usr/include/boost, rather than duplicating
       header files.  Suggest libboost-dev.  Closes: #174979, #175444.
     - Include libs/*/examples not already included in HTML.  Closes: #191704.
-  
+
  -- Steve M. Robbins <smr@debian.org>  Fri, 11 Jul 2003 18:13:32 -0400
 
 boost (1.30.0-3) unstable; urgency=low
 
   * boost/config/compiler/gcc.hpp: Do not warn about GCC 3.3.
     Closes: #193862.
-  
+
   * boost/python/object/make_ptr_instance.hpp: Add typename keyword,
-    suggested by Dave Abrahams posting referenced in bug report 
+    suggested by Dave Abrahams posting referenced in bug report
     (thanks, Ben Burton).  Closes: #198524.
-  
+
   * boost/python/converter/as_to_python_function.hpp: Qualify function
     call; workaround for apparent bug in GCC 3.3.  (Thanks, Romain
     Lerallut).  Closes: #192481.
@@ -100,7 +103,7 @@ boost (1.30.0-2) unstable; urgency=low
 boost (1.30.0-1) unstable; urgency=low
 
   * New upstream.  Closes: #186256.
-  
+
   * debian/copyright: Include copyright and license statement for each
     library.  Closes: #183153.
 
@@ -133,7 +136,7 @@ boost (1.28.0-4) unstable; urgency=low
   * Build with python 2.2.  Closes: #159533.
     The shared lib ABI changes, but the soname cannot, so introduce
     conflicting/replacing package for libboost-python.
-  
+
  -- Steve M. Robbins <smr@debian.org>  Fri, 13 Sep 2002 22:54:25 -0400
 
 boost (1.28.0-3) unstable; urgency=low
@@ -143,7 +146,7 @@ boost (1.28.0-3) unstable; urgency=low
 
   * debian/control: change section of -doc package to match ftp
     overrides.
-  
+
  -- Steve M. Robbins <smr@debian.org>  Fri, 14 Jun 2002 18:19:09 -0400
 
 boost (1.28.0-2) unstable; urgency=low
@@ -155,29 +158,29 @@ boost (1.28.0-2) unstable; urgency=low
  -- Steve M. Robbins <smr@debian.org>  Fri, 24 May 2002 14:04:58 -0400
 
 boost (1.28.0-1) unstable; urgency=low
-  
+
   * New upstream version.
 
   * Set YACC= in debian/rules to inhibit regenerating jam parser source.
     This makes for smaller debian diffs (thanks, David Abrahams).
 
   * Drop the examples package.  Code examples are in the doc package.
-  
+
  -- Steve M. Robbins <smr@debian.org>  Fri, 17 May 2002 20:46:44 -0400
 
 boost (1.27.0-4) unstable; urgency=low
 
   * libs/graph/src/Makefile: build graph lib with optimization.
-  
+
   * control: Do not build-depend on libstlport4.5-dbg, nor on texinfo.
 
   * Split docs into new libboost-doc package, suggested by libboost-dev.
     The -doc package replaces /usr/share/doc-base/Boost from the former -dev
     package.  Complete the list of documentation files.  Closes: #143128.
-  
-  * debian/README.Debian: add note for newbies (thanks, Laurent Bonnaud).  
+
+  * debian/README.Debian: add note for newbies (thanks, Laurent Bonnaud).
     Closes: #142634.
-  
+
  -- Steve M. Robbins <smr@debian.org>  Sat, 20 Apr 2002 19:31:38 -0400
 
 boost (1.27.0-3) unstable; urgency=low
@@ -193,13 +196,13 @@ boost (1.27.0-2) unstable; urgency=low
     latter mistakenly uses <asm/atomic.h> which turns out to be a bad idea.
   * libs/graph/src/Makefile: do not use "-g" flag; some of the symbols
     are so large as to upset the assembler on the alpha.
-  
+
  -- Steve M. Robbins <smr@debian.org>  Thu, 28 Feb 2002 18:45:06 -0500
 
 boost (1.27.0-1) unstable; urgency=low
 
   * New upstream version.
-  
+
  -- Steve M. Robbins <smr@debian.org>  Mon, 25 Feb 2002 18:53:58 -0500
 
 boost (1.26.0-4) unstable; urgency=low
