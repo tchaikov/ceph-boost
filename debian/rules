@@ -61,7 +61,7 @@ build-stamp: $(bjam) $(bjam_man)
 
 # Build the graph library with upstream makefile
 	$(MAKE) -C libs/graph/src libbgl-viz.a
-	rm -f libs/graph/src/*.o 
+	rm -f libs/graph/src/*.o
 	$(MAKE) -C libs/graph/src EXTRAFLAGS='-fPIC' GRAPH_SONAME_VERSION=$(SOVERSION) libbgl-viz.so
 
 	touch build-stamp
@@ -109,7 +109,7 @@ install: build
 	   debian/tmp/usr/include/boost-$(boost_version)/boost usr/include
 
 
-	# package libboost-doc 
+	# package libboost-doc
 	rm -rf $(htmldir)
 	mkdir -p $(htmldir)
 	cat debian/documentation-files \
@@ -131,6 +131,11 @@ install: build
 	dh_install -plibboost-date-time-dev --autodest \
 	   debian/tmp/usr/lib/libboost_date_time$(suffix).a \
 	   debian/tmp/usr/lib/libboost_date_time$(suffix).so
+	dh_link -plibboost-date-time-dev \
+	   usr/lib/libboost_date_time$(suffix).a \
+	   usr/lib/libboost_date_time.a \
+	   usr/lib/libboost_date_time$(suffix).so \
+	   usr/lib/libboost_date_time.so
 
 
 	# package libboost-filesystem$(SOVERSION)
@@ -142,7 +147,13 @@ install: build
 	mv debian/libboost-dev/usr/include/boost/filesystem \
 	   debian/libboost-filesystem-dev/usr/include/boost
 	dh_install -plibboost-filesystem-dev --autodest \
-	   debian/tmp/usr/lib/libboost_filesystem$(suffix).a
+	   debian/tmp/usr/lib/libboost_filesystem$(suffix).a \
+	   debian/tmp/usr/lib/libboost_filesystem$(suffix).so
+	dh_link -plibboost-filesystem-dev \
+	   usr/lib/libboost_filesystem$(suffix).a \
+	   usr/lib/libboost_filesystem.a \
+	   usr/lib/libboost_filesystem$(suffix).so \
+	   usr/lib/libboost_filesystem.so
 
 
 	# package libboost-graph$(SOVERSION)
@@ -170,6 +181,9 @@ install: build
 	   debian/libboost-python-dev/usr/include/boost
 	dh_install -plibboost-python-dev --autodest \
 	   debian/tmp/usr/lib/libboost_python$(suffix).so
+	dh_link -plibboost-python-dev \
+	   usr/lib/libboost_python$(suffix).so \
+	   usr/lib/libboost_python.so
 
 
 	# package libboost-regex$(SOVERSION)
@@ -183,6 +197,11 @@ install: build
 	dh_install -plibboost-regex-dev --autodest \
 	   debian/tmp/usr/lib/libboost_regex$(suffix).a \
 	   debian/tmp/usr/lib/libboost_regex$(suffix).so
+	dh_link -plibboost-regex-dev \
+	   usr/lib/libboost_regex$(suffix).a \
+	   usr/lib/libboost_regex.a \
+	   usr/lib/libboost_regex$(suffix).so \
+	   usr/lib/libboost_regex.so
 
 
 	# package libboost-signals$(SOVERSION)
@@ -196,6 +215,11 @@ install: build
 	dh_install -plibboost-signals-dev --autodest \
 	   debian/tmp/usr/lib/libboost_signals$(suffix).a \
 	   debian/tmp/usr/lib/libboost_signals$(suffix).so
+	dh_link -plibboost-signals-dev \
+	   usr/lib/libboost_signals$(suffix).a \
+	   usr/lib/libboost_signals.a \
+	   usr/lib/libboost_signals$(suffix).so \
+	   usr/lib/libboost_signals.so
 
 
 	# package libboost-test$(SOVERSION)
@@ -215,6 +239,19 @@ install: build
 	   debian/tmp/usr/lib/libboost_test_exec_monitor$(suffix).so \
 	   debian/tmp/usr/lib/libboost_unit_test_framework$(suffix).a \
 	   debian/tmp/usr/lib/libboost_unit_test_framework$(suffix).so
+	dh_link -plibboost-test-dev \
+	   usr/lib/libboost_prg_exec_monitor$(suffix).a \
+	   usr/lib/libboost_prg_exec_monitor.a \
+	   usr/lib/libboost_prg_exec_monitor$(suffix).so \
+	   usr/lib/libboost_prg_exec_monitor.so \
+	   usr/lib/libboost_test_exec_monitor$(suffix).a \
+	   usr/lib/libboost_test_exec_monitor.a \
+	   usr/lib/libboost_test_exec_monitor$(suffix).so \
+	   usr/lib/libboost_test_exec_monitor.so \
+	   usr/lib/libboost_unit_test_framework$(suffix).a \
+	   usr/lib/libboost_unit_test_framework.a \
+	   usr/lib/libboost_unit_test_framework$(suffix).so \
+	   usr/lib/libboost_unit_test_framework.so
 
 
 	# package libboost-thread$(SOVERSION)
@@ -227,6 +264,9 @@ install: build
 	   debian/libboost-thread-dev/usr/include/boost
 	dh_install -plibboost-thread-dev --autodest \
 	   debian/tmp/usr/lib/libboost_thread$(suffix).so
+	dh_link -plibboost-thread-dev \
+	   usr/lib/libboost_thread$(suffix).so \
+	   usr/lib/libboost_thread.so
 
 
 # This single target is used to build all the packages, all at once, or
