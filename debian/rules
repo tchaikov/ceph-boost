@@ -21,26 +21,25 @@ SOVERSION=1.29.0
 # Locations of static libs.
 static_graph = libs/graph/src/libbgl-viz.a
 static_regex = dbuild/libs/regex/build/bin-stage/libboost_regex.a
-static_thread = dbuild/libs/thread/build/bin/libboost_thread.a/gcc-stlport/release/runtime-link-dynamic/threading-multi/libboost_thread.a
-static_signals = dbuild/libs/signals/build/bin/libboost_signals.a/gcc-stlport/release/runtime-link-dynamic/libboost_signals.a
-static_test1 = dbuild/libs/test/build/bin/libprg_exec_monitor.a/gcc-stlport/release/runtime-link-dynamic/libprg_exec_monitor.a
-static_test2 = dbuild/libs/test/build/bin/libtest_exec_monitor.a/gcc-stlport/release/runtime-link-dynamic/libtest_exec_monitor.a
-static_test3 = dbuild/libs/test/build/bin/libunit_test_framework.a/gcc-stlport/release/runtime-link-dynamic/libunit_test_framework.a
+static_thread = dbuild/libs/thread/build/bin/libboost_thread.a/gcc/release/runtime-link-dynamic/threading-multi/libboost_thread.a
+static_signals = dbuild/libs/signals/build/bin/libboost_signals.a/gcc/release/runtime-link-dynamic/libboost_signals.a
+static_test1 = dbuild/libs/test/build/bin/libprg_exec_monitor.a/gcc/release/runtime-link-dynamic/libprg_exec_monitor.a
+static_test2 = dbuild/libs/test/build/bin/libtest_exec_monitor.a/gcc/release/runtime-link-dynamic/libtest_exec_monitor.a
+static_test3 = dbuild/libs/test/build/bin/libunit_test_framework.a/gcc/release/runtime-link-dynamic/libunit_test_framework.a
 
 
 # locations of shared libs.
 shared_graph = libs/graph/src/libbgl-viz.so.$(SOVERSION)
 shared_python = dbuild/libs/python/build/bin-stage/libboost_python.so.$(SOVERSION)
 shared_regex = dbuild/libs/regex/build/bin-stage/libboost_regex.so.$(SOVERSION)
-shared_signals = dbuild/libs/signals/build/bin/libboost_signals.so/gcc-stlport/release/runtime-link-dynamic/shared-linkable-true/libboost_signals.so.$(SOVERSION)
+shared_signals = dbuild/libs/signals/build/bin/libboost_signals.so/gcc/release/runtime-link-dynamic/shared-linkable-true/libboost_signals.so.$(SOVERSION)
 
 
 htmldir = debian/libboost-doc/usr/share/doc/libboost-doc/HTML
 
 bjam = tools/build/jam_src/bin/bjam
 
-JAM = $(bjam) -sTOOLS=gcc-stlport -sBUILD=release \
-	-sSTLPORT_ROOT=/usr/include \
+JAM = $(bjam) -sTOOLS=gcc -sBUILD=release \
 	-sBOOST_ROOT=. -sALL_LOCATE_TARGET=`pwd`/dbuild \
 	-sPYTHON_VERSION=2.2 -sPYTHON_ROOT=/usr \
 	-d2
@@ -110,7 +109,7 @@ install: build
 	cat debian/libboost-doc.htmlfiles | xargs cp --target-directory=$(htmldir) --parents
 
 	# package libboost-graph$(SOVERSION)
-	cp $(shared_graph) debian/libboost-graph$(SOVERSION)/usr/lib
+	cp $(shared_graph) debian/libboost-graph$(SOVERSION)c102/usr/lib
 
 	# package libboost-graph-dev
 	mkdir -p debian/libboost-graph-dev/usr/include/boost
@@ -121,7 +120,7 @@ install: build
 	   debian/libboost-graph-dev/usr/lib/libbgl-viz.so
 
 	# package libboost-python$(SOVERSION)
-	cp $(shared_python) debian/libboost-python$(SOVERSION)/usr/lib
+	cp $(shared_python) debian/libboost-python$(SOVERSION)c102/usr/lib
 
 	# package libboost-python-dev
 	mkdir -p debian/libboost-python-dev/usr/include/boost
@@ -131,7 +130,7 @@ install: build
 	   debian/libboost-python-dev/usr/lib/libboost_python.so
 
 	# package libboost-regex$(SOVERSION)
-	cp $(shared_regex) debian/libboost-regex$(SOVERSION)/usr/lib
+	cp $(shared_regex) debian/libboost-regex$(SOVERSION)c102/usr/lib
 
 	# package libboost-regex-dev
 	mkdir -p debian/libboost-regex-dev/usr/include/boost
@@ -142,7 +141,7 @@ install: build
 	   debian/libboost-regex-dev/usr/lib/libboost_regex.so
 
 	# package libboost-signals$(SOVERSION)
-	cp $(shared_signals) debian/libboost-signals$(SOVERSION)/usr/lib
+	cp $(shared_signals) debian/libboost-signals$(SOVERSION)c102/usr/lib
 
 	# package libboost-signals-dev
 	mkdir -p debian/libboost-signals-dev/usr/include/boost

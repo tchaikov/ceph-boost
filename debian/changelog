@@ -1,3 +1,10 @@
+boost (1.29.0-3) unstable; urgency=low
+
+  * Migrate to GCC 3.2.  Closes: #167030, #176269.
+    - Do not build with stlport.
+
+ -- Steve M. Robbins <smr@debian.org>  Sun, 12 Jan 2003 23:47:19 -0500
+
 boost (1.29.0-2) unstable; urgency=low
 
   * debian/rules: Install Boost.Test static libs.  Closes: #167106.

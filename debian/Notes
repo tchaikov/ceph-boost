@@ -4,11 +4,12 @@
 graph	static 	shared
 python		shared
 regex	static	shared
-thread	static
 signals	static	shared
+test    static
+thread	static
 
-
-
+The static-only libs are incorporated into boost-dev
+package.
 
 
 	Changes to Upstream Sources
@@ -18,7 +19,7 @@ signals	static	shared
   - use <endian.h>
 
 * libs/graph/src/Makefile
-  - build using -I/usr/include/stlport, optimization and no debugging
+  - build using optimization and no debugging
   - disable rules that invoke yacc
   - do not clean the yacc-built files
 
@@ -26,33 +27,19 @@ signals	static	shared
 * libs/graph/src/graphviz_graph_parser.cpp
   - add std:: prefix
 
-* tools/build/gcc-stlport-tools.jam
-  - use "-lstlport" for static linking
-
 
 
 	STLPort and GCC 3
 	-----------------
 
-The Boost libraries depend on a conforming stdc++ library.  I tried
-building boost using GCC 2.95.x (the default on most Debian
-architectures as of this writing), and it fails some of the regression
-tests.  However, using the same compiler plus STLPort suffices to pass
-the regression tests.  Thus Boost is built using STLPort and the
-packages depend on the STLPort packages.
-
-See http://www.boost.org/status/cs-linux.html.
-
-It is also true that GCC 3 passes the regression testing, so when
-that is default everywhere I'll no longer build with stlport.
-
-If you prefer to use Boost with GCC 3, you need to get the sources and
-rebuild it yourself.  I'm afraid that requires hacking the following
-files: debian/control, debian/rules, and tools/build/debian-tools.jam.
+Boost built using GCC 3 passes the regression testing.  This is
+the default GCC now, so stlport is no longer used.
 
 
 	Documentation
 	-------------
+
+TODO: httrack is now in debian, so this can be revised...
 
 I couldn't figure out the correct wget options to copy the local tree
 while not downloading stuff from other sites.  Xavier Roche <roche@httrack.com>
