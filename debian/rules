@@ -19,25 +19,25 @@ export DH_OPTIONS
 SOVERSION=1.30.2
 
 # Locations of static libs.
-static_date_time = dbuild/libs/date_time/build/bin/libboost_date_time.a/gcc/release/runtime-link-dynamic/libboost_date_time.a
-static_filesystem = dbuild/libs/filesystem/build/bin/libboost_filesystem.a/gcc/release/runtime-link-dynamic/libboost_filesystem.a
+static_date_time = dbuild/libs/date_time/build/bin/libboost_date_time.a/gcc/release/runtime-link-dynamic/threading-multi/libboost_date_time.a
+static_filesystem = dbuild/libs/filesystem/build/bin/libboost_filesystem.a/gcc/release/runtime-link-dynamic/threading-multi/libboost_filesystem.a
 static_graph = libs/graph/src/libbgl-viz.a
 static_regex = dbuild/libs/regex/build/bin-stage/libboost_regex.a
-static_signals = dbuild/libs/signals/build/bin/libboost_signals.a/gcc/release/runtime-link-dynamic/libboost_signals.a
-static_test1 = dbuild/libs/test/build/bin/libboost_prg_exec_monitor.a/gcc/release/runtime-link-dynamic/libboost_prg_exec_monitor.a
-static_test2 = dbuild/libs/test/build/bin/libboost_test_exec_monitor.a/gcc/release/runtime-link-dynamic/libboost_test_exec_monitor.a
-static_test3 = dbuild/libs/test/build/bin/libboost_unit_test_framework.a/gcc/release/runtime-link-dynamic/libboost_unit_test_framework.a
+static_signals = dbuild/libs/signals/build/bin/libboost_signals.a/gcc/release/runtime-link-dynamic/threading-multi/libboost_signals.a
+static_test1 = dbuild/libs/test/build/bin/libboost_prg_exec_monitor.a/gcc/release/runtime-link-dynamic/threading-multi/libboost_prg_exec_monitor.a
+static_test2 = dbuild/libs/test/build/bin/libboost_test_exec_monitor.a/gcc/release/runtime-link-dynamic/threading-multi/libboost_test_exec_monitor.a
+static_test3 = dbuild/libs/test/build/bin/libboost_unit_test_framework.a/gcc/release/runtime-link-dynamic/threading-multi/libboost_unit_test_framework.a
 
 
 # locations of shared libs.
-shared_date_time = dbuild/libs/date_time/build/bin/libboost_date_time.so/gcc/release/runtime-link-dynamic/shared-linkable-true/libboost_date_time.so.$(SOVERSION)
+shared_date_time = dbuild/libs/date_time/build/bin/libboost_date_time.so/gcc/release/runtime-link-dynamic/shared-linkable-true/threading-multi/libboost_date_time.so.$(SOVERSION)
 shared_graph = libs/graph/src/libbgl-viz.so.$(SOVERSION)
 shared_python = dbuild/libs/python/build/bin-stage/libboost_python.so.$(SOVERSION)
 shared_regex = dbuild/libs/regex/build/bin-stage/libboost_regex.so.$(SOVERSION)
-shared_signals = dbuild/libs/signals/build/bin/libboost_signals.so/gcc/release/runtime-link-dynamic/shared-linkable-true/libboost_signals.so.$(SOVERSION)
-shared_test1 = dbuild/libs/test/build/bin/libboost_prg_exec_monitor.so/gcc/release/runtime-link-dynamic/shared-linkable-true/libboost_prg_exec_monitor.so.$(SOVERSION)
-shared_test2 = dbuild/libs/test/build/bin/libboost_test_exec_monitor.so/gcc/release/runtime-link-dynamic/shared-linkable-true/libboost_test_exec_monitor.so.$(SOVERSION)
-shared_test3 = dbuild/libs/test/build/bin/libboost_unit_test_framework.so/gcc/release/runtime-link-dynamic/shared-linkable-true/libboost_unit_test_framework.so.$(SOVERSION)
+shared_signals = dbuild/libs/signals/build/bin/libboost_signals.so/gcc/release/runtime-link-dynamic/shared-linkable-true/threading-multi/libboost_signals.so.$(SOVERSION)
+shared_test1 = dbuild/libs/test/build/bin/libboost_prg_exec_monitor.so/gcc/release/runtime-link-dynamic/shared-linkable-true/threading-multi/libboost_prg_exec_monitor.so.$(SOVERSION)
+shared_test2 = dbuild/libs/test/build/bin/libboost_test_exec_monitor.so/gcc/release/runtime-link-dynamic/shared-linkable-true/threading-multi/libboost_test_exec_monitor.so.$(SOVERSION)
+shared_test3 = dbuild/libs/test/build/bin/libboost_unit_test_framework.so/gcc/release/runtime-link-dynamic/shared-linkable-true/threading-multi/libboost_unit_test_framework.so.$(SOVERSION)
 shared_thread = dbuild/libs/thread/build/bin/libboost_thread.so/gcc/release/runtime-link-dynamic/shared-linkable-true/threading-multi/libboost_thread.so.$(SOVERSION)
 
 
@@ -47,7 +47,7 @@ htmldir = debian/libboost-doc/usr/share/doc/libboost-doc/HTML
 
 bjam = tools/build/jam_src/bjam
 
-JAM = $(bjam) -sTOOLS=gcc -sBUILD="release <define>_REENTRANT" \
+JAM = $(bjam) -sTOOLS=gcc -sBUILD="release <define>_REENTRANT <threading>multi" \
 	-sBOOST_ROOT=. -sALL_LOCATE_TARGET=`pwd`/dbuild \
 	-sPYTHON_VERSION=2.2 -sPYTHON_ROOT=/usr \
 	-d2

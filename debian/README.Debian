@@ -39,6 +39,16 @@ There is extensive documentation available in the libboost-doc
 package and at www.boost.org.
 
 
+	Threaded Applications
+	---------------------
+
+You need to specify -D_REENTRANT at compile time to build
+threaded applications.  
+
+This behaviour changed in boost 1.30.2; prior versions mistakenly
+did not require that symbol _REENTRANT be defined.
+
+
 		Example Code
 		------------
 
@@ -60,7 +70,7 @@ directory under
 		----------
 
 Boost.Python is not compatible with Python 2.3. 
-The boost website has this bit of advice:
+The boost website has this bit of advice (circa August 2003):
 
     Boost 1.31.0, which will be compatible with Python 2.3, is due out
     shortly. In the meantime, if you need Python 2.3 compatibility, we
@@ -87,41 +97,8 @@ standard C++ library that came with GCC 2.x was sufficiently buggy to
 cause problems with boost.  STLport was a better implementation of STL
 and enabled boost to function.
 
-Debian now uses GCC 3.2.  The standard C++ library has improved enough
-to use with boost, so I dropped STLport.  
+Debian now uses GCC 3.2 (or newer).  The standard C++ library has
+improved enough to use with boost, so I dropped STLport.
 
 
-	But I need the GCC 2 packages
-	-----------------------------
-
-The old boost packages are gone from the archive.  If you need boost
-1.29.0-2, you can find a copy of the sources and i386 debs at
-
-    http://people.debian.org/~smr/boost
-
-If you're on an i386 machine, just take all the debs and install them.
-
-If you're on a different architecture, take these three files
-
-    boost_1.29.0.orig.tar.gz
-    boost_1.29.0-2.diff.gz
-    boost_1.29.0-2.dsc 
-
-and run
-
-    dpkg-source -x boost_1.29.0-2.dsc 
-    cd boost-1.29.0
-    debuild -b
-
-to generate the debs.
-
-Before you install the old debs, you'll need to remove the "c102"
-packages first.  You also need to downgrade the STLport packages
-to the last GCC 2 version.
-
-You cannot link together code compiled with different C++ compilers.
-Either you use only GCC 2 or only GCC 3.  This goes for all your
-libraries.
-
-
- -- Steve M. Robbins <smr@debian.org>, Sun Oct 12 12:28:47 2003
+ -- Steve M. Robbins <smr@debian.org>, Sat Jan 31 17:44:07 2004
