@@ -1,9 +1,12 @@
 boost (1.32.0-3) unstable; urgency=low
 
   * debian/control: libboost-dev now suggests also
-    libboost-program-options-dev.
+    libboost-program-options-dev and libboost-serialization-dev.
 
- --
+  * debian/control, debian/rules: added package libboost-serialization-dev.
+    closes: #292596.
+
+ -- Domenico Andreoli <cavok@debian.org>  Fri, 28 Jan 2005 11:03:21 +0100
 
 boost (1.32.0-2) unstable; urgency=low
 
