@@ -46,7 +46,9 @@ $(bjam):
 	cd tools/build/jam_src && sh build.sh gcc && mv bin.*/bjam .
 
 $(bjam_man):
-	docbook-to-man tools/build/jam_src/debian/jam.man.sgml > $(bjam_man)
+	docbook-to-man tools/build/jam_src/debian/jam.man.sgml > $(bjam_man).tmp
+	sed -e 's/jam /bjam /g' -e 's/JAM /BJAM /g' -e 's#doc/jam#doc/bjam#g' < $(bjam_man).tmp > $(bjam_man)
+	rm -f $(bjam_man).tmp
 
 build: build-stamp
 build-stamp: $(bjam) $(bjam_man)
