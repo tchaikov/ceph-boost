@@ -1,4 +1,4 @@
-boost (1.31.0-7) unstable; urgency=high
+boost (1.31.0-7) unstable; urgency=medium
 
   * boost/spirit/core/assert.hpp: fixed typo in BOOST_SPIRIT_ASSERT
     macro definition (from upstream CVS).  Closes: #267991.
