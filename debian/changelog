@@ -1,9 +1,11 @@
 boost (1.31.0-5) unstable; urgency=low
 
-  * boost-python shared library is now linked to libpython2.3
-    (closes: #243089).
+  * libs/python/build/Jamfile: boost-python shared library is now linked
+    to libpython2.3 (closes: #243089).
+
   * boost/graph/isomorphism.hpp: changed type of u1 and u2 in edge_cmp
     from vertex1_t to int (closes: #245390).
+
   * boost/format/internals.hpp: changed format_item::truncate_ 's type
     from int to streamsize (closes: #247643).
 
