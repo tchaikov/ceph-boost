@@ -6,7 +6,10 @@ boost (1.31.0-7) unstable; urgency=high
   * libs/graph/src/Makefile: uses -O3 instead of -O to work around
     gcc-3.3 bug #248207 on amd64.  Closes: #270156.
 
- --
+  * Added random_device.cpp as example file of libboost-dev package
+    and added a note in libboost-dev's README.Debian.  Closes: #261719.
+
+ -- Domenico Andreoli <cavok@debian.org>  Thu,  9 Sep 2004 16:06:48 +0200
 
 boost (1.31.0-6) unstable; urgency=low
 
