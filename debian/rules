@@ -23,6 +23,10 @@ static_graph = libs/graph/src/libbgl-viz.a
 static_regex = dbuild/libs/regex/build/bin-stage/libboost_regex.a
 static_thread = dbuild/libs/thread/build/bin/libboost_thread.a/gcc-stlport/release/runtime-link-dynamic/threading-multi/libboost_thread.a
 static_signals = dbuild/libs/signals/build/bin/libboost_signals.a/gcc-stlport/release/runtime-link-dynamic/libboost_signals.a
+static_test1 = dbuild/libs/test/build/bin/libprg_exec_monitor.a/gcc-stlport/release/runtime-link-dynamic/libprg_exec_monitor.a
+static_test2 = dbuild/libs/test/build/bin/libtest_exec_monitor.a/gcc-stlport/release/runtime-link-dynamic/libtest_exec_monitor.a
+static_test3 = dbuild/libs/test/build/bin/libunit_test_framework.a/gcc-stlport/release/runtime-link-dynamic/libunit_test_framework.a
+
 
 # locations of shared libs.
 shared_graph = libs/graph/src/libbgl-viz.so.$(SOVERSION)
@@ -97,6 +101,9 @@ install: build
 	rm -f debian/libboost-dev/usr/include/boost/pool/detail/*.m4
 	rm -f debian/libboost-dev/usr/include/boost/pool/detail/*.sh
 	cp $(static_thread) debian/libboost-dev/usr/lib
+	cp $(static_test1) debian/libboost-dev/usr/lib
+	cp $(static_test2) debian/libboost-dev/usr/lib
+	cp $(static_test3) debian/libboost-dev/usr/lib
 
 	# package libboost-doc
 	mkdir -p $(htmldir)
