@@ -45,6 +45,18 @@ Description: Boost.org libraries documentation
  .
   Homepage: http://www.boost.org/libs/
 
+Package: libboost-dbg
+Architecture: any
+Section: libdevel
+Depends: libboost-dev
+Description: Boost.org libraries with debug symbols
+ Part of the Boost.org library collection.
+ .
+ These libraries are built with debug symbols. They are useful to debug
+ programs which use Boost.
+ .
+  Homepage: http://www.boost.org/
+
 Package: libboost-date-time1.32.0
 Architecture: any
 Section: libs
