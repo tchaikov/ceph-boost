@@ -259,6 +259,19 @@ install: build
 	   usr/lib/libboost_regex.so
 
 
+	# package libboost-serialization-dev
+	mv debian/libboost-dev/usr/include/boost/*serialization* \
+	   debian/libboost-serialization-dev/usr/include/boost
+	dh_install -plibboost-serialization-dev --autodest \
+	   debian/tmp/usr/lib/libboost_serialization$(release_suffix).a \
+	   debian/tmp/usr/lib/libboost_wserialization$(release_suffix).a
+	dh_link -plibboost-serialization-dev \
+	   usr/lib/libboost_serialization$(release_suffix).a \
+	   usr/lib/libboost_serialization.a \
+	   usr/lib/libboost_wserialization$(release_suffix).a \
+	   usr/lib/libboost_wserialization.a
+
+
 	# package libboost-signals$(SOVERSION)
 	dh_install -plibboost-signals$(SOVERSION) --autodest \
 	   debian/tmp/usr/lib/libboost_signals$(release_suffix).so.$(SOVERSION)
