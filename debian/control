@@ -4,7 +4,7 @@ Priority: optional
 Maintainer: Steve M. Robbins <smr@debian.org>
 Uploaders: Domenico Andreoli <cavok@debian.org>
 Standards-Version: 3.5.2
-Build-Depends: python2.2-dev, debhelper (>= 3), flex-old, bison
+Build-Depends: python2.3-dev, debhelper (>= 4), flex-old, bison
 
 Package: libboost-dev
 Architecture: any
@@ -21,7 +21,7 @@ Description: Boost.org libraries development files
  upcoming C++ Standard Library Technical Report.
  .
  For the following subprojects separate packages exist: 
- graph, python, regex, and signals.
+ date-time, filesystem, graph, python, regex, signals, test, and thread.
  .
  For more information on boost visit the project homepage
  http://www.boost.org/ .
@@ -47,7 +47,7 @@ Description: Boost.org libraries documentation
  For more information on boost visit the project homepage
  http://www.boost.org/ .
 
-Package: libboost-date-time1.30.2
+Package: libboost-date-time1.31.0
 Section: devel
 Architecture: any
 Depends: ${shlibs:Depends}
@@ -63,7 +63,7 @@ Description: Set of date-time libraries based on generic programming concepts
 Package: libboost-date-time-dev
 Section: libdevel
 Architecture: any
-Depends: libboost-dev (=${Source-Version}), libboost-date-time1.30.2 (=${Source-Version})
+Depends: libboost-dev (=${Source-Version}), libboost-date-time1.31.0 (=${Source-Version})
 Replaces: libboost-dev (<< 1.30.0-1)
 Description: Set of date-time libraries based on generic programming concepts
  Part of the Boost.org library collection.
@@ -74,7 +74,35 @@ Description: Set of date-time libraries based on generic programming concepts
  For more information on Date-Time visit the project homepage
  http://www.boost.org/libs/date_time/doc/index.html .
 
-Package: libboost-graph1.30.2
+Package: libboost-filesystem1.31.0
+Section: devel
+Architecture: any
+Depends: ${shlibs:Depends}
+Description: Filesystem operations (portable paths, iteration over directories, etc) in C++
+ Part of the Boost.org library collection.
+ .
+ The Boost Filesystem Library provides portable facilities to query and 
+ manipulate paths, files, and directories.  The goal is to
+ facilitate portable script-like operations from within C++ programs.
+ .
+ For more information visit the project homepage
+ http://boost.org/libs/filesystem/doc/index.htm .
+
+Package: libboost-filesystem-dev
+Section: libdevel
+Architecture: any
+Depends: libboost-dev (=${Source-Version}), libboost-filesystem1.31.0 (=${Source-Version})
+Description: Filesystem operations (portable paths, iteration over directories, etc) in C++
+ Part of the Boost.org library collection.
+ .
+ The Boost Filesystem Library provides portable facilities to query and 
+ manipulate paths, files, and directories.  The goal is to
+ facilitate portable script-like operations from within C++ programs.
+ .
+ For more information visit the project homepage
+ http://boost.org/libs/filesystem/doc/index.htm .
+
+Package: libboost-graph1.31.0
 Section: devel
 Architecture: any
 Depends: ${shlibs:Depends}
@@ -93,7 +121,7 @@ Description: Generic graph components and algorithms in C++
 Package: libboost-graph-dev
 Section: libdevel
 Architecture: any
-Depends: libboost-dev (=${Source-Version}), libboost-graph1.30.2 (=${Source-Version})
+Depends: libboost-dev (=${Source-Version}), libboost-graph1.31.0 (=${Source-Version})
 Description: Generic graph components and algorithms in C++
  Part of the Boost.org library collection.
  .
@@ -106,7 +134,7 @@ Description: Generic graph components and algorithms in C++
  For more information on graph visit the project homepage
  http://www.boost.org/libs/graph/doc/index.html .
 
-Package: libboost-python1.30.2
+Package: libboost-python1.31.0
 Section: python
 Architecture: any
 Depends: ${shlibs:Depends}
@@ -130,7 +158,7 @@ Description: Boost Python Library
 Package: libboost-python-dev
 Section: libdevel
 Architecture: any
-Depends: libboost-dev (=${Source-Version}), libboost-python1.30.2 (=${Source-Version}), python2.2-dev
+Depends: libboost-dev (=${Source-Version}), libboost-python1.31.0 (=${Source-Version}), python2.3-dev
 Description: The Boost Python Library development files
  Part of the Boost.org library collection.
  .
@@ -148,7 +176,7 @@ Description: The Boost Python Library development files
  For more information on python library visit the project homepage
  http://www.boost.org/libs/python/ .
 
-Package: libboost-regex1.30.2
+Package: libboost-regex1.31.0
 Architecture: any
 Section: devel
 Depends: ${shlibs:Depends}
@@ -172,7 +200,7 @@ Description: Regular expression library for C++
 Package: libboost-regex-dev
 Architecture: any
 Section: libdevel
-Depends: libboost-dev (= ${Source-Version}), libboost-regex1.30.2 (= ${Source-Version})
+Depends: libboost-dev (= ${Source-Version}), libboost-regex1.31.0 (= ${Source-Version})
 Description: Regular expression library for C++
  Part of the Boost.org library collection.
  .
@@ -190,7 +218,7 @@ Description: Regular expression library for C++
  For more information on regex visit the project homepage
  http://www.boost.org/libs/regex/ .
 
-Package: libboost-signals1.30.2
+Package: libboost-signals1.31.0
 Architecture: any
 Section: devel
 Depends: ${shlibs:Depends}
@@ -209,7 +237,7 @@ Description: Managed signals and slots library for C++
 Package: libboost-signals-dev
 Architecture: any
 Section: libdevel
-Depends: libboost-dev (= ${Source-Version}), libboost-signals1.30.2 (= ${Source-Version})
+Depends: libboost-dev (= ${Source-Version}), libboost-signals1.31.0 (= ${Source-Version})
 Description: Managed signals and slots library for C++
  Part of the Boost.org library collection.
  .
@@ -222,7 +250,7 @@ Description: Managed signals and slots library for C++
  For more information on signals visit the project homepage
  http://www.boost.org/libs/signals/ .
 
-Package: libboost-test1.30.2
+Package: libboost-test1.31.0
 Architecture: any
 Section: devel
 Depends: ${shlibs:Depends}
@@ -240,7 +268,7 @@ Description: Components for writing and executing test suites
 Package: libboost-test-dev
 Architecture: any
 Section: libdevel
-Depends: libboost-dev (= ${Source-Version}), libboost-test1.30.2 (= ${Source-Version})
+Depends: libboost-dev (= ${Source-Version}), libboost-test1.31.0 (= ${Source-Version})
 Replaces: libboost-dev (<< 1.30.0-1)
 Description: Components for writing and executing test suites
  Part of the Boost.org library collection.  The library contains
@@ -253,7 +281,7 @@ Description: Components for writing and executing test suites
  For more information on Boost.Test visit the project homepage
  http://www.boost.org/libs/test/doc/index.htm .
 
-Package: libboost-thread1.30.2
+Package: libboost-thread1.31.0
 Architecture: any
 Section: devel
 Depends: ${shlibs:Depends}
@@ -271,7 +299,7 @@ Description: Portable C++ multi-threading
 Package: libboost-thread-dev
 Architecture: any
 Section: libdevel
-Depends: libboost-dev (= ${Source-Version}), libboost-thread1.30.2 (= ${Source-Version})
+Depends: libboost-dev (= ${Source-Version}), libboost-thread1.31.0 (= ${Source-Version})
 Replaces: libboost-dev (<< 1.30.0-1)
 Description: Portable C++ multi-threading
  Part of the Boost.org library collection.

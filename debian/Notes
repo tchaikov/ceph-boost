@@ -2,16 +2,16 @@
 	---------------
 
 date_time	static	shared
-filesystem	static	-
+filesystem	static	shared
 graph		static 	shared
 python		[1]	shared
 regex		static	shared
 signals		static	shared
-test    	static	shared
-thread		-	shared (comprises 3 libraries)
+test    	static	shared (comprises 3 libraries)
+thread		-	shared
 
-The static-only libs are incorporated into boost-dev
-package.
+Any static-only libs (none at the present time) are incorporated into
+boost-dev package.
 
 [1] built but not useful, thus not distributed.
 
@@ -78,10 +78,21 @@ localhost to get the source tree
 	test -f /usr/local/src/devel/boost/boost-cvs-local/$f && echo $f; 
     done > documentation-files
 
+** On my machine, "http://localhost/lsrc" resolves to "/usr/local/src",
+   which is where I unpack and build boost.
+
 * need to symlink .../HTML/boost to /usr/include/boost; when put the symlink
   into the deb, it got converted to a directory during installation; use
   postinst script to do it
 
 * use -Nlibboost-doc with dh_compress to inhibit compressing files in the HTML
   tree
+
+
+	Examples
+	--------
+
+List of example directories obtained using
+
+    find * -name 'example*' -type d > debian/example-files
 

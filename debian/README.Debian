@@ -21,7 +21,7 @@ static) and the corresponding "-l" flag.
   Component	Link Flag			Library Type
   ---------	---------			------------
   date_time     -lboost_date_time      		static	shared
-  filesystem	-lboost_filesystem		static
+  filesystem	-lboost_filesystem		static  shared
   Boost.Graph	-lbgl-viz			static	shared
   Boost.Python	-lboost_python				shared
   Boost.Regex	-lboost_regex			static	shared
@@ -66,20 +66,6 @@ directory under
 
 
 
-		Python 2.3
-		----------
-
-Boost.Python is not compatible with Python 2.3. 
-The boost website has this bit of advice (circa August 2003):
-
-    Boost 1.31.0, which will be compatible with Python 2.3, is due out
-    shortly. In the meantime, if you need Python 2.3 compatibility, we
-    suggest you get a CVS snapshot.
-
-    [http://www.boost.org/libs/python/doc/index.html]
-
-
-
 		STLport
 		-------
 
@@ -98,7 +84,7 @@ cause problems with boost.  STLport was a better implementation of STL
 and enabled boost to function.
 
 Debian now uses GCC 3.2 (or newer).  The standard C++ library has
-improved enough to use with boost, so I dropped STLport.
+improved enough to use with boost, so STLport is not longer used.
 
 
- -- Steve M. Robbins <smr@debian.org>, Sat Jan 31 17:44:07 2004
+ -- Steve M. Robbins <smr@debian.org>, Sat Feb 21 16:21:30 2004

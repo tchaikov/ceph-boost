@@ -1,8 +1,8 @@
 boost (1.31.0-1) unstable; urgency=low
 
   * New upstream version.
-  
- -- Steve M. Robbins <smr@debian.org>  Sun, 22 Feb 2004 00:48:05 -0500
+
+ -- Steve M. Robbins <smr@debian.org>  Sat, 21 Feb 2004 01:10:21 -0500
 
 boost (1.30.2-3) unstable; urgency=low
 
