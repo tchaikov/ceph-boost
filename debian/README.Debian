@@ -24,6 +24,7 @@ static) and the corresponding "-l" flag.
   Boost.Program_options  -lboost_program_options      static  shared
   Boost.Python           -lboost_python                       shared
   Boost.Regex            -lboost_regex                static  shared
+  Boost.Serialization    -lboost_serialization        static
   Boost.Signals          -lboost_signals              static  shared
   Boost.Test             -lboost_prg_exec_monitor     static  shared
                          -lboost_test_exec_monitor    static  shared
