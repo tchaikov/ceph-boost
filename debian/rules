@@ -38,6 +38,8 @@ bjam_man = debian/bjam.1
 
 JAM = $(bjam) -d2 \
 	-sTOOLS=gcc \
+	-sGCC=gcc \
+	-sGXX=g++ \
 	-sBUILD="release <define>_REENTRANT <threading>multi" \
 	-sPYTHON_VERSION=2.3 \
 	-sPYTHON_ROOT=/usr
