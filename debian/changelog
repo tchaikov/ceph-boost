@@ -1,3 +1,18 @@
+boost (1.27.0-4) unstable; urgency=low
+
+  * libs/graph/src/Makefile: build graph lib with optimization.
+  
+  * control: Do not build-depend on libstlport4.5-dbg, nor on texinfo.
+
+  * Split docs into new libboost-doc package, suggested by libboost-dev.
+    The -doc package replaces /usr/share/doc-base/Boost from the former -dev
+    package.  Complete the list of documentation files.  Closes: #143128.
+  
+  * debian/README.Debian: add note for newbies (thanks, Laurent Bonnaud).  
+    Closes: #142634.
+  
+ -- Steve M. Robbins <smr@debian.org>  Sat, 20 Apr 2002 19:31:38 -0400
+
 boost (1.27.0-3) unstable; urgency=low
 
   * Build shared library packages.

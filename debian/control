@@ -3,13 +3,13 @@ Section: libs
 Priority: optional
 Maintainer: Steve M. Robbins <smr@debian.org>
 Standards-Version: 3.5.2
-Build-Depends: libstlport4.5-dev, libstlport4.5-dbg (>>4.5.1-0.1), python2.1-dev, debhelper, flex, bison, texinfo
+Build-Depends: libstlport4.5-dev, python2.1-dev, debhelper, flex, bison
 
 Package: libboost-dev
 Architecture: any
 Section: devel
 Depends: libstdc++-dev, libstlport4.5-dev
-Suggests: libboost-regex-dev, libboost-python-dev, libboost-graph-dev
+Suggests: libboost-doc, libboost-regex-dev, libboost-python-dev, libboost-graph-dev
 Description: Boost.org libraries development files
  The Boost web site provides free, peer-reviewed, portable C++ source
  libraries. The emphasis is on libraries which work well with the C++
@@ -21,6 +21,24 @@ Description: Boost.org libraries development files
  .
  For the following subprojects separate packages exist: regex, python,
  graph.
+ .
+ For more information on boost visit the project homepage
+ http://www.boost.org/ .
+
+Package: libboost-doc
+Architecture: all
+Section: devel
+Replaces: libboost-dev (<< 1.27.0-4)
+Description: Boost.org libraries documentation
+ The Boost web site provides free, peer-reviewed, portable C++ source
+ libraries. The emphasis is on libraries which work well with the C++
+ Standard Library. One goal is to establish "existing practice" and
+ provide reference implementations so that the Boost libraries are
+ suitable for eventual standardization. Some of the libraries have
+ already been proposed for inclusion in the C++ Standards Committee's
+ upcoming C++ Standard Library Technical Report.
+ .
+ This is documentation for the libboost-dev package.
  .
  For more information on boost visit the project homepage
  http://www.boost.org/ .

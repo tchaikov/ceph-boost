@@ -12,5 +12,5 @@ Abstract: The Boost web site provides free peer-reviewed portable
 Section: Apps/Programming
 
 Format: HTML
-Index: /usr/share/doc/libboost-dev/HTML/index.htm
-Files: /usr/share/doc/libboost-dev/HTML/*
+Index: /usr/share/doc/libboost-doc/HTML/index.htm
+Files: /usr/share/doc/libboost-doc/HTML/*

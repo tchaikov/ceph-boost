@@ -1,3 +1,18 @@
+		Getting Started
+		---------------
+
+Boost for Debian is linked with the STLPort standard C++ libraries.
+Your boost-using code must also use STLPort, so do not forget to add
+/usr/include/stlport to the compiler's search path, and link against
+the stlport library.  You can use commands similar to this one:
+
+  g++ -I/usr/include/stlport foo.cc -lboost_thread -lstlport
+
+There is extensive documentation available in the libboost-doc
+package and at www.boost.org.  See also the libboost-examples
+package.
+
+
 		STLPort and GCC 3
 		-----------------
 

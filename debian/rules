@@ -35,7 +35,7 @@ shared_python = debian-build/libs/python/build/bin/libboost_python/debian/releas
 shared_graph = libs/graph/src/libbgl-viz.so.$(SOVERSION)
 
 
-htmldir = debian/libboost-dev/usr/share/doc/libboost-dev/HTML
+htmldir = debian/libboost-doc/usr/share/doc/libboost-doc/HTML
 
 JAM = tools/build/jam_src/bin/jam -sTOOLS="debian" -sBUILD=release -sBOOST_ROOT=. -d2
 
@@ -96,10 +96,10 @@ install: build
 	rm -f debian/libboost-dev/usr/include/boost/pool/detail/*.m4
 	rm -f debian/libboost-dev/usr/include/boost/pool/detail/*.sh
 	cp $(static_thread) debian/libboost-dev/usr/lib
+
+	# package libboost-doc
 	mkdir -p $(htmldir)
-	find * -name '*.html' | xargs cp -a --parents --target-directory=$(htmldir)
-	find * -name '*.htm' | xargs cp -a --parents --target-directory=$(htmldir)
-	cp -a c++boost.gif more people $(htmldir)
+	cat debian/libboost-doc.htmlfiles | xargs cp --target-directory=$(htmldir) --parents
 
 	# package libboost-regex$(SOVERSION)
 	cp $(shared_regex) \
@@ -151,7 +151,7 @@ binary-common:
 	dh_installchangelogs
 	dh_strip
 	dh_link
-	dh_compress
+	dh_compress -Nlibboost-doc
 	dh_fixperms
 	dh_makeshlibs
 	dh_installdeb

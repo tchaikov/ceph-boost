@@ -3,6 +3,7 @@
 
 # ifndef YYSTYPE
 #  define YYSTYPE int
+#  define YYSTYPE_IS_TRIVIAL 1
 # endif
 # define	_BANG	257
 # define	_BANG_EQUALS	258
