@@ -1,3 +1,9 @@
+boost (1.31.0-9) unstable; urgency=low
+
+  * More things fixed for indirect_traits in boost/detail. 
+
+ -- Domenico Andreoli <cavok@debian.org>  Thu, 11 Nov 2004 16:59:04 +0100
+
 boost (1.31.0-8) unstable; urgency=low
 
   * Moved indirect_traits to boost/detail. Fixed things here and
