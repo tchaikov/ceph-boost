@@ -1,0 +1,24 @@
+The BOOST Python library is intended only for use in constructing
+a Python module, so only a shared library is supplied.
+
+David Abrahams, the upstream maintainer posted this to the BOOST
+mailing list.
+
+  1. AFAIK libboost_python is only useful from a shared lib (python
+  module) -- oh, I suppose you could use it for embedding python in
+  another app, but I've never tried it, and libboost_python.so would
+  work just as well, wouldn't it?
+
+  2. It was originally implemented as a static lib just because that's
+  much simpler to get right across platforms. There was no
+  libboost_python.so. Since a static lib on Unix is just an archive of
+  .o files, those .os had to be shared-linkable.
+
+  3. Eventually I made libboost_python.so as a replacement, which
+  saves lots of space in every extension module. I kept
+  libboost_python_static.a, as I've said, to keep people who were
+  attached to using the static lib happy.
+
+  Message-ID: <24af01c1c244$5b845b50$0500a8c0@boostconsulting.com>
+
+
