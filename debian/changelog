@@ -1,3 +1,9 @@
+boost (1.30.0-2) unstable; urgency=low
+
+  * debian/rules: Move httrack call to binary-indep.  Closes: #187740.
+
+ -- Steve M. Robbins <smr@debian.org>  Sat,  5 Apr 2003 18:43:08 -0500
+
 boost (1.30.0-1) unstable; urgency=low
 
   * New upstream.  Closes: #186256.

@@ -8,7 +8,7 @@ Build-Depends-Indep: httrack
 
 Package: libboost-dev
 Architecture: any
-Section: devel
+Section: libdevel
 Depends: libstdc++-dev
 Suggests: libboost-doc, libboost-graph-dev, libboost-python-dev, libboost-regex-dev, libboost-signals-dev
 Description: Boost.org libraries development files
@@ -58,7 +58,7 @@ Description: Set of date-time libraries based on generic programming concepts
  http://www.boost.org/libs/date_time/doc/index.html .
 
 Package: libboost-date-time-dev
-Section: devel
+Section: libdevel
 Architecture: any
 Depends: libboost-dev (=${Source-Version}), libboost-date-time1.30.0 (=${Source-Version})
 Replaces: libboost-dev (<< 1.30.0-1)
@@ -88,7 +88,7 @@ Description: Generic graph components and algorithms in C++
  http://www.boost.org/libs/graph/doc/index.html .
 
 Package: libboost-graph-dev
-Section: devel
+Section: libdevel
 Architecture: any
 Depends: libboost-dev (=${Source-Version}), libboost-graph1.30.0 (=${Source-Version})
 Description: Generic graph components and algorithms in C++
@@ -104,7 +104,7 @@ Description: Generic graph components and algorithms in C++
  http://www.boost.org/libs/graph/doc/index.html .
 
 Package: libboost-python1.30.0
-Section: devel
+Section: python
 Architecture: any
 Depends: ${shlibs:Depends}
 Description: Boost Python Library 
@@ -125,7 +125,7 @@ Description: Boost Python Library
  http://www.boost.org/libs/python/ .
 
 Package: libboost-python-dev
-Section: devel
+Section: libdevel
 Architecture: any
 Depends: libboost-dev (=${Source-Version}), libboost-python1.30.0 (=${Source-Version}), python2.2-dev
 Description: The Boost Python Library development files
@@ -168,7 +168,7 @@ Description: Regular expression library for C++
 
 Package: libboost-regex-dev
 Architecture: any
-Section: devel
+Section: libdevel
 Depends: libboost-dev (= ${Source-Version}), libboost-regex1.30.0 (= ${Source-Version})
 Description: Regular expression library for C++
  Part of the Boost.org library collection.
@@ -205,7 +205,7 @@ Description: Managed signals and slots library for C++
 
 Package: libboost-signals-dev
 Architecture: any
-Section: devel
+Section: libdevel
 Depends: libboost-dev (= ${Source-Version}), libboost-signals1.30.0 (= ${Source-Version})
 Description: Managed signals and slots library for C++
  Part of the Boost.org library collection.
@@ -236,7 +236,7 @@ Description: Components for writing and executing test suites
 
 Package: libboost-test-dev
 Architecture: any
-Section: devel
+Section: libdevel
 Depends: libboost-dev (= ${Source-Version}), libboost-test1.30.0 (= ${Source-Version})
 Replaces: libboost-dev (<< 1.30.0-1)
 Description: Components for writing and executing test suites
@@ -267,7 +267,7 @@ Description: Portable C++ multi-threading
 
 Package: libboost-thread-dev
 Architecture: any
-Section: devel
+Section: libdevel
 Depends: libboost-dev (= ${Source-Version}), libboost-thread1.30.0 (= ${Source-Version})
 Replaces: libboost-dev (<< 1.30.0-1)
 Description: Portable C++ multi-threading

@@ -109,15 +109,7 @@ install: build
 
 	cp $(static_filesystem) debian/libboost-dev/usr/lib
 
-	# package libboost-doc
-	mkdir -p `dirname $(htmldir)`
-	rm -rf dbuild/docs
-# -q == no questions - quiet mode
-# -Q == no log
-# -C0 == no cache
-	httrack --mirror -q -Q -C0 -O dbuild/docs --footer '' file://`pwd`/index.htm
-	d=`find dbuild/docs -name google_logo_40wht.gif`; d=`dirname $$d`; \
-	    mv $$d $(htmldir)
+	# package libboost-doc (moved to binary-indep)
 
 	# package libboost-date-time$(SOVERSION)
 	cp $(shared_date_time) debian/libboost-date-time$(SOVERSION)/usr/lib
@@ -230,7 +222,15 @@ binary-common:
 
 # Build architecture independant packages using the common target.
 binary-indep: build install
-# (Uncomment this next line if you have such packages.)
+	# package libboost-doc
+	mkdir -p `dirname $(htmldir)`
+	rm -rf dbuild/docs
+# -q == no questions - quiet mode
+# -Q == no log
+# -C0 == no cache
+	httrack --mirror -q -Q -C0 -O dbuild/docs --footer '' file://`pwd`/index.htm
+	d=`find dbuild/docs -name google_logo_40wht.gif`; d=`dirname $$d`; \
+	    mv $$d $(htmldir)
 	$(MAKE) -f debian/rules DH_OPTIONS=-i binary-common
 
 # Build architecture dependant packages using the common target.
