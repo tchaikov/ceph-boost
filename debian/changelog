@@ -1,3 +1,10 @@
+boost (1.31.0-4) unstable; urgency=low
+
+  * debian/control: libboost-python-dev now replaces old
+    libboost-dev. Closes: #243432.
+
+ -- Domenico Andreoli <cavok@debian.org>  Tue, 13 Apr 2004 20:55:24 +0200
+
 boost (1.31.0-3) unstable; urgency=low
 
   * debian/control: libboost-dev depends on libboost-python-dev.
