@@ -1,0 +1,11 @@
+#! /bin/sh
+
+set -e
+
+#DEBHELPER#
+
+if [ "$1" = "remove" ]; then
+    cd /usr/share/doc/libboost-doc/HTML
+    rm -rf boost
+fi
+
