@@ -1,0 +1,111 @@
+	Built Libraries
+	---------------
+
+              static    shared
+date_time     yes       yes
+filesystem    yes       yes
+graph         yes       yes
+python        yes*      yes
+regex         yes       yes
+signals       yes       yes
+test          yes       yes (comprises 3 libraries)
+thread        no        yes
+
+* built but not useful, thus not distributed.
+
+Any static-only libs (none at the present time) are incorporated into
+boost-dev package.
+
+
+	Thread Support
+	--------------
+
+All debian libraries are supposed to be built with _REENTRANT defined
+(policy 10.2).  For the jam-built libraries, use "<define>_REENTRANT"
+on command line in debian/rules.  For graph library, set in Makefile.
+
+
+	Debian cvs-upgrade and spirit/core
+	----------------------------------
+
+
+CVS normally ignores certain files, including ones named "core".  This
+meant that "cvs-upgrade" did not import the directory boost/spirit/core.
+
+Originally, I did not realise that this was happening.  I did realise
+that some files were not properly imported, so I added them to my local
+repository and "cvs add"ed them by hand.  The files for which I did so
+then appear only on the main trunk and not on the "source-dist" branch.
+For the 1_31_0 distribution, I figured out the problem and imported
+the whole of the upstream sources by hand,
+
+	cvs import -I '!' -ko -d -m'Imported upstream version 1.31.0.'
+	    debian/boost source-dist upstream_version_1_31_0
+
+which is basically what "cvs-upgrade" does ("cvs-upgrade -n" shows the
+steps).  This appears to have worked.  It complained about conflicts
+on many files in spirit/core, but
+
+	cvs update -jupstream_version_1_30_2 -jupstream_version_1_31_0
+
+seems to have fixed them up.
+
+I then did the same merge in my checked-out debian version of boost.
+Finally, I had to remove some files in spirit/core that no longer
+appear in 1_31_0, but were not properly removed by the merge (cvs
+update -jupstream...).
+
+
+	Changes to Upstream Sources
+	---------------------------
+
+* boost/detail/limits.hpp
+  - use <endian.h>
+
+* libs/graph/src/Makefile
+  - build using optimization and no debugging
+  - set -DYYSTYPE_IS_DECLARED=1 and -D_REENTRANT
+
+* libs/python/build/Jamfile
+  - Boost.Python shared library now links to Python library
+
+
+	STLPort and GCC 3
+	-----------------
+
+Boost built using GCC 3 passes the regression testing.  This is
+the default GCC now, so stlport is no longer used.
+
+
+	Documentation
+	-------------
+
+Generate the list of documentation files using wget going through
+localhost to get the source tree
+
+    wget -r --no-parent --domains=localhost \
+    http://localhost/lsrc/devel/boost/boost-cvs-local/index.htm
+    cd localhost/....
+    rm -rf boost
+    for f in `find * -type f`; do
+        test -f /usr/local/src/devel/boost/boost-cvs-local/$f && echo $f;
+    done > documentation-files
+
+** On my machine, "http://localhost/lsrc" resolves to "/usr/local/src",
+   which is where I unpack and build boost.
+
+* need to symlink .../HTML/boost to /usr/include/boost; when put
+  the symlink into the deb, it got converted to a directory during
+  installation; use postinst script to do it
+
+* use -Nlibboost-doc with dh_compress to inhibit compressing files in the HTML
+  tree
+
+
+	Examples
+	--------
+
+List of example directories obtained using
+
+    find * -name 'example*' -type d > debian/example-files
+

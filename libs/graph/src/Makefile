@@ -17,7 +17,7 @@ LEX		= flex
 YACC		= bison
 MV		= /bin/mv
 
-EXTRAFLAGS 	= -g 
+EXTRAFLAGS 	= -O3 -DYYSTYPE_IS_DECLARED=1 -D_REENTRANT
 
 INCLUDES	= -I$(BOOST)
 

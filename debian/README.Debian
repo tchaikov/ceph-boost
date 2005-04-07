@@ -1,0 +1,99 @@
+Help Save the World
+-------------------
+
+Boost is a fairly extensive set of libraries, of which I personally
+use but a very small part.  I greatly appreciate folks that send
+patches to the BTS.  Please do have a look at the outstanding bug
+reports and send me hints or patches if you have extra information.
+
+
+Getting Started
+---------------
+
+Many Boost components are headers only.  Others have a static library,
+a shared library, or both.
+
+The following table shows which components use a library (shared or
+static) and the corresponding "-l" flag.
+
+  Component              Link Flag                    Library Type
+  ---------              ---------                    ------------
+  date_time              -lboost_date_time            static  shared
+  filesystem             -lboost_filesystem           static  shared
+  Boost.Graph            -lbgl-viz                    static  shared
+  Boost.Program_options  -lboost_program_options      static  shared
+  Boost.Python           -lboost_python                       shared
+  Boost.Regex            -lboost_regex                static  shared
+  Boost.Serialization    -lboost_serialization        static
+  Boost.Signals          -lboost_signals              static  shared
+  Boost.Test             -lboost_prg_exec_monitor     static  shared
+                         -lboost_test_exec_monitor    static  shared
+                         -lboost_unit_test_framework  static  shared
+  Boost.Thread           -lboost_thread                       shared
+
+Most of Boost is installed using the package libboost-dev.
+The components with a shared library have separate -dev packages.
+
+There is extensive documentation available in the libboost-doc
+package and at www.boost.org.
+
+
+Threaded Applications
+---------------------
+
+You need to specify -D_REENTRANT at compile time to build
+threaded applications.
+
+This behaviour changed in boost 1.30.2; prior versions mistakenly
+did not require that symbol _REENTRANT be defined.
+
+
+Example Code
+------------
+
+All example code is shipped in libboost-doc package.
+
+Some of the example code is linked to by the documentation, and thus
+appears in a directory named
+
+  /usr/share/doc/libboost-doc/HTML/libs/*/example
+
+Example code that is not linked from the documentation appears in a
+directory under
+
+  /usr/share/doc/libboost-doc/examples/libs/
+
+
+Use of boost/nondet_random.hpp
+------------------------------
+
+The use of this header file is subject to the availability of class
+boost::random_device::impl. Boost libraries provide only an example
+implementation which the user may use to fit her needs.
+
+Such implementation is distributed by libboost-dev Debian package in
+file /usr/share/doc/libboost-dev/examples/random_device.cpp. This file is
+generally good enough for most linux users. Please add it to your build
+process before filing another bug report agains Boost Debian packages.
+
+
+STLport
+-------
+
+Debian's boost packages prior to release 1.29.0-3 were built using
+libstlport.  This is no longer the case.
+
+If you have old boost-using code, you will need to change your build
+process, removing any -I/usr/include/stlport or -llstport options.
+
+* Why the change?
+
+Until January 2003, Debian's default compiler was GCC 2.95.x.  The
+standard C++ library that came with GCC 2.x was sufficiently buggy to
+cause problems with boost.  STLport was a better implementation of STL
+and enabled boost to function.
+
+Debian now uses GCC 3.2 (or newer).  The standard C++ library has
+improved enough to use with boost, so STLport is not longer used.
+
+ -- Steve M. Robbins <smr@debian.org>, Fri Mar  5 22:42:23 2004

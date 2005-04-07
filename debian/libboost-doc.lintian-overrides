@@ -1,0 +1,2 @@
+libboost-doc: description-synopsis-starts-with-a-capital-letter
+libboost-doc: extra-license-file usr/share/doc/libboost-doc/HTML/tools/boostbook/xsl/caramel/LICENSE

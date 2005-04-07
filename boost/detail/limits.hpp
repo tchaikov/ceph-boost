@@ -54,7 +54,17 @@
 #elif defined(__i386__) || defined(__alpha__) || defined(__ia64) || defined(__ia64__)
 #define BOOST_LITTLE_ENDIAN
 #else
+
+// Added for Debian GNU/Linux systems not handled above.
+#include <endian.h>
+#if __BYTE_ORDER == __BIG_ENDIAN
+#define BOOST_BIG_ENDIAN
+#elif __BYTE_ORDER == __LITTLE_ENDIAN
+#define BOOST_LITTLE_ENDIAN
+#else
+
 #error The file boost/detail/limits.hpp needs to be set up for your CPU type.
+#endif
 #endif
 
 namespace std {

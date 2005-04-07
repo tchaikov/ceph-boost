@@ -1,0 +1,376 @@
+boost (1.32.0-6) unstable; urgency=low
+
+  * debian/control: libboost-serialization-dev now replaces libboost-dev
+    properly.
+
+ -- Domenico Andreoli <cavok@debian.org>  Thu,  7 Apr 2005 10:46:00 +0200
+
+boost (1.32.0-5) unstable; urgency=low
+
+  * debian/control: libboost-dev now suggests also
+    libboost-program-options-dev and libboost-serialization-dev.
+
+  * debian/control, debian/rules: added package libboost-serialization-dev.
+    closes: #292596.
+
+ -- Domenico Andreoli <cavok@debian.org>  Wed, 30 Mar 2005 17:56:57 +0200
+
+boost (1.32.0-4) unstable; urgency=low
+
+  * debian/rules: symbolic link to HTML/boost documentation directory
+    is now properly installed.  Closes: #290333.
+
+  * boost/test/detail/wrap_stringstream.hpp: fixed workaround (from
+    upstream CVS).  Closes: #300330.
+
+ -- Domenico Andreoli <cavok@debian.org>  Tue, 22 Mar 2005 16:44:31 +0100
+
+boost (1.32.0-2) unstable; urgency=low
+
+  * debian/rules: debug libraries are now really installed in package
+    libboost-dbg.
+
+ -- Domenico Andreoli <cavok@debian.org>  Mon, 10 Jan 2005 01:36:46 +0100
+
+boost (1.32.0-1) experimental; urgency=low
+
+  * New upstream version.  Closes: #282871.
+    - boost/pool/detail/pool_construct.inc and
+      boost/pool/detail/pool_construct_simple.inc are correctly installed
+      by package libboost-dev.  Closes: #284076.
+
+  * debian/control, debian/rules: added package libboost-dbg.
+    Closes: #279883.
+
+  * debian/control, debian/rules: added packages for Boost.Program_options.
+
+ -- Domenico Andreoli <cavok@debian.org>  Tue,  7 Dec 2004 15:22:49 +0100
+
+boost (1.31.0-9) unstable; urgency=low
+
+  * More things fixed for indirect_traits in boost/detail.
+
+ -- Domenico Andreoli <cavok@debian.org>  Thu, 11 Nov 2004 16:59:04 +0100
+
+boost (1.31.0-8) unstable; urgency=low
+
+  * Moved indirect_traits to boost/detail. Fixed things here and
+    there (from upstream CVS).  Closes: #278889.
+
+  * boost/numeric/ublas/banded.hpp: fixed gcc-3.4 compilation error.
+    Closes: #276652.
+
+  * tools/regression/run_tests.sh: fix setting of BOOST_BUILD_PATH.
+
+  * debian/control: flex is used instead of flex-old.
+
+ -- Domenico Andreoli <cavok@debian.org>  Thu, 11 Nov 2004 16:04:09 +0100
+
+boost (1.31.0-7) unstable; urgency=medium
+
+  * boost/spirit/core/assert.hpp: fixed typo in BOOST_SPIRIT_ASSERT
+    macro definition (from upstream CVS).  Closes: #267991.
+
+  * libs/graph/src/Makefile: uses -O3 instead of -O to work around
+    gcc-3.3 bug #248207 on amd64.  Closes: #270156.
+
+  * Added random_device.cpp as example file of libboost-dev package
+    and added a note in libboost-dev's README.Debian.  Closes: #261719.
+
+ -- Domenico Andreoli <cavok@debian.org>  Thu,  9 Sep 2004 16:06:48 +0200
+
+boost (1.31.0-6) unstable; urgency=low
+
+  * debian/rules: removed package bjam as it is now built from a separate
+    source package, boost-jam.
+
+  * boost/iterator/iterator_adaptor.hpp: removed the useless inclusion
+    of is_xxx.hpp (from upstream CVS).
+
+  * debian/control: libboost-dev does not depend on libboost-python-dev
+    any more.
+
+  * boost/date_time/posix_time/ptime.hpp: Add constructor from special_values
+    type; upstream bug fix
+    (http://lists.boost.org/MailArchives/boost-users/msg06801.php)
+
+ -- Steve M. Robbins <smr@debian.org>  Sun, 25 Jul 2004 09:41:03 -0400
+
+boost (1.31.0-5) unstable; urgency=low
+
+  * libs/python/build/Jamfile: boost-python shared library is now linked
+    to libpython2.3.  Closes: #243089.
+
+  * boost/graph/isomorphism.hpp: changed type of u1 and u2 in edge_cmp
+    from vertex1_t to int (from upstream CVS).
+    boost/graph/detail/adjacency_list.hpp: fixed bug with regards to
+    in_edge_list for undirected graphs (from upstream CVS).
+    Closes: #245390.
+
+  * boost/format/internals.hpp: changed format_item::truncate_ 's type
+    from int to streamsize (from upstream CVS).  Closes: #247643.
+
+ -- Domenico Andreoli <cavok@debian.org>  Wed, 19 May 2004 22:19:32 +0200
+
+boost (1.31.0-4) unstable; urgency=low
+
+  * debian/control: libboost-python-dev now replaces old
+    libboost-dev.  Closes: #243432.
+
+ -- Domenico Andreoli <cavok@debian.org>  Tue, 13 Apr 2004 20:55:24 +0200
+
+boost (1.31.0-3) unstable; urgency=low
+
+  * debian/control: libboost-dev depends on libboost-python-dev.
+    A few header files include headers in <boost/python/detail/...>,
+    for some strange reason.  Closes: #242714, #242801.
+
+  * debian/control: libboost-dev suggests all the libboost-*-dev
+    packages.  Closes: #242335.
+
+  * debian/rules: proper bjam man page is created.
+
+  * Move <boost/python.hpp> to libboost-python-dev package.
+
+ -- Domenico Andreoli <cavok@debian.org>  Sat, 10 Apr 2004 16:59:35 +0200
+
+boost (1.31.0-2) unstable; urgency=low
+
+  * Added symlinks in -dev packages to ease linking of programs which
+    use Boost libraries.
+
+  * Added symlink to allow dynamic linking to boost-filesystem shared
+    library.
+
+  * Updated Debian standards version to 3.6.1.
+
+ -- Domenico Andreoli <cavok@debian.org>  Mon, 22 Mar 2004 02:34:25 +0100
+
+boost (1.31.0-1) unstable; urgency=low
+
+  * New upstream version.  Closes: #231951, #236016.
+    - builds with Python 2.3.  Closes: #206083.
+    - new bjam package (thanks, Vladimir Prus)
+    - new package for shared libboost-filesystem
+
+  * libs/date_time/doc/class_date.html: Fix doc typo.  Closes: #223236.
+
+ -- Steve M. Robbins <smr@debian.org>  Mon,  8 Mar 2004 23:10:37 -0500
+
+boost (1.30.2-3) unstable; urgency=low
+
+  * debian/rules: Build "<threading>multi" libraries.  Thanks to
+    Domenico Andreoli for the patch.
+
+  * README.Debian: Document -D_REENTRANT required for threaded
+    applications.
+
+ -- Steve M. Robbins <smr@debian.org>  Sat, 31 Jan 2004 17:24:17 -0500
+
+boost (1.30.2-2) unstable; urgency=low
+
+  * debian/control(Uploaders): Add Domenico Andreoli.
+
+  * debian/rules:
+    libs/graph/src/Makefile: Define _REENTRANT, per policy 10.2.
+
+ -- Steve M. Robbins <smr@debian.org>  Sun, 26 Oct 2003 13:57:35 -0500
+
+boost (1.30.2-1) unstable; urgency=low
+
+  * New upstream version.  Closes: #211715.
+
+  * boost/numeric/interval/detail/c99_rounding_control.hpp: fix typo.
+    Closes: #203358.
+
+  * boost/filesystem/exception.hpp:
+  * libs/filesystem/src/exception.cpp: Add implementation of who(), path1(),
+    and path2().  (Thanks, Benjamin Dauvergne).  Closes: #196830.
+
+ -- Steve M. Robbins <smr@debian.org>  Sun, 12 Oct 2003 12:11:00 -0400
+
+boost (1.30.0-4) unstable; urgency=low
+
+  * boost/math/quaternion.hpp: Apply supplied patch to fix a GCC 3.3
+    compile problem.  (Thanks, Marcelo E. Magallon).  Closes: #199270.
+
+  * libboost-doc:
+    - Fix broken links.  Closes: #199646.
+    - Use symlink to /usr/include/boost, rather than duplicating
+      header files.  Suggest libboost-dev.  Closes: #174979, #175444.
+    - Include libs/*/examples not already included in HTML.  Closes: #191704.
+
+ -- Steve M. Robbins <smr@debian.org>  Fri, 11 Jul 2003 18:13:32 -0400
+
+boost (1.30.0-3) unstable; urgency=low
+
+  * boost/config/compiler/gcc.hpp: Do not warn about GCC 3.3.
+    Closes: #193862.
+
+  * boost/python/object/make_ptr_instance.hpp: Add typename keyword,
+    suggested by Dave Abrahams posting referenced in bug report
+    (thanks, Ben Burton).  Closes: #198524.
+
+  * boost/python/converter/as_to_python_function.hpp: Qualify function
+    call; workaround for apparent bug in GCC 3.3.  (Thanks, Romain
+    Lerallut).  Closes: #192481.
+
+ -- Steve M. Robbins <smr@debian.org>  Mon, 26 May 2003 19:17:45 -0400
+
+boost (1.30.0-2) unstable; urgency=low
+
+  * debian/rules: Move httrack call to binary-indep.  Closes: #187740.
+
+ -- Steve M. Robbins <smr@debian.org>  Sat,  5 Apr 2003 18:43:08 -0500
+
+boost (1.30.0-1) unstable; urgency=low
+
+  * New upstream.  Closes: #186256.
+
+  * debian/copyright: Include copyright and license statement for each
+    library.  Closes: #183153.
+
+ -- Steve M. Robbins <smr@debian.org>  Sun, 30 Mar 2003 23:50:57 -0500
+
+boost (1.29.0-3) unstable; urgency=low
+
+  * Migrate to GCC 3.2.  Closes: #167030, #176269.
+    - Do not build with stlport.
+
+ -- Steve M. Robbins <smr@debian.org>  Sun, 12 Jan 2003 23:47:19 -0500
+
+boost (1.29.0-2) unstable; urgency=low
+
+  * debian/rules: Install Boost.Test static libs.  Closes: #167106.
+
+  * boost/pool/singleton_pool.hpp: Apply supplied patch (thanks Alexander
+    Kjeldaas).  Closes: #167198.
+
+ -- Steve M. Robbins <smr@debian.org>  Sat,  2 Nov 2002 19:32:12 -0500
+
+boost (1.29.0-1) unstable; urgency=low
+
+  * New upstream version.  Closes: #164830.
+
+ -- Steve M. Robbins <smr@debian.org>  Sat, 26 Oct 2002 15:11:17 -0400
+
+boost (1.28.0-4) unstable; urgency=low
+
+  * Build with python 2.2.  Closes: #159533.
+    The shared lib ABI changes, but the soname cannot, so introduce
+    conflicting/replacing package for libboost-python.
+
+ -- Steve M. Robbins <smr@debian.org>  Fri, 13 Sep 2002 22:54:25 -0400
+
+boost (1.28.0-3) unstable; urgency=low
+
+  * libs/graph/src/Makefile: build using -I/usr/include/stlport.
+    Closes: #150002.
+
+  * debian/control: change section of -doc package to match ftp
+    overrides.
+
+ -- Steve M. Robbins <smr@debian.org>  Fri, 14 Jun 2002 18:19:09 -0400
+
+boost (1.28.0-2) unstable; urgency=low
+
+  * libs/graph/src/Makefile: revert patch to that used in 1.27.0-4,
+    so that the shared libs are also built with optimization.
+    Closes: #148056.
+
+ -- Steve M. Robbins <smr@debian.org>  Fri, 24 May 2002 14:04:58 -0400
+
+boost (1.28.0-1) unstable; urgency=low
+
+  * New upstream version.
+
+  * Set YACC= in debian/rules to inhibit regenerating jam parser source.
+    This makes for smaller debian diffs (thanks, David Abrahams).
+
+  * Drop the examples package.  Code examples are in the doc package.
+
+ -- Steve M. Robbins <smr@debian.org>  Fri, 17 May 2002 20:46:44 -0400
+
+boost (1.27.0-4) unstable; urgency=low
+
+  * libs/graph/src/Makefile: build graph lib with optimization.
+
+  * control: Do not build-depend on libstlport4.5-dbg, nor on texinfo.
+
+  * Split docs into new libboost-doc package, suggested by libboost-dev.
+    The -doc package replaces /usr/share/doc-base/Boost from the former -dev
+    package.  Complete the list of documentation files.  Closes: #143128.
+
+  * debian/README.Debian: add note for newbies (thanks, Laurent Bonnaud).
+    Closes: #142634.
+
+ -- Steve M. Robbins <smr@debian.org>  Sat, 20 Apr 2002 19:31:38 -0400
+
+boost (1.27.0-3) unstable; urgency=low
+
+  * Build shared library packages.
+    - build graph lib with -fPIC.  Closes: #133259.
+
+ -- Steve M. Robbins <smr@debian.org>  Sun,  3 Mar 2002 14:39:18 -0500
+
+boost (1.27.0-2) unstable; urgency=low
+
+  * boost/detail/atomic_count.hpp: Do not use atomic_count_linux.hpp; the
+    latter mistakenly uses <asm/atomic.h> which turns out to be a bad idea.
+  * libs/graph/src/Makefile: do not use "-g" flag; some of the symbols
+    are so large as to upset the assembler on the alpha.
+
+ -- Steve M. Robbins <smr@debian.org>  Thu, 28 Feb 2002 18:45:06 -0500
+
+boost (1.27.0-1) unstable; urgency=low
+
+  * New upstream version.
+
+ -- Steve M. Robbins <smr@debian.org>  Mon, 25 Feb 2002 18:53:58 -0500
+
+boost (1.26.0-4) unstable; urgency=low
+
+  * control(source): build-depend on libstlport4.5-dev.
+  * control(libboost-dev): depend on libstlport4.5-dev.
+    - new stlport package just got into the archive
+  * control(libboost-examples): remove dependency on libboost-dev.
+    - depending on arch "any" package will hold it up until the latter
+      is built on all arches.
+  * document reason for depending on STLPort.  Closes: #131516.
+
+ -- Steve M. Robbins <smr@debian.org>  Sat,  2 Feb 2002 08:11:28 -0500
+
+boost (1.26.0-3) unstable; urgency=low
+
+  * control: change libboost-regex-dgb package to priority extra,
+    to agree with ftp override file.
+  * Don't build dir_it library, as it is not part of Boost.
+    - don't build-depend on unzip. Closes:  #130290.
+
+ -- Steve M. Robbins <smr@debian.org>  Sat, 26 Jan 2002 11:08:31 -0500
+
+boost (1.26.0-2) unstable; urgency=low
+
+  * boost/detail/limits.hpp: determine endianness using <endian.h>
+    Thanks to Daniel Jacobowitz for the tip.
+
+ -- Steve M. Robbins <smr@debian.org>  Tue, 22 Jan 2002 11:38:43 -0500
+
+boost (1.26.0-1) unstable; urgency=low
+
+  * New maintainer.  Closes: #123483.
+  * New upstream version.  Closes: #117106, #107802.
+  * Build-depend on flex, bison, and texinfo.  Closes: #98979.
+  * Ship all the boost headers, including all of boost/pending.
+    Closes: #108922, #108925.
+  * Fixed up the descriptions.
+    Closes: #97947, #109193, #124899, #124900, #124901, #125620, #125621.
+  * Register docs with doc-base.  Closes: #99396.
+
+ -- Steve M. Robbins <smr@debian.org>  Sun, 20 Jan 2002 23:10:28 -0500
+
+boost (1.21.1-1) unstable; urgency=low
+
+  * First upstream version.
+
+ -- Raphael Bossek <bossekr@debian.org>  Mon, 12 Mar 2001 23:37:49 +0100
