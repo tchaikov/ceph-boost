@@ -64,9 +64,10 @@ clean:
 	rm -f build-stamp
 
 	-$(JAM) clean
+	rm -rf tools/build/jam_src/bootstrap
 	rm -rf tools/build/jam_src/bootstrap.gcc
 	rm -rf tools/build/jam_src/bin.*
-	rm -f tools/build/jam_src/bjam
+	rm -ff tools/build/jam_src/bjam
 	rm -rf bin
 
 	$(MAKE) -C libs/graph/src clean
