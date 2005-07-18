@@ -1,4 +1,4 @@
-boost (1.32.0+1.33.0-cvs20050718-1) experimental; urgency=low
+boost (1.32.0+1.33.0-cvs20050718-1) unstable; urgency=low
 
   * New upstream snapshot version.  Closes: #306696, #318139, #296804.
 
