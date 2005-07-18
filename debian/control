@@ -129,7 +129,8 @@ Description: generic graph components and algorithms in C++
 Package: libboost-graph-dev
 Architecture: any
 Section: libdevel
-Depends: libboost-dev (=${Source-Version}), libboost-graph1.33.0 (=${Source-Version})
+Depends: libboost-dev (=${Source-Version})
+Recommends: libboost-graph1.33.0 (=${Source-Version})
 Description: generic graph components and algorithms in C++
  Part of the Boost.org library collection.
  .
