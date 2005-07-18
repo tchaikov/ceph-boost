@@ -11,7 +11,7 @@ export DH_OPTIONS
 # major and minor version numbers joined by an underscore.  This label
 # appears in some of the filenames.
 #
-boost_version = 1_32
+boost_version = 1_33
 
 # Library suffix
 # Boost libraries encode build information in the resulting library
@@ -22,7 +22,7 @@ debug_suffix = -gcc-mt-d-$(boost_version)
 
 # Boost does not guarantee any ABI, it uses the full version in SONAME
 #
-SOVERSION = 1.32.0
+SOVERSION = 1.33.0
 
 exampledir = debian/libboost-doc/usr/share/doc/libboost-doc/examples
 htmldir = debian/libboost-doc/usr/share/doc/libboost-doc/HTML
