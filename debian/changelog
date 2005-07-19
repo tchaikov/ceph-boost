@@ -1,14 +1,20 @@
 boost (1.32.0+1.33.0-cvs20050720-1) unstable; urgency=low
 
-  * New upstream snapshot version.  Closes: #306696, #318139, #296804.
+  * New upstream snapshot version.  Closes: #318139, #318995, #306696.
+    - fixed invalid include files in test library.  Closes: #296804.
+    - removed extraneous empty directory in package libboost-graph1.33.0.
+      Closes: #309361.
 
-  * debian/control: libboost-graph1.33.0 suggests graphviz.
-    Closes: #309363.
+  * debian/control: libboost-graph1.33.0 suggests graphviz.  Closes: #309363.
 
   * debian/control: libboost-graph-dev only recommends libboost-graph1.33.0.
     Closes: #309360.
 
- -- Domenico Andreoli <cavok@debian.org>  Wed, 20 Jul 2005 01:25:07 +0200
+  * boost/archive/detail/interface_iarchive.hpp,
+    boost/archive/detail/interface_oarchive.hpp: fixed compiler warning.
+    Closes: #308291.
+
+ -- Domenico Andreoli <cavok@debian.org>  Wed, 20 Jul 2005 01:28:45 +0200
 
 boost (1.32.0-6) unstable; urgency=low
 
