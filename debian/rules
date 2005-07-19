@@ -379,7 +379,14 @@ binary-common:
 	dh_link
 	dh_compress -Xlibboost-doc/HTML
 	dh_fixperms
-	dh_makeshlibs -Nlibboost-dbg
+
+	@if [ "$(DH_OPTIONS)" = "-a" ]; then \
+		for lib in date-time filesystem graph program-options python regex signals test thread; do \
+			echo DH_OPTIONS=-plibboost-$${lib}$(SOVERSION) dh_makeshlibs -V"libboost-$${lib}$(SOVERSION) (<< 1.32.0+1.33.0-cvs20050719)"; \
+			DH_OPTIONS=-plibboost-$${lib}$(SOVERSION) dh_makeshlibs -V"libboost-$${lib}$(SOVERSION) (<< 1.32.0+1.33.0-cvs20050719)"; \
+		done; \
+	fi
+
 	dh_installdeb
 	dh_shlibdeps
 	dh_gencontrol
@@ -396,7 +403,7 @@ binary-arch: build install
 
 # Any other binary targets build just one binary package at a time.
 binary-%: build install
-	make -f debian/rules binary-common DH_OPTIONS=-p$*
+	$(MAKE) -f debian/rules binary-common DH_OPTIONS=-p$*
 
 binary: binary-indep binary-arch
 .PHONY: build clean binary-indep binary-arch binary-common binary install
