@@ -16,6 +16,16 @@ boost (1.32.0+1.33.0-cvs20050720-1) unstable; urgency=low
 
  -- Domenico Andreoli <cavok@debian.org>  Wed, 20 Jul 2005 01:28:45 +0200
 
+boost (1.32.0-6.1) unstable; urgency=medium
+
+  * Non-maintainer upload.
+  * Medium-urgency upload for RC bugfix.
+  * Rebuild against g++-4.0 for the C++ ABI transition, adding "c2" to
+    the name of each of the library packages and conflicting with the
+    old versions.
+
+ -- Steve Langasek <vorlon@debian.org>  Mon, 18 Jul 2005 19:10:24 -0700
+
 boost (1.32.0-6) unstable; urgency=low
 
   * debian/control: libboost-serialization-dev now replaces libboost-dev
