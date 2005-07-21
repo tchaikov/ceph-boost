@@ -3,7 +3,7 @@ Section: libs
 Priority: optional
 Maintainer: Steve M. Robbins <smr@debian.org>
 Uploaders: Domenico Andreoli <cavok@debian.org>
-Build-Depends: python2.3-dev, debhelper (>= 4), flex, bison, docbook-to-man, libbz2-dev
+Build-Depends: python2.3-dev, debhelper (>= 4), flex, bison, docbook-to-man, zlib1g-dev, libbz2-dev
 Standards-Version: 3.6.2
 
 Package: libboost-dbg
