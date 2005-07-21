@@ -1,3 +1,9 @@
+boost (1.32.0+1.33.0-cvs20050720-2) unstable; urgency=low
+
+  * Added build dependency on libbz2-dev. 
+
+ -- Domenico Andreoli <cavok@debian.org>  Thu, 21 Jul 2005 10:08:48 +0200
+
 boost (1.32.0+1.33.0-cvs20050720-1) unstable; urgency=low
 
   * New upstream snapshot version.  Closes: #318139, #318995, #306696.
