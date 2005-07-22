@@ -382,8 +382,8 @@ binary-common:
 
 	@if [ "$(DH_OPTIONS)" = "-a" ]; then \
 		for lib in date-time filesystem graph program-options python regex signals test thread; do \
-			echo DH_OPTIONS=-plibboost-$${lib}$(SOVERSION) dh_makeshlibs -V"libboost-$${lib}$(SOVERSION) (<< 1.32.0+1.33.0-cvs20050721)"; \
-			DH_OPTIONS=-plibboost-$${lib}$(SOVERSION) dh_makeshlibs -V"libboost-$${lib}$(SOVERSION) (<< 1.32.0+1.33.0-cvs20050721)"; \
+			echo DH_OPTIONS=-plibboost-$${lib}$(SOVERSION) dh_makeshlibs -V"libboost-$${lib}$(SOVERSION) (<< 1.32.0+1.33.0-cvs20050720-99)"; \
+			DH_OPTIONS=-plibboost-$${lib}$(SOVERSION) dh_makeshlibs -V"libboost-$${lib}$(SOVERSION) (<< 1.32.0+1.33.0-cvs20050720-99)"; \
 		done; \
 	fi
 
