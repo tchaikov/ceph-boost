@@ -24,6 +24,8 @@ debug_suffix = -gcc-mt-d-$(boost_version)
 #
 SOVERSION = 1.33.0
 
+SNAPSHOT_VERSION="1.32.0+1.33.0-cvs20050727"
+
 exampledir = debian/libboost-doc/usr/share/doc/libboost-doc/examples
 htmldir = debian/libboost-doc/usr/share/doc/libboost-doc/HTML
 
@@ -381,9 +383,11 @@ binary-common:
 	dh_fixperms
 
 	@if [ "$(DH_OPTIONS)" = "-a" ]; then \
-		for lib in date-time filesystem graph program-options python regex signals test thread; do \
-			echo DH_OPTIONS=-plibboost-$${lib}$(SOVERSION) dh_makeshlibs -V"libboost-$${lib}$(SOVERSION) (<< 1.32.0+1.33.0-cvs20050720-99)"; \
-			DH_OPTIONS=-plibboost-$${lib}$(SOVERSION) dh_makeshlibs -V"libboost-$${lib}$(SOVERSION) (<< 1.32.0+1.33.0-cvs20050720-99)"; \
+		for name in date-time filesystem graph program-options python regex signals test thread; do \
+			lib=libboost-$${name}$(SOVERSION); \
+			shlib="$${lib} (>= $(SNAPSHOT_VERSION)-0), $${lib} (<< $(SNAPSHOT_VERSION)-99)"; \
+			echo DH_OPTIONS=-p$${lib} dh_makeshlibs -V"$${shlib}"; \
+			DH_OPTIONS=-p$${lib} dh_makeshlibs -V"$${shlib}"; \
 		done; \
 	fi
 
