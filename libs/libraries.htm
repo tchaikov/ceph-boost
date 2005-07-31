@@ -63,19 +63,6 @@ Metaprogramming</a><br>
 See <a href="../more/getting_started.html">Getting Started</a>  page to find out
 how to download, build, and install the libraries.</p>
 
-<p>Documentation for some libraries is available in alternative formats:</p>
-<ul type="disc">
-<li><a href="http://www.boost.org/doc/boost.pdf" target="_top">PDF</a>
-    [ <a href="http://www.boost.org/doc/boost.pdf.zip">.zip</a> |
-      <a href="http://www.boost.org/doc/boost.pdf.gz">.gz</a> |
-      <a href="http://www.boost.org/doc/boost.pdf.bz2">.bz2</a>
-    ]
-</li>
-<li><a href="http://www.boost.org/doc/boost-doc-man.tar.gz" target="_top">Unix man pages</a></li>
-<li><a href="../doc/boost.docbook" target="_top">DocBook</a></li>
-<li><a href="../doc/boost.fo" target="_top">XSL Formatting Objects</a></li>
-</ul>
-
 <hr>
 
 <h2>Libraries Listed <a name="Alphabetically">Alphabetically</a></h2>
@@ -106,8 +93,7 @@ how to download, build, and install the libraries.</p>
     <li><a href="config/config.htm">config</a> - Helps boost
         library developers adapt to compiler idiosyncrasies; not
         intended for library users.</li>
-    <li><a href="conversion/index.html">conversion</a> - Numeric,
-        polymorphic, and lexical casts, from Dave Abrahams and
+    <li><a href="conversion/index.html">conversion</a>Polymorphic and lexical casts, from Dave Abrahams and
         Kevlin Henney.</li>
     <li><a href="crc/index.html">crc</a> - Cyclic Redundancy Code, from Daryle
       Walker.</li>
@@ -123,6 +109,9 @@ how to download, build, and install the libraries.</p>
       for deferred calls or callbacks, from Doug Gregor.</li>
     <li><a href="functional/index.html">functional</a> - Enhanced
         function object adaptors, from Mark Rodgers.</li>
+    <li><a href="functional/hash/index.html">functional/hash</a> -
+        A TR1 hash function object that can be extended to hash user defined
+        types, from Daniel James.</li>
     <li><a href="graph/doc/table_of_contents.html">graph</a> -
         Generic graph components and algorithms, from Jeremy Siek
         and a University of Notre Dame team.</li>
@@ -134,6 +123,7 @@ how to download, build, and install the libraries.</p>
     <li><a href="utility/in_place_factories.html">in_place_factory, typed_in_place_factory</a>- Generic in-place construction of contained objects with a variadic argument-list, from Fernando Cacciola.</li>
     <li><a href="io/doc/ios_state.html">io state savers</a> - Save I/O state to
     prevent jumbled data, from Daryle Walker.</li>
+    <li><a href="iostreams/doc/index.html">iostreams</a> - Framework for defining streams, stream buffers and i/o filters, from Jonathan Turkanis.</li>
     <li><a href="iterator/doc/index.html">iterators</a> - Iterator
         construction framework, adaptors, concepts, and more, from Dave
         Abrahams, Jeremy Siek, and Thomas Witt.</li>
@@ -169,13 +159,22 @@ how to download, build, and install the libraries.</p>
         and Jeremy Siek.</li>
     <li><a href="optional/doc/optional.html">optional</a> - Discriminated-union
     wrapper for optional values, from Fernando Cacciola.</li>
+
+    <li><span class="library"><a href=
+    "parameter/doc/html/index.html">parameter</a></span> -
+    Write functions that accept arguments by name, by David Abrahams
+    and Daniel Wallin.</li>
+
+    <li><a href="ptr_container/index.html">pointer container</a>
+    - Containers for storing heap-allocated polymorphic objects to ease
+      OO-programming, from Thorsten Ottosen. </li>
     <li><a href="pool/doc/index.html">pool</a> - Memory pool management, from
       Steve Cleary.</li>
     <li><a href="preprocessor/doc/index.html">preprocessor</a> - Preprocessor
     metaprogramming tools including repetition and recursion, from Vesa Karvonen
     and Paul Mensonides.</li>
     <li><a href="../doc/html/program_options.html">program_options</a> - Access to configuration
-        data given on command line, in config files and other sources, from Vladimir Prus.</li> 
+        data given on command line, in config files and other sources, from Vladimir Prus.</li>
     <li><a href="property_map/property_map.html">property map</a>
         - Concepts defining interfaces which map key objects to
         value objects, from Jeremy Siek.</li>
@@ -238,6 +237,8 @@ how to download, build, and install the libraries.</p>
 	from Fernando Cacciola, based on the original idea of David Abrahams.</li>
     <li><a href="variant/index.html">variant</a> - Safe, generic, stack-based discriminated union
     container, from Eric Friedman and Itay Maman.</li>
+    <li><a href="wave/index.html">wave</a> -  Standards conformant
+  implementation of the mandated C99/C++ preprocessor functionality packed behind an easy to use iterator interface, from Hartmut&nbsp;Kaiser </li>
 </ul>
 
 <hr>
@@ -251,15 +252,17 @@ how to download, build, and install the libraries.</p>
       class template, from Kevlin Henney.</li>
     <li><a href="format/index.html">format</a> - Type-safe 'printf-like' format
     operations, from Samuel Krempp.</li>
+    <li><a href="iostreams/doc/index.html">iostreams</a> - Framework for defining streams, stream buffers and i/o filters, from Jonathan Turkanis.</li>
     <li><a href="regex/index.html">regex</a> - Regular expression
         library, from John Maddock</li>
     <li><a href="spirit/index.html">spirit</a> - LL parser framework&nbsp;
     represents parsers directly as EBNF grammars in inlined C++, from Joel de
     Guzman and team.</li>
-    <li><a href="tokenizer/index.html">tokenizer</a> - Break of a string or other
-      character sequence into a series of tokens, from John Bandela.</li>
     <li><a href="algorithm/string/index.html">string_algo</a> -
     String algorithms library, from Pavol Droba</li>
+    <li><a href="tokenizer/index.html">tokenizer</a> - Break of a string or other
+      character sequence into a series of tokens, from John Bandela</li>
+    <li><a href="wave/index.html">wave</a> - Standards conformant implementation of the mandated C99/C++ preprocessor functionality packed behind an easy to use iterator interface, from Hartmut&nbsp;Kaiser.</li>
 </ul>
 
 <h3><a name="Containers">Containers</a></h3>
@@ -277,6 +280,8 @@ how to download, build, and install the libraries.</p>
     <li><a href="multi_index/doc/index.html">multi_index</a> - Containers with
     multiple STL-compatible access interfaces, from Joaqu&iacute;n M L&oacute;pez
     Mu&ntilde;oz.</li>
+    <li><a href="ptr_container/index.html">pointer container</a>
+      - Containers for storing heap-allocated polymorphic objects to ease OO-programming, from Thorsten Ottosen. </li>
     <li><a href="property_map/property_map.html">property map</a>
         - Concepts defining interfaces which map key objects to
         value objects, from Jeremy Siek.</li>
@@ -327,9 +332,18 @@ how to download, build, and install the libraries.</p>
       for deferred calls or callbacks, from Doug Gregor.</li>
     <li><a href="functional/index.html">functional</a> - Enhanced
         function object adaptors, from Mark Rodgers.</li>
+    <li><a href="functional/hash/index.html">functional/hash</a> -
+        A TR1 hash function object that can be extended to hash user defined
+        types, from Daniel James.</li>
     <li><a href="lambda/index.html">lambda</a> - Define small unnamed
     function objects at the actual call site, and more, from Jaakko Järvi and
     Gary Powell.</li>
+
+    <li><span class="library"><a href=
+    "parameter/doc/html/index.html">parameter</a></span> -
+    Write functions that accept arguments by name, by David Abrahams
+    and Daniel Wallin.</li>
+
 
     <li><a href="bind/ref.html">ref</a> - A utility library for
     passing references to generic functions, from Jaako J&auml;rvi,
@@ -357,6 +371,12 @@ how to download, build, and install the libraries.</p>
     <li><a href="utility/operators.htm">operators</a> - Templates
         ease arithmetic classes and iterators, from Dave Abrahams
         and Jeremy Siek.</li>
+    <li><span class="library"><a href=
+    "parameter/doc/html/index.html">parameter</a></span> -
+    Write functions that accept arguments by name, by David Abrahams
+    and Daniel Wallin.</li>
+
+
     <li><a href="property_map/property_map.html">property map</a>
         - Concepts defining interfaces which map key objects to
         value objects, from Jeremy Siek.</li>
@@ -402,8 +422,6 @@ how to download, build, and install the libraries.</p>
 <ul>
     <li><a href="math/doc/index.html">math</a> - Several contributions in the
     domain of mathematics, from various authors.</li>
-    <li><a href="conversion/cast.htm">conversion/numeric_cast</a> - <tt>numeric_cast</tt>
-      class template, from Kevlin Henney.</li>
     <li><a href="numeric/conversion/index.html">numeric/conversion</a> - Optimized Policy-based Numeric Conversions,
         from Fernando Cacciola.</li>
     <li><a href="integer/index.html">integer</a> - Headers to ease
@@ -457,6 +475,8 @@ how to download, build, and install the libraries.</p>
     <li><a href="multi_index/doc/index.html">multi_index</a> - Containers with
     multiple STL-compatible access interfaces, from Joaqu&iacute;n M L&oacute;pez
     Mu&ntilde;oz.</li>
+    <li><a href="ptr_container/index.html">pointer container</a>
+    - Containers for storing heap-allocated polymorphic objects to ease OO-programming, from Thorsten Ottosen. </li>
     <li><a href="tuple/doc/tuple_users_guide.html">tuple</a> - Ease definition of functions returning multiple values, and more,
     from Jaakko Järvi.</li>
     <li><a href="variant/index.html">variant</a> - Safe, generic, stack-based
@@ -469,8 +489,9 @@ how to download, build, and install the libraries.</p>
   operations, from Samuel Krempp.</li>
   <li><a href="io/doc/ios_state.html">io state savers</a> - Save I/O state to
   prevent jumbled data, from Daryle Walker.</li>
+  <li><a href="iostreams/doc/index.html">iostreams</a> - Framework for defining streams, stream buffers and i/o filters, from Jonathan Turkanis.</li>
   <li><a href="../doc/html/program_options.html">program_options</a> - Access to configuration
-  data given on command line, in config files and other sources, from Vladimir Prus.</li> 
+  data given on command line, in config files and other sources, from Vladimir Prus.</li>
   <li><a href="serialization/doc/index.html">serialization</a> - Serialization
 of arbitrary data for persistence and marshalling, from Robert Ramey</li>
     <li><a href="assign/index.html">assign</a> - Filling containers
@@ -519,8 +540,7 @@ of arbitrary data for persistence and marshalling, from Robert Ramey</li>
     <li><a href="utility/compressed_pair.htm">compressed_pair</a>
         - Empty member optimization, from John Maddock, Howard
         Hinnant, et al.</li>
-    <li><a href="conversion/index.html">conversion</a> - Numeric,
-        polymorphic, and lexical casts, from Dave Abrahams and
+    <li><a href="conversion/index.html">conversion</a> - Polymorphic and lexical casts, from Dave Abrahams and
         Kevlin Henney.</li>
     <li><a href="numeric/conversion/index.html">numeric/conversion</a> - Optimized Policy-based Numeric Conversions,
         from Fernando Cacciola.</li>
@@ -533,7 +553,7 @@ of arbitrary data for persistence and marshalling, from Robert Ramey</li>
     <li><a href="optional/doc/optional.html">optional</a> - Discriminated-union
     wrapper for optional values, from Fernando Cacciola.</li>
     <li><a href="../doc/html/program_options.html">program_options</a> - Access to configuration
-        data given on command line, in config files and other sources, from Vladimir Prus.</li> 
+        data given on command line, in config files and other sources, from Vladimir Prus.</li>
     <li><a href="timer/index.html">timer</a> - Event timer,
         progress timer, and progress display classes, from Beman
         Dawes.</li>
@@ -574,11 +594,11 @@ of arbitrary data for persistence and marshalling, from Robert Ramey</li>
 
 <p>Revised
 <!--webbot bot="Timestamp" s-type="EDITED"
-s-format="%d %b %Y" startspan -->07 October 2004<!--webbot bot="Timestamp" endspan i-checksum="14890" --></p>
+s-format="%d %b %Y" startspan -->23 June 2005<!--webbot bot="Timestamp" endspan i-checksum="14890" --></p>
 
 <p>© Copyright Beman Dawes 2000-2004</p>
-<p>Distributed under the Boost Software License, Version 1.0. 
-(See accompanying file <a href="../LICENSE_1_0.txt">LICENSE_1_0.txt</a> 
+<p>Distributed under the Boost Software License, Version 1.0.
+(See accompanying file <a href="../LICENSE_1_0.txt">LICENSE_1_0.txt</a>
 or copy at <a href="http://www.boost.org/LICENSE_1_0.txt">www.boost.org/LICENSE_1_0.txt</a>)
 </p>
 
