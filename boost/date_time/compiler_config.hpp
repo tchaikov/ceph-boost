@@ -5,7 +5,7 @@
  * Subject to the Boost Software License, Version 1.0. (See accompanying
  * file LICENSE-1.0 or http://www.boost.org/LICENSE-1.0)
  * Author: Jeff Garland, Bart Garst
- * $Date: 2005/04/10 23:53:08 $
+ * $Date: 2005/08/02 13:52:44 $
  */
 
 
@@ -135,7 +135,7 @@ namespace std {
 #endif  // auto-linking disabled
 
 #if defined(BOOST_HAS_THREADS) 
-#  if defined(_MSC_VER) || defined(__MWERKS__) || defined(__MINGW32__)
+#  if defined(_MSC_VER) || defined(__MWERKS__) || defined(__MINGW32__) ||  defined(__BORLANDC__)
      //no reentrant posix functions (eg: localtime_r)
 #  else
 #   define BOOST_DATE_TIME_HAS_REENTRANT_STD_FUNCTIONS
