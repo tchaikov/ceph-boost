@@ -101,7 +101,7 @@ http://www.boost.org/LICENSE_1_0.txt)
      
     <xsl:template match="/">
 
-        <xsl:variable name="summary_results" select="concat( 'summary_', $release_postfix, '.html' )"/>
+        <xsl:variable name="summary_results" select="concat( 'summary', $release_postfix, '_.html' )"/>
 
         <!-- Summary page -->
         <html>
@@ -330,32 +330,34 @@ http://www.boost.org/LICENSE_1_0.txt)
     <td class="{$class} user-{$class}" title="{$library}/{$toolset}">
         <xsl:choose>
         <xsl:when test="$class='summary-unusable'">
-            <xsl:text>&#160;&#160;</xsl:text>
+            <xsl:text>&#160;</xsl:text>
             <a href="{$library_page}{$release_postfix}.html" class="log-link" target="_top">
                 <xsl:text>unusable</xsl:text>
             </a>
-            <xsl:text>&#160;&#160;</xsl:text>
+            <xsl:text>&#160;</xsl:text>
         </xsl:when>
         <xsl:when test="$class='summary-missing'">
-            <xsl:text>no results</xsl:text>
+            <xsl:text>&#160;no&#160;results&#160;</xsl:text>
         </xsl:when>
         <xsl:when test="$class='summary-fail-unexpected'">
+            <xsl:text>&#160;</xsl:text>
             <a href="{$library_page}{$release_postfix}.html" class="log-link" target="_top">
                 <xsl:text>regress.</xsl:text>
             </a>
+            <xsl:text>&#160;</xsl:text>
         </xsl:when>
         <xsl:when test="$class='summary-fail-unexpected-new'
                      or $class='summary-fail-expected'
                      or $class='summary-unknown-status'
                      or $class='summary-fail-expected-unresearched'">
-            <xsl:text>&#160;&#160;</xsl:text>
+            <xsl:text>&#160;</xsl:text>
             <a href="{$library_page}{$release_postfix}.html" class="log-link" target="_top">
                 <xsl:text>details</xsl:text>
             </a>
-            <xsl:text>&#160;&#160;</xsl:text>
+            <xsl:text>&#160;</xsl:text>
         </xsl:when>
         <xsl:otherwise>
-            <xsl:text>&#160;&#160;&#160;&#160;</xsl:text>
+            <xsl:text>&#160;pass&#160;</xsl:text>
         </xsl:otherwise>
         </xsl:choose>
     </td>
