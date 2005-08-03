@@ -1,8 +1,8 @@
 /*
 :Authors: David Goodger, David Abrahams
 :Contact: goodger@users.sourceforge.net, dave@boost-consulting.com
-:date: $Date: 2005/07/28 12:52:15 $
-:version: $Revision: 1.7 $
+:date: $Date: 2005/08/03 17:31:05 $
+:version: $Revision: 1.7.2.1 $
 :copyright: This stylesheet has been placed in the public domain.
 
 This stylesheet is for the use of ReStructuredText in a Boost context.
@@ -156,7 +156,7 @@ CODE
 }
 .footnote
 {
-    FONT-SIZE: 66%;
+    FONT-SIZE: 80%;
     VERTICAL-ALIGN: super;
     TEXT-DECORATION: none;
 }
