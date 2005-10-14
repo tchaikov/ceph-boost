@@ -19,8 +19,6 @@ namespace std{
 #endif
 
 #include "test_tools.hpp"
-#include <boost/preprocessor/stringize.hpp>
-#include BOOST_PP_STRINGIZE(BOOST_ARCHIVE_TEST)
 #include <boost/serialization/tracking.hpp>
 #include <boost/serialization/nvp.hpp>
 
@@ -103,14 +101,11 @@ void in(const char *testfile)
     PAN *pan = NULL;
     PAS *pas = NULL;
     PAA *paa = NULL;
-    ia >> BOOST_SERIALIZATION_NVP(pan);
-    ia >> BOOST_SERIALIZATION_NVP(pan);
+    ia >> BOOST_SERIALIZATION_NVP(pan) >> BOOST_SERIALIZATION_NVP(pan);
     BOOST_CHECK(pan->count == 2);
-    ia >> BOOST_SERIALIZATION_NVP(pas);
-    ia >> BOOST_SERIALIZATION_NVP(pas);
+    ia >> BOOST_SERIALIZATION_NVP(pas) >> BOOST_SERIALIZATION_NVP(pas);
     BOOST_CHECK(pas->count == 1);
-    ia >> BOOST_SERIALIZATION_NVP(paa);
-    ia >> BOOST_SERIALIZATION_NVP(paa);
+    ia >> BOOST_SERIALIZATION_NVP(paa) >> BOOST_SERIALIZATION_NVP(paa);
     BOOST_CHECK(paa->count == 1);
     delete pan;
     delete pas;
@@ -126,7 +121,7 @@ test_main( int /* argc */, char* /* argv */[] )
     out(testfile);
     in(testfile);
     std::remove(testfile);
-    return EXIT_SUCCESS;
+    return boost::exit_success;
 }
 
 // EOF

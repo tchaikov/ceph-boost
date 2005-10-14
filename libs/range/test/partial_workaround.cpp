@@ -33,6 +33,7 @@
 
 #include <boost/static_assert.hpp>
 #include <boost/type_traits.hpp>
+#include <boost/test/unit_test.hpp>
 #include <boost/test/test_tools.hpp>
 #include <iostream>
 #include <vector>
@@ -91,8 +92,9 @@ void check_partial_workaround()
 }
 
 
-#include <boost/test/unit_test.hpp>
-using boost::unit_test::test_suite;
+#include <boost/test/included/unit_test_framework.hpp> 
+
+using boost::unit_test_framework::test_suite;
 
 test_suite* init_unit_test_suite( int argc, char* argv[] )
 {
@@ -105,15 +107,7 @@ test_suite* init_unit_test_suite( int argc, char* argv[] )
 
 #else // BOOST_NO_TEMPLATE_PARTIAL_SPECIALIZATION
 
-#include <boost/test/unit_test.hpp>
-using boost::unit_test::test_suite;
-
-test_suite* init_unit_test_suite( int, char** )
-{
-    test_suite* test = BOOST_TEST_SUITE( "Range Test Suite" );
-    
-    return test;
-}
+int main() { return 0; }
 
 #endif
 

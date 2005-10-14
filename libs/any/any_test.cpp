@@ -35,7 +35,6 @@ namespace any_tests // test suite
     void test_bad_cast();
     void test_swap();
     void test_null_copying();
-    void test_cast_to_reference();
 
     const test_case test_cases[] =
     {

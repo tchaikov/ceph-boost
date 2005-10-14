@@ -111,7 +111,7 @@ int test_main( int /* argc */, char* /* argv */[] ) {
         );
     }
 
-    BOOST_CHECK(ok);
+    BOOST_TEST(ok);
     {
         std::wofstream ofs("testfile2");
         ofs.imbue(*null_locale);
@@ -131,6 +131,6 @@ int test_main( int /* argc */, char* /* argv */[] ) {
  
     delete null_locale;
     std::remove(testfile);
-    return EXIT_SUCCESS;
+    return boost::exit_success;
 }
 

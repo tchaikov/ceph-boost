@@ -25,14 +25,18 @@
 #include <boost/serialization/split_free.hpp>
 #include <boost/serialization/nvp.hpp>
 
-#if defined(__SGI_STL_PORT) || defined(_STLPORT_VERSION)
-#define STD _STLP_STD
+// function specializations must be defined in the appropriate
+// namespace - boost::serialization
+#ifdef BOOST_NO_ARGUMENT_DEPENDENT_LOOKUP
+    namespace boost { namespace serialization {
 #else
-#define STD BOOST_STD_EXTENSION_NAMESPACE
+    #if defined(__SGI_STL_PORT) || defined(_STLPORT_VERSION)
+    #define STD _STLP_STD
+    #else
+    #define STD BOOST_STD_EXTENSION_NAMESPACE
+    #endif
+    namespace STD {
 #endif
-
-namespace boost { 
-namespace serialization {
 
 template<class Archive, class U, class Allocator>
 inline void save(
@@ -60,16 +64,15 @@ inline void load(
     if(0 == count)
         return;
 
-    boost::serialization::stack_construct<Archive, U> u(ar);
+    boost::serialization::stl::stack_construct<Archive, U> u(ar);
     ar >> boost::serialization::make_nvp("item", u.reference());
     t.push_front(u.reference());
     BOOST_DEDUCED_TYPENAME BOOST_STD_EXTENSION_NAMESPACE::slist<U, Allocator>::iterator last;
     last = t.begin();
     while(--count > 0){
-        boost::serialization::stack_construct<Archive, U> u(ar);
+        boost::serialization::stl::stack_construct<Archive, U> u(ar);
         ar >> boost::serialization::make_nvp("item", u.reference());
         last = t.insert_after(last, u.reference());
-        ar.reset_object_address(& (*last), & u);
     }
 }
 
@@ -84,8 +87,11 @@ inline void serialize(
     boost::serialization::split_free(ar, t, file_version);
 }
 
-} // serialization
-} // namespace boost
+#ifdef BOOST_NO_ARGUMENT_DEPENDENT_LOOKUP
+}} // namespace boost::serialization
+#else
+} // BOOST_STD_EXTENSION_NAMESPACE
+#endif
 
 #include <boost/serialization/collection_traits.hpp>
 

@@ -42,25 +42,27 @@ T    asinh_error_evaluator(T x)
 }
 
 
-BOOST_TEST_CASE_TEMPLATE_FUNCTION(asinh_test, T)
+template<typename T>
+void    asinh_test(const char * more_blurb)
 {
     BOOST_MESSAGE("Testing asinh in the real domain for "
-        << string_type_name<T>::_() << ".");
+        << more_blurb << ".");
     
     for    (int i = 0; i <= 100; i++)
     {
         T    x = static_cast<T>(i-50)/static_cast<T>(5);
         
-        BOOST_CHECK_PREDICATE(::std::less_equal<T>(),
-            (asinh_error_evaluator(x))
-            (static_cast<T>(4)));
+        BOOST_CHECK_PREDICATE(::std::less_equal<T>(), 2,
+            (
+                asinh_error_evaluator(x),
+                static_cast<T>(4)
+            ));
     }
 }
 
 
 void    asinh_manual_check()
 {
-    BOOST_MESSAGE(" ");
     BOOST_MESSAGE("asinh");
     
     for    (int i = 0; i <= 100; i++)

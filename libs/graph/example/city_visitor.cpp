@@ -3,9 +3,25 @@
 // Copyright 1997, 1998, 1999, 2000 University of Notre Dame.
 // Authors: Andrew Lumsdaine, Lie-Quan Lee, Jeremy G. Siek
 //
-// Distributed under the Boost Software License, Version 1.0. (See
-// accompanying file LICENSE_1_0.txt or copy at
-// http://www.boost.org/LICENSE_1_0.txt)
+// This file is part of the Generic Graph Component Library
+//
+// You should have received a copy of the License Agreement for the
+// Generic Graph Component Library along with the software;  see the
+// file LICENSE.  If not, contact Office of Research, University of Notre
+// Dame, Notre Dame, IN  46556.
+//
+// Permission to modify the code and to distribute modified code is
+// granted, provided the text of this NOTICE is retained, a notice that
+// the code was modified is included with the above COPYRIGHT NOTICE and
+// with the COPYRIGHT NOTICE in the LICENSE file, and that the LICENSE
+// file is distributed with the modified code.
+//
+// LICENSOR MAKES NO REPRESENTATIONS OR WARRANTIES, EXPRESS OR IMPLIED.
+// By way of example, but not limitation, Licensor MAKES NO
+// REPRESENTATIONS OR WARRANTIES OF MERCHANTABILITY OR FITNESS FOR ANY
+// PARTICULAR PURPOSE OR THAT THE USE OF THE LICENSED SOFTWARE COMPONENTS
+// OR DOCUMENTATION WILL NOT INFRINGE ANY PATENTS, COPYRIGHTS, TRADEMARKS
+// OR OTHER RIGHTS.
 //=======================================================================
 //
 
@@ -30,7 +46,7 @@
      |
   San Jose ---- Fresno
      |
-  Los Angeles ---- Las Vegas ---- Phoenix
+  Los Angeles ---- Los Vegas ---- Pheonix
      |
   San Diego  
 
@@ -92,20 +108,21 @@ struct finish_city : public base_visitor<finish_city>
 int main(int, char*[]) 
 {
 
-  enum { SanJose, SanFran, LA, SanDiego, Fresno, LasVegas, Reno,
-         Sacramento, SaltLake, Phoenix, N };
+  enum { SanJose, SanFran, LA, SanDiego, Fresno, LosVegas, Reno,
+         Sacramento, SaltLake, Pheonix, N };
 
-  string names[] = { "San Jose", "San Francisco", "Los Angeles", "San Diego", 
-                     "Fresno", "Las Vegas", "Reno", "Sacramento",
-                     "Salt Lake City", "Phoenix" };
+  string names[] = { "San Jose", "San Francisco",  "San Jose",
+                     "San Francisco", "Los Angeles", "San Diego", 
+                     "Fresno", "Los Vegas", "Reno", "Sacramento",
+                     "Salt Lake City", "Pheonix" };
 
   typedef std::pair<int,int> E;
   E edge_array[] = { E(Sacramento, Reno), E(Sacramento, SanFran),
                      E(Reno, SaltLake),
                      E(SanFran, SanJose),
                      E(SanJose, Fresno), E(SanJose, LA),
-                     E(LA, LasVegas), E(LA, SanDiego),
-                     E(LasVegas, Phoenix) };
+                     E(LA, LosVegas), E(LA, SanDiego),
+                     E(LosVegas, Pheonix) };
 
   /* Create the graph type we want. */
   typedef adjacency_list<vecS, vecS, undirectedS> Graph;

@@ -32,7 +32,7 @@ namespace std{ using ::wcslen; }
 #include <boost/archive/iterators/ostream_iterator.hpp>
 
 #include <boost/archive/add_facet.hpp>
-#include <boost/archive/detail/utf8_codecvt_facet.hpp>
+#include <boost/utf8_codecvt_facet.hpp>
 
 template<std::size_t s>
 struct test_data
@@ -99,10 +99,7 @@ int
 test_main(int /* argc */, char * /* argv */[]) {
     std::locale old_loc;
     std::locale * utf8_locale
-        = boost::archive::add_facet(
-            old_loc, 
-            new boost::archive::detail::utf8_codecvt_facet
-        );
+        = boost::archive::add_facet(old_loc, new utf8_codecvt_facet<wchar_t, char>);
 
     typedef char utf8_t;
     typedef test_data<sizeof(wchar_t)> td;
@@ -148,13 +145,13 @@ test_main(int /* argc */, char * /* argv */[]) {
     // compare the data read back in with the orginal
     #if ! defined(__BORLANDC__)
         // borland 5.60 complains about this
-        BOOST_CHECK(from_file.size() == sizeof(td::wchar_encoding)/sizeof(wchar_t));
+        BOOST_TEST(from_file.size() == sizeof(td::wchar_encoding)/sizeof(wchar_t));
     #else
         // so use this instead
-        BOOST_CHECK(from_file.size() == 6);
+        BOOST_TEST(from_file.size() == 6);
     #endif
 
-    BOOST_CHECK(std::equal(from_file.begin(), from_file.end(), td::wchar_encoding));
+    BOOST_TEST(std::equal(from_file.begin(), from_file.end(), td::wchar_encoding));
   
     // Send the UCS4_data back out, converting to UTF-8
     {
@@ -183,7 +180,7 @@ test_main(int /* argc */, char * /* argv */[]) {
         std::vector<utf8_t> data2;
         std::copy(it2, end_iter, std::back_inserter(data2));
 
-        BOOST_CHECK(data1 == data2);
+        BOOST_TEST(data1 == data2);
     }
 
     // some libraries have trouble that only shows up with longer strings
@@ -234,7 +231,7 @@ test_main(int /* argc */, char * /* argv */[]) {
         std::wifstream ifs;
         ifs.imbue(*utf8_locale);
         ifs.open("test3.dat");
-        BOOST_CHECK(
+        BOOST_TEST(
             std::equal(
                 test3_data,
                 test3_data + l,
@@ -244,5 +241,5 @@ test_main(int /* argc */, char * /* argv */[]) {
     }
 
     delete utf8_locale;
-    return EXIT_SUCCESS;
+    return boost::exit_success;
 }

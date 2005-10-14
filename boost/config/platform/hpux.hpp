@@ -21,15 +21,9 @@
 #define BOOST_NO_SWPRINTF 
 #define BOOST_NO_CWCTYPE
 
-#if defined(__GNUC__)
-#  if (__GNUC__ < 3) || ((__GNUC__ == 3) && (__GNUC_MINOR__ < 3))
-      // GNU C on HP-UX does not support threads (checked up to gcc 3.3)
-#     define BOOST_DISABLE_THREADS
-#  elif !defined(BOOST_DISABLE_THREADS)
-      // threads supported from gcc-3.3 onwards:
-#     define BOOST_HAS_THREADS
-#     define BOOST_HAS_PTHREADS
-#  endif
+#ifdef __GNUC__
+   // GNU C on HP-UX does not support threads (checked up to gcc 3.3)
+#  define BOOST_DISABLE_THREADS
 #endif
 
 // boilerplate code:

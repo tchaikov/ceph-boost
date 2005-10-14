@@ -5,7 +5,7 @@
     License, Version 1.0. (See accompanying file LICENSE_1_0.txt or copy at
     http://www.boost.org/LICENSE_1_0.txt)
 ==============================================================================*/
-#include <boost/detail/lightweight_test.hpp>
+#include <boost/test/minimal.hpp>
 #include <boost/spirit/fusion/sequence/tuple.hpp>
 #include <boost/spirit/fusion/sequence/io.hpp>
 #include <boost/spirit/fusion/sequence/equal_to.hpp>
@@ -13,7 +13,7 @@
 #include <boost/spirit/fusion/sequence/range.hpp>
 
 int
-main()
+test_main(int, char*[])
 {
     using namespace boost::fusion;
 
@@ -53,6 +53,6 @@ main()
         }
     }
 
-    return boost::report_errors();
+    return 0;
 }
 

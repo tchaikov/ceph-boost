@@ -15,7 +15,6 @@
 # ifdef _MSC_VER
 #  pragma warning(push)
 #  pragma warning(disable:4297)
-#  pragma warning(disable:4535)
 extern "C" void straight_to_debugger(unsigned int, EXCEPTION_POINTERS*)
 {
     throw;

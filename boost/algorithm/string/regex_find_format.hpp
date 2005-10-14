@@ -40,15 +40,15 @@ namespace boost {
         */
         template< 
             typename CharT, 
-            typename RegexTraitsT>
-        inline detail::find_regexF< basic_regex<CharT, RegexTraitsT> >
+            typename RegexTraitsT, typename RegexAllocatorT>
+        inline detail::find_regexF< reg_expression<CharT, RegexTraitsT, RegexAllocatorT> >
         regex_finder(
-            const basic_regex<CharT, RegexTraitsT>& Rx,
+            const reg_expression<CharT, RegexTraitsT, RegexAllocatorT>& Rx,
             match_flag_type MatchFlags=match_default )
         {
             return detail::
                 find_regexF< 
-                    basic_regex<CharT, RegexTraitsT> >( Rx, MatchFlags );
+                    reg_expression<CharT, RegexTraitsT, RegexAllocatorT> >( Rx, MatchFlags );
         }
 
 //  regex_formater  ---------------------------------------------//

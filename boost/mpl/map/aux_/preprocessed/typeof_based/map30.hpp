@@ -26,7 +26,6 @@ struct map21
         , map20< P0,P1,P2,P3,P4,P5,P6,P7,P8,P9,P10,P11,P12,P13,P14,P15,P16,P17,P18,P19 >
         >
 {
-    typedef map21 type;
 };
 
 template<
@@ -43,7 +42,6 @@ struct map22
         , map21< P0,P1,P2,P3,P4,P5,P6,P7,P8,P9,P10,P11,P12,P13,P14,P15,P16,P17,P18,P19,P20 >
         >
 {
-    typedef map22 type;
 };
 
 template<
@@ -60,7 +58,6 @@ struct map23
         , map22< P0,P1,P2,P3,P4,P5,P6,P7,P8,P9,P10,P11,P12,P13,P14,P15,P16,P17,P18,P19,P20,P21 >
         >
 {
-    typedef map23 type;
 };
 
 template<
@@ -77,7 +74,6 @@ struct map24
         , map23< P0,P1,P2,P3,P4,P5,P6,P7,P8,P9,P10,P11,P12,P13,P14,P15,P16,P17,P18,P19,P20,P21,P22 >
         >
 {
-    typedef map24 type;
 };
 
 template<
@@ -94,7 +90,6 @@ struct map25
         , map24< P0,P1,P2,P3,P4,P5,P6,P7,P8,P9,P10,P11,P12,P13,P14,P15,P16,P17,P18,P19,P20,P21,P22,P23 >
         >
 {
-    typedef map25 type;
 };
 
 template<
@@ -112,7 +107,6 @@ struct map26
         , map25< P0,P1,P2,P3,P4,P5,P6,P7,P8,P9,P10,P11,P12,P13,P14,P15,P16,P17,P18,P19,P20,P21,P22,P23,P24 >
         >
 {
-    typedef map26 type;
 };
 
 template<
@@ -130,7 +124,6 @@ struct map27
         , map26< P0,P1,P2,P3,P4,P5,P6,P7,P8,P9,P10,P11,P12,P13,P14,P15,P16,P17,P18,P19,P20,P21,P22,P23,P24,P25 >
         >
 {
-    typedef map27 type;
 };
 
 template<
@@ -148,7 +141,6 @@ struct map28
         , map27< P0,P1,P2,P3,P4,P5,P6,P7,P8,P9,P10,P11,P12,P13,P14,P15,P16,P17,P18,P19,P20,P21,P22,P23,P24,P25,P26 >
         >
 {
-    typedef map28 type;
 };
 
 template<
@@ -166,7 +158,6 @@ struct map29
         , map28< P0,P1,P2,P3,P4,P5,P6,P7,P8,P9,P10,P11,P12,P13,P14,P15,P16,P17,P18,P19,P20,P21,P22,P23,P24,P25,P26,P27 >
         >
 {
-    typedef map29 type;
 };
 
 template<
@@ -184,7 +175,6 @@ struct map30
         , map29< P0,P1,P2,P3,P4,P5,P6,P7,P8,P9,P10,P11,P12,P13,P14,P15,P16,P17,P18,P19,P20,P21,P22,P23,P24,P25,P26,P27,P28 >
         >
 {
-    typedef map30 type;
 };
 
 }}

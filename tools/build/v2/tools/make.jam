@@ -28,13 +28,15 @@ class make-target-class : basic-target
         self.make-rule = $(make-rule) ;    
     }
         
-    rule construct ( name : source-targets * : property-set )
+    rule construct ( source-targets * : property-set )
     {
-        local a = [ new action $(source-targets) : $(self.make-rule) 
+        local t = [ new file-target $(self.name:S=) : [ type.type $(self.name) ]
+                    : $(self.project) ] ;
+        $(t).suffix [ regex.match .(.*) : $(self.name:S) ] ;
+        local a = [ new action $(t) : $(source-targets) : $(self.make-rule) 
                     : $(property-set) ] ;
-        local t = [ new file-target $(self.name) exact 
-          : [ type.type $(self.name) ] : $(self.project) : $(a) ] ;        
-        return [ property-set.empty ] [ virtual-target.register $(t) ] ;
+        $(t).action $(a) ;
+        return [ virtual-target.register $(t) ] ;
     }   
 }
 

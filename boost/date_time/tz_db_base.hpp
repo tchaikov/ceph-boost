@@ -5,7 +5,7 @@
  * Subject to the Boost Software License, Version 1.0. 
  * (See accompanying file LICENSE-1.0 or http://www.boost.org/LICENSE-1.0)
  * Author: Jeff Garland, Bart Garst
- * $Date: 2005/05/07 08:49:15 $
+ * $Date: 2004/09/07 21:09:03 $
  */
 
 #include "boost/shared_ptr.hpp"
@@ -16,7 +16,6 @@
 #include <string>
 #include <sstream>
 #include <map>
-#include <vector>
 #include <stdexcept>
 #include <fstream>
 
@@ -141,13 +140,13 @@ namespace boost {
        * it should be possible in the future (when poor compilers get 
        * fixed or stop being used). 
        * Since this class was designed to use charT as a parameter it 
-       * is simply typedef'd here to ease converting in back to a 
+       * is simply typedefed here to ease converting in back to a 
        * parameter the future */
       typedef char charT;
 
       typedef typename time_zone_type::base_type time_zone_base_type;
       typedef typename time_zone_type::time_duration_type time_duration_type;
-      typedef time_zone_names_base<charT> time_zone_names;
+      typedef time_zone_names<charT> time_zone_names;
       typedef dst_adjustment_offsets<time_duration_type> dst_adjustment_offsets;
       typedef std::basic_string<charT> string_type;
 
@@ -165,9 +164,9 @@ namespace boost {
         if(!ifs){
           throw data_not_accessible(pathspec);
         }
-        std::getline(ifs, buff); // first line is column headings
+        getline(ifs, buff); // first line is column headings
 
-        while( std::getline(ifs, buff)) {
+        while( getline(ifs, buff)) {
           parse_string(buff);
         }
       }
@@ -196,19 +195,6 @@ namespace boost {
           return boost::shared_ptr<time_zone_base_type>(); //null pointer
         }
         return record->second;
-      }
-
-      //! Returns a vector of strings holding the time zone regions in the database
-      std::vector<std::string> region_list() const
-      {
-        typedef std::vector<std::string> vector_type;
-        vector_type regions;
-        typename map_type::const_iterator itr = m_zone_map.begin();
-        while(itr != m_zone_map.end()) {
-          regions.push_back(itr->first);
-          ++itr;
-        }
-        return regions;
       }
     
     private:
@@ -279,9 +265,9 @@ namespace boost {
         tokenizer tokens(rule, sep); // 3 fields
         
         typename tokenizer::iterator tok_iter = tokens.begin(); 
-        nth = std::atoi(tok_iter->c_str()); ++tok_iter;
-        d   = std::atoi(tok_iter->c_str()); ++tok_iter;
-        m   = std::atoi(tok_iter->c_str());
+        nth = atoi(tok_iter->c_str()); ++tok_iter;
+        d   = atoi(tok_iter->c_str()); ++tok_iter;
+        m   = atoi(tok_iter->c_str());
       }
 
      
@@ -308,9 +294,7 @@ namespace boost {
                          DSTADJUST, START_DATE_RULE, START_TIME, END_DATE_RULE,
                          END_TIME, FIELD_COUNT };
 
-        //take a shot at fixing gcc 4.x error
-        const unsigned int expected_fields = static_cast<unsigned int>(FIELD_COUNT);
-        if (result.size() != expected_fields) { 
+        if (result.size() != FIELD_COUNT) { 
           std::stringstream msg;
           msg << "Expecting " << FIELD_COUNT << " fields, got " 
             << result.size() << " fields in line: " << s;

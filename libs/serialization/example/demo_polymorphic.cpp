@@ -20,8 +20,7 @@
 
 int main(int argc, char* argv[])
 {
-    const A a;
-    A a1;
+    A a, a1;
     {
         // test with a text archive
         std::stringstream ss;

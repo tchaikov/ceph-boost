@@ -22,11 +22,8 @@
 #else
 
 #include <istream>
-#include <boost/archive/detail/auto_link_warchive.hpp>
 #include <boost/archive/basic_binary_iprimitive.hpp>
 #include <boost/archive/basic_binary_iarchive.hpp>
-
-#include <boost/archive/detail/abi_prefix.hpp> // must be the last header
 
 namespace boost { 
 namespace archive {
@@ -54,16 +51,13 @@ protected:
         basic_binary_iarchive<Archive>::init();
         basic_binary_iprimitive<Archive, std::wistream>::init();
     }
-    binary_wiarchive_impl(std::wistream & is, unsigned int flags) :
+    binary_wiarchive_impl(std::wistream & is, unsigned int flags = 0) :
         basic_binary_iprimitive<Archive, std::wistream>(
             is, 
             0 != (flags & no_codecvt)
         ),
-        basic_binary_iarchive<Archive>(flags)
-    {
-        if(0 == (flags & no_header))
-            init();
-    }
+        basic_binary_iarchive<Archive>()
+    {}
 };
 
 // do not derive from this class.  If you want to extend this functionality
@@ -74,18 +68,15 @@ class binary_wiarchive :
 {
 public:
     binary_wiarchive(std::wistream & is, unsigned int flags = 0) :
-        binary_wiarchive_impl<binary_wiarchive>(is, flags)
-    {}
+        binary_wiarchive_impl<binary_wiarchive>(is, flags | no_header)
+    {
+        if(0 == (flags & no_header))
+            init();
+    }
 };
 
 } // namespace archive
 } // namespace boost
-
-// required by smart_cast for compilers not implementing 
-// partial template specialization
-BOOST_BROKEN_COMPILER_TYPE_TRAITS_SPECIALIZATION(boost::archive::binary_wiarchive)
-
-#include <boost/archive/detail/abi_suffix.hpp> // pops abi_suffix.hpp pragmas
 
 #endif // BOOST_NO_STD_WSTREAMBUF
 #endif // BOOST_ARCHIVE_BINARY_WIARCHIVE_HPP

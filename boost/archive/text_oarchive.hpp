@@ -17,8 +17,8 @@
 //  See http://www.boost.org for updates, documentation, and revision history.
 
 #include <ostream>
-#include <cstddef> // std::size_t
 
+#include <cstddef> // std::size_t
 #include <boost/config.hpp>
 #if defined(BOOST_NO_STDC_NAMESPACE)
 namespace std{ 
@@ -26,11 +26,8 @@ namespace std{
 } // namespace std
 #endif
 
-#include <boost/archive/detail/auto_link_archive.hpp>
 #include <boost/archive/basic_text_oprimitive.hpp>
 #include <boost/archive/basic_text_oarchive.hpp>
-
-#include <boost/archive/detail/abi_prefix.hpp> // must be the last header
 
 namespace boost { 
 namespace archive {
@@ -53,26 +50,39 @@ protected:
         this->newtoken();
         basic_text_oprimitive<std::ostream>::save(t);
     }
-    BOOST_ARCHIVE_DECL(void) 
-    save(const char * t);
+    void save(const char * t);
     #ifndef BOOST_NO_INTRINSIC_WCHAR_T
-    BOOST_ARCHIVE_DECL(void) 
-    save(const wchar_t * t);
+    void save(const wchar_t * t);
     #endif
-    BOOST_ARCHIVE_DECL(void) 
-    save(const std::string &s);
+    void save(const std::string &s);
     #ifndef BOOST_NO_STD_WSTRING
-    BOOST_ARCHIVE_DECL(void) 
-    save(const std::wstring &ws);
+    void save(const std::wstring &ws);
     #endif
 protected:
-    BOOST_ARCHIVE_DECL(BOOST_PP_EMPTY()) 
-    text_oarchive_impl(std::ostream & os, unsigned int flags);
-    BOOST_ARCHIVE_DECL(BOOST_PP_EMPTY()) 
-    ~text_oarchive_impl(){};
+    text_oarchive_impl(std::ostream & os, unsigned int flags = 0) :
+        basic_text_oprimitive<std::ostream>(
+            os, 
+            0 != (flags & no_codecvt)
+        ),
+        basic_text_oarchive<Archive>()
+    {
+        if(0 == (flags & no_header))
+            basic_text_oarchive<Archive>::init();
+    }
 public:
-    BOOST_ARCHIVE_DECL(void) 
-    save_binary(const void *address, std::size_t count);
+    void save_binary(const void *address, std::size_t count){
+        put('\n');
+        this->end_preamble();
+        #if ! defined(__MWERKS__)
+        this->basic_text_oprimitive<std::ostream>::save_binary(
+        #else
+        this->basic_text_oprimitive::save_binary(
+        #endif
+            address, 
+            count
+        );
+        this->delimiter = this->eol;
+    }
 };
 
 // do not derive from this class.  If you want to extend this functionality
@@ -82,11 +92,10 @@ class text_oarchive :
     public text_oarchive_impl<text_oarchive>
 {
 public:
-     
     text_oarchive(std::ostream & os, unsigned int flags = 0) :
         text_oarchive_impl<text_oarchive>(os, flags)
-    {}
-    ~text_oarchive(){}
+    {
+    }
 };
 
 } // namespace archive
@@ -95,7 +104,5 @@ public:
 // required by smart_cast for compilers not implementing 
 // partial template specialization
 BOOST_BROKEN_COMPILER_TYPE_TRAITS_SPECIALIZATION(boost::archive::text_oarchive)
-
-#include <boost/archive/detail/abi_suffix.hpp> // pops abi_suffix.hpp pragmas
 
 #endif // BOOST_ARCHIVE_TEXT_OARCHIVE_HPP

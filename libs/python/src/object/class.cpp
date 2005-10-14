@@ -407,7 +407,7 @@ namespace objects
   }
 
   BOOST_PYTHON_DECL void*
-  find_instance_impl(PyObject* inst, type_info type, bool null_shared_ptr_only)
+  find_instance_impl(PyObject* inst, type_info type)
   {
       if (inst->ob_type->ob_type != &class_metatype_object)
           return 0;
@@ -416,7 +416,7 @@ namespace objects
 
       for (instance_holder* match = self->objects; match != 0; match = match->next())
       {
-          void* const found = match->holds(type, null_shared_ptr_only);
+          void* const found = match->holds(type);
           if (found)
               return found;
       }
@@ -535,22 +535,20 @@ namespace objects
       this->attr("__instance_size__") = instance_size;
   }
   
-  void class_base::add_property(
-    char const* name, object const& fget, char const* docstr)
+  void class_base::add_property(char const* name, object const& fget)
   {
       object property(
           (python::detail::new_reference)
-              PyObject_CallFunction((PyObject*)&PyProperty_Type, "Osss", fget.ptr(), 0, 0, docstr));
+              PyObject_CallFunction((PyObject*)&PyProperty_Type, "O", fget.ptr()));
       
       this->setattr(name, property);
   }
 
-  void class_base::add_property(
-    char const* name, object const& fget, object const& fset, char const* docstr)
+  void class_base::add_property(char const* name, object const& fget, object const& fset)
   {
       object property(
           (python::detail::new_reference)
-              PyObject_CallFunction((PyObject*)&PyProperty_Type, "OOss", fget.ptr(), fset.ptr(), 0, docstr));
+              PyObject_CallFunction((PyObject*)&PyProperty_Type, "OO", fget.ptr(), fset.ptr()));
       
       this->setattr(name, property);
   }

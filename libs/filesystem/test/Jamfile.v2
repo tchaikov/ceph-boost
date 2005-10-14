@@ -6,14 +6,30 @@
 #  warranty, and with no claim as to its suitability for any purpose.
 
 project 
-    : requirements <library>/boost/filesystem//boost_filesystem
+    : source-location $(BOOST_ROOT)
     ;
 
+# bring in rules for testing
+import testing ;
+
+alias fs : ../../../libs/filesystem/build//boost_filesystem ;
+
+{
    test-suite "filesystem"
-       : [ run path_test.cpp ]
-         [ run default_name_check_test.cpp ]
-         [ run operations_test.cpp ]
-         [ run fstream_test.cpp ]
-         [ run convenience_test.cpp ]
-         [ run large_file_support_test.cpp ]
+       : [ run libs/filesystem/test/path_test.cpp
+               fs
+         ]
+         [ run libs/filesystem/test/default_name_check_test.cpp
+               fs
+         ]
+         [ run libs/filesystem/test/operations_test.cpp
+               fs
+         ]
+         [ run libs/filesystem/test/fstream_test.cpp
+               fs
+         ]
+         [ run libs/filesystem/test/convenience_test.cpp
+               fs
+         ]
        ;
+}

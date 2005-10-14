@@ -1,7 +1,7 @@
 BOOST 		= ../../..
  
-CXX		= g++
-EXTRAFLAGS 	= -pedantic -Wno-long-long -Wno-long-double -ftemplate-depth-50 
+CXX		= gcc
+EXTRAFLAGS 	= -pedantic -Wno-long-long -ftemplate-depth-50 
 LIBS		= -lstdc++
 
 #CXX		= KCC 

@@ -22,8 +22,7 @@
 				Optimization="0"
 				ImproveFloatingPointConsistency="TRUE"
 				AdditionalIncludeDirectories="&quot;$(ProjectDir)..\..\..&quot;"
-				PreprocessorDefinitions="WIN32;_DEBUG;_LIB;"
-				GeneratePreprocessedFile="0"
+				PreprocessorDefinitions="WIN32;_DEBUG;_LIB;BOOST_TEST_NO_AUTO_LINK=1"
 				MinimalRebuild="FALSE"
 				BasicRuntimeChecks="0"
 				SmallerTypeCheck="FALSE"
@@ -43,7 +42,7 @@
 				Name="VCCustomBuildTool"/>
 			<Tool
 				Name="VCLibrarianTool"
-				OutputFile="$(OutDir)/libboost_wserialization-vc71-mt-gd-1_32.lib"/>
+				OutputFile="$(OutDir)/libboost_wserialization.lib"/>
 			<Tool
 				Name="VCMIDLTool"/>
 			<Tool
@@ -358,9 +357,6 @@
 				</FileConfiguration>
 			</File>
 			<File
-				RelativePath="..\src\codecvt_null.cpp">
-			</File>
-			<File
 				RelativePath="..\src\text_wiarchive.cpp">
 				<FileConfiguration
 					Name="Release runtime-static threading-multi|Win32">
@@ -441,13 +437,16 @@
 			Name="Headers"
 			Filter="">
 			<File
-				RelativePath="..\..\..\boost\archive\detail\auto_link_warchive.hpp">
-			</File>
-			<File
 				RelativePath="..\..\..\boost\archive\binary_wiarchive.hpp">
 			</File>
 			<File
 				RelativePath="..\..\..\boost\archive\binary_woarchive.hpp">
+			</File>
+			<File
+				RelativePath="..\..\..\boost\archive\polymorphic_binary_wiarchive.hpp">
+			</File>
+			<File
+				RelativePath="..\..\..\boost\archive\polymorphic_binary_woarchive.hpp">
 			</File>
 			<File
 				RelativePath="..\..\..\boost\archive\polymorphic_text_wiarchive.hpp">
@@ -468,7 +467,7 @@
 				RelativePath="..\..\..\boost\archive\text_woarchive.hpp">
 			</File>
 			<File
-				RelativePath="..\..\..\boost\archive\detail\utf8_codecvt_facet.hpp">
+				RelativePath="..\..\..\boost\utf8_codecvt_facet.hpp">
 			</File>
 			<File
 				RelativePath="..\..\..\boost\archive\xml_wiarchive.hpp">

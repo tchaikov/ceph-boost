@@ -13,9 +13,7 @@
 #include <boost/algorithm/string/config.hpp>
 #include <boost/mpl/bool.hpp>
 #include <boost/mpl/logical.hpp>
-#include <boost/range/begin.hpp>
-#include <boost/range/end.hpp>
-
+#include <boost/algorithm/string/collection_traits.hpp>
 #include <boost/algorithm/string/sequence_traits.hpp>
 
 namespace boost {

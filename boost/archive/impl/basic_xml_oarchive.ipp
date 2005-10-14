@@ -8,57 +8,17 @@
 
 //  See http://www.boost.org for updates, documentation, and revision history.
 
-#include <algorithm>
-#include <cstring>
-#if defined(BOOST_NO_STDC_NAMESPACE) && ! defined(__LIBCOMO__)
-namespace std{ 
-    using ::strlen; 
-} // namespace std
-#endif
-
 #include <boost/archive/basic_xml_archive.hpp>
 #include <boost/archive/basic_xml_oarchive.hpp>
-#include <boost/detail/no_exceptions_support.hpp>
 
 namespace boost {
 namespace archive {
-
-namespace detail {
-template<class CharType>
-struct XML_name {
-    typedef bool result_type;
-    void operator()(CharType t) const{
-        unsigned char lookup_table[] = {
-            0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
-            0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
-            0,0,0,0,0,0,0,0,0,0,1,1,0,0,0,0, // -.
-            1,1,1,1,1,1,1,1,1,1,0,0,0,0,0,0, // 0-9
-            0,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1, // A-
-            1,1,1,1,1,1,1,1,1,1,1,0,0,0,0,1, // -Z _
-            0,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1, // a-
-            1,1,1,1,1,1,1,1,1,1,1,0,0,0,0,0, // -z
-            0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
-            0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
-        };
-        if((unsigned)t > 127)
-            return;
-        if(0 == lookup_table[(unsigned)t])
-            boost::throw_exception(
-                xml_archive_exception(
-                    xml_archive_exception::xml_archive_tag_name_error
-                )
-            );
-    }
-};
-
-} // namespace detail
 
 /////////1/////////2/////////3/////////4/////////5/////////6/////////7/////////8
 // implemenations of functions common to both types of xml output
 
 template<class Archive>
-BOOST_ARCHIVE_OR_WARCHIVE_DECL(void)
-basic_xml_oarchive<Archive>::write_attribute(
+void basic_xml_oarchive<Archive>::write_attribute(
     const char *attribute_name, 
     int t,
     const char *conjunction
@@ -71,8 +31,7 @@ basic_xml_oarchive<Archive>::write_attribute(
 }
     
 template<class Archive>
-BOOST_ARCHIVE_OR_WARCHIVE_DECL(void)
-basic_xml_oarchive<Archive>::write_attribute(
+void basic_xml_oarchive<Archive>::write_attribute(
     const char *attribute_name, 
     const char *key
 ){
@@ -84,23 +43,17 @@ basic_xml_oarchive<Archive>::write_attribute(
 }
     
 template<class Archive>
-BOOST_ARCHIVE_OR_WARCHIVE_DECL(void)
-basic_xml_oarchive<Archive>::indent(){
+void basic_xml_oarchive<Archive>::indent(){
     int i;
     for(i = depth; i-- > 0;)
         this->This()->put('\t');
 }
 
 template<class Archive>
-BOOST_ARCHIVE_OR_WARCHIVE_DECL(void)
-basic_xml_oarchive<Archive>::save_start(const char *name)
+void basic_xml_oarchive<Archive>::save_start(const char *name)
 {
     if(NULL == name)
         return;
-        
-    // be sure name has no invalid characters
-    std::for_each(name, name + std::strlen(name), detail::XML_name<const char>());
-
     end_preamble();
     if(depth > 0){
         this->This()->put('\n');
@@ -114,15 +67,10 @@ basic_xml_oarchive<Archive>::save_start(const char *name)
 }
 
 template<class Archive>
-BOOST_ARCHIVE_OR_WARCHIVE_DECL(void)
-basic_xml_oarchive<Archive>::save_end(const char *name)
+void basic_xml_oarchive<Archive>::save_end(const char *name)
 {
     if(NULL == name)
         return;
-        
-    // be sure name has no invalid characters
-    std::for_each(name, name + std::strlen(name), detail::XML_name<const char>());
-
     end_preamble();
     --depth;
     if(indent_next){
@@ -138,8 +86,7 @@ basic_xml_oarchive<Archive>::save_end(const char *name)
 }
 
 template<class Archive>
-BOOST_ARCHIVE_OR_WARCHIVE_DECL(void)
-basic_xml_oarchive<Archive>::end_preamble(){
+void basic_xml_oarchive<Archive>::end_preamble(){
     if(pending_preamble){
         this->This()->put('>');
         pending_preamble = false;
@@ -147,99 +94,85 @@ basic_xml_oarchive<Archive>::end_preamble(){
 }
 
 template<class Archive>
-BOOST_ARCHIVE_OR_WARCHIVE_DECL(void)
-basic_xml_oarchive<Archive>::save_override(const object_id_type & t, int)
+void basic_xml_oarchive<Archive>::save_override(const object_id_type & t, int)
 {
     int i = t.t; // extra .t is for borland
-    write_attribute(OBJECT_ID(), i, "=\"_"); 
+    write_attribute(OBJECT_ID, i, "=\"_"); 
 }
 template<class Archive>
-BOOST_ARCHIVE_OR_WARCHIVE_DECL(void)
-basic_xml_oarchive<Archive>::save_override(
+void basic_xml_oarchive<Archive>::save_override(
     const object_reference_type & t,
     int
 ){
     int i = t.t; // extra .t is for borland
-    write_attribute(OBJECT_REFERENCE(), i, "=\"_"); 
+    write_attribute(OBJECT_REFERENCE, i, "=\"_"); 
 }
 template<class Archive>
-BOOST_ARCHIVE_OR_WARCHIVE_DECL(void)
-basic_xml_oarchive<Archive>::save_override(const version_type & t, int)
+void basic_xml_oarchive<Archive>::save_override(const version_type & t, int)
 {
     int i = t.t; // extra .t is for borland
-    write_attribute(VERSION(), i); 
+    write_attribute(VERSION, i); 
 }
 template<class Archive>
-BOOST_ARCHIVE_OR_WARCHIVE_DECL(void)
-basic_xml_oarchive<Archive>::save_override(const class_id_type & t, int)
+void basic_xml_oarchive<Archive>::save_override(const class_id_type & t, int)
 {
-    write_attribute(CLASS_ID(), t); 
+    write_attribute(CLASS_ID, t); 
 }
 template<class Archive>
-BOOST_ARCHIVE_OR_WARCHIVE_DECL(void)
-basic_xml_oarchive<Archive>::save_override(
+void basic_xml_oarchive<Archive>::save_override(
     const class_id_reference_type & t,
     int
 ){
-    write_attribute(CLASS_ID_REFERENCE(), t); 
+    write_attribute(CLASS_ID_REFERENCE, t); 
 }
 template<class Archive>
-BOOST_ARCHIVE_OR_WARCHIVE_DECL(void)
-basic_xml_oarchive<Archive>::save_override(
+void basic_xml_oarchive<Archive>::save_override(
     const class_id_optional_type & t,
     int
 ){
-    write_attribute(CLASS_ID(), t); 
+    write_attribute(CLASS_ID, t); 
 }
 template<class Archive>
-BOOST_ARCHIVE_OR_WARCHIVE_DECL(void)
-basic_xml_oarchive<Archive>::save_override(const class_name_type & t, int)
+void basic_xml_oarchive<Archive>::save_override(const class_name_type & t, int)
 {
     const char * key = t;
     if(NULL == key)
         return;
-    write_attribute(CLASS_NAME(), key); 
+    write_attribute(CLASS_NAME, key); 
 }
 template<class Archive>
-BOOST_ARCHIVE_OR_WARCHIVE_DECL(void)
-basic_xml_oarchive<Archive>::save_override(const tracking_type & t, int)
+void basic_xml_oarchive<Archive>::save_override(const tracking_type & t, int)
 {
-    write_attribute(TRACKING(), t.t); // extra .t is for borland 
+    write_attribute(TRACKING, t.t); // extra .t is for borland 
 }
 
 template<class Archive>
-BOOST_ARCHIVE_OR_WARCHIVE_DECL(void)
-basic_xml_oarchive<Archive>::init(){
+void basic_xml_oarchive<Archive>::init(){
     // xml header
+    header = true;
     this->This()->put("<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"yes\" ?>\n");
     this->This()->put("<!DOCTYPE boost_serialization>\n");
     // xml document wrapper - outer root
     this->This()->put("<boost_serialization");
-    write_attribute("signature", ARCHIVE_SIGNATURE()); 
-    write_attribute("version", ARCHIVE_VERSION()); 
+    write_attribute("signature", ARCHIVE_SIGNATURE); 
+    write_attribute("version", static_cast<unsigned int>(ARCHIVE_VERSION)); 
     this->This()->put(">\n");
 }
 
-template<class Archive> 
-BOOST_ARCHIVE_OR_WARCHIVE_DECL(BOOST_PP_EMPTY())
+template<class Archive>
 basic_xml_oarchive<Archive>::basic_xml_oarchive(unsigned int flags) :
-    detail::common_oarchive<Archive>(flags),
     depth(0),
     indent_next(false),
-    pending_preamble(false)
+    pending_preamble(false),
+    header(false)
 {
 }
 
-template<class Archive> 
-BOOST_ARCHIVE_OR_WARCHIVE_DECL(BOOST_PP_EMPTY())
+template<class Archive>
 basic_xml_oarchive<Archive>::~basic_xml_oarchive(){
-    if(0 == (this->get_flags() & no_header)){
-        BOOST_TRY{
-                    this->This()->put("</boost_serialization>\n");
-            }
-            BOOST_CATCH(...){}
-            BOOST_CATCH_END
-        }
+    if(!header)
+        return;
+    this->This()->put("</boost_serialization>\n");
 }
 
 } // namespace archive

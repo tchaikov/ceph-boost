@@ -78,18 +78,12 @@ void var_hash_swap( struct hash** new_vars )
 /*
  * var_defines() - load a bunch of variable=value settings
  *
- * If preprocess is false, take the value verbatim.
- *
- * Otherwise, if the variable value is enclosed in quotes, strip the
- * quotes.
- *
- * Otherwise, if variable name ends in PATH, split value at :'s.
- *
- * Otherwise, split the value at blanks.
+ * If variable name ends in PATH, split value at :'s.  
+ * Otherwise, split at blanks.
  */
 
 void
-var_defines( char *const* e, int preprocess )
+var_defines( char **e )
 {
     string buf[1];
 
@@ -98,6 +92,12 @@ var_defines( char *const* e, int preprocess )
 	for( ; *e; e++ )
 	{
 	    char *val;
+
+	    /* Just say "no": windows defines this in the env, */
+	    /* but we don't want it to override our notion of OS. */
+
+	    if( !strcmp( *e, "OS=Windows_NT" ) )
+		continue;
 
 # ifdef OS_MAC
 	    /* On the mac (MPW), the var=val is actually var\0val */
@@ -110,20 +110,13 @@ var_defines( char *const* e, int preprocess )
 	    {
 		LIST *l = L0;
 		char *pp, *p;
-# ifdef OPT_NO_EXTERNAL_VARIABLE_SPLIT
-                char split = '\0';
-# else
 # ifdef OS_MAC
 		char split = ',';
 # else
 		char split = ' ';
 # endif
-# endif
                 size_t len = strlen(val + 1);
-
-                int quoted = val[1] == '"' && val[len] == '"';
-                
-                if ( quoted && preprocess )
+                if ( val[1] == '"' && val[len] == '"')
                 {
                     string_append_range( buf, val + 2, val + len );
                     l = list_new( l, newstr( buf->value ) );
@@ -143,10 +136,7 @@ var_defines( char *const* e, int preprocess )
 
                     /* Do the split */
 
-                    for(
-                        pp = val + 1;
-                        preprocess && (p = strchr( pp, split )) != 0;
-                        pp = p + 1 )
+                    for( pp = val + 1; p = strchr( pp, split ); pp = p + 1 )
                     {
                         string_append_range( buf, pp, p );
                         l = list_new( l, newstr( buf->value ) );

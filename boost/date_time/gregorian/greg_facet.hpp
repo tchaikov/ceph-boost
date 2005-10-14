@@ -6,7 +6,7 @@
  * Boost Software License, Version 1.0. (See accompanying
  * file LICENSE-1.0 or http://www.boost.org/LICENSE-1.0)
  * Author: Jeff Garland, Bart Garst
- * $Date: 2005/04/12 13:16:24 $
+ * $Date: 2004/07/18 23:37:24 $
  */
 
 #include "boost/date_time/gregorian/gregorian_types.hpp"
@@ -31,7 +31,6 @@ namespace gregorian {
     typedef boost::date_time::weekdays weekday_enum;
   };
 
-#if defined(USE_DATE_TIME_PRE_1_33_FACET_IO)
   //! Create the base facet type for gregorian::date
   typedef boost::date_time::date_names_put<greg_facet_config> greg_base_facet;
 
@@ -138,8 +137,7 @@ namespace gregorian {
   std::basic_ostream<charT, traits>&
   operator<<(std::basic_ostream<charT, traits>& os, const partial_date& pd)
   {
-    os << std::setw(2) << std::setfill('0') << pd.day() << ' ' 
-       << pd.month().as_short_string() ; 
+    os << pd.day() << ' ' << pd.month().as_short_string() ; 
     return os;
   }
 
@@ -201,7 +199,7 @@ namespace gregorian {
     os << fkb.day_of_week() << " before"; 
     return os;
   }
-#endif // USE_DATE_TIME_PRE_1_33_FACET_IO
+
   /**************** Input Streaming ******************/
   
 #if !defined(BOOST_NO_STD_ITERATOR_TRAITS)
@@ -281,7 +279,7 @@ namespace gregorian {
       const facet_def& f = std::use_facet<facet_def>(is.getloc());
       num = date_time::find_match(f.get_short_month_names(), 
                                   f.get_long_month_names(), 
-                                  (greg_month::max)(), s); 
+                                  greg_month::max(), s); 
     }
     /* bad_cast will be thrown if the desired facet is not accessible
      * so we can generate the facet. This has the drawback of using english
@@ -292,12 +290,11 @@ namespace gregorian {
       const facet_def* f = create_facet_def(a);
       num = date_time::find_match(f->get_short_month_names(), 
                                   f->get_long_month_names(), 
-                                  (greg_month::max)(), s); 
+                                  greg_month::max(), s); 
       delete(f);
     }
-    
-    num += 1; // months numbered 1-12
-    m = greg_month(num); 
+   
+    m = greg_month(num +1); // months numbered 1-12
 
     return is;
   }
@@ -323,7 +320,7 @@ namespace gregorian {
       const facet_def& f = std::use_facet<facet_def>(is.getloc());
       num = date_time::find_match(f.get_short_weekday_names(), 
                                   f.get_long_weekday_names(), 
-                                  (greg_weekday::max)(), s); 
+                                  greg_weekday::max(), s); 
     }
     /* bad_cast will be thrown if the desired facet is not accessible
      * so we can generate the facet. This has the drawback of using english
@@ -334,7 +331,7 @@ namespace gregorian {
       const facet_def* f = create_facet_def(a);
       num = date_time::find_match(f->get_short_weekday_names(), 
                                   f->get_long_weekday_names(), 
-                                  (greg_weekday::max)(), s); 
+                                  greg_weekday::max(), s); 
       delete(f);
     }
    

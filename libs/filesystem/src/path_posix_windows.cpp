@@ -650,7 +650,7 @@ namespace boost
 
 // path::iterator implementation  --------------------------------------------// 
 
-    BOOST_FILESYSTEM_DECL void path::iterator::increment()
+    void path::iterator::increment()
     {
       assert( m_pos < m_path_ptr->m_path.size() ); // detect increment past end
       m_pos += m_name.size();
@@ -677,7 +677,7 @@ namespace boost
       m_name = m_path_ptr->m_path.substr( m_pos, end_pos - m_pos );
     }
 
-    BOOST_FILESYSTEM_DECL void path::iterator::decrement()
+    void path::iterator::decrement()
     {                                                                                
       assert( m_pos ); // detect decrement of begin
       std::string::size_type end_pos( m_pos );

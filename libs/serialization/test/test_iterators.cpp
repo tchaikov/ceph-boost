@@ -209,5 +209,5 @@ test_main(int /* argc */, char* /* argv */ [] )
     test_transform_width<6, 8>(7);
     test_transform_width<6, 8>(8);
 
-    return EXIT_SUCCESS;
+    return boost::exit_success;
 }

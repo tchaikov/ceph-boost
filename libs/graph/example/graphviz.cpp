@@ -1,79 +1,97 @@
-// Copyright 2005 Trustees of Indiana University
+//=======================================================================
+// Copyright 2001 University of Notre Dame.
+// Author: Lie-Quan Lee
+//
+// This file is part of the Boost Graph Library
+//
+// You should have received a copy of the License Agreement for the
+// Boost Graph Library along with the software; see the file LICENSE.
+// If not, contact Office of Research, University of Notre Dame, Notre
+// Dame, IN 46556.
+//
+// Permission to modify the code and to distribute modified code is
+// granted, provided the text of this NOTICE is retained, a notice that
+// the code was modified is included with the above COPYRIGHT NOTICE and
+// with the COPYRIGHT NOTICE in the LICENSE file, and that the LICENSE
+// file is distributed with the modified code.
+//
+// LICENSOR MAKES NO REPRESENTATIONS OR WARRANTIES, EXPRESS OR IMPLIED.
+// By way of example, but not limitation, Licensor MAKES NO
+// REPRESENTATIONS OR WARRANTIES OF MERCHANTABILITY OR FITNESS FOR ANY
+// PARTICULAR PURPOSE OR THAT THE USE OF THE LICENSED SOFTWARE COMPONENTS
+// OR DOCUMENTATION WILL NOT INFRINGE ANY PATENTS, COPYRIGHTS, TRADEMARKS
+// OR OTHER RIGHTS.
+//=======================================================================
 
-// Use, modification and distribution is subject to the Boost Software
-// License, Version 1.0. (See accompanying file LICENSE_1_0.txt or copy at
-// http://www.boost.org/LICENSE_1_0.txt)
-
-// Author: Douglas Gregor
-#include <boost/graph/graphviz.hpp>
-#include <boost/graph/adjacency_list.hpp>
-#include <boost/test/minimal.hpp>
-#include <string>
+#include <boost/config.hpp>
+#include <iostream>
 #include <fstream>
-#include <boost/graph/iteration_macros.hpp>
+#include <string>
+#include <map>
 
-using namespace boost;
+#include <boost/graph/graphviz.hpp>
 
-typedef boost::adjacency_list<vecS, vecS, directedS,
-                              property<vertex_name_t, std::string>,
-                              property<edge_weight_t, double> > Digraph;
+using boost::GraphvizDigraph;
 
-typedef boost::adjacency_list<vecS, vecS, undirectedS,
-                              property<vertex_name_t, std::string>,
-                              property<edge_weight_t, double> > Graph;
-
-void test_graph_read_write(const std::string& filename)
-{
-  std::ifstream in(filename.c_str());
-  BOOST_REQUIRE(in);
-
-  Graph g;
-  dynamic_properties dp;
-  dp.property("id", get(vertex_name, g));
-  dp.property("weight", get(edge_weight, g));
-  BOOST_CHECK(read_graphviz(in, g, dp, "id"));
-
-  BOOST_CHECK(num_vertices(g) == 4);
-  BOOST_CHECK(num_edges(g) == 4);
-  
-  typedef graph_traits<Graph>::vertex_descriptor Vertex;
-
-  std::map<std::string, Vertex> name_to_vertex;
-  BGL_FORALL_VERTICES(v, g, Graph) 
-    name_to_vertex[get(vertex_name, g, v)] = v;
-
-  // Check vertices
-  BOOST_CHECK(name_to_vertex.find("0") != name_to_vertex.end());
-  BOOST_CHECK(name_to_vertex.find("1") != name_to_vertex.end());
-  BOOST_CHECK(name_to_vertex.find("foo") != name_to_vertex.end());
-  BOOST_CHECK(name_to_vertex.find("bar") != name_to_vertex.end());
-
-  // Check edges
-  BOOST_CHECK(edge(name_to_vertex["0"], name_to_vertex["1"], g).second);
-  BOOST_CHECK(edge(name_to_vertex["1"], name_to_vertex["foo"], g).second);
-  BOOST_CHECK(edge(name_to_vertex["foo"], name_to_vertex["bar"], g).second);
-  BOOST_CHECK(edge(name_to_vertex["1"], name_to_vertex["bar"], g).second);
-
-  BOOST_CHECK(get(edge_weight, g, 
-                  edge(name_to_vertex["0"], name_to_vertex["1"], g).first)
-                == 3.14159);
-  BOOST_CHECK(get(edge_weight, g, 
-                  edge(name_to_vertex["1"], name_to_vertex["foo"], g).first)
-                == 2.71828);
-  BOOST_CHECK(get(edge_weight, g, 
-                  edge(name_to_vertex["foo"], name_to_vertex["bar"], g).first)
-                == 10.0);
-  BOOST_CHECK(get(edge_weight, g, 
-                  edge(name_to_vertex["1"], name_to_vertex["bar"], g).first)
-                == 10.0);
-
-  // Write out the graph
-  write_graphviz(std::cout, g, dp, std::string("id"));
+template <class Vertex>
+const std::string& 
+vertex_label(const Vertex& u, const GraphvizDigraph& g) {
+  boost::property_map<GraphvizDigraph, boost::vertex_attribute_t>::const_type
+    va = boost::get(boost::vertex_attribute, g); 
+  return (*(va[u].find("label"))).second;
 }
 
-int test_main(int, char*[])
-{
-  test_graph_read_write("graphviz_example.dot");
+
+void print(GraphvizDigraph& g) {
+  typedef GraphvizDigraph Graph;
+  boost::graph_traits<Graph>::vertex_iterator i, end;
+  boost::graph_traits<Graph>::out_edge_iterator ei, edge_end;
+  for(boost::tie(i,end) = boost::vertices(g); i != end; ++i) {
+    std::cout << vertex_label(*i, g) << " --> ";
+    for (boost::tie(ei,edge_end) = boost::out_edges(*i, g); 
+         ei != edge_end; ++ei)
+      std::cout << vertex_label(boost::target(*ei, g), g) << "  ";
+    std::cout << std::endl;
+  }
+}
+
+/*
+  This is to give an example of read graphviz file and create BGL graph.
+  Then write the graph to the graphviz file.
+*/
+
+
+int main(int argc, char* argv[]) {
+  std::cout << "This is an example to demonstrate how to read graphviz file"
+            << std::endl 
+            << "and how to write graph to graphviz format."
+            << std::endl 
+            << std::endl 
+            << std::endl;
+
+  std::cout << "Usage: " << argv[0] << "  <input>.dot  <output>.dot " 
+            << std::endl;
+  std::cout << "If only have one xxx.dot in command line," << std::endl 
+            << "the second dot is graphviz_test_new.dot by default." << std::endl
+            << "If there is no input and output dot file in command line, "
+            << "input is graphviz_test.dot and output graphviz_test_new.dot." << std::endl;
+
+  std::string filename = "graphviz_test.dot";
+
+  if ( argc > 1 )
+    filename = argv[1];
+  
+  GraphvizDigraph g;
+
+  boost::read_graphviz(filename, g);
+
+  print(g);
+
+  const char* dot = "graphviz_test_new.dot";
+  if ( argc > 2 ) 
+    dot = argv[2];
+
+  boost::write_graphviz(dot, g);
   
   return 0;
 }

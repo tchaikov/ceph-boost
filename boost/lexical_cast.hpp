@@ -12,9 +12,8 @@
 //        with additional fixes and suggestions from Gennaro Prota,
 //        Beman Dawes, Dave Abrahams, Daryle Walker, Peter Dimov,
 //        and other Boosters
-// when:  November 2000, March 2003, June 2005
+// when:  November 2000, March 2003
 
-#include <cstddef>
 #include <string>
 #include <typeinfo>
 #include <boost/config.hpp>
@@ -46,9 +45,9 @@ namespace boost
         {
         }
         bad_lexical_cast(
-            const std::type_info &source_type,
-            const std::type_info &target_type) :
-            source(&source_type), target(&target_type)
+            const std::type_info &s,
+            const std::type_info &t) :
+            source(&s), target(&t)
         {
         }
         const std::type_info &source_type() const
@@ -124,11 +123,6 @@ namespace boost
         template<typename Target, typename Source>
         class lexical_stream
         {
-        private:
-            typedef typename widest_char<
-                typename stream_char<Target>::type,
-                typename stream_char<Source>::type>::type char_type;
-
         public:
             lexical_stream()
             {
@@ -154,16 +148,7 @@ namespace boost
             {
                 return !is_pointer<InputStreamable>::value &&
                        stream >> output &&
-                       stream.get() ==
-#if defined(__GNUC__) && (__GNUC__<3) && defined(BOOST_NO_STD_WSTRING)
-// GCC 2.9x lacks std::char_traits<>::eof().
-// We use BOOST_NO_STD_WSTRING to filter out STLport and libstdc++-v3
-// configurations, which do provide std::char_traits<>::eof().
-    
-                           EOF;
-#else
-                           std::char_traits<char_type>::eof();
-#endif
+                       (stream >> std::ws).eof();
             }
             bool operator>>(std::string &output)
             {
@@ -181,6 +166,10 @@ namespace boost
             }
             #endif
         private:
+            typedef typename widest_char<
+                typename stream_char<Target>::type,
+                typename stream_char<Source>::type>::type char_type;
+
             #if defined(BOOST_NO_STRINGSTREAM)
             std::strstream stream;
             #elif defined(BOOST_NO_STD_LOCALE)
@@ -191,42 +180,6 @@ namespace boost
         };
     }
 
-    #ifndef BOOST_NO_TEMPLATE_PARTIAL_SPECIALIZATION
-
-    // call-by-const reference version
-
-    namespace detail
-    {
-        template<class T>
-        struct array_to_pointer_decay
-        {
-            typedef T type;
-        };
-
-        template<class T, std::size_t N>
-        struct array_to_pointer_decay<T[N]>
-        {
-            typedef const T * type;
-        };
-    }
-
-    template<typename Target, typename Source>
-    Target lexical_cast(const Source &arg)
-    {
-        typedef typename detail::array_to_pointer_decay<Source>::type NewSource;
-
-        detail::lexical_stream<Target, NewSource> interpreter;
-        Target result;
-
-        if(!(interpreter << arg && interpreter >> result))
-            throw_exception(bad_lexical_cast(typeid(NewSource), typeid(Target)));
-        return result;
-    }
-
-    #else
-
-    // call-by-value fallback version (deprecated)
-
     template<typename Target, typename Source>
     Target lexical_cast(Source arg)
     {
@@ -234,14 +187,12 @@ namespace boost
         Target result;
 
         if(!(interpreter << arg && interpreter >> result))
-            throw_exception(bad_lexical_cast(typeid(Source), typeid(Target)));
+            throw_exception(bad_lexical_cast(typeid(Target), typeid(Source)));
         return result;
     }
-
-    #endif
 }
 
-// Copyright Kevlin Henney, 2000-2005. All rights reserved.
+// Copyright Kevlin Henney, 2000-2003. All rights reserved.
 //
 // Distributed under the Boost Software License, Version 1.0. (See
 // accompanying file LICENSE_1_0.txt or copy at
@@ -249,3 +200,4 @@ namespace boost
 
 #undef DISABLE_WIDE_CHAR_SUPPORT
 #endif
+

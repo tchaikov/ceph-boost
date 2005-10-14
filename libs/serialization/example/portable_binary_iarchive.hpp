@@ -18,7 +18,6 @@
 
 #include <ostream>
 #include <boost/archive/binary_iarchive.hpp>
-#include <boost/detail/endian.hpp>
 
 /////////1/////////2/////////3/////////4/////////5/////////6/////////7/////////8
 // exception to be thrown if integer read from archive doesn't fit
@@ -73,7 +72,7 @@ public:
             char * first = static_cast<char *>(static_cast<void *>(& l));
             char * last = first + sizeof(l) - 1;
             for(;first < last;++first, --last){
-                char x = *last;
+                char x = *first;
                 *last = *first;
                 *first = x;
             }
@@ -113,7 +112,7 @@ public:
     {
         // use our own header checking
         if(0 != (flags & boost::archive::no_header)){
-            this->boost::archive::basic_binary_iarchive<derived_t>::init();
+            boost::archive::basic_binary_iarchive<derived_t>::init();
             // skip the following for "portable" binary archives
             // boost::archive::basic_binary_oprimitive<derived_t, std::ostream>::init();
         }
@@ -121,14 +120,12 @@ public:
 };
 
 // explicitly instantiate for this type of text stream
-#include <boost/archive/impl/basic_binary_iarchive.ipp>
 #include <boost/archive/impl/archive_pointer_iserializer.ipp>
 #include <boost/archive/impl/basic_binary_iprimitive.ipp>
 
 namespace boost {
 namespace archive {
 
-template class basic_binary_iarchive<portable_binary_iarchive> ;
 template class basic_binary_iprimitive<portable_binary_iarchive, std::istream> ;
 template class binary_iarchive_impl<portable_binary_iarchive> ;
 template class detail::archive_pointer_iserializer<portable_binary_iarchive> ;

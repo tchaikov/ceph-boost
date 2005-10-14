@@ -1,5 +1,6 @@
-//  (C) Copyright Gennadiy Rozental 2001-2005.
+//  (C) Copyright Gennadiy Rozental 2002-2004.
 //  (C) Copyright Gennadiy Rozental & Ullrich Koethe 2001.
+//  (C) Copyright Gennadiy Rozental 2001-2004.
 //  Distributed under the Boost Software License, Version 1.0.
 //  (See accompanying file LICENSE_1_0.txt or copy at 
 //  http://www.boost.org/LICENSE_1_0.txt)
@@ -7,11 +8,11 @@
 //  See http://www.boost.org/libs/test for the library home page.
 
 // Boost.Test
-#include <boost/test/floating_point_comparison.hpp>
 #include <boost/test/unit_test.hpp>
+#include <boost/test/floating_point_comparison.hpp>
 using boost::unit_test::test_suite;
 using boost::unit_test::test_case;
-using boost::test_tools::close_at_tolerance;
+using boost::test_toolbox::close_at_tolerance;
 
 // BOOST
 #include <boost/lexical_cast.hpp>
@@ -19,9 +20,7 @@ using boost::test_tools::close_at_tolerance;
 // STL
 #include <functional>
 #include <iostream>
-#include <iomanip>
 #include <memory>
-#include <stdexcept>
 
 struct account {
     account()
@@ -33,7 +32,7 @@ struct account {
     {
         if(amount > m_amount)
         {
-            throw std::logic_error("You don't have that much money!");
+            throw std::runtime_error("You don't have that much money!");
         }
         m_amount -= amount;
     }
@@ -73,10 +72,6 @@ struct account_test {
 
     void test_deposit()
     {
-        // these 2 statements just to show that usage manipulators doesn't hurt Boost.Test output
-        std::cout << "Current balance: " << std::hex << (int)m_account.balance() << std::endl;
-        std::cerr << "Current balance: " << std::hex << (int)m_account.balance() << std::endl;
-
         float curr_ballance = (float)m_account.balance();
         float deposit_value;
 
@@ -100,11 +95,11 @@ struct account_test {
 
         // reports 'fatal error in "account_test::test_deposit": test std::not_equal_to<double>()(m_account.balance(), 999.9) failed
         //          for (999.9, 999.9)' on error
-        BOOST_REQUIRE_PREDICATE( std::not_equal_to<double>(), (m_account.balance())(999.9) );
+        BOOST_REQUIRE_PREDICATE( std::not_equal_to<double>(), 2, (m_account.balance(), 999.9) );
 
         // reports 'fatal error in "account_test::test_deposit": test close_at_tolerance<double>( 1e-9 )( m_account.balance(), 605.5)
         //          failed for (actual_value, 605.5)
-        BOOST_REQUIRE_PREDICATE( close_at_tolerance<double>( 1e-9 ), (m_account.balance())(605.5) );
+        BOOST_REQUIRE_PREDICATE( close_at_tolerance<double>( 1e-9 ), 2, (m_account.balance(), 605.5) );
     }
 
     void test_withdraw()
@@ -119,7 +114,6 @@ struct account_test {
 
         // reports 'error in "account_test::test_withdraw": exception std::runtime_error is expected' on error
         BOOST_CHECK_THROW( m_account.withdraw( m_account.balance() + 1 ), std::runtime_error );
-
     }
 };
 
@@ -133,7 +127,7 @@ struct account_test_suite : public test_suite {
         test_case* withdraw_test_case = BOOST_CLASS_TEST_CASE( &account_test::test_withdraw, instance );
 
         deposit_test_case->depends_on( init_test_case );
-        withdraw_test_case->depends_on( deposit_test_case );
+        withdraw_test_case->depends_on( init_test_case );
 
         add( init_test_case, 1 );
         add( deposit_test_case, 1 );
@@ -143,7 +137,7 @@ struct account_test_suite : public test_suite {
 
 test_suite*
 init_unit_test_suite( int argc, char * argv[] ) {
-    test_suite* test = BOOST_TEST_SUITE( "Unit test example 3" );
+    std::auto_ptr<test_suite> test( BOOST_TEST_SUITE( "Unit test example 3" ) );
 
     try {
         if( argc < 2 )
@@ -155,7 +149,7 @@ init_unit_test_suite( int argc, char * argv[] ) {
         return (test_suite*)0;
     }
 
-    return test;
+    return test.release();
 }
 
 // EOF

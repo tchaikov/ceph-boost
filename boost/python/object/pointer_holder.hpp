@@ -65,7 +65,7 @@ struct pointer_holder : instance_holder
  private: // types
     
  private: // required holder implementation
-    void* holds(type_info, bool null_ptr_only);
+    void* holds(type_info);
     
     template <class T>
     inline void* holds_wrapped(type_info dst_t, wrapper<T>*,T* p)
@@ -99,7 +99,7 @@ struct pointer_holder_back_reference : instance_holder
 #  include BOOST_PP_ITERATE()
 
  private: // required holder implementation
-    void* holds(type_info, bool null_ptr_only);
+    void* holds(type_info);
 
  private: // data members
     Pointer m_p;
@@ -120,11 +120,9 @@ inline pointer_holder_back_reference<Pointer,Value>::pointer_holder_back_referen
 }
 
 template <class Pointer, class Value>
-void* pointer_holder<Pointer, Value>::holds(type_info dst_t, bool null_ptr_only)
+void* pointer_holder<Pointer, Value>::holds(type_info dst_t)
 {
-    if (dst_t == python::type_id<Pointer>()
-        && !(null_ptr_only && get_pointer(this->m_p))
-    )
+    if (dst_t == python::type_id<Pointer>())
         return &this->m_p;
 
     Value* p = get_pointer(this->m_p);
@@ -139,11 +137,9 @@ void* pointer_holder<Pointer, Value>::holds(type_info dst_t, bool null_ptr_only)
 }
 
 template <class Pointer, class Value>
-void* pointer_holder_back_reference<Pointer, Value>::holds(type_info dst_t, bool null_ptr_only)
+void* pointer_holder_back_reference<Pointer, Value>::holds(type_info dst_t)
 {
-    if (dst_t == python::type_id<Pointer>()
-        && !(null_ptr_only && get_pointer(this->m_p))
-    )
+    if (dst_t == python::type_id<Pointer>())
         return &this->m_p;
 
     if (!get_pointer(this->m_p))

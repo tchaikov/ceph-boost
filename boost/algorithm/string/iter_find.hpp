@@ -14,13 +14,8 @@
 #include <algorithm>
 #include <iterator>
 #include <boost/iterator/transform_iterator.hpp>
-
-#include <boost/range/iterator_range.hpp>
-#include <boost/range/begin.hpp>
-#include <boost/range/end.hpp>
-#include <boost/range/result_iterator.hpp>
-#include <boost/range/value_type.hpp>
-
+#include <boost/algorithm/string/collection_traits.hpp>
+#include <boost/algorithm/string/iterator_range.hpp>
 #include <boost/algorithm/string/concept.hpp>
 #include <boost/algorithm/string/find_iterator.hpp>
 #include <boost/algorithm/string/detail/util.hpp>
@@ -64,24 +59,24 @@ namespace boost {
         */
         template< 
             typename SequenceSequenceT,
-            typename RangeT,
+            typename CollectionT,
             typename FinderT >
         inline SequenceSequenceT&
         iter_find(
             SequenceSequenceT& Result,
-            RangeT& Input,
+            CollectionT& Input,
             FinderT Finder )
         {
             function_requires< 
                 FinderConcept<FinderT,
-                BOOST_STRING_TYPENAME range_result_iterator<RangeT>::type> >();
+                BOOST_STRING_TYPENAME result_iterator_of<CollectionT>::type> >();
 
             typedef BOOST_STRING_TYPENAME 
-                range_result_iterator<RangeT>::type input_iterator_type;
+                result_iterator_of<CollectionT>::type input_iterator_type;
             typedef find_iterator<input_iterator_type> find_iterator_type;
             typedef detail::copy_iterator_rangeF<
                 BOOST_STRING_TYPENAME 
-                    range_value<SequenceSequenceT>::type,
+                    value_type_of<SequenceSequenceT>::type,
                 input_iterator_type> copy_range_type;
             
             input_iterator_type InputEnd=end(Input);
@@ -131,24 +126,24 @@ namespace boost {
         */
         template< 
             typename SequenceSequenceT,
-            typename RangeT,
+            typename CollectionT,
             typename FinderT >
         inline SequenceSequenceT&
         iter_split(
             SequenceSequenceT& Result,
-            RangeT& Input,
+            CollectionT& Input,
             FinderT Finder )
         {
             function_requires< 
                 FinderConcept<FinderT,
-                BOOST_STRING_TYPENAME range_result_iterator<RangeT>::type> >();
+                BOOST_STRING_TYPENAME result_iterator_of<CollectionT>::type> >();
 
             typedef BOOST_STRING_TYPENAME 
-                range_result_iterator<RangeT>::type input_iterator_type;
+                result_iterator_of<CollectionT>::type input_iterator_type;
             typedef split_iterator<input_iterator_type> find_iterator_type;
             typedef detail::copy_iterator_rangeF<
                 BOOST_STRING_TYPENAME 
-                    range_value<SequenceSequenceT>::type,
+                    value_type_of<SequenceSequenceT>::type,
                 input_iterator_type> copy_range_type;
             
             input_iterator_type InputEnd=end(Input);

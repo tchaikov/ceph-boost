@@ -19,8 +19,7 @@
       friend class iterator_core_access;
    public:
       iterator_adaptor();
-      explicit iterator_adaptor(Base const& iter);
-      typedef Base base_type;
+      explicit iterator_adaptor(Base iter);
       Base const& base() const;
    protected:
       typedef iterator_adaptor iterator_adaptor\_;
@@ -116,7 +115,7 @@ above are defined as follows:
     ``m_iterator`` default constructed.
 
 
-``explicit iterator_adaptor(Base const& iter);``
+``explicit iterator_adaptor(Base iter);``
 
 :Returns: An instance of ``iterator_adaptor`` with
     ``m_iterator`` copy constructed from ``iter``.

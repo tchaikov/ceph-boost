@@ -12,10 +12,8 @@
 
 #include <boost/algorithm/string/config.hpp>
 #include <boost/regex.hpp>
-
-#include <boost/range/iterator_range.hpp>
-#include <boost/range/begin.hpp>
-#include <boost/range/end.hpp>
+#include <boost/algorithm/string/iterator_range.hpp>
+#include <boost/algorithm/string/collection_traits.hpp>
 
 namespace boost {
     namespace algorithm {
@@ -31,6 +29,7 @@ namespace boost {
                 typedef regex_search_result<IteratorT> type;
                 typedef iterator_range<IteratorT> base_type;
                 typedef BOOST_STRING_TYPENAME base_type::value_type value_type;
+                typedef BOOST_STRING_TYPENAME base_type::reference reference;
                 typedef BOOST_STRING_TYPENAME base_type::difference_type difference_type;
                 typedef BOOST_STRING_TYPENAME base_type::const_iterator const_iterator;
                 typedef BOOST_STRING_TYPENAME base_type::iterator iterator;

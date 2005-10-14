@@ -17,7 +17,11 @@
 #   error "macro already defined!"
 #endif
 
+#ifdef __BORLANDC__
+#define BOOST_STRING_TYPENAME
+#else
 #define BOOST_STRING_TYPENAME BOOST_DEDUCED_TYPENAME
+#endif
 
 // Metrowerks workaround
 #if BOOST_WORKAROUND(__MWERKS__, <= 0x3003) // 8.x

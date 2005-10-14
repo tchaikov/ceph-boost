@@ -33,8 +33,11 @@
 #define STD std
 #endif
 
-namespace boost { 
-namespace serialization {
+#ifdef BOOST_NO_ARGUMENT_DEPENDENT_LOOKUP
+namespace boost { namespace serialization {
+#else
+namespace STD {
+#endif
 
 /////////1/////////2/////////3/////////4/////////5/////////6/////////7/////////8
 // vector<T>
@@ -126,8 +129,11 @@ inline void serialize(
 
 #endif // BOOST_WORKAROUND
 
-} // serialization
-} // namespace boost
+#ifdef BOOST_NO_ARGUMENT_DEPENDENT_LOOKUP
+}} // namespace boost::serialization
+#else
+} // namspace STD
+#endif
 
 #include <boost/serialization/collection_traits.hpp>
 

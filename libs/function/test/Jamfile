@@ -62,7 +62,6 @@ DEPENDS all : test ;
   [ run libs/function/test/function_ref_portable.cpp :  :  :  :  ]
 
   [ run libs/function/test/contains_test.cpp : : : : ]
-
-  [ run libs/function/test/contains2_test.cpp : : : : ]
  ;
 }
+      

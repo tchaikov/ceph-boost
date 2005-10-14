@@ -16,7 +16,6 @@
 # include <errno.h>
 # include <assert.h>
 # include <ctype.h>
-# include <time.h>
 
 # ifdef USE_EXECNT
 
@@ -72,7 +71,7 @@ static int  is_win95_defined = 0;
 static struct
 {
 	int	pid; /* on win32, a real process handle */
-	void	(*func)( void *closure, int status, timing_info* );
+	void	(*func)( void *closure, int status );
 	void 	*closure;
 	char	*tempfile;
 
@@ -108,97 +107,91 @@ int maxline()
         : 2047;
 }
 
-static void
-free_argv( char** args )
-{
-  free( args[0] );
-  free( args );
-}
-
-/* Convert a command string into arguments for spawnvp.  The original
- * code, inherited from ftjam, tried to break up every argument on the
- * command-line, dealing with quotes, but that's really a waste of
- * time on Win32, at least.  It turns out that all you need to do is
- * get the raw path to the executable in the first argument to
- * spawnvp, and you can pass all the rest of the command-line
- * arguments to spawnvp in one, un-processed string.
- *
- * New strategy: break the string in at most one place.
- */
 static char**
-string_to_args( const char*  string )
+string_to_args( const char*  string, int*  pcount )
 {
-    int src_len;
-    int in_quote;
-    char* line;
-    char const* src;
-    char* dst;
-    char** argv;
+  int    total    = strlen( string );
+  int    in_quote = 0,
+      num_args = 0; /* was uninitialized -- dwa */
+  char*  line;
+  char*  p;
+  char** arg;
+  char** args;
 
-    /* drop leading and trailing whitespace if any */
-    while (isspace(*string))
-        ++string;
+  *pcount = 0;  
+
+  /* do not copy trailing newlines, if any */  
+  while ( total > 0 )
+  {
+      if ( !isspace( string[total - 1] ) )
+          break;
+      --total;
+  }
   
-    src_len = strlen( string );
-    while ( src_len > 0 && isspace( string[src_len - 1] ) )
-        --src_len;
-
-    /* Copy the input string into a buffer we can modify
-     */
-    line = (char*)malloc( src_len+1 );
-    if (!line)
-        return 0;
-
-    /* allocate the argv array.
-     *   element 0: stores the path to the executable
-     *   element 1: stores the command-line arguments to the executable
-     *   element 2: NULL terminator
-     */
-    argv = (char**)malloc( 3 * sizeof(char*) );
-    if (!argv)
+  /* first of all, copy the input string */
+  line    = (char*)malloc( total+2 );
+  if (!line)
+    return 0;
+    
+  memcpy( line+1, string, total );
+  line[0]       = 0;
+  line[total+1] = 0;
+  
+  in_quote = 0;
+  for ( p = line+1; p[0]; p++ )
+  {
+    switch (p[0])
     {
-        free( line );
-        return 0;
+      case '"':
+        in_quote = !in_quote;
+        break;
+        
+      case ' ':
+      case '\t':
+        if (!in_quote)
+          p[0]    = 0;
+        
+      default:
+        ;
     }
-    
-    /* Strip quotes from the first command-line argument and find
-     * where it ends.  Quotes are illegal in Win32 pathnames, so we
-     * don't need to worry about preserving escaped quotes here.
-     * Spaces can't be escaped in Win32, only enclosed in quotes, so
-     * removing backslash escapes is also a non-issue.
-     */
-    in_quote = 0;
-    for ( src = string, dst = line ; *src; src++ )
+  }
+  
+  /* now count the arguments.. */
+  for ( p = line; p < line+total+1; p++ )
+    if ( !p[0] && p[1] )
+      num_args++;
+      
+  /* allocate the args array */
+  /* dwa -- did you really mean to allocate only 2 additional bytes? */
+#if 0 /* was like this */
+  args = (char**)malloc( num_args*sizeof(char*)+2 );
+#endif
+  args = (char**)malloc( (num_args + 2) * sizeof(char*) );
+  if (!args)
+  {
+    free( line );
+    return 0;
+  }
+  
+  arg = args+1;
+  for ( p = line; p < line+total+1; p++ )
+    if ( !p[0] && p[1] )
     {
-        if (*src == '"')
-            in_quote = !in_quote;
-        else if (!in_quote && isspace(*src))
-            break;
-        else
-            *dst++ = *src;
+      arg[0] = p+1;
+      arg++;
     }
-    *dst++ = 0;
-    argv[0] = line;
-
-    /* skip whitespace in src */
-    while (isspace(*src))
-        ++src;
-
-    argv[1] = dst;
-
-	/* Copy the rest of the arguments verbatim */
-    
-    src_len -= src - string;
-
-    /* Use strncat because it appends a trailing nul */
-    *dst = 0;
-    strncat(dst, src, src_len);
-
-    argv[2] = 0;
-    
-    return argv;
+  arg[0]  = 0;
+  *pcount = num_args;
+  args[0] = line;
+  return args+1;
 }
 
+static void
+free_args( char** args )
+{
+  free( args[-1] );
+  free( args-1 );
+}
 
 
 /* process a "del" or "erase" command under Windows 95/98 */
@@ -317,22 +310,28 @@ onintr( int disp )
 	printf( "...interrupted\n" );
 }
 
+#if 0 // the shell is too different from direct invocation; let's
+      // always use the shell unless forced.
 /*
- * can_spawn() - If the command is suitable for execution via spawnvp,
- * return a number >= the number of characters it would occupy on the
- * command-line.  Otherwise, return zero.
+ * use_bat_file() - return true iff the command demands the use of a
+ * .bat file to run it
  */
-long can_spawn(char* command)
+int use_bat_file(char* command)
 {
-    char *p;
+    char *p = command;
     
     char inquote = 0;
 
-    /* Move to the first non-whitespace */
-    command += strspn( command, " \t" );
+    p += strspn( p, " \t" );
 
-    p = command;
-    
+    /* spawnvp can't handle any paths with spaces or quoted filenames with no directory prefix */
+    if ( *p == '"' )
+    {
+        char* q = p + 1 + strcspn( p + 1, "\" /\\" );
+        if ( *q == '"' || *q == ' ' )
+            return 1;
+    }
+        
     /* Look for newlines and unquoted i/o redirection */
     do
     {
@@ -344,11 +343,11 @@ long can_spawn(char* command)
             /* skip over any following spaces */
             while( isspace( *p ) )
                 ++p;
-            /* Must use a .bat file if there is anything significant
-             * following the newline
+            /* return true iff there is anything significant following
+             * the newline
              */
             if (*p)
-                return 0;
+                return 1;
             break;
             
         case '"':
@@ -368,21 +367,20 @@ long can_spawn(char* command)
         case '>':
         case '|':
             if (!inquote)
-                return 0;
+                return 1;
             ++p;
             break;
         }
     }
     while (*p);
-
-    /* Return the number of characters the command will occupy
-     */
-    return p - command;
+    
+    return p - command >= MAXLINE;
 }
+#endif
 
 void execnt_unit_test()
 {
-#if !defined(NDEBUG)        
+#if 0 && !defined(NDEBUG)
     /* vc6 preprocessor is broken, so assert with these strings gets
      * confused. Use a table instead.
      */
@@ -392,6 +390,10 @@ void execnt_unit_test()
         { "x\n ", 0 },
         { "x\ny", 1 },
         { "x\n\n y", 1 },
+        { "\"x\"", 1 },
+        { "\"x y\"", 1 },
+        { "\"x/y\"", 0 },
+        { "\"x\\y\"", 0 },
         { "echo x > foo.bar", 1 },
         { "echo x < foo.bar", 1 },
         { "echo x \">\" foo.bar", 0 },
@@ -402,7 +404,7 @@ void execnt_unit_test()
     int i;
     for ( i = 0; i < sizeof(tests)/sizeof(*tests); ++i)
     {
-        assert( !can_spawn( tests[i].command ) == tests[i].result );
+        assert( use_bat_file( tests[i].command ) == tests[i].result );
     }
 
     {
@@ -410,25 +412,13 @@ void execnt_unit_test()
         assert( long_command != 0 );
         memset( long_command, 'x', MAXLINE + 9 );
         long_command[MAXLINE + 9] = 0;
-        assert( can_spawn( long_command ) == MAXLINE + 9);
+        assert( use_bat_file( long_command ) );
         free( long_command );
-    }
-
-    {
-        /* Work around vc6 bug; it doesn't like escaped string
-         * literals inside assert
-         */
-        char** argv = string_to_args("\"g++\" -c -I\"Foobar\"");
-        char const expected[] = "-c -I\"Foobar\""; 
-        
-        assert(!strcmp(argv[0], "g++"));
-        assert(!strcmp(argv[1], expected));
-        free_argv(argv);
     }
 #endif 
 }
 
-/* SVA - handle temp dirs with spaces in the path */
+// SVA - handle temp dirs with spaces in the path
 static const char *getTempDir(void)
 {
     static char tempPath[_MAX_PATH];
@@ -456,65 +446,6 @@ static const char *getTempDir(void)
     return pTempPath;
 }
 
-/* 64-bit arithmetic helpers */
-
-/* Compute the carry bit from the addition of two 32-bit unsigned numbers */
-#define add_carry_bit(a, b) ( (((a) | (b)) >> 31) & (~((a) + (b)) >> 31) & 0x1 )
-
-/* Compute the high 32 bits of the addition of two 64-bit unsigned numbers, h1l1 and h2l2 */
-#define add_64_hi(h1, l1, h2, l2) ((h1) + (h2) + add_carry_bit(l1, l2))
-
-/* Add two 64-bit unsigned numbers, h1l1 and h2l2 */
-static FILETIME add_64(
-    unsigned long h1, unsigned long l1,
-    unsigned long h2, unsigned long l2)
-{
-    FILETIME result;
-    result.dwLowDateTime = l1 + l2;
-    result.dwHighDateTime = add_64_hi(h1, l1, h2, l2);
-
-    return result;
-}
-
-static FILETIME add_FILETIME(FILETIME t1, FILETIME t2)
-{
-    return add_64(
-        t1.dwHighDateTime, t1.dwLowDateTime
-      , t2.dwHighDateTime, t2.dwLowDateTime);
-}
-static FILETIME negate_FILETIME(FILETIME t)
-{
-    /* 2s complement negation */
-    return add_64(~t.dwHighDateTime, ~t.dwLowDateTime, 0, 1);
-}
-
-/* COnvert a FILETIME to a number of seconds */
-static double filetime_seconds(FILETIME t)
-{
-    return t.dwHighDateTime * (double)(1UL << 31) * 2 + t.dwLowDateTime * 1.0e-7;
-}
-
-static void
-record_times(int pid, timing_info* time)
-{
-    FILETIME creation, exit, kernel, user;
-    if (GetProcessTimes((HANDLE)pid, &creation, &exit, &kernel, &user))
-    {
-        /* Compute the elapsed time */
-#if 0 /* We don't know how to get this number this on Unix */
-        time->elapsed = filetime_seconds(
-            add_FILETIME( exit, negate_FILETIME(creation) )
-        );
-#endif 
-
-        time->system = filetime_seconds(kernel);
-        time->user = filetime_seconds(user);            
-    }
-        
-    CloseHandle((HANDLE)pid);
-}
-    
-
 /*
  * execcmd() - launch an async command execution
  */
@@ -522,7 +453,7 @@ record_times(int pid, timing_info* time)
 void
 execcmd( 
 	char *string,
-	void (*func)( void *closure, int status, timing_info* ),
+	void (*func)( void *closure, int status ),
 	void *closure,
 	LIST *shell )
 {
@@ -570,7 +501,7 @@ execcmd(
 
         tempdir = getTempDir();
   
-        /* SVA - allocate 64 other just to be safe */
+        // SVA - allocate 64 other just to be safe
         cmdtab[ slot ].tempfile = malloc( strlen( tempdir ) + 64 );
   
         procID = GetCurrentProcessId();
@@ -584,26 +515,19 @@ execcmd(
     while( isspace( *string ) )
         ++string;
 
-    /* Write to .BAT file unless the line would be too long and it
-     * meets the other spawnability criteria.
-     */
-    if( raw_cmd && can_spawn( string ) >= MAXLINE )
-    {
-        if( DEBUG_EXECCMD )
-            printf("Executing raw command directly\n");        
-    }
-    else
+    /* If multi line, or too long, or JAMSHELL is set, write to bat file. */
+    /* Otherwise, exec directly. */
+    /* Frankly, if it is a single long line I don't think the */
+    /* command interpreter will do any better -- it will fail. */
+
+    if( shell || !raw_cmd // && use_bat_file( string )
+        )
     {
         FILE *f;
-        raw_cmd = 0;
-        
+
         /* Write command to bat file. */
+
         f = fopen( cmdtab[ slot ].tempfile, "w" );
-        if (!f)
-        {
-            printf( "failed to write command file!\n" );
-            exit( EXITBAD );
-        }
         fputs( string, f );
         fclose( f );
 
@@ -616,6 +540,10 @@ execcmd(
             else
                 printf("Executing through .bat file\n");
         }
+    }
+    else if( DEBUG_EXECCMD )
+    {
+        printf("Executing raw command directly\n");
     }
 
     /* Forumulate argv */
@@ -649,7 +577,8 @@ execcmd(
     }
     else if (raw_cmd)
     {
-        argv = string_to_args(string);
+        int ignored;
+        argv = string_to_args(string, &ignored);
     }
     else
     {
@@ -679,7 +608,6 @@ execcmd(
         const char**  keyword;
         int           len, spawn = 1;
         int           result;
-        timing_info time = {0,0};
           
         for ( keyword = hard_coded; keyword[0]; keyword++ )
         {
@@ -702,10 +630,11 @@ execcmd(
         if (spawn)
         {
             char**  args;
+            int     num_args;
             
             /* convert the string into an array of arguments */
             /* we need to take care of double quotes !!      */
-            args = string_to_args( string );
+            args = string_to_args( string, &num_args );
             if ( args )
             {
 #if 0
@@ -720,13 +649,12 @@ execcmd(
                 fprintf( stderr, "\n" );
 #endif              
                 result = spawnvp( P_WAIT, args[0], args );
-                record_times(result, &time);
-                free_argv( args );
+                free_args( args );
             }
             else
                 result = 1;
         }
-        func( closure, result ? EXEC_CMD_FAIL : EXEC_CMD_OK, &time );
+        func( closure, result ? EXEC_CMD_FAIL : EXEC_CMD_OK );
         return;
     }
 
@@ -744,19 +672,12 @@ execcmd(
     }
 
     /* the rest is for Windows NT only */
-    /* spawn doesn't like quotes around the command name */
+    /* spawn doesn't like quotes aroudn the command name */
     if ( argv[0][0] == '"')
     {
         int l = strlen(argv[0]);
-
-        /* Clobber any closing quote, shortening the string by one
-         * element */
-        if (argv[0][l-1] == '"')
-            argv[0][l-1] = '\0';
-        
-        /* Move everything *including* the original terminating zero
-         * back one place in memory, covering up the opening quote */
-        memmove(argv[0],argv[0]+1,l);
+        if (argv[0][l-1] == '"') argv[0][l-1] = '\0';
+        strcpy(argv[0],argv[0]+1);
     }
     if( ( pid = spawnvp( P_NOWAIT, argv[0], argv ) ) == -1 )
     {
@@ -778,7 +699,7 @@ execcmd(
     
     if (argv != argv_static)
     {
-        free_argv(argv);
+        free_args(argv);
     }
 }
 
@@ -792,20 +713,19 @@ execwait()
 	int i;
 	int status, w;
 	int rstat;
-    timing_info time;
 
 	/* Handle naive make1() which doesn't know if cmds are running. */
 
 	if( !cmdsrunning )
 	    return 0;
 
-    if ( is_win95 )
-        return 0;
+        if ( is_win95 )
+          return 0;
           
 	/* Pick up process pid and status */
     
-    while( ( w = wait( &status ) ) == -1 && errno == EINTR )
-        ;
+	while( ( w = wait( &status ) ) == -1 && errno == EINTR )
+		;
 
 	if( w == -1 )
 	{
@@ -826,8 +746,6 @@ execwait()
 	    exit( EXITBAD );
 	}
 
-    record_times(cmdtab[i].pid, &time);
-    
 	/* Clear the temp file */
     if ( cmdtab[i].tempfile )
         unlink( cmdtab[ i ].tempfile );
@@ -845,113 +763,68 @@ execwait()
 	    rstat = EXEC_CMD_OK;
 
 	cmdtab[ i ].pid = 0;
-	/* SVA don't leak temp files */
+	// SVA don't leak temp files
 	if(cmdtab[i].tempfile != NULL)
 	{
             free(cmdtab[i].tempfile);
             cmdtab[i].tempfile = NULL;
 	}
-	(*cmdtab[ i ].func)( cmdtab[ i ].closure, rstat, &time );
+	(*cmdtab[ i ].func)( cmdtab[ i ].closure, rstat );
 
 	return 1;
 }
 
 # if !defined( __BORLANDC__ )
 
-/* The possible result codes from check_process_exit, below */
-typedef enum { process_error, process_active, process_finished } process_state;
-
-/* Helper for my_wait() below.  Checks to see whether the process has
- * exited and if so, records timing information.
- */
-static process_state
-check_process_exit(
-    HANDLE process         /* The process we're looking at */
-    
-  , int* status            /* Storage for the finished process' exit
-                            * code.  If the process is still active
-                            * this location is left untouched. */
-    
-  , HANDLE* active_handles /* Storage for the process handle if it is
-                            * found to be still active, or NULL.  The
-                            * process is treated as though it is
-                            * complete.  */
-    
-  , int* num_active        /* The current length of active_handles */
-)
-{
-    DWORD exitcode;
-    process_state result;
-
-    /* Try to get the process exit code */
-    if (!GetExitCodeProcess(process, &exitcode))
-    {
-        result = process_error; /* signal an error */
-    }
-    else if (
-        exitcode == STILL_ACTIVE     /* If the process is still active */
-        && active_handles != 0       /* and we've been passed a place to buffer it */
-    )
-    {
-        active_handles[(*num_active)++] = process; /* push it onto the active stack */
-        result = process_active;
-    }
-    else
-    {
-        *status = (int)((exitcode & 0xff) << 8);
-        result = process_finished;
-    }
-    
-    return result;
-}
-
 static int
 my_wait( int *status )
 {
 	int i, num_active = 0;
 	DWORD exitcode, waitcode;
-	HANDLE active_handles[MAXJOBS];
+	static HANDLE *active_handles = 0;
+
+	if (!active_handles)
+	    active_handles = (HANDLE *)malloc(globs.jobs * sizeof(HANDLE) );
 
 	/* first see if any non-waited-for processes are dead,
 	 * and return if so.
 	 */
-	for ( i = 0; i < globs.jobs; i++ )
-    {
-        int pid = cmdtab[i].pid;
-        
-	    if ( pid )
-        {
-            process_state state
-                = check_process_exit((HANDLE)pid, status, active_handles, &num_active);
-            
-            if ( state == process_error )
-                goto FAILED;
-            else if ( state == process_finished )
-                return pid;
+	for ( i = 0; i < globs.jobs; i++ ) {
+	    if ( cmdtab[i].pid ) {
+		if ( GetExitCodeProcess((HANDLE)cmdtab[i].pid, &exitcode) ) {
+		    if ( exitcode == STILL_ACTIVE )
+			active_handles[num_active++] = (HANDLE)cmdtab[i].pid;
+		    else {
+			CloseHandle((HANDLE)cmdtab[i].pid);
+			*status = (int)((exitcode & 0xff) << 8);
+			return cmdtab[i].pid;
+		    }
+		}
+		else
+		    goto FAILED;
 	    }
 	}
 
 	/* if a child exists, wait for it to die */
-	if ( !num_active )
-    {
+	if ( !num_active ) {
 	    errno = ECHILD;
 	    return -1;
 	}
-    
 	waitcode = WaitForMultipleObjects( num_active,
-                                       active_handles,
-                                       FALSE,
-                                       INFINITE );
-	if ( waitcode != WAIT_FAILED )
-    {
+					   active_handles,
+					   FALSE,
+					   INFINITE );
+	if ( waitcode != WAIT_FAILED ) {
 	    if ( waitcode >= WAIT_ABANDONED_0
-             && waitcode < WAIT_ABANDONED_0 + num_active )
-            i = waitcode - WAIT_ABANDONED_0;
+		&& waitcode < WAIT_ABANDONED_0 + num_active )
+		i = waitcode - WAIT_ABANDONED_0;
 	    else
-            i = waitcode - WAIT_OBJECT_0;
-        
-        if ( check_process_exit(active_handles[i], status, 0, 0) == process_finished )
-            return (int)active_handles[i];
+		i = waitcode - WAIT_OBJECT_0;
+	    if ( GetExitCodeProcess(active_handles[i], &exitcode) ) {
+		CloseHandle(active_handles[i]);
+		*status = (int)((exitcode & 0xff) << 8);
+		return (int)active_handles[i];
+	    }
 	}
 
 FAILED:

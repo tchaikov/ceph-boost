@@ -27,15 +27,10 @@
 #include <cassert>
 #include <boost/config.hpp>
 #include <boost/pfto.hpp>
+
 #include <boost/detail/workaround.hpp>
-
-#include <boost/archive/detail/oserializer.hpp>
-#include <boost/archive/detail/interface_oarchive.hpp>
 #include <boost/archive/detail/common_oarchive.hpp>
-
 #include <boost/serialization/string.hpp>
-
-#include <boost/archive/detail/abi_prefix.hpp> // must be the last header
 
 namespace boost {
 namespace archive {
@@ -43,11 +38,10 @@ namespace archive {
 /////////////////////////////////////////////////////////////////////////
 // class basic_text_iarchive - read serialized objects from a input text stream
 template<class Archive>
-class basic_text_oarchive : 
-    public detail::common_oarchive<Archive>
+class basic_text_oarchive : public detail::common_oarchive<Archive>
 {
 #if BOOST_WORKAROUND(BOOST_MSVC, <= 1300) \
-|| BOOST_WORKAROUND(__BORLANDC__,BOOST_TESTED_AT(0x560))
+|| BOOST_WORKAROUND(__BORLANDC__,BOOST_TESTED_AT(0x564))
 public:
 #elif defined(BOOST_MSVC)
     // for some inexplicable reason insertion of "class" generates compile erro
@@ -68,12 +62,11 @@ protected:
         delimiter = eol;
     }
 
-    BOOST_ARCHIVE_OR_WARCHIVE_DECL(void)
-    newtoken();
+    void newtoken();
 
     // default processing - invoke serialization library
     template<class T>
-    void save_override(T & t, BOOST_PFTO int)
+    void save_override(const T & t, BOOST_PFTO int)
     {
         archive::save(* this->This(), t);
     }
@@ -95,24 +88,38 @@ protected:
     void save_override(const class_id_optional_type & /* t */, int){}
 
     void save_override(const class_name_type & t, int){
-                const std::string s(t);
-                * this->This() << s;
+        this->This()->save(std::string(static_cast<const char *>(t)));
     }
-
-    BOOST_ARCHIVE_OR_WARCHIVE_DECL(void)
-    init();
-
-    basic_text_oarchive(unsigned int flags) :
-        detail::common_oarchive<Archive>(flags),
+protected:
+    basic_text_oarchive() :
+        detail::common_oarchive<Archive>(),
         delimiter(none)
     {}
-
-    ~basic_text_oarchive(){}
+    ~basic_text_oarchive()
+    {}
 };
+
+template<class Archive>
+void basic_text_oarchive<Archive>::newtoken()
+{
+    switch(delimiter){
+    default:
+        assert(false);
+        break;
+    case eol:
+        this->This()->put('\n');
+        delimiter = space;
+        break;
+    case space:
+        this->This()->put(' ');
+        break;
+    case none:
+        delimiter = space;
+        break;
+    }
+}
 
 } // namespace archive
 } // namespace boost
-
-#include <boost/archive/detail/abi_suffix.hpp> // pops abi_suffix.hpp pragmas
 
 #endif // BOOST_ARCHIVE_BASIC_TEXT_OARCHIVE_HPP

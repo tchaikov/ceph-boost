@@ -12,6 +12,7 @@
 #include <iostream>
 #include <iterator>
 #include <functional>
+#include <boost/algorithm/string/iterator_range.hpp>
 #include <boost/algorithm/string/classification.hpp>
 #include <boost/algorithm/string/split.hpp>
 #include <boost/algorithm/string/find_iterator.hpp>
@@ -35,7 +36,7 @@ int main()
         It!=string_find_iterator();
         ++It)
     {
-        cout << copy_range<std::string>(*It) << endl;
+        cout << copy_iterator_range<std::string>(*It) << endl;
         // shift all chars in the match by one
         transform( 
             It->begin(), It->end(), 

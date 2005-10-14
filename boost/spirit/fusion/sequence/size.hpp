@@ -1,6 +1,5 @@
 /*=============================================================================
     Copyright (c) 2001-2003 Joel de Guzman
-    Copyright (c) 2004 Peder Holt
 
     Use, modification and distribution is subject to the Boost Software
     License, Version 1.0. (See accompanying file LICENSE_1_0.txt or copy at
@@ -35,7 +34,7 @@ namespace boost { namespace fusion
         template <typename Sequence>
         struct size
             : size_impl<typename as_fusion_sequence<Sequence>::type::tag>::
-                template apply<typename as_fusion_sequence<Sequence>::type>
+                template apply<typename as_fusion_sequence<Sequence>::type>::type
         {};
     }
 }}

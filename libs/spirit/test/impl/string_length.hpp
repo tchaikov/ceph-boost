@@ -16,10 +16,10 @@
 namespace
 {
     template <typename Char>
-    inline unsigned int
+    inline int
     string_length(Char const* str)
     {
-        unsigned int len = 0;
+        int len = 0;
         while (*str++)
             ++len;
         return len;

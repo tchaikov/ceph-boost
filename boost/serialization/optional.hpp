@@ -16,9 +16,6 @@
 
 #include <boost/config.hpp>
 
-#include <boost/mpl/integral_c.hpp>
-#include <boost/mpl/integral_c_tag.hpp>
-
 #include <boost/optional.hpp>
 #include <boost/serialization/split_free.hpp>
 #include <boost/serialization/level.hpp>
@@ -28,14 +25,17 @@
 // function specializations must be defined in the appropriate
 // namespace - boost::serialization
 namespace boost { 
-namespace serialization {    
+#ifdef BOOST_NO_ARGUMENT_DEPENDENT_LOOKUP
+namespace serialization {
+#endif
+    
     template<class Archive, class T>
     void save(
         Archive & ar, 
         const boost::optional<T> & t, 
         const unsigned int /*version*/
     ){
-        const bool tflag = t;
+        bool tflag = t;
         ar << boost::serialization::make_nvp("initialized", tflag);
         if (tflag)
            ar << boost::serialization::make_nvp("value", *t);
@@ -99,7 +99,8 @@ namespace serialization {
 
     #endif
 
+#ifdef BOOST_NO_ARGUMENT_DEPENDENT_LOOKUP
 } // serialization
+#endif
 } // namespace boost
-
-#endif // BOOST_SERIALIZATION_OPTIONAL_HPP_
+#endif

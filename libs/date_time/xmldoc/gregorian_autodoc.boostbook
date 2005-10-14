@@ -1,33 +1,10 @@
 <?xml version="1.0" standalone="yes"?>
-<!-- Copyright (c) 2001-2005 CrystalClear Software, Inc.
+<!-- Copyright (c) 2001-2004 CrystalClear Software, Inc.
      Subject to the Boost Software License, Version 1.0. 
      (See accompanying file LICENSE-1.0 or  http://www.boost.org/LICENSE-1.0)
 -->
-<!-- date source directory processed: 2005-Jun-27 -->
 <section id="gregorian_reference">
 <title>Gregorian Reference</title>
-  <header name="boost/date_time/gregorian/conversion.hpp">
-    <namespace name="boost">
-      <namespace name="gregorian">
-        <function name="to_tm">
-          <type>tm</type>
-          <parameter name="d">
-            <paramtype>const <classname>date</classname> &amp;</paramtype>
-          </parameter>
-          <purpose>Converts a date to a tm struct. Throws out_of_range exception if date is a special value. </purpose>
-        </function>
-        <function name="date_from_tm">
-          <type>
-            <classname>date</classname>
-          </type>
-          <parameter name="datetm">
-            <paramtype>const tm &amp;</paramtype>
-          </parameter>
-          <purpose>Converts a tm structure into a date dropping the any time values. </purpose>
-        </function>
-      </namespace>
-    </namespace>
-  </header>
   <header name="boost/date_time/gregorian/formatters.hpp">
     <namespace name="boost">
       <namespace name="gregorian">
@@ -45,7 +22,9 @@
           <parameter name="d">
             <paramtype>const <classname>date</classname> &amp;</paramtype>
           </parameter>
-          <purpose>To YYYY-mmm-DD string where mmm 3 char month name. Example: 2002-Jan-01. </purpose>
+          <purpose>
+            <simpara>To YYYY-mmm-DD string where mmm 3 char month name. Example: 2002-Jan-01. </simpara>
+          </purpose>
         </function>
         <function name="to_simple_string_type">
           <type>std::basic_string&lt; charT &gt;</type>
@@ -61,7 +40,9 @@
           <parameter name="d">
             <paramtype>const date_period &amp;</paramtype>
           </parameter>
-          <purpose>Convert date period to simple string. Example: [2002-Jan-01/2002-Jan-02]. </purpose>
+          <purpose>
+            <simpara>Convert date period to simple string. Example: [2002-Jan-01/2002-Jan-02]. </simpara>
+          </purpose>
         </function>
         <function name="to_iso_string_type">
           <type>std::basic_string&lt; charT &gt;</type>
@@ -77,7 +58,9 @@
           <parameter name="d">
             <paramtype>const date_period &amp;</paramtype>
           </parameter>
-          <purpose>Date period to iso standard format CCYYMMDD/CCYYMMDD. Example: 20021225/20021231. </purpose>
+          <purpose>
+            <simpara>Date period to iso standard format CCYYMMDD/CCYYMMDD. Example: 20021225/20021231. </simpara>
+          </purpose>
         </function>
         <function name="to_iso_extended_string_type">
           <type>std::basic_string&lt; charT &gt;</type>
@@ -93,7 +76,9 @@
           <parameter name="d">
             <paramtype>const <classname>date</classname> &amp;</paramtype>
           </parameter>
-          <purpose>Convert to iso extended format string CCYY-MM-DD. Example 2002-12-31. </purpose>
+          <purpose>
+            <simpara>Convert to iso extended format string CCYY-MM-DD. Example 2002-12-31. </simpara>
+          </purpose>
         </function>
         <function name="to_iso_string_type">
           <type>std::basic_string&lt; charT &gt;</type>
@@ -109,7 +94,9 @@
           <parameter name="d">
             <paramtype>const <classname>date</classname> &amp;</paramtype>
           </parameter>
-          <purpose>Convert to iso standard string YYYYMMDD. Example: 20021231. </purpose>
+          <purpose>
+            <simpara>Convert to iso standard string YYYYMMDD. Example: 20021231. </simpara>
+          </purpose>
         </function>
         <function name="to_sql_string_type">
           <type>std::basic_string&lt; charT &gt;</type>
@@ -131,35 +118,45 @@
           <parameter name="d">
             <paramtype>const date_period &amp;</paramtype>
           </parameter>
-          <purpose>Convert date period to simple string. Example: [2002-Jan-01/2002-Jan-02]. </purpose>
+          <purpose>
+            <simpara>Convert date period to simple string. Example: [2002-Jan-01/2002-Jan-02]. </simpara>
+          </purpose>
         </function>
         <function name="to_simple_wstring">
           <type>std::wstring</type>
           <parameter name="d">
             <paramtype>const <classname>date</classname> &amp;</paramtype>
           </parameter>
-          <purpose>To YYYY-mmm-DD string where mmm 3 char month name. Example: 2002-Jan-01. </purpose>
+          <purpose>
+            <simpara>To YYYY-mmm-DD string where mmm 3 char month name. Example: 2002-Jan-01. </simpara>
+          </purpose>
         </function>
         <function name="to_iso_wstring">
           <type>std::wstring</type>
           <parameter name="d">
             <paramtype>const date_period &amp;</paramtype>
           </parameter>
-          <purpose>Date period to iso standard format CCYYMMDD/CCYYMMDD. Example: 20021225/20021231. </purpose>
+          <purpose>
+            <simpara>Date period to iso standard format CCYYMMDD/CCYYMMDD. Example: 20021225/20021231. </simpara>
+          </purpose>
         </function>
         <function name="to_iso_extended_wstring">
           <type>std::wstring</type>
           <parameter name="d">
             <paramtype>const <classname>date</classname> &amp;</paramtype>
           </parameter>
-          <purpose>Convert to iso extended format string CCYY-MM-DD. Example 2002-12-31. </purpose>
+          <purpose>
+            <simpara>Convert to iso extended format string CCYY-MM-DD. Example 2002-12-31. </simpara>
+          </purpose>
         </function>
         <function name="to_iso_wstring">
           <type>std::wstring</type>
           <parameter name="d">
             <paramtype>const <classname>date</classname> &amp;</paramtype>
           </parameter>
-          <purpose>Convert to iso standard string YYYYMMDD. Example: 20021231. </purpose>
+          <purpose>
+            <simpara>Convert to iso standard string YYYYMMDD. Example: 20021231. </simpara>
+          </purpose>
         </function>
         <function name="to_sql_wstring">
           <type>std::wstring</type>
@@ -179,28 +176,40 @@
     <namespace name="boost">
       <namespace name="gregorian">
         <class name="gregorian_calendar">
-          <purpose>Gregorian calendar for this implementation, hard work in the base. </purpose>
+          <purpose>
+            <simpara>Gregorian calendar for this implementation, hard work in the base. </simpara>
+          </purpose>
           <typedef name="day_of_week_type">
-            <purpose>Type to hold a weekday (eg: Sunday, Monday,...). </purpose>
+            <purpose>
+              <simpara>Type to hold a weekday (eg: Sunday, Monday,...). </simpara>
+            </purpose>
             <type>
               <classname>greg_weekday</classname>
             </type>
           </typedef>
           <typedef name="day_of_year_type">
-            <purpose>Counter type from 1 to 366 for gregorian dates. </purpose>
+            <purpose>
+              <simpara>Counter type from 1 to 366 for gregorian dates. </simpara>
+            </purpose>
             <type>greg_day_of_year_rep</type>
           </typedef>
           <typedef name="date_rep_type">
-            <purpose>Internal date representation that handles infinity, not a date. </purpose>
+            <purpose>
+              <simpara>Internal date representation that handles infinity, not a date. </simpara>
+            </purpose>
             <type>fancy_date_rep</type>
           </typedef>
           <typedef name="date_traits_type">
-            <purpose>Date rep implements the traits stuff as well. </purpose>
+            <purpose>
+              <simpara>Date rep implements the traits stuff as well. </simpara>
+            </purpose>
             <type>fancy_date_rep</type>
           </typedef>
         </class>
         <typedef name="fancy_date_rep">
-          <purpose>An internal date representation that includes infinities, not a date. </purpose>
+          <purpose>
+            <simpara>An internal date representation that includes infinities, not a date. </simpara>
+          </purpose>
           <type>date_time::int_adapter&lt; unsigned long &gt;</type>
         </typedef>
       </namespace>
@@ -210,7 +219,9 @@
     <namespace name="boost">
       <namespace name="gregorian">
         <class name="date">
-          <purpose>A date type based on gregorian_calendar. </purpose>
+          <purpose>
+            <simpara>A date type based on gregorian_calendar. </simpara>
+          </purpose>
           <description>
             <para>This class is the primary interface for programming with greogorian dates. The is a lightweight type that can be freely passed by value. All comparison operators are supported. </para>
           </description>
@@ -241,33 +252,39 @@
           <method-group name="public member functions">
             <method name="julian_day" cv="const">
               <type>date_int_type</type>
-              <purpose>Return the Julian Day number for the date. </purpose>
+              <purpose>
+                <simpara>Return the Julian Day number for the date. </simpara>
+              </purpose>
             </method>
             <method name="day_of_year" cv="const">
               <type>day_of_year_type</type>
-              <purpose>Return the day of year 1..365 or 1..366 (for leap year). </purpose>
+              <purpose>
+                <simpara>Return the day of year 1..365 or 1..366 (for leap year). </simpara>
+              </purpose>
             </method>
             <method name="modjulian_day" cv="const">
               <type>long</type>
-              <purpose>Return the Modified Julian Day number for the date. </purpose>
+              <purpose>
+                <simpara>Return the Modified Julian Day number for the date. </simpara>
+              </purpose>
             </method>
             <method name="week_number" cv="const">
               <type>int</type>
-              <purpose>Return the iso 8601 week number 1..53. </purpose>
+              <purpose>
+                <simpara>Return the iso 8601 week number 1..53. </simpara>
+              </purpose>
             </method>
             <method name="day_number" cv="const">
               <type>date_int_type</type>
-              <purpose>Return the day number from the calendar. </purpose>
-            </method>
-            <method name="end_of_month" cv="const">
-              <type>
-                <classname>date</classname>
-              </type>
-              <purpose>Return the last day of the current month. </purpose>
+              <purpose>
+                <simpara>Return the day number from the calendar. </simpara>
+              </purpose>
             </method>
           </method-group>
           <constructor>
-            <purpose>Default constructor constructs with not_a_date_time. </purpose>
+            <purpose>
+              <simpara>Default constructor constructs with not_a_date_time. </simpara>
+            </purpose>
           </constructor>
           <constructor>
             <parameter name="y">
@@ -279,31 +296,41 @@
             <parameter name="d">
               <paramtype>day_type</paramtype>
             </parameter>
-            <purpose>Main constructor with year, month, day. </purpose>
+            <purpose>
+              <simpara>Main constructor with year, month, day. </simpara>
+            </purpose>
           </constructor>
           <constructor>
             <parameter name="ymd">
               <paramtype>const ymd_type &amp;</paramtype>
             </parameter>
-            <purpose>Constructor from a ymd_type structure. </purpose>
+            <purpose>
+              <simpara>Constructor from a ymd_type structure. </simpara>
+            </purpose>
           </constructor>
           <constructor>
             <parameter name="rhs">
               <paramtype>const date_int_type &amp;</paramtype>
             </parameter>
-            <purpose>Needed copy constructor. </purpose>
+            <purpose>
+              <simpara>Needed copy constructor. </simpara>
+            </purpose>
           </constructor>
           <constructor>
             <parameter name="rhs">
               <paramtype>date_rep_type</paramtype>
             </parameter>
-            <purpose>Needed copy constructor. </purpose>
+            <purpose>
+              <simpara>Needed copy constructor. </simpara>
+            </purpose>
           </constructor>
           <constructor>
             <parameter name="sv">
               <paramtype>special_values</paramtype>
             </parameter>
-            <purpose>Constructor for infinities, not a date, max and min date. </purpose>
+            <purpose>
+              <simpara>Constructor for infinities, not a date, max and min date. </simpara>
+            </purpose>
           </constructor>
         </class>
       </namespace>
@@ -313,18 +340,24 @@
     <namespace name="boost">
       <namespace name="gregorian">
         <struct name="bad_day_of_month">
-          <purpose>Exception type for gregorian day of month (1..31). </purpose>
+          <purpose>
+            <simpara>Exception type for gregorian day of month (1..31). </simpara>
+          </purpose>
           <method-group name="public member functions"/>
           <constructor/>
           <constructor>
             <parameter name="s">
               <paramtype>const std::string &amp;</paramtype>
             </parameter>
-            <purpose>Allow other classes to throw with unique string for bad day like Feb 29. </purpose>
+            <purpose>
+              <simpara>Allow other classes to throw with unique string for bad day like Feb 29. </simpara>
+            </purpose>
           </constructor>
         </struct>
         <class name="greg_day">
-          <purpose>Represent a day of the month (range 1 - 31). </purpose>
+          <purpose>
+            <simpara>Represent a day of the month (range 1 - 31). </simpara>
+          </purpose>
           <description>
             <para>This small class allows for simple conversion an integer value into a day of the month for a standard gregorian calendar. The type is automatically range checked so values outside of the range 1-31 will cause a bad_day_of_month exception </para>
           </description>
@@ -343,11 +376,15 @@
           </constructor>
         </class>
         <typedef name="greg_day_policies">
-          <purpose>Policy class that declares error handling and day of month ranges. </purpose>
+          <purpose>
+            <simpara>Policy class that declares error handling and day of month ranges. </simpara>
+          </purpose>
           <type>CV::simple_exception_policy&lt; unsigned short, 1, 31, <classname>bad_day_of_month</classname> &gt;</type>
         </typedef>
         <typedef name="greg_day_rep">
-          <purpose>Generated represetation for gregorian day of month. </purpose>
+          <purpose>
+            <simpara>Generated represetation for gregorian day of month. </simpara>
+          </purpose>
           <type>CV::constrained_value&lt; greg_day_policies &gt;</type>
         </typedef>
       </namespace>
@@ -357,16 +394,22 @@
     <namespace name="boost">
       <namespace name="gregorian">
         <struct name="bad_day_of_year">
-          <purpose>Exception type for day of year (1..366). </purpose>
+          <purpose>
+            <simpara>Exception type for day of year (1..366). </simpara>
+          </purpose>
           <method-group name="public member functions"/>
           <constructor/>
         </struct>
         <typedef name="greg_day_of_year_policies">
-          <purpose>A day of the year range (1..366). </purpose>
+          <purpose>
+            <simpara>A day of the year range (1..366). </simpara>
+          </purpose>
           <type>CV::simple_exception_policy&lt; unsigned short, 1, 366, <classname>bad_day_of_year</classname> &gt;</type>
         </typedef>
         <typedef name="greg_day_of_year_rep">
-          <purpose>Define a range representation type for the day of the year 1..366. </purpose>
+          <purpose>
+            <simpara>Define a range representation type for the day of the year 1..366. </simpara>
+          </purpose>
           <type>CV::constrained_value&lt; greg_day_of_year_policies &gt;</type>
         </typedef>
       </namespace>
@@ -376,15 +419,21 @@
     <namespace name="boost">
       <namespace name="gregorian">
         <typedef name="date_duration_rep">
-          <purpose>An internal date representation that includes infinities, not a date. </purpose>
+          <purpose>
+            <simpara>An internal date representation that includes infinities, not a date. </simpara>
+          </purpose>
           <type>boost::date_time::duration_traits_adapted</type>
         </typedef>
         <typedef name="date_duration">
-          <purpose>Durations in days for gregorian system. </purpose>
+          <purpose>
+            <simpara>Durations in days for gregorian system. </simpara>
+          </purpose>
           <type>date_time::date_duration&lt; date_duration_rep &gt;</type>
         </typedef>
         <typedef name="days">
-          <purpose>Shorthand for date_duration. </purpose>
+          <purpose>
+            <simpara>Shorthand for date_duration. </simpara>
+          </purpose>
           <type>date_duration</type>
         </typedef>
       </namespace>
@@ -394,7 +443,9 @@
     <namespace name="boost">
       <namespace name="gregorian">
         <struct name="greg_durations_config">
-          <purpose>config struct for additional duration types (ie months_duration&lt;&gt; &amp; years_duration&lt;&gt;) </purpose>
+          <purpose>
+            <simpara>config struct for additional duration types (ie months_duration&lt;&gt; &amp; years_duration&lt;&gt;) </simpara>
+          </purpose>
           <typedef name="date_type">
             <type>
               <classname>date</classname>
@@ -423,7 +474,9 @@
     <namespace name="boost">
       <namespace name="gregorian">
         <struct name="greg_facet_config">
-          <purpose>Configuration of the output facet template. </purpose>
+          <purpose>
+            <simpara>Configuration of the output facet template. </simpara>
+          </purpose>
           <typedef name="month_type">
             <type>
               <classname>boost::gregorian::greg_month</classname>
@@ -440,7 +493,9 @@
           </typedef>
         </struct>
         <typedef name="greg_base_facet">
-          <purpose>Create the base facet type for gregorian::date. </purpose>
+          <purpose>
+            <simpara>Create the base facet type for gregorian::date. </simpara>
+          </purpose>
           <type>boost::date_time::date_names_put&lt; <classname>greg_facet_config</classname> &gt;</type>
         </typedef>
         <function name="operator&lt;&lt;">
@@ -455,7 +510,9 @@
           <parameter name="d">
             <paramtype>const <classname>date</classname> &amp;</paramtype>
           </parameter>
-          <purpose>ostream operator for gregorian::date </purpose>
+          <purpose>
+            <simpara>ostream operator for gregorian::date </simpara>
+          </purpose>
           <description>
             <para>Uses the date facet to determine various output parameters including:<itemizedlist>
 <listitem><para>string values for the month (eg: Jan, Feb, Mar) (default: English)</para></listitem><listitem><para>string values for special values (eg: not-a-date-time) (default: English)</para></listitem><listitem><para>selection of long, short strings, or numerical month representation (default: short string)</para></listitem><listitem><para>month day year order (default yyyy-mmm-dd) </para></listitem></itemizedlist>
@@ -474,7 +531,9 @@
           <parameter name="m">
             <paramtype>const <classname>greg_month</classname> &amp;</paramtype>
           </parameter>
-          <purpose>operator&lt;&lt; for gregorian::greg_month typically streaming: Jan, Feb, Mar... </purpose>
+          <purpose>
+            <simpara>operator&lt;&lt; for gregorian::greg_month typically streaming: Jan, Feb, Mar... </simpara>
+          </purpose>
           <description>
             <para>Uses the date facet to determine output string as well as selection of long or short strings. Default if no facet is installed is to output a 2 wide numeric value for the month eg: 01 == Jan, 02 == Feb, ... 12 == Dec. </para>
           </description>
@@ -491,7 +550,9 @@
           <parameter name="wd">
             <paramtype>const <classname>greg_weekday</classname> &amp;</paramtype>
           </parameter>
-          <purpose>operator&lt;&lt; for gregorian::greg_weekday typically streaming: Sun, Mon, Tue, ... </purpose>
+          <purpose>
+            <simpara>operator&lt;&lt; for gregorian::greg_weekday typically streaming: Sun, Mon, Tue, ... </simpara>
+          </purpose>
           <description>
             <para>Uses the date facet to determine output string as well as selection of long or short string. Default if no facet is installed is to output a 3 char english string for the day of the week. </para>
           </description>
@@ -508,7 +569,9 @@
           <parameter name="dp">
             <paramtype>const date_period &amp;</paramtype>
           </parameter>
-          <purpose>operator&lt;&lt; for gregorian::date_period typical output: [2002-Jan-01/2002-Jan-31] </purpose>
+          <purpose>
+            <simpara>operator&lt;&lt; for gregorian::date_period typical output: [2002-Jan-01/2002-Jan-31] </simpara>
+          </purpose>
           <description>
             <para>Uses the date facet to determine output string as well as selection of long or short string fr dates. Default if no facet is installed is to output a 3 char english string for the day of the week. </para>
           </description>
@@ -538,7 +601,9 @@
           <parameter name="pd">
             <paramtype>const partial_date &amp;</paramtype>
           </parameter>
-          <purpose>operator&lt;&lt; for gregorian::partial_date. Output: "Jan 1" </purpose>
+          <purpose>
+            <simpara>operator&lt;&lt; for gregorian::partial_date. Output: "Jan 1" </simpara>
+          </purpose>
         </function>
         <function name="operator&lt;&lt;">
           <type>std::basic_ostream&lt; charT, traits &gt; &amp;</type>
@@ -552,7 +617,9 @@
           <parameter name="nkd">
             <paramtype>const nth_kday_of_month &amp;</paramtype>
           </parameter>
-          <purpose>operator&lt;&lt; for gregorian::nth_kday_of_month. Output: "first Mon of Jun" </purpose>
+          <purpose>
+            <simpara>operator&lt;&lt; for gregorian::nth_kday_of_month. Output: "first Mon of Jun" </simpara>
+          </purpose>
         </function>
         <function name="operator&lt;&lt;">
           <type>std::basic_ostream&lt; charT, traits &gt; &amp;</type>
@@ -566,7 +633,9 @@
           <parameter name="fkd">
             <paramtype>const first_kday_of_month &amp;</paramtype>
           </parameter>
-          <purpose>operator&lt;&lt; for gregorian::first_kday_of_month. Output: "first Mon of Jun" </purpose>
+          <purpose>
+            <simpara>operator&lt;&lt; for gregorian::first_kday_of_month. Output: "first Mon of Jun" </simpara>
+          </purpose>
         </function>
         <function name="operator&lt;&lt;">
           <type>std::basic_ostream&lt; charT, traits &gt; &amp;</type>
@@ -580,7 +649,9 @@
           <parameter name="lkd">
             <paramtype>const last_kday_of_month &amp;</paramtype>
           </parameter>
-          <purpose>operator&lt;&lt; for gregorian::last_kday_of_month. Output: "last Mon of Jun" </purpose>
+          <purpose>
+            <simpara>operator&lt;&lt; for gregorian::last_kday_of_month. Output: "last Mon of Jun" </simpara>
+          </purpose>
         </function>
         <function name="operator&lt;&lt;">
           <type>std::basic_ostream&lt; charT, traits &gt; &amp;</type>
@@ -594,7 +665,9 @@
           <parameter name="fka">
             <paramtype>const first_kday_after &amp;</paramtype>
           </parameter>
-          <purpose>operator&lt;&lt; for gregorian::first_kday_after. Output: "first Mon after" </purpose>
+          <purpose>
+            <simpara>operator&lt;&lt; for gregorian::first_kday_after. Output: "first Mon after" </simpara>
+          </purpose>
         </function>
         <function name="operator&lt;&lt;">
           <type>std::basic_ostream&lt; charT, traits &gt; &amp;</type>
@@ -608,7 +681,9 @@
           <parameter name="fkb">
             <paramtype>const first_kday_before &amp;</paramtype>
           </parameter>
-          <purpose>operator&lt;&lt; for gregorian::first_kday_before. Output: "first Mon before" </purpose>
+          <purpose>
+            <simpara>operator&lt;&lt; for gregorian::first_kday_before. Output: "first Mon before" </simpara>
+          </purpose>
         </function>
         <function name="operator&gt;&gt;">
           <type>std::basic_istream&lt; charT &gt; &amp;</type>
@@ -621,7 +696,9 @@
           <parameter name="d">
             <paramtype><classname>date</classname> &amp;</paramtype>
           </parameter>
-          <purpose>operator&gt;&gt; for gregorian::date </purpose>
+          <purpose>
+            <simpara>operator&gt;&gt; for gregorian::date </simpara>
+          </purpose>
         </function>
         <function name="operator&gt;&gt;">
           <type>std::basic_istream&lt; charT &gt; &amp;</type>
@@ -634,7 +711,9 @@
           <parameter name="dd">
             <paramtype>date_duration &amp;</paramtype>
           </parameter>
-          <purpose>operator&gt;&gt; for gregorian::date_duration </purpose>
+          <purpose>
+            <simpara>operator&gt;&gt; for gregorian::date_duration </simpara>
+          </purpose>
         </function>
         <function name="operator&gt;&gt;">
           <type>std::basic_istream&lt; charT &gt; &amp;</type>
@@ -647,7 +726,9 @@
           <parameter name="dp">
             <paramtype>date_period &amp;</paramtype>
           </parameter>
-          <purpose>operator&gt;&gt; for gregorian::date_period </purpose>
+          <purpose>
+            <simpara>operator&gt;&gt; for gregorian::date_period </simpara>
+          </purpose>
         </function>
         <function name="generate_locale">
           <type>BOOST_DATE_TIME_DECL std::locale</type>
@@ -657,14 +738,18 @@
           <parameter name="type">
             <paramtype>char</paramtype>
           </parameter>
-          <purpose>generates a locale with the set of gregorian name-strings of type char* </purpose>
+          <purpose>
+            <simpara>generates a locale with the set of gregorian name-strings of type char* </simpara>
+          </purpose>
         </function>
         <function name="create_facet_def">
           <type>BOOST_DATE_TIME_DECL boost::date_time::all_date_names_put&lt; <classname>greg_facet_config</classname>, char &gt; *</type>
           <parameter name="type">
             <paramtype>char</paramtype>
           </parameter>
-          <purpose>Returns a pointer to a facet with a default set of names (English). </purpose>
+          <purpose>
+            <simpara>Returns a pointer to a facet with a default set of names (English). </simpara>
+          </purpose>
         </function>
         <function name="generate_locale">
           <type>BOOST_DATE_TIME_DECL std::locale</type>
@@ -674,14 +759,18 @@
           <parameter name="type">
             <paramtype>wchar_t</paramtype>
           </parameter>
-          <purpose>generates a locale with the set of gregorian name-strings of type wchar_t* </purpose>
+          <purpose>
+            <simpara>generates a locale with the set of gregorian name-strings of type wchar_t* </simpara>
+          </purpose>
         </function>
         <function name="create_facet_def">
           <type>BOOST_DATE_TIME_DECL boost::date_time::all_date_names_put&lt; <classname>greg_facet_config</classname>, wchar_t &gt; *</type>
           <parameter name="type">
             <paramtype>wchar_t</paramtype>
           </parameter>
-          <purpose>Returns a pointer to a facet with a default set of names (English). </purpose>
+          <purpose>
+            <simpara>Returns a pointer to a facet with a default set of names (English). </simpara>
+          </purpose>
         </function>
         <function name="operator&gt;&gt;">
           <type>std::basic_istream&lt; charT &gt; &amp;</type>
@@ -694,7 +783,9 @@
           <parameter name="m">
             <paramtype><classname>greg_month</classname> &amp;</paramtype>
           </parameter>
-          <purpose>operator&gt;&gt; for gregorian::greg_month - throws exception if invalid month given </purpose>
+          <purpose>
+            <simpara>operator&gt;&gt; for gregorian::greg_month - throws exception if invalid month given </simpara>
+          </purpose>
         </function>
         <function name="operator&gt;&gt;">
           <type>std::basic_istream&lt; charT &gt; &amp;</type>
@@ -707,7 +798,9 @@
           <parameter name="wd">
             <paramtype><classname>greg_weekday</classname> &amp;</paramtype>
           </parameter>
-          <purpose>operator&gt;&gt; for gregorian::greg_weekday - throws exception if invalid weekday given </purpose>
+          <purpose>
+            <simpara>operator&gt;&gt; for gregorian::greg_weekday - throws exception if invalid weekday given </simpara>
+          </purpose>
         </function>
       </namespace>
     </namespace>
@@ -716,12 +809,16 @@
     <namespace name="boost">
       <namespace name="gregorian">
         <struct name="bad_month">
-          <purpose>Exception thrown if a greg_month is constructed with a value out of range. </purpose>
+          <purpose>
+            <simpara>Exception thrown if a greg_month is constructed with a value out of range. </simpara>
+          </purpose>
           <method-group name="public member functions"/>
           <constructor/>
         </struct>
         <class name="greg_month">
-          <purpose>Wrapper class to represent months in gregorian based calendar. </purpose>
+          <purpose>
+            <simpara>Wrapper class to represent months in gregorian based calendar. </simpara>
+          </purpose>
           <typedef name="month_enum">
             <type>date_time::months_of_year</type>
           </typedef>
@@ -734,11 +831,15 @@
           <method-group name="public member functions">
             <method name="conversion-operator" cv="const">
               <type>unsigned short</type>
-              <purpose>Convert the value back to a short. </purpose>
+              <purpose>
+                <simpara>Convert the value back to a short. </simpara>
+              </purpose>
             </method>
             <method name="as_number" cv="const">
               <type>unsigned short</type>
-              <purpose>Returns month as number from 1 to 12. </purpose>
+              <purpose>
+                <simpara>Returns month as number from 1 to 12. </simpara>
+              </purpose>
             </method>
             <method name="as_enum" cv="const">
               <type>month_enum</type>
@@ -784,18 +885,24 @@
             <parameter name="theMonth">
               <paramtype>month_enum</paramtype>
             </parameter>
-            <purpose>Construct a month from the months_of_year enumeration. </purpose>
+            <purpose>
+              <simpara>Construct a month from the months_of_year enumeration. </simpara>
+            </purpose>
           </constructor>
           <constructor>
             <parameter name="theMonth">
               <paramtype>unsigned short</paramtype>
             </parameter>
-            <purpose>Construct from a short value. </purpose>
+            <purpose>
+              <simpara>Construct from a short value. </simpara>
+            </purpose>
           </constructor>
           <method-group name="public static functions">
             <method name="get_month_map_ptr" cv="">
               <type>month_map_ptr_type</type>
-              <purpose>Shared pointer to a map of Month strings (Names &amp; Abbrev) &amp; numbers. </purpose>
+              <purpose>
+                <simpara>Shared pointer to a map of Month strings (Names &amp; Abbrev) &amp; numbers. </simpara>
+              </purpose>
             </method>
           </method-group>
         </class>
@@ -803,11 +910,15 @@
           <type>date_time::months_of_year</type>
         </typedef>
         <typedef name="greg_month_policies">
-          <purpose>Build a policy class for the greg_month_rep. </purpose>
+          <purpose>
+            <simpara>Build a policy class for the greg_month_rep. </simpara>
+          </purpose>
           <type>CV::simple_exception_policy&lt; unsigned short, 1, 12, <classname>bad_month</classname> &gt;</type>
         </typedef>
         <typedef name="greg_month_rep">
-          <purpose>A constrained range that implements the gregorian_month rules. </purpose>
+          <purpose>
+            <simpara>A constrained range that implements the gregorian_month rules. </simpara>
+          </purpose>
           <type>CV::constrained_value&lt; greg_month_policies &gt;</type>
         </typedef>
       </namespace>
@@ -818,12 +929,16 @@
     <namespace name="boost">
       <namespace name="gregorian">
         <struct name="bad_weekday">
-          <purpose>Exception that flags that a weekday number is incorrect. </purpose>
+          <purpose>
+            <simpara>Exception that flags that a weekday number is incorrect. </simpara>
+          </purpose>
           <method-group name="public member functions"/>
           <constructor/>
         </struct>
         <class name="greg_weekday">
-          <purpose>Represent a day within a week (range 0==Sun to 6==Sat). </purpose>
+          <purpose>
+            <simpara>Represent a day within a week (range 0==Sun to 6==Sat). </simpara>
+          </purpose>
           <typedef name="weekday_enum">
             <type>boost::date_time::weekdays</type>
           </typedef>
@@ -866,12 +981,16 @@
     <namespace name="boost">
       <namespace name="gregorian">
         <struct name="bad_year">
-          <purpose>Exception type for gregorian year. </purpose>
+          <purpose>
+            <simpara>Exception type for gregorian year. </simpara>
+          </purpose>
           <method-group name="public member functions"/>
           <constructor/>
         </struct>
         <class name="greg_year">
-          <purpose>Represent a day of the month (range 1900 - 10000). </purpose>
+          <purpose>
+            <simpara>Represent a day of the month (range 1900 - 10000). </simpara>
+          </purpose>
           <description>
             <para>This small class allows for simple conversion an integer value into a year for the gregorian calendar. This currently only allows a range of 1900 to 10000. Both ends of the range are a bit arbitrary at the moment, but they are the limits of current testing of the library. As such they may be increased in the future. </para>
           </description>
@@ -887,11 +1006,15 @@
           </constructor>
         </class>
         <typedef name="greg_year_policies">
-          <purpose>Policy class that declares error handling gregorian year type. </purpose>
+          <purpose>
+            <simpara>Policy class that declares error handling gregorian year type. </simpara>
+          </purpose>
           <type>CV::simple_exception_policy&lt; unsigned short, 1400, 10000, <classname>bad_year</classname> &gt;</type>
         </typedef>
         <typedef name="greg_year_rep">
-          <purpose>Generated representation for gregorian year. </purpose>
+          <purpose>
+            <simpara>Generated representation for gregorian year. </simpara>
+          </purpose>
           <type>CV::constrained_value&lt; greg_year_policies &gt;</type>
         </typedef>
       </namespace>
@@ -909,390 +1032,29 @@
   <header name="boost/date_time/gregorian/gregorian.hpp">
     <para>Single file header that provides overall include for all elements of the gregorian date-time system. This includes the various types defined, but also other functions for formatting and parsing.</para>
   </header>
-  <header name="boost/date_time/gregorian/gregorian_io.hpp">
-    <namespace name="boost">
-      <namespace name="gregorian">
-        <typedef name="wperiod_formatter">
-          <type>boost::date_time::period_formatter&lt; wchar_t &gt;</type>
-        </typedef>
-        <typedef name="period_formatter">
-          <type>boost::date_time::period_formatter&lt; char &gt;</type>
-        </typedef>
-        <typedef name="wdate_facet">
-          <type>boost::date_time::date_facet&lt; <classname>date</classname>, wchar_t &gt;</type>
-        </typedef>
-        <typedef name="date_facet">
-          <type>boost::date_time::date_facet&lt; <classname>date</classname>, char &gt;</type>
-        </typedef>
-        <typedef name="period_parser">
-          <type>boost::date_time::period_parser&lt; <classname>date</classname>, char &gt;</type>
-        </typedef>
-        <typedef name="wperiod_parser">
-          <type>boost::date_time::period_parser&lt; <classname>date</classname>, wchar_t &gt;</type>
-        </typedef>
-        <typedef name="special_values_formatter">
-          <type>boost::date_time::special_values_formatter&lt; char &gt;</type>
-        </typedef>
-        <typedef name="wspecial_values_formatter">
-          <type>boost::date_time::special_values_formatter&lt; wchar_t &gt;</type>
-        </typedef>
-        <typedef name="special_values_parser">
-          <type>boost::date_time::special_values_parser&lt; <classname>date</classname>, char &gt;</type>
-        </typedef>
-        <typedef name="wspecial_values_parser">
-          <type>boost::date_time::special_values_parser&lt; <classname>date</classname>, wchar_t &gt;</type>
-        </typedef>
-        <typedef name="date_input_facet">
-          <type>boost::date_time::date_input_facet&lt; <classname>date</classname>, char &gt;</type>
-        </typedef>
-        <typedef name="wdate_input_facet">
-          <type>boost::date_time::date_input_facet&lt; <classname>date</classname>, wchar_t &gt;</type>
-        </typedef>
-        <function name="operator&lt;&lt;">
-          <type>std::basic_ostream&lt; CharT, TraitsT &gt; &amp;</type>
-          <template>
-          <template-type-parameter name="CharT"/>
-          <template-type-parameter name="TraitsT"/>
-        </template>
-          <parameter name="os">
-            <paramtype>std::basic_ostream&lt; CharT, TraitsT &gt; &amp;</paramtype>
-          </parameter>
-          <parameter name="d">
-            <paramtype>const <classname>boost::gregorian::date</classname> &amp;</paramtype>
-          </parameter>
-        </function>
-        <function name="operator&gt;&gt;">
-          <type>std::basic_istream&lt; CharT, Traits &gt; &amp;</type>
-          <template>
-          <template-type-parameter name="CharT"/>
-          <template-type-parameter name="Traits"/>
-        </template>
-          <parameter name="is">
-            <paramtype>std::basic_istream&lt; CharT, Traits &gt; &amp;</paramtype>
-          </parameter>
-          <parameter name="d">
-            <paramtype><classname>date</classname> &amp;</paramtype>
-          </parameter>
-          <purpose>input operator for date </purpose>
-        </function>
-        <function name="operator&lt;&lt;">
-          <type>std::basic_ostream&lt; CharT, TraitsT &gt; &amp;</type>
-          <template>
-          <template-type-parameter name="CharT"/>
-          <template-type-parameter name="TraitsT"/>
-        </template>
-          <parameter name="os">
-            <paramtype>std::basic_ostream&lt; CharT, TraitsT &gt; &amp;</paramtype>
-          </parameter>
-          <parameter name="dd">
-            <paramtype>const boost::gregorian::date_duration &amp;</paramtype>
-          </parameter>
-        </function>
-        <function name="operator&gt;&gt;">
-          <type>std::basic_istream&lt; CharT, Traits &gt; &amp;</type>
-          <template>
-          <template-type-parameter name="CharT"/>
-          <template-type-parameter name="Traits"/>
-        </template>
-          <parameter name="is">
-            <paramtype>std::basic_istream&lt; CharT, Traits &gt; &amp;</paramtype>
-          </parameter>
-          <parameter name="dd">
-            <paramtype>date_duration &amp;</paramtype>
-          </parameter>
-          <purpose>input operator for date_duration </purpose>
-        </function>
-        <function name="operator&lt;&lt;">
-          <type>std::basic_ostream&lt; CharT, TraitsT &gt; &amp;</type>
-          <template>
-          <template-type-parameter name="CharT"/>
-          <template-type-parameter name="TraitsT"/>
-        </template>
-          <parameter name="os">
-            <paramtype>std::basic_ostream&lt; CharT, TraitsT &gt; &amp;</paramtype>
-          </parameter>
-          <parameter name="dp">
-            <paramtype>const boost::gregorian::date_period &amp;</paramtype>
-          </parameter>
-        </function>
-        <function name="operator&gt;&gt;">
-          <type>std::basic_istream&lt; CharT, Traits &gt; &amp;</type>
-          <template>
-          <template-type-parameter name="CharT"/>
-          <template-type-parameter name="Traits"/>
-        </template>
-          <parameter name="is">
-            <paramtype>std::basic_istream&lt; CharT, Traits &gt; &amp;</paramtype>
-          </parameter>
-          <parameter name="dp">
-            <paramtype>date_period &amp;</paramtype>
-          </parameter>
-          <purpose>input operator for date_period </purpose>
-        </function>
-        <function name="operator&lt;&lt;">
-          <type>std::basic_ostream&lt; CharT, TraitsT &gt; &amp;</type>
-          <template>
-          <template-type-parameter name="CharT"/>
-          <template-type-parameter name="TraitsT"/>
-        </template>
-          <parameter name="os">
-            <paramtype>std::basic_ostream&lt; CharT, TraitsT &gt; &amp;</paramtype>
-          </parameter>
-          <parameter name="gm">
-            <paramtype>const <classname>boost::gregorian::greg_month</classname> &amp;</paramtype>
-          </parameter>
-        </function>
-        <function name="operator&gt;&gt;">
-          <type>std::basic_istream&lt; CharT, Traits &gt; &amp;</type>
-          <template>
-          <template-type-parameter name="CharT"/>
-          <template-type-parameter name="Traits"/>
-        </template>
-          <parameter name="is">
-            <paramtype>std::basic_istream&lt; CharT, Traits &gt; &amp;</paramtype>
-          </parameter>
-          <parameter name="m">
-            <paramtype><classname>greg_month</classname> &amp;</paramtype>
-          </parameter>
-          <purpose>input operator for greg_month </purpose>
-        </function>
-        <function name="operator&lt;&lt;">
-          <type>std::basic_ostream&lt; CharT, TraitsT &gt; &amp;</type>
-          <template>
-          <template-type-parameter name="CharT"/>
-          <template-type-parameter name="TraitsT"/>
-        </template>
-          <parameter name="os">
-            <paramtype>std::basic_ostream&lt; CharT, TraitsT &gt; &amp;</paramtype>
-          </parameter>
-          <parameter name="gw">
-            <paramtype>const <classname>boost::gregorian::greg_weekday</classname> &amp;</paramtype>
-          </parameter>
-        </function>
-        <function name="operator&gt;&gt;">
-          <type>std::basic_istream&lt; CharT, Traits &gt; &amp;</type>
-          <template>
-          <template-type-parameter name="CharT"/>
-          <template-type-parameter name="Traits"/>
-        </template>
-          <parameter name="is">
-            <paramtype>std::basic_istream&lt; CharT, Traits &gt; &amp;</paramtype>
-          </parameter>
-          <parameter name="wd">
-            <paramtype><classname>greg_weekday</classname> &amp;</paramtype>
-          </parameter>
-          <purpose>input operator for greg_weekday </purpose>
-        </function>
-        <function name="operator&gt;&gt;">
-          <type>std::basic_istream&lt; CharT, Traits &gt; &amp;</type>
-          <template>
-          <template-type-parameter name="CharT"/>
-          <template-type-parameter name="Traits"/>
-        </template>
-          <parameter name="is">
-            <paramtype>std::basic_istream&lt; CharT, Traits &gt; &amp;</paramtype>
-          </parameter>
-          <parameter name="gd">
-            <paramtype><classname>greg_day</classname> &amp;</paramtype>
-          </parameter>
-          <purpose>input operator for greg_day </purpose>
-        </function>
-        <function name="operator&gt;&gt;">
-          <type>std::basic_istream&lt; CharT, Traits &gt; &amp;</type>
-          <template>
-          <template-type-parameter name="CharT"/>
-          <template-type-parameter name="Traits"/>
-        </template>
-          <parameter name="is">
-            <paramtype>std::basic_istream&lt; CharT, Traits &gt; &amp;</paramtype>
-          </parameter>
-          <parameter name="gy">
-            <paramtype><classname>greg_year</classname> &amp;</paramtype>
-          </parameter>
-          <purpose>input operator for greg_year </purpose>
-        </function>
-        <function name="operator&lt;&lt;">
-          <type>std::basic_ostream&lt; CharT, TraitsT &gt; &amp;</type>
-          <template>
-          <template-type-parameter name="CharT"/>
-          <template-type-parameter name="TraitsT"/>
-        </template>
-          <parameter name="os">
-            <paramtype>std::basic_ostream&lt; CharT, TraitsT &gt; &amp;</paramtype>
-          </parameter>
-          <parameter name="pd">
-            <paramtype>const boost::gregorian::partial_date &amp;</paramtype>
-          </parameter>
-        </function>
-        <function name="operator&gt;&gt;">
-          <type>std::basic_istream&lt; CharT, Traits &gt; &amp;</type>
-          <template>
-          <template-type-parameter name="CharT"/>
-          <template-type-parameter name="Traits"/>
-        </template>
-          <parameter name="is">
-            <paramtype>std::basic_istream&lt; CharT, Traits &gt; &amp;</paramtype>
-          </parameter>
-          <parameter name="pd">
-            <paramtype>partial_date &amp;</paramtype>
-          </parameter>
-          <purpose>input operator for partial_date </purpose>
-        </function>
-        <function name="operator&lt;&lt;">
-          <type>std::basic_ostream&lt; CharT, TraitsT &gt; &amp;</type>
-          <template>
-          <template-type-parameter name="CharT"/>
-          <template-type-parameter name="TraitsT"/>
-        </template>
-          <parameter name="os">
-            <paramtype>std::basic_ostream&lt; CharT, TraitsT &gt; &amp;</paramtype>
-          </parameter>
-          <parameter name="nkd">
-            <paramtype>const boost::gregorian::nth_day_of_the_week_in_month &amp;</paramtype>
-          </parameter>
-        </function>
-        <function name="operator&gt;&gt;">
-          <type>std::basic_istream&lt; CharT, Traits &gt; &amp;</type>
-          <template>
-          <template-type-parameter name="CharT"/>
-          <template-type-parameter name="Traits"/>
-        </template>
-          <parameter name="is">
-            <paramtype>std::basic_istream&lt; CharT, Traits &gt; &amp;</paramtype>
-          </parameter>
-          <parameter name="nday">
-            <paramtype>nth_day_of_the_week_in_month &amp;</paramtype>
-          </parameter>
-          <purpose>input operator for nth_day_of_the_week_in_month </purpose>
-        </function>
-        <function name="operator&lt;&lt;">
-          <type>std::basic_ostream&lt; CharT, TraitsT &gt; &amp;</type>
-          <template>
-          <template-type-parameter name="CharT"/>
-          <template-type-parameter name="TraitsT"/>
-        </template>
-          <parameter name="os">
-            <paramtype>std::basic_ostream&lt; CharT, TraitsT &gt; &amp;</paramtype>
-          </parameter>
-          <parameter name="fkd">
-            <paramtype>const boost::gregorian::first_day_of_the_week_in_month &amp;</paramtype>
-          </parameter>
-        </function>
-        <function name="operator&gt;&gt;">
-          <type>std::basic_istream&lt; CharT, Traits &gt; &amp;</type>
-          <template>
-          <template-type-parameter name="CharT"/>
-          <template-type-parameter name="Traits"/>
-        </template>
-          <parameter name="is">
-            <paramtype>std::basic_istream&lt; CharT, Traits &gt; &amp;</paramtype>
-          </parameter>
-          <parameter name="fkd">
-            <paramtype>first_day_of_the_week_in_month &amp;</paramtype>
-          </parameter>
-          <purpose>input operator for first_day_of_the_week_in_month </purpose>
-        </function>
-        <function name="operator&lt;&lt;">
-          <type>std::basic_ostream&lt; CharT, TraitsT &gt; &amp;</type>
-          <template>
-          <template-type-parameter name="CharT"/>
-          <template-type-parameter name="TraitsT"/>
-        </template>
-          <parameter name="os">
-            <paramtype>std::basic_ostream&lt; CharT, TraitsT &gt; &amp;</paramtype>
-          </parameter>
-          <parameter name="lkd">
-            <paramtype>const boost::gregorian::last_day_of_the_week_in_month &amp;</paramtype>
-          </parameter>
-        </function>
-        <function name="operator&gt;&gt;">
-          <type>std::basic_istream&lt; CharT, Traits &gt; &amp;</type>
-          <template>
-          <template-type-parameter name="CharT"/>
-          <template-type-parameter name="Traits"/>
-        </template>
-          <parameter name="is">
-            <paramtype>std::basic_istream&lt; CharT, Traits &gt; &amp;</paramtype>
-          </parameter>
-          <parameter name="lkd">
-            <paramtype>last_day_of_the_week_in_month &amp;</paramtype>
-          </parameter>
-          <purpose>input operator for last_day_of_the_week_in_month </purpose>
-        </function>
-        <function name="operator&lt;&lt;">
-          <type>std::basic_ostream&lt; CharT, TraitsT &gt; &amp;</type>
-          <template>
-          <template-type-parameter name="CharT"/>
-          <template-type-parameter name="TraitsT"/>
-        </template>
-          <parameter name="os">
-            <paramtype>std::basic_ostream&lt; CharT, TraitsT &gt; &amp;</paramtype>
-          </parameter>
-          <parameter name="fda">
-            <paramtype>const boost::gregorian::first_day_of_the_week_after &amp;</paramtype>
-          </parameter>
-        </function>
-        <function name="operator&gt;&gt;">
-          <type>std::basic_istream&lt; CharT, Traits &gt; &amp;</type>
-          <template>
-          <template-type-parameter name="CharT"/>
-          <template-type-parameter name="Traits"/>
-        </template>
-          <parameter name="is">
-            <paramtype>std::basic_istream&lt; CharT, Traits &gt; &amp;</paramtype>
-          </parameter>
-          <parameter name="fka">
-            <paramtype>first_day_of_the_week_after &amp;</paramtype>
-          </parameter>
-          <purpose>input operator for first_day_of_the_week_after </purpose>
-        </function>
-        <function name="operator&lt;&lt;">
-          <type>std::basic_ostream&lt; CharT, TraitsT &gt; &amp;</type>
-          <template>
-          <template-type-parameter name="CharT"/>
-          <template-type-parameter name="TraitsT"/>
-        </template>
-          <parameter name="os">
-            <paramtype>std::basic_ostream&lt; CharT, TraitsT &gt; &amp;</paramtype>
-          </parameter>
-          <parameter name="fdb">
-            <paramtype>const boost::gregorian::first_day_of_the_week_before &amp;</paramtype>
-          </parameter>
-        </function>
-        <function name="operator&gt;&gt;">
-          <type>std::basic_istream&lt; CharT, Traits &gt; &amp;</type>
-          <template>
-          <template-type-parameter name="CharT"/>
-          <template-type-parameter name="Traits"/>
-        </template>
-          <parameter name="is">
-            <paramtype>std::basic_istream&lt; CharT, Traits &gt; &amp;</paramtype>
-          </parameter>
-          <parameter name="fkb">
-            <paramtype>first_day_of_the_week_before &amp;</paramtype>
-          </parameter>
-          <purpose>input operator for first_day_of_the_week_before </purpose>
-        </function>
-      </namespace>
-    </namespace>
-  </header>
   <header name="boost/date_time/gregorian/gregorian_types.hpp">
     <para>Single file header that defines most of the types for the gregorian date-time system.</para>
     <namespace name="boost">
       <namespace name="gregorian">
         <typedef name="date_period">
-          <purpose>Date periods for the gregorian system. </purpose>
+          <purpose>
+            <simpara>Date periods for the gregorian system. </simpara>
+          </purpose>
           <type>date_time::period&lt; <classname>date</classname>, date_duration &gt;</type>
         </typedef>
         <typedef name="year_based_generator">
-          <purpose>A unifying date_generator base type. </purpose>
+          <purpose>
+            <simpara>A unifying date_generator base type. </simpara>
+          </purpose>
           <description>
             <para>A unifying date_generator base type for: partial_date, nth_day_of_the_week_in_month, first_day_of_the_week_in_month, and last_day_of_the_week_in_month </para>
           </description>
           <type>date_time::year_based_generator&lt; <classname>date</classname> &gt;</type>
         </typedef>
         <typedef name="partial_date">
-          <purpose>A date generation object type. </purpose>
+          <purpose>
+            <simpara>A date generation object type. </simpara>
+          </purpose>
           <type>date_time::partial_date&lt; <classname>date</classname> &gt;</type>
         </typedef>
         <typedef name="nth_kday_of_month">
@@ -1326,27 +1088,39 @@
           <type>first_kday_before</type>
         </typedef>
         <typedef name="day_clock">
-          <purpose>A clock to get the current day from the local computer. </purpose>
+          <purpose>
+            <simpara>A clock to get the current day from the local computer. </simpara>
+          </purpose>
           <type>date_time::day_clock&lt; <classname>date</classname> &gt;</type>
         </typedef>
         <typedef name="date_iterator">
-          <purpose>Base date_iterator type for gregorian types. </purpose>
+          <purpose>
+            <simpara>Base date_iterator type for gregorian types. </simpara>
+          </purpose>
           <type>date_time::date_itr_base&lt; <classname>date</classname> &gt;</type>
         </typedef>
         <typedef name="day_iterator">
-          <purpose>A day level iterator. </purpose>
+          <purpose>
+            <simpara>A day level iterator. </simpara>
+          </purpose>
           <type>date_time::date_itr&lt; date_time::day_functor&lt; <classname>date</classname> &gt;, <classname>date</classname> &gt;</type>
         </typedef>
         <typedef name="week_iterator">
-          <purpose>A week level iterator. </purpose>
+          <purpose>
+            <simpara>A week level iterator. </simpara>
+          </purpose>
           <type>date_time::date_itr&lt; date_time::week_functor&lt; <classname>date</classname> &gt;, <classname>date</classname> &gt;</type>
         </typedef>
         <typedef name="month_iterator">
-          <purpose>A month level iterator. </purpose>
+          <purpose>
+            <simpara>A month level iterator. </simpara>
+          </purpose>
           <type>date_time::date_itr&lt; date_time::month_functor&lt; <classname>date</classname> &gt;, <classname>date</classname> &gt;</type>
         </typedef>
         <typedef name="year_iterator">
-          <purpose>A year level iterator. </purpose>
+          <purpose>
+            <simpara>A year level iterator. </simpara>
+          </purpose>
           <type>date_time::date_itr&lt; date_time::year_functor&lt; <classname>date</classname> &gt;, <classname>date</classname> &gt;</type>
         </typedef>
       </namespace>
@@ -1355,16 +1129,6 @@
   <header name="boost/date_time/gregorian/parsers.hpp">
     <namespace name="boost">
       <namespace name="gregorian">
-        <function name="special_value_from_string">
-          <type>special_values</type>
-          <parameter name="s">
-            <paramtype>const std::string &amp;</paramtype>
-          </parameter>
-          <purpose>Return special_value from string argument. </purpose>
-          <description>
-            <para>Return special_value from string argument. If argument is not one of the special value names (defined in src/gregorian/names.hpp), return 'not_special' </para>
-          </description>
-        </function>
         <function name="from_string">
           <type>
             <classname>date</classname>
@@ -1372,7 +1136,9 @@
           <parameter name="s">
             <paramtype>std::string</paramtype>
           </parameter>
-          <purpose>Deprecated: Use from_simple_string. </purpose>
+          <purpose>
+            <simpara>Deprecated: Use from_simple_string. </simpara>
+          </purpose>
         </function>
         <function name="from_simple_string">
           <type>
@@ -1381,7 +1147,9 @@
           <parameter name="s">
             <paramtype>std::string</paramtype>
           </parameter>
-          <purpose>From delimited date string where with order year-month-day eg: 2002-1-25 or 2003-Jan-25 (full month name is also accepted). </purpose>
+          <purpose>
+            <simpara>From delimited date string where with order year-month-day eg: 2002-1-25 or 2003-Jan-25 (full month name is also accepted). </simpara>
+          </purpose>
         </function>
         <function name="from_us_string">
           <type>
@@ -1390,7 +1158,9 @@
           <parameter name="s">
             <paramtype>std::string</paramtype>
           </parameter>
-          <purpose>From delimited date string where with order year-month-day eg: 1-25-2003 or Jan-25-2003 (full month name is also accepted). </purpose>
+          <purpose>
+            <simpara>From delimited date string where with order year-month-day eg: 1-25-2003 or Jan-25-2003 (full month name is also accepted). </simpara>
+          </purpose>
         </function>
         <function name="from_uk_string">
           <type>
@@ -1399,7 +1169,9 @@
           <parameter name="s">
             <paramtype>std::string</paramtype>
           </parameter>
-          <purpose>From delimited date string where with order day-month-year eg: 25-1-2002 or 25-Jan-2003 (full month name is also accepted). </purpose>
+          <purpose>
+            <simpara>From delimited date string where with order day-month-year eg: 25-1-2002 or 25-Jan-2003 (full month name is also accepted). </simpara>
+          </purpose>
         </function>
         <function name="from_undelimited_string">
           <type>
@@ -1408,7 +1180,9 @@
           <parameter name="s">
             <paramtype>std::string</paramtype>
           </parameter>
-          <purpose>From iso type date string where with order year-month-day eg: 20020125. </purpose>
+          <purpose>
+            <simpara>From iso type date string where with order year-month-day eg: 20020125. </simpara>
+          </purpose>
         </function>
         <function name="date_from_iso_string">
           <type>
@@ -1417,7 +1191,9 @@
           <parameter name="s">
             <paramtype>const std::string &amp;</paramtype>
           </parameter>
-          <purpose>From iso type date string where with order year-month-day eg: 20020125. </purpose>
+          <purpose>
+            <simpara>From iso type date string where with order year-month-day eg: 20020125. </simpara>
+          </purpose>
         </function>
         <function name="from_stream">
           <type>
@@ -1432,21 +1208,27 @@
           <parameter name="end">
             <paramtype>iterator_type</paramtype>
           </parameter>
-          <purpose>Stream should hold a date in the form of: 2002-1-25. Month number, abbrev, or name are accepted. </purpose>
+          <purpose>
+            <simpara>Stream should hold a date in the form of: 2002-1-25. Month number, abbrev, or name are accepted. </simpara>
+          </purpose>
         </function>
         <function name="date_period_from_string">
           <type>date_period</type>
           <parameter name="s">
             <paramtype>const std::string &amp;</paramtype>
           </parameter>
-          <purpose>Function to parse a date_period from a string (eg: [2003-Oct-31/2003-Dec-25]). </purpose>
+          <purpose>
+            <simpara>Function to parse a date_period from a string (eg: [2003-Oct-31/2003-Dec-25]). </simpara>
+          </purpose>
         </function>
         <function name="date_period_from_wstring">
           <type>date_period</type>
           <parameter name="s">
             <paramtype>const std::wstring &amp;</paramtype>
           </parameter>
-          <purpose>Function to parse a date_period from a wstring (eg: [2003-Oct-31/2003-Dec-25]). </purpose>
+          <purpose>
+            <simpara>Function to parse a date_period from a wstring (eg: [2003-Oct-31/2003-Dec-25]). </simpara>
+          </purpose>
         </function>
       </namespace>
     </namespace>

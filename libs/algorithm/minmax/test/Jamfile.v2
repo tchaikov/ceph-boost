@@ -11,10 +11,7 @@ import testing ;
 
 {
   test-suite algorithm/minmax:
-   : [ run minmax_element_test.cpp
-       : : : : minmax_element ]
-     [ run minmax_test.cpp
-       : : : : minmax ]      
-   ;
+    [ run minmax_element_test.cpp ]
+  ;
 }
 

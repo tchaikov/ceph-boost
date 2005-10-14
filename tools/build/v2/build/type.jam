@@ -35,7 +35,11 @@ feature.feature base-target-type : : composite optional free ;
 # If 'suffixes' are provided, they given all the suffixes that mean a file is of 'type'.
 # Also, the first element gives the suffix to be used when constructing and object of
 # 'type'.
-rule register ( type : suffixes * : base-type ? )
+# If 'main' is given, a rule with the same name as the target type
+# and signature
+#     rule target-type ( name : sources * : requirements * : default-build )
+# will be added to the global scope.
+rule register ( type : suffixes * : base-type ? : main ? ) 
 {
     # Type names cannot contain hyphens, because when used as
     # feature-values they will be interpreted as composite features
@@ -53,7 +57,6 @@ rule register ( type : suffixes * : base-type ? )
     {
         .types += $(type) ;
         .bases.$(type) = $(base-type) ;
-        .derived.$(base-type) += $(type) ;        
 
         if $(suffixes)-not-empty
         {            
@@ -71,16 +74,15 @@ rule register ( type : suffixes * : base-type ? )
         feature.extend base-target-type : $(type) ;
 #        feature.compose <target-type>$(type) : <base-target-type>$(type) ;
         feature.compose <base-target-type>$(type) : <base-target-type>$(base-type) ;
-
-        # We used to declare main target rule only when 'main' parameter
-        # is specified. However, it's hard to decide that a type *never*
-        # will need a main target rule and so from time to time we needed
-        # to make yet another type 'main'. So, now main target rule is defined
-        # for each type.
-        main-rule-name = [ type-to-rule-name $(type) ] ;            
-        .main-target-type.$(main-rule-name) = $(type) ;    
+        
+        if $(main)
+        {
+            main-rule-name = [ type-to-rule-name $(type) ] ;            
+            .main-target-type.$(main-rule-name) = $(type) ;    
             
-        IMPORT $(__name__) : main-target-rule : : $(main-rule-name) ;
+            IMPORT $(__name__) : main-target-rule : : $(main-rule-name) ;
+#            feature.compose <main-target-type>$(type) : <base-target-type>$(type) ;
+        }        
     }
 }
 
@@ -153,10 +155,10 @@ rule set-scanner ( type : scanner )
 }
 
 # Returns a scanner instance appropriate to 'type' and 'properties'.
-rule get-scanner ( type : property-set )
+rule get-scanner ( type : properties * )
 {
     if $(.scanner.$(type)) {
-        return [ scanner.get $(.scanner.$(type)) : [ $(property-set).raw ] ] ;
+        return [ scanner.get $(.scanner.$(type)) : $(properties) ] ;
     }    
 }
 
@@ -171,17 +173,6 @@ rule all-bases ( type )
     }
     return $(result) ;
 }
-
-rule all-derived ( type )
-{
-    local result = $(type) ;
-    for local d in $(.derived.$(type))
-    {
-        result += [ all-derived $(d) ] ;
-    }
-    return $(result) ;      
-}
-
 
 # Returns true if 'type' has 'base' as its direct or
 # indirect base.
@@ -241,7 +232,7 @@ rule change-generated-target-suffix ( type : properties * : suffix )
 # Returns suffix that should be used when generating target of 'type',
 # with the specified properties. If not suffix were specified for
 # 'type', returns suffix for base type, if any.
-rule generated-target-suffix-real ( type : properties * )
+rule generated-target-suffix ( type : properties * )
 {
     local result ;
     local found ;
@@ -263,28 +254,6 @@ rule generated-target-suffix-real ( type : properties * )
     }
     return $(result) ;
 }
-
-rule generated-target-suffix ( type : property-set )
-{
-    local key = .gts.$(type).$(property-set) ;
-    local v = $($(key)) ;
-    if ! $(v)
-    {
-        v = [ generated-target-suffix-real $(type) 
-          : [ $(property-set).raw ] ] ;
-        if ! $(v)
-        {
-            v = none ;
-        }
-        $(key) = $(v) ;
-    }
-    
-    if $(v) != none
-    {
-        return $(v) ;
-    }        
-}
-
 
 # Returns file type given it's name. If there are several dots in filename,
 # tries each suffix. E.g. for name of "file.so.1.2" suffixes "2", "1", and 

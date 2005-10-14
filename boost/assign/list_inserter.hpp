@@ -19,8 +19,6 @@
 
 #include <boost/mpl/if.hpp>
 #include <boost/type_traits/is_same.hpp>
-#include <boost/range/begin.hpp>
-#include <boost/range/end.hpp>
 #include <boost/config.hpp>
 #include <cstddef>
 
@@ -40,6 +38,9 @@ namespace assign_detail
         std::size_t  sz;
         T            val;
 
+        repeater( const repeater& r ) : sz( r.sz ), val( r.val )
+        { }
+        
         repeater( std::size_t sz, T r ) : sz( sz ), val( r )
         { }
     };
@@ -50,6 +51,9 @@ namespace assign_detail
         std::size_t  sz;
         Fun          val;
         
+        fun_repeater( const fun_repeater& r ) : sz( r.sz ), val( r.val )
+        { }
+
         fun_repeater( std::size_t sz, Fun r ) : sz( sz ), val( r )
         { }
     };
@@ -59,6 +63,9 @@ namespace assign_detail
     {
         C& c_;
     public:
+        call_push_back( const call_push_back& r ) : c_( r.c_ )
+        { }
+
         call_push_back( C& c ) : c_( c )
         { }
         
@@ -74,6 +81,9 @@ namespace assign_detail
     {
         C& c_;
     public:
+        call_push_front( const call_push_front& r ) : c_( r.c_ )
+        { }
+
         call_push_front( C& c ) : c_( c )
         { }
         
@@ -89,6 +99,9 @@ namespace assign_detail
     {
         C& c_;
     public:
+        call_push( const call_push& r ) : c_( r.c_ )
+        { }
+            
         call_push( C& c ) : c_( c )
         { }
     
@@ -104,6 +117,9 @@ namespace assign_detail
     {
         C& c_;
     public:
+        call_insert( const call_insert& r ) : c_( r.c_ )
+        { }
+
         call_insert( C& c ) : c_( c )
         { }
     
@@ -114,28 +130,6 @@ namespace assign_detail
         }
     };
 
-    template< class C >
-    class call_add_edge
-    {
-        C& c_;
-    public:
-        call_add_edge( C& c ) : c_(c)
-        { }
-
-        template< class T >
-        void operator()( T l, T r )
-        {
-            add_edge( l, r, c_ );
-        }
-
-        template< class T, class EP >
-        void operator()( T l, T r, const EP& ep )
-        {
-            add_edge( l, r, ep, c_ );
-        }
-
-    };
-    
     struct forward_n_arguments {};
     
 } // namespace 'assign_detail'
@@ -188,7 +182,7 @@ namespace assign
         }
         
         template< class T >
-        list_inserter& operator=( const T& r )
+        list_inserter& operator=( T r )
         {
             insert_( r );
             return *this;
@@ -201,7 +195,7 @@ namespace assign
         }
         
         template< class Nullary_function >
-        list_inserter& operator=( const assign_detail::fun_repeater<Nullary_function>& r )
+        list_inserter& operator=( assign_detail::fun_repeater<Nullary_function> r )
         {
             //BOOST_STATIC_ASSERT( function_traits<Nullary_function>::arity == 0 );
             //BOOST_STATIC_ASSERT( is_convertible< BOOST_DEDUCED_TYPENAME function_traits<
@@ -211,28 +205,20 @@ namespace assign
         }
         
         template< class T >
-        list_inserter& operator,( const T& r )
+        list_inserter& operator,( T r )
         {
             insert_( r  );
             return *this;
         }
 
-#if BOOST_WORKAROUND(__MWERKS__, BOOST_TESTED_AT(0x3205))
-        template< class T >
-        list_inserter& operator,( const assign_detail::repeater<T> & r )
-        {
-            return repeat( r.sz, r.val ); 
-        }
-#else
         template< class T >
         list_inserter& operator,( assign_detail::repeater<T> r )
         {
             return repeat( r.sz, r.val ); 
         }
-#endif
         
         template< class Nullary_function >
-        list_inserter& operator,( const assign_detail::fun_repeater<Nullary_function>& r )
+        list_inserter& operator,( assign_detail::fun_repeater<Nullary_function> r )
         {
             return repeat_fun( r.sz, r.val ); 
         }
@@ -255,23 +241,15 @@ namespace assign
             return *this;
         }
 
-        template< class SinglePassIterator >
-        list_inserter& range( SinglePassIterator first, 
-                              SinglePassIterator last )
-        {
-            for( ; first != last; ++first )
-                insert_( *first );
-            return *this;
-        }
         
-        template< class SinglePassRange >
-        list_inserter& range( const SinglePassRange& r )
-        {
-            return range( boost::begin(r), boost::end(r) );
-        }
-        
+#if BOOST_WORKAROUND(BOOST_MSVC, <= 1300)
+
         template< class T >
         list_inserter& operator()( const T& t )
+#else        
+        template< class T >
+        list_inserter& operator()( T t )
+#endif       
         {
             insert_( t );
             return *this;
@@ -282,7 +260,7 @@ namespace assign
 #endif
 #define BOOST_ASSIGN_MAX_PARAMETERS (BOOST_ASSIGN_MAX_PARAMS - 1)
 #define BOOST_ASSIGN_PARAMS1(n) BOOST_PP_ENUM_PARAMS(n, class T)
-#define BOOST_ASSIGN_PARAMS2(n) BOOST_PP_ENUM_BINARY_PARAMS(n, T, const& t)
+#define BOOST_ASSIGN_PARAMS2(n) BOOST_PP_ENUM_BINARY_PARAMS(n, T, t)
 #define BOOST_ASSIGN_PARAMS3(n) BOOST_PP_ENUM_PARAMS(n, t)
         
 #define BOOST_PP_LOCAL_LIMITS (1, BOOST_ASSIGN_MAX_PARAMETERS)
@@ -301,7 +279,7 @@ namespace assign
 #define BOOST_PP_LOCAL_LIMITS (1, BOOST_ASSIGN_MAX_PARAMETERS)
 #define BOOST_PP_LOCAL_MACRO(n) \
     template< class T, BOOST_ASSIGN_PARAMS1(n) > \
-    void BOOST_PP_CAT(insert, BOOST_PP_INC(n))(T const& t, BOOST_ASSIGN_PARAMS2(n), single_arg_type) \
+    void BOOST_PP_CAT(insert, BOOST_PP_INC(n))(T t, BOOST_ASSIGN_PARAMS2(n), single_arg_type) \
     { \
         insert_( Argument(t, BOOST_ASSIGN_PARAMS3(n) )); \
     } \
@@ -312,7 +290,7 @@ namespace assign
 #define BOOST_PP_LOCAL_LIMITS (1, BOOST_ASSIGN_MAX_PARAMETERS)
 #define BOOST_PP_LOCAL_MACRO(n) \
     template< class T, BOOST_ASSIGN_PARAMS1(n) > \
-    void BOOST_PP_CAT(insert, BOOST_PP_INC(n))(T const& t, BOOST_ASSIGN_PARAMS2(n), n_arg_type) \
+    void BOOST_PP_CAT(insert, BOOST_PP_INC(n))(T t, BOOST_ASSIGN_PARAMS2(n), n_arg_type) \
     { \
         insert_(t, BOOST_ASSIGN_PARAMS3(n) ); \
     } \
@@ -384,13 +362,6 @@ namespace assign
         static BOOST_DEDUCED_TYPENAME C::value_type* p = 0;
         return make_list_inserter( assign_detail::call_push<C>( c ),
                                    p );
-    }
-
-    template< class C >
-    inline list_inserter< assign_detail::call_add_edge<C> >
-    add_edge( C& c )   
-    {
-        return make_list_inserter( assign_detail::call_add_edge<C>( c ) );
     }
     
 } // namespace 'assign'

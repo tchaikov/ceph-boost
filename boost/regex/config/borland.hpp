@@ -1,7 +1,7 @@
 /*
  *
  * Copyright (c) 1998-2002
- * John Maddock
+ * Dr John Maddock
  *
  * Use, modification and distribution are subject to the 
  * Boost Software License, Version 1.0. (See accompanying file 
@@ -57,15 +57,6 @@
 #        define BOOST_REGEX_STATIC_LINK
 #     endif
 #  endif
-
-#if __BORLANDC__ < 0x600
-//
-// string workarounds:
-//
-#include <cstring>
-#undef strcmp
-#undef strcpy
-#endif
 
 #endif
 

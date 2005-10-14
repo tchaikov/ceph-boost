@@ -32,8 +32,11 @@
 #define STD std
 #endif
 
-namespace boost { 
-namespace serialization {
+#ifdef BOOST_NO_ARGUMENT_DEPENDENT_LOOKUP
+namespace boost { namespace serialization {
+#else
+namespace STD {
+#endif
 
 template<class Archive, class U, class Allocator>
 inline void save(
@@ -43,7 +46,7 @@ inline void save(
 ){
     boost::serialization::stl::save_collection<
         Archive, 
-        std::list<U, Allocator> 
+        STD::list<U, Allocator> 
     >(ar, t);
 }
 
@@ -58,7 +61,7 @@ inline void load(
         std::list<U, Allocator>,
         boost::serialization::stl::archive_input_seq<
             Archive, 
-            std::list<U, Allocator> 
+            STD::list<U, Allocator> 
         >,
         boost::serialization::stl::no_reserve_imp<STD::list<U, Allocator> >
     >(ar, t);
@@ -75,8 +78,11 @@ inline void serialize(
     boost::serialization::split_free(ar, t, file_version);
 }
 
-} // serialization
-} // namespace boost
+#ifdef BOOST_NO_ARGUMENT_DEPENDENT_LOOKUP
+}} // namespace boost::serialization
+#else
+} // std
+#endif
 
 #include <boost/serialization/collection_traits.hpp>
 

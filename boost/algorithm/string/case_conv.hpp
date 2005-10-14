@@ -14,11 +14,7 @@
 #include <algorithm>
 #include <locale>
 #include <boost/iterator/transform_iterator.hpp>
-
-#include <boost/range/begin.hpp>
-#include <boost/range/end.hpp>
-#include <boost/range/value_type.hpp>
-
+#include <boost/algorithm/string/collection_traits.hpp>
 #include <boost/algorithm/string/detail/case_conv.hpp>
 
 /*! \file
@@ -39,7 +35,7 @@ namespace boost {
             It is returned as a sequence or copied to the output iterator.
 
             \param Output An output iterator to which the result will be copied
-            \param Input An input range
+            \param Input An input collection
             \param Loc A locale used for conversion
             \return 
                 An output iterator pointing just after the last inserted character or
@@ -48,19 +44,19 @@ namespace boost {
             \note The second variant of this function provides the strong exception-safety guarantee
                 
         */
-        template<typename OutputIteratorT, typename RangeT>
+        template<typename OutputIteratorT, typename CollectionT>
         inline OutputIteratorT 
         to_lower_copy(
             OutputIteratorT Output,
-            const RangeT& Input,
+            const CollectionT& Input,
             const std::locale& Loc=std::locale())
         {
             return std::transform( 
                 begin(Input), 
                 end(Input), 
                 Output,
-                ::boost::algorithm::detail::to_lowerF<
-                    typename range_value<RangeT>::type >(Loc));
+                detail::to_lowerF<
+                    typename value_type_of<CollectionT>::type >(Loc));
         }
 
         //! Convert to lower case
@@ -75,12 +71,12 @@ namespace boost {
             return SequenceT(
                 make_transform_iterator(
                     begin(Input),
-                    ::boost::algorithm::detail::to_lowerF<
-                        typename range_value<SequenceT>::type >(Loc)),
+                    detail::to_lowerF<
+                        typename value_type_of<SequenceT>::type >(Loc)),
                 make_transform_iterator(
                     end(Input), 
-                    ::boost::algorithm::detail::to_lowerF<
-                        typename range_value<SequenceT>::type >(Loc)));
+                    detail::to_lowerF<
+                        typename value_type_of<SequenceT>::type >(Loc)));
         }
 
         //! Convert to lower case
@@ -88,20 +84,20 @@ namespace boost {
             Each element of the input sequence is converted to lower
             case. The input sequence is modified in-place.
 
-            \param Input A range
+            \param Input A collection
             \param Loc a locale used for conversion
         */
-        template<typename WritableRangeT>
+        template<typename MutableCollectionT>
         inline void to_lower( 
-            WritableRangeT& Input, 
+            MutableCollectionT& Input, 
             const std::locale& Loc=std::locale())
         {
             std::transform( 
                 begin(Input), 
                 end(Input), 
                 begin(Input), 
-                ::boost::algorithm::detail::to_lowerF<
-                    typename range_value<WritableRangeT>::type >(Loc));
+                detail::to_lowerF<
+                    typename value_type_of<MutableCollectionT>::type >(Loc));
         }
         
 //  to_upper  -----------------------------------------------//
@@ -113,7 +109,7 @@ namespace boost {
             It is returned as a sequence or copied to the output iterator
 
             \param Output An output iterator to which the result will be copied
-            \param Input An input range
+            \param Input An input collection
             \param Loc A locale used for conversion
             \return 
                 An output iterator pointing just after the last inserted character or
@@ -121,19 +117,19 @@ namespace boost {
 
             \note The second variant of this function provides the strong exception-safety guarantee
         */
-        template<typename OutputIteratorT, typename RangeT>
+        template<typename OutputIteratorT, typename CollectionT>
         inline OutputIteratorT 
         to_upper_copy(
             OutputIteratorT Output,
-            const RangeT& Input,
+            const CollectionT& Input,
             const std::locale& Loc=std::locale())
         {
             return std::transform( 
                 begin(Input), 
                 end(Input), 
                 Output,
-                ::boost::algorithm::detail::to_upperF<
-                    typename range_value<RangeT>::type >(Loc));
+                detail::to_upperF<
+                    typename value_type_of<CollectionT>::type >(Loc));
         }
 
         //! Convert to upper case
@@ -148,12 +144,12 @@ namespace boost {
             return SequenceT(
                 make_transform_iterator(
                     begin(Input),
-                    ::boost::algorithm::detail::to_upperF<
-                        typename range_value<SequenceT>::type >(Loc)),
+                    detail::to_upperF<
+                        typename value_type_of<SequenceT>::type >(Loc)),
                 make_transform_iterator(
                     end(Input), 
-                    ::boost::algorithm::detail::to_upperF<
-                        typename range_value<SequenceT>::type >(Loc)));
+                    detail::to_upperF<
+                        typename value_type_of<SequenceT>::type >(Loc)));
 
         }
 
@@ -162,20 +158,20 @@ namespace boost {
             Each element of the input sequence is converted to upper
             case. The input sequence is modified in-place.
 
-            \param Input An input range
+            \param Input An input collection
             \param Loc a locale used for conversion
         */
-        template<typename WritableRangeT>
+        template<typename MutableCollectionT>
         inline void to_upper( 
-            WritableRangeT& Input, 
+            MutableCollectionT& Input, 
             const std::locale& Loc=std::locale())
         {
             std::transform( 
                 begin(Input), 
                 end(Input), 
                 begin(Input), 
-                ::boost::algorithm::detail::to_upperF<
-                    typename range_value<WritableRangeT>::type >(Loc));
+                detail::to_upperF<
+                    typename value_type_of<MutableCollectionT>::type >(Loc));
         }
 
     } // namespace algorithm

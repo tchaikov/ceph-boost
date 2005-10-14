@@ -25,31 +25,35 @@ namespace boost { namespace fusion
         template <typename Sequence>
         struct begin_traits_impl
         {
-            typedef single_view_iterator<Sequence> type;
+            typedef single_view_iterator<
+                FUSION_GET_VALUE_TYPE(Sequence)>
+            type;
 
             static type
-            call(Sequence& s);
+            call(Sequence const& s);
         };
 
         template <typename Sequence>
         inline typename begin_traits_impl<Sequence>::type
-        begin_traits_impl<Sequence>::call(Sequence& s)
+        begin_traits_impl<Sequence>::call(Sequence const& s)
         {
-            return type(s);
+            return type(s.val);
         }
 
         template <typename Sequence>
         struct end_traits_impl
         {
-            typedef single_view_iterator_end<Sequence> type;
+            typedef single_view_iterator_end<
+                FUSION_GET_VALUE_TYPE(Sequence)>
+            type;
 
             static type
-            call(Sequence&);
+            call(Sequence const&);
         };
 
         template <typename Sequence>
         inline typename end_traits_impl<Sequence>::type
-        end_traits_impl<Sequence>::call(Sequence&)
+        end_traits_impl<Sequence>::call(Sequence const&)
         {
             FUSION_RETURN_DEFAULT_CONSTRUCTED;
         }

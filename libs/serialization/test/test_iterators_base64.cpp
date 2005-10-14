@@ -96,5 +96,5 @@ test_main( int argc, char* argv[] )
     #ifndef BOOST_NO_CWCHAR
     test_base64<wchar_t>();
     #endif
-    return EXIT_SUCCESS;
+    return boost::exit_success;
 }

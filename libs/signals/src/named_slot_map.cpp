@@ -23,74 +23,150 @@ typedef std::map<any, group_list, compare_type> slot_container_type;
 typedef slot_container_type::iterator group_iterator;
 typedef slot_container_type::const_iterator const_group_iterator;
 
-named_slot_map_iterator::named_slot_map_iterator() : slot_assigned(false) {}
-
-named_slot_map_iterator::
-named_slot_map_iterator(const named_slot_map_iterator& other)
-  : group(other.group), last_group(other.last_group), 
-    slot_assigned(other.slot_assigned)
+class named_slot_map::impl
 {
-  if (slot_assigned) slot_ = other.slot_;
+public:
+  impl(const compare_type& compare) : groups(compare)
+  {
+    clear();
+  }
+
+  void clear()
+  {
+    groups.clear();
+    groups[front_type()];
+    groups[back_type()];
+    back = groups.end();
+    --back;
+  }
+
+  slot_container_type groups;
+  group_iterator back;
+
+  bool empty(const_group_iterator group) const
+  {
+    return (group->second.empty() && group != groups.begin() && group != back);
+  }
+};
+
+class named_slot_map_iterator::impl
+{
+public:
+  impl() : slot_assigned(false) {}
+
+  impl(group_iterator group, group_iterator last_group)
+    : group(group), last_group(last_group), slot_assigned(false)
+  { init_next_group(); }
+
+  impl(group_iterator group, group_iterator last_group,
+       slot_pair_iterator slot_)
+    : group(group), last_group(last_group), slot_(slot_), slot_assigned(true)
+  { }
+
+  impl(const impl& other) 
+    : group(other.group), last_group(other.last_group), 
+      slot_assigned(other.slot_assigned)
+  {
+    if (slot_assigned) slot_ = other.slot_;
+  }
+
+  impl& operator=(const impl& other)
+  {
+    group = other.group;
+    last_group = other.last_group;
+    slot_assigned = other.slot_assigned;
+    if (slot_assigned) slot_ = other.slot_;
+    return *this;
+  }
+
+  void init_next_group()
+  {
+    while (group != last_group && group->second.empty()) ++group;
+    if (group != last_group) {
+      slot_ = group->second.begin();
+      slot_assigned = true;
+    }
+  }
+
+  group_iterator group;
+  group_iterator last_group;
+  slot_pair_iterator slot_;
+  bool slot_assigned;
+};
+
+named_slot_map_iterator::named_slot_map_iterator() {}
+
+named_slot_map_iterator::named_slot_map_iterator(std::auto_ptr<impl> impl_)
+  : impl_(impl_) {}
+
+named_slot_map_iterator
+  ::named_slot_map_iterator(const named_slot_map_iterator& other)
+{
+  impl_.reset(new impl(*other.impl_));
 }
 
-named_slot_map_iterator& 
+named_slot_map_iterator::~named_slot_map_iterator() {}
+
+named_slot_map_iterator&
 named_slot_map_iterator::operator=(const named_slot_map_iterator& other)
 {
-  slot_assigned = other.slot_assigned;
-  group = other.group;
-  last_group = other.last_group;
-  if (slot_assigned) slot_ = other.slot_;
+  if (impl_) *impl_ = *other.impl_;
+  else impl_.reset(new impl(*other.impl_));
   return *this;
 }
 
-
 connection_slot_pair& named_slot_map_iterator::dereference() const
-{ return *slot_; }
+{ return *impl_->slot_; }
 
 void named_slot_map_iterator::increment()
 {
-  ++slot_;
-  if (slot_ == group->second.end()) {
-    ++group;
-    init_next_group();
+  ++impl_->slot_;
+  if (impl_->slot_ == impl_->group->second.end()) {
+    ++impl_->group;
+    impl_->init_next_group();
   }
 }
 
 bool 
 named_slot_map_iterator::equal(const named_slot_map_iterator& other) const
 {
-  return (group == other.group
-          && (group == last_group
-              || slot_ == other.slot_));
+  return (impl_->group == other.impl_->group
+          && (impl_->group == impl_->last_group
+              || impl_->slot_ == other.impl_->slot_));
 }
 
-#if BOOST_WORKAROUND(_MSC_VER, <= 0x1701)
+#if BOOST_WORKAROUND(BOOST_MSVC, <= 0x1701)
 void named_slot_map_iterator::decrement() { assert(false); }
 void named_slot_map_iterator::advance(difference_type) { assert(false); }
 #endif
 
-named_slot_map::named_slot_map(const compare_type& compare) : groups(compare)
+named_slot_map::named_slot_map(const compare_type& compare)
 {
-  clear();
+  impl_.reset(new impl(compare));
 }
 
-void named_slot_map::clear() 
-{ 
-  groups.clear();
-  groups[front_type()];
-  groups[back_type()];
-  back = groups.end();
-  --back;
-}
+named_slot_map::~named_slot_map() {}
+
+void named_slot_map::clear() { impl_->clear(); }
 
 named_slot_map::iterator named_slot_map::begin()
 {
-  return named_slot_map::iterator(groups.begin(), groups.end());
+  typedef named_slot_map::iterator::impl iterator_impl;
+
+  std::auto_ptr<iterator_impl> 
+    it(new iterator_impl(impl_->groups.begin(),
+                         impl_->groups.end()));
+  return named_slot_map::iterator(it);
 }
 
 named_slot_map::iterator named_slot_map::end()
 {
-  return named_slot_map::iterator(groups.end(), groups.end());
+  typedef named_slot_map::iterator::impl iterator_impl;
+
+  std::auto_ptr<iterator_impl> 
+    it(new iterator_impl(impl_->groups.end(),
+                         impl_->groups.end()));
+  return named_slot_map::iterator(it);
 }
 
 named_slot_map::iterator
@@ -100,41 +176,42 @@ named_slot_map::insert(const any& name, const connection& con, const any& slot,
   group_iterator group;
   if (name.empty()) {
     switch (at) {
-    case at_front: group = groups.begin(); break;
-    case at_back: group = back; break;
+    case at_front: group = impl_->groups.begin(); break;
+    case at_back: group = impl_->back; break;
     }
   } else {
-    group = groups.find(name);
-    if (group == groups.end()) {
+    group = impl_->groups.find(name);
+    if (group == impl_->groups.end()) {
       slot_container_type::value_type v(name, group_list());
-      group = groups.insert(v).first;
+      group = impl_->groups.insert(v).first;
     }
   }
-  iterator it;
-  it.group = group;
-  it.last_group = groups.end();
+  typedef named_slot_map::iterator::impl iterator_impl;
+  std::auto_ptr<iterator_impl> it(new iterator_impl);
+  it->group = group;
+  it->last_group = impl_->groups.end();
 
   switch (at) {
   case at_back:
     group->second.push_back(connection_slot_pair(con, slot));
-    it.slot_ = group->second.end();
-    it.slot_assigned = true;
-    --(it.slot_);
+    it->slot_ = group->second.end();
+    it->slot_assigned = true;
+    --(it->slot_);
     break;
 
   case at_front:
     group->second.push_front(connection_slot_pair(con, slot));
-    it.slot_ = group->second.begin();
-    it.slot_assigned = true;
+    it->slot_ = group->second.begin();
+    it->slot_assigned = true;
     break;
   }
-  return it;
+  return iterator(it);
 }
 
 void named_slot_map::disconnect(const any& name)
 {
-  group_iterator group = groups.find(name);
-  if (group != groups.end()) {
+  group_iterator group = impl_->groups.find(name);
+  if (group != impl_->groups.end()) {
     slot_pair_iterator i = group->second.begin();
     while (i != group->second.end()) {
       slot_pair_iterator next = i;
@@ -142,22 +219,22 @@ void named_slot_map::disconnect(const any& name)
       i->first.disconnect();
       i = next;
     }
-    groups.erase(group);
+    impl_->groups.erase(group);
   }
 }
 
 void named_slot_map::erase(iterator pos)
 {
   // Erase the slot
-  pos.slot_->first.disconnect();
-  pos.group->second.erase(pos.slot_);
+  pos.impl_->slot_->first.disconnect();
+  //  pos.impl_->group->second.erase(pos.impl_->slot_); ?
 }
 
 void named_slot_map::remove_disconnected_slots()
 {
   // Remove any disconnected slots
-  group_iterator g = groups.begin();
-  while (g != groups.end()) {
+  group_iterator g = impl_->groups.begin();
+  while (g != impl_->groups.end()) {
     slot_pair_iterator s = g->second.begin();
     while (s != g->second.end()) {
       if (s->first.connected()) ++s;
@@ -165,7 +242,7 @@ void named_slot_map::remove_disconnected_slots()
     }
 
     // Clear out empty groups
-    if (empty(g)) groups.erase(g++);
+    if (impl_->empty(g)) impl_->groups.erase(g++);
     else ++g;
   }
 }

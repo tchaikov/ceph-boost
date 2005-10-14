@@ -12,9 +12,7 @@
 #define BOOST_RANGE_DETAIL_ITERATOR_HPP
 
 #include <boost/range/detail/common.hpp>
-#include <boost/range/detail/remove_extent.hpp>
-
-#include <boost/static_assert.hpp>
+#include <boost/type_traits/remove_bounds.hpp>
 
 //////////////////////////////////////////////////////////////////////////////
 // missing partial specialization  workaround.
@@ -25,13 +23,7 @@ namespace boost
     namespace range_detail 
     {        
         template< typename T >
-        struct range_iterator_ {
-            template< typename C >
-            struct pts
-            {
-                typedef int type;
-            };
-        };
+        struct range_iterator_;
 
         template<>
         struct range_iterator_<std_container_>
@@ -39,7 +31,7 @@ namespace boost
             template< typename C >
             struct pts
             {
-                typedef BOOST_RANGE_DEDUCED_TYPENAME C::iterator type;
+                typedef BOOST_DEDUCED_TYPENAME C::iterator type;
             };
         };
 
@@ -49,7 +41,7 @@ namespace boost
             template< typename P >
             struct pts
             {
-                typedef BOOST_RANGE_DEDUCED_TYPENAME P::first_type type;
+                typedef BOOST_DEDUCED_TYPENAME P::first_type type;
             };
         };
 
@@ -60,7 +52,7 @@ namespace boost
             struct pts
             {
                 typedef BOOST_RANGE_DEDUCED_TYPENAME 
-                    remove_extent<T>::type* type;
+                    remove_bounds<T>::type* type;
             };
         };
         
@@ -71,7 +63,7 @@ namespace boost
             struct pts
             {
                  typedef BOOST_RANGE_DEDUCED_TYPENAME 
-                    remove_extent<T>::type* type;
+                    remove_bounds<T>::type* type;
             };
         };
 
@@ -114,14 +106,15 @@ namespace boost
                  typedef const wchar_t* type; 
              };         
          };
-    } 
 
+    } 
+    
     template< typename C >
     class range_iterator
     {
-        typedef BOOST_RANGE_DEDUCED_TYPENAME range_detail::range<C>::type c_type;
+        typedef BOOST_DEDUCED_TYPENAME range_detail::range<C>::type c_type;
     public:
-        typedef typename range_detail::range_iterator_<c_type>::BOOST_NESTED_TEMPLATE pts<C>::type type; 
+        typedef BOOST_DEDUCED_TYPENAME range_detail::range_iterator_<c_type>::BOOST_NESTED_TEMPLATE pts<C>::type type; 
     };
 }
 

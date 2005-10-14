@@ -97,10 +97,7 @@ if ! [ MATCH "(gcc)" : $(.GCC) ]
 {
     flags darwin CFLAGS : -Wno-long-double -no-cpp-precomp ;
 }
-# GCC 4.0, the default compiler in Darwin 8.0.0, does not have
-# -fcoalesce-templates.  GCC 3.3 needs it.
-if ! [ MATCH "(g[+][+])" : $(.GXX) ] && $(JAMUNAME[3]) < "8.0.0" ||
-    [ MATCH "(g[+][+]-3.3)" : $(.GXX) ]
+if ! [ MATCH "(g[+][+])" : $(.GXX) ]
 {
     flags darwin C++FLAGS : -fcoalesce-templates ;
 }
@@ -137,8 +134,8 @@ if $(LINK_FORMAT) = bundle
 }
 else
 {
-#    flags darwin LINKFLAGS <target-type>$(SHARED_TYPES) :
-#        -Wl,-dynamic -nostartfiles -Wl,-dylib -Wl,-ldylib1.o ;
+    flags darwin LINKFLAGS <target-type>$(SHARED_TYPES) :
+        -Wl,-dynamic -nostartfiles -Wl,-dylib -Wl,-ldylib1.o ;
 }
 
 flags darwin .LINKFLAGS <linkflags> ;
@@ -187,7 +184,7 @@ actions darwin-Link-DyLib-action bind NEEDLIBS NEEDIMPS
     && \
     $(.GCC_BIN_DIR)$(.GXX) $(LINKFLAGS) -o "$(<[1])" "$(<[1]:S=.lo)" \
       -F$(FRAMEWORKS:D) -framework$(_)$(FRAMEWORKS:D=) \
-      -L"$(LIBPATH:T)" -L"$(STDLIBPATH:T)" "$(NEEDLIBS)" "$(NEEDLIBS)" -l$(FINDLIBS) -dynamiclib -install_name "$(<[1]:D=:S=.dylib)" \
+      -L"$(LIBPATH:T)" -L"$(STDLIBPATH:T)" "$(NEEDLIBS)" "$(NEEDLIBS)" -l$(FINDLIBS) \
     && \
     rm -f "$(<[1]:S=.lo)"
 }

@@ -1,7 +1,7 @@
 /*
  *
  * Copyright (c) 2003
- * John Maddock
+ * Dr John Maddock
  *
  * Use, modification and distribution are subject to the 
  * Boost Software License, Version 1.0. (See accompanying file 

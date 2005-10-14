@@ -17,8 +17,7 @@
 //  See http://www.boost.org for updates, documentation, and revision history.
 
 #include <boost/config.hpp>
-#include <boost/mpl/eval_if.hpp>
-#include <boost/mpl/identity.hpp>
+#include <boost/mpl/if.hpp>
 
 #include <boost/serialization/access.hpp>
 
@@ -61,12 +60,11 @@ template<class Archive, class T>
 inline void split_member(
     Archive & ar, T & t, const unsigned int file_version
 ){
-    typedef BOOST_DEDUCED_TYPENAME mpl::eval_if<
+    mpl::if_<
         BOOST_DEDUCED_TYPENAME Archive::is_saving,
-        mpl::identity<detail::member_saver<Archive, T> >, 
-        mpl::identity<detail::member_loader<Archive, T> >
-    >::type typex;
-    typex::invoke(ar, t, file_version);
+        detail::member_saver<Archive, T>, 
+        detail::member_loader<Archive, T>
+    >::type::invoke(ar, t, file_version);
 }
 
 } // namespace serialization

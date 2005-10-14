@@ -11,9 +11,7 @@
 #define BOOST_STRING_FIND_FORMAT_ALL_DETAIL_HPP
 
 #include <boost/algorithm/string/config.hpp>
-#include <boost/range/iterator_range.hpp>
-#include <boost/range/const_iterator.hpp>
-#include <boost/range/value_type.hpp>
+#include <boost/algorithm/string/iterator_range.hpp>
 #include <boost/algorithm/string/detail/find_format_store.hpp>
 #include <boost/algorithm/string/detail/replace_storage.hpp>
 
@@ -61,7 +59,7 @@ namespace boost {
                 const FormatResultT& FormatResult )
             {       
                 typedef BOOST_STRING_TYPENAME 
-                    range_const_iterator<InputT>::type input_iterator_type; 
+                    const_iterator_of<InputT>::type input_iterator_type; 
 
                 typedef find_format_store<
                         input_iterator_type, 
@@ -74,7 +72,7 @@ namespace boost {
                 // Initialize last match
                 input_iterator_type LastMatch=begin(Input);
 
-                // Iterate through all matches
+                // Iterate throug all matches
                 while( M )
                 {
                     // Copy the beginning of the sequence
@@ -128,7 +126,7 @@ namespace boost {
                 const FormatResultT& FormatResult)
             {
                 typedef BOOST_STRING_TYPENAME 
-                    range_const_iterator<InputT>::type input_iterator_type; 
+                    const_iterator_of<InputT>::type input_iterator_type; 
 
                 typedef find_format_store<
                         input_iterator_type, 
@@ -144,7 +142,7 @@ namespace boost {
                 // Output temporary
                 InputT Output;
 
-                // Iterate through all matches
+                // Iterate throug all matches
                 while( M )
                 {
                     // Copy the beginning of the sequence
@@ -198,7 +196,7 @@ namespace boost {
                 FormatResultT FormatResult)
             {
                 typedef BOOST_STRING_TYPENAME 
-                    range_iterator<InputT>::type input_iterator_type; 
+                    iterator_of<InputT>::type input_iterator_type; 
                 typedef find_format_store<
                         input_iterator_type, 
                         FormatterT,
@@ -209,7 +207,7 @@ namespace boost {
           
                 // Instantiate replacement storage
                 std::deque<
-                    BOOST_STRING_TYPENAME range_value<InputT>::type> Storage;
+                    BOOST_STRING_TYPENAME value_type_of<InputT>::type> Storage;
 
                 // Initialize replacement iterators
                 input_iterator_type InsertIt=begin(Input);

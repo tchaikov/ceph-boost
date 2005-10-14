@@ -140,8 +140,7 @@ public:
   void reindex(const BaseList& values) {
     boost::function_requires<
       detail::multi_array::CollectionConcept<BaseList> >();
-    boost::detail::multi_array::
-      copy_n(values.begin(),num_dimensions(),index_base_list_.begin());
+    boost::copy_n(values.begin(),num_dimensions(),index_base_list_.begin());
     origin_offset_ =
       this->calculate_origin_offset(stride_list_,extent_list_,
                               storage_,index_base_list_);
@@ -243,7 +242,7 @@ public:
   }
 
   const_iterator end() const {
-    return const_iterator(*index_bases()+(index)*shape(),origin(),
+    return const_iterator(*index_bases()+*shape(),origin(),
                           shape(),strides(),index_bases());
   }
 
@@ -328,8 +327,7 @@ public:
    // If index_bases or extents is null, then initialize the corresponding
    // private data to zeroed lists.
    if(index_bases) {
-     boost::detail::multi_array::
-       copy_n(index_bases,NumDims,index_base_list_.begin());
+     boost::copy_n(index_bases,NumDims,index_base_list_.begin());
    } else {
      std::fill_n(index_base_list_.begin(),NumDims,0);
    }
@@ -387,12 +385,11 @@ public:
   void init_multi_array_ref(InputIterator extents_iter) {
     boost::function_requires<InputIteratorConcept<InputIterator> >();
 
-    boost::detail::multi_array::
-      copy_n(extents_iter,num_dimensions(),extent_list_.begin());
+    boost::copy_n(extents_iter,num_dimensions(),extent_list_.begin());
 
     // Calculate the array size
     num_elements_ = std::accumulate(extent_list_.begin(),extent_list_.end(),
-                            size_type(1),std::multiplies<size_type>());
+                            1,std::multiplies<index>());
 
     this->compute_strides(stride_list_,extent_list_,storage_);
 
@@ -545,7 +542,7 @@ public:
   }
 
   iterator end() {
-    return iterator(*this->index_bases()+(index)*this->shape(),origin(),
+    return iterator(*this->index_bases()+*this->shape(),origin(),
                     this->shape(),this->strides(),
                     this->index_bases());
   }

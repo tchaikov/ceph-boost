@@ -165,20 +165,6 @@ file_time(
 	return 0;
 }
 
-int file_is_file(char* filename)
-{
-	struct stat statbuf;
-
-	if( stat( filename, &statbuf ) < 0 )
-	    return -1;
-
-    if (statbuf.st_mode & S_IFREG) 
-        return 1;
-    else
-        return 0;    
-}
-
-
 /*
  * file_archscan() - scan an archive for files
  */
@@ -266,7 +252,7 @@ file_archscan(
 		*/
 
 		name = string_table + atoi( ar_hdr.ar_name + 1 );
-		for ( endname = name; *endname && *endname != '\n'; ++endname) {}
+		endname = name + strlen( name );
 	    }
 	    else
 	    {

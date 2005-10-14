@@ -1,6 +1,5 @@
 /*=============================================================================
     Copyright (c) 2003 Joel de Guzman
-    Copyright (c) 2004 Peder Holt
 
     Use, modification and distribution is subject to the Boost Software
     License, Version 1.0. (See accompanying file LICENSE_1_0.txt or copy at
@@ -28,16 +27,12 @@ namespace boost { namespace fusion
         typedef typename converter::type first_type;
         typedef F transform_type;
 
-        transform_view_iterator(First const& first, F f);
+        transform_view_iterator(First const& first, F f)
+            : first(converter::convert(first)), f(f) {}
 
         first_type first;
         transform_type f;
     };
-
-    template <typename First, typename F>
-    transform_view_iterator<First,F>::transform_view_iterator(First const& first, F f)
-    : first(converter::convert(first)), f(f) {}
-
 }}
 
 #endif

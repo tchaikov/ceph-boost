@@ -26,7 +26,7 @@
 #include "boost/mpl/bool.hpp"
 #include "boost/mpl/not.hpp"
 #include "boost/detail/reference_content.hpp"
-#include "boost/none_t.hpp"
+#include "boost/detail/none_t.hpp"
 #include "boost/utility/compare_pointees.hpp"
 
 #if BOOST_WORKAROUND(BOOST_MSVC, == 1200)
@@ -167,7 +167,7 @@ class optional_base : public optional_tag
 
     // Creates an optional<T> uninitialized.
     // No-throw
-    optional_base ( none_t const& )
+    optional_base ( detail::none_t const& )
       :
       m_initialized(false) {}
 
@@ -208,40 +208,32 @@ class optional_base : public optional_tag
     ~optional_base() { destroy() ; }
 
     // Assigns from another optional<T> (deep-copies the rhs value)
+    // Basic Guarantee: If T::T( T const& ) throws, this is left UNINITIALIZED
     void assign ( optional_base const& rhs )
-    {
-      if (is_initialized())
       {
-        if ( rhs.is_initialized() )
-             assign_value(rhs.get_impl(), is_reference_predicate() );
-        else destroy();
-      }
-      else
-      {
+        destroy();
         if ( rhs.is_initialized() )
           construct(rhs.get_impl());
       }
-    }
 
     // Assigns from a T (deep-copies the rhs value)
+    // Basic Guarantee: If T::( T const& ) throws, this is left UNINITIALIZED
     void assign ( argument_type val )
-    {
-      if (is_initialized())
-           assign_value(val, is_reference_predicate() );
-      else construct(val);
-    }
+      {
+        destroy();
+        construct(val);
+      }
 
     // Assigns from "none", destroying the current value, if any, leaving this UNINITIALIZED
     // No-throw (assuming T::~T() doesn't)
-    void assign ( none_t const& ) { destroy(); }
+    void assign ( detail::none_t const& ) { destroy(); }
 
 #ifndef BOOST_OPTIONAL_NO_INPLACE_FACTORY_SUPPORT
     template<class Expr>
     void assign_expr ( Expr const& expr, Expr const* tag )
       {
-        if (is_initialized())
-             assign_expr_to_initialized(expr,tag);
-        else construct(expr,tag);
+        destroy();
+        construct(expr,tag);
       }
 #endif
 
@@ -252,6 +244,7 @@ class optional_base : public optional_tag
     void reset() { destroy(); }
 
     // Replaces the current value -if any- with 'val'
+    // Basic Guarantee: If T::T( T const& ) throws this is left UNINITIALIZED.
     void reset ( argument_type val ) { assign(val); }
 
     // Returns a pointer to the value if this is initialized, otherwise,
@@ -288,21 +281,6 @@ class optional_base : public optional_tag
        factory.apply(m_storage.address()) ;
        m_initialized = true ;
      }
-
-    template<class Expr>
-    void assign_expr_to_initialized ( Expr const& factory, in_place_factory_base const* tag )
-     {
-       destroy();
-       construct(factory,tag);
-     }
-
-    // Constructs in-place using the given typed factory
-    template<class Expr>
-    void assign_expr_to_initialized ( Expr const& factory, typed_in_place_factory_base const* tag )
-     {
-       destroy();
-       construct(factory,tag);
-     }
 #endif
 
     // Constructs using any expression implicitely convertible to the single argument
@@ -314,16 +292,6 @@ class optional_base : public optional_tag
      {
        new (m_storage.address()) internal_type(expr) ;
        m_initialized = true ;
-     }
-
-    // Assigns using a form any expression implicitely convertible to the single argument
-    // of a T's assignment operator.
-    // Converting assignments of optional<T> from optional<U> uses this function with
-    // 'Expr' being of type 'U' and relying on a converting assignment of T from U.
-    template<class Expr>
-    void assign_expr_to_initialized ( Expr const& expr, void const* )
-     {
-       assign_value(expr, is_reference_predicate());
      }
 
 #ifdef BOOST_OPTIONAL_WEAK_OVERLOAD_RESOLUTION
@@ -353,14 +321,11 @@ class optional_base : public optional_tag
      }
 #endif
 
-    void assign_value ( argument_type val, is_not_reference_tag ) { get_impl() = val; }
-    void assign_value ( argument_type val, is_reference_tag     ) { construct(val); }
-
     void destroy()
-    {
-      if ( m_initialized )
-        destroy_impl(is_reference_predicate()) ;
-    }
+      {
+        if ( m_initialized )
+          destroy_impl(is_reference_predicate()) ;
+      }
 
     unspecified_bool_type safe_bool() const { return m_initialized ? &this_type::is_initialized : 0 ; }
 
@@ -426,7 +391,7 @@ class optional : public optional_detail::optional_base<T>
 
     // Creates an optional<T> uninitialized.
     // No-throw
-    optional( none_t const& none_ ) : base(none_) {}
+    optional( detail::none_t const& none_ ) : base(none_) {}
 
     // Creates an optional<T> initialized with 'val'.
     // Can throw if T::T(T const&) does
@@ -488,7 +453,14 @@ class optional : public optional_detail::optional_base<T>
     template<class U>
     optional& operator= ( optional<U> const& rhs )
       {
-        this->assign(rhs.get());
+        this->destroy(); // no-throw
+
+        if ( rhs.is_initialized() )
+        {
+          // An exception can be thrown here.
+          // It it happens, THIS will be left uninitialized.
+          this->assign(rhs.get());
+        }
         return *this ;
       }
 #endif
@@ -513,7 +485,7 @@ class optional : public optional_detail::optional_base<T>
     // Assigns from a "none"
     // Which destroys the current value, if any, leaving this UNINITIALIZED
     // No-throw (assuming T::~T() doesn't)
-    optional& operator= ( none_t const& none_ )
+    optional& operator= ( detail::none_t const& none_ )
       {
         this->assign( none_ ) ;
         return *this ;
@@ -635,62 +607,62 @@ bool operator >= ( optional<T> const& x, optional<T> const& y )
 
 template<class T>
 inline
-bool operator == ( optional<T> const& x, none_t const& )
+bool operator == ( optional<T> const& x, detail::none_t const& )
 { return equal_pointees(x, optional<T>() ); }
 
 template<class T>
 inline
-bool operator < ( optional<T> const& x, none_t const& )
+bool operator < ( optional<T> const& x, detail::none_t const& )
 { return less_pointees(x,optional<T>() ); }
 
 template<class T>
 inline
-bool operator != ( optional<T> const& x, none_t const& y )
+bool operator != ( optional<T> const& x, detail::none_t const& y )
 { return !( x == y ) ; }
 
 template<class T>
 inline
-bool operator > ( optional<T> const& x, none_t const& y )
+bool operator > ( optional<T> const& x, detail::none_t const& y )
 { return y < x ; }
 
 template<class T>
 inline
-bool operator <= ( optional<T> const& x, none_t const& y )
+bool operator <= ( optional<T> const& x, detail::none_t const& y )
 { return !( y < x ) ; }
 
 template<class T>
 inline
-bool operator >= ( optional<T> const& x, none_t const& y )
+bool operator >= ( optional<T> const& x, detail::none_t const& y )
 { return !( x < y ) ; }
 
 template<class T>
 inline
-bool operator == ( none_t const& x, optional<T> const& y )
+bool operator == ( detail::none_t const& x, optional<T> const& y )
 { return equal_pointees(optional<T>() ,y); }
 
 template<class T>
 inline
-bool operator < ( none_t const& x, optional<T> const& y )
+bool operator < ( detail::none_t const& x, optional<T> const& y )
 { return less_pointees(optional<T>() ,y); }
 
 template<class T>
 inline
-bool operator != ( none_t const& x, optional<T> const& y )
+bool operator != ( detail::none_t const& x, optional<T> const& y )
 { return !( x == y ) ; }
 
 template<class T>
 inline
-bool operator > ( none_t const& x, optional<T> const& y )
+bool operator > ( detail::none_t const& x, optional<T> const& y )
 { return y < x ; }
 
 template<class T>
 inline
-bool operator <= ( none_t const& x, optional<T> const& y )
+bool operator <= ( detail::none_t const& x, optional<T> const& y )
 { return !( y < x ) ; }
 
 template<class T>
 inline
-bool operator >= ( none_t const& x, optional<T> const& y )
+bool operator >= ( detail::none_t const& x, optional<T> const& y )
 { return !( x < y ) ; }
 
 //
@@ -707,9 +679,8 @@ namespace optional_detail {
 #endif
 
 // optional's swap:
-// If both are initialized, calls swap(T&, T&). If this swap throws, both will remain initialized but their values are now unspecified.
-// If only one is initialized, calls U.reset(*I), THEN I.reset().
-// If U.reset(*I) throws, both are left UNCHANGED (U is kept uinitialized and I is never reset)
+// If both are initialized, calls swap(T&, T&), with whatever exception guarantess are given there.
+// If only one is initialized, calls I.reset() and U.reset(*I), with the Basic Guarantee
 // If both are uninitialized, do nothing (no-throw)
 template<class T>
 inline
@@ -717,12 +688,12 @@ void optional_swap ( optional<T>& x, optional<T>& y )
 {
   if ( !x && !!y )
   {
-    x.reset(*y);
+    x.reset(*y); // Basic guarantee.
     y.reset();
   }
   else if ( !!x && !y )
   {
-    y.reset(*x);
+    y.reset(*x); // Basic guarantee.
     x.reset();
   }
   else if ( !!x && !!y )

@@ -71,7 +71,7 @@ void run_test_cases( BOOST_EXPLICIT_TEMPLATE_TYPE(Block) )
                                   std::ios::eofbit | std::ios::failbit
                                 };
 
-    static std::string strings[] = {
+    std::string strings[] =     {
                                   std::string(""),
                                   std::string("0"),
                                   std::string("1"),
@@ -179,7 +179,7 @@ void run_test_cases( BOOST_EXPLICIT_TEMPLATE_TYPE(Block) )
   const std::string spaces = "\t\n "; //"\t\n\v\f ";
 
   const std::string long_string = get_long_string();
-  /*const*/ static std::string strings[] = {
+  /*const*/ std::string strings[] = {
                   // NOTE: "const" gives the usual problems with Borland
                   //       (in Tests::stream_extractor instantiation)
 

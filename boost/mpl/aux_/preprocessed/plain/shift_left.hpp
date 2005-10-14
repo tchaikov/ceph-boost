@@ -66,7 +66,6 @@ template<
     , typename BOOST_MPL_AUX_NA_PARAM(N2)
     >
 struct shift_left
-
     : shift_left_impl<
           typename shift_left_tag<N1>::type
         , typename shift_left_tag<N2>::type

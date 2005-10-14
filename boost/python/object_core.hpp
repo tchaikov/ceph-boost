@@ -383,9 +383,9 @@ namespace api
   template <>
   struct object_initializer_impl<false, true>
   {
-      template <class T, class U>
+      template <class T>
       static PyObject*
-      get(T const& x, U)
+      get(T const& x, ...)
       {
           return python::incref(get_managed_object(x, tag));
       }

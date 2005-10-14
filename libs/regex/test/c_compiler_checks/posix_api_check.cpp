@@ -1,7 +1,7 @@
 /*
  *
  * Copyright (c) 1998-2002
- * John Maddock
+ * Dr John Maddock
  *
  * Use, modification and distribution are subject to the 
  * Boost Software License, Version 1.0. (See accompanying file 
@@ -19,7 +19,7 @@
 
 #include <stdio.h>
 #include <string.h>
-#include <boost/assert.hpp>
+#include <assert.h>
 #include <boost/regex.h>
 
 const char* expression = "^";
@@ -42,7 +42,7 @@ int main()
       printf(buf);
       return result;
    }
-   BOOST_ASSERT(re.re_nsub == 0);
+   assert(re.re_nsub == 0);
    matches[0].rm_so = 0;
    matches[0].rm_eo = strlen(text);
    result = regexec(&re, text, 1, matches, REG_NOTBOL | REG_NOTEOL | REG_STARTEND);
@@ -54,7 +54,7 @@ int main()
       regfree(&re);
       return result;
    }
-   BOOST_ASSERT(matches[0].rm_so == matches[0].rm_eo == 1);
+   assert(matches[0].rm_so == matches[0].rm_eo == 1);
    regfree(&re);
    printf("no errors found\n");
    return 0;

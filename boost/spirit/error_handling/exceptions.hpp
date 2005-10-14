@@ -39,8 +39,7 @@ namespace boost { namespace spirit {
 
     public:
 
-        parser_error_base(parser_error_base const& rhs)
-            : std::exception(rhs) {}
+        parser_error_base(parser_error_base const&) {}
         parser_error_base& operator=(parser_error_base const&)
         {
             return *this;
@@ -71,8 +70,7 @@ namespace boost { namespace spirit {
         : where(where_), descriptor(descriptor_) {}
 
         parser_error(parser_error const& rhs)
-        : parser_error_base(rhs)
-        , where(rhs.where), descriptor(rhs.descriptor) {}
+        : where(rhs.where), descriptor(rhs.descriptor) {}
 
         parser_error&
         operator=(parser_error const& rhs)

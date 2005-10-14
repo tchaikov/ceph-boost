@@ -7,7 +7,7 @@
  *
  * See http://www.boost.org for most recent version including documentation.
  *
- * $Id: subtract_with_carry.hpp,v 1.24 2005/05/21 15:57:00 dgregor Exp $
+ * $Id: subtract_with_carry.hpp,v 1.20 2004/09/29 13:25:37 vladimir_prus Exp $
  *
  * Revision history
  *  2002-03-02  created
@@ -20,7 +20,6 @@
 #include <iostream>
 #include <algorithm>     // std::equal
 #include <stdexcept>
-#include <cmath>         // std::pow
 #include <boost/config.hpp>
 #include <boost/limits.hpp>
 #include <boost/cstdint.hpp>
@@ -32,15 +31,7 @@
 namespace boost {
 namespace random {
 
-#if BOOST_WORKAROUND(_MSC_FULL_VER, BOOST_TESTED_AT(13102292)) && BOOST_MSVC > 1300
-#  define BOOST_RANDOM_EXTRACT_SWC_01
-#endif
-
-#if defined(__APPLE_CC__) && defined(__GNUC__) && (__GNUC__ == 3) && (__GNUC_MINOR__ <= 3)
-#  define BOOST_RANDOM_EXTRACT_SWC_01
-#endif
-
-# ifdef BOOST_RANDOM_EXTRACT_SWC_01
+# if BOOST_WORKAROUND(_MSC_FULL_VER, BOOST_TESTED_AT(13102292)) && BOOST_MSVC > 1300
 namespace detail
 {
   template <class IStream, class SubtractWithCarry, class RealType>
@@ -367,7 +358,7 @@ public:
   friend std::basic_istream<CharT,Traits>&
   operator>>(std::basic_istream<CharT,Traits>& is, subtract_with_carry_01& f)
   {
-# ifdef BOOST_RANDOM_EXTRACT_SWC_01
+# if BOOST_WORKAROUND(_MSC_FULL_VER, BOOST_TESTED_AT(13102292)) && BOOST_MSVC > 1300
       detail::extract_subtract_with_carry_01(is, f, f.carry, f.x, f._modulus);
 # else
     // MSVC (up to 7.1) and Borland (up to 5.64) don't handle the template type

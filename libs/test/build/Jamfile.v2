@@ -8,7 +8,6 @@ project boost/test
     : source-location ../src
     : requirements <define>BOOST_TEST_NO_AUTO_LINK=1
                    <os>NT:<link>static
-                   <toolset>msvc:<asynch-exceptions>on
     ;
 
 PRG_EXEC_MON_SOURCES =
@@ -17,44 +16,30 @@ PRG_EXEC_MON_SOURCES =
   ;
 
 TEST_EXEC_MON_SOURCES =
-  compiler_log_formatter
   execution_monitor
-  framework
-  plain_report_formatter
-  progress_monitor
-  results_collector
-  results_reporter
-  test_main
   test_tools
-  unit_test_log
-  unit_test_main
-  unit_test_monitor
   unit_test_parameters
+  unit_test_log
+  unit_test_monitor
+  unit_test_result
   unit_test_suite
-  xml_log_formatter
-  xml_report_formatter
+  test_main
+  supplied_log_formatters
   ;
 
 UTF_SOURCES =
-  compiler_log_formatter
   execution_monitor
-  framework
-  plain_report_formatter
-  progress_monitor
-  results_collector
-  results_reporter
   test_tools
-  unit_test_log
-  unit_test_main
-  unit_test_monitor
   unit_test_parameters
+  unit_test_log
+  unit_test_monitor
+  unit_test_result
   unit_test_suite
-  xml_log_formatter
-  xml_report_formatter
+  unit_test_main
+  supplied_log_formatters
   ;
 
 lib boost_prg_exec_monitor : $(PRG_EXEC_MON_SOURCES).cpp
-     :
      ;
 
 lib boost_test_exec_monitor : $(TEST_EXEC_MON_SOURCES).cpp
@@ -65,6 +50,3 @@ lib boost_unit_test_framework : $(UTF_SOURCES).cpp
      : <toolset>borland:<cxxflags>-w-8080
      ;
 
-alias minimal : : : :
-                   <toolset>msvc:<asynch-exceptions>on
-       ;

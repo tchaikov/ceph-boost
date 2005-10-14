@@ -21,7 +21,6 @@ namespace std{
 #include <boost/pfto.hpp>
 
 #include <boost/archive/basic_text_iprimitive.hpp>
-#include <boost/archive/codecvt_null.hpp>
 #include <boost/archive/add_facet.hpp>
 
 #include <boost/archive/iterators/remove_whitespace.hpp>
@@ -35,8 +34,7 @@ namespace archive {
 // translate base64 text into binary and copy into buffer
 // until buffer is full.
 template<class IStream>
-BOOST_ARCHIVE_OR_WARCHIVE_DECL(void)
-basic_text_iprimitive<IStream>::load_binary(
+void basic_text_iprimitive<IStream>::load_binary(
     void *address, 
     std::size_t count
 ){
@@ -46,7 +44,7 @@ basic_text_iprimitive<IStream>::load_binary(
         return;
         
     assert(
-        static_cast<std::size_t>((std::numeric_limits<std::streamsize>::max)())
+        static_cast<std::size_t>(std::numeric_limits<std::streamsize>::max())
         > (count + sizeof(CharType) - 1)/sizeof(CharType)
     );
         
@@ -74,7 +72,7 @@ basic_text_iprimitive<IStream>::load_binary(
     );
                 
     char * caddr = static_cast<char *>(address);
-    std::size_t padding = 2 - count % 3;
+    unsigned int padding = 2 - count % 3;
     
     // take care that we don't increment anymore than necessary
     while(--count > 0){
@@ -90,9 +88,8 @@ basic_text_iprimitive<IStream>::load_binary(
 }
 
 template<class IStream>
-BOOST_ARCHIVE_OR_WARCHIVE_DECL(BOOST_PP_EMPTY())
 basic_text_iprimitive<IStream>::basic_text_iprimitive(
-    IStream  &is_,
+    IStream  &is_, 
     bool no_codecvt
 ) : 
     is(is_),
@@ -114,7 +111,6 @@ basic_text_iprimitive<IStream>::basic_text_iprimitive(
 }
 
 template<class IStream>
-BOOST_ARCHIVE_OR_WARCHIVE_DECL(BOOST_PP_EMPTY())
 basic_text_iprimitive<IStream>::~basic_text_iprimitive(){
 }
 

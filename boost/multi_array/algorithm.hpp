@@ -43,8 +43,7 @@
 #include "boost/iterator.hpp"
 
 namespace boost {
-namespace detail {
-namespace multi_array {
+
 //--------------------------------------------------
 // copy_n (not part of the C++ standard)
 #if 1
@@ -96,8 +95,7 @@ copy_n(InputIter first, Size count, OutputIter result) {
 }
 
 #endif // 1
-} // namespace multi_array
-} // namespace detail
+
 } // namespace boost
 
 #endif // BOOST_ALGORITHM_RG071801_HPP

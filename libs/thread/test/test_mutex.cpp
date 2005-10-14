@@ -17,6 +17,7 @@
 #include <boost/thread/condition.hpp>
 
 #include <boost/test/unit_test.hpp>
+#include <boost/test/unit_test_suite_ex.hpp>
 
 #define DEFAULT_EXECUTION_MONITOR_TYPE execution_monitor::use_sleep_only
 #include <libs/thread/test/util.inl>

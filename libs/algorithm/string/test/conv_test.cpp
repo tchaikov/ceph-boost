@@ -82,8 +82,8 @@ void conv_test()
     to_upper( str3 );
     BOOST_CHECK( str3=="" );
 
-    delete[] pch1;
-    delete[] pch2;
+    free(pch1);
+    free(pch2);
 }
 
 // test main 

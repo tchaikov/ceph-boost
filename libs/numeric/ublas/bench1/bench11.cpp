@@ -14,6 +14,14 @@
 //  GeNeSys mbH & Co. KG in producing this work.
 //
 
+#include <iostream>
+#include <string>
+
+#include <boost/numeric/ublas/vector.hpp>
+#include <boost/numeric/ublas/matrix.hpp>
+
+#include <boost/timer.hpp>
+
 #include "bench1.hpp"
 
 template<class T, int N>
@@ -38,6 +46,9 @@ struct bench_c_inner_prod {
         catch (std::exception &e) {
             std::cout << e.what () << std::endl;
         }
+        catch (...) {
+            std::cout << "unknown exception" << std::endl;
+        }
     }
 };
 template<class V, int N>
@@ -60,6 +71,9 @@ struct bench_my_inner_prod {
         catch (std::exception &e) {
             std::cout << e.what () << std::endl;
         }
+        catch (...) {
+            std::cout << "unknown exception" << std::endl;
+        }
     }
 };
 template<class V, int N>
@@ -81,6 +95,9 @@ struct bench_cpp_inner_prod {
         }
         catch (std::exception &e) {
             std::cout << e.what () << std::endl;
+        }
+        catch (...) {
+            std::cout << "unknown exception" << std::endl;
         }
     }
 };
@@ -106,6 +123,9 @@ struct bench_c_vector_add {
         catch (std::exception &e) {
             std::cout << e.what () << std::endl;
         }
+        catch (...) {
+            std::cout << "unknown exception" << std::endl;
+        }
     }
 };
 template<class V, int N>
@@ -127,6 +147,9 @@ struct bench_my_vector_add {
         catch (std::exception &e) {
             std::cout << e.what () << std::endl;
         }
+        catch (...) {
+            std::cout << "unknown exception" << std::endl;
+        }
     }
     void operator () (int runs, fast_tag) const {
         try {
@@ -142,6 +165,9 @@ struct bench_my_vector_add {
         }
         catch (std::exception &e) {
             std::cout << e.what () << std::endl;
+        }
+        catch (...) {
+            std::cout << "unknown exception" << std::endl;
         }
     }
 };
@@ -163,6 +189,9 @@ struct bench_cpp_vector_add {
         }
         catch (std::exception &e) {
             std::cout << e.what () << std::endl;
+        }
+        catch (...) {
+            std::cout << "unknown exception" << std::endl;
         }
     }
 };
@@ -287,3 +316,5 @@ template struct bench_1<std::complex<double>, 30>;
 template struct bench_1<std::complex<double>, 100>;
 #endif
 #endif
+
+

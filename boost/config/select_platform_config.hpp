@@ -49,7 +49,7 @@
 // MacOS
 #  define BOOST_PLATFORM_CONFIG "boost/config/platform/macos.hpp"
 
-#elif defined(__IBMCPP__) || defined(_AIX)
+#elif defined(__IBMCPP__)
 // IBM
 #  define BOOST_PLATFORM_CONFIG "boost/config/platform/aix.hpp"
 

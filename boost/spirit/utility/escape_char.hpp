@@ -15,8 +15,6 @@
 #include <cctype>
 #include <boost/limits.hpp>
 
-#include <boost/spirit/debug.hpp>
-
 #include <boost/spirit/utility/impl/escape_char.ipp>
 
 ///////////////////////////////////////////////////////////////////////////////

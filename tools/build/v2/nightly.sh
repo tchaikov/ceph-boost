@@ -4,12 +4,10 @@
 # and updates the web site.
 
 # Create the packages
-set -e
 cd /tmp
 rm -rf boost-build
-cvs -d :ext:vladimir_prus@cvs.sourceforge.net:/cvsroot/boost co -P -d  boost-build boost/tools/build > /tmp/boost_build_checkout_log
-mv /tmp/boost_build_checkout_log boost-build/checkout-log
+cvs -d :ext:vladimir_prus@cvs.sourceforge.net:/cvsroot/boost co -P -d  boost-build boost/tools/build
 cd boost-build/v2
-./roll.sh > ../roll-log
+./roll.sh
 cd ..
-scp boost-build.zip boost-build.tar.bz2 vladimir_prus@shell.sf.net:/home/groups/b/bo/boost/htdocs/boost-build2 > scp-log
+scp boost-build.zip boost-build.tar.bz2 vladimir_prus@shell.sf.net:/home/groups/b/bo/boost/htdocs/boost-build2

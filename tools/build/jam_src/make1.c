@@ -61,8 +61,6 @@
 # include "command.h"
 # include "execcmd.h"
 
-# include <stdlib.h>
-
 #if defined(sun) || defined(__sun)
 #include <unistd.h> /* for unlink */
 #endif
@@ -70,7 +68,7 @@
 static CMD *make1cmds( TARGET *t );
 static LIST *make1list( LIST *l, TARGETS *targets, int flags );
 static SETTINGS *make1settings( LIST *vars );
-static void make1bind( TARGET *t );
+static void make1bind( TARGET *t, int warn );
 
 /* Ugly static - it's too hard to carry it through the callbacks. */
 
@@ -103,7 +101,7 @@ static void make1atail(state *pState);
 static void make1b( state *pState );
 static void make1c( state *pState );
 static void make1d( state *pState );
-static void make_closure(void *closure, int status, timing_info*);
+static void make_closure(void *closure, int status);
 
 typedef struct _stack
 {
@@ -412,10 +410,9 @@ make1b( state *pState )
     if( pState->t->status == EXEC_CMD_OK )
         switch( pState->t->fate )
         {
-            /* These are handled by the default case below now
         case T_FATE_INIT:
         case T_FATE_MAKING:
-            */
+            /* shouldn't happen */
 
         case T_FATE_STABLE:
         case T_FATE_NEWER:
@@ -436,7 +433,6 @@ make1b( state *pState )
         case T_FATE_NEEDTMP:
         case T_FATE_OUTDATED:
         case T_FATE_UPDATE:
-        case T_FATE_REBUILD:
 
             /* Set "on target" vars, build actions, unset vars */
             /* Set "progress" so that make1c() counts this target among */
@@ -453,11 +449,6 @@ make1b( state *pState )
             }
 
             break;
-            
-            /* All possible fates should have been accounted for by now */
-        default:
-            printf("ERROR: %s has bad fate %d", pState->t->name, pState->t->fate);
-            abort();
         }
 
 		/* Call make1c() to begin the execution of the chain of commands */
@@ -664,60 +655,9 @@ make1c( state *pState )
 	}
 }
 
-/* To l, append a 1-element list containing the string representation
- * of x
- */
-static void append_double_string( LOL *l, double x )
+static void make_closure(void *closure, int status)
 {
-    char buffer[50];
-    sprintf(buffer, "%f", x);
-    lol_add( l, list_new( L0, newstr( buffer ) ) );
-}
-
-/* Look up the __TIMING_RULE__ variable on the given target, and if
- * non-empty, invoke the rule it names, passing the given
- * timing_info
- */
-static void call_timing_rule(TARGET* target, timing_info* time)
-{
-    LIST* timing_rule;
-    
-    pushsettings(target->settings);
-    timing_rule = var_get( "__TIMING_RULE__" );
-    popsettings(target->settings);
-
-    if (timing_rule)
-    {
-        /* We'll prepend $(__TIMING_RULE__[2-]) to the first argument */
-        LIST* initial_args = list_copy( L0, timing_rule->next );
-            
-        /* Prepare the argument list */
-        FRAME frame[1];
-        frame_init( frame );
-
-        /* First argument is the name of the timed target */
-        lol_add( frame->args, list_new( initial_args, target->name ) );
-        append_double_string(frame->args, time->user);
-        append_double_string(frame->args, time->system);
-
-        if( lol_get( frame->args, 2 ) )
-            evaluate_rule( timing_rule->string, frame );
-            
-        /* Clean up */
-        frame_free( frame );
-    }
-}
-
-static void make_closure(
-    void *closure, int status, timing_info* time)
-{
-    TARGET* built = (TARGET*)closure;
-
-    call_timing_rule(built, time);
-    if (DEBUG_EXECCMD)
-        printf("%f sec system; %f sec user\n", time->system, time->user);
-    
-    push_state(&state_stack, built, NULL, T_STATE_MAKE1D)->status = status;
+	push_state(&state_stack, (TARGET *)closure, NULL, T_STATE_MAKE1D)->status = status;
 }
 
 /*
@@ -995,8 +935,13 @@ make1list(
     {
 	TARGET *t = targets->target;
 
+	/* Sources to 'actions existing' are never in the dependency */
+	/* graph (if they were, they'd get built and 'existing' would */
+	/* be superfluous, so throttle warning message about independent */
+	/* targets. */
+
 	if( t->binding == T_BIND_UNBOUND )
-	    make1bind( t );
+	    make1bind( t, !( flags & RULE_EXISTING ) );
 
     if ( ( flags & RULE_EXISTING ) && ( flags & RULE_NEWSRCS ) )
     {
@@ -1052,10 +997,11 @@ make1settings( LIST *vars )
 	    {
 		TARGET *t = bindtarget( l->string );
 
-		/* Make sure the target is bound */
+		/* Make sure the target is bound, warning if it is not in the */
+		/* dependency graph. */
 
 		if( t->binding == T_BIND_UNBOUND )
-		    make1bind( t );
+		    make1bind( t, 1 );
 
 		/* Build new list */
 
@@ -1079,10 +1025,19 @@ make1settings( LIST *vars )
 
 static void
 make1bind( 
-	TARGET	*t )
+	TARGET	*t,
+	int	warn )
 {
 	if( t->flags & T_FLAG_NOTFILE )
 	    return;
+
+	/* Sources to 'actions existing' are never in the dependency */
+	/* graph (if they were, they'd get built and 'existing' would */
+	/* be superfluous, so throttle warning message about independent */
+	/* targets. */
+
+	if( warn )
+	    printf( "warning: using independent target %s\n", t->name );
 
 	pushsettings( t->settings );
 	t->boundname = search( t->name, &t->time, 0 );

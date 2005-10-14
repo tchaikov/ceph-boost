@@ -1,4 +1,4 @@
-#~ Copyright 2004-2005 Rene Rivera.
+#~ Copyright 2004 Rene Rivera.
 #~ Distributed under the Boost Software License, Version 1.0.
 #~ (See accompanying file LICENSE_1_0.txt or http://www.boost.org/LICENSE_1_0.txt)
 
@@ -6,11 +6,8 @@
 # program as the column heading for HTML tables. Must not include version number.
 #//<a href="http://www.metrowerks.com/MW/Develop/Desktop/default.htm">Metrowerks<br>CodeWarrior</a>
 
-# For adding framwork libraries; like <framework>Python, <framework>Carbon, etc.
-free-feature framework ;
-
 # singleton variables...
-set-as-singleton CW_ROOT CWFOLDER CWFolder CWINSTALL ;
+set-as-singleton CW_ROOT CWFOLDER CWFolder ;
 
 flags cw cw-version : $(CW_VERSION) ;
 flags cw cw-root : $(CW_ROOT) ;
@@ -41,10 +38,6 @@ flags cw LIBPATH <library-path> ;
 flags cw NEEDLIBS <library-file> ;
 flags cw FINDLIBS <find-library> ;
 flags cw PREFIX <prefix> ;
-if $(OS) = MACOSX
-{
-    flags cw FRAMEWORKS <framework> ;
-}
 
 flags cw cw-errors <errors> ;
 flags cw cw-warnings <warnings> ;
@@ -70,6 +63,7 @@ if $(NT)
 }
 
 # Some language related options
+flags cw C++FLAGS : -DNOMINMAX ;
 flags cw CFLAGS <eh-model>msvc : -exc ms ;
 flags cw CFLAGS <include-search>directory : "-cwd proj" ;
 flags cw CFLAGS <include-search>source : "-cwd source" ;
@@ -77,11 +71,6 @@ flags cw CFLAGS <include-search>paths : "-cwd explicit" ;
 flags cw CFLAGS <include-search>relative : "-cwd include" ;
 flags cw C++FLAGS <rtti>off : "-RTTI off" ;
 flags cw C++FLAGS <rtti>on : "-RTTI on" ;
-# CodeWarrior on MacOS defaults to wchar_t support off, contrary
-# to what it does on Windows. So "fix" this discrepancy. Don't
-# bother with OS type just set this to on for all. After all it's
-# standard!
-flags cw CFLAGS : "-wchar_t on" ;
 
 # OS subsystem target
 if $(NT)
@@ -99,15 +88,15 @@ flags cw FLAGS : [ conditional $(cw-errors) : "-maxerrors $(cw-errors[1])" : "-m
 # Warnings, default to maximum 20 warnings
 if off in $(cw-warnings)
 {
-    flags cw FLAGS : "-warnings off" ;
+    flags cw FLAGS : "-warn off" ;
 }
 else if error in $(cw-warnings)
 {
-    flags cw FLAGS : "-warnings error" ;
+    flags cw FLAGS : "-warn error" ;
 }
 else
 {
-    flags cw FLAGS : "-warnings on" ;
+    flags cw FLAGS : "-warn on" ;
 }
 if ! ( off in $(cw-warnings) )
 {
@@ -125,52 +114,42 @@ if ! ( off in $(cw-warnings) )
 cw-warnings = [ difference $(cw-warnings) : on off error ] ;
 if $(cw-warnings)
 {
-    flags cw CFLAGS <warnings>no-illegal-pragmas : "-warnings nopragmas" ;
-    flags cw CFLAGS <warnings>illegal-pragmas : "-warnings pragmas" ;
-    flags cw CFLAGS <warnings>no-empty-declarations : "-warnings noempty" ;
-    flags cw CFLAGS <warnings>empty-declarations : "-warnings empty" ;
-    flags cw CFLAGS <warnings>no-empty-declarations : "-warnings noempty" ;
-    flags cw CFLAGS <warnings>empty-declarations : "-warnings empty" ;
-    flags cw CFLAGS <warnings>no-unwanted-effect : "-warnings nounwanted" ;
-    flags cw CFLAGS <warnings>unwanted-effect : "-warnings unwanted" ;
-    flags cw CFLAGS <warnings>no-unused-arg : "-warnings nounusedarg" ;
-    flags cw CFLAGS <warnings>unused-arg : "-warnings unsedarg" ;
-    flags cw CFLAGS <warnings>no-unused-var : "-warnings nounusedvar" ;
-    flags cw CFLAGS <warnings>unused-var : "-warnings unsedvar" ;
-    flags cw CFLAGS <warnings>no-extra-comma : "-warnings nocomma" ;
-    flags cw CFLAGS <warnings>extra-comma : "-warnings comma" ;
-    flags cw CFLAGS <warnings>no-pedantic : "-warnings nopedantic" ;
-    flags cw CFLAGS <warnings>pedantic : "-warnings pedantic" ;
-    flags cw CFLAGS <warnings>no-hidden-virtual : "-warnings nohidden" ;
-    flags cw CFLAGS <warnings>hidden-virtual : "-warnings hidden" ;
-    flags cw CFLAGS <warnings>no-implicit-convert : "-warnings noimplicit" ;
-    flags cw CFLAGS <warnings>implicit-convert : "-warnings implicit" ;
-    flags cw CFLAGS <warnings>no-not-inlined : "-warnings nonotinlined" ;
-    flags cw CFLAGS <warnings>not-inlined : "-warnings notinlined" ;
-    flags cw CFLAGS <warnings>no-inconsistent-class : "-warnings nostructclass" ;
-    flags cw CFLAGS <warnings>inconsistent-class : "-warnings structclass" ;
-    if $(NT)
-    {
-        flags cw CFLAGS <warnings>no-unused-expresssion : "-warnings nounusedexpr" ;
-        flags cw CFLAGS <warnings>unused-expresssion : "-warnings unsedexpr" ;
-        flags cw CFLAGS <warnings>no-structure-pad : "-warnings nopadding" ;
-        flags cw CFLAGS <warnings>structure-pad : "-warnings padding" ;
-        flags cw CFLAGS <warnings>no-unused-return : "-warnings nonotused" ;
-        flags cw CFLAGS <warnings>unused-return : "-warnings notused" ;
-        flags cw CFLAGS <warnings>no-pointer-conversion : "-warnings noptrintconv" ;
-        flags cw CFLAGS <warnings>pointer-conversion : "-warnings ptrintconv" ;
-    }
+    flags cw CFLAGS <warnings>no-illegal-pragmas : "-warn nopragmas" ;
+    flags cw CFLAGS <warnings>illegal-pragmas : "-warn pragmas" ;
+    flags cw CFLAGS <warnings>no-empty-declarations : "-warn noempty" ;
+    flags cw CFLAGS <warnings>empty-declarations : "-warn empty" ;
+    flags cw CFLAGS <warnings>no-empty-declarations : "-warn noempty" ;
+    flags cw CFLAGS <warnings>empty-declarations : "-warn empty" ;
+    flags cw CFLAGS <warnings>no-unwanted-effect : "-warn nounwanted" ;
+    flags cw CFLAGS <warnings>unwanted-effect : "-warn unwanted" ;
+    flags cw CFLAGS <warnings>no-unused-arg : "-warn nounusedarg" ;
+    flags cw CFLAGS <warnings>unused-arg : "-warn unsedarg" ;
+    flags cw CFLAGS <warnings>no-unused-var : "-warn nounusedvar" ;
+    flags cw CFLAGS <warnings>unused-var : "-warn unsedvar" ;
+    flags cw CFLAGS <warnings>no-unused-expresssion : "-warn nounusedexpr" ;
+    flags cw CFLAGS <warnings>unused-expresssion : "-warn unsedexpr" ;
+    flags cw CFLAGS <warnings>no-extra-comma : "-warn nocomma" ;
+    flags cw CFLAGS <warnings>extra-comma : "-warn comma" ;
+    flags cw CFLAGS <warnings>no-pedantic : "-warn nopedantic" ;
+    flags cw CFLAGS <warnings>pedantic : "-warn pedantic" ;
+    flags cw CFLAGS <warnings>no-hidden-virtual : "-warn nohidden" ;
+    flags cw CFLAGS <warnings>hidden-virtual : "-warn hidden" ;
+    flags cw CFLAGS <warnings>no-implicit-convert : "-warn noimplicit" ;
+    flags cw CFLAGS <warnings>implicit-convert : "-warn implicit" ;
+    flags cw CFLAGS <warnings>no-not-inlined : "-warn nonotinlined" ;
+    flags cw CFLAGS <warnings>not-inlined : "-warn notinlined" ;
+    flags cw CFLAGS <warnings>no-inconsistent-class : "-warn nostructclass" ;
+    flags cw CFLAGS <warnings>inconsistent-class : "-warn structclass" ;
+    flags cw CFLAGS <warnings>no-structure-pad : "-warn nopadding" ;
+    flags cw CFLAGS <warnings>structure-pad : "-warn padding" ;
+    flags cw CFLAGS <warnings>no-unused-return : "-warn nonotused" ;
+    flags cw CFLAGS <warnings>unused-return : "-warn notused" ;
+    flags cw CFLAGS <warnings>no-pointer-conversion : "-warn noptrintconv" ;
+    flags cw CFLAGS <warnings>pointer-conversion : "-warn ptrintconv" ;
 }
 else
 {
-    if $(NT)
-    {
-        flags cw CFLAGS : "-warnings nounusedexpr,nounused" ;
-    }
-    else
-    {
-        flags cw CFLAGS : "-warnings nounused" ;
-    }
+    flags cw CFLAGS : "-warn nounusedexpr,nounused" ;
 }
 
 # Search for files in search paths
@@ -183,18 +162,15 @@ if $(cw-version) in 8.0 9.0
     # Use latest ISO conforming templates
     flags cw C++FLAGS : -iso_templates on ;
     
-    if $(NT)
-    {
-        # The runtime libraries
-        flags cw CFLAGS <runtime-link>static/<threading>single/<runtime-build>release : -runtime ss ;
-        flags cw CFLAGS <runtime-link>static/<threading>single/<runtime-build>debug : -runtime ssd ;
-        
-        flags cw CFLAGS <runtime-link>static/<threading>multi/<runtime-build>release : -runtime sm ;
-        flags cw CFLAGS <runtime-link>static/<threading>multi/<runtime-build>debug : -runtime smd ;
-        
-        flags cw CFLAGS <runtime-link>dynamic/<runtime-build>release : -runtime dm ;
-        flags cw CFLAGS <runtime-link>dynamic/<runtime-build>debug : -runtime dmd ;
-    }
+    # The runtime libraries
+    flags cw CFLAGS <runtime-link>static/<threading>single/<runtime-build>release : -runtime ss ;
+    flags cw CFLAGS <runtime-link>static/<threading>single/<runtime-build>debug : -runtime ssd ;
+    
+    flags cw CFLAGS <runtime-link>static/<threading>multi/<runtime-build>release : -runtime sm ;
+    flags cw CFLAGS <runtime-link>static/<threading>multi/<runtime-build>debug : -runtime smd ;
+    
+    flags cw CFLAGS <runtime-link>dynamic/<runtime-build>release : -runtime dm ;
+    flags cw CFLAGS <runtime-link>dynamic/<runtime-build>debug : -runtime dmd ;
 }
 if $(NT) && $(cw-version) in 6.0 7.0 8.0
 {
@@ -246,63 +222,17 @@ flags cw FLAGS : -nowraplines ;
 
 flags cw CW_PREFIX : "-prefix " ;
 
-# CodeWarrior has it's own set of standard headers, so ignore the default.
-flags cw STDHDRS : ;
-
-# MacOSX.. only the MSL/Carbon/Mach-O combination is working.
-if $(OS) = MACOSX
-{
-    # We use the compiler for both compiles and link, because we may need
-    # to compile the console stubs source. The compiler passes all options
-    # down to the linker anyway.
-    flags cw MWCC : mwcc ;
-    flags cw MWLD : mwcc ;
-    # For Carbon we need this prefix file to tell CW that's what we are targetting.
-    flags cw PREFIX : MSLCarbonPrefix.h ;
-    # We need to add the framework, as it's not added automatically.
-    flags cw FRAMEWORKS : Carbon ;
-    # For comsole apps we need to compile in the MSL functions that will
-    # talk to the MacOSX console.
-    flags cw LINKFLAGS <user-interface>console :
-        "-prefix MSLCarbonPrefix.h"
-        "\"$(CWINSTALL)/MSL/MSL_C/MSL_MacOS/Src/console_OS_X.c\"" ;
-}
-
-if $(NT)
-{
-    flags cw MWCC : mwcc ;
-    flags cw MWLD : mwld ;
-}
-
-#~ flags cw CFLAGS : -verbose ;
-#~ flags cw LINKFLAGS : -verbose ;
-
 #### Link ####
 rule Link-action
 {
-    _ on $(<) = " " ;
+    # We can't have the mixture of the same libs going in NEEDLIBS and FINDLIBS.
+    # So remove the extras from FINDLIBS.
+    FINDLIBS on $(<) =
+        [ difference
+            [ on $(<[1]) return $(FINDLIBS) ] :
+            $(gTARGET_BASENAME($(gTARGET_SUBVARIANT($(NEEDLIBS))))) ] ;
     gRUN_PATH($(<)) += $(CW_RUN_PATH) ;
-    if $(NT)
-    {
-        # We can't have the mixture of the same libs going in NEEDLIBS and FINDLIBS.
-        # So remove the extras from FINDLIBS.
-        local find-libs =
-            [ difference
-                [ on $(<[1]) return $(FINDLIBS) ] :
-                $(gTARGET_BASENAME($(gTARGET_SUBVARIANT($(NEEDLIBS))))) ] ;
-        FINDLIBS on $(<) = $(find-libs)$(SUFLIB) ;
-
-        CMD on $(<) = "@" ;
-        with-command-file cw-Link-action $(<) : $(>) $(NEEDLIBS) $(NEEDIMPS) ;
-    }
-    else if $(OS) = MACOSX
-    {
-        local find-libs = [ on $(<[1]) return $(FINDLIBS) ] ;
-        FINDLIBS on $(<) = -l$(find-libs) ;
-
-        CMD on $(<) = "" ;
-        cw-Link-action $(<) : $(>) $(NEEDLIBS) $(NEEDIMPS) ;
-    }
+    with-command-file cw-Link-action $(<) : $(>) $(NEEDLIBS) ;
 }
 
 actions cw-Link-action
@@ -310,13 +240,12 @@ actions cw-Link-action
     $(CW_SETUP)
     $(CW_CLEAR_ERROR)
     $(CW_LINK_SETUP)$(STDLIBS:J=;)
-    $(MWLD) $(FLAGS) $(LINKFLAGS) "-L$(LIBPATH)" "-L$(STDLIBPATH)" -framework$(_)"$(FRAMEWORKS)" $(CW_IMPLIB_COMMAND)"$(<[2])" -o "$(<[1])" $(CMD)"$(>)" "$(FINDLIBS)"
+    mwld $(FLAGS) $(LINKFLAGS) "-L$(LIBPATH)" "-L$(STDLIBPATH)" $(CW_IMPLIB_COMMAND)"$(<[2])" -o "$(<[1])" @"$(>)" "$(FINDLIBS)$(SUFLIB)"
 }
 
 #### Cc #####
 rule Cc-action
 {
-    _ on $(<) = " " ;
     cw-Cc-action $(<) : $(>) ;
 }
 
@@ -324,13 +253,12 @@ actions cw-Cc-action
 {
     $(CW_SETUP)
     $(CW_CLEAR_ERROR)
-    $(MWCC) -c -lang c -U$(UNDEFS) -D$(DEFINES) $(FLAGS) $(CFLAGS) "-I$(HDRS)" -I-$(_)"-I$(STDHDRS)" -I-$(_)"-I$(SYSHDRS)" $(CW_PREFIX)"$(PREFIX)" -o "$(<)" "$(>)"
+    mwcc -c -lang c -U$(UNDEFS) -D$(DEFINES) $(FLAGS) $(CFLAGS) "-I$(HDRS)" -I- "-I$(STDHDRS)" "-I$(SYSHDRS)" $(CW_PREFIX)"$(PREFIX)" -o "$(<)" "$(>)"
 }
 
 #### C++ ####
 rule C++-action
 {
-    _ on $(<) = " " ;
     cw-C++-action $(<) : $(>) ;
 }
 
@@ -338,40 +266,18 @@ actions cw-C++-action
 {
     $(CW_SETUP)
     $(CW_CLEAR_ERROR)
-    $(MWCC) -c -lang c++ -U$(UNDEFS) -D$(DEFINES) $(FLAGS) $(CFLAGS) $(C++FLAGS) "-I$(HDRS)" -I-$(_)"-I$(STDHDRS)" -I-$(_)"-I$(SYSHDRS)" $(CW_PREFIX)"$(PREFIX)" -o "$(<)" "$(>)"
+    mwcc -c -lang c++ -U$(UNDEFS) -D$(DEFINES) $(FLAGS) $(CFLAGS) $(C++FLAGS) "-I$(HDRS)" -I- "-I$(STDHDRS)" "-I$(SYSHDRS)" $(CW_PREFIX)"$(PREFIX)" -o "$(<)" "$(>)"
 }
 
 #### Archive ####
 rule Archive-action
 {
-    _ on $(<) = " " ;
-    if $(NT)
-    {
-        local find-libs = [ on $(<[1]) return $(FINDLIBS) ] ;
-        FINDLIBS on $(<) = $(find-libs)$(SUFLIB) ;
-
-        CMD on $(<) = "@" ;
-        with-command-file cw-Archive-action $(<) : $(>) [ on $(<) return $(NEEDLIBS) ] ;
-    }
-    else if $(OS) = MACOSX
-    {
-        local find-libs = [ on $(<[1]) return $(FINDLIBS) ] ;
-        FINDLIBS on $(<) = -l$(find-libs) ;
-
-        CMD on $(<) = "" ;
-        cw-Archive-action $(<) : $(>) [ on $(<) return $(NEEDLIBS) ] ;
-    }
-}
-
-## CW in general doesn't produce archive that ranlib is intereted in. So
-## don't run ranlib.
-rule Ranlib-action
-{
+    with-command-file cw-Archive-action $(<) : $(>) [ on $(<) return $(NEEDLIBS) ] ;
 }
 
 actions together cw-Archive-action
 {
     $(CW_SETUP)
     $(CW_CLEAR_ERROR)
-    $(MWLD) -library $(FLAGS) $(ARFLAGS) "-L$(LIBPATH)" "-L$(STDLIBPATH)" -o "$(<)" $(CMD)"$(>)" "$(FINDLIBS)"
+    mwld -library $(FLAGS) $(ARFLAGS) "-L$(LIBPATH)" "-L$(STDLIBPATH)" -o "$(<)" @"$(>)" "$(FINDLIBS)$(SUFLIB)"
 }

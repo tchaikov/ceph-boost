@@ -23,8 +23,6 @@ namespace std{
 #endif
 
 #include "test_tools.hpp"
-#include <boost/preprocessor/stringize.hpp>
-#include BOOST_PP_STRINGIZE(BOOST_ARCHIVE_TEST)
 
 #include <boost/archive/polymorphic_oarchive.hpp>
 #include <boost/archive/polymorphic_iarchive.hpp>
@@ -36,9 +34,7 @@ int test_main(int /* argc */, char * /* argv */ [])
 {
     const char * testfile = boost::archive::tmpnam(NULL);
     BOOST_REQUIRE(NULL != testfile);
-    const data d;
-    data d1;
-    // test using using polymorphic interface
+    data d, d1;
     {
         test_ostream os(testfile, TEST_STREAM_FLAGS);
         test_oarchive oa_implementation(os);
@@ -53,20 +49,5 @@ int test_main(int /* argc */, char * /* argv */ [])
     }
     BOOST_CHECK(d == d1);
     std::remove(testfile);
-
-    // test using using polymorphic implementation.
-    {
-        test_ostream os(testfile, TEST_STREAM_FLAGS);
-        test_oarchive oa_implementation(os);
-        oa_implementation << BOOST_SERIALIZATION_NVP(d);
-    }
-    {
-        test_istream is(testfile, TEST_STREAM_FLAGS);
-        test_iarchive  ia_implementation(is);
-        ia_implementation >> BOOST_SERIALIZATION_NVP(d1);
-    }
-    BOOST_CHECK(d == d1);
-    std::remove(testfile);
-
-    return EXIT_SUCCESS;
+    return boost::exit_success;
 }

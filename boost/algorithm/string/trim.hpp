@@ -11,11 +11,7 @@
 #define BOOST_STRING_TRIM_HPP
 
 #include <boost/algorithm/string/config.hpp>
-
-#include <boost/range/begin.hpp>
-#include <boost/range/end.hpp>
-#include <boost/range/const_iterator.hpp>
-
+#include <boost/algorithm/string/collection_traits.hpp>
 #include <boost/algorithm/string/detail/trim.hpp>
 #include <boost/algorithm/string/classification.hpp>
 #include <locale>
@@ -46,7 +42,7 @@ namespace boost {
             or copied to the output iterator
 
             \param Output An output iterator to which the result will be copied
-            \param Input An input range
+            \param Input An input collection
             \param IsSpace An unary predicate identifying spaces
             \return 
                 An output iterator pointing just after the last inserted character or
@@ -54,14 +50,14 @@ namespace boost {
 
                \note The second variant of this function provides the strong exception-safety guarantee
         */
-        template<typename OutputIteratorT, typename RangeT, typename PredicateT>
+        template<typename OutputIteratorT, typename CollectionT, typename PredicateT>
         inline OutputIteratorT trim_left_copy_if( 
             OutputIteratorT Output,
-            const RangeT& Input,
+            const CollectionT& Input,
             PredicateT IsSpace)
         {
             std::copy( 
-                ::boost::algorithm::detail::trim_begin( 
+                detail::trim_begin( 
                     begin(Input), 
                     end(Input), 
                     IsSpace ),
@@ -79,7 +75,7 @@ namespace boost {
         inline SequenceT trim_left_copy_if(const SequenceT& Input, PredicateT IsSpace)
         {
             return SequenceT( 
-                ::boost::algorithm::detail::trim_begin( 
+                detail::trim_begin( 
                     begin(Input), 
                     end(Input), 
                     IsSpace ),
@@ -120,7 +116,7 @@ namespace boost {
         {
             Input.erase( 
                 begin(Input),
-                ::boost::algorithm::detail::trim_begin( 
+                detail::trim_begin( 
                     begin(Input), 
                     end(Input), 
                     IsSpace));
@@ -152,7 +148,7 @@ namespace boost {
             or copied to the output iterator
 
             \param Output An output iterator to which the result will be copied
-            \param Input An input range
+            \param Input An input collection
             \param IsSpace An unary predicate identifying spaces
             \return 
                 An output iterator pointing just after the last inserted character or
@@ -160,15 +156,15 @@ namespace boost {
 
              \note The second variant of this function provides the strong exception-safety guarantee
         */
-        template<typename OutputIteratorT, typename RangeT, typename PredicateT>
+        template<typename OutputIteratorT, typename CollectionT, typename PredicateT>
         inline OutputIteratorT trim_right_copy_if( 
             OutputIteratorT Output,
-            const RangeT& Input,
+            const CollectionT& Input,
             PredicateT IsSpace )
         {
             std::copy( 
                 begin(Input),
-                ::boost::algorithm::detail::trim_end( 
+                detail::trim_end( 
                     begin(Input), 
                     end(Input), 
                     IsSpace ),
@@ -186,7 +182,7 @@ namespace boost {
         {
             return SequenceT( 
                 begin(Input),
-                ::boost::algorithm::detail::trim_end( 
+                detail::trim_end( 
                     begin(Input), 
                     end(Input), 
                     IsSpace)
@@ -227,7 +223,7 @@ namespace boost {
         inline void trim_right_if(SequenceT& Input, PredicateT IsSpace)
         {
             Input.erase(
-                ::boost::algorithm::detail::trim_end( 
+                detail::trim_end( 
                     begin(Input), 
                     end(Input), 
                     IsSpace ),
@@ -262,7 +258,7 @@ namespace boost {
             or copied to the output iterator
 
             \param Output An output iterator to which the result will be copied
-            \param Input An input range
+            \param Input An input collection
             \param IsSpace An unary predicate identifying spaces
             \return 
                 An output iterator pointing just after the last inserted character or
@@ -270,15 +266,15 @@ namespace boost {
 
              \note The second variant of this function provides the strong exception-safety guarantee
         */
-        template<typename OutputIteratorT, typename RangeT, typename PredicateT>
+        template<typename OutputIteratorT, typename CollectionT, typename PredicateT>
         inline OutputIteratorT trim_copy_if( 
             OutputIteratorT Output,
-            const RangeT& Input,
+            const CollectionT& Input,
             PredicateT IsSpace)
         {
             BOOST_STRING_TYPENAME 
-                range_const_iterator<RangeT>::type TrimEnd=
-                ::boost::algorithm::detail::trim_end( 
+                const_iterator_of<CollectionT>::type TrimEnd=
+                detail::trim_end( 
                     begin(Input), 
                     end(Input), 
                     IsSpace);
@@ -301,8 +297,8 @@ namespace boost {
         inline SequenceT trim_copy_if(const SequenceT& Input, PredicateT IsSpace)
         {
             BOOST_STRING_TYPENAME 
-                range_const_iterator<SequenceT>::type TrimEnd=
-                    ::boost::algorithm::detail::trim_end( 
+                const_iterator_of<SequenceT>::type TrimEnd=
+                    detail::trim_end( 
                         begin(Input), 
                         end(Input), 
                         IsSpace);

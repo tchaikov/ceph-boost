@@ -1,12 +1,12 @@
-/* Copyright (c) 2003-2005 CrystalClear Software, Inc.
+/* Copyright (c) 2003-2004 CrystalClear Software, Inc.
  * Subject to the Boost Software License, Version 1.0. 
  * (See accompanying file LICENSE-1.0 or http://www.boost.org/LICENSE-1.0)
  * Author: Jeff Garland, Bart Garst
- * $Date: 2005/05/26 12:37:49 $
+ * $Date: 2004/10/07 22:30:16 $
  */
 
 
-#include "boost/date_time/local_time/custom_time_zone.hpp"
+#include "boost/date_time/local_time/time_zone.hpp"
 #include "boost/date_time/posix_time/posix_time.hpp"
 #include "boost/date_time/local_time/local_time.hpp"
 // #include "boost/date_time/local_time/posix_time_zone.hpp"
@@ -49,11 +49,12 @@ main()
   // of these operations is done in the posix_time tests
 
   try {
-    time_zone_ptr az_tz(new posix_time_zone("MST-07"));
-    time_zone_ptr ny_tz(new posix_time_zone("EST-05EDT,M4.1.0,M10.5.0"));
+    boost::shared_ptr<time_zone_base> az_tz(new posix_time_zone("MST-07"));
+    boost::shared_ptr<time_zone_base> ny_tz(new posix_time_zone("EST-05EDT,M4.1.0,M10.5.0"));
     // EST & EST for sydney is correct, according to zoneinfo files
-    time_zone_ptr sydney(new posix_time_zone("EST+10EST,M10.5.0,M3.5.0/03:00"));
-    time_zone_ptr null_tz;
+    boost::shared_ptr<time_zone_base> 
+      sydney(new posix_time_zone("EST+10EST,M10.5.0,M3.5.0/03:00"));
+    boost::shared_ptr<time_zone_base> null_tz;
     date d(2003, 12, 20);
     hours h(12);
     ptime t(d,h);
@@ -105,16 +106,11 @@ main()
           sv_time3.to_string() == "9999-Dec-31 18:59:59.999999 EST");
 #endif
 
-    try {
-      local_date_time sv_time4(min_date_time);
-      check("min_date_time to_string: " + sv_time4.to_string(), 
-            sv_time4.to_string() == "1400-Jan-01 00:00:00 UTC");
-    }
-    catch (std::exception& e) {
-      check("min_date_time to_string -- exception" , false);
-      std::cout << "Exception is : " << e.what() << std::endl;
-    }
+    local_date_time sv_time4(min_date_time);
+    check("min_date_time to_string: " + sv_time4.to_string(), 
+          sv_time4.to_string() == "1400-Jan-01 00:00:00 UTC");
 
+    std::cout << sv_time4.to_string() << std::endl;
 /** todo  -- this will cause an out of range when min_date is adjusted for ny_tz
     local_date_time sv_time5(min_date_time, ny_tz);
     std::cout << sv_time5.to_string() << std::endl;
@@ -133,7 +129,7 @@ main()
       try{
         local_date_time calcop(d, td, ny_tz, local_date_time::EXCEPTION_ON_ERROR);
         check("Did not catch expected exception", false);
-      }catch(time_label_invalid& /*i*/){
+      }catch(InvalidTimeLabel& i){
         check("Caught expected exception", true);
       }catch(...){
         check("Caught unexpected exception", false);
@@ -151,7 +147,7 @@ main()
       try{
         local_date_time calcop(d, td, ny_tz, local_date_time::EXCEPTION_ON_ERROR);
         check("Did not catch expected exception", false);
-      }catch(ambiguous_result& /*a*/){
+      }catch(ambiguous_result& a){
         check("Caught expected exception", true);
       }catch(...){
         check("Caught unexpected exception", false);
@@ -180,16 +176,16 @@ main()
     //Now construct with a date and time - invalid parameters
     try{
       local_date_time blt(d, h, ny_tz, true);
-      check("Did not catch expected exception (dst_not_valid)", false);
-    }catch(dst_not_valid& d){
-      check(std::string("Caught expected exception (dst_not_valid) ") + d.what(), true);
+      check("Did not catch expected exception (DSTNotValid)", false);
+    }catch(DSTNotValid& d){
+      check(std::string("Caught expected exception (DSTNotValid) ") + d.what(), true);
     }catch(std::exception& e){
       check(std::string("Caught unexpected exception ") + e.what(), false);
     }
     try{
       local_date_time blt(date(2004,Apr,4), time_duration(2,30,0), ny_tz, true);
       check("Did not catch expected exception (Invalid_Time_Label)", false);
-    }catch(time_label_invalid& e){
+    }catch(InvalidTimeLabel& e){
       check(std::string("Caught expected exception (Invalid_Time_Label) ") + e.what(), true);
     }catch(std::exception& e){
       check(std::string("Caught unexpected exception ") + e.what(), false);
@@ -219,7 +215,7 @@ main()
         //local_date_time lt1(d,td,ny_tz,false);
         local_date_time lt1(d,td,ny_tz,true);
         std::cout << "no exception thrown" << std::endl;
-      }catch(time_label_invalid& e){
+      }catch(InvalidTimeLabel& e){
         std::cout << "caught: " << e.what() << std::endl;
       }*/
       local_date_time lt2(ptime(d,time_duration(5,15,0)), ny_tz);
@@ -319,10 +315,6 @@ main()
           (az_lt + days(2)).to_string() == "2003-Aug-30 05:00:00 MST");
       check("local - days", 
           (az_lt - days(2)).to_string() == "2003-Aug-26 05:00:00 MST");
-      check("local += days", 
-          (az_lt += days(2)).to_string() == "2003-Aug-30 05:00:00 MST");
-      check("local -= days", 
-          (az_lt -= days(2)).to_string() == "2003-Aug-28 05:00:00 MST");
       check("local + time_duration", 
           (az_lt + hours(2)).to_string() == "2003-Aug-28 07:00:00 MST");
       check("local - time_duration", 
@@ -331,32 +323,6 @@ main()
       check("pos_infinity > local", sv_lt > au_lt); 
       local_date_time sv_lt2(sv_lt + days(2));
       check("pos_infin + duration == pos_infin", sv_lt2 == sv_lt);
-   
-#if defined(BOOST_DATE_TIME_OPTIONAL_GREGORIAN_TYPES)
-      months m(2);
-      years y(2);
-      check("Local + months", 
-          (az_lt + m).to_string() == "2003-Oct-28 05:00:00 MST");
-      az_lt += m;
-      check("Local += months", 
-          az_lt.to_string() == "2003-Oct-28 05:00:00 MST");
-      check("Local - months", 
-          (az_lt - m).to_string() == "2003-Aug-28 05:00:00 MST");
-      az_lt -= m;
-      check("Local -= months", 
-          az_lt.to_string() == "2003-Aug-28 05:00:00 MST");
-      check("Local + years", 
-          (az_lt + y).to_string() == "2005-Aug-28 05:00:00 MST");
-      az_lt += y;
-      check("Local += years", 
-          az_lt.to_string() == "2005-Aug-28 05:00:00 MST");
-      check("Local - years", 
-          (az_lt - y).to_string() == "2003-Aug-28 05:00:00 MST");
-      az_lt -= y;
-      check("Local -= years", 
-          az_lt.to_string() == "2003-Aug-28 05:00:00 MST");
-      
-#endif // BOOST_DATE_TIME_OPTIONAL_GREGORIAN_TYPES
     }
   }
   catch(std::exception& e) {

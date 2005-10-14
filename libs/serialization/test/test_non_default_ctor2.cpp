@@ -22,8 +22,6 @@ namespace std{
 #endif
 
 #include "test_tools.hpp"
-#include <boost/preprocessor/stringize.hpp>
-#include BOOST_PP_STRINGIZE(BOOST_ARCHIVE_TEST)
 
 class IntValueHolder
 {
@@ -100,8 +98,9 @@ private:
     }
 };
 
-namespace boost { 
-namespace serialization {
+#if defined(BOOST_NO_ARGUMENT_DEPENDENT_LOOKUP)
+namespace boost { namespace serialization {
+#endif
 
 template <class ArchiveT>
 void save_construct_data(ArchiveT& archive, const A* p, unsigned int version)
@@ -118,8 +117,9 @@ void load_construct_data(ArchiveT& archive, A* p, unsigned int version)
     ::new (p) A(initialValue);
 }
 
-} // serialization
-} // namespace boost
+#if defined(BOOST_NO_ARGUMENT_DEPENDENT_LOOKUP)
+}} // namespace boost::serialization
+#endif
 
 int test_main( int /* argc */, char* /* argv */[] )
 {
@@ -142,5 +142,5 @@ int test_main( int /* argc */, char* /* argv */[] )
     }
     delete a;
     delete a_new;
-    return EXIT_SUCCESS;
+    return boost::exit_success;
 }

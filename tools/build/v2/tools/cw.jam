@@ -46,16 +46,13 @@ rule init ( version ? : command * : options * )
     {
         command = [ common.get-absolute-tool-path $(command[-1]) ] ;
     }
-    local tool-root = $(command) ;
+    local root = $(command) ;
 
-    setup = $(tool-root)\\$(setup) ;
+    setup = $(root)\\$(setup) ;
 
    # map the batch file in setup so it can be executed
 
-    other-tools = $(tool-root:D) ;
-    root = $(other-tools:D) ;
-    
-    setup = "set \"CWFOLDER="$(root)"\" && call \""$(setup)"\" > nul " ;
+   setup = "call \""$(setup)"\" > nul " ;
 
    if [ os.name ] = NT
    {
@@ -104,18 +101,18 @@ generators.register-c-compiler cw.compile.c : C : OBJ : <toolset>cw ;
 
 generators.register-linker cw.link
    : OBJ SEARCHED_LIB STATIC_LIB IMPORT_LIB
-   : EXE
+   : EXE RSP
    : <toolset>cw
    ;
 generators.register-linker cw.link.dll
    : OBJ SEARCHED_LIB STATIC_LIB IMPORT_LIB
-   : SHARED_LIB IMPORT_LIB
+   : SHARED_LIB IMPORT_LIB RSP
    : <toolset>cw
    ;
 
-generators.register-archiver cw.archive
+generators.register-composing cw.archive
    : OBJ
-   : STATIC_LIB
+   : STATIC_LIB RSP
    : <toolset>cw
    ;
 
@@ -170,40 +167,40 @@ if [ os.name ] in NT
 {
    rule link ( targets + : sources * : properties * )
    {
-      common.response-file $(targets) : $(sources) : 
+      common.response-file $(targets) : $(sources) : $(targets[2])
          : $(properties) ;
    }
 
    rule link.dll ( targets + : sources * : properties * )
    {
-      common.response-file $(targets) : $(sources) : 
+      common.response-file $(targets) : $(sources) : $(targets[3])
          : $(properties) ;
       DEPENDS $(<) : [ on $(<) return $(DEF_FILE) ] ;
    }
 
    rule archive ( targets + : sources * : properties * )
    {
-      common.response-file $(targets) : $(sources) : 
+      common.response-file $(targets) : $(sources) : $(targets[2])
          : $(properties) ;
    }
 
-   actions archive bind RSP
+   actions archive
    {
       if exist "$(<[1])" DEL "$(<[1])"
-      $(.LD) -library -o "$(<[1])" @"$(RSP:W)"
+      $(.LD) -library -o "$(<[1])" @"$(<[2])"
    }
 }
 else # cygwin
 {
    rule link ( targets + : sources * : properties * )
    {
-      common.response-file $(targets) : $(sources) : 
+      common.response-file $(targets) : $(sources) : $(targets[2])
          : $(properties) ;
    }
 
    rule link.dll ( targets + : sources + : properties * )
    {
-      common.response-file $(targets) : $(sources) : 
+      common.response-file $(targets) : $(sources) : $(targets[3])
          : $(properties) ;
       .cygpath = "cygpath -d " ;
       DEPENDS $(<) : [ on $(<) return $(DEF_FILE) ] ;
@@ -211,27 +208,27 @@ else # cygwin
 
    rule archive ( targets + : sources * : properties * )
    {
-      common.response-file $(targets) : $(sources) : 
+      common.response-file $(targets) : $(sources) : $(targets[2])
          : $(properties) ;
    }
 
-   actions archive bind RSP
+   actions archive
    {
       _bbv2_out_="$(<)"
       if test -f "$_bbv2_out_" ; then
          _bbv2_existing_="$(<:W)"
       fi
-      $(.LD) -library -o "$(<:W)" $_bbv2_existing_ @"$(RSP:W)"
+      $(.LD) -library -o "$(<:W)" $_bbv2_existing_ @"$(>:W)"
    }
 }
 
-actions link bind DEF_FILE RSP
+actions link bind DEF_FILE
 {
-   $(.LD) -o "$(<[1]:W)" -L"$(LINKPATH)" $(LINKFLAGS) $(USER_LINKFLAGS) @"$(RSP:W)"
+   $(.LD) -o "$(<[1]:W)" -L"$(LINKPATH)" $(LINKFLAGS) $(USER_LINKFLAGS) @"$(<[2]:W)"
 }
 
-actions link.dll bind DEF_FILE RSP
+actions link.dll bind DEF_FILE
 {
-   $(.LD) -o "$(<[1]:W)" -implib "$(<[2]:W)" -L"$(LINKPATH)" $(LINKFLAGS) -f "$(DEF_FILE)" $(USER_LINKFLAGS) @"$(RSP:W)"
+   $(.LD) -o "$(<[1]:W)" -implib "$(<[2]:W)" -L"$(LINKPATH)" $(LINKFLAGS) -f "$(DEF_FILE)" $(USER_LINKFLAGS) @"$(<[3]:W)"
 }
 

@@ -18,10 +18,8 @@ namespace std{
 }
 #endif
 
-#include "test_tools.hpp"
-#include <boost/preprocessor/stringize.hpp>
-#include BOOST_PP_STRINGIZE(BOOST_ARCHIVE_TEST)
 #include <boost/serialization/nvp.hpp>
+#include "test_tools.hpp"
 
 #include "B.hpp"
 
@@ -48,8 +46,8 @@ int test_main( int /* argc */, char* /* argv */[] )
     const char * testfile = boost::archive::tmpnam(NULL);
     BOOST_REQUIRE(NULL != testfile);
 
-    const C c;
-    C c1;
+    C c, c1;
+
     {   
         test_ostream os(testfile, TEST_STREAM_FLAGS);
         test_oarchive oa(os);
@@ -62,7 +60,7 @@ int test_main( int /* argc */, char* /* argv */[] )
     }
     BOOST_CHECK(c == c1);
     std::remove(testfile);
-    return EXIT_SUCCESS;
+    return boost::exit_success;
 }
 
 // EOF

@@ -18,12 +18,10 @@ namespace std{
 }
 #endif
 
-#include "test_tools.hpp"
-#include <boost/preprocessor/stringize.hpp>
-#include BOOST_PP_STRINGIZE(BOOST_ARCHIVE_TEST)
-
 #include <boost/serialization/split_member.hpp>
 #include <boost/serialization/split_free.hpp>
+
+#include "test_tools.hpp"
 
 class A
 {
@@ -78,8 +76,9 @@ public:
 
 // function specializations must be defined in the appropriate
 // namespace - boost::serialization
-namespace boost { 
-namespace serialization {
+#ifdef BOOST_NO_ARGUMENT_DEPENDENT_LOOKUP
+namespace boost { namespace serialization {
+#endif
 
 template<class Archive>
 void serialize(
@@ -90,8 +89,9 @@ void serialize(
     boost::serialization::split_member(ar, b, file_version);
 } 
 
-} // serialization
-} // namespace boost
+#ifdef BOOST_NO_ARGUMENT_DEPENDENT_LOOKUP
+}} // namespace boost::serialization
+#endif
 
 class C
 {
@@ -103,14 +103,17 @@ public:
     }
 };
 
-namespace boost { 
-namespace serialization {
+// function specializations must be defined in the appropriate
+// namespace - boost::serialization
+#ifdef BOOST_NO_ARGUMENT_DEPENDENT_LOOKUP
+namespace boost { namespace serialization {
+#endif
 
 template<class Archive>
 void save(
     Archive & /* ar */, 
     const C & c,
-    const unsigned int /* file_version */
+    const unsigned int file_version /* file_version */
 ){
     ++(const_cast<C &>(c).count);
 }
@@ -124,8 +127,9 @@ void load(
     --c.count;
 }
 
-} // serialization
-} // namespace boost
+#ifdef BOOST_NO_ARGUMENT_DEPENDENT_LOOKUP
+}} // namespace boost::serialization
+#endif
 
 BOOST_SERIALIZATION_SPLIT_FREE(C)
 
@@ -160,7 +164,7 @@ test_main( int /* argc */, char* /* argv */[] )
     out(testfile, a, b, c);
     in(testfile, a, b, c);
     std::remove(testfile);
-    return EXIT_SUCCESS;
+    return boost::exit_success;
 }
 
 // EOF

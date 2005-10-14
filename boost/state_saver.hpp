@@ -30,7 +30,6 @@
 #include <boost/call_traits.hpp>
 #include <boost/noncopyable.hpp>
 #include <boost/type_traits/has_nothrow_copy.hpp>
-#include <boost/detail/no_exceptions_support.hpp>
 
 #include <boost/mpl/eval_if.hpp>
 #include <boost/mpl/identity.hpp>
@@ -56,13 +55,16 @@ private:
 
     struct restore_with_exception {
         static void invoke(T & previous_ref, const T & previous_value){
-            BOOST_TRY{
+            #ifndef BOOST_NO_EXCEPTIONS
+                try{
+                    previous_ref = previous_value;
+                } 
+                catch(::std::exception &) { 
+                    // we must ignore it - we are in destructor
+                }
+            #else
                 previous_ref = previous_value;
-            } 
-            BOOST_CATCH(::std::exception &) { 
-                // we must ignore it - we are in destructor
-            }
-            BOOST_CATCH_END
+            #endif
         }
     };
 
@@ -75,20 +77,19 @@ public:
     {}
     
     ~state_saver() {
-        #ifndef BOOST_NO_EXCEPTIONS
-            typedef BOOST_DEDUCED_TYPENAME mpl::eval_if<
-                has_nothrow_copy<T>,
-                mpl::identity<restore>,
-                mpl::identity<restore_with_exception>
-            >::type typex;
-            typex::invoke(previous_ref, previous_value);
-        #else
-            previous_ref = previous_value;
-        #endif
+        typedef BOOST_DEDUCED_TYPENAME mpl::eval_if<
+            has_nothrow_copy<T>,
+            mpl::identity<restore>,
+            mpl::identity<restore_with_exception>
+        >::type typex;
+        typex::invoke(previous_ref, previous_value);
     }
 
 }; // state_saver<>
 
 } // boost
+
+#undef BOOST_TRY
+#undef BOOST_CATCH
 
 #endif //BOOST_STATE_SAVER_HPP

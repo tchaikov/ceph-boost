@@ -1,7 +1,7 @@
 
 /*
  *
- * (C) Copyright John Maddock 1999-2005. 
+ * (C) Copyright John Maddock 1999. 
  * Use, modification and distribution are subject to the 
  * Boost Software License, Version 1.0. (See accompanying file 
  * LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
@@ -20,9 +20,9 @@
 #include <memory>
 #include <cstring>
 
-#include <boost/test/included/prg_exec_monitor.hpp>
 #include <boost/timer.hpp>
 #include <boost/type_traits.hpp>
+#include <boost/call_traits.hpp>
 
 #if defined(BOOST_NO_STDC_NAMESPACE) || (defined(std) && defined(__SGI_STL_PORT))
 namespace std{ using :: memset; }
@@ -35,12 +35,13 @@ using std::cin;
 namespace opt{
 //
 // fill
-// same as std::fill, but uses memset where appropriate
+// same as std::fill, uses memset where appropriate, along with call_traits
+// to "optimise" parameter passing.
 //
 namespace detail{
 
-template <typename I, typename T, bool b>
-void do_fill(I first, I last, const T& val, const boost::integral_constant<bool, b>&)
+template <typename I, typename T>
+void do_fill_(I first, I last, typename boost::call_traits<T>::param_type val)
 {
    while(first != last)
    {
@@ -49,24 +50,43 @@ void do_fill(I first, I last, const T& val, const boost::integral_constant<bool,
    }
 }
 
-template <typename T>
-void do_fill(T* first, T* last, const T& val, const boost::true_type&)
+template <bool opt>
+struct filler
 {
-   std::memset(first, val, last-first);
-}
+   template <typename I, typename T>
+   struct rebind
+   {
+      static void do_fill(I first, I last, typename boost::call_traits<T>::param_type val)
+      { do_fill_<I,T>(first, last, val); }
+   };
+};
+
+template <>
+struct filler<true>
+{
+   template <typename I, typename T>
+   struct rebind
+   {
+      static void do_fill(I first, I last, T val)
+      {
+         std::memset(first, val, last-first);
+      }
+   };
+};
 
 }
 
 template <class I, class T>
 inline void fill(I first, I last, const T& val)
 {
-   //
-   // We can do an optimised fill if T has a trivial assignment 
-   // operator and if it's size is one:
-   //
-   typedef boost::integral_constant<bool, 
-      ::boost::has_trivial_assign<T>::value && (sizeof(T) == 1)> truth_type;
-   detail::do_fill(first, last, val, truth_type());
+   typedef detail::filler<
+      ::boost::type_traits::ice_and<
+         ::boost::is_pointer<I>::value,
+         ::boost::is_arithmetic<T>::value,
+         (sizeof(T) == 1)
+      >::value> filler_t;
+   typedef typename filler_t:: template rebind<I,T> binder;
+   binder::do_fill(first, last, val);
 }
 
 };   // namespace opt
@@ -130,7 +150,8 @@ int cpp_main(int argc, char* argv[])
    result = t.elapsed();
    cout << "std::fill<char*, char>: " << result << endl << endl;
 
-   cout << "testing fill(int)...\n" << endl;
+   cout << "testing fill(int)...\n"
+   "[Tests the effect of call_traits pass-by-value optimisation -\nthe value of this optimisation may depend upon hardware characteristics.]" << endl;
 
    // cache load:
    opt::fill(i_array, i_array + array_size, 3);

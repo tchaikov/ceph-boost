@@ -10,7 +10,13 @@
 import testing ;
 
 test-suite algorithm/string
-    : [ run 
+    : [ run
+            container_test.cpp
+          : :
+            :
+            : container
+        ]
+      [ run 
             trim_test.cpp
           : :
             :

@@ -22,8 +22,7 @@ template<
 struct set21
     : s_item<
           T20
-        , typename set20< T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11
-        , T12, T13, T14, T15, T16, T17, T18, T19 >::item_
+        , set20< T0,T1,T2,T3,T4,T5,T6,T7,T8,T9,T10,T11,T12,T13,T14,T15,T16,T17,T18,T19 >
         >
 {
     typedef set21 type;
@@ -39,8 +38,7 @@ template<
 struct set22
     : s_item<
           T21
-        , typename set21< T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11
-        , T12, T13, T14, T15, T16, T17, T18, T19, T20 >::item_
+        , set21< T0,T1,T2,T3,T4,T5,T6,T7,T8,T9,T10,T11,T12,T13,T14,T15,T16,T17,T18,T19,T20 >
         >
 {
     typedef set22 type;
@@ -56,8 +54,7 @@ template<
 struct set23
     : s_item<
           T22
-        , typename set22< T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11
-        , T12, T13, T14, T15, T16, T17, T18, T19, T20, T21 >::item_
+        , set22< T0,T1,T2,T3,T4,T5,T6,T7,T8,T9,T10,T11,T12,T13,T14,T15,T16,T17,T18,T19,T20,T21 >
         >
 {
     typedef set23 type;
@@ -73,8 +70,7 @@ template<
 struct set24
     : s_item<
           T23
-        , typename set23< T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11
-        , T12, T13, T14, T15, T16, T17, T18, T19, T20, T21, T22 >::item_
+        , set23< T0,T1,T2,T3,T4,T5,T6,T7,T8,T9,T10,T11,T12,T13,T14,T15,T16,T17,T18,T19,T20,T21,T22 >
         >
 {
     typedef set24 type;
@@ -90,8 +86,7 @@ template<
 struct set25
     : s_item<
           T24
-        , typename set24< T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11
-        , T12, T13, T14, T15, T16, T17, T18, T19, T20, T21, T22, T23 >::item_
+        , set24< T0,T1,T2,T3,T4,T5,T6,T7,T8,T9,T10,T11,T12,T13,T14,T15,T16,T17,T18,T19,T20,T21,T22,T23 >
         >
 {
     typedef set25 type;
@@ -108,9 +103,7 @@ template<
 struct set26
     : s_item<
           T25
-        , typename set25< T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11
-        , T12, T13, T14, T15, T16, T17, T18, T19, T20, T21, T22, T23
-        , T24 >::item_
+        , set25< T0,T1,T2,T3,T4,T5,T6,T7,T8,T9,T10,T11,T12,T13,T14,T15,T16,T17,T18,T19,T20,T21,T22,T23,T24 >
         >
 {
     typedef set26 type;
@@ -127,9 +120,7 @@ template<
 struct set27
     : s_item<
           T26
-        , typename set26< T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11
-        , T12, T13, T14, T15, T16, T17, T18, T19, T20, T21, T22, T23, T24
-        , T25 >::item_
+        , set26< T0,T1,T2,T3,T4,T5,T6,T7,T8,T9,T10,T11,T12,T13,T14,T15,T16,T17,T18,T19,T20,T21,T22,T23,T24,T25 >
         >
 {
     typedef set27 type;
@@ -146,9 +137,7 @@ template<
 struct set28
     : s_item<
           T27
-        , typename set27< T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11
-        , T12, T13, T14, T15, T16, T17, T18, T19, T20, T21, T22, T23, T24, T25
-        , T26 >::item_
+        , set27< T0,T1,T2,T3,T4,T5,T6,T7,T8,T9,T10,T11,T12,T13,T14,T15,T16,T17,T18,T19,T20,T21,T22,T23,T24,T25,T26 >
         >
 {
     typedef set28 type;
@@ -165,9 +154,7 @@ template<
 struct set29
     : s_item<
           T28
-        , typename set28< T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11
-        , T12, T13, T14, T15, T16, T17, T18, T19, T20, T21, T22, T23, T24, T25
-        , T26, T27 >::item_
+        , set28< T0,T1,T2,T3,T4,T5,T6,T7,T8,T9,T10,T11,T12,T13,T14,T15,T16,T17,T18,T19,T20,T21,T22,T23,T24,T25,T26,T27 >
         >
 {
     typedef set29 type;
@@ -184,9 +171,7 @@ template<
 struct set30
     : s_item<
           T29
-        , typename set29< T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11
-        , T12, T13, T14, T15, T16, T17, T18, T19, T20, T21, T22, T23, T24, T25
-        , T26, T27, T28 >::item_
+        , set29< T0,T1,T2,T3,T4,T5,T6,T7,T8,T9,T10,T11,T12,T13,T14,T15,T16,T17,T18,T19,T20,T21,T22,T23,T24,T25,T26,T27,T28 >
         >
 {
     typedef set30 type;

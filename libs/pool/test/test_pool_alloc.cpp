@@ -10,7 +10,6 @@
 #include <boost/pool/pool_alloc.hpp>
 #include <boost/pool/object_pool.hpp>
 
-#include <stdlib.h>
 #include <stdexcept>
 #include <iostream>
 #include <vector>

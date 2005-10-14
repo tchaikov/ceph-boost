@@ -5,7 +5,7 @@
     License, Version 1.0. (See accompanying file LICENSE_1_0.txt or copy at
     http://www.boost.org/LICENSE_1_0.txt)
 ==============================================================================*/
-#include <boost/detail/lightweight_test.hpp>
+#include <boost/test/minimal.hpp>
 #include <boost/spirit/fusion/sequence/tuple.hpp>
 #include <boost/spirit/fusion/sequence/io.hpp>
 #include <boost/spirit/fusion/sequence/equal_to.hpp>
@@ -15,7 +15,7 @@
 #include <string>
 
 int
-main()
+test_main(int, char*[])
 {
     using namespace boost::fusion;
 
@@ -50,6 +50,6 @@ main()
             == make_tuple(1, 2, 3, 4, 5, 6)));
     }
 
-    return boost::report_errors();
+    return 0;
 }
 

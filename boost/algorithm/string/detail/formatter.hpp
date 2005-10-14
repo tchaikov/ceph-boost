@@ -10,12 +10,8 @@
 #ifndef BOOST_STRING_FORMATTER_DETAIL_HPP
 #define BOOST_STRING_FORMATTER_DETAIL_HPP
 
-
-#include <boost/range/iterator_range.hpp>
-#include <boost/range/begin.hpp>
-#include <boost/range/end.hpp>
-#include <boost/range/const_iterator.hpp>
-
+#include <boost/algorithm/string/collection_traits.hpp>
+#include <boost/algorithm/string/iterator_range.hpp>
 #include <boost/algorithm/string/detail/util.hpp>
 
 //  generic replace functors -----------------------------------------------//
@@ -27,30 +23,22 @@ namespace boost {
 //  const format functor ----------------------------------------------------//
 
             // constant format functor
-            template<typename RangeT>
+            template<typename CollectionT>
             struct const_formatF
             {
             private:
                 typedef BOOST_STRING_TYPENAME
-                    range_const_iterator<RangeT>::type format_iterator;
+                    const_iterator_of<CollectionT>::type format_iterator;
                 typedef iterator_range<format_iterator> result_type;
             
             public:
                 // Construction
-                const_formatF(const RangeT& Format) :
+                const_formatF(const CollectionT& Format) :
                     m_Format(begin(Format), end(Format)) {}
 
                 // Operation
-#if BOOST_WORKAROUND(__BORLANDC__, BOOST_TESTED_AT(0x564))
-                template<typename Range2T>
-                result_type& operator()(const Range2T&)
-                {
-                    return m_Format;
-                }
-#endif
-
-                template<typename Range2T>
-                const result_type& operator()(const Range2T&) const
+                template<typename Collection2T>
+                const result_type& operator()(const Collection2T&) const
                 {
                     return m_Format;
                 }
@@ -62,14 +50,14 @@ namespace boost {
 //  identity format functor ----------------------------------------------------//
 
             // identity format functor
-            template<typename RangeT>
+            template<typename CollectionT>
             struct identity_formatF
             {
                 // Operation
-                template< typename Range2T >
-                const RangeT& operator()(const Range2T& Replace) const
+                template< typename Collection2T >
+                const CollectionT& operator()(const Collection2T& Replace) const
                 {
-                    return RangeT(begin(Replace), end(Replace));
+                    return CollectionT(begin(Replace), end(Replace));
                 }
             };
 

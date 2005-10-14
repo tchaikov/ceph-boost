@@ -11,9 +11,8 @@
 #define BOOST_STRING_CONCEPT_HPP
 
 #include <boost/concept_check.hpp>
-#include <boost/range/iterator_range.hpp>
-#include <boost/range/begin.hpp>
-#include <boost/range/end.hpp>
+#include <boost/algorithm/string/iterator_range.hpp>
+#include <boost/algorithm/string/collection_traits.hpp>
 
 /*! \file 
     Defines concepts used in string_algo library

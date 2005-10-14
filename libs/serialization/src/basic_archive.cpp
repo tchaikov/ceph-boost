@@ -31,7 +31,6 @@
 //
 //  * required only for pointers - optional for objects
 
-#define BOOST_ARCHIVE_SOURCE
 #include <boost/archive/basic_archive.hpp>
 
 namespace boost {
@@ -41,10 +40,7 @@ namespace archive {
 // constants used in archive signature
 //This should never ever change. note that is not an std::string
 // string.
-BOOST_ARCHIVE_DECL(const char *) 
-ARCHIVE_SIGNATURE(){
-    return "serialization::archive";
-}
+const char * ARCHIVE_SIGNATURE = "serialization::archive";
 
 // this should change if the capabilities are added to the library
 // such that archives can be created which can't be read by previous
@@ -52,11 +48,9 @@ ARCHIVE_SIGNATURE(){
 // 1 - initial version
 // 2 - made address tracking optional
 // 3 - numerous changes - can't guarentee compatibility with previous versions
- 
-BOOST_ARCHIVE_DECL(unsigned char)
-ARCHIVE_VERSION(){
-    return 3;
-}
+const version_type ARCHIVE_VERSION(3);
+
+const class_id_type null_pointer_tag(-1);
 
 } // namespace archive
 } // namespace boost

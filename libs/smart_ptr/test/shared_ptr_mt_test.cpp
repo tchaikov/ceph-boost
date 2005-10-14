@@ -143,11 +143,19 @@ void test(boost::shared_ptr<int> const & pi)
 
 int const m = 16; // threads
 
+#if defined(BOOST_LWM_USE_CRITICAL_SECTION)
+    char const * implementation = "critical section";
+#elif defined(BOOST_LWM_USE_PTHREADS)
+    char const * implementation = "pthread_mutex";
+#else
+    char const * implementation = "spinlock";
+#endif
+
 int main()
 {
     using namespace std; // printf, clock_t, clock
 
-    printf("%s: %d threads, %d iterations: ", title, m, n);
+    printf("%s: %s, %d threads, %d iterations: ", title, implementation, m, n);
 
     boost::shared_ptr<int> pi(new int(42));
 

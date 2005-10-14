@@ -7,7 +7,7 @@
 #endif
 
 /////////1/////////2/////////3/////////4/////////5/////////6/////////7/////////8
-// archive_pointer_iserializer.hpp
+// basic_iserializer.hpp: extenstion of type_info required for serialization.
 
 // (C) Copyright 2002 Robert Ramey - http://www.rrsd.com . 
 // Use, modification and distribution is subject to the Boost Software
@@ -23,8 +23,6 @@
 #include <boost/archive/detail/basic_serializer.hpp>
 #include <boost/archive/detail/basic_pointer_iserializer.hpp>
 
-#include <boost/archive/detail/abi_prefix.hpp> // must be the last header
-
 namespace boost {
 
 namespace serialization {
@@ -35,12 +33,10 @@ namespace archive {
 namespace detail {
 
 template<class Archive>
-class archive_pointer_iserializer : 
-    public basic_pointer_iserializer {
+class archive_pointer_iserializer : public basic_pointer_iserializer {
 protected:
-    explicit BOOST_ARCHIVE_OR_WARCHIVE_DECL(BOOST_PP_EMPTY()) 
-    archive_pointer_iserializer(
-        const boost::serialization::extended_type_info & eti
+    explicit archive_pointer_iserializer(
+        const boost::serialization::extended_type_info & type_
     );
 public:
     virtual const basic_iserializer & get_basic_serializer() const 
@@ -70,10 +66,8 @@ public:
     // type_info.  returns NULL if there is no such instance. This
     // would indicate that the no object of the specified type was loaded
     // any where in the code.
-    static
-    BOOST_ARCHIVE_OR_WARCHIVE_DECL(const basic_pointer_iserializer *)
-    find(
-        const boost::serialization::extended_type_info & eti
+    static const basic_pointer_iserializer * find(
+        const boost::serialization::extended_type_info & type_
     );
     
     virtual ~archive_pointer_iserializer(){}
@@ -82,7 +76,5 @@ public:
 } // namespace detail
 } // namespace archive
 } // namespace boost
-
-#include <boost/archive/detail/abi_suffix.hpp> // pops abi_suffix.hpp pragmas
 
 #endif // BOOST_ARCHIVE_ARCHIVE_POINTER_ISERIALIZER_POINTER_HPP

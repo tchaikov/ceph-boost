@@ -49,8 +49,7 @@ namespace std{
 #include <boost/scoped_ptr.hpp>
 
 #include <boost/archive/archive_exception.hpp>
-
-#include <boost/archive/detail/abi_prefix.hpp> // must be the last header
+#include <boost/archive/codecvt_null.hpp>
 
 namespace boost {
 namespace archive {
@@ -66,12 +65,13 @@ protected:
 public:
 #endif
     IStream &is;
-    io::ios_flags_saver flags_saver;
+    io::ios_flags_saver  flags_saver;
     io::ios_precision_saver precision_saver;
     boost::scoped_ptr<std::locale> archive_locale;
     io::basic_ios_locale_saver<
         BOOST_DEDUCED_TYPENAME IStream::char_type, BOOST_DEDUCED_TYPENAME IStream::traits_type
     > locale_saver;
+
     template<class T>
     void load(T & t)
     {
@@ -113,18 +113,15 @@ public:
         t = static_cast<wchar_t>(i);
     }
     #endif
-    BOOST_ARCHIVE_OR_WARCHIVE_DECL(BOOST_PP_EMPTY()) 
-    basic_text_iprimitive(IStream  &is, bool no_codecvt);
-    BOOST_ARCHIVE_OR_WARCHIVE_DECL(BOOST_PP_EMPTY()) 
+
+     basic_text_iprimitive(IStream  &is, bool no_codecvt);
     ~basic_text_iprimitive();
 public:
-    BOOST_ARCHIVE_OR_WARCHIVE_DECL(void)
-    load_binary(void *address, std::size_t count);
+    void load_binary(void *address, std::size_t count);
 };
 
 } // namespace archive
 } // namespace boost
 
-#include <boost/archive/detail/abi_suffix.hpp> // pop pragams
 
 #endif // BOOST_ARCHIVE_BASIC_TEXT_IPRIMITIVE_HPP

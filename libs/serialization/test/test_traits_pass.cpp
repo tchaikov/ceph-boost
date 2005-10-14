@@ -8,8 +8,6 @@
 
 // compile test for traits
 #include "test_tools.hpp"
-#include <boost/preprocessor/stringize.hpp>
-#include BOOST_PP_STRINGIZE(BOOST_ARCHIVE_TEST)
 
 #include <boost/serialization/level.hpp>
 #include <boost/serialization/tracking.hpp>
@@ -26,7 +24,7 @@ BOOST_CLASS_TRACKING(B, boost::serialization::track_always)
 int
 test_main( int argc, char* argv[] )
 {
-    return EXIT_SUCCESS;
+    return boost::exit_success;
 }
 
 // EOF

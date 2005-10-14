@@ -68,14 +68,6 @@ void bcp_implementation::enable_unix_lines()
 void bcp_implementation::set_boost_path(const char* p)
 {
    m_boost_path = fs::path(p, fs::native);
-   fs::path check = m_boost_path / "boost" / "version.hpp";
-   if(!fs::exists(check))
-   {
-      std::string s = "The Boost path appears to have been incorrectly set: could not find boost/version.hpp in ";
-      s += m_boost_path.string();
-      std::runtime_error e(s);
-      throw e;
-   }
 }
 
 void bcp_implementation::set_destination(const char* p)
@@ -113,7 +105,7 @@ int bcp_implementation::run()
    if (fs::exists(blanket_permission)) {
      fs::ifstream in(blanket_permission);
      std::string line;
-     while (std::getline(in, line)) {
+     while (getline(in, line)) {
        boost::regex e("([^(]+)\\(");
        boost::smatch result;
        if (boost::regex_search(line, result, e))

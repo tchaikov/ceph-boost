@@ -82,9 +82,6 @@ enter_rule( char *rulename, module_t *target_module )
         r->arguments = 0;
         r->exported = 0;
         r->module = target_module;
-#ifdef HAVE_PYTHON
-        r->python_function = 0;
-#endif
     }
     return r;
 }
@@ -771,7 +768,7 @@ RULE *bindrule( char *rulename, module_t* m)
        here, but we don't have necessary information, such as frame.
     */
     if (!result)
-        result = enter_rule( rulename, m );
+        result = enter_rule( rulename, root_module() );
 
     return result;
 }

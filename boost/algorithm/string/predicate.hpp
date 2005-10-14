@@ -11,12 +11,8 @@
 #define BOOST_STRING_PREDICATE_HPP
 
 #include <boost/algorithm/string/config.hpp>
-#include <boost/range/begin.hpp>
-#include <boost/range/end.hpp>
-#include <boost/range/iterator.hpp>
-#include <boost/range/const_iterator.hpp>
-
 #include <boost/algorithm/string/compare.hpp>
+#include <boost/algorithm/string/collection_traits.hpp>
 #include <boost/algorithm/string/find.hpp>
 #include <boost/algorithm/string/detail/predicate.hpp>
 
@@ -38,7 +34,7 @@ namespace boost {
 
         //! 'Starts with' predicate
         /*!
-            This predicate holds when the test string is a prefix of the Input.
+            This predicate holds when the test collection is a prefix of the Input.
             In other words, if the input starts with the test.
             When the optional predicate is specified, it is used for character-wise
             comparison.
@@ -50,16 +46,16 @@ namespace boost {
 
               \note This function provides the strong exception-safety guarantee
         */
-        template<typename Range1T, typename Range2T, typename PredicateT>
+        template<typename Collection1T, typename Collection2T, typename PredicateT>
             inline bool starts_with( 
-            const Range1T& Input, 
-            const Range2T& Test,
+            const Collection1T& Input, 
+            const Collection2T& Test,
             PredicateT Comp)
         {
             typedef BOOST_STRING_TYPENAME 
-                range_const_iterator<Range1T>::type Iterator1T;
+                const_iterator_of<Collection1T>::type Iterator1T;
             typedef BOOST_STRING_TYPENAME 
-                range_const_iterator<Range2T>::type Iterator2T;
+                const_iterator_of<Collection2T>::type Iterator2T;
 
             Iterator1T InputEnd=end(Input);
             Iterator2T TestEnd=end(Test);
@@ -81,17 +77,17 @@ namespace boost {
         /*!
             \overload
         */
-        template<typename Range1T, typename Range2T>
+        template<typename Collection1T, typename Collection2T>
         inline bool starts_with( 
-            const Range1T& Input, 
-            const Range2T& Test)
+            const Collection1T& Input, 
+            const Collection2T& Test)
         {
             return starts_with(Input, Test, is_equal());
         }
 
         //! 'Starts with' predicate ( case insensitive )
         /*!
-            This predicate holds when the test string is a prefix of the Input.
+            This predicate holds when the test container is a prefix of the Input.
             In other words, if the input starts with the test.
             Elements are compared case insensitively.
 
@@ -102,10 +98,10 @@ namespace boost {
 
             \note This function provides the strong exception-safety guarantee
         */
-        template<typename Range1T, typename Range2T>
+        template<typename Collection1T, typename Collection2T>
         inline bool istarts_with( 
-            const Range1T& Input, 
-            const Range2T& Test,
+            const Collection1T& Input, 
+            const Collection2T& Test,
             const std::locale& Loc=std::locale())
         {
             return starts_with(Input, Test, is_iequal(Loc));
@@ -116,7 +112,7 @@ namespace boost {
 
         //! 'Ends with' predicate
         /*!
-            This predicate holds when the test string is a suffix of the Input.
+            This predicate holds when the test container is a suffix of the Input.
             In other words, if the input ends with the test.
             When the optional predicate is specified, it is used for character-wise
             comparison.
@@ -129,14 +125,14 @@ namespace boost {
 
               \note This function provides the strong exception-safety guarantee
         */
-        template<typename Range1T, typename Range2T, typename PredicateT>
+        template<typename Collection1T, typename Collection2T, typename PredicateT>
         inline bool ends_with( 
-            const Range1T& Input, 
-            const Range2T& Test,
+            const Collection1T& Input, 
+            const Collection2T& Test,
             PredicateT Comp)
         {
             typedef BOOST_STRING_TYPENAME 
-                range_const_iterator<Range1T>::type Iterator1T;
+                const_iterator_of<Collection1T>::type Iterator1T;
             typedef BOOST_STRING_TYPENAME boost::detail::
                 iterator_traits<Iterator1T>::iterator_category category;
 
@@ -155,10 +151,10 @@ namespace boost {
         /*!
             \overload
         */
-        template<typename Range1T, typename Range2T>
+        template<typename Collection1T, typename Collection2T>
         inline bool ends_with( 
-            const Range1T& Input, 
-            const Range2T& Test)
+            const Collection1T& Input, 
+            const Collection2T& Test)
         {
             return ends_with(Input, Test, is_equal());
         }
@@ -176,10 +172,10 @@ namespace boost {
 
             \note This function provides the strong exception-safety guarantee
         */
-        template<typename Range1T, typename Range2T>
+        template<typename Collection1T, typename Collection2T>
         inline bool iends_with( 
-            const Range1T& Input, 
-            const Range2T& Test,
+            const Collection1T& Input, 
+            const Collection2T& Test,
             const std::locale& Loc=std::locale())
         {
             return ends_with(Input, Test, is_iequal(Loc));
@@ -200,10 +196,10 @@ namespace boost {
 
                \note This function provides the strong exception-safety guarantee
         */
-        template<typename Range1T, typename Range2T, typename PredicateT>
+        template<typename Collection1T, typename Collection2T, typename PredicateT>
         inline bool contains( 
-            const Range1T& Input, 
-            const Range2T& Test,
+            const Collection1T& Input, 
+            const Collection2T& Test,
             PredicateT Comp)
         {
             if (empty(Test))
@@ -221,10 +217,10 @@ namespace boost {
         /*!
             \overload
         */
-        template<typename Range1T, typename Range2T>
+        template<typename Collection1T, typename Collection2T>
         inline bool contains( 
-            const Range1T& Input, 
-            const Range2T& Test)
+            const Collection1T& Input, 
+            const Collection2T& Test)
         {
             return contains(Input, Test, is_equal());
         }
@@ -241,10 +237,10 @@ namespace boost {
 
             \note This function provides the strong exception-safety guarantee
         */
-        template<typename Range1T, typename Range2T>
+        template<typename Collection1T, typename Collection2T>
         inline bool icontains( 
-            const Range1T& Input, 
-            const Range2T& Test, 
+            const Collection1T& Input, 
+            const Collection2T& Test, 
             const std::locale& Loc=std::locale())
         {
             return contains(Input, Test, is_iequal(Loc));
@@ -268,16 +264,16 @@ namespace boost {
 
             \note This function provides the strong exception-safety guarantee
         */
-        template<typename Range1T, typename Range2T, typename PredicateT>
+        template<typename Collection1T, typename Collection2T, typename PredicateT>
         inline bool equals( 
-            const Range1T& Input, 
-            const Range2T& Test,
+            const Collection1T& Input, 
+            const Collection2T& Test,
             PredicateT Comp)
         {
             typedef BOOST_STRING_TYPENAME 
-                range_const_iterator<Range1T>::type Iterator1T;
+                const_iterator_of<Collection1T>::type Iterator1T;
             typedef BOOST_STRING_TYPENAME 
-                range_const_iterator<Range2T>::type Iterator2T;
+                const_iterator_of<Collection2T>::type Iterator2T;
                 
             Iterator1T InputEnd=end(Input);
             Iterator2T TestEnd=end(Test);
@@ -299,10 +295,10 @@ namespace boost {
         /*!
             \overload
         */
-        template<typename Range1T, typename Range2T>
+        template<typename Collection1T, typename Collection2T>
         inline bool equals( 
-            const Range1T& Input, 
-            const Range2T& Test)
+            const Collection1T& Input, 
+            const Collection2T& Test)
         {
             return equals(Input, Test, is_equal());
         }
@@ -322,10 +318,10 @@ namespace boost {
 
             \note This function provides the strong exception-safety guarantee
         */
-        template<typename Range1T, typename Range2T>
+        template<typename Collection1T, typename Collection2T>
         inline bool iequals( 
-            const Range1T& Input, 
-            const Range2T& Test,
+            const Collection1T& Input, 
+            const Collection2T& Test,
             const std::locale& Loc=std::locale())
         {
             return equals(Input, Test, is_iequal(Loc));
@@ -344,13 +340,13 @@ namespace boost {
 
             \note This function provides the strong exception-safety guarantee
         */
-        template<typename RangeT, typename PredicateT>
+        template<typename CollectionT, typename PredicateT>
         inline bool all( 
-            const RangeT& Input, 
+            const CollectionT& Input, 
             PredicateT Pred)
         {
             typedef BOOST_STRING_TYPENAME 
-                range_const_iterator<RangeT>::type Iterator1T;
+                const_iterator_of<CollectionT>::type Iterator1T;
 
             Iterator1T InputEnd=end(Input);
             for( Iterator1T It=begin(Input); It!=InputEnd; ++It)

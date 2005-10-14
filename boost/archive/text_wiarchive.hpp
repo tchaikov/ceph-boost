@@ -17,17 +17,15 @@
 //  See http://www.boost.org for updates, documentation, and revision history.
 
 #include <boost/config.hpp>
+
 #ifdef BOOST_NO_STD_WSTREAMBUF
 #error "wide char i/o not supported on this platform"
 #else
 
 #include <istream>
 
-#include <boost/archive/detail/auto_link_warchive.hpp>
 #include <boost/archive/basic_text_iprimitive.hpp>
 #include <boost/archive/basic_text_iarchive.hpp>
-
-#include <boost/archive/detail/abi_prefix.hpp> // must be the last header
 
 namespace boost { 
 namespace archive {
@@ -49,17 +47,13 @@ protected:
     void load(T & t){
         basic_text_iprimitive<std::wistream>::load(t);
     }
-    BOOST_WARCHIVE_DECL(void)
-    load(char * t);
+    void load(char * t);
     #ifndef BOOST_NO_INTRINSIC_WCHAR_T
-    BOOST_WARCHIVE_DECL(void)
-    load(wchar_t * t);
+    void load(wchar_t * t);
     #endif
-    BOOST_WARCHIVE_DECL(void)
-    load(std::string &s);
+    void load(std::string &s);
     #ifndef BOOST_NO_STD_WSTRING
-    BOOST_WARCHIVE_DECL(void)
-    load(std::wstring &ws);
+    void load(std::wstring &ws);
     #endif
     // note: the following should not needed - but one compiler (vc 7.1)
     // fails to compile one test (test_shared_ptr) without it !!!
@@ -67,32 +61,30 @@ protected:
     void load_override(T & t, BOOST_PFTO int){
         basic_text_iarchive<Archive>::load_override(t, 0);
     }
-    BOOST_WARCHIVE_DECL(BOOST_PP_EMPTY()) 
-    text_wiarchive_impl(std::wistream & is, unsigned int flags);
-    ~text_wiarchive_impl(){};
+    text_wiarchive_impl(std::wistream & is, unsigned int flags = 0) :
+        basic_text_iprimitive<std::wistream>(
+            is, 
+            0 != (flags & no_codecvt)
+        )
+    {}
 };
 
 // do not derive from this class.  If you want to extend this functionality
 // via inhertance, derived from text_wiarchive_impl instead.  This will
 // preserve correct static polymorphism.
-class text_wiarchive : 
-    public text_wiarchive_impl<text_wiarchive>
+class text_wiarchive : public text_wiarchive_impl<text_wiarchive>
 {
 public:
     text_wiarchive(std::wistream & is, unsigned int flags = 0) :
-        text_wiarchive_impl<text_wiarchive>(is, flags)
-    {}
-    ~text_wiarchive(){}
+        text_wiarchive_impl<text_wiarchive>(is, flags | no_header)
+    {
+        if(0 == (flags & no_header))
+            basic_text_iarchive<text_wiarchive>::init();
+    }
 };
 
 } // namespace archive
 } // namespace boost
-
-// required by smart_cast for compilers not implementing 
-// partial template specialization
-BOOST_BROKEN_COMPILER_TYPE_TRAITS_SPECIALIZATION(boost::archive::text_wiarchive)
-
-#include <boost/archive/detail/abi_suffix.hpp> // pops abi_suffix.hpp pragmas
 
 #endif // BOOST_NO_STD_WSTREAMBUF
 #endif // BOOST_ARCHIVE_TEXT_WIARCHIVE_HPP

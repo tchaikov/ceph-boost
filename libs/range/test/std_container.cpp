@@ -1,4 +1,4 @@
-    // Boost.Range library
+// Boost.Range library
 //
 //  Copyright Thorsten Ottosen 2003-2004. Use, modification and
 //  distribution is subject to the Boost Software License, Version
@@ -25,6 +25,7 @@
 #include <vector>
 
 using namespace boost;
+using boost::unit_test_framework::test_suite;
 
 void check_std_container()
 {
@@ -60,8 +61,11 @@ void check_std_container()
 }
 
 
-#include <boost/test/unit_test.hpp>
-using boost::unit_test::test_suite;
+
+
+#include <boost/test/included/unit_test_framework.hpp> 
+
+using boost::unit_test_framework::test_suite;
 
 test_suite* init_unit_test_suite( int argc, char* argv[] )
 {

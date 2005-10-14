@@ -23,7 +23,6 @@
 #include <boost/spirit/phoenix/actor.hpp>
 #include <boost/spirit/phoenix/composite.hpp>
 #include <boost/config.hpp>
-#include <boost/mpl/if.hpp>
 
 ///////////////////////////////////////////////////////////////////////////////
 namespace phoenix {
@@ -400,9 +399,21 @@ template <typename T, int N> struct rank<T[N]>
 ///////////////////////////////////////////////////////////////////////////////
 template <typename T0, typename T1>
 struct higher_rank {
-    typedef typename boost::mpl::if_c<
-        rank<T0>::value < rank<T1>::value,
-        T1, T0>::type type;
+
+    enum {
+
+        rank1 = rank<T0>::value,
+        rank2 = rank<T1>::value,
+
+#if defined __BORLANDC__ && __BORLANDC__ >= 0x561
+        siz = (rank<T0>::value < rank<T1>::value) ? 1 : 2
+#else
+        siz = (rank1 < rank2) ? 1 : 2
+#endif
+    };
+
+    typedef char compare_rank[siz];
+    typedef typename impl::if_t<compare_rank, T1, T0>::type type;
 };
 
 ///////////////////////////////////////////////////////////////////////////////

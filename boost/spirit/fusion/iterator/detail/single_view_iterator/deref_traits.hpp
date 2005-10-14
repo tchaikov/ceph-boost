@@ -14,29 +14,13 @@
 
 namespace boost { namespace fusion
 {
-    namespace detail
-    {
-        template <typename SingleView>
-        struct single_view_access_result
-        {
-            typedef typename
-                mpl::eval_if<
-                    is_const<SingleView>
-                  , cref_result<mpl::identity<FUSION_GET_VALUE_TYPE(SingleView)> >
-                  , ref_result<mpl::identity<FUSION_GET_VALUE_TYPE(SingleView)> >
-                >::type
-            type;
-        };
-    }
-
     namespace single_view_iterator_detail
     {
         template <typename Iterator>
         struct deref_traits_impl
         {
-            typedef typename Iterator::single_view_type single_view_type;
-            typedef typename detail::single_view_access_result<
-                single_view_type>::type 
+            typedef typename detail::cref_result<
+                mpl::identity<FUSION_GET_VALUE_TYPE(Iterator)> >::type
             type;
 
             static type
@@ -47,7 +31,7 @@ namespace boost { namespace fusion
         inline typename deref_traits_impl<Iterator>::type
         deref_traits_impl<Iterator>::call(Iterator const& i)
         {
-            return detail::ref(i.view.val);
+            return detail::ref(i.val);
         }
     }
 

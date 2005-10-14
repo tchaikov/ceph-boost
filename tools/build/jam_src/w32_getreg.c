@@ -63,9 +63,8 @@ builtin_system_registry(
         && ERROR_SUCCESS == RegOpenKeyEx(key, path, 0, KEY_QUERY_VALUE, &key) 
     )
     {
-        DWORD  type;
+        DWORD  type, len;
         BYTE   data[MAX_REGISTRY_DATA_LENGTH];
-        DWORD  len = sizeof(data);
         LIST const* const field = lol_get(frame->args, 1);
         
         if ( ERROR_SUCCESS ==

@@ -1,7 +1,7 @@
 /*
  *
  * Copyright (c) 1998-2002
- * John Maddock
+ * Dr John Maddock
  *
  * Use, modification and distribution are subject to the 
  * Boost Software License, Version 1.0. (See accompanying file 
@@ -71,13 +71,6 @@ template<>
 struct regex_iterator_traits<wchar_t*> : pointer_iterator_traits<wchar_t>{};
 template<>
 struct regex_iterator_traits<const wchar_t*> : const_pointer_iterator_traits<wchar_t>{};
-
-#ifdef BOOST_REGEX_HAS_OTHER_WCHAR_T
-template<>
-struct regex_iterator_traits<unsigned short*> : pointer_iterator_traits<unsigned short>{};
-template<>
-struct regex_iterator_traits<const unsigned short*> : const_pointer_iterator_traits<unsigned short>{};
-#endif
 
 #if defined(__SGI_STL_PORT) && defined(__STL_DEBUG)
 template<>

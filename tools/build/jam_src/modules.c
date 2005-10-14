@@ -53,7 +53,6 @@ module_t* bindmodule( char* name )
         m->imported_modules = 0;
         m->class_module = 0;
         m->native_rules = 0;
-        m->user_module = 0;
     }
     string_free( &s );
     return m;
@@ -148,3 +147,4 @@ LIST* imported_modules(module_t* module)
 
     return result;
 }
+

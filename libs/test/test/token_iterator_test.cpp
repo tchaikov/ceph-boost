@@ -1,4 +1,4 @@
-//  (C) Copyright Gennadiy Rozental 2001-2005.
+//  (C) Copyright Gennadiy Rozental 2001-2004.
 //  Distributed under the Boost Software License, Version 1.0.
 //  (See accompanying file LICENSE_1_0.txt or copy at 
 //  http://www.boost.org/LICENSE_1_0.txt)
@@ -7,20 +7,19 @@
 //
 //  File        : $RCSfile: token_iterator_test.cpp,v $
 //
-//  Version     : $Revision: 1.12 $
+//  Version     : $Revision: 1.5.2.1 $
 //
 //  Description : string_token_iterator unit test
 // *****************************************************************************
 
 // Boost.Test
-#define BOOST_AUTO_TEST_MAIN
-#include <boost/test/auto_unit_test.hpp>
-#include <boost/test/utils/iterator/token_iterator.hpp>
+#include <boost/test/unit_test.hpp>
 
-// BOOST
+#include <boost/test/detail/iterator/token_iterator.hpp>
 #include <boost/iterator/transform_iterator.hpp>
 
-// STL
+namespace utf = boost::unit_test;
+
 #include <iostream>
 #include <list>
 #include <iterator>
@@ -29,72 +28,59 @@
 namespace std{ using ::toupper; using ::tolower; }
 #endif
 
-namespace utf = boost::unit_test;
-
 //____________________________________________________________________________//
 
 static utf::string_token_iterator  sti_end;
 static utf::wstring_token_iterator wsti_end;
-
-BOOST_AUTO_TEST_CASE( test_default_delim_policy )
+void test_default_delim_policy()
 {
     utf::string_token_iterator tit( "This is\n,  a \ttest" );
     char const* res[] = { "This", "is", ",", "a", "test" };
 
-    BOOST_CHECK_EQUAL_COLLECTIONS( tit, sti_end, res, res + sizeof(res)/sizeof(char const*) );
+    BOOST_CHECK_EQUAL_COLLECTIONS( tit, sti_end, res );
 }
 
 //____________________________________________________________________________//
 
-BOOST_AUTO_TEST_CASE( test_wide )
+void test_wide()
 {
     utf::wstring_token_iterator tit( L"\317\356\367\345\354\363 \341\373 \350 \355\345\362" );
     wchar_t const* res[4] = { L"\317\356\367\345\354\363", L"\341\373", L"\350", L"\355\345\362" };
     
-    BOOST_CHECK_EQUAL_COLLECTIONS( tit, wsti_end, res, res + sizeof(res)/sizeof(char const*) );
+    BOOST_CHECK_EQUAL_COLLECTIONS( tit, wsti_end, res );
 }
 
 //____________________________________________________________________________//
 
-BOOST_AUTO_TEST_CASE( test_custom_drop_delim )
+void test_custom_drop_delim()
 {
     utf::string_token_iterator tit( "My:-:\t: :string, :", utf::dropped_delimeters = ":" );
     char const* res[] = { "My", "-", "\t", " ", "string", ",", " " };
 
-    BOOST_CHECK_EQUAL_COLLECTIONS( tit, sti_end, res, res + sizeof(res)/sizeof(char const*) );
+    BOOST_CHECK_EQUAL_COLLECTIONS( tit, sti_end, res );
 }
 
 //____________________________________________________________________________//
 
-BOOST_AUTO_TEST_CASE( test_custom_keep_delim )
+void test_custom_keep_delim()
 {
     utf::string_token_iterator tit( "abc = \t\t 123, int", utf::kept_delimeters = "=," );
     char const* res[] = { "abc", "=", "123", ",", "int" };
 
-    BOOST_CHECK_EQUAL_COLLECTIONS( tit, sti_end, res, res + sizeof(res)/sizeof(char const*) );
+    BOOST_CHECK_EQUAL_COLLECTIONS( tit, sti_end, res );
 }
 
 //____________________________________________________________________________//
 
-BOOST_AUTO_TEST_CASE( test_keep_empty_tokens )
+void test_keep_empty_tokens()
 {
-    utf::string_token_iterator tit( "fld,, 456,a==4=,", 
-                                    (utf::dropped_delimeters = " ,",
-                                     utf::kept_delimeters    = "=",
-                                     utf::keep_empty_tokens )); 
-    char const* res[] = { "fld", "", "", "456", "a", "=", "", "=", "4", "=", "", "" };
+    utf::string_token_iterator tit( "fld,, 456,a=4,", 
+                                    utf::dropped_delimeters = " ,",
+                                    utf::kept_delimeters    = "=",
+                                    utf::keep_empty_tokens ); 
+    char const* res[] = { "fld", "", "", "456", "a", "=", "4", "" };
 
-    BOOST_CHECK_EQUAL_COLLECTIONS( tit, sti_end, res, res + sizeof(res)/sizeof(char const*) );
-}
-
-//____________________________________________________________________________//
-
-BOOST_AUTO_TEST_CASE( test_max_tokens )
-{
-    utf::string_token_iterator tit( "aa bb dd", utf::max_tokens = 2 ); 
-    char const* res[] = { "aa", "bb dd" };
-
-    BOOST_CHECK_EQUAL_COLLECTIONS( tit, sti_end, res, res + sizeof(res)/sizeof(char const*) );
+    BOOST_CHECK_EQUAL_COLLECTIONS( tit, sti_end, res );
 }
 
 //____________________________________________________________________________//
@@ -106,7 +92,7 @@ struct ci_comp {
     }
 };
 
-BOOST_AUTO_TEST_CASE( test_custom_compare )
+void test_custom_compare()
 {
     typedef utf::basic_string_token_iterator<char,ci_comp> my_token_iterator;
 
@@ -114,12 +100,12 @@ BOOST_AUTO_TEST_CASE( test_custom_compare )
     char const* res[] = { "093514", "120104" };
 
     my_token_iterator end;
-    BOOST_CHECK_EQUAL_COLLECTIONS( tit, end, res, res + sizeof(res)/sizeof(char const*) );
+    BOOST_CHECK_EQUAL_COLLECTIONS( tit, end, res );
 }
 
 //____________________________________________________________________________//
 
-BOOST_AUTO_TEST_CASE( test_range_token_iterator )
+void test_range_token_iterator()
 {
     typedef utf::range_token_iterator<std::list<char>::iterator> my_token_iterator;
 
@@ -127,49 +113,18 @@ BOOST_AUTO_TEST_CASE( test_range_token_iterator )
     char const* pattern = "a bc , cd";
     std::copy( pattern, pattern+9, std::back_inserter( l ) );
 
-#if !defined( __GNUC__ ) ||  ( __GNUC__ == 3 && __GNUC_MINOR__ != 2 ) || ( __GNUC__ > 3 )
+#if !BOOST_WORKAROUND( __GNUC__, < 3 )
     my_token_iterator tit( l.begin(), l.end() );
     char const* res[] = { "a", "bc", ",", "cd" };
 
     my_token_iterator end;
-    BOOST_CHECK_EQUAL_COLLECTIONS( tit, end, res, res + sizeof(res)/sizeof(char const*) );
+    BOOST_CHECK_EQUAL_COLLECTIONS( tit, end, res );
 #endif
 }
 
 //____________________________________________________________________________//
 
-template<typename Iter>
-void moo( Iter b )
-{
-    char const* res[6] = { "ABC", "SDF", " ", "SD", "FG", " " };
-
-    Iter end;
-    BOOST_CHECK_EQUAL_COLLECTIONS( b, end, res, res+sizeof(res)/sizeof(char const*) );
-}
-
-template<typename Iter>
-void foo( Iter b, Iter e )
-{
-    moo( utf::make_range_token_iterator( b, e, (utf::kept_delimeters = utf::dt_isspace, utf::dropped_delimeters = "2" )) );
-}
-
-inline char loo( char c ) { return (std::toupper)( c ); }
-
-BOOST_AUTO_TEST_CASE( test_make_range_token_iterator )
-{
-    char const* str = "Abc22sdf sd2fg ";
-
-#if !BOOST_WORKAROUND( BOOST_MSVC, <= 1300 ) && !BOOST_WORKAROUND( __BORLANDC__, <= 0x550 )
-    foo( boost::make_transform_iterator( str, loo ),
-         boost::make_transform_iterator( str+15, loo ) );
-#endif
-}
-
-//____________________________________________________________________________//
-
-#if 0
-
-BOOST_AUTO_TEST_CASE( test_istream_token_iterator )
+void test_istream_token_iterator()
 {
     typedef utf::range_token_iterator<std::istream_iterator<char> > my_token_iterator;
 
@@ -183,7 +138,54 @@ BOOST_AUTO_TEST_CASE( test_istream_token_iterator )
     }
 }
 
+//____________________________________________________________________________//
+
+template<typename Iter>
+void moo( Iter b )
+{
+    char const* res[] = { "ABC", "SDF", " ", "SD", "FG", " " };
+
+    Iter end;
+    BOOST_CHECK_EQUAL_COLLECTIONS( b, end, res );
+}
+
+template<typename Iter>
+void foo( Iter b, Iter e )
+{
+    moo( utf::make_range_token_iterator( b, e, utf::kept_delimeters = utf::use_isspace, utf::dropped_delimeters = "2" ) );
+}
+
+inline char loo( char c ) { return (std::toupper)( c ); }
+
+void test_make_range_token_iterator()
+{
+    char const* str = "Abc22sdf sd2fg ";
+
+#if !BOOST_WORKAROUND( BOOST_MSVC, <= 1300 ) && !BOOST_WORKAROUND( __BORLANDC__, <= 0x550 )
+    foo( boost::make_transform_iterator( str, loo ),
+         boost::make_transform_iterator( str+15, loo ) );
 #endif
+}
+
+//____________________________________________________________________________//
+
+utf::test_suite*
+init_unit_test_suite( int argc, char* argv[] )
+{
+    utf::test_suite* test= BOOST_TEST_SUITE( "token iterator unit test" );
+
+    test->add( BOOST_TEST_CASE( &test_default_delim_policy ) );
+    test->add( BOOST_TEST_CASE( &test_wide ) );
+    test->add( BOOST_TEST_CASE( &test_custom_drop_delim ) );
+    test->add( BOOST_TEST_CASE( &test_custom_keep_delim ) );
+    test->add( BOOST_TEST_CASE( &test_keep_empty_tokens ) );
+    test->add( BOOST_TEST_CASE( &test_custom_compare ) );
+    test->add( BOOST_TEST_CASE( &test_range_token_iterator ) );
+//    test->add( BOOST_TEST_CASE( &test_istream_token_iterator ) );
+    test->add( BOOST_TEST_CASE( &test_make_range_token_iterator ) );
+
+    return test;
+}
 
 //____________________________________________________________________________//
 
@@ -191,18 +193,23 @@ BOOST_AUTO_TEST_CASE( test_istream_token_iterator )
 // History :
 //
 // $Log: token_iterator_test.cpp,v $
-// Revision 1.12  2005/06/11 19:20:58  rogeeff
-// *** empty log message ***
+// Revision 1.5.2.1  2004/10/30 11:33:38  agurtovoy
+// MSVC/Borland fixes
 //
-// Revision 1.11  2005/06/05 18:10:59  grafik
-// named_param.hpp; Work around CW not handling operator, using declaration, by using a real operator,().
-// token_iterator_test.cpp; Work around CW-8 confused with array initialization.
+// Revision 1.5  2004/10/05 01:32:09  rogeeff
+// file/directory renaming for the sake of CD burning
 //
-// Revision 1.10  2005/05/11 05:07:57  rogeeff
-// licence update
+// Revision 1.4  2004/10/01 10:55:43  rogeeff
+// some test errors workarrounds
 //
-// Revision 1.9  2005/04/13 05:09:16  rogeeff
-// *** empty log message ***
+// Revision 1.3  2004/09/28 17:27:25  rogeeff
+// unnesseary check removed
+//
+// Revision 1.2  2004/09/27 08:39:21  rogeeff
+// msvc/gcc workarounds
+//
+// Revision 1.1  2004/06/05 11:04:50  rogeeff
+// no message
 //
 // *****************************************************************************
 

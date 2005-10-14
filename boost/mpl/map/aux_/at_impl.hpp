@@ -12,8 +12,8 @@
 // See http://www.boost.org/libs/mpl for documentation.
 
 // $Source: /cvsroot/boost/boost/boost/mpl/map/aux_/at_impl.hpp,v $
-// $Date: 2004/12/14 14:05:31 $
-// $Revision: 1.6 $
+// $Date: 2004/10/13 18:23:36 $
+// $Revision: 1.5 $
 
 #include <boost/mpl/at_fwd.hpp>
 #include <boost/mpl/long.hpp>
@@ -24,7 +24,6 @@
 #include <boost/mpl/aux_/ptr_to_ref.hpp>
 #include <boost/mpl/aux_/static_cast.hpp>
 #include <boost/mpl/aux_/config/typeof.hpp>
-#include <boost/mpl/aux_/config/ctps.hpp>
 
 #if !defined(BOOST_MPL_CFG_TYPEOF_BASED_SEQUENCES)
 #   include <boost/mpl/eval_if.hpp>
@@ -79,30 +78,10 @@ struct item_by_order
 
 #else // BOOST_MPL_CFG_TYPEOF_BASED_SEQUENCES
 
-#   if !defined(BOOST_NO_TEMPLATE_PARTIAL_SPECIALIZATION)
-
 template< typename Map, long n > struct m_at
 {
     typedef void_ type;
 };
-
-#   else
-
-template< long n > struct m_at_impl
-{
-    template< typename Map > struct result_
-    {
-        typedef void_ type;
-    };
-};
-
-template< typename Map, long n > struct m_at
-{
-    typedef typename m_at_impl<n>::result_<Map>::type type;
-};
-
-#   endif
-
 
 template<>
 struct at_impl< aux::map_tag >

@@ -1,4 +1,4 @@
-//  (C) Copyright Gennadiy Rozental 2003-2005.
+//  (C) Copyright Gennadiy Rozental 2003.
 //  Distributed under the Boost Software License, Version 1.0.
 //  (See accompanying file LICENSE_1_0.txt or copy at 
 //  http://www.boost.org/LICENSE_1_0.txt)
@@ -7,178 +7,150 @@
 //
 //  File        : $RCSfile: test_case_template.hpp,v $
 //
-//  Version     : $Revision: 1.15 $
+//  Version     : $Revision: 1.8 $
 //
 //  Description : implements support for test cases templates instantiated with 
 //                sequence of test types
 // ***************************************************************************
 
-#ifndef BOOST_TEST_TEST_CASE_TEMPLATE_HPP_071894GER
-#define BOOST_TEST_TEST_CASE_TEMPLATE_HPP_071894GER
+#ifndef BOOST_TEST_CASE_TEMPLATE_HPP_071894GER
+#define BOOST_TEST_CASE_TEMPLATE_HPP_071894GER
 
 // Boost.Test
 #include <boost/test/unit_test_suite.hpp>
 
 // Boost
+#include "boost/mpl/size.hpp"
 #include <boost/mpl/for_each.hpp>
 #include <boost/mpl/identity.hpp>
-#include <boost/type.hpp>
-#include <boost/type_traits/is_const.hpp>
-
-// STL
-#include <typeinfo>
-
-#include <boost/test/detail/suppress_warnings.hpp>
 
 //____________________________________________________________________________//
 
-#define BOOST_TEST_CASE_TEMPLATE( name, typelist )                          \
-    boost::unit_test::ut_detail::template_test_case_gen<name,typelist >(    \
-        BOOST_TEST_STRINGIZE( name ) )                                      \
+#define BOOST_META_FUNC_TEST_CASE( the_function )   \
+struct meta_ ## the_function {                      \
+    template<typename T>                            \
+    static void execute( T* = 0 )                   \
+    {                                               \
+        the_function<T>();                          \
+    }                                               \
+}                                                   \
 /**/
 
-//____________________________________________________________________________//
-
-#define BOOST_TEST_CASE_TEMPLATE_FUNCTION( name, type_name )    \
-template<typename type_name>                                    \
-void BOOST_JOIN( name, _impl )( boost::type<type_name>* );      \
-                                                                \
-struct name {                                                   \
-    template<typename TestType>                                 \
-    static void run( boost::type<TestType>* frwrd = 0 )         \
-    {                                                           \
-       BOOST_JOIN( name, _impl )( frwrd );                      \
-    }                                                           \
-};                                                              \
-                                                                \
-template<typename type_name>                                    \
-void BOOST_JOIN( name, _impl )( boost::type<type_name>* )       \
-/**/
-
-//____________________________________________________________________________//
-
+#define BOOST_FUNC_TEMPLATE_TEST_CASE( the_function, typelist ) \
+boost::unit_test::create_test_case_template( meta_ ## the_function(), typelist(), #the_function )
+    
 namespace boost {
-
 namespace unit_test {
-
 namespace ut_detail {
 
 // ************************************************************************** //
-// **************          test_case_template_invoker          ************** //
+// **************          test_case_template_instance         ************** //
 // ************************************************************************** //
+// Generate test case by supplied test case template and test type
 
 template<typename TestCaseTemplate,typename TestType>
-class test_case_template_invoker {
+class test_case_template_instance : public test_case {
+    typedef TestType*   test_type_ptr;
 public:
-    void    operator()()    { TestCaseTemplate::run( (boost::type<TestType>*)0 ); }
+    explicit            test_case_template_instance( const_string template_name_ )
+    : test_case( template_name_, true, 1 )  {}
+    
+protected:
+    // test case implementation
+    void                do_run()            { TestCaseTemplate::execute( test_type_ptr() ); }
+
 };
 
 //____________________________________________________________________________//
 
 // ************************************************************************** //
-// **************           generate_test_case_4_type          ************** //
+// **************           test_case_instance_runner          ************** //
 // ************************************************************************** //
+// Instantiate generated test case and run it.
 
-template<typename Generator,typename TestCaseTemplate>
-struct generate_test_case_4_type {
-    explicit    generate_test_case_4_type( const_string tc_name, Generator& G )
-    : m_test_case_name( tc_name )
-    , m_holder( G )
-    {}
+template<typename TestCaseTemplate>
+struct test_case_instance_runner {
+    explicit            test_case_instance_runner( const_string template_name_ )
+    : m_template_name( template_name_ ) {}
 
     template<typename TestType>
-    void        operator()( mpl::identity<TestType> )
+    void                operator()( ::boost::mpl::identity<TestType> )
     {
-        std::string full_name;
-        assign_op( full_name, m_test_case_name, 0 );
-        full_name += '<';
-        full_name += typeid(TestType).name();
-        if( boost::is_const<TestType>::value )
-            full_name += " const";
-        full_name += '>';
+        test_case_template_instance<TestCaseTemplate,TestType> the_instance( m_template_name ); //!! could this throw?
 
-        m_holder.m_test_cases.push_back( 
-            new test_case( full_name, test_case_template_invoker<TestCaseTemplate,TestType>() ) );
+        the_instance.run();
     }
 
-private:
-    // Data members
-    const_string    m_test_case_name;
-    Generator&      m_holder;
+    const_string    m_template_name;
 };
+
+} // namespace ut_detail
 
 // ************************************************************************** //
 // **************              test_case_template              ************** //
 // ************************************************************************** //
 
 template<typename TestCaseTemplate,typename TestTypesList>
-class template_test_case_gen : public test_unit_generator {
+class test_case_template : public test_case {
 public:
     // Constructor
-    template_test_case_gen( const_string tc_name )
-    {
-        typedef generate_test_case_4_type<template_test_case_gen<TestCaseTemplate,TestTypesList>,
-                                          TestCaseTemplate
-        > single_test_gen;
-        mpl::for_each<TestTypesList,mpl::make_identity<mpl::_> >( single_test_gen( tc_name, *this ) );
-    }
+    explicit            test_case_template( const_string name_ )
+    : test_case( name_, false, 1, false ), m_template_holder( p_name.get() ) {}
 
-    test_unit* next() const
-    {
-        if( m_test_cases.empty() )
-            return 0;
+    // access methods
+    unit_test_counter   size() const    { return ::boost::mpl::size<TestTypesList>::value; }
+
+protected:
     
-        test_unit* res = m_test_cases.front();
-        m_test_cases.pop_front();
-
-        return res;
+    // test case implementation
+    void                do_run()
+    {
+        ::boost::mpl::for_each<TestTypesList,mpl::make_identity<boost::mpl::_> >( m_template_holder );
     }
 
     // Data members
-    mutable std::list<test_unit*> m_test_cases;
+    ut_detail::test_case_instance_runner<TestCaseTemplate> m_template_holder; // need instance to match for_each interface
 };
 
 //____________________________________________________________________________//
 
-} // namespace ut_detail
+// ************************************************************************** //
+// **************               object generators              ************** //
+// ************************************************************************** //
 
-} // unit_test
-
-} // namespace boost
+template<typename TestCaseTemplate, typename TestTypesList>
+inline test_case*
+create_test_case_template( TestCaseTemplate, TestTypesList, std::string name_ )
+{
+    return new test_case_template<TestCaseTemplate,TestTypesList>( ut_detail::normalize_test_case_name( name_ ) );
+}
 
 //____________________________________________________________________________//
 
-#include <boost/test/detail/enable_warnings.hpp>
+} // unit_test
+} // namespace boost
 
 // ***************************************************************************
 //  Revision History :
 //  
 //  $Log: test_case_template.hpp,v $
-//  Revision 1.15  2005/04/17 15:50:37  rogeeff
-//  portability fixes
+//  Revision 1.8  2004/07/19 12:14:34  rogeeff
+//  guard rename
 //
-//  Revision 1.14  2005/04/13 04:35:18  rogeeff
-//  forgot zero
+//  Revision 1.7  2004/06/07 07:33:49  rogeeff
+//  detail namespace renamed
 //
-//  Revision 1.13  2005/04/12 06:50:46  rogeeff
-//  assign_to -> assign_op
+//  Revision 1.6  2004/05/21 06:19:35  rogeeff
+//  licence update
 //
-//  Revision 1.12  2005/03/22 06:58:47  rogeeff
-//  assign_to made free function
+//  Revision 1.5  2004/05/11 11:00:35  rogeeff
+//  basic_cstring introduced and used everywhere
+//  class properties reworked
 //
-//  Revision 1.11  2005/02/20 08:27:06  rogeeff
-//  This a major update for Boost.Test framework. See release docs for complete list of fixes/updates
-//
-//  Revision 1.10  2005/02/01 06:40:06  rogeeff
-//  copyright update
-//  old log entries removed
-//  minor stilistic changes
-//  depricated tools removed
-//
-//  Revision 1.9  2005/01/30 03:20:38  rogeeff
-//  use BOOST_JOIN and BOOST_TEST_STRINGIZE
+//  Revision 1.4  2003/12/01 00:41:56  rogeeff
+//  prerelease cleaning
 //
 // ***************************************************************************
 
-#endif // BOOST_TEST_TEST_CASE_TEMPLATE_HPP_071894GER
+#endif // BOOST_TEST_CASE_TEMPLATE_HPP_071894GER
 

@@ -1,4 +1,4 @@
-//  (C) Copyright Gennadiy Rozental 2003-2005.
+//  (C) Copyright Gennadiy Rozental 2003-2004.
 //  Distributed under the Boost Software License, Version 1.0.
 //  (See accompanying file LICENSE_1_0.txt or copy at 
 //  http://www.boost.org/LICENSE_1_0.txt)
@@ -6,7 +6,6 @@
 //  See http://www.boost.org/libs/test for the library home page.
 
 #include <boost/test/execution_monitor.hpp>
-#include <boost/test/utils/basic_cstring/io.hpp>
 
 #include <iostream>
 
@@ -24,13 +23,11 @@ struct my_exception2
     int         m_res_code;
 };
 
-namespace {
+struct dangerous_call_monitor : boost::execution_monitor
+{
+    explicit dangerous_call_monitor( int argc ) : m_argc( argc ) {}
 
-class dangerous_call {
-public:
-    dangerous_call( int argc ) : m_argc( argc ) {}
-    
-    int operator()()
+    virtual int function()
     {
         // here we perform some operation under monitoring that could throw my_exception
         if( m_argc < 2 )
@@ -43,9 +40,7 @@ public:
         return 1;
     }
 
-private:
-    // Data members  
-    int     m_argc;
+    int m_argc;
 };
 
 void translate_my_exception1( my_exception1 const& ex )
@@ -58,18 +53,16 @@ void translate_my_exception2( my_exception2 const& ex )
     std::cout << "Caught my_exception2(" << ex.m_res_code << ")"<< std::endl;   
 }
 
-} // local_namespace
-
 int
 main( int argc , char *[] )
 { 
-    ::boost::execution_monitor ex_mon;
+    dangerous_call_monitor the_monitor( argc );
 
-    ex_mon.register_exception_translator<my_exception1>( &translate_my_exception1 );
-    ex_mon.register_exception_translator<my_exception2>( &translate_my_exception2 );
+    the_monitor.register_exception_translator<my_exception1>( &translate_my_exception1 );
+    the_monitor.register_exception_translator<my_exception2>( &translate_my_exception2 );
 
     try {
-        ex_mon.execute( ::boost::unit_test::callback0<int>( dangerous_call( argc ) ) );
+        the_monitor.execute();
     }
     catch ( boost::execution_exception const& ex ) {
         std::cout << "Caught exception: " << ex.what() << std::endl;

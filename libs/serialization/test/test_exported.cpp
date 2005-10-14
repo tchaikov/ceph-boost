@@ -18,12 +18,11 @@ namespace std{
 }
 #endif
 
-#include <boost/archive/archive_exception.hpp>
-#include "test_tools.hpp"
-#include <boost/preprocessor/stringize.hpp>
-#include BOOST_PP_STRINGIZE(BOOST_ARCHIVE_TEST)
-
 #include <boost/serialization/base_object.hpp>
+#include <boost/archive/archive_exception.hpp>
+
+#include "test_tools.hpp"
+
 #include <boost/serialization/export.hpp>
 
 class polymorphic_base
@@ -36,7 +35,7 @@ public:
     virtual ~polymorphic_base(){};
 };
 
-BOOST_IS_ABSTRACT(polymorphic_base)
+//BOOST_IS_ABSTRACT(polymorphic_base)
 
 class polymorphic_derived1 : public polymorphic_base
 {
@@ -124,7 +123,7 @@ test_main( int /* argc */, char* /* argv */[] )
     save_exported(testfile);
     load_exported(testfile);
     std::remove(testfile);
-    return EXIT_SUCCESS;
+    return boost::exit_success;
 }
 
 // EOF

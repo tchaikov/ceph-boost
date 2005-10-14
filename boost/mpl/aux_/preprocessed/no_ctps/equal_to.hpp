@@ -65,7 +65,6 @@ template<
     , typename BOOST_MPL_AUX_NA_PARAM(N2)
     >
 struct equal_to
-
     : equal_to_impl<
           typename equal_to_tag<N1>::type
         , typename equal_to_tag<N2>::type

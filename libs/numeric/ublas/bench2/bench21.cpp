@@ -14,6 +14,16 @@
 //  GeNeSys mbH & Co. KG in producing this work.
 //
 
+#include <iostream>
+#include <string>
+
+#include <boost/numeric/ublas/vector.hpp>
+#include <boost/numeric/ublas/vector_sparse.hpp>
+#include <boost/numeric/ublas/matrix.hpp>
+#include <boost/numeric/ublas/matrix_sparse.hpp>
+
+#include <boost/timer.hpp>
+
 #include "bench2.hpp"
 
 template<class T, int N>
@@ -38,6 +48,9 @@ struct bench_c_inner_prod {
         catch (std::exception &e) {
             std::cout << e.what () << std::endl;
         }
+        catch (...) {
+            std::cout << "unknown exception" << std::endl;
+        }
     }
 };
 template<class V, int N>
@@ -60,6 +73,9 @@ struct bench_my_inner_prod {
         catch (std::exception &e) {
             std::cout << e.what () << std::endl;
         }
+        catch (...) {
+            std::cout << "unknown exception" << std::endl;
+        }
     }
 };
 template<class V, int N>
@@ -81,6 +97,9 @@ struct bench_cpp_inner_prod {
         }
         catch (std::exception &e) {
             std::cout << e.what () << std::endl;
+        }
+        catch (...) {
+            std::cout << "unknown exception" << std::endl;
         }
     }
 };
@@ -106,6 +125,9 @@ struct bench_c_vector_add {
         catch (std::exception &e) {
             std::cout << e.what () << std::endl;
         }
+        catch (...) {
+            std::cout << "unknown exception" << std::endl;
+        }
     }
 };
 template<class V, int N>
@@ -127,6 +149,9 @@ struct bench_my_vector_add {
         catch (std::exception &e) {
             std::cout << e.what () << std::endl;
         }
+        catch (...) {
+            std::cout << "unknown exception" << std::endl;
+        }
     }
     void operator () (int runs, fast_tag) const {
         try {
@@ -142,6 +167,9 @@ struct bench_my_vector_add {
         }
         catch (std::exception &e) {
             std::cout << e.what () << std::endl;
+        }
+        catch (...) {
+            std::cout << "unknown exception" << std::endl;
         }
     }
 };
@@ -164,6 +192,9 @@ struct bench_cpp_vector_add {
         catch (std::exception &e) {
             std::cout << e.what () << std::endl;
         }
+        catch (...) {
+            std::cout << "unknown exception" << std::endl;
+        }
     }
 };
 
@@ -177,15 +208,15 @@ void bench_1<T, N>::operator () (int runs) {
     header ("C array");
     bench_c_inner_prod<T, N> () (runs);
 
-#ifdef USE_MAPPED_VECTOR
+#ifdef USE_SPARSE_VECTOR
 #ifdef USE_MAP_ARRAY
-    header ("mapped_vector<map_array>");
-    bench_my_inner_prod<ublas::mapped_vector<T, ublas::map_array<std::size_t, T> >, N> () (runs);
+    header ("sparse_vector<map_array>");
+    bench_my_inner_prod<ublas::sparse_vector<T, ublas::map_array<std::size_t, T> >, N> () (runs);
 #endif
 
 #ifdef USE_STD_MAP
-    header ("mapped_vector<std::map>");
-    bench_my_inner_prod<ublas::mapped_vector<T, std::map<std::size_t, T> >, N> () (runs);
+    header ("sparse_vector<std::map>");
+    bench_my_inner_prod<ublas::sparse_vector<T, std::map<std::size_t, T> >, N> () (runs);
 #endif
 #endif
 
@@ -209,21 +240,21 @@ void bench_1<T, N>::operator () (int runs) {
     header ("C array");
     bench_c_vector_add<T, N> () (runs);
 
-#ifdef USE_MAPPED_VECTOR
+#ifdef USE_SPARSE_VECTOR
 #ifdef USE_MAP_ARRAY
-    header ("mapped_vector<map_array> safe");
-    bench_my_vector_add<ublas::mapped_vector<T, ublas::map_array<std::size_t, T> >, N> () (runs, safe_tag ());
+    header ("sparse_vector<map_array> safe");
+    bench_my_vector_add<ublas::sparse_vector<T, ublas::map_array<std::size_t, T> >, N> () (runs, safe_tag ());
 
-    header ("maped_vector<map_array> fast");
-    bench_my_vector_add<ublas::mapped_vector<T, ublas::map_array<std::size_t, T> >, N> () (runs, fast_tag ());
+    header ("sparse_vector<map_array> fast");
+    bench_my_vector_add<ublas::sparse_vector<T, ublas::map_array<std::size_t, T> >, N> () (runs, fast_tag ());
 #endif
 
 #ifdef USE_STD_MAP
-    header ("mapped_vector<std::map> safe");
-    bench_my_vector_add<ublas::mapped_vector<T, std::map<std::size_t, T> >, N> () (runs, safe_tag ());
+    header ("sparse_vector<std::map> safe");
+    bench_my_vector_add<ublas::sparse_vector<T, std::map<std::size_t, T> >, N> () (runs, safe_tag ());
 
-    header ("mapped_vector<std::map> fast");
-    bench_my_vector_add<ublas::mapped_vector<T, std::map<std::size_t, T> >, N> () (runs, fast_tag ());
+    header ("sparse_vector<std::map> fast");
+    bench_my_vector_add<ublas::sparse_vector<T, std::map<std::size_t, T> >, N> () (runs, fast_tag ());
 #endif
 #endif
 
@@ -282,3 +313,5 @@ template struct bench_1<std::complex<double>, 30>;
 template struct bench_1<std::complex<double>, 100>;
 #endif
 #endif
+
+

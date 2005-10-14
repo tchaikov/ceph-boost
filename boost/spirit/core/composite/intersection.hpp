@@ -58,7 +58,7 @@ namespace boost { namespace spirit {
             iterator_t save = scan.first;
             if (result_t hl = this->left().parse(scan))
             {
-                ScannerT bscan(scan.first, scan.first, scan);
+                ScannerT bscan(scan.first, scan.first);
                 scan.first = save;
                 result_t hr = this->right().parse(bscan);
                 if (hl.length() == hr.length())

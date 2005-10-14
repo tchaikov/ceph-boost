@@ -13,7 +13,6 @@
 # define CONFIG_DWA052200_H_
 
 # include <boost/config.hpp>
-# include <boost/detail/workaround.hpp>
 
 # ifdef BOOST_NO_OPERATORS_IN_NAMESPACE
    // A gcc bug forces some symbols into the global namespace
@@ -106,7 +105,7 @@
 #  define BOOST_PYTHON_DECL_EXCEPTION BOOST_PYTHON_DECL
 #endif
 
-#if BOOST_WORKAROUND(__DECCXX_VER, BOOST_TESTED_AT(60590042))
+#if (defined(__DECCXX_VER) && __DECCXX_VER <= 60590041)
 // Replace broken Tru64/cxx offsetof macro
 # define BOOST_PYTHON_OFFSETOF(s_name, s_member) \
         ((size_t)__INTADDR__(&(((s_name *)0)->s_member)))

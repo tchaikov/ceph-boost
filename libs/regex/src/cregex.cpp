@@ -1,7 +1,7 @@
 /*
  *
  * Copyright (c) 1998-2002
- * John Maddock
+ * Dr John Maddock
  *
  * Use, modification and distribution are subject to the 
  * Boost Software License, Version 1.0. (See accompanying file 
@@ -21,6 +21,9 @@
 
 #include <boost/cregex.hpp>
 #include <boost/regex.hpp>
+#ifndef BOOST_NO_INCLASS_MEMBER_INITIALIZATION
+#  include <boost/integer_traits.hpp>
+#endif
 #if !defined(BOOST_NO_STD_STRING)
 #include <map>
 #include <list>
@@ -51,6 +54,7 @@ namespace{
 template <class iterator>
 std::string to_string(iterator i, iterator j)
 {
+   BOOST_RE_GUARD_STACK
    std::string s;
    while(i != j)
    {
@@ -104,6 +108,7 @@ public:
 
 void RegExData::update()
 {
+   BOOST_RE_GUARD_STACK
    strings.erase(strings.begin(), strings.end());
    positions.erase(positions.begin(), positions.end());
    if(t == type_pc)
@@ -111,7 +116,7 @@ void RegExData::update()
       for(unsigned int i = 0; i < m.size(); ++i)
       {
          if(m[i].matched) strings[i] = std::string(m[i].first, m[i].second);
-         positions[i] = m[i].matched ? m[i].first - pbase : -1;
+         positions[i] = m[i].matched ? m[i].first - pbase : RegEx::npos;
       }
    }
 #ifndef BOOST_REGEX_NO_FILEITER
@@ -120,7 +125,7 @@ void RegExData::update()
       for(unsigned int i = 0; i < fm.size(); ++i)
       {
          if(fm[i].matched) strings[i] = to_string(fm[i].first, fm[i].second);
-         positions[i] = fm[i].matched ? fm[i].first - fbase : -1;
+         positions[i] = fm[i].matched ? fm[i].first - fbase : RegEx::npos;
       }
    }
 #endif
@@ -129,6 +134,7 @@ void RegExData::update()
 
 void RegExData::clean()
 {
+   BOOST_RE_GUARD_STACK
 #ifndef BOOST_REGEX_NO_FILEITER
    fbase = mapfile::iterator();
    fm = match_results<mapfile::iterator>();
@@ -139,46 +145,54 @@ void RegExData::clean()
 
 RegEx::RegEx()
 {
+   BOOST_RE_GUARD_STACK
    pdata = new re_detail::RegExData();
 }
 
 RegEx::RegEx(const RegEx& o)
 {
+   BOOST_RE_GUARD_STACK
    pdata = new re_detail::RegExData(*(o.pdata));
 }
 
 RegEx::~RegEx()
 {
+   BOOST_RE_GUARD_STACK
    delete pdata;
 }
 
 RegEx::RegEx(const char* c, bool icase)
 {
+   BOOST_RE_GUARD_STACK
    pdata = new re_detail::RegExData();
    SetExpression(c, icase);
 }
 
 RegEx::RegEx(const std::string& s, bool icase)
 {
+   BOOST_RE_GUARD_STACK
    pdata = new re_detail::RegExData();
    SetExpression(s.c_str(), icase);
 }
 
 RegEx& RegEx::operator=(const RegEx& o)
 {
+   BOOST_RE_GUARD_STACK
    *pdata = *(o.pdata);
    return *this;
 }
 
 RegEx& RegEx::operator=(const char* p)
 {
+   BOOST_RE_GUARD_STACK
    SetExpression(p, false);
    return *this;
 }
 
 unsigned int RegEx::SetExpression(const char* p, bool icase)
 {
-   boost::uint_fast32_t f = icase ? regex::normal | regex::icase : regex::normal;
+   BOOST_RE_GUARD_STACK
+   boost::uint_fast32_t f = icase ? regex::normal | regex::use_except | regex::icase : regex::normal | regex::use_except;
    return pdata->e.set_expression(p, f);
 }
 
@@ -190,6 +204,7 @@ unsigned int RegEx::error_code()const
 
 std::string RegEx::Expression()const
 {
+   BOOST_RE_GUARD_STACK
    return pdata->e.expression();
 }
 
@@ -198,6 +213,7 @@ std::string RegEx::Expression()const
 //
 bool RegEx::Match(const char* p, match_flag_type flags)
 {
+   BOOST_RE_GUARD_STACK
    pdata->t = re_detail::RegExData::type_pc;
    pdata->pbase = p;
    const char* end = p;
@@ -213,6 +229,7 @@ bool RegEx::Match(const char* p, match_flag_type flags)
 
 bool RegEx::Search(const char* p, match_flag_type flags)
 {
+   BOOST_RE_GUARD_STACK
    pdata->t = re_detail::RegExData::type_pc;
    pdata->pbase = p;
    const char* end = p;
@@ -240,6 +257,7 @@ struct pred1
 }
 unsigned int RegEx::Grep(GrepCallback cb, const char* p, match_flag_type flags)
 {
+   BOOST_RE_GUARD_STACK
    pdata->t = re_detail::RegExData::type_pc;
    pdata->pbase = p;
    const char* end = p;
@@ -269,6 +287,7 @@ private:
 
 unsigned int RegEx::Grep(std::vector<std::string>& v, const char* p, match_flag_type flags)
 {
+   BOOST_RE_GUARD_STACK
    pdata->t = re_detail::RegExData::type_pc;
    pdata->pbase = p;
    const char* end = p;
@@ -298,6 +317,7 @@ private:
 }
 unsigned int RegEx::Grep(std::vector<std::size_t>& v, const char* p, match_flag_type flags)
 {
+   BOOST_RE_GUARD_STACK
    pdata->t = re_detail::RegExData::type_pc;
    pdata->pbase = p;
    const char* end = p;
@@ -330,23 +350,24 @@ struct pred4
 namespace{
 void BuildFileList(std::list<std::string>* pl, const char* files, bool recurse)
 {
+   BOOST_RE_GUARD_STACK
    file_iterator start(files);
    file_iterator end;
    if(recurse)
    {
       // go through sub directories:
       char buf[MAX_PATH];
-      re_detail::overflow_error_if_not_zero(re_detail::strcpy_s(buf, MAX_PATH, start.root()));
+      std::strcpy(buf, start.root());
       if(*buf == 0)
       {
-         re_detail::overflow_error_if_not_zero(re_detail::strcpy_s(buf, MAX_PATH, "."));
-         re_detail::overflow_error_if_not_zero(re_detail::strcat_s(buf, MAX_PATH, directory_iterator::separator()));
-         re_detail::overflow_error_if_not_zero(re_detail::strcat_s(buf, MAX_PATH, "*"));
+         std::strcpy(buf, ".");
+         std::strcat(buf, directory_iterator::separator());
+         std::strcat(buf, "*");
       }
       else
       {
-         re_detail::overflow_error_if_not_zero(re_detail::strcat_s(buf, MAX_PATH, directory_iterator::separator()));
-         re_detail::overflow_error_if_not_zero(re_detail::strcat_s(buf, MAX_PATH, "*"));
+         std::strcat(buf, directory_iterator::separator());
+         std::strcat(buf, "*");
       }
       directory_iterator dstart(buf);
       directory_iterator dend;
@@ -359,11 +380,7 @@ void BuildFileList(std::list<std::string>* pl, const char* files, bool recurse)
 
       while(dstart != dend)
       {
-#if BOOST_WORKAROUND(BOOST_MSVC, >= 1400)
-         (::sprintf_s)(buf, sizeof(buf), "%s%s%s", dstart.path(), directory_iterator::separator(), ptr);
-#else
-         (std::sprintf)(buf, "%s%s%s", dstart.path(), directory_iterator::separator(), ptr);
-#endif
+         std::sprintf(buf, "%s%s%s", dstart.path(), directory_iterator::separator(), ptr);
          BuildFileList(pl, buf, recurse);
          ++dstart;
       }
@@ -378,6 +395,7 @@ void BuildFileList(std::list<std::string>* pl, const char* files, bool recurse)
 
 unsigned int RegEx::GrepFiles(GrepFileCallback cb, const char* files, bool recurse, match_flag_type flags)
 {
+   BOOST_RE_GUARD_STACK
    unsigned int result = 0;
    std::list<std::string> file_list;
    BuildFileList(&file_list, files, recurse);
@@ -405,6 +423,7 @@ unsigned int RegEx::GrepFiles(GrepFileCallback cb, const char* files, bool recur
 
 unsigned int RegEx::FindFiles(FindFilesCallback cb, const char* files, bool recurse, match_flag_type flags)
 {
+   BOOST_RE_GUARD_STACK
    unsigned int result = 0;
    std::list<std::string> file_list;
    BuildFileList(&file_list, files, recurse);
@@ -472,6 +491,7 @@ std::size_t RegEx::Split(std::vector<std::string>& v,
 //
 std::size_t RegEx::Position(int i)const
 {
+   BOOST_RE_GUARD_STACK
    switch(pdata->t)
    {
    case re_detail::RegExData::type_pc:
@@ -491,14 +511,16 @@ std::size_t RegEx::Position(int i)const
    return RegEx::npos;
 }
 
-std::size_t RegEx::Marks()const
+unsigned int RegEx::Marks()const
 {
+   BOOST_RE_GUARD_STACK
    return pdata->e.mark_count();
 }
 
 
 std::size_t RegEx::Length(int i)const
 {
+   BOOST_RE_GUARD_STACK
    switch(pdata->t)
    {
    case re_detail::RegExData::type_pc:
@@ -520,6 +542,7 @@ std::size_t RegEx::Length(int i)const
 
 bool RegEx::Matched(int i)const
 {
+   BOOST_RE_GUARD_STACK
    switch(pdata->t)
    {
    case re_detail::RegExData::type_pc:
@@ -542,6 +565,7 @@ bool RegEx::Matched(int i)const
 
 std::string RegEx::What(int i)const
 {
+   BOOST_RE_GUARD_STACK
    std::string result;
    switch(pdata->t)
    {
@@ -564,10 +588,14 @@ std::string RegEx::What(int i)const
    return result;
 }
 
-#ifdef BOOST_HAS_LONG_LONG
-const std::size_t RegEx::npos = static_cast<std::size_t>(~0ULL);
+#ifndef __MINGW32__
+#ifndef BOOST_NO_INCLASS_MEMBER_INITIALIZATION
+const std::size_t RegEx::npos = ::boost::integer_traits<std::size_t>::const_max;
+#elif defined(BOOST_HAS_LONG_LONG)
+const std::size_t RegEx::npos = ~0ULL;
 #else
-const std::size_t RegEx::npos = static_cast<std::size_t>(~0UL);
+const std::size_t RegEx::npos = ~0UL;
+#endif
 #endif
 
 } // namespace boost

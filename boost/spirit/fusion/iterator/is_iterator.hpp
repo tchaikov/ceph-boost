@@ -22,7 +22,10 @@ namespace boost { namespace fusion
     //          is_iterator<T>::value
     //
     ///////////////////////////////////////////////////////////////////////////
-    struct iterator_root;
+    namespace detail
+    {
+        struct iterator_root;
+    }
 
     template <typename T>
     struct is_iterator : is_base_and_derived<iterator_root, T> {};

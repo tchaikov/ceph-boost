@@ -22,7 +22,10 @@ namespace std{
 
 #include <ostream>
 
+#include <boost/utf8_codecvt_facet.hpp>
 #include <boost/archive/text_woarchive.hpp>
+#include <boost/archive/codecvt_null.hpp>
+#include <boost/archive/add_facet.hpp>
 
 namespace boost {
 namespace archive {
@@ -31,11 +34,10 @@ namespace archive {
 // implementation of woarchive functions
 //
 template<class Archive>
-BOOST_WARCHIVE_DECL(void)
-text_woarchive_impl<Archive>::save(const char *s)
+void text_woarchive_impl<Archive>::save(const char *s)
 {
     // note: superfluous local variable fixes borland warning
-    const std::size_t size = std::strlen(s);
+    std::size_t size = std::strlen(s);
     * this->This() << size;
     this->This()->newtoken();
     while(*s != '\0')
@@ -43,23 +45,21 @@ text_woarchive_impl<Archive>::save(const char *s)
 }
 
 template<class Archive>
-BOOST_WARCHIVE_DECL(void)
-text_woarchive_impl<Archive>::save(const std::string &s)
+void text_woarchive_impl<Archive>::save(const std::string &s)
 {
-    const std::size_t size = s.size();
+    std::size_t size = s.size();
     * this->This() << size;
     this->This()->newtoken();
     const char * cptr = s.data();
-    for(std::size_t i = size; i-- > 0;)
+    while(size-- > 0)
         os.put(os.widen(*cptr++));
 }
 
 #ifndef BOOST_NO_INTRINSIC_WCHAR_T
 template<class Archive>
-BOOST_WARCHIVE_DECL(void)
-text_woarchive_impl<Archive>::save(const wchar_t *ws)
+void text_woarchive_impl<Archive>::save(const wchar_t *ws)
 {
-    const std::size_t size = std::wostream::traits_type::length(ws);
+    std::size_t size = std::wostream::traits_type::length(ws);
     * this->This() << size;
     this->This()->newtoken();
     os.write(ws, size);
@@ -68,10 +68,9 @@ text_woarchive_impl<Archive>::save(const wchar_t *ws)
 
 #ifndef BOOST_NO_STD_WSTRING
 template<class Archive>
-BOOST_WARCHIVE_DECL(void)
-text_woarchive_impl<Archive>::save(const std::wstring &ws)
+void text_woarchive_impl<Archive>::save(const std::wstring &ws)
 {
-    const std::size_t size = ws.length();
+    std::size_t size = ws.length();
     * this->This() << size;
     this->This()->newtoken();
     os.write(ws.data(), size);

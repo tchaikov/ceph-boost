@@ -27,6 +27,7 @@ namespace std{ using ::wcslen; }
 #endif
 #endif
 
+#include <boost/archive/codecvt_null.hpp>
 #include <boost/archive/add_facet.hpp>
 #include <boost/archive/text_oarchive.hpp>
 
@@ -38,20 +39,18 @@ namespace archive {
 // of template parameters used to create a text_oprimitive
 
 template<class Archive>
-BOOST_ARCHIVE_DECL(void)
-text_oarchive_impl<Archive>::save(const char * s)
+void text_oarchive_impl<Archive>::save(const char * s)
 {
-    const std::size_t len = std::ostream::traits_type::length(s);
+    unsigned len = std::ostream::traits_type::length(s);
     *this->This() << len;
     this->This()->newtoken();
     os << s;
 }
 
 template<class Archive>
-BOOST_ARCHIVE_DECL(void)
-text_oarchive_impl<Archive>::save(const std::string &s)
+void text_oarchive_impl<Archive>::save(const std::string &s)
 {
-    const std::size_t size = s.size();
+    unsigned size = s.size();
     *this->This() << size;
     this->This()->newtoken();
     os << s;
@@ -60,10 +59,9 @@ text_oarchive_impl<Archive>::save(const std::string &s)
 #ifndef BOOST_NO_CWCHAR
 #ifndef BOOST_NO_INTRINSIC_WCHAR_T
 template<class Archive>
-BOOST_ARCHIVE_DECL(void)
-text_oarchive_impl<Archive>::save(const wchar_t * ws)
+void text_oarchive_impl<Archive>::save(const wchar_t * ws)
 {
-    const std::size_t l = std::wcslen(ws);
+    std::size_t l = std::wcslen(ws);
     * this->This() << l;
     this->This()->newtoken();
     os.write((const char *)ws, l * sizeof(wchar_t)/sizeof(char));
@@ -72,52 +70,15 @@ text_oarchive_impl<Archive>::save(const wchar_t * ws)
 
 #ifndef BOOST_NO_STD_WSTRING
 template<class Archive>
-BOOST_ARCHIVE_DECL(void)
-text_oarchive_impl<Archive>::save(const std::wstring &ws)
+void text_oarchive_impl<Archive>::save(const std::wstring &ws)
 {
-    const std::size_t l = ws.size();
+    std::size_t l = ws.size();
     * this->This() << l;
     this->This()->newtoken();
     os.write((const char *)(ws.data()), l * sizeof(wchar_t)/sizeof(char));
 }
 #endif
 #endif // BOOST_NO_CWCHAR
-
-template<class Archive>
-BOOST_ARCHIVE_DECL(BOOST_PP_EMPTY()) 
-text_oarchive_impl<Archive>::text_oarchive_impl(
-    std::ostream & os, 
-    unsigned int flags
-) :
-    basic_text_oprimitive<std::ostream>(
-        os, 
-        0 != (flags & no_codecvt)
-    ),
-    basic_text_oarchive<Archive>(flags)
-{
-    if(0 == (flags & no_header))
-        #if BOOST_WORKAROUND(__MWERKS__, BOOST_TESTED_AT(0x3205))
-        this->init();
-        #else
-        this->basic_text_oarchive<Archive>::init();
-        #endif
-}
-
-template<class Archive>
-BOOST_ARCHIVE_DECL(void)
-text_oarchive_impl<Archive>::save_binary(const void *address, std::size_t count){
-    put('\n');
-    this->end_preamble();
-    #if ! defined(__MWERKS__)
-    this->basic_text_oprimitive<std::ostream>::save_binary(
-    #else
-    this->basic_text_oprimitive::save_binary(
-    #endif
-        address, 
-        count
-    );
-    this->delimiter = this->eol;
-}
 
 } // namespace archive
 } // namespace boost

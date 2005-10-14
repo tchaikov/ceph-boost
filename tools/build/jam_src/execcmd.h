@@ -10,16 +10,9 @@
  * 05/04/94 (seiwald) - async multiprocess interface
  */
 
-typedef struct timing_info
-{
-    /* double elapsed; */  /* We don't know how to get this number on Unix */
-    double system;
-    double user;
-} timing_info;
-
 void execcmd(
 	char *string,
-	void (*func)( void *closure, int status, timing_info* ),
+	void (*func)( void *closure, int status ),
 	void *closure,
 	LIST *shell );
 

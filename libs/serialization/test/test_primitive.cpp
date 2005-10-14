@@ -10,12 +10,10 @@
 
 #include <fstream>
 
-#include "test_tools.hpp"
-#include <boost/preprocessor/stringize.hpp>
-#include BOOST_PP_STRINGIZE(BOOST_ARCHIVE_TEST)
-
 #include <boost/serialization/level.hpp>
 #include <boost/serialization/nvp.hpp>
+
+#include "test_tools.hpp"
 
 struct A
 {
@@ -59,7 +57,7 @@ test_main( int /* argc */, char* /* argv */[] )
     A a;
     out(testfile, a);
     in(testfile, a);
-    return EXIT_SUCCESS;
+    return boost::exit_success;
 }
 
 // EOF

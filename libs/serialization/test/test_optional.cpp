@@ -18,13 +18,10 @@ namespace std{
 }
 #endif
 
+#include <boost/serialization/optional.hpp>
 
 #include <boost/archive/archive_exception.hpp>
 #include "test_tools.hpp"
-#include <boost/preprocessor/stringize.hpp>
-#include BOOST_PP_STRINGIZE(BOOST_ARCHIVE_TEST)
-
-#include <boost/serialization/optional.hpp>
 
 #include "A.hpp"
 
@@ -33,8 +30,9 @@ int test_main( int /* argc */, char* /* argv */[] )
     const char * testfile = boost::archive::tmpnam(NULL);
     BOOST_REQUIRE(NULL != testfile);
 
-    const boost::optional<int> aoptional1;
-    const boost::optional<int> aoptional2(123);
+    boost::optional<int> aoptional1;
+    boost::optional<int> aoptional2(123);
+
     {   
         test_ostream os(testfile, TEST_STREAM_FLAGS);
         test_oarchive oa(os);
@@ -55,7 +53,7 @@ int test_main( int /* argc */, char* /* argv */[] )
     BOOST_CHECK(aoptional2 == aoptional2a);
     
     std::remove(testfile);
-    return EXIT_SUCCESS;
+    return boost::exit_success;
 }
 
 // EOF

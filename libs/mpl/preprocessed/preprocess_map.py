@@ -8,13 +8,13 @@
 # See http://www.boost.org/libs/mpl for documentation.
 
 # $Source: /cvsroot/boost/boost/libs/mpl/preprocessed/preprocess_map.py,v $
-# $Date: 2004/12/14 12:57:14 $
-# $Revision: 1.3 $
+# $Date: 2004/09/02 15:41:30 $
+# $Revision: 1.2 $
 
 import preprocess
 
 preprocess.main(
-      [ "plain", "typeof_based", "no_ctps" ]
+      [ "plain", "typeof_based" ]
     , "map"
     , "boost\\mpl\\map\\aux_\\preprocessed"
     )

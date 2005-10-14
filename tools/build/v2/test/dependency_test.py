@@ -18,7 +18,6 @@ t.run_build_system()
 
 t.expect_touch("bin/$toolset/debug/a.exe")
 t.expect_touch("bin/$toolset/debug/a.obj")
-t.expect_touch("bin/$toolset/debug/a_c.obj")
 t.expect_touch("bin/$toolset/debug/b.exe")
 t.expect_touch("bin/$toolset/debug/b.obj")
 # Now, <dependency> does not add dependency.
@@ -34,7 +33,6 @@ t.run_build_system()
 
 t.expect_touch("bin/$toolset/debug/a.exe")
 t.expect_touch("bin/$toolset/debug/a.obj")
-t.expect_touch("bin/$toolset/debug/a_c.obj")
 t.ignore("*.tds")
 t.expect_nothing_more()
 
@@ -43,7 +41,6 @@ t.touch("src1/b.h")
 t.run_build_system()
 t.expect_touch("bin/$toolset/debug/a.exe")
 t.expect_touch("bin/$toolset/debug/a.obj")
-t.expect_touch("bin/$toolset/debug/a_c.obj")
 t.ignore("*.tds")
 t.expect_nothing_more()
 
@@ -64,12 +61,10 @@ t.expect_nothing_more()
 t.touch("x.foo")
 t.run_build_system()
 t.expect_touch("bin/$toolset/debug/a.obj")
-t.expect_touch("bin/$toolset/debug/a_c.obj")
 
 # Check that generated headers are scanned for dependencies as well
 t.touch("src1/z.h")
 t.run_build_system()
 t.expect_touch("bin/$toolset/debug/a.obj")
-t.expect_touch("bin/$toolset/debug/a_c.obj")
 
 t.cleanup()

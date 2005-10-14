@@ -12,7 +12,6 @@
 //
 //  Copyright (c) 2001-2004 Peter Dimov and Multi Media Ltd.
 //  Copyright (c) 2001 David Abrahams
-//  Copyright (c) 2005 Peter Dimov
 //
 // Distributed under the Boost Software License, Version 1.0. (See
 // accompanying file LICENSE_1_0.txt or copy at
@@ -128,7 +127,7 @@ template<class F> inline F & unwrap(reference_wrapper<F> const * f, int)
     return f->get();
 }
 
-#if !( defined(__MWERKS__) && BOOST_WORKAROUND(__MWERKS__, <= 0x3004) )
+#if !( defined(__MWERKS__) && BOOST_WORKAROUND(__MWERKS__, <= 0x3003) )
 
 template<class R, class T> inline _mfi::dm<R, T> unwrap(R T::* * pm, int)
 {
@@ -154,9 +153,9 @@ public:
 
     list0() {}
 
-    template<class T> T & operator[] (_bi::value<T> & v) const { return v.get(); }
+    template<class T> T & operator[] (value<T> & v) const { return v.get(); }
 
-    template<class T> T const & operator[] (_bi::value<T> const & v) const { return v.get(); }
+    template<class T> T const & operator[] (value<T> const & v) const { return v.get(); }
 
     template<class T> T & operator[] (reference_wrapper<T> const & v) const { return v.get(); }
 
@@ -204,9 +203,9 @@ public:
 
     A1 operator[] (boost::arg<1> (*) ()) const { return a1_; }
 
-    template<class T> T & operator[] ( _bi::value<T> & v ) const { return v.get(); }
+    template<class T> T & operator[] (value<T> & v) const { return v.get(); }
 
-    template<class T> T const & operator[] ( _bi::value<T> const & v ) const { return v.get(); }
+    template<class T> T const & operator[] (value<T> const & v) const { return v.get(); }
 
     template<class T> T & operator[] (reference_wrapper<T> const & v) const { return v.get(); }
 
@@ -261,9 +260,9 @@ public:
     A1 operator[] (boost::arg<1> (*) ()) const { return a1_; }
     A2 operator[] (boost::arg<2> (*) ()) const { return a2_; }
 
-    template<class T> T & operator[] (_bi::value<T> & v) const { return v.get(); }
+    template<class T> T & operator[] (value<T> & v) const { return v.get(); }
 
-    template<class T> T const & operator[] (_bi::value<T> const & v) const { return v.get(); }
+    template<class T> T const & operator[] (value<T> const & v) const { return v.get(); }
 
     template<class T> T & operator[] (reference_wrapper<T> const & v) const { return v.get(); }
 
@@ -322,9 +321,9 @@ public:
     A2 operator[] (boost::arg<2> (*) ()) const { return a2_; }
     A3 operator[] (boost::arg<3> (*) ()) const { return a3_; }
 
-    template<class T> T & operator[] (_bi::value<T> & v) const { return v.get(); }
+    template<class T> T & operator[] (value<T> & v) const { return v.get(); }
 
-    template<class T> T const & operator[] (_bi::value<T> const & v) const { return v.get(); }
+    template<class T> T const & operator[] (value<T> const & v) const { return v.get(); }
 
     template<class T> T & operator[] (reference_wrapper<T> const & v) const { return v.get(); }
 
@@ -387,9 +386,9 @@ public:
     A3 operator[] (boost::arg<3> (*) ()) const { return a3_; }
     A4 operator[] (boost::arg<4> (*) ()) const { return a4_; }
 
-    template<class T> T & operator[] (_bi::value<T> & v) const { return v.get(); }
+    template<class T> T & operator[] (value<T> & v) const { return v.get(); }
 
-    template<class T> T const & operator[] (_bi::value<T> const & v) const { return v.get(); }
+    template<class T> T const & operator[] (value<T> const & v) const { return v.get(); }
 
     template<class T> T & operator[] (reference_wrapper<T> const & v) const { return v.get(); }
 
@@ -458,9 +457,9 @@ public:
     A4 operator[] (boost::arg<4> (*) ()) const { return a4_; }
     A5 operator[] (boost::arg<5> (*) ()) const { return a5_; }
 
-    template<class T> T & operator[] (_bi::value<T> & v) const { return v.get(); }
+    template<class T> T & operator[] (value<T> & v) const { return v.get(); }
 
-    template<class T> T const & operator[] (_bi::value<T> const & v) const { return v.get(); }
+    template<class T> T const & operator[] (value<T> const & v) const { return v.get(); }
 
     template<class T> T & operator[] (reference_wrapper<T> const & v) const { return v.get(); }
 
@@ -533,9 +532,9 @@ public:
     A5 operator[] (boost::arg<5> (*) ()) const { return a5_; }
     A6 operator[] (boost::arg<6> (*) ()) const { return a6_; }
 
-    template<class T> T & operator[] (_bi::value<T> & v) const { return v.get(); }
+    template<class T> T & operator[] (value<T> & v) const { return v.get(); }
 
-    template<class T> T const & operator[] (_bi::value<T> const & v) const { return v.get(); }
+    template<class T> T const & operator[] (value<T> const & v) const { return v.get(); }
 
     template<class T> T & operator[] (reference_wrapper<T> const & v) const { return v.get(); }
 
@@ -612,9 +611,9 @@ public:
     A6 operator[] (boost::arg<6> (*) ()) const { return a6_; }
     A7 operator[] (boost::arg<7> (*) ()) const { return a7_; }
 
-    template<class T> T & operator[] (_bi::value<T> & v) const { return v.get(); }
+    template<class T> T & operator[] (value<T> & v) const { return v.get(); }
 
-    template<class T> T const & operator[] (_bi::value<T> const & v) const { return v.get(); }
+    template<class T> T const & operator[] (value<T> const & v) const { return v.get(); }
 
     template<class T> T & operator[] (reference_wrapper<T> const & v) const { return v.get(); }
 
@@ -696,9 +695,9 @@ public:
     A7 operator[] (boost::arg<7> (*) ()) const { return a7_; }
     A8 operator[] (boost::arg<8> (*) ()) const { return a8_; }
 
-    template<class T> T & operator[] (_bi::value<T> & v) const { return v.get(); }
+    template<class T> T & operator[] (value<T> & v) const { return v.get(); }
 
-    template<class T> T const & operator[] (_bi::value<T> const & v) const { return v.get(); }
+    template<class T> T const & operator[] (value<T> const & v) const { return v.get(); }
 
     template<class T> T & operator[] (reference_wrapper<T> const & v) const { return v.get(); }
 
@@ -784,9 +783,9 @@ public:
     A8 operator[] (boost::arg<8> (*) ()) const { return a8_; }
     A9 operator[] (boost::arg<9> (*) ()) const { return a9_; }
 
-    template<class T> T & operator[] (_bi::value<T> & v) const { return v.get(); }
+    template<class T> T & operator[] (value<T> & v) const { return v.get(); }
 
-    template<class T> T const & operator[] (_bi::value<T> const & v) const { return v.get(); }
+    template<class T> T const & operator[] (value<T> const & v) const { return v.get(); }
 
     template<class T> T & operator[] (reference_wrapper<T> const & v) const { return v.get(); }
 
@@ -920,54 +919,17 @@ public:
 
 #endif
 
-// function_equal
+// bind_t::operator==
 
-#ifndef BOOST_NO_ARGUMENT_DEPENDENT_LOOKUP
-
-// put overloads in _bi, rely on ADL
-
-# ifndef BOOST_NO_FUNCTION_TEMPLATE_ORDERING
-
-template<class R, class F, class L> bool function_equal( bind_t<R, F, L> const & a, bind_t<R, F, L> const & b )
+template<class R, class F, class L> bool operator==(bind_t<R, F, L> const & a, bind_t<R, F, L> const & b)
 {
     return a.compare(b);
 }
 
-# else
-
-template<class R, class F, class L> bool function_equal_impl( bind_t<R, F, L> const & a, bind_t<R, F, L> const & b, int )
+template<class R, class F, class L> bool operator!=(bind_t<R, F, L> const & a, bind_t<R, F, L> const & b)
 {
-    return a.compare(b);
+    return !a.compare(b);
 }
-
-# endif // #ifndef BOOST_NO_FUNCTION_TEMPLATE_ORDERING
-
-#else // BOOST_NO_ARGUMENT_DEPENDENT_LOOKUP
-
-// put overloads in boost
-
-} // namespace _bi
-
-# ifndef BOOST_NO_FUNCTION_TEMPLATE_ORDERING
-
-template<class R, class F, class L> bool function_equal( _bi::bind_t<R, F, L> const & a, _bi::bind_t<R, F, L> const & b )
-{
-    return a.compare(b);
-}
-
-# else
-
-template<class R, class F, class L> bool function_equal_impl( _bi::bind_t<R, F, L> const & a, _bi::bind_t<R, F, L> const & b, int )
-{
-    return a.compare(b);
-}
-
-# endif // #ifndef BOOST_NO_FUNCTION_TEMPLATE_ORDERING
-
-namespace _bi
-{
-
-#endif // BOOST_NO_ARGUMENT_DEPENDENT_LOOKUP
 
 // add_value
 
@@ -975,12 +937,12 @@ namespace _bi
 
 template<class T> struct add_value
 {
-    typedef _bi::value<T> type;
+    typedef value<T> type;
 };
 
 template<class T> struct add_value< value<T> >
 {
-    typedef _bi::value<T> type;
+    typedef value<T> type;
 };
 
 template<class T> struct add_value< reference_wrapper<T> >
@@ -1133,71 +1095,6 @@ template<class A1, class A2, class A3, class A4, class A5, class A6, class A7, c
     typedef typename add_value<A9>::type B9;
     typedef list9<B1, B2, B3, B4, B5, B6, B7, B8, B9> type;
 };
-
-// operator!
-
-struct logical_not
-{
-    template<class V> bool operator()(V const & v) const { return !v; }
-};
-
-template<class R, class F, class L>
-    bind_t< bool, logical_not, list1< bind_t<R, F, L> > >
-    operator! (bind_t<R, F, L> const & f)
-{
-    typedef list1< bind_t<R, F, L> > list_type;
-    return bind_t<bool, logical_not, list_type> ( logical_not(), list_type(f) );
-}
-
-// relational operators
-
-#define BOOST_BIND_OPERATOR( op, name ) \
-\
-struct name \
-{ \
-    template<class V, class W> bool operator()(V const & v, W const & w) const { return v op w; } \
-}; \
- \
-template<class R, class F, class L, class A2> \
-    bind_t< bool, name, list2< bind_t<R, F, L>, typename add_value<A2>::type > > \
-    operator op (bind_t<R, F, L> const & f, A2 a2) \
-{ \
-    typedef typename add_value<A2>::type B2; \
-    typedef list2< bind_t<R, F, L>, B2> list_type; \
-    return bind_t<bool, name, list_type> ( name(), list_type(f, a2) ); \
-}
-
-BOOST_BIND_OPERATOR( ==, equal )
-BOOST_BIND_OPERATOR( !=, not_equal )
-
-BOOST_BIND_OPERATOR( <, less )
-BOOST_BIND_OPERATOR( <=, less_equal )
-
-BOOST_BIND_OPERATOR( >, greater )
-BOOST_BIND_OPERATOR( >=, greater_equal )
-
-#undef BOOST_BIND_OPERATOR
-
-#if defined(__GNUC__) && BOOST_WORKAROUND(__GNUC__, < 3)
-
-// resolve ambiguity with rel_ops
-
-#define BOOST_BIND_OPERATOR( op, name ) \
-\
-template<class R, class F, class L> \
-    bind_t< bool, name, list2< bind_t<R, F, L>, bind_t<R, F, L> > > \
-    operator op (bind_t<R, F, L> const & f, bind_t<R, F, L> const & g) \
-{ \
-    typedef list2< bind_t<R, F, L>, bind_t<R, F, L> > list_type; \
-    return bind_t<bool, name, list_type> ( name(), list_type(f, g) ); \
-}
-
-BOOST_BIND_OPERATOR( !=, not_equal )
-BOOST_BIND_OPERATOR( <=, less_equal )
-BOOST_BIND_OPERATOR( >, greater )
-BOOST_BIND_OPERATOR( >=, greater_equal )
-
-#endif
 
 } // namespace _bi
 
@@ -1524,18 +1421,6 @@ template<class F, class A1, class A2, class A3, class A4, class A5, class A6, cl
 
 #undef BOOST_BIND_MF_NAME
 #undef BOOST_BIND_MF_CC
-
-#ifdef BOOST_MEM_FN_ENABLE_CDECL
-
-#define BOOST_BIND_MF_NAME(X) X##_cdecl
-#define BOOST_BIND_MF_CC __cdecl
-
-#include <boost/bind/bind_mf_cc.hpp>
-
-#undef BOOST_BIND_MF_NAME
-#undef BOOST_BIND_MF_CC
-
-#endif
 
 #ifdef BOOST_MEM_FN_ENABLE_STDCALL
 

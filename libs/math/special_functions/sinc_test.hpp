@@ -18,7 +18,8 @@
 #include <boost/test/unit_test.hpp>
 
 
-BOOST_TEST_CASE_TEMPLATE_FUNCTION(sinc_pi_test, T)
+template<typename T>
+void    sinc_pi_test(const char * more_blurb)
 {
     using    ::std::abs;
         
@@ -28,15 +29,18 @@ BOOST_TEST_CASE_TEMPLATE_FUNCTION(sinc_pi_test, T)
     
     
     BOOST_MESSAGE("Testing sinc_pi in the real domain for "
-        << string_type_name<T>::_() << ".");
+        << more_blurb << ".");
     
-    BOOST_CHECK_PREDICATE(::std::less_equal<T>(),
-        (abs(sinc_pi<T>(static_cast<T>(0))-static_cast<T>(1)))
-        (numeric_limits<T>::epsilon()));
+    BOOST_CHECK_PREDICATE(::std::less_equal<T>(), 2,
+        (
+            abs(sinc_pi<T>(static_cast<T>(0))-static_cast<T>(1)),
+            numeric_limits<T>::epsilon()
+        ));
 }
 
 
-BOOST_TEST_CASE_TEMPLATE_FUNCTION(sinc_pi_complex_test, T)
+template<typename T>
+void    sinc_pi_complex_test(const char * more_blurb)
 {
     using    ::std::abs;
     using    ::std::sinh;
@@ -47,12 +51,14 @@ BOOST_TEST_CASE_TEMPLATE_FUNCTION(sinc_pi_complex_test, T)
     
     
     BOOST_MESSAGE("Testing sinc_pi in the complex domain for "
-        << string_type_name<T>::_() << ".");
+        << more_blurb << ".");
     
-    BOOST_CHECK_PREDICATE(::std::less_equal<T>(),
-        (abs(sinc_pi<T>(::std::complex<T>(0, 1))-
-             ::std::complex<T>(sinh(static_cast<T>(1)))))
-        (numeric_limits<T>::epsilon()));
+    BOOST_CHECK_PREDICATE(::std::less_equal<T>(), 2,
+        (
+            abs(sinc_pi<T>(::std::complex<T>(0, 1))-
+                ::std::complex<T>(sinh(static_cast<T>(1)))),
+            numeric_limits<T>::epsilon()
+        ));
 }
 
 
@@ -61,7 +67,6 @@ void    sinc_pi_manual_check()
     using    ::boost::math::sinc_pi;
     
     
-    BOOST_MESSAGE(" ");
     BOOST_MESSAGE("sinc_pi");
     
     for    (int i = 0; i <= 100; i++)

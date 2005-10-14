@@ -14,23 +14,28 @@
 #include <algorithm>
 #include <locale>
 
-#include <boost/config.hpp> // msvc 6.0 needs this to suppress warnings 
-                            // for BOOST_DEDUCED_TYPENAME
 #include <cstring> // strlen
-#include <cstdlib> // mbtowc
-#include <cwchar>  // wcslen
-
+#include <boost/config.hpp> // msvc 6.0 needs this to suppress warnings
 #if defined(BOOST_NO_STDC_NAMESPACE)
 namespace std{ 
     using ::strlen; 
-    #if ! defined(BOOST_NO_INTRINSIC_WCHAR_T)
-        using ::mbtowc; 
-        using ::wcslen;
-    #endif
 } // namespace std
 #endif
 
 #include <boost/throw_exception.hpp>
+#include <boost/utf8_codecvt_facet.hpp>
+
+#include <cstring>
+#include <cstdlib> // mbtowc
+
+#include <boost/config.hpp> // for BOOST_DEDUCED_TYPENAME
+#if defined(BOOST_NO_STDC_NAMESPACE) && ! defined(__LIBCOMO__)
+namespace std{ 
+    using ::strlen; 
+    using ::mbtowc; 
+} //std
+#endif
+
 #include <boost/pfto.hpp>
 
 #include <boost/archive/iterators/xml_escape.hpp>
@@ -39,13 +44,38 @@ namespace std{
 #include <boost/archive/iterators/dataflow_exception.hpp>
 
 #include <boost/archive/add_facet.hpp>
-#include <boost/archive/detail/utf8_codecvt_facet.hpp>
 
 namespace boost {
 namespace archive {
 
 /////////1/////////2/////////3/////////4/////////5/////////6/////////7/////////8
 // implemenations of functions specific to wide char archives
+
+std::wostream & operator<<(std::wostream &os, const char *t){
+    for(;;){
+        wchar_t wc;
+        int result = std::mbtowc(&wc, t, 10 /* max number */);
+        if(0 < result)
+            os.put(wc);
+        else
+        if(0 == result)
+            break;
+        else
+            boost::throw_exception(
+                iterators::dataflow_exception(
+                    iterators::dataflow_exception::invalid_conversion
+                )
+            );
+    }
+    return os;
+}
+
+std::wostream & operator<<(std::wostream &os, const char t){
+    wchar_t wc;
+    std::mbtowc(&wc, &t, 1);
+    os.put(wc);
+    return os;
+}
 
 // copy chars to output escaping to xml and widening characters as we go
 template<class InputIterator>
@@ -61,8 +91,7 @@ void save_iterator(std::wostream &os, InputIterator begin, InputIterator end){
 }
 
 template<class Archive>
-BOOST_WARCHIVE_DECL(void)
-xml_woarchive_impl<Archive>::save(const std::string & s){
+void xml_woarchive_impl<Archive>::save(const std::string & s){
     // note: we don't use s.begin() and s.end() because dinkumware
     // doesn't have string::value_type defined. So use a wrapper
     // around these values to implement the definitions.
@@ -73,17 +102,8 @@ xml_woarchive_impl<Archive>::save(const std::string & s){
 
 #ifndef BOOST_NO_STD_WSTRING
 template<class Archive>
-BOOST_WARCHIVE_DECL(void)
-xml_woarchive_impl<Archive>::save(const std::wstring & ws){
-#if 0
+void xml_woarchive_impl<Archive>::save(const std::wstring & ws){
     typedef iterators::xml_escape<std::wstring::const_iterator> xmbtows;
-    std::copy(
-        xmbtows(BOOST_MAKE_PFTO_WRAPPER(ws.begin())),
-        xmbtows(BOOST_MAKE_PFTO_WRAPPER(ws.end())),
-        boost::archive::iterators::ostream_iterator<wchar_t>(os)
-    );
-#endif
-    typedef iterators::xml_escape<const wchar_t *> xmbtows;
     std::copy(
         xmbtows(BOOST_MAKE_PFTO_WRAPPER(ws.data())),
         xmbtows(BOOST_MAKE_PFTO_WRAPPER(ws.data() + ws.size())),
@@ -93,15 +113,13 @@ xml_woarchive_impl<Archive>::save(const std::wstring & ws){
 #endif //BOOST_NO_STD_WSTRING
 
 template<class Archive>
-BOOST_WARCHIVE_DECL(void)
-xml_woarchive_impl<Archive>::save(const char * s){
+void xml_woarchive_impl<Archive>::save(const char * s){
    save_iterator(os, s, s + std::strlen(s));
 }
 
 #ifndef BOOST_NO_INTRINSIC_WCHAR_T
 template<class Archive>
-BOOST_WARCHIVE_DECL(void)
-xml_woarchive_impl<Archive>::save(const wchar_t * ws){
+void xml_woarchive_impl<Archive>::save(const wchar_t * ws){
     os << ws;
     typedef iterators::xml_escape<const wchar_t *> xmbtows;
     std::copy(
@@ -113,7 +131,6 @@ xml_woarchive_impl<Archive>::save(const wchar_t * ws){
 #endif
 
 template<class Archive>
-BOOST_WARCHIVE_DECL(BOOST_PP_EMPTY())
 xml_woarchive_impl<Archive>::xml_woarchive_impl(
     std::wostream & os_,
     unsigned int flags
@@ -139,12 +156,12 @@ xml_woarchive_impl<Archive>::xml_woarchive_impl(
     // we can hack around this by using a static codecvt that never
     // gets destroyed.
     if(0 == (flags & no_codecvt)){
-        detail::utf8_codecvt_facet *pfacet;
+        utf8_codecvt_facet_wchar_t *pfacet;
         #if defined(__SGI_STL_PORT) || defined(_STLPORT_VERSION)
-            static detail::utf8_codecvt_facet facet(static_cast<size_t>(1));
+            static utf8_codecvt_facet_wchar_t facet(static_cast<size_t>(1));
             pfacet = & facet;
         #else
-            pfacet = new detail::utf8_codecvt_facet;
+            pfacet = new utf8_codecvt_facet_wchar_t;
         #endif
         archive_locale.reset(add_facet(std::locale::classic(), pfacet));
         os.imbue(* archive_locale);

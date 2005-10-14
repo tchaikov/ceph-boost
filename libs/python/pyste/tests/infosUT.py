@@ -3,14 +3,13 @@
 # (See accompanying file LICENSE_1_0.txt or copy at 
 # http:#www.boost.org/LICENSE_1_0.txt)
 import sys
-from Pyste.infos import *
-from Pyste.policies import *
-from Pyste.exporterutils import *
+sys.path.append('../src')  
+from infos import *
+from policies import *
+from exporterutils import *
 import unittest
 
-#================================================================================
-# InfosTest
-#================================================================================
+
 class InfosTest(unittest.TestCase):
 
     def testFunctionInfo(self):

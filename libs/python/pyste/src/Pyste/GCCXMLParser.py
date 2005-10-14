@@ -4,12 +4,7 @@
 # http:#www.boost.org/LICENSE_1_0.txt)
 
 from declarations import *
-# try to use cElementTree if avaiable
-try:
-    from cElementTree import ElementTree    
-except ImportError:
-    # fall back to the normal elementtree
-    from elementtree.ElementTree import ElementTree
+from elementtree.ElementTree import ElementTree
 from xml.parsers.expat import ExpatError
 from copy import deepcopy
 from utils import enumerate
@@ -408,8 +403,12 @@ class GCCXMLParser(object):
         classname = self.GetDecl(element.get('context')).FullName()
         location = self.GetLocation(element.get('location'))
         params = self.GetArguments(element)
-        artificial = element.get('artificial', False)        
-        ctor = Constructor(name, classname, params, visib)
+        artificial = element.get('artificial', False)
+        if not artificial:
+            ctor = Constructor(name, classname, params, visib)
+        else:
+            # we don't want artificial constructors
+            ctor = Unknown('__Unknown_Element_%s' % id)
         ctor.location = location
         self.Update(id, ctor)
 

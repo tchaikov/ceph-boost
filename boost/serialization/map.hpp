@@ -34,8 +34,11 @@
 #define STD std
 #endif
 
-namespace boost { 
-namespace serialization {
+#ifdef BOOST_NO_ARGUMENT_DEPENDENT_LOOKUP
+namespace boost { namespace serialization {
+#else
+namespace STD {
+#endif
 
 template<class Archive, class Type, class Key, class Compare, class Allocator >
 inline void save(
@@ -100,7 +103,7 @@ inline void load(
     boost::serialization::stl::load_collection<
         Archive,
         STD::multimap<Key, Type, Compare, Allocator>,
-        boost::serialization::stl::archive_input_multimap<
+        boost::serialization::stl::archive_input_map<
             Archive, STD::multimap<Key, Type, Compare, Allocator> 
         >,
         boost::serialization::stl::no_reserve_imp<
@@ -120,9 +123,11 @@ inline void serialize(
     boost::serialization::split_free(ar, t, file_version);
 }
 
-} // serialization
-} // namespace boost
-
+#ifdef BOOST_NO_ARGUMENT_DEPENDENT_LOOKUP
+}} // namespace boost::serialization
+#else
+} // namespace STD
+#endif
 #undef STD
 
 #endif // BOOST_SERIALIZATION_MAP_HPP

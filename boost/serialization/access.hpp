@@ -34,8 +34,6 @@ namespace detail {
 namespace serialization {
 
 // forward declarations
-template<class Archive, class T>
-inline void serialize_adl(Archive &, T &, const unsigned int);
 namespace detail {
     template<class Archive, class T>
     struct member_saver;
@@ -86,8 +84,7 @@ public:
     template<class Archive, class T>
     static void member_save(
         Archive & ar, 
-        //const T & t,
-        T & t,
+        const T & t,
         const unsigned int file_version
     ){
         t.save(ar, file_version);

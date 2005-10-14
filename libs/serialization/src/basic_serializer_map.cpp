@@ -14,7 +14,6 @@
 
 #include <set>
 
-#define BOOST_ARCHIVE_SOURCE
 #include <boost/archive/detail/basic_serializer.hpp>
 #include <boost/archive/detail/basic_serializer_map.hpp>
 
@@ -25,18 +24,7 @@ namespace boost {
 namespace archive {
 namespace detail {
 
-bool type_info_pointer_compare::operator()(
-    const basic_serializer * lhs, const basic_serializer * rhs
-) const    {
-    return *lhs < *rhs;
-}
-
-BOOST_ARCHIVE_DECL(BOOST_PP_EMPTY())
-basic_serializer_map::basic_serializer_map(){
-}
-
-BOOST_ARCHIVE_DECL(bool) 
-basic_serializer_map::insert(const basic_serializer * bs){
+bool basic_serializer_map::insert(const basic_serializer * bs){
     return map.insert(bs).second;
 }
 
@@ -47,11 +35,10 @@ public:
     {}
 };
 
-BOOST_ARCHIVE_DECL(const basic_serializer *) 
-basic_serializer_map::tfind(
-    const boost::serialization::extended_type_info & eti
+const basic_serializer * basic_serializer_map::tfind(
+    const boost::serialization::extended_type_info & type_
 ) const {
-    const basic_serializer_arg bs(eti);
+    const basic_serializer_arg bs(type_);
     map_type::const_iterator it;
     it = map.find(& bs);
     if(it == map.end())

@@ -12,12 +12,10 @@
 
 import feature ;
 import regex ;
-import sequence ;
 import common ;
 
 feature.feature xsl:param : : free ;
 feature.feature xsl:path : : free ;
-feature.feature catalog : : free ;
 
 # Initialize xsltproc support. The parameters are:
 #   xsltproc: The xsltproc executable
@@ -50,52 +48,30 @@ rule compute-xslt-flags ( target : properties * )
     flags += --path $(path:G=) ;
   }
         
-  # Take care of implicit dependencies
-  local other-deps ;
-  for local dep in [ feature.get-values <implicit-dependency> : $(properties) ]
-  {
-    other-deps += [ $(dep:G=).creating-subvariant ] ;
-  }
-
-  local implicit-target-directories ;
-  for local dep in [ sequence.unique $(other-deps) ]
-  {
-    implicit-target-directories += [ $(dep).all-target-directories ] ;
-  }
-
-  for local dir in $(implicit-target-directories)
-  {
-    flags += --path $(dir) ;
-  }
-
   return $(flags) ;
 }
 
 
-local rule .xsltproc ( target : source stylesheet : properties * : dirname ? : action )
-{   
-    STYLESHEET on $(target) = $(stylesheet) ;
-    FLAGS on $(target) = [ compute-xslt-flags $(target) : $(properties) ] ;
-    NAME on $(target) = $(.xsltproc) ;
-    
-    for local catalog in [ feature.get-values <catalog> : $(properties) ]
-    {
-        CATALOG = [ common.variable-setting-command XML_CATALOG_FILES : $(catalog) ] ;
-    }
-    
-    DIRECTORY on $(target) = $(dirname) ;
-    $(action) $(target) : $(source) ;
-}
-
 rule xslt ( target : source stylesheet : properties * )
 { 
-    return [ .xsltproc $(target) : $(source) $(stylesheet) : $(properties) : : xslt-xsltproc ] ;
+  STYLESHEET on $(target) = $(stylesheet) ;
+  FLAGS on $(target) = [ compute-xslt-flags $(target) : $(properties) ] ;
+  NAME on $(target) = $(.xsltproc) ;
+    
+  CATALOG = [ common.variable-setting-command "XML_CATALOG_FILES" "catalog.xml" ] ;  
+  xslt-xsltproc $(target) : $(source) ;
 }
 
 rule xslt-dir ( target : source stylesheet : properties * : dirname )
-{ 
-    return [ .xsltproc $(target) : $(source) $(stylesheet) : $(properties) : $(dirname) : xslt-xsltproc-dir ] ;
+{   
+  STYLESHEET on $(target) = $(stylesheet) ;
+  FLAGS on $(target) = [ compute-xslt-flags $(target) : $(properties) ] ;
+  DIRECTORY on $(target) = $(dirname) ;
+  NAME on $(target) = $(.xsltproc) ;
+  CATALOG = [ common.variable-setting-command "XML_CATALOG_FILES" "catalog.xml" ] ;      
+  xslt-xsltproc-dir $(target) : $(source) ;
 }
+
 
 actions xslt-xsltproc
 {
@@ -106,3 +82,6 @@ actions xslt-xsltproc-dir
 {
   $(CATALOG) "$(NAME:E=xsltproc)" $(FLAGS) --xinclude -o "$(DIRECTORY)/" "$(STYLESHEET)" "$(>)"
 }
+
+IMPORT $(__name__) : xslt : : xslt ;
+IMPORT $(__name__) : xslt-dir : : xslt-dir ;

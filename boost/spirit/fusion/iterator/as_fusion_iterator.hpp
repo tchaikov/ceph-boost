@@ -1,6 +1,5 @@
 /*=============================================================================
     Copyright (c) 2003 Joel de Guzman
-    Copyright (c) 2004 Peder Holt
 
     Use, modification and distribution is subject to the Boost Software
     License, Version 1.0. (See accompanying file LICENSE_1_0.txt or copy at
@@ -19,22 +18,6 @@ namespace boost { namespace fusion
     //  Test T. If it is a fusion iterator, return a reference to it.
     //  else, assume it is an mpl iterator.
 
-    namespace as_fusion_iterator_detail {
-        template <typename T>
-        static T const&
-        convert(T const& x, mpl::true_)
-        {
-            return x;
-        }
-
-        template <typename T>
-        static type_sequence_iterator<T>
-        convert(T const& x, mpl::false_)
-        {
-            return type_sequence_iterator<T>();
-        }
-    }
-
     template <typename T>
     struct as_fusion_iterator
     {
@@ -46,27 +29,29 @@ namespace boost { namespace fusion
             >::type
         type;
 
+        static T const&
+        convert(T const& x, mpl::true_)
+        {
+            return x;
+        }
+
+        static type_sequence_iterator<T>
+        convert(T const& x, mpl::false_)
+        {
+            return type_sequence_iterator<T>();
+        }
+
         static typename
             mpl::if_<
                 fusion::is_iterator<T>
               , T const&
               , type_sequence_iterator<T>
             >::type
-        convert(T const& x);
+        convert(T const& x)
+        {
+            return convert(x, fusion::is_iterator<T>());
+        }
     };
-
-    template <typename T>
-    typename
-        mpl::if_<
-            fusion::is_iterator<T>
-          , T const&
-          , type_sequence_iterator<T>
-        >::type
-    as_fusion_iterator<T>::convert(T const& x)
-    {
-        return as_fusion_iterator_detail::convert(x, fusion::is_iterator<T>());
-    }
-
 }}
 
 #endif

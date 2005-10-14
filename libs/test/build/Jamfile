@@ -12,40 +12,27 @@ PRG_EXEC_MON_SOURCES =
   ;
 
 TEST_EXEC_MON_SOURCES =
-  compiler_log_formatter
   execution_monitor
-  framework
-  plain_report_formatter
-  progress_monitor
-  results_collector
-  results_reporter
-  test_main
   test_tools
-  unit_test_log
-  unit_test_main
-  unit_test_monitor
   unit_test_parameters
+  unit_test_log
+  unit_test_monitor
+  unit_test_result
   unit_test_suite
-  xml_log_formatter
-  xml_report_formatter
+  supplied_log_formatters
+  test_main
   ;
 
 UTF_SOURCES =
-  compiler_log_formatter
   execution_monitor
-  framework
-  plain_report_formatter
-  progress_monitor
-  results_collector
-  results_reporter
   test_tools
-  unit_test_log
-  unit_test_main
-  unit_test_monitor
   unit_test_parameters
+  unit_test_log
+  unit_test_monitor
+  unit_test_result
   unit_test_suite
-  xml_log_formatter
-  xml_report_formatter
+  unit_test_main
+  supplied_log_formatters
   ;
 
 template boost_test_lib 
@@ -66,7 +53,7 @@ lib boost_test_exec_monitor   : <template>boost_test_lib
 lib boost_unit_test_framework : <template>boost_test_lib
                                 ../src/$(UTF_SOURCES).cpp ; 
 
-if ! $(NT) && ( ! $(UNIX) || $(OS) != CYGWIN )
+if ! $(NT)
 {
 dll boost_prg_exec_monitor    : <template>boost_test_lib
                                 ../src/$(PRG_EXEC_MON_SOURCES).cpp ;

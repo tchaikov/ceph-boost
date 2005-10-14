@@ -42,8 +42,11 @@ BOOST_CLASS_IMPLEMENTATION(std::wstring, boost::serialization::primitive_type)
 #define STD std
 #endif
 
-namespace boost { 
-namespace serialization {
+#ifdef BOOST_NO_ARGUMENT_DEPENDENT_LOOKUP
+namespace boost { namespace serialization {
+#else
+namespace STD {
+#endif
 
 // basic_string - general case
 template<class Archive, class U, class Allocator>
@@ -87,8 +90,11 @@ inline void serialize(
     boost::serialization::split_free(ar, t, file_version);
 }
 
-} // serialization
-} // namespace boost
+#ifdef BOOST_NO_ARGUMENT_DEPENDENT_LOOKUP
+}} // namespace boost::serialization
+#else
+} // std
+#endif
 
 #include <boost/serialization/collection_traits.hpp>
 

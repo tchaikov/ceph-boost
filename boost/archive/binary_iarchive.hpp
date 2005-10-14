@@ -17,11 +17,9 @@
 //  See http://www.boost.org for updates, documentation, and revision history.
 
 #include <istream>
-#include <boost/archive/detail/auto_link_archive.hpp>
+#include <boost/config.hpp>
 #include <boost/archive/basic_binary_iarchive.hpp>
 #include <boost/archive/basic_binary_iprimitive.hpp>
-
-#include <boost/archive/detail/abi_prefix.hpp> // must be the last header
 
 namespace boost { 
 namespace archive {
@@ -47,23 +45,23 @@ protected:
         basic_binary_iarchive<Archive>::load_override(t, 0);
     }
     void init(){
-        #if ! defined(__MWERKS__)
-            this->basic_binary_iarchive<Archive>::init();
-            this->basic_binary_iprimitive<Archive, std::istream>::init();
-        #else
-            basic_binary_iarchive<Archive>::init();
-            basic_binary_iprimitive<Archive, std::istream>::init();
-        #endif
+        basic_binary_iarchive<Archive>::init();
+        basic_binary_iprimitive<Archive, std::istream>::init();
     }
-    binary_iarchive_impl(std::istream & is, unsigned int flags) :
+    binary_iarchive_impl(std::istream & is, unsigned int flags = 0) :
         basic_binary_iprimitive<Archive, std::istream>(
             is, 
             0 != (flags & no_codecvt)
-        ),
-        basic_binary_iarchive<Archive>(flags)
+        )
     {
         if(0 == (flags & no_header)){
-            init();
+            #if ! defined(__MWERKS__)
+                this->basic_binary_iarchive<Archive>::init();
+                this->basic_binary_iprimitive<Archive, std::istream>::init();
+            #else
+                basic_binary_iarchive<Archive>::init();
+                basic_binary_iprimitive<Archive, std::istream>::init();
+            #endif
         }
     }
 };
@@ -77,7 +75,8 @@ class binary_iarchive :
 public:
     binary_iarchive(std::istream & is, unsigned int flags = 0) :
         binary_iarchive_impl<binary_iarchive>(is, flags)
-    {}
+    {
+    }
 };
 
 } // namespace archive
@@ -86,7 +85,5 @@ public:
 // required by smart_cast for compilers not implementing 
 // partial template specialization
 BOOST_BROKEN_COMPILER_TYPE_TRAITS_SPECIALIZATION(boost::archive::binary_iarchive)
-
-#include <boost/archive/detail/abi_suffix.hpp> // pops abi_suffix.hpp pragmas
 
 #endif // BOOST_ARCHIVE_BINARY_IARCHIVE_HPP

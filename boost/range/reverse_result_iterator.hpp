@@ -29,9 +29,11 @@ namespace boost
     struct range_reverse_result_iterator
     {
         typedef reverse_iterator< 
-            BOOST_RANGE_DEDUCED_TYPENAME range_result_iterator<C>::type > type;
+            BOOST_DEDUCED_TYPENAME range_result_iterator<C>::type > type;
     };
     
 } // namespace boost
+
+//#endif // BOOST_NO_TEMPLATE_PARTIAL_SPECIALIZATION
 
 #endif

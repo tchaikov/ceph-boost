@@ -11,7 +11,6 @@
 
 ///////////////////////////////////////////////////////////////////////////////
 #include <memory> // for std::auto_ptr
-#include <boost/spirit/core/assert.hpp>
 
 ///////////////////////////////////////////////////////////////////////////////
 namespace boost { namespace spirit {
@@ -134,9 +133,6 @@ namespace boost { namespace spirit {
             node_t**  np = &root;
             CharT   ch = *first;
 
-            BOOST_SPIRIT_ASSERT(first == last || ch != 0
-                && "Won't add string containing null character");
-
             for (;;)
             {
                 if (*np == 0 || ch == 0)
@@ -171,9 +167,7 @@ namespace boost { namespace spirit {
                             }
                        }
                         ++first;
-                        ch = (first == last) ? CharT(0) : *first;
-                        BOOST_SPIRIT_ASSERT(first == last || ch != 0
-                            && "Won't add string containing null character");
+                        ch = (first == last) ? 0 : *first;
                         np = &(**np).middle.link;
                     }
                     else
@@ -201,8 +195,7 @@ namespace boost { namespace spirit {
 
             while (np)
             {
-
-                if (ch < np->value) // => go left!
+                if (ch < np->value)
                 {
                     if (np->value == 0)
                     {
@@ -213,41 +206,41 @@ namespace boost { namespace spirit {
                             latest_len = result.length;
                         }
                     }
-
                     np = np->left;
                 }
-                else if (ch == np->value) // => go middle!
+                else
                 {
-                    // Matching the null character is not allowed.
-                    if (np->value == 0)
+                    if (ch == np->value)
                     {
-                        result.data = np->middle.data;
-                        if (result.data)
+                        if (scan.at_end())
                         {
-                            latest = scan.first;
-                            latest_len = result.length;
+                            result.data = np->middle.data;
+                            if (result.data)
+                            {
+                                latest = scan.first;
+                                latest_len = result.length;
+                            }
+                            break;
                         }
-                        break;
-                    }
 
-                    ++scan;
-                    ch = scan.at_end() ? CharT(0) : *scan;
-                    np = np->middle.link;
-                    ++result.length;
-                }
-                else // (ch > np->value) => go right!
-                {
-                    if (np->value == 0)
+                        ++scan;
+                        ch = scan.at_end() ? 0 : *scan;
+                        np = np->middle.link;
+                        ++result.length;
+                    }
+                    else
                     {
-                        result.data = np->middle.data;
-                        if (result.data)
+                        if (np->value == 0)
                         {
-                            latest = scan.first;
-                            latest_len = result.length;
+                            result.data = np->middle.data;
+                            if (result.data)
+                            {
+                                latest = scan.first;
+                                latest_len = result.length;
+                            }
                         }
-                    }
-
-                    np = np->right;
+                        np = np->right;
+                     }
                 }
             }
 

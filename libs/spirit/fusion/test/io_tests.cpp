@@ -5,7 +5,7 @@
     License, Version 1.0. (See accompanying file LICENSE_1_0.txt or copy at
     http://www.boost.org/LICENSE_1_0.txt)
 ==============================================================================*/
-#include <boost/detail/lightweight_test.hpp>
+#include <boost/test/minimal.hpp>
 #include <boost/spirit/fusion/sequence/tuple.hpp>
 #include <boost/spirit/fusion/sequence/make_tuple.hpp>
 #include <boost/spirit/fusion/sequence/equal_to.hpp>
@@ -46,8 +46,10 @@ using std::ifstream;
 using std::string;
 
 int
-main()
+test_main(int argc, char * argv[])
 {
+    (void)argc;
+    (void)argv;
     using boost::fusion::tuple_close;
     using boost::fusion::tuple_open;
     using boost::fusion::tuple_delimiter;
@@ -116,6 +118,6 @@ main()
     // general. If this is wanted, some kind of a parseable string class
     // should be used.
 
-    return boost::report_errors();
+    return 0;
 }
 

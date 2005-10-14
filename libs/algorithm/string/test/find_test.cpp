@@ -28,7 +28,7 @@ void find_test()
     string str1("123abcxXxabcXxXabc321");
     string str2("abc");
     string str3("");
-    const char* pch1="123abcxxxabcXXXabc321";
+    char* pch1="123abcxxxabcXXXabc321";
     vector<int> vec1( str1.begin(), str1.end() );
 
     // find results ------------------------------------------------------------//

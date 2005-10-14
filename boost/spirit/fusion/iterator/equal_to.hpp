@@ -1,6 +1,5 @@
 /*=============================================================================
     Copyright (c) 2003 Joel de Guzman
-    Copyright (c) 2004 Peder Holt
 
     Use, modification and distribution is subject to the Boost Software
     License, Version 1.0. (See accompanying file LICENSE_1_0.txt or copy at
@@ -36,13 +35,11 @@ namespace boost { namespace fusion
 
         template <typename I1, typename I2>
         struct equal_to
-            : detail::bool_base<
-              typename equal_to_impl<typename as_fusion_iterator<I1>::type::tag>::
+            : equal_to_impl<typename as_fusion_iterator<I1>::type::tag>::
                 template apply<
                     typename as_fusion_iterator<I1>::type
                   , typename as_fusion_iterator<I2>::type
-                >::type
-              > {};
+                >::type {};
     }
 }}
 

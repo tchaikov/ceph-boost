@@ -39,8 +39,11 @@
 #define STD BOOST_STD_EXTENSION_NAMESPACE
 #endif
 
-namespace boost { 
-namespace serialization {
+#ifdef BOOST_NO_ARGUMENT_DEPENDENT_LOOKUP
+namespace boost { namespace serialization {
+#else
+namespace STD {
+#endif
 
 template<class Archive, class Key, class Compare, class Allocator >
 inline void save(
@@ -106,7 +109,7 @@ inline void load(
     boost::serialization::stl::load_collection<
         Archive,
         STD::hash_multimap<Key, Compare, Allocator>,
-        boost::serialization::stl::archive_input_multimap<
+        boost::serialization::stl::archive_input_map<
             Archive, 
             STD::hash_multimap<Key, Compare, Allocator> 
         >,
@@ -127,9 +130,11 @@ inline void serialize(
     boost::serialization::split_free(ar, t, file_version);
 }
 
-} // namespace serialization
-} // namespace boost
-
+#ifdef BOOST_NO_ARGUMENT_DEPENDENT_LOOKUP
+}} // namespace boost::serialization
+#else
+} // STD
+#endif
 #undef STD
 
 #endif // BOOST_HAS_HASH

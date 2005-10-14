@@ -1,6 +1,5 @@
 /*=============================================================================
     Copyright (c) 2003 Joel de Guzman
-    Copyright (c) 2004 Peder Holt
 
     Use, modification and distribution is subject to the Boost Software
     License, Version 1.0. (See accompanying file LICENSE_1_0.txt or copy at
@@ -28,26 +27,17 @@ namespace boost { namespace fusion
     struct void_t;
 
     template <int N, typename Tuple>
-    struct tuple_iterator;
-
-    template <int N, typename Tuple>
-    struct tuple_iterator_base : iterator_base<tuple_iterator<N, Tuple> >
+    struct tuple_iterator : iterator_base<tuple_iterator<N, Tuple> >
     {
-        typedef FUSION_INT(N) index;
+        typedef mpl::int_<N> index;
         typedef Tuple tuple;
         typedef tuple_iterator_tag tag;
         typedef tuple_iterator<N, Tuple> self_type;
-    };
 
-    template <int N, typename Tuple>
-    struct tuple_iterator : tuple_iterator_base<N,Tuple>
-    {
-        typedef typename tuple_iterator_base<N,Tuple>::tuple tuple;
-        typedef typename tuple_iterator_base<N,Tuple>::index index;
         typedef typename
             mpl::eval_if<
                 mpl::less<index, typename Tuple::size>
-              , detail::tuple_iterator_next_traits_impl<tuple_iterator_base<N,Tuple> >
+              , detail::tuple_iterator_next_traits_impl<self_type>
               , mpl::identity<void_t>
             >::type
         next;
@@ -55,43 +45,28 @@ namespace boost { namespace fusion
         typedef typename
             mpl::eval_if<
                 mpl::less<index, typename Tuple::size>
-              , detail::tuple_iterator_value_traits_impl<tuple_iterator_base<N,Tuple> >
+              , detail::tuple_iterator_value_traits_impl<self_type>
               , mpl::identity<void_t>
             >::type
         type;
 
-#if BOOST_WORKAROUND(BOOST_MSVC,==1200)
-        tuple_iterator(tuple_iterator const& i);
-#else
+        tuple_iterator(tuple& t)
+            : t(t) {}
+
         template <int N2, typename Tuple2>
         tuple_iterator(tuple_iterator<N2, Tuple2> const& i)
-        : t(static_cast<tuple&>(i.get_tuple())) {}
-#endif
-        tuple_iterator(tuple& t);
+            : t(static_cast<tuple&>(i.get_tuple())) {}
 
         tuple&
-        get_tuple() const;
+        get_tuple() const
+        {
+            return t;
+        }
+
     private:
 
         tuple& t;
     };
-
-#if BOOST_WORKAROUND(BOOST_MSVC,==1200)
-    template <int N, typename Tuple>
-    tuple_iterator<N,Tuple>::tuple_iterator(tuple_iterator const& i)
-    : t(static_cast<tuple&>(i.get_tuple())) {}
-#endif
-
-    template <int N, typename Tuple>
-    tuple_iterator<N,Tuple>::tuple_iterator(tuple& t)
-    : t(t) {}
-
-    template <int N, typename Tuple>
-    typename tuple_iterator<N,Tuple>::tuple&
-    tuple_iterator<N,Tuple>::get_tuple() const
-    {
-        return t;
-    }
 }}
 
 #endif

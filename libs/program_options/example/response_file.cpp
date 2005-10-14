@@ -46,7 +46,6 @@ int main(int ac, char* av[])
             ("help", "produce a help message")
             ("include-path,I", value< vector<string> >()->composing(), 
                  "include path")
-            ("magic", value<int>(), "magic value")
             ("response-file", value<string>(), 
                  "can be specified with '@name', too")
         ;
@@ -83,9 +82,6 @@ int main(int ac, char* av[])
             copy(s.begin(), s.end(), ostream_iterator<string>(cout, " "));
             cout << "\n";
         }        
-        if (vm.count("magic")) {
-            cout << "Magic value: " << vm["magic"].as<int>() << "\n";
-        }
     }
     catch(exception& e) {
         cout << e.what() << "\n";

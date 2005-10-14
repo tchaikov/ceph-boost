@@ -44,7 +44,7 @@ namespace detail {
 
     template<class Ch, class Facet> inline
     bool wrap_isdigit(const Facet& fac, Ch c) {
-#if ! defined( BOOST_NO_LOCALE_ISDIGIT )
+#if ! defined( BOOST_NO_LOCALE_ISIDIGIT )
         return fac.is(std::ctype<Ch>::digit, c);
 # else
         using namespace std;

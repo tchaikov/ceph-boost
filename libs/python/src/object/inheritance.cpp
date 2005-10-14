@@ -203,7 +203,7 @@ namespace
           return &*p;
   }
   
-  // Get the entry for a type, inserting if necessary
+  // Get the entry for a type, inserting if neccessary
   inline type_index_t::iterator demand_type(class_id type)
   {
       type_index_t::iterator p = type_position(type);
@@ -218,7 +218,7 @@ namespace
       return type_index().insert(p, boost::make_tuple(type, v, dynamic_id_function(0)));
   }
 
-  // Map a two types to a vertex in the graph, inserting if necessary
+  // Map a two types to a vertex in the graph, inserting if neccessary
   typedef std::pair<type_index_t::iterator, type_index_t::iterator>
         type_index_iterator_pair;
   

@@ -41,20 +41,11 @@ struct counting_allocator : public std::allocator<T>
   }
 };
 
-struct plus_int
-{
-  int operator()(int x, int y) const { return x + y; }
-
-  int unused_state_data;
-};
-
 static int do_minus(int x, int y) { return x-y; }
 
 struct DoNothing
 {
   void operator()() const {}
-
-  int unused_state_data;
 };
 
 static void do_nothing() {}
@@ -63,32 +54,28 @@ int
 test_main(int, char*[])
 {
   function2<int, int, int, counting_allocator<int> > f;
-  f = plus_int();
+  f = plus<int>();
   f.clear();
-  BOOST_CHECK(alloc_count == 1);
-  BOOST_CHECK(dealloc_count == 1);
+  BOOST_TEST(alloc_count == 1);
+  BOOST_TEST(dealloc_count == 1);
 
   alloc_count = 0;
   dealloc_count = 0;
   f = &do_minus;
   f.clear();
-  BOOST_CHECK(alloc_count == 0);
-  BOOST_CHECK(dealloc_count == 0);
 
   function0<void, counting_allocator<int> > fv;
   alloc_count = 0;
   dealloc_count = 0;
   fv = DoNothing();
   fv.clear();
-  BOOST_CHECK(alloc_count == 1);
-  BOOST_CHECK(dealloc_count == 1);
+  BOOST_TEST(alloc_count == 1);
+  BOOST_TEST(dealloc_count == 1);
 
   alloc_count = 0;
   dealloc_count = 0;
   fv = &do_nothing;
   fv.clear();
-  BOOST_CHECK(alloc_count == 0);
-  BOOST_CHECK(dealloc_count == 0);
 
   return 0;
 }

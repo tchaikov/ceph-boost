@@ -73,8 +73,7 @@ critical_tests = ["unit_tests", "module_actions", "startup_v1", "startup_v2"]
 critical_tests += ["core_d12", "core_typecheck", "core_delete_module",
                    "core_varnames", "core_import_module"]
 
-tests = [ "rebuilds",
-          "timedata",
+tests = [ "project_test1",
           "project_test3",
           "project_test4",
           "generators_test",
@@ -112,6 +111,7 @@ tests = [ "rebuilds",
           "suffix",
           "inherit_toolset",
           "skipping",
+          "project_root",
           "glob",
           "project_root_constants",
           "double_loading",
@@ -125,23 +125,14 @@ tests = [ "rebuilds",
           "wrapper",
           "duplicate",
           "library_property",
-          "load_order",
-          "wrong_project",
-          "using",
-          "source_locations",
-          "out_of_tree",
-          "notfile",
+          #"ordered_properties",
           ]
 
 if os.name == 'posix':
     tests.append("symlink")
     # On windows, library order is not important, so skip this test
-    # Besides, it fails ;-)
-    # Further, the test relies on the fact that on Linux, one
-    # can build a shared library with unresolved symbols. This is
-    # not true on Windows (even with cygwin gcc).
-    if string.find(os.uname()[0], "CYGWIN") == -1:
-        tests.append("library_order")
+    # Besides, it fails ;-)    
+    tests.append("library_order")
 
 if string.find(get_toolset(), 'gcc') == 0:
     tests.append("gcc_runtime")
@@ -150,10 +141,5 @@ if os.environ.has_key('QTDIR'):
     tests.append("railsys")
 else:
     print 'skipping railsys test since QTDIR environment variable is unset'
-
-if "--extras" in sys.argv:
-    tests.append("boostbook")
-else:
-    print 'Note: skipping extra tests'
 
 run_tests(critical_tests, tests)

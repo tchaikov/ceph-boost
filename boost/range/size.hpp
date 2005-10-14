@@ -29,18 +29,16 @@
 
 namespace boost 
 {
-
-#if !BOOST_WORKAROUND(__BORLANDC__, BOOST_TESTED_AT(0x564))    
 namespace range_detail 
 {
-#endif
+
         //////////////////////////////////////////////////////////////////////
         // primary template
         //////////////////////////////////////////////////////////////////////
         
         template< typename C >
         inline BOOST_DEDUCED_TYPENAME C::size_type
-        boost_range_size(  const C& c )
+        size( const C& c )
         {
             return c.size(); 
         }
@@ -50,7 +48,7 @@ namespace range_detail
         //////////////////////////////////////////////////////////////////////
 
         template< typename Iterator >
-        inline std::size_t boost_range_size(  const std::pair<Iterator,Iterator>& p )
+        inline std::size_t size( const std::pair<Iterator,Iterator>& p )
         {
             return std::distance( p.first, p.second );
         }
@@ -60,13 +58,13 @@ namespace range_detail
         //////////////////////////////////////////////////////////////////////
 
         template< typename T, std::size_t sz >
-        inline std::size_t boost_range_size(  const T (&array)[sz] )
+        inline std::size_t size( const T (&array)[sz] )
         {
             return range_detail::array_size<T,sz>( array ); 
         }
         
         template< typename T, std::size_t sz >
-        inline std::size_t boost_range_size(  T (&array)[sz] )
+        inline std::size_t size( T (&array)[sz] )
         {
             return boost::range_detail::array_size<T,sz>( array );
         }
@@ -75,42 +73,37 @@ namespace range_detail
         // string
         //////////////////////////////////////////////////////////////////////
 
-        inline std::size_t boost_range_size(  const char* const& s )
+        inline std::size_t size( const char* const& s )
         {
             return boost::range_detail::str_size( s );
         }
 
-        inline std::size_t boost_range_size(  const wchar_t* const& s )
+        inline std::size_t size( const wchar_t* const& s )
         {
             return boost::range_detail::str_size( s );
         }
-
-#if !BOOST_WORKAROUND(__BORLANDC__, BOOST_TESTED_AT(0x564))                
+        
 } // namespace 'range_detail'
-#endif
 
 template< class T >
-inline BOOST_DEDUCED_TYPENAME range_size<T>::type size(  const T& r )
+inline BOOST_DEDUCED_TYPENAME range_size<T>::type size( const T& r )
 {
-#if !BOOST_WORKAROUND(__BORLANDC__, BOOST_TESTED_AT(0x564))        
-    using namespace range_detail;
-#endif    
-    return boost_range_size( r );
+    return range_detail::size( r );
 }
 
 
-#if BOOST_WORKAROUND(__MWERKS__, <= 0x3003 ) || BOOST_WORKAROUND(__BORLANDC__, BOOST_TESTED_AT(0x564))
+#if BOOST_WORKAROUND(__MWERKS__, <= 3003 ) || BOOST_WORKAROUND(__BORLANDC__, BOOST_TESTED_AT(0x564))
 // BCB and CW are not able to overload pointer when class overloads are also available.
-inline range_size<const char*>::type size(  const char* r ) {
+inline range_size<const char*>::type size( const char* r ) {
     return range_detail::str_size( r );
 }
-inline range_size<char*>::type size(  char* r ) {
+inline range_size<char*>::type size( char* r ) {
     return range_detail::str_size( r );
 }
-inline range_size<const wchar_t*>::type size(  const wchar_t* r ) {
+inline range_size<const wchar_t*>::type size( const wchar_t* r ) {
     return range_detail::str_size( r );
 }
-inline range_size<wchar_t*>::type size(  wchar_t* r ) {
+inline range_size<wchar_t*>::type size( wchar_t* r ) {
     return range_detail::str_size( r );
 }
 #endif

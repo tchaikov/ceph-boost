@@ -4,12 +4,12 @@
 // MS compatible compilers support #pragma once
 #if defined(_MSC_VER) && (_MSC_VER >= 1020)
 # pragma once
-#pragma inline_depth(511)
+#pragma inline_depth(255)
 #pragma inline_recursion(on)
 #endif
 
 #if defined(__MWERKS__)
-#pragma inline_depth(511)
+#pragma inline_depth(255)
 #endif
 
 /////////1/////////2/////////3/////////4/////////5/////////6/////////7/////////8
@@ -27,23 +27,24 @@
 #include <cstddef> // size_t
 
 #include <boost/config.hpp>
-#include <boost/detail/workaround.hpp>
 #if defined(BOOST_NO_STDC_NAMESPACE)
 namespace std{ 
     using ::size_t; 
 } // namespace std
 #endif
-#include <boost/throw_exception.hpp>
-#include <boost/smart_cast.hpp>
+
+#include <boost/detail/workaround.hpp>
+
 #include <boost/static_assert.hpp>
 #include <boost/static_warning.hpp>
+#include <boost/smart_cast.hpp>
 
 #include <boost/type_traits/is_pointer.hpp>
 #include <boost/type_traits/is_fundamental.hpp>
 #include <boost/type_traits/is_enum.hpp>
 #include <boost/type_traits/is_same.hpp>
-#include <boost/type_traits/is_const.hpp>
 #include <boost/type_traits/remove_const.hpp>
+#include <boost/throw_exception.hpp>
 #include <boost/serialization/is_abstract.hpp>
 
 #include <boost/mpl/eval_if.hpp>
@@ -57,32 +58,32 @@ namespace std{
 #include <boost/mpl/list.hpp>
 #include <boost/mpl/empty.hpp>
 #include <boost/mpl/not.hpp>
-
-#ifndef BOOST_SERIALIZATION_DEFAULT_TYPE_INFO
-    #include <boost/serialization/extended_type_info_typeid.hpp>
+// the following is only used with VC for now and it crashes
+// at least one other compiler (Borland)
+#if defined(BOOST_MSVC)
+#include <boost/mpl/find.hpp>
 #endif
 
 // the following is need only for dynamic cast of polymorphic pointers
 #include <boost/archive/detail/basic_iarchive.hpp>
 #include <boost/archive/detail/basic_iserializer.hpp>
 #include <boost/archive/detail/archive_pointer_iserializer.hpp>
-#include <boost/archive/archive_exception.hpp>
 
 #include <boost/serialization/force_include.hpp>
+#include <boost/serialization/extended_type_info.hpp>
 #include <boost/serialization/serialization.hpp>
 #include <boost/serialization/version.hpp>
 #include <boost/serialization/level.hpp>
 #include <boost/serialization/tracking.hpp>
 #include <boost/serialization/type_info_implementation.hpp>
 #include <boost/serialization/nvp.hpp>
-#include <boost/serialization/binary_object.hpp>
+#include <boost/serialization/force_include.hpp>
+
+#include <boost/archive/archive_exception.hpp>
+
+#include <boost/archive/detail/known_archive_types_fwd.hpp>
 
 namespace boost {
-
-namespace serialization {
-    class extended_type_info;
-} // namespace serialization
-
 namespace archive {
 
 // an accessor to permit friend access to archives.  Needed because
@@ -104,14 +105,12 @@ private:
     virtual void destroy(/*const*/ void *address) const {
         boost::serialization::access::destroy(static_cast<T *>(address));
     }
-    // private constructor to inhibit any existence other than the 
-    // static one
+public:
     explicit iserializer() :
         basic_iserializer(
             * boost::serialization::type_info_implementation<T>::type::get_instance()
         )
     {}
-public:
     virtual BOOST_DLLEXPORT void load_object_data(
         basic_iarchive & ar,
         void *x, 
@@ -121,9 +120,7 @@ public:
         return boost::serialization::implementation_level<T>::value 
             >= boost::serialization::object_class_info;
     }
-    virtual bool tracking(const unsigned int flags) const {
-        if(0 != (flags & no_tracking))
-            return false;
+    virtual bool tracking() const {
         return boost::serialization::tracking_level<T>::value 
                 == boost::serialization::track_always
             || boost::serialization::tracking_level<T>::value 
@@ -155,7 +152,7 @@ BOOST_DLLEXPORT void iserializer<Archive, T>::load_object_data(
 ) const {
     // make sure call is routed through the higest interface that might
     // be specialized by the user.
-    boost::serialization::serialize_adl(
+    boost::serialization::serialize_adl<Archive, T>(
         boost::smart_cast_reference<Archive &>(ar),
         * static_cast<T *>(x), 
         file_version
@@ -177,29 +174,19 @@ private:
         void * & x,
         const unsigned int file_version
     ) const BOOST_USED;
-#if defined(__GNUC__) || ( defined(BOOST_MSVC) && (_MSC_VER <= 1300) )
 public:
-#endif
-    // private constructor to inhibit any existence other than the 
-    // static one.  Note GCC doesn't permit constructor to be private
-    explicit BOOST_DLLEXPORT pointer_iserializer() BOOST_USED;
     static const pointer_iserializer instance;
-public:
-    // at least one compiler (CW) seems to require that serialize_adl
-    // be explicitly instantiated. Still under investigation. 
-    #if !defined(__BORLANDC__)
-    void (* const m)(Archive &, T &, const unsigned);
-    boost::serialization::extended_type_info * (* e)();
-    #endif
+    explicit pointer_iserializer() :
+        archive_pointer_iserializer<Archive>(
+            * boost::serialization::type_info_implementation<T>::type::get_instance()
+        )
+    {
+        basic_iserializer & bis = iserializer<Archive, T>::instantiate();
+        bis.set_bpis(this);
+    }
     static BOOST_DLLEXPORT const pointer_iserializer & instantiate() BOOST_USED;
     virtual ~pointer_iserializer(){};
 };
-
-template<class T, class Archive>
-BOOST_DLLEXPORT const pointer_iserializer<T, Archive> & 
-pointer_iserializer<T, Archive>::instantiate() {
-    return instance;
-}
 
 // note: instances of this template to be constructed before the main
 // is called in order for things to be initialized properly.  For this
@@ -278,19 +265,20 @@ private:
     T* m_p;
 };
 
+template<class Archive, class T>
+void load_ptr(
+    Archive & ar, 
+    T * & t, 
+    const BOOST_PFTO unsigned int file_version
+){
+}
+
 template<class T, class Archive>
 BOOST_DLLEXPORT void pointer_iserializer<T, Archive>::load_object_ptr(
     basic_iarchive & ar, 
     void * & x,
     const unsigned int file_version
 ) const {
-    Archive & ar_impl = boost::smart_cast_reference<Archive &>(ar);
-
-//    if(0 != (ar.get_flags() & no_object_creation)){
-//        ar_impl >> boost::serialization::make_nvp(NULL, * static_cast<T *>(x));
-//        return;
-//    }
-
     auto_ptr_with_deleter<T> ap(heap_allocator<T>::invoke());
     if(NULL == ap.get())
         boost::throw_exception(std::bad_alloc()) ;
@@ -300,6 +288,8 @@ BOOST_DLLEXPORT void pointer_iserializer<T, Archive>::load_object_ptr(
     // this addresses an obscure situtation that occurs when load_constructor
     // de-serializes something through and a pointer.
     ar.next_object_pointer(t);
+
+    Archive & ar_impl = boost::smart_cast_reference<Archive &>(ar);
     boost::serialization::load_construct_data_adl<Archive, T>(
         ar_impl,
         t, 
@@ -307,25 +297,6 @@ BOOST_DLLEXPORT void pointer_iserializer<T, Archive>::load_object_ptr(
     );
     ar_impl >> boost::serialization::make_nvp(NULL, * t);
     ap.release();
-}
-
-template<class T, class Archive>
-#if !defined(__BORLANDC__)
-BOOST_DLLEXPORT pointer_iserializer<T, Archive>::pointer_iserializer() :
-    archive_pointer_iserializer<Archive>(
-        * boost::serialization::type_info_implementation<T>::type::get_instance()
-    ),
-    m(boost::serialization::serialize_adl<Archive, T>),
-    e(boost::serialization::type_info_implementation<T>::type::get_instance)
-#else
-BOOST_DLLEXPORT pointer_iserializer<T, Archive>::pointer_iserializer() :
-    archive_pointer_iserializer<Archive>(
-        * boost::serialization::type_info_implementation<T>::type::get_instance()
-    )
-#endif
-{
-    iserializer<Archive, T> & bis = iserializer<Archive, T>::instantiate();
-    bis.set_bpis(this);
 }
 
 template<class Archive, class T>
@@ -349,59 +320,14 @@ struct load_non_pointer_type {
             );
         }
     };
-
     // note this save class information including version
     // and serialization level to the archive
-    struct load_standard {
+    struct load {
         static void invoke(Archive &ar, T &t){
-                        //BOOST_STATIC_ASSERT(! boost::is_const<T>::value);
-                        // borland - for some reason T is const here - even though
-                        // its not called that way - so fix it her
-                        typedef BOOST_DEDUCED_TYPENAME boost::remove_const<T>::type typex;
-                        void * x = & const_cast<typex &>(t);
-            ar.load_object(x, iserializer<Archive, T>::instantiate());
+            const void * x = &t;
+            ar.load_object(const_cast<void *>(x), iserializer<Archive, T>::instantiate());
         }
     };
-
-    struct load_conditional {
-        static void invoke(Archive &ar, T &t){
-            //if(0 == (ar.get_flags() & no_tracking))
-                load_standard::invoke(ar, t);
-            //else
-            //    load_only::invoke(ar, t);
-        }
-    };
-
-    typedef BOOST_DEDUCED_TYPENAME mpl::eval_if<
-            // if its primitive
-            mpl::equal_to<
-                boost::serialization::implementation_level<T>,
-                mpl::int_<boost::serialization::primitive_type>
-            >,
-            mpl::identity<load_primitive>,
-        // else
-        BOOST_DEDUCED_TYPENAME mpl::eval_if<
-        // class info / version
-        mpl::greater_equal<
-                    boost::serialization::implementation_level<T>,
-                    mpl::int_<boost::serialization::object_class_info>
-                >,
-        // do standard load
-        mpl::identity<load_standard>,
-    // else
-    BOOST_DEDUCED_TYPENAME mpl::eval_if<
-        // no tracking
-                mpl::equal_to<
-                    boost::serialization::tracking_level<T>,
-                    mpl::int_<boost::serialization::track_never>
-            >,
-            // do a fast load
-            mpl::identity<load_only>,
-        // else
-        // do a fast load only tracking is turned off
-        mpl::identity<load_conditional>
-    > > >::type typex;
-
     static void invoke(Archive & ar, T &t){
         BOOST_STATIC_ASSERT((
             mpl::greater_equal<
@@ -409,6 +335,34 @@ struct load_non_pointer_type {
                 mpl::int_<boost::serialization::primitive_type>
             >::value
         ));
+        typedef BOOST_DEDUCED_TYPENAME mpl::eval_if<
+                // if its primitive
+                mpl::equal_to<
+                    boost::serialization::implementation_level<T>,
+                    mpl::int_<boost::serialization::primitive_type>
+                >,
+                mpl::identity<load_primitive>,
+            // else
+            BOOST_DEDUCED_TYPENAME mpl::eval_if<
+                mpl::and_<
+                    // no class info / version
+                    mpl::less<
+                        boost::serialization::implementation_level<T>,
+                        mpl::int_<boost::serialization::object_class_info>
+                    >,
+                    // and no tracking
+                    mpl::equal_to<
+                        boost::serialization::tracking_level<T>,
+                        mpl::int_<boost::serialization::track_never>
+                    >
+                >,
+                // do a fast load
+                mpl::identity<load_only>,
+            // else
+                // do standard load
+                mpl::identity<load>
+            >
+        >::type typex;
         typex::invoke(ar, t);
     }
 };
@@ -419,12 +373,10 @@ struct load_pointer_type {
     struct abstract
     {
         static const basic_pointer_iserializer * register_type(Archive & /* ar */){
-            #if ! defined(__BORLANDC__)
             typedef BOOST_DEDUCED_TYPENAME 
                 boost::serialization::type_info_implementation<T>::type::is_polymorphic typex;
             // it has? to be polymorphic
             BOOST_STATIC_ASSERT(typex::value);
-            #endif
             return static_cast<basic_pointer_iserializer *>(NULL);
          }
     };
@@ -439,6 +391,31 @@ struct load_pointer_type {
 
     template<class T>
     static const basic_pointer_iserializer * register_type(Archive &ar, T & /*t*/){
+        #if defined(BOOST_MSVC)
+        // note: if you program traps here its because
+        // a) your serializing through a base class pointer
+        // b) to an archive not in the known list.  
+        // This will usually occur when one makes a custom archive and 
+        // forgets to add it to the list of known archive.  If the derived
+        // class is explictly registered or if no derived pointer is used
+        // there won't be a problem - that's why its a warning.  However
+        // if you export the derived type and the archive used isn't on the
+        // known list it will fail below at execution time and one will have
+        // a hell of time figuring out why.  Hence this warning.
+        BOOST_STATIC_WARNING((
+            mpl::not_<
+                mpl::and_<
+                    BOOST_DEDUCED_TYPENAME serialization::type_info_implementation<T>::type::is_polymorphic,
+                    mpl::not_<mpl::empty<known_archive_types<false>::type > >,
+                    is_same<
+                        mpl::end<known_archive_types<false>::type >::type,
+                        BOOST_DEDUCED_TYPENAME mpl::find<known_archive_types<false>::type, Archive>::type
+                    >
+                >
+            >
+            ::value
+        ));
+        #endif
         // there should never be any need to load an abstract polymorphic 
         // class pointer.  Inhibiting code generation for this
         // permits abstract base classes to be used - note: exception
@@ -477,7 +454,7 @@ struct load_pointer_type {
         );
         // if the pointer isn't that of the base class
         if(newbpis_ptr != bpis_ptr){
-            t = pointer_tweak(newbpis_ptr->get_eti(), t, *t);
+            t = pointer_tweak(newbpis_ptr->type, t, *t);
         }
     }
 };
@@ -514,34 +491,27 @@ struct load_array_type {
 
 // note bogus arguments to workaround msvc 6 silent runtime failure
 template<class Archive, class T>
-BOOST_DLLEXPORT 
-inline const basic_pointer_iserializer &
+BOOST_DLLEXPORT inline const basic_pointer_iserializer &
 instantiate_pointer_iserializer(
     Archive * /* ar = NULL */,
     T * /* t = NULL */
 ) BOOST_USED;
 
 template<class Archive, class T>
-BOOST_DLLEXPORT 
-inline const basic_pointer_iserializer &
+BOOST_DLLEXPORT inline const basic_pointer_iserializer &
 instantiate_pointer_iserializer(
     Archive * /* ar = NULL */,
     T * /* t = NULL */
 ){
     // note: reversal of order of arguments to work around msvc 6.0 bug
     // that manifests itself while trying to link.
-    return pointer_iserializer<T, Archive>::instantiate();
+    return pointer_iserializer<T, Archive>::instance;
 }
 
 } // detail
 
 template<class Archive, class T>
 inline void load(Archive &ar, T &t){
-    // if this assertion trips. It means we're trying to load a
-    // const object with a compiler that doesn't have correct
-    // funtion template ordering.  On other compilers, this is
-    // handled below.
-    BOOST_STATIC_ASSERT(! boost::is_const<T>::value);
     typedef
         BOOST_DEDUCED_TYPENAME mpl::eval_if<is_pointer<T>,
             mpl::identity<detail::load_pointer_type<Archive, T> >
@@ -558,38 +528,6 @@ inline void load(Archive &ar, T &t){
         >::type typex;
     typex::invoke(ar, t);
 }
-
-// BORLAND
-#if BOOST_WORKAROUND(__BORLANDC__, BOOST_TESTED_AT(0x560))
-// borland has a couple fo problems
-// a) if function is partiall specialized - see below
-// const paramters are transformed to non-const ones
-// b) implementation of base_object can't be made to work
-// correctly which results in all base_object s being const.
-// So, strip off the const for borland.  This breaks the trap
-// for loading const objects - but I see no alternative
-template<class Archive, class T>
-inline void load(Archive &ar, const T & t){
-        load(ar, const_cast<T &>(t));
-}
-#endif
-
-// let wrappers through.  (Someday implement is_wrapper)
-#ifndef BOOST_NO_FUNCTION_TEMPLATE_ORDERING
-template<class Archive, class T>
-inline void load(Archive &ar, const serialization::nvp<T> &t){
-        boost::archive::load(ar, const_cast<serialization::nvp<T> &>(t));
-}
-template<class Archive>
-inline void load(Archive &ar, const serialization::binary_object &t){
-        boost::archive::load(ar, const_cast<serialization::binary_object &>(t));
-}
-
-//template<class Archive, class T>
-//inline void load(Archive &ar, const serialization::binary_object &t){
-//      load(ar, const_cast<binary_object &>(t));
-//}
-#endif
 
 } // namespace archive
 } // namespace boost

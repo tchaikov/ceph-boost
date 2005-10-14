@@ -48,7 +48,6 @@ namespace boost {
             typedef typename compat_traits_type::off_type     off_type;
             typedef Alloc                     allocator_type;
             typedef ::std::basic_string<Ch, Tr, Alloc> string_type;
-            typedef typename string_type::size_type    size_type;
 
             typedef ::std::streamsize streamsize;
 
@@ -76,12 +75,12 @@ namespace boost {
 
             // 0-copy access :
             Ch * begin() const; 
-            size_type size() const;
-            size_type cur_size() const; // stop at current pointer
+            streamsize size() const;
+            streamsize cur_size() const; // stop at current pointer
             Ch * pend() const // the highest position reached by pptr() since creation
                 { return ((putend_ < pptr()) ? pptr() : putend_); }
-            size_type pcount() const 
-                { return static_cast<size_type>( pptr() - pbase()) ;}
+            streamsize pcount() const 
+                { return static_cast<streamsize>( pptr() - pbase()) ;}
 
             // copy buffer to string :
             string_type str() const 
@@ -132,7 +131,6 @@ namespace boost {
                 basic_altstringbuf<Ch,Tr, Alloc> > > 
                 pbase_type;
             typedef ::std::basic_string<Ch, Tr, Alloc>  string_type;
-            typedef typename string_type::size_type     size_type;
             typedef basic_altstringbuf<Ch, Tr, Alloc>   stringbuf_t;
         public:
             typedef Alloc  allocator_type;
@@ -153,9 +151,9 @@ namespace boost {
             // 0-copy access :
             Ch * begin() const 
                 { return rdbuf()->begin(); }
-            size_type size() const 
+            ::std::streamsize size() const 
                 { return rdbuf()->size(); }
-            size_type cur_size() const // stops at current position
+            ::std::streamsize cur_size() const // stops at current position
                 { return rdbuf()->cur_size(); }
 
             // copy buffer to string :
@@ -163,8 +161,6 @@ namespace boost {
                 { return rdbuf()->str(); } 
             string_type cur_str() const   // [pbase, pptr[
                 { return rdbuf()->cur_str(); }
-            void str(const string_type& s) 
-                { rdbuf()->str(s); }
         };
 
     } // N.S. io

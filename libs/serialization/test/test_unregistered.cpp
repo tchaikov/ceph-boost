@@ -19,12 +19,10 @@ namespace std{
 #endif
 
 #include "test_tools.hpp"
-#include <boost/preprocessor/stringize.hpp>
-#include BOOST_PP_STRINGIZE(BOOST_ARCHIVE_TEST)
 
 #include <boost/archive/archive_exception.hpp>
 #include <boost/serialization/base_object.hpp>
-#include <boost/detail/no_exceptions_support.hpp>
+#include "throw_exception.hpp"
 
 class polymorphic_base
 {
@@ -71,7 +69,6 @@ void save_unregistered1(const char *testfile)
     BOOST_CATCH(boost::archive::archive_exception aex){
         except = true;
     }
-    BOOST_CATCH_END
     BOOST_CHECK_MESSAGE(except, "lack of registration not detected !");
 
     delete rb1;
@@ -102,7 +99,6 @@ void load_unregistered1(const char *testfile)
             "failed load resulted in a non-null pointer"
         );
     }
-    BOOST_CATCH_END
     BOOST_CHECK_MESSAGE(except, "lack of registration not detected !");
 
     delete rb1;
@@ -126,7 +122,6 @@ void save_unregistered2(const char *testfile)
     BOOST_CATCH(boost::archive::archive_exception aex){
         except = true;
     }
-    BOOST_CATCH_END
     BOOST_CHECK_MESSAGE(! except, "registration not detected !");
 
     delete rd1;
@@ -156,7 +151,6 @@ void load_unregistered2(const char *testfile)
             "failed load resulted in a non-null pointer"
         );
     }
-    BOOST_CATCH_END
     BOOST_CHECK_MESSAGE(! except, "registration not detected !");
 
     delete rd1;
@@ -233,7 +227,7 @@ test_main( int /* argc */, char* /* argv */[] )
     save_registered(testfile);
     load_registered(testfile);
     std::remove(testfile);
-    return EXIT_SUCCESS;
+    return boost::exit_success;
 }
 
 // EOF

@@ -21,8 +21,6 @@ namespace std{
 #endif
 
 #include "test_tools.hpp"
-#include <boost/preprocessor/stringize.hpp>
-#include BOOST_PP_STRINGIZE(BOOST_ARCHIVE_TEST)
 
 #include <boost/serialization/nvp.hpp>
 #include <boost/serialization/base_object.hpp>
@@ -132,5 +130,5 @@ test_main( int /* argc */, char* /* argv */[] )
 
     delete pc;
     std::remove(testfile);
-    return EXIT_SUCCESS;
+    return boost::exit_success;
 }

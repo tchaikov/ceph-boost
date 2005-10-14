@@ -17,13 +17,12 @@
 //  See http://www.boost.org for updates, documentation, and revision history.
 
 #include <boost/config.hpp>
-
 #ifdef BOOST_NO_STD_WSTREAMBUF
 #error "wide char i/o not supported on this platform"
 #else
 
-#include <ostream>
 #include <cstddef> // size_t
+#include <ostream>
 
 #if defined(BOOST_NO_STDC_NAMESPACE)
 namespace std{ 
@@ -31,11 +30,8 @@ namespace std{
 } // namespace std
 #endif
 
-#include <boost/archive/detail/auto_link_warchive.hpp>
 #include <boost/archive/basic_text_oprimitive.hpp>
 #include <boost/archive/basic_text_oarchive.hpp>
-
-#include <boost/archive/detail/abi_prefix.hpp> // must be the last header
 
 namespace boost { 
 namespace archive {
@@ -58,28 +54,20 @@ protected:
         this->newtoken();
         basic_text_oprimitive<std::wostream>::save(t);
     }
-    BOOST_WARCHIVE_DECL(void)
-    save(const char * t);
+    void save(const char * t);
     #ifndef BOOST_NO_INTRINSIC_WCHAR_T
-    BOOST_WARCHIVE_DECL(void)
-    save(const wchar_t * t);
+    void save(const wchar_t * t);
     #endif
-    BOOST_WARCHIVE_DECL(void)
-    save(const std::string &s);
+    void save(const std::string &s);
     #ifndef BOOST_NO_STD_WSTRING
-    BOOST_WARCHIVE_DECL(void)
-    save(const std::wstring &ws);
+    void save(const std::wstring &ws);
     #endif
-    text_woarchive_impl(std::wostream & os, unsigned int flags) :
+    text_woarchive_impl(std::wostream & os, unsigned int flags = 0) :
         basic_text_oprimitive<std::wostream>(
             os, 
             0 != (flags & no_codecvt)
-        ),
-        basic_text_oarchive<Archive>(flags)
-    {
-        if(0 == (flags & no_header))
-            basic_text_oarchive<Archive>::init();
-    }
+        )
+    {}
 public:
     void save_binary(const void *address, std::size_t count){
         put(L'\n');
@@ -109,19 +97,15 @@ class text_woarchive :
 {
 public:
     text_woarchive(std::wostream & os, unsigned int flags = 0) :
-        text_woarchive_impl<text_woarchive>(os, flags)
-    {}
-    ~text_woarchive(){}
+        text_woarchive_impl<text_woarchive>(os, flags | no_header)
+    {
+        if(0 == (flags & no_header))
+            basic_text_oarchive<text_woarchive>::init();
+    }
 };
 
 } // namespace archive
 } // namespace boost
-
-// required by smart_cast for compilers not implementing 
-// partial template specialization
-BOOST_BROKEN_COMPILER_TYPE_TRAITS_SPECIALIZATION(boost::archive::text_woarchive)
-
-#include <boost/archive/detail/abi_suffix.hpp> // pops abi_suffix.hpp pragmas
 
 #endif // BOOST_NO_STD_WSTREAMBUF
 #endif // BOOST_ARCHIVE_TEXT_WOARCHIVE_HPP

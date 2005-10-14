@@ -14,7 +14,6 @@
 
 #include <string>
 #include <map>
-#include <set>
 
 namespace boost { namespace program_options {
 
@@ -120,14 +119,6 @@ namespace boost { namespace program_options {
         /** Implementation of abstract_variables_map::get
             which does 'find' in *this. */
         const variable_value& get(const std::string& name) const;
-
-        /** Names of option with 'final' values -- which should not
-            be changed by subsequence assignments. */
-        std::set<std::string> m_final;
-
-        friend void store(const basic_parsed_options<char>& options, 
-                          variables_map& xm,
-                          bool utf8);
     };
 
     /** Stores in 'm' all options that are defined in 'options'. 
@@ -184,13 +175,19 @@ namespace boost { namespace program_options {
     template<class T>
     const T&
     variable_value::as() const {
-        return boost::any_cast<const T&>(v);
+        const T* r = boost::any_cast<T>(&v);
+        if (!r)
+            throw boost::bad_any_cast();
+        return *r;
     }
 
     template<class T>
     T&
     variable_value::as() {
-        return boost::any_cast<T&>(v);
+        T* r = boost::any_cast<T>(&v);
+        if (!r)
+            throw boost::bad_any_cast();
+        return *r;
     }
 }}
 

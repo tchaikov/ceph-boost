@@ -65,7 +65,6 @@ template<
     , typename BOOST_MPL_AUX_NA_PARAM(N2)
     >
 struct less_equal
-
     : less_equal_impl<
           typename less_equal_tag<N1>::type
         , typename less_equal_tag<N2>::type
