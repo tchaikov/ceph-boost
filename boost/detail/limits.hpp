@@ -42,29 +42,10 @@
 #include <climits>
 #include <cfloat>
 #include <boost/config.hpp>
+#include <boost/detail/endian.hpp>
 
 #ifndef BOOST_NO_CWCHAR
 #include <cwchar> // for WCHAR_MIN and WCHAR_MAX
-#endif
-
-// The macros are not named appropriately.  We don't care about integer
-// bit layout, but about floating-point NaN (etc.) bit patterns.
-#if defined(__sparc) || defined(__sparc__) || defined(__powerpc__) || defined(__ppc__) || defined(__hppa) || defined(_MIPSEB) || defined(_POWER)
-#define BOOST_BIG_ENDIAN
-#elif defined(__i386__) || defined(__alpha__) || defined(__ia64) || defined(__ia64__)
-#define BOOST_LITTLE_ENDIAN
-#else
-
-// Added for Debian GNU/Linux systems not handled above.
-#include <endian.h>
-#if __BYTE_ORDER == __BIG_ENDIAN
-#define BOOST_BIG_ENDIAN
-#elif __BYTE_ORDER == __LITTLE_ENDIAN
-#define BOOST_LITTLE_ENDIAN
-#else
-
-#error The file boost/detail/limits.hpp needs to be set up for your CPU type.
-#endif
 #endif
 
 namespace std {
