@@ -39,7 +39,7 @@ then appear only on the main trunk and not on the "source-dist" branch.
 For the 1_31_0 distribution, I figured out the problem and imported
 the whole of the upstream sources by hand,
 
-	cvs import -I '!' -ko -d -m'Imported upstream version 1.31.0.'
+	cvs import -I '!' -I core -ko -d -m 'Imported upstream version 1.31.0.'
 	    debian/boost source-dist upstream_version_1_31_0
 
 which is basically what "cvs-upgrade" does ("cvs-upgrade -n" shows the

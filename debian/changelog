@@ -1,8 +1,66 @@
-boost (1.33.0-1) UNRELEASED; urgency=low
+boost (1.33.0-1) unstable; urgency=low
 
-  * (NOT RELEASED YET) New upstream release
+  * New usptream version.  Closes: #322674.
 
- -- Domenico Andreoli <cavok@debian.org>  Sun, 16 Oct 2005 23:18:00 +0200
+  * debian/rules: static library of program_options is now distributed.
+    Closes: #320973, #322269.
+
+  * boost/graph/adjacency_list.hpp: fixed compiler warnings.
+    Closes: #322386.
+
+  * debian/documentation-files: updated.  Closes: #322579.
+
+  * Fixed FTBFS on GNU/kFreeBSD.  Closes: #320677.
+
+ -- Domenico Andreoli <cavok@debian.org>  Fri, 12 Aug 2005 12:37:35 +0200
+
+boost (1.32.0+1.33.0-cvs20050727-1) unstable; urgency=low
+
+  * Updated the snapshot version.  Closes: #319966.
+
+  * Fixed shlibs version.
+
+ -- Domenico Andreoli <cavok@debian.org>  Wed, 27 Jul 2005 23:06:27 +0200
+
+boost (1.32.0+1.33.0-cvs20050720-3) unstable; urgency=low
+
+  * Added build dependency on zlib1g-dev.
+
+ -- Domenico Andreoli <cavok@debian.org>  Thu, 21 Jul 2005 12:34:37 +0200
+
+boost (1.32.0+1.33.0-cvs20050720-2) unstable; urgency=low
+
+  * Added build dependency on libbz2-dev.
+
+ -- Domenico Andreoli <cavok@debian.org>  Thu, 21 Jul 2005 10:08:48 +0200
+
+boost (1.32.0+1.33.0-cvs20050720-1) unstable; urgency=low
+
+  * New upstream snapshot version.  Closes: #318139, #318995, #306696.
+    - fixed invalid include files in test library.  Closes: #296804.
+    - removed extraneous empty directory in package libboost-graph1.33.0.
+      Closes: #309361.
+
+  * debian/control: libboost-graph1.33.0 suggests graphviz.  Closes: #309363.
+
+  * debian/control: libboost-graph-dev only recommends libboost-graph1.33.0.
+    Closes: #309360.
+
+  * boost/archive/detail/interface_iarchive.hpp,
+    boost/archive/detail/interface_oarchive.hpp: fixed compiler warning.
+    Closes: #308291.
+
+ -- Domenico Andreoli <cavok@debian.org>  Wed, 20 Jul 2005 01:28:45 +0200
+
+boost (1.32.0-6.1) unstable; urgency=medium
+
+  * Non-maintainer upload.
+  * Medium-urgency upload for RC bugfix.
+  * Rebuild against g++-4.0 for the C++ ABI transition, adding "c2" to
+    the name of each of the library packages and conflicting with the
+    old versions.
+
+ -- Steve Langasek <vorlon@debian.org>  Mon, 18 Jul 2005 19:10:24 -0700
 
 boost (1.32.0-6) unstable; urgency=low
 

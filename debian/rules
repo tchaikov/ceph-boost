@@ -11,7 +11,7 @@ export DH_OPTIONS
 # major and minor version numbers joined by an underscore.  This label
 # appears in some of the filenames.
 #
-boost_version = 1_32
+boost_version = 1_33
 
 # Library suffix
 # Boost libraries encode build information in the resulting library
@@ -22,7 +22,7 @@ debug_suffix = -gcc-mt-d-$(boost_version)
 
 # Boost does not guarantee any ABI, it uses the full version in SONAME
 #
-SOVERSION = 1.32.0
+SOVERSION = 1.33.0
 
 exampledir = debian/libboost-doc/usr/share/doc/libboost-doc/examples
 htmldir = debian/libboost-doc/usr/share/doc/libboost-doc/HTML
@@ -64,9 +64,10 @@ clean:
 	rm -f build-stamp
 
 	-$(JAM) clean
+	rm -rf tools/build/jam_src/bootstrap
 	rm -rf tools/build/jam_src/bootstrap.gcc
 	rm -rf tools/build/jam_src/bin.*
-	rm -f tools/build/jam_src/bjam
+	rm -ff tools/build/jam_src/bjam
 	rm -rf bin
 
 	$(MAKE) -C libs/graph/src clean
@@ -207,8 +208,11 @@ install: build
 	mv debian/libboost-dev/usr/include/boost/program_options* \
 	   debian/libboost-program-options-dev/usr/include/boost
 	dh_install -plibboost-program-options-dev --autodest \
+	   debian/tmp/usr/lib/libboost_program_options$(release_suffix).a \
 	   debian/tmp/usr/lib/libboost_program_options$(release_suffix).so
 	dh_link -plibboost-program-options-dev \
+	   usr/lib/libboost_program_options$(release_suffix).a \
+	   usr/lib/libboost_program_options.a \
 	   usr/lib/libboost_program_options$(release_suffix).so \
 	   usr/lib/libboost_program_options.so
 
@@ -378,7 +382,16 @@ binary-common:
 	dh_link
 	dh_compress -Xlibboost-doc/HTML
 	dh_fixperms
-	dh_makeshlibs -Nlibboost-dbg
+
+	@if [ "$(DH_OPTIONS)" = "-a" ]; then \
+		for name in date-time filesystem graph program-options python regex signals test thread; do \
+			lib=libboost-$${name}$(SOVERSION); \
+			shlib="$${lib} (>= 1.33.0-1)"; \
+			echo DH_OPTIONS=-p$${lib} dh_makeshlibs -V"$${shlib}"; \
+			DH_OPTIONS=-p$${lib} dh_makeshlibs -V"$${shlib}"; \
+		done; \
+	fi
+
 	dh_installdeb
 	dh_shlibdeps
 	dh_gencontrol
@@ -395,7 +408,7 @@ binary-arch: build install
 
 # Any other binary targets build just one binary package at a time.
 binary-%: build install
-	make -f debian/rules binary-common DH_OPTIONS=-p$*
+	$(MAKE) -f debian/rules binary-common DH_OPTIONS=-p$*
 
 binary: binary-indep binary-arch
 .PHONY: build clean binary-indep binary-arch binary-common binary install
