@@ -1,3 +1,10 @@
+boost (1.33.0-2) unstable; urgency=low
+
+  * boost/tuple/detail/tuple_basic.hpp: removed name of parameter 't1'.
+    Closes: #327167.
+
+ -- Domenico Andreoli <cavok@debian.org>  Sat, 15 Oct 2005 00:16:36 +0200
+
 boost (1.33.0-1) unstable; urgency=low
 
   * New usptream version.  Closes: #322674.
