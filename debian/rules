@@ -405,7 +405,7 @@ binary-common:
 	dh_fixperms
 
 	@if [ "$(DH_OPTIONS)" = "-a" ]; then \
-		for name in date-time filesystem graph program-options python regex signals test thread; do \
+		for name in date-time filesystem graph iostreams program-options python regex signals test thread; do \
 			lib=libboost-$${name}$(SOVERSION); \
 			shlib="$${lib} (>= 1.33.0-1)"; \
 			echo DH_OPTIONS=-p$${lib} dh_makeshlibs -V"$${shlib}"; \
