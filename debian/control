@@ -3,7 +3,7 @@ Section: libs
 Priority: optional
 Maintainer: Steve M. Robbins <smr@debian.org>
 Uploaders: Domenico Andreoli <cavok@debian.org>
-Build-Depends: python2.3-dev, debhelper (>= 4), flex, bison, docbook-to-man, zlib1g-dev, libbz2-dev
+Build-Depends: python2.3-dev, debhelper (>= 4), flex, bison, docbook-to-man, zlib1g-dev, libbz2-dev, libicu34-dev
 Standards-Version: 3.6.2
 
 Package: libboost-dbg
@@ -142,6 +142,33 @@ Description: generic graph components and algorithms in C++
  .
   Homepage: http://www.boost.org/libs/graph/
 
+Package: libboost-iostreams1.33.0
+Architecture: any
+Section: libs
+Depends: ${shlibs:Depends}
+Description: Boost.Iostreams Library
+ Part of the Boost.org library collection.
+ .
+ Boost.Iostreams are a collection of concepts and set of templates
+ which turn models of these concepts into C++ standard library streams
+ and stream buffers.
+ .
+  Homepage: http://www.boost.org/libs/iostreams/
+
+Package: libboost-iostreams-dev
+Architecture: any
+Section: libdevel
+Depends: libboost-dev (=${Source-Version}), libboost-iostreams1.33.0 (=${Source-Version})
+Replaces: libboost-dev (<< 1.33.0-2)
+Description: Boost.Iostreams Library development files
+ Part of the Boost.org library collection.
+ .
+ Boost.Iostreams are a collection of concepts and set of templates
+ which turn models of these concepts into C++ standard library streams
+ and stream buffers.
+ .
+  Homepage: http://www.boost.org/libs/iostreams/
+
 Package: libboost-program-options1.33.0
 Architecture: any
 Section: libs
@@ -232,7 +259,7 @@ Description: regular expression library for C++
 Package: libboost-regex-dev
 Architecture: any
 Section: libdevel
-Depends: libboost-dev (= ${Source-Version}), libboost-regex1.33.0 (= ${Source-Version})
+Depends: libboost-dev (= ${Source-Version}), libboost-regex1.33.0 (= ${Source-Version}), libicu34-dev
 Description: regular expression library for C++
  Part of the Boost.org library collection.
  .
