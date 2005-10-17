@@ -50,6 +50,7 @@ build-stamp: $(bjam)
 	# mv libs/config/user.hpp boost/config
 
 	# Build most of the stuff with jam
+	cd tools/bcp && ../../$(JAM) bcp
 	$(JAM)
 
 	# Build the graph library with upstream makefile
@@ -92,6 +93,13 @@ install: build
 	find debian -empty -type f | xargs rm -f
 
 	dh_installdirs --all usr/include/boost
+
+
+	# package bcp
+	mkdir -p debian/bcp/usr/bin
+	install -m755 \
+	   bin/boost/tools/bcp/bcp/gcc/release/threading-multi/bcp \
+	   debian/bcp/usr/bin
 
 
 	# package libboost-dbg
