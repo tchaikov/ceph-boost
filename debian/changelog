@@ -1,13 +1,17 @@
 boost (1.33.0-2) unstable; urgency=low
 
+  * The Debian Boost Team now maintains the package.
+
   * Added packages for Boost.Iostreams library.  Closes: #324833.
+
+  * Added package for bcp utility.  Closes: #333530.
 
   * boost/tuple/detail/tuple_basic.hpp: removed name of unused parameter.
     Closes: #327167.
 
   * debian/rules: enabled UNICODE support for Boost.Regex.  Closes: #333703.
 
- -- Domenico Andreoli <cavok@debian.org>  Mon, 17 Oct 2005 12:12:10 +0200
+ -- Domenico Andreoli <cavok@debian.org>  Tue, 18 Oct 2005 18:21:25 +0200
 
 boost (1.33.0-1) unstable; urgency=low
 
