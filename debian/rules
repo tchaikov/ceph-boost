@@ -65,7 +65,9 @@ clean:
 	dh_testroot
 	rm -f build-stamp
 
+	-cd tools/bcp && ../../$(JAM) clean
 	-$(JAM) clean
+
 	rm -rf tools/build/jam_src/bootstrap
 	rm -rf tools/build/jam_src/bootstrap.gcc
 	rm -rf tools/build/jam_src/bin.*
