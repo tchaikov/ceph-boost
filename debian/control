@@ -1,8 +1,8 @@
 Source: boost
 Section: libs
 Priority: optional
-Maintainer: Steve M. Robbins <smr@debian.org>
-Uploaders: Domenico Andreoli <cavok@debian.org>
+Maintainer: Debian Boost Team <pkg-boost-devel@lists.alioth.debian.org>
+Uploaders: Steve M. Robbins <smr@debian.org>, Domenico Andreoli <cavok@debian.org>
 Build-Depends: debhelper (>= 4), bison, flex, docbook-to-man, xsltproc, doxygen, python2.3-dev, zlib1g-dev, libbz2-dev, libicu34-dev
 Standards-Version: 3.6.2
 
