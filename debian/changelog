@@ -2,7 +2,8 @@ boost (1.33.0-2) unstable; urgency=low
 
   * The Debian Boost Team now maintains the package.
 
-  * Added packages for Boost.Iostreams library.  Closes: #324833.
+  * Added packages for Boost.Iostreams and Boost.Wave libraries.
+    Closes: #324833.
 
   * Added package for bcp utility.  Closes: #333530.
 
