@@ -401,3 +401,18 @@ Description: portable C++ multi-threading
  registers.
  .
   Homepage: http://www.boost.org/libs/thread/
+
+Package: libboost-wave-dev
+Architecture: any
+Section: libdevel
+Depends: libboost-dev (= ${Source-Version})
+Replaces: libboost-dev (<< 1.33.0-2)
+Description: C99/C++ preprocessor library
+ Part of the Boost C++ Libraries collection.
+ .
+ The Wave C++ preprocessor library is a Standards conformant
+ implementation of the mandated C99/C++ preprocessor functionality
+ packed behind a simple to use interface, which integrates well with
+ the well known idioms of the Standard Template Library (STL).
+ .
+  Homepage: http://www.boost.org/libs/wave/
