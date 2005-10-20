@@ -34,7 +34,6 @@ JAM = $(bjam) -d2 \
 	-sGCC=gcc \
 	-sGXX=g++ \
 	-sHAVE_ICU=1 \
-	-sBUILD="debug release <define>_REENTRANT <threading>multi" \
 	-sPYTHON_VERSION=2.3 \
 	-sPYTHON_ROOT=/usr
 
@@ -50,8 +49,10 @@ build-stamp: $(bjam)
 	# mv libs/config/user.hpp boost/config
 
 	# Build most of the stuff with jam
-	cd tools/bcp && ../../$(JAM) bcp
-	$(JAM)
+	cd tools/bcp && ../../$(JAM) -sBUILD="release <define>_REENTRANT <threading>multi" bcp
+	$(JAM) -sBUILD="debug release <define>_REENTRANT <threading>multi"
+	#cd libs/graph/build && ../../../$(JAM) -sBUILD="debug release" bgl-viz.a bgl-viz.so
+	#cd libs/graph/build/python && ../../../../$(JAM)
 
 	# Build the graph library with upstream makefile
 	$(MAKE) -C libs/graph/src libbgl-viz.a
@@ -66,6 +67,8 @@ clean:
 	rm -f build-stamp
 
 	-cd tools/bcp && ../../$(JAM) clean
+	#-cd libs/graph/build && ../../../$(JAM) clean
+	#-cd libs/graph/build/python && ../../../../$(JAM) clean
 	-$(JAM) clean
 
 	rm -rf tools/build/jam_src/bootstrap
@@ -396,6 +399,16 @@ install: build
 	dh_link -plibboost-thread-dev \
 	   usr/lib/libboost_thread$(release_suffix).so \
 	   usr/lib/libboost_thread.so
+
+
+	# package libboost-wave-dev
+	mv debian/libboost-dev/usr/include/boost/wave* \
+	   debian/libboost-wave-dev/usr/include/boost
+	dh_install -plibboost-wave-dev --autodest \
+	   debian/tmp/usr/lib/libboost_wave$(release_suffix).a
+	dh_link -plibboost-wave-dev \
+	   usr/lib/libboost_wave$(release_suffix).a \
+	   usr/lib/libboost_wave.a
 
 
 # This single target is used to build all the packages, all at once, or
