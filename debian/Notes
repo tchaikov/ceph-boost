@@ -84,11 +84,11 @@ Generate the list of documentation files using wget going through
 localhost to get the source tree
 
     wget -r --no-parent --domains=localhost \
-    http://localhost/lsrc/devel/boost/boost-cvs-local/index.htm
+	http://localhost/lsrc/devel/Boost/boost-svn/trunk/index.htm
     cd localhost/....
     rm -rf boost
     for f in `find * -type f`; do
-        test -f /usr/local/src/devel/boost/boost-cvs-local/$f && echo $f;
+        test -f /usr/local/src/devel/Boost/boost-svn/trunk/$f && echo $f;
     done > documentation-files
 
 ** On my machine, "http://localhost/lsrc" resolves to "/usr/local/src",
