@@ -1,8 +1,12 @@
 boost (1.33.0-3) unstable; urgency=low
 
   * debian/documentation-files: regenerate.
+  * Applied patch from 1.33.1 to unbreak ublas
+  * Applied patch from 1.33.1 to unbreak is_incrementable with g++-4.02
+  * Bug fix: "boost: Please consider providing single-threaded Boost
+    libraries as well", thanks to Waba (Closes: #335594).
 
- -- 
+ --
 
 boost (1.33.0-2) unstable; urgency=low
 
