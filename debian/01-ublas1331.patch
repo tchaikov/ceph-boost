@@ -1,0 +1,329 @@
+Index: boost/numeric/ublas/exception.hpp
+===================================================================
+--- boost/numeric/ublas/exception.hpp	(revision 13869)
++++ boost/numeric/ublas/exception.hpp	(working copy)
+@@ -254,10 +254,8 @@
+ //    template<class E>
+ //    BOOST_UBLAS_INLINE
+ //    void check_ex (bool expression, const char *file, int line, const E &e) {}
+-#define BOOST_UBLAS_CHECK(expression, e) \
+-    if (! (expression) );
+-#define BOOST_UBLAS_CHECK_EX(expression, file, line, e) \
+-    if (! (expression) );
++#define BOOST_UBLAS_CHECK(expression, e)
++#define BOOST_UBLAS_CHECK_EX(expression, file, line, e)
+ #endif
+ 
+ 
+Index: boost/numeric/ublas/vector.hpp
+===================================================================
+--- boost/numeric/ublas/vector.hpp	(revision 13869)
++++ boost/numeric/ublas/vector.hpp	(working copy)
+@@ -153,7 +153,7 @@
+         template<class C>          // Container assignment without temporary
+         BOOST_UBLAS_INLINE
+         vector &operator = (const vector_container<C> &v) {
+-            resize (v.size (), false);
++            resize (v ().size (), false);
+             assign (v);
+             return *this;
+         }
+@@ -592,7 +592,7 @@
+ 
+         // Resizing
+         BOOST_UBLAS_INLINE
+-        void resize (size_type size, bool preserve = true) {
++        void resize (size_type size, bool /*preserve*/ = true) {
+             size_ = size;
+         }
+ 
+@@ -785,7 +785,7 @@
+ 
+         // Resizing
+         BOOST_UBLAS_INLINE
+-        void resize (size_type size, bool preserve = true) {
++        void resize (size_type size, bool /*preserve*/ = true) {
+             size_ = size;
+         }
+ 
+@@ -1304,7 +1304,7 @@
+         template<class C>          // Container assignment without temporary
+         BOOST_UBLAS_INLINE
+         c_vector &operator = (const vector_container<C> &v) {
+-            resize (v.size (), false);
++            resize (v ().size (), false);
+             assign (v);
+             return *this;
+         }
+Index: boost/numeric/ublas/vector_proxy.hpp
+===================================================================
+--- boost/numeric/ublas/vector_proxy.hpp	(revision 13869)
++++ boost/numeric/ublas/vector_proxy.hpp	(working copy)
+@@ -973,13 +973,13 @@
+     // Simple Projections
+     template<class V>
+     BOOST_UBLAS_INLINE
+-    vector_slice<V> subslice (V &data, typename V::size_type_t start, typename V::differenece_type stride, typename V::size_type size) {
++    vector_slice<V> subslice (V &data, typename V::size_type start, typename V::difference_type stride, typename V::size_type size) {
+         typedef basic_slice<typename V::size_type, typename V::difference_type> slice_type;
+         return vector_slice<V> (data, slice_type (start, stride, size));
+     }
+     template<class V>
+     BOOST_UBLAS_INLINE
+-    vector_slice<const V> subslice (const V &data, typename V::size_type start, typename V::differenece_type stride, typename V::size_type size)  {
++    vector_slice<const V> subslice (const V &data, typename V::size_type start, typename V::difference_type stride, typename V::size_type size)  {
+         typedef basic_slice<typename V::size_type, typename V::difference_type> slice_type;
+         return vector_slice<const V> (data, slice_type (start, stride, size));
+     }
+Index: boost/numeric/ublas/matrix.hpp
+===================================================================
+--- boost/numeric/ublas/matrix.hpp	(revision 13869)
++++ boost/numeric/ublas/matrix.hpp	(working copy)
+@@ -185,7 +185,7 @@
+         template<class C>          // Container assignment without temporary
+         BOOST_UBLAS_INLINE
+         matrix &operator = (const matrix_container<C> &m) {
+-            resize (m.size1 (), m.size2 ());
++            resize (m ().size1 (), m ().size2 (), false);
+             assign (m);
+             return *this;
+         }
+@@ -1132,7 +1132,7 @@
+         template<class C>          // Container assignment without temporary
+         BOOST_UBLAS_INLINE
+         vector_of_vector &operator = (const matrix_container<C> &m) {
+-            resize (m.size1 (), m.size2 ());
++            resize (m ().size1 (), m ().size2 (), false);
+             assign (m);
+             return *this;
+         }
+@@ -1989,7 +1989,7 @@
+             size2_ = size;
+         }
+         BOOST_UBLAS_INLINE
+-        void resize (size_type size1, size_type size2, bool preserve = true) {
++        void resize (size_type size1, size_type size2, bool /*preserve*/ = true) {
+             size1_ = size1;
+             size2_ = size2;
+         }
+@@ -2347,7 +2347,7 @@
+             size2_ = size;
+         }
+         BOOST_UBLAS_INLINE
+-        void resize (size_type size1, size_type size2, bool preserve = true) {
++        void resize (size_type size1, size_type size2, bool /*preserve*/ = true) {
+             size1_ = size1;
+             size2_ = size2;
+         }
+@@ -2721,14 +2721,14 @@
+ 
+         // Resizing
+         BOOST_UBLAS_INLINE
+-        void resize (size_type size1, size_type size2, bool preserve = true) {
++        void resize (size_type size1, size_type size2, bool /*preserve*/ = true) {
+             size1_ = size1;
+             size2_ = size2;
+         }
+ 
+         // Element access
+         BOOST_UBLAS_INLINE
+-        const_reference operator () (size_type i, size_type j) const {
++        const_reference operator () (size_type /*i*/, size_type /*j*/) const {
+             return value_; 
+         }
+ 
+@@ -3236,7 +3236,7 @@
+         template<class C>          // Container assignment without temporary
+         BOOST_UBLAS_INLINE
+         c_matrix &operator = (const matrix_container<C> &m) {
+-            resize (m.size1 (), m.size2 ());
++            resize (m ().size1 (), m ().size2 (), false);
+             assign (m);
+             return *this;
+         }
+Index: boost/numeric/ublas/storage.hpp
+===================================================================
+--- boost/numeric/ublas/storage.hpp	(revision 13869)
++++ boost/numeric/ublas/storage.hpp	(working copy)
+@@ -292,15 +292,13 @@
+         explicit BOOST_UBLAS_INLINE
+         bounded_array (size_type size):
+             size_ (size) /*, data_ ()*/ {
+-            if (size_ > N)
+-                bad_size ().raise ();
++            BOOST_UBLAS_CHECK (size_ <= N, bad_size ());
+             // data_ (an array) elements are already default constructed
+         }
+         BOOST_UBLAS_INLINE
+         bounded_array (size_type size, const value_type &init):
+             size_ (size) /*, data_ ()*/ {
+-            if (size_ > N)
+-                bad_size ().raise ();
++            BOOST_UBLAS_CHECK (size_ <= N, bad_size ());
+             // ISSUE elements should be value constructed here, but we must fill instead as already default constructed
+             std::fill (begin(), end(), init) ;
+         }
+@@ -315,14 +313,12 @@
+         // Resizing
+         BOOST_UBLAS_INLINE
+         void resize (size_type size) {
+-            if (size > N)
+-                bad_size ().raise ();
++            BOOST_UBLAS_CHECK (size_ <= N, bad_size ());
+             size_ = size;
+         }
+         BOOST_UBLAS_INLINE
+         void resize (size_type size, value_type init) {
+-            if (size > N)
+-                bad_size ().raise ();
++            BOOST_UBLAS_CHECK (size_ <= N, bad_size ());
+             if (size > size_)
+                 std::fill (data_ + size_, data_ + size, init);
+             size_ = size;
+@@ -625,10 +621,10 @@
+ 
+         typedef shallow_array_adaptor<T> self_type;
+ 
+-        template<class T>
++        template<class TT>
+         struct leaker {
+             typedef void result_type;
+-            typedef T *argument_type;
++            typedef TT *argument_type;
+ 
+             BOOST_UBLAS_INLINE
+             result_type operator () (argument_type x) {}
+Index: boost/numeric/ublas/matrix_proxy.hpp
+===================================================================
+--- boost/numeric/ublas/matrix_proxy.hpp	(revision 13869)
++++ boost/numeric/ublas/matrix_proxy.hpp	(working copy)
+@@ -4010,13 +4010,13 @@
+     // Simple Projections
+     template<class M>
+     BOOST_UBLAS_INLINE
+-    matrix_slice<M> subslice (M &data, typename M::size_type start1, typename M::differenece_type stride1, typename M::size_type size1, typename M::size_type start2, typename M::differenece_type stride2, typename M::size_type size2) {
++    matrix_slice<M> subslice (M &data, typename M::size_type start1, typename M::difference_type stride1, typename M::size_type size1, typename M::size_type start2, typename M::difference_type stride2, typename M::size_type size2) {
+         typedef basic_slice<typename M::size_type, typename M::difference_type> slice_type;
+         return matrix_slice<M> (data, slice_type (start1, stride1, size1), slice_type (start2, stride2, size2));
+     }
+     template<class M>
+     BOOST_UBLAS_INLINE
+-    matrix_slice<const M> subslice (const M &data, typename M::size_type start1, typename M::differenece_type stride1, typename M::size_type size1, typename M::size_type start2, typename M::differenece_type stride2, typename M::size_type size2) {
++    matrix_slice<const M> subslice (const M &data, typename M::size_type start1, typename M::difference_type stride1, typename M::size_type size1, typename M::size_type start2, typename M::difference_type stride2, typename M::size_type size2) {
+         typedef basic_slice<typename M::size_type, typename M::difference_type> slice_type;
+         return matrix_slice<const M> (data (), slice_type (start1, stride1, size1), slice_type (start2, stride2, size2));
+     }
+Index: boost/numeric/ublas/vector_sparse.hpp
+===================================================================
+--- boost/numeric/ublas/vector_sparse.hpp	(revision 13869)
++++ boost/numeric/ublas/vector_sparse.hpp	(working copy)
+@@ -62,7 +62,7 @@
+         }
+         BOOST_UBLAS_INLINE
+         sparse_vector_element (const sparse_vector_element &p):
+-            container_reference<vector_type> (p), i_ (p.i_), d_ (p.d_) {}
++            container_reference<vector_type> (p), i_ (p.i_) {}
+         BOOST_UBLAS_INLINE
+         ~sparse_vector_element () {
+         }
+@@ -447,7 +447,7 @@
+         template<class C>          // Container assignment without temporary
+         BOOST_UBLAS_INLINE
+         mapped_vector &operator = (const vector_container<C> &v) {
+-            resize (v.size (), false);
++            resize (v ().size (), false);
+             assign (v);
+             return *this;
+         }
+@@ -997,7 +997,7 @@
+         template<class C>          // Container assignment without temporary
+         BOOST_UBLAS_INLINE
+         compressed_vector &operator = (const vector_container<C> &v) {
+-            resize (v.size (), false);
++            resize (v ().size (), false);
+             assign (v);
+             return *this;
+         }
+@@ -1615,7 +1615,7 @@
+         template<class C>          // Container assignment without temporary
+         BOOST_UBLAS_INLINE
+         coordinate_vector &operator = (const vector_container<C> &v) {
+-            resize (v.size (), false);
++            resize (v ().size (), false);
+             assign (v);
+             return *this;
+         }
+Index: boost/numeric/ublas/matrix_sparse.hpp
+===================================================================
+--- boost/numeric/ublas/matrix_sparse.hpp	(revision 13869)
++++ boost/numeric/ublas/matrix_sparse.hpp	(working copy)
+@@ -64,7 +64,7 @@
+         }
+         BOOST_UBLAS_INLINE
+         sparse_matrix_element (const sparse_matrix_element &p):
+-            container_reference<matrix_type> (p), i_ (p.i_), d_ (p.d_) {}
++            container_reference<matrix_type> (p), i_ (p.i_), j_ (p.j_) {}
+         BOOST_UBLAS_INLINE
+         ~sparse_matrix_element () {
+         }
+@@ -431,7 +431,7 @@
+         template<class C>          // Container assignment without temporary
+         BOOST_UBLAS_INLINE
+         mapped_matrix &operator = (const matrix_container<C> &m) {
+-            resize (m.size1 (), m.size2 ());
++            resize (m ().size1 (), m ().size2 (), false);
+             assign (m);
+             return *this;
+         }
+@@ -1500,7 +1500,7 @@
+         template<class C>          // Container assignment without temporary
+         BOOST_UBLAS_INLINE
+         mapped_vector_of_mapped_vector &operator = (const matrix_container<C> &m) {
+-            resize (m.size1 (), m.size2 ());
++            resize (m ().size1 (), m ().size2 ());
+             assign (m);
+             return *this;
+         }
+@@ -2843,7 +2843,7 @@
+         template<class C>          // Container assignment without temporary
+         BOOST_UBLAS_INLINE
+         compressed_matrix &operator = (const matrix_container<C> &m) {
+-            resize (m.size1 (), m.size2 ());
++            resize (m ().size1 (), m ().size2 (), false);
+             assign (m);
+             return *this;
+         }
+@@ -4008,6 +4008,7 @@
+             value_data_.resize (capacity_);
+             filled_ = 0;
+             sorted_filled_ = filled_;
++            sorted_ = true;
+             storage_invariants ();
+         }
+ 
+@@ -4137,6 +4138,7 @@
+                 size2_ = m.size2_;
+                 capacity_ = m.capacity_;
+                 filled_ = m.filled_;
++                sorted_filled_ = m.sorted_filled_;
+                 sorted_ = m.sorted_;
+                 index1_data_ = m.index1_data_;
+                 index2_data_ = m.index2_data_;
+@@ -4151,7 +4153,7 @@
+         template<class C>          // Container assignment without temporary
+         BOOST_UBLAS_INLINE
+         coordinate_matrix &operator = (const matrix_container<C> &m) {
+-            resize (m.size1 (), m.size2 ());
++            resize (m ().size1 (), m ().size2 (), false);
+             assign (m);
+             return *this;
+         }
+@@ -4302,7 +4304,7 @@
+             BOOST_UBLAS_CHECK (filled_ > 0, external_logic ());
+             -- filled_;
+             sorted_filled_ = (std::min) (sorted_filled_, filled_);
+-            sorted_ = sorted_filled_ = filled;
++            sorted_ = sorted_filled_ = filled_;
+             storage_invariants ();
+         }
+ 
