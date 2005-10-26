@@ -50,7 +50,7 @@ build-stamp: $(bjam)
 
 	# Build most of the stuff with jam
 	cd tools/bcp && ../../$(JAM) -sBUILD="release <define>_REENTRANT <threading>multi" bcp
-	$(JAM) -sBUILD="debug release <define>_REENTRANT <threading>multi"
+	$(JAM) -sBUILD="debug release <define>_REENTRANT <threading>single/multi"
 	#cd libs/graph/build && ../../../$(JAM) -sBUILD="debug release" bgl-viz.a bgl-viz.so
 	#cd libs/graph/build/python && ../../../../$(JAM)
 
