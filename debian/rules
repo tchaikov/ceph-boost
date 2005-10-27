@@ -51,7 +51,7 @@ build-stamp: $(bjam)
 	# mv libs/config/user.hpp boost/config
 
 	# Build most of the stuff with jam
-	cd tools/bcp && ../../$(JAM) -sBUILD="release <define>_REENTRANT <threading>single/multi" bcp
+	cd tools/bcp && ../../$(JAM) -sBUILD="release <define>_REENTRANT <threading>single" bcp
 	$(JAM) -sBUILD="debug release <define>_REENTRANT <threading>single/multi"
 	#cd libs/graph/build && ../../../$(JAM) -sBUILD="debug release" bgl-viz.a bgl-viz.so
 	#cd libs/graph/build/python && ../../../../$(JAM)
@@ -105,7 +105,7 @@ install: build
 	# package bcp
 	mkdir -p debian/bcp/usr/bin
 	install -m755 \
-	   bin/boost/tools/bcp/bcp/gcc/release/threading-multi/bcp \
+	   bin/boost/tools/bcp/bcp/gcc/release/bcp \
 	   debian/bcp/usr/bin
 
 
