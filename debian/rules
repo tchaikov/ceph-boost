@@ -26,6 +26,17 @@ debug_suffix = -gcc-mt-d-$(boost_version)
 #
 SOVERSION = 1.33.0
 
+DEB_BUILD_ARCH ?= $(shell dpkg-architecture -qDEB_BUILD_ARCH)
+
+GCC=gcc-3.4
+GXX=g++-3.4
+ifneq ($(DEB_BUILD_ARCH), hppa)
+ifneq ($(DEB_BUILD_ARCH), m68k)
+GCC=gcc
+GXX=g++
+endif
+endif
+
 exampledir = debian/libboost-doc/usr/share/doc/libboost-doc/examples
 htmldir = debian/libboost-doc/usr/share/doc/libboost-doc/HTML
 
@@ -33,8 +44,8 @@ bjam = tools/build/jam_src/bjam
 
 JAM = $(bjam) -d2 \
 	-sTOOLS=gcc \
-	-sGCC=gcc \
-	-sGXX=g++ \
+	-sGCC=$(GCC) \
+	-sGXX=$(GXX) \
 	-sHAVE_ICU=1 \
 	-sPYTHON_VERSION=2.3 \
 	-sPYTHON_ROOT=/usr
