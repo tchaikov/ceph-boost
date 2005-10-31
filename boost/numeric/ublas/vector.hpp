@@ -20,6 +20,7 @@
 #include <boost/numeric/ublas/storage.hpp>
 #include <boost/numeric/ublas/vector_expression.hpp>
 #include <boost/numeric/ublas/detail/vector_assign.hpp>
+#include <boost/concept_check.hpp>
 
 // Iterators based on ideas of Jeremy Siek
 
@@ -137,7 +138,7 @@ namespace boost { namespace numeric { namespace ublas {
         void erase_element (size_type i) {
             data () [i] = value_type/*zero*/();
         }
-        
+
         // Zeroing
         BOOST_UBLAS_INLINE
         void clear () {
@@ -702,6 +703,7 @@ namespace boost { namespace numeric { namespace ublas {
             BOOST_UBLAS_INLINE
             bool operator == (const const_iterator &it) const {
                 BOOST_UBLAS_CHECK (&(*this) () == &it (), external_logic ());
+                ignore_unused_variable_warning(it);
                 return true;
             }
         };
@@ -1287,7 +1289,7 @@ namespace boost { namespace numeric { namespace ublas {
             BOOST_UBLAS_CHECK (i < size_, bad_index ());
             return (data_ [i] = value_type/*zero*/());
         }
-        
+
         // Zeroing
         BOOST_UBLAS_INLINE
         void clear () {

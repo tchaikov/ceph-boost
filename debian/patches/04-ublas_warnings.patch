@@ -1,0 +1,165 @@
+Only in ./detail: semantic.cache
+diff -x CVS -u -r /home/prudhomm/Devel/C++/Boost/boost-1.33/boost/numeric/ublas/functional.hpp ./functional.hpp
+--- /home/prudhomm/Devel/C++/Boost/boost-1.33/boost/numeric/ublas/functional.hpp	2005-07-14 15:05:27.000000000 +0200
++++ ./functional.hpp	2005-10-28 10:03:19.136784304 +0200
+@@ -35,6 +35,7 @@
+ #include <boost/numeric/bindings/traits/ublas_matrix.hpp>
+ #include <boost/numeric/bindings/atlas/cblas.hpp>
+ #endif
++#include <boost/concept_check.hpp>
+ 
+ 
+ 
+@@ -1390,6 +1391,7 @@
+         size_type element (size_type i, size_type size1, size_type j, size_type size2) {
+             BOOST_UBLAS_CHECK (i < size1, bad_index ());
+             BOOST_UBLAS_CHECK (j < size2, bad_index ());
++            ignore_unused_variable_warning(size1);
+             // Guard against size_type overflow
+             BOOST_UBLAS_CHECK (i <= ((std::numeric_limits<size_type>::max) () - j) / size2, bad_index ());
+             return i * size2 + j;
+@@ -1399,6 +1401,7 @@
+         size_type address (size_type i, size_type size1, size_type j, size_type size2) {
+             BOOST_UBLAS_CHECK (i <= size1, bad_index ());
+             BOOST_UBLAS_CHECK (j <= size2, bad_index ());
++            ignore_unused_variable_warning(size1);
+             // Guard against size_type overflow - address may be size2 past end of storage
+             BOOST_UBLAS_CHECK (size2 == 0 || i <= ((std::numeric_limits<size_type>::max) () - j) / size2, bad_index ());
+             return i * size2 + j;
+@@ -1479,24 +1482,28 @@
+         BOOST_UBLAS_INLINE
+         size_type element1 (size_type i, size_type size1, size_type /* j */, size_type /* size2 */) {
+             BOOST_UBLAS_CHECK (i < size1, bad_index ());
++            ignore_unused_variable_warning(size1);
+             return i;
+         }
+         static
+         BOOST_UBLAS_INLINE
+         size_type element2 (size_type /* i */, size_type /* size1 */, size_type j, size_type size2) {
+             BOOST_UBLAS_CHECK (j < size2, bad_index ());
++            ignore_unused_variable_warning(size2);
+             return j;
+         }
+         static
+         BOOST_UBLAS_INLINE
+         size_type address1 (size_type i, size_type size1, size_type /* j */, size_type /* size2 */) {
+             BOOST_UBLAS_CHECK (i <= size1, bad_index ());
++            ignore_unused_variable_warning(size1);
+             return i;
+         }
+         static
+         BOOST_UBLAS_INLINE
+         size_type address2 (size_type /* i */, size_type /* size1 */, size_type j, size_type size2) {
+             BOOST_UBLAS_CHECK (j <= size2, bad_index ());
++            ignore_unused_variable_warning(size2);
+             return j;
+         }
+         static
+@@ -1569,6 +1576,7 @@
+         size_type element (size_type i, size_type size1, size_type j, size_type size2) {
+             BOOST_UBLAS_CHECK (i < size1, bad_index ());
+             BOOST_UBLAS_CHECK (j < size2, bad_index ());
++            ignore_unused_variable_warning(size2);
+             // Guard against size_type overflow
+             BOOST_UBLAS_CHECK (j <= ((std::numeric_limits<size_type>::max) () - i) / size1, bad_index ());
+             return i + j * size1;
+@@ -1578,6 +1586,7 @@
+         size_type address (size_type i, size_type size1, size_type j, size_type size2) {
+             BOOST_UBLAS_CHECK (i <= size1, bad_index ());
+             BOOST_UBLAS_CHECK (j <= size2, bad_index ());
++            ignore_unused_variable_warning(size2);
+             // Guard against size_type overflow - address may be size1 past end of storage
+             BOOST_UBLAS_CHECK (size1 == 0 || j <= ((std::numeric_limits<size_type>::max) () - i) / size1, bad_index ());
+             return i + j * size1;
+@@ -1658,24 +1667,28 @@
+         BOOST_UBLAS_INLINE
+         size_type element1 (size_type /* i */, size_type /* size1 */, size_type j, size_type size2) {
+             BOOST_UBLAS_CHECK (j < size2, bad_index ());
++            ignore_unused_variable_warning(size2);
+             return j;
+         }
+         static
+         BOOST_UBLAS_INLINE
+         size_type element2 (size_type i, size_type size1, size_type /* j */, size_type /* size2 */) {
+             BOOST_UBLAS_CHECK (i < size1, bad_index ());
++            ignore_unused_variable_warning(size1);
+             return i;
+         }
+         static
+         BOOST_UBLAS_INLINE
+         size_type address1 (size_type /* i */, size_type /* size1 */, size_type j, size_type size2) {
+             BOOST_UBLAS_CHECK (j <= size2, bad_index ());
++            ignore_unused_variable_warning(size2);
+             return j;
+         }
+         static
+         BOOST_UBLAS_INLINE
+         size_type address2 (size_type i, size_type size1, size_type /* j */, size_type /* size2 */) {
+             BOOST_UBLAS_CHECK (i <= size1, bad_index ());
++            ignore_unused_variable_warning(size1);
+             return i;
+         }
+         static
+Only in .: matrix_expression.hpp~
+diff -x CVS -u -r /home/prudhomm/Devel/C++/Boost/boost-1.33/boost/numeric/ublas/matrix.hpp ./matrix.hpp
+--- /home/prudhomm/Devel/C++/Boost/boost-1.33/boost/numeric/ublas/matrix.hpp	2005-08-25 11:13:05.000000000 +0200
++++ ./matrix.hpp	2005-10-28 10:04:41.782220288 +0200
+@@ -2137,6 +2137,7 @@
+             BOOST_UBLAS_INLINE
+             bool operator == (const const_iterator1 &it) const {
+                 BOOST_UBLAS_CHECK (&(*this) () == &it (), external_logic ());
++		boost::ignore_unused_variable_warning(it);
+                 return true;
+             }
+         };
+@@ -2246,6 +2247,7 @@
+             BOOST_UBLAS_INLINE
+             bool operator == (const const_iterator2 &it) const {
+                 BOOST_UBLAS_CHECK (&(*this) () == &it (), external_logic ());
++		boost::ignore_unused_variable_warning(it);
+                 return true;
+             }
+         };
+Only in .: matrix_proxy.hpp~
+diff -x CVS -u -r /home/prudhomm/Devel/C++/Boost/boost-1.33/boost/numeric/ublas/matrix_sparse.hpp ./matrix_sparse.hpp
+--- /home/prudhomm/Devel/C++/Boost/boost-1.33/boost/numeric/ublas/matrix_sparse.hpp	2005-10-25 20:13:14.322634920 +0200
++++ ./matrix_sparse.hpp	2005-10-28 12:21:50.941197968 +0200
+@@ -17,6 +17,8 @@
+ #ifndef _BOOST_UBLAS_MATRIX_SPARSE_
+ #define _BOOST_UBLAS_MATRIX_SPARSE_
+ 
++#include <boost/concept_check.hpp>
++
+ #include <boost/numeric/ublas/vector_sparse.hpp>
+ #include <boost/numeric/ublas/matrix_expression.hpp>
+ #include <boost/numeric/ublas/detail/matrix_assign.hpp>
+@@ -2677,6 +2679,7 @@
+         void resize (size_type size1, size_type size2, bool preserve = true) {
+             // FIXME preserve unimplemented
+             BOOST_UBLAS_CHECK (!preserve, internal_logic ());
++	    boost::ignore_unused_variable_warning(preserve);
+             size1_ = size1;
+             size2_ = size2;
+             capacity_ = restrict_capacity (capacity_);
+Only in .: matrix_sparse.hpp~
+Only in .: semantic.cache
+Only in .: semantic.cache~
+diff -x CVS -u -r /home/prudhomm/Devel/C++/Boost/boost-1.33/boost/numeric/ublas/vector.hpp ./vector.hpp
+--- /home/prudhomm/Devel/C++/Boost/boost-1.33/boost/numeric/ublas/vector.hpp	2005-08-25 11:13:05.000000000 +0200
++++ ./vector.hpp	2005-10-28 09:41:56.349797568 +0200
+@@ -20,6 +20,7 @@
+ #include <boost/numeric/ublas/storage.hpp>
+ #include <boost/numeric/ublas/vector_expression.hpp>
+ #include <boost/numeric/ublas/detail/vector_assign.hpp>
++#include <boost/concept_check.hpp>
+ 
+ // Iterators based on ideas of Jeremy Siek
+ 
+@@ -702,6 +703,7 @@
+             BOOST_UBLAS_INLINE
+             bool operator == (const const_iterator &it) const {
+                 BOOST_UBLAS_CHECK (&(*this) () == &it (), external_logic ());
++                ignore_unused_variable_warning(it);
+                 return true;
+             }
+         };
