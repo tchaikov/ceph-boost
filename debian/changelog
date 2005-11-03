@@ -14,7 +14,7 @@ boost (1.33.0-3) unstable; urgency=low
 
   * hppa and m68k build with gcc 3.4.  Closes: #319232, #334959.
 
- --
+ -- Domenico Andreoli <cavok@debian.org>  Thu,  3 Nov 2005 13:11:05 +0100
 
 boost (1.33.0-2) unstable; urgency=low
 
