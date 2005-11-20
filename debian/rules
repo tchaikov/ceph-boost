@@ -37,11 +37,6 @@ GXX=g++
 endif
 endif
 
-HAVE_ICU=
-ifneq ($(DEB_BUILD_ARCH), m68k)
-HAVE_ICU=-sHAVE_ICU=1
-endif
-
 exampledir = debian/libboost-doc/usr/share/doc/libboost-doc/examples
 htmldir = debian/libboost-doc/usr/share/doc/libboost-doc/HTML
 
@@ -51,7 +46,7 @@ JAM = $(bjam) -d2 \
 	-sTOOLS=gcc \
 	-sGCC=$(GCC) \
 	-sGXX=$(GXX) \
-	$(HAVE_ICU) \
+	-sHAVE_ICU=1 \
 	-sPYTHON_VERSION=2.3 \
 	-sPYTHON_ROOT=/usr
 

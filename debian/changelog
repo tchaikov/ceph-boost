@@ -1,7 +1,5 @@
 boost (1.33.0-4) unstable; urgency=low
 
-  * debian/control, debian/rules: ICU support is now disabled on m68k.
-
   * debian/control: renamed DSO packages to '*c2a'.  Closes: #339154.
 
  -- Domenico Andreoli <cavok@debian.org>  Sat, 19 Nov 2005 15:55:50 +0100
