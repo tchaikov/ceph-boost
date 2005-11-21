@@ -1,3 +1,9 @@
+boost (1.33.0-5) unstable; urgency=low
+
+  * Re-uploaded with the right maintainer, the Debian Boost Team.
+
+ -- Domenico Andreoli <cavok@debian.org>  Mon, 21 Nov 2005 16:49:41 +0100
+
 boost (1.33.0-4) unstable; urgency=low
 
   * debian/control, debian/rules: renamed DSO packages to '*c2a'.
