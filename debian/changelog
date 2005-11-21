@@ -1,8 +1,9 @@
 boost (1.33.0-4) unstable; urgency=low
 
-  * debian/control: renamed DSO packages to '*c2a'.  Closes: #339154.
+  * debian/control, debian/rulles: renamed DSO packages to '*c2a'.
+    Closes: #339154.
 
- -- Domenico Andreoli <cavok@debian.org>  Sat, 19 Nov 2005 15:55:50 +0100
+ -- Christophe Prud'homme <prudhomm@debian.org>  Mon, 21 Nov 2005 07:05:58 +0100
 
 boost (1.33.0-3) unstable; urgency=low
 

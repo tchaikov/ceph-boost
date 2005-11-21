@@ -79,6 +79,8 @@ Package: libboost-date-time1.33.0c2a
 Architecture: any
 Section: libs
 Depends: ${shlibs:Depends}
+Conflicts: libboost-date-time1.33.0
+Replaces: libboost-date-time1.33.0
 Description: set of date-time libraries based on generic programming concepts
  Part of the Boost C++ Libraries collection.
  .
@@ -90,7 +92,7 @@ Description: set of date-time libraries based on generic programming concepts
 Package: libboost-date-time-dev
 Architecture: any
 Section: libdevel
-Depends: libboost-dev (=${Source-Version}), libboost-date-time1.33.0 (=${Source-Version})
+Depends: libboost-dev (=${Source-Version}), libboost-date-time1.33.0c2a (=${Source-Version})
 Replaces: libboost-dev (<< 1.30.0-1)
 Description: set of date-time libraries based on generic programming concepts
  Part of the Boost C++ Libraries collection.
@@ -104,6 +106,8 @@ Package: libboost-filesystem1.33.0c2a
 Architecture: any
 Section: libs
 Depends: ${shlibs:Depends}
+Conflicts: libboost-filesystem1.33.0
+Replaces: libboost-filesystem1.33.0
 Description: filesystem operations (portable paths, iteration over directories, etc) in C++
  Part of the Boost C++ Libraries collection.
  .
@@ -116,7 +120,7 @@ Description: filesystem operations (portable paths, iteration over directories, 
 Package: libboost-filesystem-dev
 Architecture: any
 Section: libdevel
-Depends: libboost-dev (=${Source-Version}), libboost-filesystem1.33.0 (=${Source-Version})
+Depends: libboost-dev (=${Source-Version}), libboost-filesystem1.33.0c2a (=${Source-Version})
 Replaces: libboost-dev (<< 1.31.0-1)
 Description: filesystem operations (portable paths, iteration over directories, etc) in C++
  Part of the Boost C++ Libraries collection.
@@ -132,6 +136,8 @@ Architecture: any
 Section: libs
 Depends: ${shlibs:Depends}
 Suggests: graphviz
+Conflicts: libboost-graph1.33.0
+Replaces: libboost-graph1.33.0
 Description: generic graph components and algorithms in C++
  Part of the Boost C++ Libraries collection.
  .
@@ -147,7 +153,7 @@ Package: libboost-graph-dev
 Architecture: any
 Section: libdevel
 Depends: libboost-dev (=${Source-Version})
-Recommends: libboost-graph1.33.0 (=${Source-Version})
+Recommends: libboost-graph1.33.0c2a (=${Source-Version})
 Description: generic graph components and algorithms in C++
  Part of the Boost C++ Libraries collection.
  .
@@ -163,6 +169,8 @@ Package: libboost-iostreams1.33.0c2a
 Architecture: any
 Section: libs
 Depends: ${shlibs:Depends}
+Conflicts: libboost-iostreams1.33.0
+Replaces: libboost-iostreams1.33.0
 Description: Boost.Iostreams Library
  Part of the Boost C++ Libraries collection.
  .
@@ -175,7 +183,7 @@ Description: Boost.Iostreams Library
 Package: libboost-iostreams-dev
 Architecture: any
 Section: libdevel
-Depends: libboost-dev (=${Source-Version}), libboost-iostreams1.33.0 (=${Source-Version})
+Depends: libboost-dev (=${Source-Version}), libboost-iostreams1.33.0c2a (=${Source-Version})
 Replaces: libboost-dev (<< 1.33.0-2)
 Description: Boost.Iostreams Library development files
  Part of the Boost C++ Libraries collection.
@@ -190,6 +198,8 @@ Package: libboost-program-options1.33.0c2a
 Architecture: any
 Section: libs
 Depends: ${shlibs:Depends}
+Conflicts: libboost-program-options1.33.0
+Replaces: libboost-program-options1.33.0
 Description: program options library for C++
  Part of the Boost C++ Libraries collection.
  .
@@ -202,7 +212,7 @@ Description: program options library for C++
 Package: libboost-program-options-dev
 Architecture: any
 Section: libdevel
-Depends: libboost-dev (= ${Source-Version}), libboost-program-options1.33.0 (= ${Source-Version})
+Depends: libboost-dev (= ${Source-Version}), libboost-program-options1.33.0c2a (= ${Source-Version})
 Description: program options library for C++
  Part of the Boost C++ Libraries collection.
  .
@@ -216,6 +226,8 @@ Package: libboost-python1.33.0c2a
 Architecture: any
 Section: python
 Depends: ${shlibs:Depends}
+Conflicts: libboost-python1.33.0
+Replaces: libboost-python1.33.0
 Description: Boost.Python Library 
  Part of the Boost C++ Libraries collection.
  .
@@ -235,7 +247,7 @@ Description: Boost.Python Library
 Package: libboost-python-dev
 Architecture: any
 Section: libdevel
-Depends: libboost-dev (=${Source-Version}), libboost-python1.33.0 (=${Source-Version}), python2.3-dev
+Depends: libboost-dev (=${Source-Version}), libboost-python1.33.0c2a (=${Source-Version}), python2.3-dev
 Replaces: libboost-dev (<< 1.31.0-3)
 Description: Boost.Python Library development files
  Part of the Boost C++ Libraries collection.
@@ -257,6 +269,8 @@ Package: libboost-regex1.33.0c2a
 Architecture: any
 Section: libs
 Depends: ${shlibs:Depends}
+Conflicts: libboost-regex1.33.0
+Replaces: libboost-regex1.33.0
 Description: regular expression library for C++
  Part of the Boost C++ Libraries collection.
  .
@@ -276,7 +290,7 @@ Description: regular expression library for C++
 Package: libboost-regex-dev
 Architecture: any
 Section: libdevel
-Depends: libboost-dev (= ${Source-Version}), libboost-regex1.33.0 (= ${Source-Version}), libicu34-dev
+Depends: libboost-dev (= ${Source-Version}), libboost-regex1.33.0c2a (= ${Source-Version}), libicu34-dev
 Description: regular expression library for C++
  Part of the Boost C++ Libraries collection.
  .
@@ -318,6 +332,8 @@ Package: libboost-signals1.33.0c2a
 Architecture: any
 Section: libs
 Depends: ${shlibs:Depends}
+Conflicts: libboost-signals1.33.0
+Replaces: libboost-signals1.33.0
 Description: managed signals and slots library for C++
  Part of the Boost C++ Libraries collection.
  .
@@ -332,7 +348,7 @@ Description: managed signals and slots library for C++
 Package: libboost-signals-dev
 Architecture: any
 Section: libdevel
-Depends: libboost-dev (= ${Source-Version}), libboost-signals1.33.0 (= ${Source-Version})
+Depends: libboost-dev (= ${Source-Version}), libboost-signals1.33.0c2a (= ${Source-Version})
 Description: managed signals and slots library for C++
  Part of the Boost C++ Libraries collection.
  .
@@ -348,6 +364,8 @@ Package: libboost-test1.33.0c2a
 Architecture: any
 Section: libs
 Depends: ${shlibs:Depends}
+Conflicts: libboost-test1.33.0
+Replaces: libboost-test1.33.0
 Description: components for writing and executing test suites
  Part of the Boost C++ Libraries collection.  The library contains
  several components.
@@ -361,7 +379,7 @@ Description: components for writing and executing test suites
 Package: libboost-test-dev
 Architecture: any
 Section: libdevel
-Depends: libboost-dev (= ${Source-Version}), libboost-test1.33.0 (= ${Source-Version})
+Depends: libboost-dev (= ${Source-Version}), libboost-test1.33.0c2a (= ${Source-Version})
 Replaces: libboost-dev (<< 1.30.0-1)
 Description: components for writing and executing test suites
  Part of the Boost C++ Libraries collection.  The library contains
@@ -377,6 +395,8 @@ Package: libboost-thread1.33.0c2a
 Architecture: any
 Section: libs
 Depends: ${shlibs:Depends}
+Conflicts: libboost-thread1.33.0
+Replaces: libboost-thread1.33.0
 Description: portable C++ multi-threading
  Part of the Boost C++ Libraries collection.
  .
@@ -390,7 +410,7 @@ Description: portable C++ multi-threading
 Package: libboost-thread-dev
 Architecture: any
 Section: libdevel
-Depends: libboost-dev (= ${Source-Version}), libboost-thread1.33.0 (= ${Source-Version})
+Depends: libboost-dev (= ${Source-Version}), libboost-thread1.33.0c2a (= ${Source-Version})
 Replaces: libboost-dev (<< 1.30.0-1)
 Description: portable C++ multi-threading
  Part of the Boost C++ Libraries collection.
