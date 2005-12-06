@@ -48,7 +48,7 @@ JAM = $(bjam) -d2 \
 	-sGCC=$(GCC) \
 	-sGXX=$(GXX) \
 	-sHAVE_ICU=1 \
-	-sPYTHON_VERSION=2.3 \
+	-sPYTHON_VERSION=2.4 \
 	-sPYTHON_ROOT=/usr
 
 $(bjam):

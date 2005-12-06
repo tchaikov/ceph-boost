@@ -2,7 +2,9 @@ boost (1.33.1-1) experimental; urgency=low
 
   * New upstream release.
 
- -- Domenico Andreoli <cavok@debian.org>  Tue,  6 Dec 2005 12:11:11 +0100
+  * debian/control, debian/rules: switched to python 2.4.
+
+ -- Domenico Andreoli <cavok@debian.org>  Tue,  6 Dec 2005 17:30:14 +0100
 
 boost (1.33.0-5) unstable; urgency=low
 

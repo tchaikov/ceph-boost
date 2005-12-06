@@ -3,7 +3,7 @@ Section: libs
 Priority: optional
 Maintainer: Debian Boost Team <pkg-boost-devel@lists.alioth.debian.org>
 Uploaders: Steve M. Robbins <smr@debian.org>, Domenico Andreoli <cavok@debian.org>, Christophe Prud'homme <prudhomm@debian.org>
-Build-Depends: debhelper (>= 4), bison, flex, docbook-to-man, xsltproc, doxygen, python2.3-dev, zlib1g-dev, libbz2-dev, libicu34-dev, gcc-3.4 [hppa], gcc-3.4 [m68k], g++-3.4 [hppa], g++-3.4 [m68k]
+Build-Depends: debhelper (>= 4), bison, flex, docbook-to-man, xsltproc, doxygen, python2.4-dev, zlib1g-dev, libbz2-dev, libicu34-dev, gcc-3.4 [hppa], gcc-3.4 [m68k], g++-3.4 [hppa], g++-3.4 [m68k]
 Standards-Version: 3.6.2
 
 Package: bcp
