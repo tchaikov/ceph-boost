@@ -20,7 +20,6 @@
 #include <boost/numeric/ublas/storage.hpp>
 #include <boost/numeric/ublas/vector_expression.hpp>
 #include <boost/numeric/ublas/detail/vector_assign.hpp>
-#include <boost/concept_check.hpp>
 
 // Iterators based on ideas of Jeremy Siek
 
@@ -31,10 +30,10 @@ namespace boost { namespace numeric { namespace ublas {
     class vector:
         public vector_container<vector<T, A> > {
 
-        typedef T *pointer;
-        typedef const T *const_pointer;
         typedef vector<T, A> self_type;
     public:
+        typedef T *pointer;
+        typedef const T *const_pointer;
 #ifdef BOOST_UBLAS_ENABLE_PROXY_SHORTCUTS
         using vector_container<self_type>::operator ();
 #endif
@@ -138,7 +137,7 @@ namespace boost { namespace numeric { namespace ublas {
         void erase_element (size_type i) {
             data () [i] = value_type/*zero*/();
         }
-
+        
         // Zeroing
         BOOST_UBLAS_INLINE
         void clear () {
@@ -703,7 +702,7 @@ namespace boost { namespace numeric { namespace ublas {
             BOOST_UBLAS_INLINE
             bool operator == (const const_iterator &it) const {
                 BOOST_UBLAS_CHECK (&(*this) () == &it (), external_logic ());
-                ignore_unused_variable_warning(it);
+                detail::ignore_unused_variable_warning(it);
                 return true;
             }
         };
@@ -1287,9 +1286,9 @@ namespace boost { namespace numeric { namespace ublas {
         BOOST_UBLAS_INLINE
         void erase_element (size_type i) {
             BOOST_UBLAS_CHECK (i < size_, bad_index ());
-            return (data_ [i] = value_type/*zero*/());
+            data_ [i] = value_type/*zero*/();
         }
-
+        
         // Zeroing
         BOOST_UBLAS_INLINE
         void clear () {

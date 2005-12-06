@@ -17,8 +17,6 @@
 #ifndef _BOOST_UBLAS_MATRIX_SPARSE_
 #define _BOOST_UBLAS_MATRIX_SPARSE_
 
-#include <boost/concept_check.hpp>
-
 #include <boost/numeric/ublas/vector_sparse.hpp>
 #include <boost/numeric/ublas/matrix_expression.hpp>
 #include <boost/numeric/ublas/detail/matrix_assign.hpp>
@@ -2679,7 +2677,7 @@ namespace boost { namespace numeric { namespace ublas {
         void resize (size_type size1, size_type size2, bool preserve = true) {
             // FIXME preserve unimplemented
             BOOST_UBLAS_CHECK (!preserve, internal_logic ());
-	    boost::ignore_unused_variable_warning(preserve);
+            detail::ignore_unused_variable_warning(preserve);
             size1_ = size1;
             size2_ = size2;
             capacity_ = restrict_capacity (capacity_);

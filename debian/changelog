@@ -1,3 +1,9 @@
+boost (1.33.1-1) experimental; urgency=low
+
+  * New upstream release.
+
+ -- Domenico Andreoli <cavok@debian.org>  Tue,  6 Dec 2005 12:11:11 +0100
+
 boost (1.33.0-5) unstable; urgency=low
 
   * Re-uploaded with the right maintainer, the Debian Boost Team.

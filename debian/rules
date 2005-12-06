@@ -11,7 +11,7 @@ export DH_OPTIONS
 # major and minor version numbers joined by an underscore.  This label
 # appears in some of the filenames.
 #
-boost_version = 1_33
+boost_version = 1_33_1
 
 # Library suffix
 # Boost libraries encode build information in the resulting library
@@ -24,8 +24,8 @@ debug_suffix = -gcc-mt-d-$(boost_version)
 
 # Boost does not guarantee any ABI, it uses the full version in SONAME
 #
-SOVERSION = 1.33.0
-DEBIAN_SUFFIX = c2a
+SOVERSION = 1.33.1
+DEBIAN_SUFFIX =
 
 DEB_BUILD_ARCH ?= $(shell dpkg-architecture -qDEB_BUILD_ARCH)
 
