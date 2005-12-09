@@ -29,14 +29,14 @@ DEBIAN_SUFFIX =
 
 DEB_BUILD_ARCH ?= $(shell dpkg-architecture -qDEB_BUILD_ARCH)
 
-GCC=gcc-3.4
-GXX=g++-3.4
-ifneq ($(DEB_BUILD_ARCH), hppa)
-ifneq ($(DEB_BUILD_ARCH), m68k)
+#GCC=gcc-3.4
+#GXX=g++-3.4
+#ifneq ($(DEB_BUILD_ARCH), hppa)
+#ifneq ($(DEB_BUILD_ARCH), m68k)
 GCC=gcc
 GXX=g++
-endif
-endif
+#endif
+#endif
 
 exampledir = debian/libboost-doc/usr/share/doc/libboost-doc/examples
 htmldir = debian/libboost-doc/usr/share/doc/libboost-doc/HTML
