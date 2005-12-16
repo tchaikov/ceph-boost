@@ -235,7 +235,7 @@ Description: Boost.Python Library
 Package: libboost-python-dev
 Architecture: any
 Section: libdevel
-Depends: libboost-dev (=${Source-Version}), libboost-python1.33.1 (=${Source-Version}), python2.3-dev
+Depends: libboost-dev (=${Source-Version}), libboost-python1.33.1 (=${Source-Version}), python2.4-dev
 Replaces: libboost-dev (<< 1.31.0-3)
 Description: Boost.Python Library development files
  Part of the Boost C++ Libraries collection.
