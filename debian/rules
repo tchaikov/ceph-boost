@@ -38,6 +38,11 @@ GXX=g++
 #endif
 #endif
 
+CFLAGS=-mlong-calls
+ifneq ($(DEB_BUILD_ARCH), hppa)
+CFLAGS=
+endif
+
 exampledir = debian/libboost-doc/usr/share/doc/libboost-doc/examples
 htmldir = debian/libboost-doc/usr/share/doc/libboost-doc/HTML
 
@@ -64,7 +69,7 @@ build-stamp: $(bjam)
 
 	# Build most of the stuff with jam
 	cd tools/bcp && ../../$(JAM) -sBUILD="release <define>_REENTRANT <threading>single" bcp
-	$(JAM) -sBUILD="debug release <define>_REENTRANT <threading>single/multi"
+	$(JAM) -sBUILD="debug release <cflags>$(CFLAGS) <define>_REENTRANT <threading>single/multi"
 	#cd libs/graph/build && ../../../$(JAM) -sBUILD="debug release" bgl-viz.a bgl-viz.so
 	#cd libs/graph/build/python && ../../../../$(JAM)
 
@@ -288,10 +293,10 @@ install: build
 	   debian/tmp/usr/lib/libboost_python$(release_suffix_st).so.$(SOVERSION)
 	dh_install -plibboost-python$(SOVERSION)$(DEBIAN_SUFFIX) --autodest \
 	   debian/tmp/usr/lib/libboost_python$(release_suffix).so.$(SOVERSION)
-	mkdir -p debian/libboost-python$(SOVERSION)/usr/share/lintian/overrides
+	mkdir -p debian/libboost-python$(SOVERSION)${DEBIAN_SUFFIX}/usr/share/lintian/overrides
 	install -m644 \
-	   debian/libboost-python$(SOVERSION).lintian-overrides \
-	   debian/libboost-python$(SOVERSION)/usr/share/lintian/overrides/libboost-python$(SOVERSION)
+	   debian/libboost-python$(SOVERSION)${DEBIAN_SUFFIX}.lintian-overrides \
+	   debian/libboost-python$(SOVERSION)${DEBIAN_SUFFIX}/usr/share/lintian/overrides/libboost-python$(SOVERSION)${DEBIAN_SUFFIX}
 	dh_install -plibboost-dbg --autodest \
 	   debian/tmp/usr/lib/libboost_python$(debug_suffix_st).so.$(SOVERSION)
 	dh_install -plibboost-dbg --autodest \
