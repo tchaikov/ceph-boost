@@ -502,9 +502,8 @@ binary-common:
 	@if [ "$(DH_OPTIONS)" = "-a" ]; then \
 		for name in date-time filesystem graph iostreams program-options python regex signals test thread; do \
 			lib=libboost-$${name}$(SOVERSION)$(DEBIAN_SUFFIX); \
-			shlib="$${lib} (>= 1.33.0-1)"; \
-			echo DH_OPTIONS=-p$${lib} dh_makeshlibs -V"$${shlib}"; \
-			DH_OPTIONS=-p$${lib} dh_makeshlibs -V"$${shlib}"; \
+			echo DH_OPTIONS=-p$${lib} dh_makeshlibs -V"$${lib}"; \
+			DH_OPTIONS=-p$${lib} dh_makeshlibs -V"$${lib}"; \
 		done; \
 	fi
 
