@@ -6,6 +6,9 @@
 # This has to be exported to make some magic below work.
 export DH_OPTIONS
 
+# This is the debhelper compatability version to use.
+export DH_COMPAT=4
+
 # Boost Version
 # This is the "short label" for the Boost library version, consisting of the
 # major and minor version numbers joined by an underscore.  This label
