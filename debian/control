@@ -405,7 +405,7 @@ Description: portable C++ multi-threading
 Package: libboost-wave-dev
 Architecture: any
 Section: libdevel
-Depends: libboost-dev (= ${Source-Version})
+Depends: libboost-dev (= ${Source-Version}), libboost-filesystem-dev (= ${Source-Version})
 Replaces: libboost-dev (<< 1.33.0-2)
 Description: C99/C++ preprocessor library
  Part of the Boost C++ Libraries collection.
