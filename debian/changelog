@@ -1,9 +1,10 @@
 boost (1.33.1-2) experimental; urgency=low
 
   * [Christophe Prud'homme]
-    o added libboost-wave-dev dependency wrt libboost-filesystem-dev
+    o Bug fix: "libboost-wave-dev: Dependency on libboost-filesystem-dev
+      missing", thanks to Martin v . LÃÂ¶wis (Closes: #346367).
 
- -- Christophe Prud'homme <prudhomm@debian.org>  Sat,  7 Jan 2006 13:54:46 +0100
+ -- Christophe Prud'homme <prudhomm@debian.org>  Mon,  9 Jan 2006 12:09:13 +0100
 
 boost (1.33.1-1) experimental; urgency=low
 
