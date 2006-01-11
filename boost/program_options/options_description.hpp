@@ -81,7 +81,7 @@ namespace program_options {
         /** Given 'option', specified in the input source,
             return 'true' is 'option' specifies *this.
         */
-        bool match(const std::string& option, bool approx) const;
+        match_result match(const std::string& option, bool approx) const;
 
         /** Return the key that should identify the option, in
             particular in the variables_map class.
