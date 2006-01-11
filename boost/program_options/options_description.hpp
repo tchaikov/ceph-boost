@@ -78,6 +78,8 @@ namespace program_options {
 
         virtual ~option_description();
 
+        enum match_result { no_match, full_match, approximate_match };
+
         /** Given 'option', specified in the input source,
             return 'true' is 'option' specifies *this.
         */
