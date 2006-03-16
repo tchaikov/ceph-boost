@@ -1,3 +1,10 @@
+boost (1.33.1-3) unstable; urgency=low
+
+  * Fixed licensing of Graph library (closes: #349209).
+    Patch from upstream CVS repository, courtesy of Doug Gregor.
+
+ -- Domenico Andreoli <cavok@debian.org>  Thu, 16 Mar 2006 13:40:06 +0100
+
 boost (1.33.1-2) unstable; urgency=low
 
   [ Christophe Prud'homme ]

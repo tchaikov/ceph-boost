@@ -1,7 +1,8 @@
 //=======================================================================
 // Copyright 1997, 1998, 1999, 2000 University of Notre Dame.
+// Copyright 2006 The Trustees of Indiana University.
 // Copyright (C) 2001 Vladimir Prus <ghost@cs.msu.su>
-// Authors: Andrew Lumsdaine, Lie-Quan Lee, Jeremy G. Siek
+// Authors: Andrew Lumsdaine, Lie-Quan Lee, Jeremy G. Siek, Douglas Gregor
 //
 // Distributed under the Boost Software License, Version 1.0. (See
 // accompanying file LICENSE_1_0.txt or copy at

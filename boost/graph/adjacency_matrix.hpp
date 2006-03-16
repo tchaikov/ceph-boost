@@ -1,6 +1,7 @@
 //=======================================================================
 // Copyright 2001 University of Notre Dame.
-// Author: Jeremy G. Siek
+// Copyright 2006 Trustees of Indiana University
+// Authors: Jeremy G. Siek and Douglas Gregor <dgregor@cs.indiana.edu>
 //
 // Distributed under the Boost Software License, Version 1.0. (See
 // accompanying file LICENSE_1_0.txt or copy at
