@@ -32,7 +32,7 @@ AR		= ar
 
 default: libbgl-viz.a libbgl-viz.so
 
-OBJS = graphviz_graph_lex.o graphviz_digraph_lex.o graphviz_digraph_parser.o graphviz_graph_parser.o
+OBJS = graphviz_graph_lex.o graphviz_digraph_lex.o graphviz_digraph_parser.o graphviz_graph_parser.o read_graphviz_spirit.o
 
 libbgl-viz.a: $(OBJS)
 	$(AR) -rc libbgl-viz.a $(OBJS)
