@@ -5,6 +5,7 @@ boost (1.33.1-3) unstable; urgency=low
   * Fixed build of Boost.Graph library.  Closes: #326089.
   * Shared library packages do not install the empty /usr/include/boost
     directory any more.  Closes: #344599.
+  * Added manpage for bcp.  Closes: #348523.
 
  -- Domenico Andreoli <cavok@debian.org>  Thu, 16 Mar 2006 13:40:06 +0100
 
