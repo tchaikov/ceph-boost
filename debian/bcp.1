@@ -1,0 +1,61 @@
+.TH BCP "1" "March 2006" "Boost C++ Libraries" "User Commands"
+.SH NAME
+bcp \- extract subsets of Boost
+.SH SYNOPSIS
+.B bcp
+\fB\-\-list\fR [\fIoptions\fR] \fImodule\-list\fR
+.br
+.B bcp
+\fB\-\-report\fR [\fIoptions\fR] \fImodule\-list html\-file\fR
+.br
+.B bcp
+[\fIoptions\fR] \fImodule\-list output\-path\fR
+.br
+.SH DESCRIPTION
+module\-list:      a list of boost files or library names to copy
+.br
+html\-file:        the name of a html file to which the report will be written
+.br
+output\-path:      the path to which files will be copied
+.br
+.SH OPTIONS
+.TP
+\fB\-\-boost\fR=\fIpath\fR
+sets the location of the boost tree to path
+.TP
+\fB\-\-scan\fR
+treat the module list as a list of (possibly non\-boost)
+files to scan for boost dependencies
+.TP
+\fB\-\-cvs\fR
+only copy files under cvs version control
+.TP
+\fB\-\-unix\-lines\fR
+make sure that all copied files use Unix style line endings
+.SH EXAMPLES
+.TP
+\fBbcp\fR scoped_ptr /foo
+Copies boost/scoped_ptr.hpp and dependencies to /foo.
+.TP
+\fBbcp\fR boost/regex.hpp /foo
+Copies boost/regex.hpp and all dependencies including the regex source
+code (in libs/regex/src) and build files (in libs/regex/build) to /foo.
+Does not copy the regex documentation, test, or example code.
+.TP
+\fBbcp\fR regex /foo
+Copies the full regex lib (in libs/regex) including dependencies (such
+as the boost.test source required by the regex test programs) to /foo.
+.TP
+\fBbcp\fR regex config build /foo
+Copies the full regex lib (in libs/regex) plus the config lib
+(libs/config) and the build system (tools/build) to /foo including all
+the dependencies.
+.TP
+\fBbcp --scan --boost\fR=/boost foo.cpp bar.cpp boost
+Scans the [non-boost] files foo.cpp and bar.cpp for boost dependencies
+and copies those dependencies to the sub-directory boost.
+.TP
+\fBbcp --report\fR regex.hpp boost-regex-report.html
+Creates a HTML report called boost-regex-report.html for the boost
+module regex.hpp.  The report contains license information, author
+details, and file dependencies.
