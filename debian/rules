@@ -124,6 +124,7 @@ install: build
 	dh_install -pbcp \
 	   bin/boost/tools/bcp/bcp/gcc/release/bcp \
 	   usr/bin
+	dh_installman -pbcp debian/bcp.1
 
 
 	# package libboost-dbg
