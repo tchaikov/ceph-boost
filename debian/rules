@@ -120,27 +120,27 @@ install: build
 	find debian -empty -type f | xargs rm -f
 
 	# package bcp
-	mkdir -p debian/bcp/usr/bin
-	install -m755 \
+	dh_installdirs -pbcp usr/bin
+	dh_install -pbcp \
 	   bin/boost/tools/bcp/bcp/gcc/release/bcp \
-	   debian/bcp/usr/bin
+	   usr/bin
 
 
 	# package libboost-dbg
-	mkdir -p debian/libboost-dbg/usr/share/lintian/overrides
-	install -m644 \
+	dh_installdirs -plibboost-dbg usr/share/lintian/overrides
+	dh_install -plibboost-dbg \
 	   debian/libboost-dbg.lintian-overrides \
-	   debian/libboost-dbg/usr/share/lintian/overrides/libboost-dbg
+	   usr/share/lintian/overrides/libboost-dbg
 
 
 	# package libboost-dev
 	dh_install -plibboost-dev \
 	   debian/tmp/usr/include/boost-$(boost_version)/boost \
 	   usr/include
-	mkdir -p debian/libboost-dev/usr/share/lintian/overrides
-	install -m644 \
+	dh_installdirs -plibboost-dev usr/share/lintian/overrides
+	dh_install -plibboost-dev \
 	   debian/libboost-dev.lintian-overrides \
-	   debian/libboost-dev/usr/share/lintian/overrides/libboost-dev
+	   usr/share/lintian/overrides/libboost-dev
 
 
 	# package libboost-doc
@@ -157,10 +157,10 @@ install: build
 	cat debian/example-files \
 	    | xargs cp -a --parents --target-directory=$(exampledir)
 	find $(exampledir) -type f | xargs chmod 644
-	mkdir -p debian/libboost-doc/usr/share/lintian/overrides
-	install -m644 \
+	dh_installdirs -plibboost-doc usr/share/lintian/overrides
+	dh_install -plibboost-doc \
 	   debian/libboost-doc.lintian-overrides \
-	   debian/libboost-doc/usr/share/lintian/overrides/libboost-doc
+	   usr/share/lintian/overrides/libboost-doc
 
 
 	# package libboost-date-time$(SOVERSION)
@@ -298,10 +298,10 @@ install: build
 	   debian/tmp/usr/lib/libboost_python$(release_suffix_st).so.$(SOVERSION)
 	dh_install -plibboost-python$(SOVERSION)$(DEBIAN_SUFFIX) --autodest \
 	   debian/tmp/usr/lib/libboost_python$(release_suffix).so.$(SOVERSION)
-	mkdir -p debian/libboost-python$(SOVERSION)${DEBIAN_SUFFIX}/usr/share/lintian/overrides
-	install -m644 \
+	dh_installdirs -plibboost-python$(SOVERSION)${DEBIAN_SUFFIX} usr/share/lintian/overrides
+	dh_install -plibboost-python$(SOVERSION)${DEBIAN_SUFFIX} \
 	   debian/libboost-python$(SOVERSION)${DEBIAN_SUFFIX}.lintian-overrides \
-	   debian/libboost-python$(SOVERSION)${DEBIAN_SUFFIX}/usr/share/lintian/overrides/libboost-python$(SOVERSION)${DEBIAN_SUFFIX}
+	   usr/share/lintian/overrides/libboost-python$(SOVERSION)${DEBIAN_SUFFIX}
 	dh_install -plibboost-dbg --autodest \
 	   debian/tmp/usr/lib/libboost_python$(debug_suffix_st).so.$(SOVERSION)
 	dh_install -plibboost-dbg --autodest \
@@ -322,10 +322,10 @@ install: build
 	dh_link -plibboost-python-dev \
 	   usr/lib/libboost_python$(release_suffix).so \
 	   usr/lib/libboost_python.so
-	mkdir -p debian/libboost-python-dev/usr/share/lintian/overrides
-	install -m644 \
+	dh_installdirs -plibboost-python-dev usr/share/lintian/overrides
+	dh_install -plibboost-python-dev \
 	   debian/libboost-python-dev.lintian-overrides \
-	   debian/libboost-python-dev/usr/share/lintian/overrides/libboost-python-dev
+	   usr/share/lintian/overrides/libboost-python-dev
 
 
 	# package libboost-regex$(SOVERSION)
