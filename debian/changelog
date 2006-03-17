@@ -1,8 +1,10 @@
 boost (1.33.1-3) unstable; urgency=low
 
-  * Fixed licensing of Graph library (closes: #349209).
+  * Fixed licensing of Graph library.  Closes: #349209.
     Patch from upstream CVS repository, courtesy of Doug Gregor.
-  * Fixed build of Boost.Graph library (closes: #326089).
+  * Fixed build of Boost.Graph library.  Closes: #326089.
+  * Shared library packages do not install the empty /usr/include/boost
+    directory any more.  Closes: #344599.
 
  -- Domenico Andreoli <cavok@debian.org>  Thu, 16 Mar 2006 13:40:06 +0100
 

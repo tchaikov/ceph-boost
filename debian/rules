@@ -119,9 +119,6 @@ install: build
 	find debian/tmp -name .cvsignore | xargs rm -f
 	find debian -empty -type f | xargs rm -f
 
-	dh_installdirs --all usr/include/boost
-
-
 	# package bcp
 	mkdir -p debian/bcp/usr/bin
 	install -m755 \
@@ -181,6 +178,7 @@ install: build
 
 
 	# package libboost-date-time-dev
+	dh_installdirs -plibboost-date-time-dev usr/include/boost
 	mv debian/libboost-dev/usr/include/boost/date_time \
 	   debian/libboost-date-time-dev/usr/include/boost
 	dh_install -plibboost-date-time-dev --autodest \
@@ -210,6 +208,7 @@ install: build
 
 
 	# package libboost-filesystem-dev
+	dh_installdirs -plibboost-filesystem-dev usr/include/boost
 	mv debian/libboost-dev/usr/include/boost/filesystem \
 	   debian/libboost-filesystem-dev/usr/include/boost
 	dh_install -plibboost-filesystem-dev --autodest \
@@ -234,6 +233,7 @@ install: build
 
 
 	# package libboost-graph-dev
+	dh_installdirs -plibboost-graph-dev usr/include/boost
 	mv debian/libboost-dev/usr/include/boost/graph \
 	   debian/libboost-graph-dev/usr/include/boost
 	dh_install -plibboost-graph-dev \
@@ -253,6 +253,7 @@ install: build
 
 
 	# package libboost-iostreams-dev
+	dh_installdirs -plibboost-iostreams-dev usr/include/boost
 	mv debian/libboost-dev/usr/include/boost/iostreams* \
 	   debian/libboost-iostreams-dev/usr/include/boost
 	dh_install -plibboost-iostreams-dev --autodest \
@@ -277,6 +278,7 @@ install: build
 
 
 	# package libboost-program-options-dev
+	dh_installdirs -plibboost-program-options-dev usr/include/boost
 	mv debian/libboost-dev/usr/include/boost/program_options* \
 	   debian/libboost-program-options-dev/usr/include/boost
 	dh_install -plibboost-program-options-dev --autodest \
@@ -310,6 +312,7 @@ install: build
 
 
 	# package libboost-python-dev
+	dh_installdirs -plibboost-python-dev usr/include/boost
 	mv debian/libboost-dev/usr/include/boost/python* \
 	   debian/libboost-python-dev/usr/include/boost
 	dh_install -plibboost-python-dev --autodest \
@@ -340,6 +343,7 @@ install: build
 
 
 	# package libboost-regex-dev
+	dh_installdirs -plibboost-regex-dev usr/include/boost
 	mv debian/libboost-dev/usr/include/boost/*regex* \
 	   debian/libboost-regex-dev/usr/include/boost
 	dh_install -plibboost-regex-dev --autodest \
@@ -355,6 +359,7 @@ install: build
 
 
 	# package libboost-serialization-dev
+	dh_installdirs -plibboost-serialization-dev usr/include/boost
 	mv debian/libboost-dev/usr/include/boost/*serialization* \
 	   debian/libboost-serialization-dev/usr/include/boost
 	dh_install -plibboost-serialization-dev --autodest \
@@ -384,6 +389,7 @@ install: build
 
 
 	# package libboost-signals-dev
+	dh_installdirs -plibboost-signals-dev usr/include/boost
 	mv debian/libboost-dev/usr/include/boost/*signal* \
 	   debian/libboost-signals-dev/usr/include/boost
 	dh_install -plibboost-signals-dev --autodest \
@@ -423,6 +429,7 @@ install: build
 
 
 	# package libboost-test-dev
+	dh_installdirs -plibboost-test-dev usr/include/boost
 	mv debian/libboost-dev/usr/include/boost/test \
 	   debian/libboost-test-dev/usr/include/boost
 	dh_install -plibboost-test-dev --autodest \
@@ -464,6 +471,7 @@ install: build
 
 
 	# package libboost-thread-dev
+	dh_installdirs -plibboost-thread-dev usr/include/boost
 	mv debian/libboost-dev/usr/include/boost/thread* \
 	   debian/libboost-thread-dev/usr/include/boost
 	dh_install -plibboost-thread-dev --autodest \
@@ -474,6 +482,7 @@ install: build
 
 
 	# package libboost-wave-dev
+	dh_installdirs -plibboost-wave-dev usr/include/boost
 	mv debian/libboost-dev/usr/include/boost/wave* \
 	   debian/libboost-wave-dev/usr/include/boost
 	dh_install -plibboost-wave-dev --autodest \
