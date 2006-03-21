@@ -476,8 +476,11 @@ install: build
 	mv debian/libboost-dev/usr/include/boost/thread* \
 	   debian/libboost-thread-dev/usr/include/boost
 	dh_install -plibboost-thread-dev --autodest \
+	   debian/tmp/usr/lib/libboost_thread$(release_suffix).a \
 	   debian/tmp/usr/lib/libboost_thread$(release_suffix).so
 	dh_link -plibboost-thread-dev \
+	   usr/lib/libboost_thread$(release_suffix).a \
+	   usr/lib/libboost_thread.a \
 	   usr/lib/libboost_thread$(release_suffix).so \
 	   usr/lib/libboost_thread.so
 
