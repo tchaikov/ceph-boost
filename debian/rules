@@ -77,9 +77,9 @@ build-stamp: $(bjam)
 	#cd libs/graph/build/python && ../../../../$(JAM)
 
 	# Build the graph library with upstream makefile
-	$(MAKE) -C libs/graph/src libbgl-viz.a
+	$(MAKE) -C libs/graph/src EXTRAFLAGS="$(CFLAGS)" libbgl-viz.a
 	rm -f libs/graph/src/*.o
-	$(MAKE) -C libs/graph/src EXTRAFLAGS='-fPIC' GRAPH_SONAME_VERSION=$(SOVERSION) libbgl-viz.so
+	$(MAKE) -C libs/graph/src EXTRAFLAGS="$(CFLAGS) -fPIC" GRAPH_SONAME_VERSION=$(SOVERSION) libbgl-viz.so
 
 	touch build-stamp
 
