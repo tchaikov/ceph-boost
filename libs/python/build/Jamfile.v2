@@ -26,7 +26,7 @@ project boost/python
     ;
 
 lib boost_python
-    : 
+    : # sources
     numeric.cpp
     list.cpp
     long.cpp
@@ -50,13 +50,21 @@ lib boost_python
     converter/builtin_converters.cpp
     converter/arg_to_python_base.cpp
     object/iterator.cpp
+    object/stl_iterator.cpp
     object_protocol.cpp
     object_operators.cpp
     wrapper.cpp
-    :   <link>static:<define>BOOST_PYTHON_STATIC_LIB 
+    import.cpp
+    exec.cpp
+    :   # requirements
+        <link>static:<define>BOOST_PYTHON_STATIC_LIB 
         <define>BOOST_PYTHON_SOURCE
-	<library>/python//python
-    : <link>shared
+     	<library>/python//python
+    :   # default build
+        <link>shared
+    :   # usage requirements
+        <link>static:<define>BOOST_PYTHON_STATIC_LIB 
+        <link>shared:<define>BOOST_PYTHON_DYNAMIC_LIB
     ;
 }
 else

@@ -3,7 +3,7 @@
 
     http://www.boost.org/
 
-    Copyright (c) 2001-2005 Hartmut Kaiser. Distributed under the Boost
+    Copyright (c) 2001-2006 Hartmut Kaiser. Distributed under the Boost
     Software License, Version 1.0. (See accompanying file
     LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
 =============================================================================*/
@@ -14,6 +14,13 @@
 #if defined (BOOST_SPIRIT_DEBUG)
 #include <iostream>
 #endif // defined(BOOST_SPIRIT_DEBUG)
+
+#include <boost/wave/wave_config.hpp>
+
+// this must occur after all of the includes and before any code appears
+#ifdef BOOST_HAS_ABI_HEADERS
+#include BOOST_ABI_PREFIX
+#endif
 
 ///////////////////////////////////////////////////////////////////////////////
 namespace boost {
@@ -598,12 +605,12 @@ public:
         case is_uint:   cmp = lhs.value.ui == (unsigned long)(rhs); break;
         case is_bool:   cmp = lhs.value.b == bool(rhs); break;
         }
-        return closure_value(cmp, (value_error)(lhs.valid & rhs.valid));
+        return closure_value(cmp, (value_error)(lhs.valid | rhs.valid));
     }
     friend closure_value 
     operator!= (closure_value const &lhs, closure_value const &rhs)
     {
-        return closure_value(!bool(lhs == rhs), (value_error)(lhs.valid & rhs.valid));
+        return closure_value(!bool(lhs == rhs), (value_error)(lhs.valid | rhs.valid));
     }
     friend closure_value 
     operator> (closure_value const &lhs, closure_value const &rhs)
@@ -621,14 +628,14 @@ public:
         case is_uint:   cmp = lhs.value.ui > (unsigned long)(rhs); break;
         case is_bool:   cmp = lhs.value.b > bool(rhs); break;
         }
-        return closure_value(cmp, (value_error)(lhs.valid & rhs.valid));
+        return closure_value(cmp, (value_error)(lhs.valid | rhs.valid));
     }
     friend closure_value 
     operator< (closure_value const &lhs, closure_value const &rhs)
     {
         bool cmp = false;
         switch (lhs.type) {
-        case is_int:    cmp = long(lhs) < long(rhs); break;
+        case is_int:
             switch(rhs.type) {
             case is_bool:   cmp = lhs.value.i < long(rhs); break;
             case is_int:    cmp = lhs.value.i < rhs.value.i; break;
@@ -639,17 +646,17 @@ public:
         case is_uint:   cmp = lhs.value.ui < (unsigned long)(rhs); break;
         case is_bool:   cmp = bool(lhs) < bool(rhs); break;
         }
-        return closure_value(cmp, (value_error)(lhs.valid & rhs.valid));
+        return closure_value(cmp, (value_error)(lhs.valid | rhs.valid));
     }
     friend closure_value 
     operator<= (closure_value const &lhs, closure_value const &rhs)
     {
-        return closure_value(!bool(lhs > rhs), (value_error)(lhs.valid & rhs.valid));
+        return closure_value(!bool(lhs > rhs), (value_error)(lhs.valid | rhs.valid));
     }
     friend closure_value 
     operator>= (closure_value const &lhs, closure_value const &rhs)
     {
-        return closure_value(!bool(lhs < rhs), (value_error)(lhs.valid & rhs.valid));
+        return closure_value(!bool(lhs < rhs), (value_error)(lhs.valid | rhs.valid));
     }
 
     closure_value &
@@ -787,14 +794,14 @@ public:
     operator|| (closure_value const &lhs, closure_value const &rhs)
     {
         bool result = bool(lhs) || bool(rhs);
-        return closure_value(result, (value_error)(lhs.valid & rhs.valid));
+        return closure_value(result, (value_error)(lhs.valid | rhs.valid));
     }
     
     friend closure_value 
     operator&& (closure_value const &lhs, closure_value const &rhs)
     {
         bool result = bool(lhs) && bool(rhs);
-        return closure_value(result, (value_error)(lhs.valid & rhs.valid));
+        return closure_value(result, (value_error)(lhs.valid | rhs.valid));
     }
 
     // handle the ?: operator
@@ -848,5 +855,10 @@ private:
 }   // namespace grammars
 }   // namespace wave
 }   // namespace boost
+
+// the suffix header occurs after all of the code
+#ifdef BOOST_HAS_ABI_HEADERS
+#include BOOST_ABI_SUFFIX
+#endif
 
 #endif // !defined(CPP_EXPRESSION_VALUE_HPP_452FE66D_8754_4107_AF1E_E42255A0C18A_INCLUDED)

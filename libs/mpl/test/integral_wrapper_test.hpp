@@ -8,8 +8,8 @@
 // See http://www.boost.org/libs/mpl for documentation.
 
 // $Source: /cvsroot/boost/boost/libs/mpl/test/integral_wrapper_test.hpp,v $
-// $Date: 2004/10/13 14:27:35 $
-// $Revision: 1.3 $
+// $Date: 2006/02/20 15:45:07 $
+// $Revision: 1.4 $
 
 #include <boost/mpl/next_prior.hpp>
 #include <boost/mpl/aux_/test.hpp>
@@ -19,12 +19,12 @@
 
 #if !BOOST_WORKAROUND(__BORLANDC__, < 0x600)
 #   define INTEGRAL_WRAPPER_RUNTIME_TEST(i, T) \
-    assert(( WRAPPER(T,i)() == i )); \
-    assert(( WRAPPER(T,i)::value == i )); \
+    BOOST_TEST(( WRAPPER(T,i)() == i )); \
+    BOOST_TEST(( WRAPPER(T,i)::value == i )); \
     /**/
 #else
 #   define INTEGRAL_WRAPPER_RUNTIME_TEST(i, T) \
-    assert(( WRAPPER(T,i)::value == i )); \
+    BOOST_TEST(( WRAPPER(T,i)::value == i )); \
     /**/
 #endif
 

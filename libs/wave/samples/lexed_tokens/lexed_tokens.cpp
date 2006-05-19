@@ -3,7 +3,7 @@
 
     http://www.boost.org/
 
-    Copyright (c) 2001-2005 Hartmut Kaiser. Distributed under the Boost 
+    Copyright (c) 2001-2006 Hartmut Kaiser. Distributed under the Boost 
     Software License, Version 1.0. (See accompanying file 
     LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
 =============================================================================*/
@@ -41,7 +41,7 @@ operator<< (std::ostream &stream,
     token_id id = token_id(t);
     stream << setw(16) 
         << left << boost::wave::get_token_name(id) << " ("
-        << "#" << BASEID_FROM_TOKEN(id);
+        << "#" << setw(3) << BASEID_FROM_TOKEN(id);
 
     if (ExtTokenTypeMask & id) {
     // this is an extended token id
@@ -114,7 +114,7 @@ boost::wave::util::file_position_type current_position;
         position_type pos(argv[1]);
         lexer_type it = lexer_type(instr.begin(), instr.end(), pos, 
             boost::wave::language_support(
-                boost::wave::support_cpp|boost::wave::support_long_long));
+                boost::wave::support_cpp|boost::wave::support_option_long_long));
         lexer_type end = lexer_type();
 
         while (it != end) {

@@ -379,12 +379,29 @@ public:
   }
 
 
+  template <typename ExtentList>
+  multi_array& resize(const ExtentList& extents) {
+    boost::function_requires<
+      detail::multi_array::CollectionConcept<ExtentList> >();
+
+    typedef detail::multi_array::extent_gen<NumDims> gen_type;
+    gen_type ranges;
+
+    for (int i=0; i != NumDims; ++i) {
+      ranges.ranges_[i] = typename gen_type::range(0,extents[i]);
+    }
+    
+    return this->resize(ranges);
+  }
+
+
+
   multi_array& resize(const detail::multi_array
                       ::extent_gen<NumDims>& ranges) {
 
 
     // build a multi_array with the specs given
-    multi_array new_array(ranges);
+    multi_array new_array(ranges,this->storage_order());
 
 
     // build a view of tmp with the minimum extents

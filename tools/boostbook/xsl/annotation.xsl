@@ -8,7 +8,7 @@
   <xsl:key name="libraries" match="library" use="@name"/>
   <xsl:key name="macros" match="macro" use="@name"/>
   <xsl:key name="headers" match="header" use="@name"/>
-  <xsl:key name="named-entities" match="class|struct|union|function|overloaded-function|macro|library|*[attribute::id]" use="@name|@id"/>
+  <xsl:key name="named-entities" match="class|struct|union|function|overloaded-function|macro|library|namespace/data-member|header/data-member|*[attribute::id]" use="@name|@id"/>
 
   <xsl:template match="function|overloaded-function" mode="generate.id">
     <xsl:variable name="name" select="normalize-space(@name)"/>
@@ -20,10 +20,14 @@
     <xsl:choose>
       <xsl:when test="count(key('named-entities', $name))=1
                       and ($translated-name=$name)">
-        <xsl:value-of select="$name"/>
+        <xsl:call-template name="fully-qualified-name">
+          <xsl:with-param name="node" select="."/>
+          <xsl:with-param name="separator" select="'.'"/>
+        </xsl:call-template>
       </xsl:when>
       <xsl:otherwise>
         <xsl:value-of select="generate-id(.)"/>
+        <xsl:text>-bb</xsl:text>
       </xsl:otherwise>
     </xsl:choose>
   </xsl:template>
@@ -338,8 +342,13 @@
     </emphasis>
   </xsl:template>
 
+  <xsl:template match="comment()" mode="annotation">
+    <xsl:copy/>
+  </xsl:template>
+
   <xsl:template match="node()" mode="annotation">
     <xsl:param name="highlight" select="false()"/>
+
     <xsl:element name="{name(.)}">
       <xsl:for-each select="./@*">
         <xsl:attribute name="{name(.)}">

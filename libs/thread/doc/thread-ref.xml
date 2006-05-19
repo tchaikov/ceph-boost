@@ -5,7 +5,7 @@
   %threads.entities;
 ]>
 <header name="boost/thread/thread.hpp"
-  last-revision="$Date: 2005/12/04 18:11:08 $">
+  last-revision="$Date: 2005/12/08 04:18:26 $">
   <namespace name="boost">
     <class name="thread">
 		<purpose>

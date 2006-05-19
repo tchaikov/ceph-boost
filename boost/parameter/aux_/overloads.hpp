@@ -6,20 +6,25 @@
 // This file generates overloads in this format:
 //
 //     template<class A0, class A1>
-//     typename aux::make_arg_list<
-//         PS0,A0
-//       , aux::make_arg_list<
-//             PS1,A1
-//           , mpl::identity<aux::empty_arg_list>
-//         >
-//     >::type
-//     operator()(A0 const& a0, A1 const& a1) const
-//     {
-//         typedef typename aux::make_arg_list<
+//     typename mpl::apply_wrap1<
+//         aux::make_arg_list<
 //             PS0,A0
 //           , aux::make_arg_list<
 //                 PS1,A1
 //               , mpl::identity<aux::empty_arg_list>
+//             >
+//         >
+//      , unnamed_list
+//     >::type
+//     operator()(A0 const& a0, A1 const& a1) const
+//     {
+//         typedef typename mpl::apply_wrap1<
+//             aux::make_arg_list<
+//                 PS0,A0
+//               , aux::make_arg_list<
+//                     PS1,A1
+//                   , mpl::identity<aux::empty_arg_list>
+//                 >
 //             >
 //         >::type arg_tuple;
 //
@@ -40,18 +45,20 @@
 
 #define BOOST_PARAMETER_open_list(z, n, text) \
     aux::make_arg_list< \
-        BOOST_PP_CAT(PS, n), BOOST_PP_CAT(A, n) \
+        BOOST_PP_CAT(PS, n), BOOST_PP_CAT(A, n), aux::tag_keyword_arg
 
 #define BOOST_PARAMETER_close_list(z, n, text) > 
 
 #define BOOST_PARAMETER_arg_list(n) \
+    mpl::apply_wrap1< \
     BOOST_PP_ENUM(N, BOOST_PARAMETER_open_list, _) \
-  , mpl::identity<aux::empty_arg_list> \
-    BOOST_PP_REPEAT(N, BOOST_PARAMETER_close_list, _) 
+  , mpl::always<aux::empty_arg_list> \
+    BOOST_PP_REPEAT(N, BOOST_PARAMETER_close_list, _) \
+  , unnamed_list>
 
 template<BOOST_PP_ENUM_PARAMS(N, class A)>
 typename BOOST_PARAMETER_arg_list(N)::type
-operator()(BOOST_PP_ENUM_BINARY_PARAMS(N, A, const& a)) const
+operator()(BOOST_PP_ENUM_BINARY_PARAMS(N, A, & a)) const
 {
     typedef typename BOOST_PARAMETER_arg_list(N)::type arg_tuple;
 
@@ -59,7 +66,7 @@ operator()(BOOST_PP_ENUM_BINARY_PARAMS(N, A, const& a)) const
         BOOST_PP_ENUM_PARAMS(N, a)
         BOOST_PP_ENUM_TRAILING_PARAMS(
             BOOST_PP_SUB(BOOST_PARAMETER_MAX_ARITY, N)
-          , aux::void_() BOOST_PP_INTERCEPT
+          , aux::void_reference() BOOST_PP_INTERCEPT
         ));
 }
 

@@ -14,6 +14,8 @@
   <xsl:import href="xref.xsl"/>
   <xsl:import href="relative-href.xsl"/>
 
+  <xsl:param name="admon.style"/>
+  <xsl:param name="admon.graphics">1</xsl:param>
   <xsl:param name="html.stylesheet" select="'boostbook.css'"/>
   <xsl:param name="navig.graphics" select="1"/>
   <xsl:param name="navig.graphics.extension" select="'.png'"/>
@@ -27,6 +29,13 @@
   <xsl:param name="doc.standalone">false</xsl:param>
   <xsl:param name="chunker.output.indent">yes</xsl:param>
   <xsl:param name="toc.max.depth">2</xsl:param>
+  
+<xsl:param name="admon.style">
+    <!-- Remove the style. Let the CSS do the styling -->
+</xsl:param>
+
+<!-- Always have graphics -->
+<xsl:param name="admon.graphics" select="1"/>
 
   <xsl:param name="generate.toc">
 appendix  toc,title
@@ -153,36 +162,6 @@ set       toc,title
     </table>
   </xsl:template>
 
-  <xsl:template match="variablelist">
-    <xsl:choose>
-      <xsl:when test="@spacing='boost'">
-        <p><xsl:apply-templates mode="boost.variablelist"/></p>
-      </xsl:when>
-      <xsl:otherwise>
-        <xsl:apply-imports />
-      </xsl:otherwise>
-    </xsl:choose>
-  </xsl:template>
-
-  <xsl:template match="varlistentry" mode="boost.variablelist">
-    <xsl:if test="position() &gt; 1">
-      <br/>
-    </xsl:if>
-    <b><xsl:apply-templates select="term"/></b>:
-
-    <xsl:choose>
-      <xsl:when test="local-name(listitem/*[1])='simpara' or
-                      local-name(listitem/*[1])='para'">
-        <xsl:apply-templates 
-          select="listitem/*[1]/*|listitem/*[1]/text()"/>
-        <xsl:apply-templates select="(listitem/*|listitem/text())[position() &gt; 1]"/>
-      </xsl:when>
-      <xsl:otherwise>
-        <xsl:apply-templates select="listitem/*|listitem/text()"/>        
-      </xsl:otherwise>
-    </xsl:choose>
-  </xsl:template>
-  
   <!-- We don't want refentry's to show up in the TOC because they
        will merely be redundant with the synopsis. -->
   <xsl:template match="refentry" mode="toc"/>

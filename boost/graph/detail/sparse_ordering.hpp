@@ -1,4 +1,3 @@
-//
 //=======================================================================
 // Copyright 1997, 1998, 1999, 2000 University of Notre Dame.
 // Copyright 2004, 2005 Trustees of Indiana University
@@ -107,7 +106,7 @@ namespace boost {
     public:      
       typedef typename Sequence::iterator iterator;
       typedef typename Sequence::reverse_iterator reverse_iterator;
-      typedef queue<Tp,Sequence> queue;
+      typedef queue<Tp,Sequence> base;
       typedef typename Sequence::size_type size_type;
 
       inline iterator begin() { return this->c.begin(); }

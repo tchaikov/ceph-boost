@@ -3,7 +3,7 @@
 
     http://www.boost.org/
 
-    Copyright (c) 2001-2005 Hartmut Kaiser. Distributed under the Boost
+    Copyright (c) 2001-2006 Hartmut Kaiser. Distributed under the Boost
     Software License, Version 1.0. (See accompanying file
     LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
 =============================================================================*/
@@ -16,8 +16,14 @@
 
 #include <boost/assert.hpp>
 #include <boost/config.hpp>
+#include <boost/throw_exception.hpp>
 
 #include <boost/wave/wave_config.hpp>
+
+// this must occur after all of the includes and before any code appears
+#ifdef BOOST_HAS_ABI_HEADERS
+#include BOOST_ABI_PREFIX
+#endif
 
 ///////////////////////////////////////////////////////////////////////////////
 // helper macro for throwing exceptions
@@ -26,29 +32,66 @@
 #include <strstream>
 #define BOOST_WAVE_THROW(cls, code, msg, act_pos)                             \
     {                                                                         \
-    using namespace boost::wave;                                              \
-    std::strstream stream;                                                    \
-        stream << cls::severity_text(cls::code) << ": "                       \
-        << cls::error_text(cls::code);                                        \
-    if ((msg)[0] != 0) stream << ": " << (msg);                               \
-    stream << std::ends;                                                      \
-    std::string throwmsg = stream.str(); stream.freeze(false);                \
-    throw cls(throwmsg.c_str(), cls::code, (act_pos).get_line(),              \
-        (act_pos).get_column(), (act_pos).get_file().c_str());                \
+        using namespace boost::wave;                                          \
+        std::strstream stream;                                                \
+            stream << cls::severity_text(cls::code) << ": "                   \
+            << cls::error_text(cls::code);                                    \
+        if ((msg)[0] != 0) stream << ": " << (msg);                           \
+        stream << std::ends;                                                  \
+        std::string throwmsg = stream.str(); stream.freeze(false);            \
+        boost::throw_exception(cls(throwmsg.c_str(), cls::code,               \
+            (act_pos).get_line(), (act_pos).get_column(),                     \
+            (act_pos).get_file().c_str()));                                   \
     }                                                                         \
     /**/
 #else
 #include <sstream>
 #define BOOST_WAVE_THROW(cls, code, msg, act_pos)                             \
     {                                                                         \
-    using namespace boost::wave;                                              \
-    std::stringstream stream;                                                 \
-        stream << cls::severity_text(cls::code) << ": "                       \
-        << cls::error_text(cls::code);                                        \
-    if ((msg)[0] != 0) stream << ": " << (msg);                               \
-    stream << std::ends;                                                      \
-    throw cls(stream.str().c_str(), cls::code, (act_pos).get_line(),          \
-        (act_pos).get_column(), (act_pos).get_file().c_str());                \
+        using namespace boost::wave;                                          \
+        std::stringstream stream;                                             \
+            stream << cls::severity_text(cls::code) << ": "                   \
+            << cls::error_text(cls::code);                                    \
+        if ((msg)[0] != 0) stream << ": " << (msg);                           \
+        stream << std::ends;                                                  \
+        boost::throw_exception(cls(stream.str().c_str(), cls::code,           \
+            (act_pos).get_line(), (act_pos).get_column(),                     \
+            (act_pos).get_file().c_str()));                                   \
+    }                                                                         \
+    /**/
+#endif // BOOST_NO_STRINGSTREAM
+#endif // BOOST_WAVE_THROW
+
+#if !defined(BOOST_WAVE_THROW_NAME)
+#ifdef BOOST_NO_STRINGSTREAM
+#include <strstream>
+#define BOOST_WAVE_THROW_NAME(cls, code, msg, act_pos, name)                  \
+    {                                                                         \
+        using namespace boost::wave;                                          \
+        std::strstream stream;                                                \
+            stream << cls::severity_text(cls::code) << ": "                   \
+            << cls::error_text(cls::code);                                    \
+        if ((msg)[0] != 0) stream << ": " << (msg);                           \
+        stream << std::ends;                                                  \
+        std::string throwmsg = stream.str(); stream.freeze(false);            \
+        boost::throw_exception(cls(throwmsg.c_str(), cls::code,               \
+            (act_pos).get_line(), (act_pos).get_column(),                     \
+            (act_pos).get_file().c_str(), (name)));                           \
+    }                                                                         \
+    /**/
+#else
+#include <sstream>
+#define BOOST_WAVE_THROW_NAME(cls, code, msg, act_pos, name)                  \
+    {                                                                         \
+        using namespace boost::wave;                                          \
+        std::stringstream stream;                                             \
+            stream << cls::severity_text(cls::code) << ": "                   \
+            << cls::error_text(cls::code);                                    \
+        if ((msg)[0] != 0) stream << ": " << (msg);                           \
+        stream << std::ends;                                                  \
+        boost::throw_exception(cls(stream.str().c_str(), cls::code,           \
+            (act_pos).get_line(), (act_pos).get_column(),                     \
+            (act_pos).get_file().c_str(), (name)));                           \
     }                                                                         \
     /**/
 #endif // BOOST_NO_STRINGSTREAM
@@ -67,11 +110,12 @@ namespace util {
         severity_warning,
         severity_error,
         severity_fatal,
-        severity_commandline_error
+        severity_commandline_error,
+        last_severity_code = severity_commandline_error
     };
     
     inline char const *
-    get_severity(severity level) 
+    get_severity(int level) 
     {
         static char const *severity_text[] = 
         {
@@ -82,7 +126,7 @@ namespace util {
             "command line error"    // severity_commandline_error
         };
         BOOST_ASSERT(severity_remark <= level && 
-            level <= severity_commandline_error);
+            level <= last_severity_code);
         return severity_text[level];
     }
 }
@@ -97,14 +141,18 @@ public:
     :   line(line_), column(column_) 
     {
         unsigned int off = 0;
-        while (off < sizeof(filename) && *filename_)
+        while (off < sizeof(filename)-1 && *filename_)
             filename[off++] = *filename_++;
         filename[off] = 0;
     }
     ~cpp_exception() throw() {}
     
-    virtual char const *what() const throw() = 0;   // to be overloaded
+    virtual char const *what() const throw() = 0;           // to be overloaded
     virtual char const *description() const throw() = 0;
+    virtual int get_errorcode() const throw() = 0;
+    virtual int get_severity() const throw() = 0;
+    virtual char const* get_related_name() const throw() = 0;
+    virtual bool is_recoverable() const throw() = 0;
     
     int line_no() const throw() { return line; }
     int column_no() const throw() { return column; }
@@ -160,12 +208,18 @@ public:
         ill_formed_integer_literal,
         ill_formed_character_literal,
         unbalanced_if_endif,
-        character_literal_out_of_range
+        character_literal_out_of_range,
+        could_not_open_output_file,
+        incompatible_config,
+        ill_formed_pragma_message,
+        pragma_message_directive,
+        last_error_number = pragma_message_directive
     };
 
     preprocess_exception(char const *what_, error_code code, int line_, 
         int column_, char const *filename_) throw() 
-    :   cpp_exception(line_, column_, filename_), level(severity_level(code))
+    :   cpp_exception(line_, column_, filename_), 
+        code(code)
     {
         unsigned int off = 0;
         while (off < sizeof(buffer) && *what_)
@@ -182,11 +236,68 @@ public:
     {
         return buffer;
     }
-    util::severity get_severity()
+    virtual int get_severity() const throw()
     {
-        return level;
+        return severity_level(code);
     }
-
+    virtual int get_errorcode() const throw()
+    {
+        return code;
+    }
+    virtual char const* get_related_name() const throw()
+    {
+        return "<unknown>";
+    }
+    virtual bool is_recoverable() const throw()
+    {
+        switch (get_errorcode()) {
+        // these are the exceptions thrown during processing not supposed to 
+        // produce any tokens on the context::iterator level
+        case preprocess_exception::macro_redefinition:
+        case preprocess_exception::macro_insertion_error:
+        case preprocess_exception::bad_macro_definition:
+        case preprocess_exception::illegal_redefinition:
+        case preprocess_exception::duplicate_parameter_name:
+        case preprocess_exception::invalid_macroname:
+        case preprocess_exception::bad_include_file:
+        case preprocess_exception::bad_include_statement:
+        case preprocess_exception::ill_formed_directive:
+        case preprocess_exception::error_directive:
+        case preprocess_exception::warning_directive:
+        case preprocess_exception::ill_formed_expression:
+        case preprocess_exception::missing_matching_if:
+        case preprocess_exception::missing_matching_endif:
+        case preprocess_exception::unbalanced_if_endif:
+        case preprocess_exception::bad_define_statement:
+        case preprocess_exception::bad_line_statement:
+        case preprocess_exception::bad_undefine_statement:
+        case preprocess_exception::division_by_zero:
+        case preprocess_exception::integer_overflow:
+        case preprocess_exception::ill_formed_integer_literal:
+        case preprocess_exception::ill_formed_character_literal:
+        case preprocess_exception::character_literal_out_of_range:
+        case preprocess_exception::last_line_not_terminated:
+        case preprocess_exception::include_nesting_too_deep:
+        case preprocess_exception::illegal_operator_redefinition:
+        case preprocess_exception::incompatible_config:
+        case preprocess_exception::ill_formed_pragma_option:
+        case preprocess_exception::ill_formed_pragma_message:
+        case preprocess_exception::pragma_message_directive:
+            return true;
+            
+        case preprocess_exception::unexpected_error:
+        case preprocess_exception::ill_formed_operator:
+        case preprocess_exception::too_few_macroarguments:
+        case preprocess_exception::too_many_macroarguments:
+        case preprocess_exception::empty_macroarguments:
+        case preprocess_exception::improperly_terminated_macro:
+        case preprocess_exception::invalid_concat:
+        case preprocess_exception::could_not_open_output_file:
+            break;
+        }
+        return false;
+    }
+    
     static char const *error_text(int code)
     {
     // error texts in this array must appear in the same order as the items in
@@ -234,10 +345,14 @@ public:
             "ill formed integer literal or integer constant too large",   // ill_formed_integer_literal
             "ill formed character literal",             // ill_formed_character_literal
             "unbalanced #if/#endif in include file",    // unbalanced_if_endif
-            "character literal out of range"            // character_literal_out_of_range
+            "character literal out of range",           // character_literal_out_of_range
+            "could not open output file",               // could_not_open_output_file
+            "incompatible state information",           // incompatible_config
+            "illformed pragma message",                 // ill_formed_pragma_message
+            "encountered #pragma message directive"     // pragma_message_directive
         };
         BOOST_ASSERT(unexpected_error <= code && 
-            code <= character_literal_out_of_range);
+            code <= last_error_number);
         return preprocess_exception_errors[code];
     }
 
@@ -281,10 +396,14 @@ public:
             util::severity_error,              // ill_formed_integer_literal
             util::severity_error,              // ill_formed_character_literal
             util::severity_warning,            // unbalanced_if_endif
-            util::severity_warning             // character_literal_out_of_range
+            util::severity_warning,            // character_literal_out_of_range
+            util::severity_error,              // could_not_open_output_file
+            util::severity_remark,             // incompatible_config
+            util::severity_warning,            // ill_formed_pragma_message
+            util::severity_remark,             // pragma_message_directive
         };
         BOOST_ASSERT(unexpected_error <= code && 
-            code <= character_literal_out_of_range);
+            code <= last_error_number);
         return preprocess_exception_severity[code];
     }
     static char const *severity_text(int code)
@@ -294,11 +413,61 @@ public:
 
 private:
     char buffer[512];
-    util::severity level;
+    error_code code;
 };
+
+///////////////////////////////////////////////////////////////////////////////
+//  Error during macro handling, this exception contains the related macro name
+class macro_handling_exception :
+    public preprocess_exception
+{
+public:
+    macro_handling_exception(char const *what_, error_code code, int line_, 
+        int column_, char const *filename_, char const *macroname) throw() 
+    :   preprocess_exception(what_, code, line_, column_, filename_)
+    {
+        unsigned int off = 0;
+        while (off < sizeof(name) && *macroname)
+            name[off++] = *macroname++;
+        name[off] = 0;
+    }
+    ~macro_handling_exception() throw() {}
+    
+    virtual char const *what() const throw()
+    {
+        return "boost::wave::macro_handling_exception";
+    }
+    char const* get_related_name() const throw()
+    {
+        return name;
+    }
+
+private:
+    char name[512];
+};
+
+///////////////////////////////////////////////////////////////////////////////
+//
+//  The is_recoverable() function allows to decide, whether it is possible 
+//  simply to continue after a given exception was thrown by Wave.
+//
+//  This is kind of a hack to allow to recover from certain errors as long as 
+//  Wave doesn't provide better means of error recovery.
+//
+///////////////////////////////////////////////////////////////////////////////
+inline bool
+is_recoverable(cpp_exception const& e)
+{
+    return e.is_recoverable();
+}
 
 ///////////////////////////////////////////////////////////////////////////////
 }   // namespace wave
 }   // namespace boost
+
+// the suffix header occurs after all of the code
+#ifdef BOOST_HAS_ABI_HEADERS
+#include BOOST_ABI_SUFFIX
+#endif
 
 #endif // !defined(CPP_EXCEPTIONS_HPP_5190E447_A781_4521_A275_5134FF9917D7_INCLUDED)

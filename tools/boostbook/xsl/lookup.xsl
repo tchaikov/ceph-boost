@@ -7,17 +7,7 @@
   <!-- Generate an ID for the entity referenced -->
   <xsl:template name="generate.id">
     <xsl:param name="node" select="."/>
-    <xsl:variable name="id">
-      <xsl:apply-templates select="$node" mode="generate.id"/>
-    </xsl:variable>
-    <xsl:choose>
-      <xsl:when test="string-length($id) &gt; $boost.max.id.length">
-        <xsl:value-of select="generate-id($node)"/>
-      </xsl:when>
-      <xsl:otherwise>
-        <xsl:value-of select="string($id)"/>
-      </xsl:otherwise>
-    </xsl:choose>
+    <xsl:apply-templates select="$node" mode="generate.id"/>
   </xsl:template>
 
   <xsl:template match="*" mode="generate.id">
@@ -31,7 +21,7 @@
   <xsl:template name="strip-qualifiers">
     <xsl:param name="name"/>
     <xsl:choose>
-      <xsl:when test="contains($name, '::')">
+      <xsl:when test="contains($name, '::') and not(contains(substring-before($name, '::'), '&lt;'))">
         <xsl:call-template name="strip-qualifiers">
           <xsl:with-param name="name" select="substring-after($name, '::')"/>
         </xsl:call-template>
@@ -270,7 +260,7 @@
     <xsl:param name="display-name"/>
 
     <!-- The name we are looking for (unqualified)-->
-    <xsl:param name="unqualified name"/> 
+    <xsl:param name="unqualified-name"/> 
 
     <!-- The list of nodes that match the lookup node in both name and type -->
     <xsl:param name="nodes"/>

@@ -7,7 +7,7 @@ License, Version 1.0. (See accompanying file LICENSE_1_0.txt or copy at
 http://www.boost.org/LICENSE_1_0.txt)
 -->
 <head>
-<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <link rel="stylesheet" type="text/css" href="../../../boost.css">
 <link rel="stylesheet" type="text/css" href="style.css">
 <title>Serialization - Release Notes</title>
@@ -78,6 +78,11 @@ at the front of the list of include paths.
     <li>More compilers tested and supported.
     <li>Miscelleanous bug fixes.
 </ul>
+<h2><a name="recent_improvements"></a>Differences from Boost 1.33</h2>
+<ul>
+    <li>Native Binary archives use the <code style="white-space: normal">std::streambuf</code> interface.
+    This should result in noticible faster execution in some cases.
+</ul>
 
 <h2><a name="todo"></a>Pending issues</h2>
 <ul>
@@ -94,6 +99,7 @@ at the front of the list of include paths.
     is fixed in this version.  Unfortunately, the fix breaks serialization of
     <code style="white-space: normal">std::map</code> for those compilers which do not support
     partial template specialization.
+    <li>Floating point values which are number cannot be serialized to text base archives.
 </ul>
 <p>
 Aside from the above, there are a number of issus related to specific platforms.  

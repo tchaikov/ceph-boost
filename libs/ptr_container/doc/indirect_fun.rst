@@ -125,6 +125,9 @@ first operation is expanded inline.
                  
         } // namespace 'boost'  
         
+.. raw:: html 
 
-:copyright:     Thorsten Ottosen 2004-2005. 
+        <hr>
+
+:Copyright:     Thorsten Ottosen 2004-2006. 
 

@@ -3,7 +3,7 @@
 
     http://www.boost.org/
 
-    Copyright (c) 2001-2005 Hartmut Kaiser. Distributed under the Boost
+    Copyright (c) 2001-2006 Hartmut Kaiser. Distributed under the Boost
     Software License, Version 1.0. (See accompanying file
     LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
 =============================================================================*/
@@ -45,6 +45,11 @@
 #define spirit_assign_actor(actor) boost::spirit::assign(actor)
 #endif // SPIRIT_VERSION >= 0x1700
 #endif // !defined(spirit_append_actor)
+
+// this must occur after all of the includes and before any code appears
+#ifdef BOOST_HAS_ABI_HEADERS
+#include BOOST_ABI_PREFIX
+#endif
 
 ///////////////////////////////////////////////////////////////////////////////
 //
@@ -168,6 +173,10 @@ struct expression_grammar :
         BOOST_SPIRIT_DEBUG_TRACE_GRAMMAR_NAME(*this, "expression_grammar", 
             TRACE_CPP_EXPR_GRAMMAR);
     }
+    
+    // no need for copy constructor/assignment operator
+    expression_grammar(expression_grammar const&);
+    expression_grammar& operator= (expression_grammar const&);
     
     template <typename ScannerT>
     struct definition
@@ -439,6 +448,10 @@ struct expression_grammar :
                     [
                         constant.val = impl::as_intlit(arg1)
                     ]
+                |   ch_p(T_PP_NUMBER) 
+                    [
+                        constant.val = impl::as_intlit(arg1)
+                    ]
                 |   ch_p(T_CHARLIT) 
                     [
                         constant.val = impl::as_chlit(arg1)
@@ -559,6 +572,7 @@ struct expression_grammar :
 
             constant_nocalc
                 =   ch_p(T_INTLIT) 
+                |   ch_p(T_PP_NUMBER) 
                 |   ch_p(T_CHARLIT) 
                 ;
 
@@ -648,7 +662,7 @@ expression_grammar_gen<TokenT>::evaluate(
             if (if_block_status) {
                 string_type expression = as_string<string_type>(first, last);
                 if (0 == expression.size()) 
-                    expression = "empty expression";
+                    expression = "<empty expression>";
                 BOOST_WAVE_THROW(preprocess_exception, ill_formed_expression, 
                     expression.c_str(), act_pos);
             }
@@ -661,7 +675,7 @@ expression_grammar_gen<TokenT>::evaluate(
     catch (wave::preprocess_exception const& e) {
     // expression is illformed
         if (if_block_status) {
-            throw e;
+            boost::throw_exception(e);
         }
         else {
         //  as the if_block_status is false no errors will be reported
@@ -731,5 +745,10 @@ expression_grammar_gen<TokenT>::evaluate(
 }   // namespace grammars
 }   // namespace wave
 }   // namespace boost
+
+// the suffix header occurs after all of the code
+#ifdef BOOST_HAS_ABI_HEADERS
+#include BOOST_ABI_SUFFIX
+#endif
 
 #endif // !defined(CPP_EXPRESSION_GRAMMAR_HPP_099CD1A4_A6C0_44BE_8F24_0B00F5BE5674_INCLUDED)

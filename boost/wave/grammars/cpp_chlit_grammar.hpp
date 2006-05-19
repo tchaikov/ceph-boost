@@ -3,7 +3,7 @@
 
     http://www.boost.org/
 
-    Copyright (c) 2001-2005 Hartmut Kaiser. Distributed under the Boost
+    Copyright (c) 2001-2006 Hartmut Kaiser. Distributed under the Boost
     Software License, Version 1.0. (See accompanying file
     LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
 =============================================================================*/
@@ -28,6 +28,11 @@
 #include <boost/wave/wave_config.hpp>   
 #include <boost/wave/cpp_exceptions.hpp>   
 #include <boost/wave/grammars/cpp_literal_grammar_gen.hpp>
+
+// this must occur after all of the includes and before any code appears
+#ifdef BOOST_HAS_ABI_HEADERS
+#include BOOST_ABI_PREFIX
+#endif
 
 ///////////////////////////////////////////////////////////////////////////////
 //
@@ -123,6 +128,10 @@ struct chlit_grammar :
         BOOST_SPIRIT_DEBUG_TRACE_GRAMMAR_NAME(*this, "chlit_grammar", 
             TRACE_CHLIT_GRAMMAR);
     }
+    
+    // no need for copy constructor/assignment operator
+    chlit_grammar(chlit_grammar const&);
+    chlit_grammar& operator=(chlit_grammar const&);
     
     template <typename ScannerT>
     struct definition
@@ -331,5 +340,10 @@ parse_info<typename TokenT::string_type::const_iterator> hit =
 }   // namespace grammars
 }   // namespace wave
 }   // namespace boost
+
+// the suffix header occurs after all of the code
+#ifdef BOOST_HAS_ABI_HEADERS
+#include BOOST_ABI_SUFFIX
+#endif
 
 #endif // !defined(CPP_CHLIT_GRAMMAR_HPP_9527D349_6592_449A_A409_42A001E6C64C_INCLUDED)

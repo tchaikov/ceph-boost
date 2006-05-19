@@ -14,6 +14,7 @@
 # include <boost/python/iterator.hpp>
 # include <boost/mpl/or.hpp>
 # include <boost/mpl/not.hpp>
+# include <boost/type_traits/is_same.hpp>
 
 namespace boost { namespace python {
                    
@@ -119,13 +120,18 @@ namespace boost { namespace python {
         
         typedef mpl::or_<
             mpl::bool_<NoProxy>
-          , mpl::not_<is_class<Data> > > 
+          , mpl::not_<is_class<Data> >
+          , typename mpl::or_<
+                is_same<Data, std::string>
+              , is_same<Data, std::complex<float> >
+              , is_same<Data, std::complex<double> >
+              , is_same<Data, std::complex<long double> > >::type>
         no_proxy;
                     
         typedef detail::container_element<Container, Index, DerivedPolicies>
             container_element_t;
        
-#if BOOST_WORKAROUND(BOOST_MSVC, == 1200)
+#if BOOST_WORKAROUND(BOOST_MSVC, < 1300)
         struct return_policy : return_internal_reference<> {};
 #else
         typedef return_internal_reference<> return_policy;

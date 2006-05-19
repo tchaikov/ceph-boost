@@ -14,7 +14,28 @@ using namespace boost;
 #include <boost/test/test_tools.hpp>
 
 #include <utility>
+#include <string>
+#include <sstream>
 using namespace std;
+
+void test_type()
+{
+    options_description desc;
+    desc.add_options()
+        ("foo", value<int>(), "")
+        ("bar", value<std::string>(), "")
+        ;
+    
+    const typed_value_base* b = dynamic_cast<const typed_value_base*>
+        (desc.find("foo", false).semantic().get());
+    BOOST_CHECK(b);
+    BOOST_CHECK(b->value_type() == typeid(int));
+
+    const typed_value_base* b2 = dynamic_cast<const typed_value_base*>
+        (desc.find("bar", false).semantic().get());
+    BOOST_CHECK(b2);
+    BOOST_CHECK(b2->value_type() == typeid(std::string));
+}
 
 void test_approximation()
 {
@@ -41,8 +62,25 @@ void test_approximation()
 //    BOOST_CHECK(*(++a.begin()) == "foo");
 }
 
+void test_formatting()
+{
+    // Long option descriptions used to crash on MSVC-8.0.
+    options_description desc;
+    desc.add_options()(
+        "test", new untyped_value(),
+        "foo foo foo foo foo foo foo foo foo foo foo foo foo foo"
+        "foo foo foo foo foo foo foo foo foo foo foo foo foo foo"
+        "foo foo foo foo foo foo foo foo foo foo foo foo foo foo"
+        "foo foo foo foo foo foo foo foo foo foo foo foo foo foo");
+
+    stringstream ss;
+    ss << desc;
+}
+
 int test_main(int, char* [])
 {
+    test_type();
     test_approximation();
+    test_formatting();
     return 0;
 }

@@ -698,7 +698,7 @@ generate the overloads you need.
 
 __ http://www.open-std.org/jtc1/sc22/wg21/docs/papers/2004/n1690.html
 
-.. _`Boost.Preprocessor`: ../../../preprocessor/index.html
+.. _`Boost.Preprocessor`: ../../../preprocessor
 
 If it is impractical for you to generate or write the overloads
 that would be required for positional “out” arguments to be passed
@@ -849,12 +849,11 @@ Now we add a special defaulted argument to each of our
   }
 
 
-These additional parameters are not intended to be used directly
-by callers; they merely trigger SFINAE by becoming illegal types
-when the ``name`` argument is not convertible to ``const
-char*``. The ``BOOST_PARAMETER_FUN`` macro described earlier
-adds these extra function parameters for you (Borland users see
-this note__).
+These additional parameters are not intended to be used directly by
+callers; they merely trigger SFINAE by becoming illegal types when
+the ``root_vertex`` argument is not convertible to ``int``. The
+``BOOST_PARAMETER_FUN`` macro described earlier adds these extra
+function parameters for you (Borland users see this note__).
 
 .. _BOOST_PARAMETER_MATCH:
 

@@ -13,7 +13,7 @@
     [authors [authors, various]]
     [category template]
     [category generic]
-    [last-revision $Date: 2005/08/24 16:49:32 $]
+    [last-revision $Date: 2006/04/21 09:44:40 $]
 ]
 
 [def __boost_root ../../../../]
@@ -1251,7 +1251,7 @@ __header ` #include <boost/type_traits/extent.hpp>` or ` #include <boost/type_tr
 
 __examples
 
-[:`extent<int[1]>` inherits from `__integral_constant<std::size_t, 0>`.]
+[:`extent<int[1]>` inherits from `__integral_constant<std::size_t, 1>`.]
 
 [:`extent<double[2][3][4], 1>::type` is the type `__integral_constant<std::size_t, 3>`.]
 
@@ -1305,9 +1305,9 @@ the same thing as a /pointer to a function/.
 [[`function_traits<long (int, long, double, void*)>::arity`] [An integral constant expression that has the value 4.]]
 [[`function_traits<void (void)>::result_type`] [The type `void`.]]
 [[`function_traits<long (int)>::result_type`] [The type `long`.]]
-[[`function_traits<long (int)>::arg0_type`] [The type `int`.]]
-[[`function_traits<long (int, long, double, void*)>::arg3_type`] [The type `void*`.]]
-[[`function_traits<long (int, long, double, void*)>::arg4_type`] [A compiler error: there is no `arg4_type` since there are only three arguments.]]
+[[`function_traits<long (int)>::arg1_type`] [The type `int`.]]
+[[`function_traits<long (int, long, double, void*)>::arg4_type`] [The type `void*`.]]
+[[`function_traits<long (int, long, double, void*)>::arg5_type`] [A compiler error: there is no `arg4_type` since there are only three arguments.]]
 [[`function_traits<long (*)(void)>::arity`] [A compiler error: argument type is a /function pointer/, and not a /function type/.]]
 
 ]
@@ -1673,14 +1673,15 @@ expression that evaluates to /true/.]
    template <class Base, class Derived>
    struct is_base_of : public __tof {};
   
-__inherit If Base is base class of type Derived then inherits from __true_type, 
+__inherit If Base is base class of type Derived or if both types are the same
+then inherits from __true_type, 
 otherwise inherits from __false_type.
 
 This template will detect non-public base classes, and ambiguous base classes.
 
-Note that a class is not considered to be it's own base class, 
-likewise, if either `Base` or `Derived` are non-class types, 
-then the class will always inherit from __false_type.
+Note that `is_base_of<X,X>` will always inherit from __true_type.  [*This is the
+case even if `X` is not a class type].  This is a change in behaviour 
+from Boost-1.33 in order to track the Technical Report on C++ Library Extensions.
 
 Types `Base` and `Derived` must not be incomplete types.
 
@@ -2199,7 +2200,16 @@ expression that evaluates to /false/: void is not an object type]
 __inherit If T is a (possibly cv-qualified) POD type then inherits from __true_type, 
 otherwise inherits from __false_type.
 
-__std_ref 3.9p10 and 9p4.
+POD stands for "Plain old data".  
+Arithmetic types, and enumeration types, 
+a pointers and pointer to members are all PODs.  Classes and unions can also
+be POD's if they have no non-static data members that are of reference or
+non-POD type, no user defined constructors, no user defined assignment
+operators, no private or protected non-static data members, 
+no virtual functions and no base classes.  Finally, a cv-qualified POD is 
+still a POD, as is an array of PODs.
+
+__std_ref 3.9p10 and 9p4 (Note that POD's are also aggregates, see 8.5.1).
 
 __compat If the compiler does not support partial-specialization 
 of class templates, then this template can not be used with function types.
@@ -2842,4 +2852,5 @@ should be directed to boost@lists.boost.org
 www.boost.org/more/mailing_lists.htm#main] for subscription details).
 
 [endsect]
+
 

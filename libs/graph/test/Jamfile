@@ -6,14 +6,27 @@ subproject libs/graph/test ;
 
 import testing ;
 
+# A bug in the Win32 intel compilers causes compilation of one of our
+# tests to take forever when debug symbols are enabled. This rule
+# turns them off when added to the requirements section
+local rule turn-off-intel-debug-symbols ( toolset variant : properties * )
+{
+    if $(NT) && [ MATCH (.*intel.*) : $(toolset) ]
+    {
+        properties = [ difference $(properties) : <debug-symbols>on ] <debug-symbols>off ;
+    }
+    return $(properties) ;
+}
+
+
 test-suite graph : 
 
-    [ run transitive_closure_test.cpp : : : <sysinclude>$(BOOST_ROOT) ]
-             
     [ compile adj_list_cc.cpp : <sysinclude>$(BOOST_ROOT)  ]
 
     # adj_list_test needs some work -JGS
     # unit-test adj_list_test : adj_list_test.cpp : <sysinclude>$(BOOST_ROOT)  ;
+    [ run adj_list_edge_list_set.cpp : : : <sysinclude>$(BOOST_ROOT) ]
+
     [ compile adj_matrix_cc.cpp : <sysinclude>$(BOOST_ROOT)  ]
 
     [ run bfs.cpp : : : <sysinclude>$(BOOST_ROOT) ]
@@ -24,6 +37,10 @@ test-suite graph :
 
     [ run betweenness_centrality_test.cpp ] 
 
+    [ run bidir_remove_edge.cpp ]
+
+    [ run csr_graph_test.cpp : : : : : release ]
+
     [ run dag_longest_paths.cpp : : : <sysinclude>$(BOOST_ROOT) ]
 
     [ run dfs.cpp : : : <sysinclude>$(BOOST_ROOT) ]
@@ -33,7 +50,7 @@ test-suite graph :
     [ compile dijkstra_cc.cpp : <sysinclude>$(BOOST_ROOT) ]
 
     [ run dijkstra_heap_performance.cpp : 10000 : : <sysinclude>$(BOOST_ROOT) ]
-
+    [ run dominator_tree_test.cpp ]
     [ run relaxed_heap_test.cpp : 5000 15000 : : <sysinclude>$(BOOST_ROOT) ]
     [ compile edge_list_cc.cpp : <sysinclude>$(BOOST_ROOT) ]
 
@@ -50,7 +67,7 @@ test-suite graph :
 
     [ run gursoy_atun_layout_test.cpp : : : <sysinclude>$(BOOST_ROOT) ]
 
-    [ run layout_test.cpp : : : <test-info>always_show_run_output ]
+    [ run layout_test.cpp : : : <test-info>always_show_run_output turn-off-intel-debug-symbols ]
 
     [ compile reverse_graph_cc.cpp : <sysinclude>$(BOOST_ROOT) ] 
 
@@ -58,6 +75,8 @@ test-suite graph :
 
     [ run subgraph.cpp : : : <sysinclude>$(BOOST_ROOT) ]
 
+    [ run transitive_closure_test.cpp : : : <sysinclude>$(BOOST_ROOT) ]
+             
     [ run isomorphism.cpp  : : : <sysinclude>$(BOOST_ROOT) ]
 
     [ run adjacency_matrix_test.cpp : : : <sysinclude>$(BOOST_ROOT) ]    
@@ -79,6 +98,8 @@ test-suite graph :
     [ run cuthill_mckee_ordering.cpp ]
 
     [ run king_ordering.cpp ]
+ 
+    [ run matching_test.cpp ]
     ;
 
 # Run SDB tests only when -sSDB= is set.

@@ -5,7 +5,7 @@ set -e
 
 cp -r ../v2 ../boost-build
 # Grab jam_src
-cp -r ../jam_src ../boost-build
+cp -r ../../jam/src ../boost-build/jam_src
 cd ../boost-build
 
 # This one is not fully finished
@@ -23,14 +23,15 @@ echo -e "boost-build kernel ;\n" > boost-build.jam
 touch doc/project-root.jam
 export BOOST_ROOT=/home/ghost/Work/boost-rc
 cd doc
-/home/ghost/Work/boost/tools/build/jam_src/bin.linuxx86/bjam --v2
-/home/ghost/Work/boost/tools/build/jam_src/bin.linuxx86/bjam --v2 pdf
+/home/ghost/Work/boost-rc/tools/jam/src/bin.linuxx86/bjam --v2
+/home/ghost/Work/boost-rc/tools/jam/src/bin.linuxx86/bjam --v2 pdf
 cp `find bin -name "*.pdf"` ../..
+mv ../../standalone.pdf ../../userman.pdf
 rm -rf bin
 cd ..
 
 # Get the boost logo.
-wget http://boost.org/boost-build2/boost.png
+wget http://boost.sf.net/boost-build2/boost.png
 
 # Adjust the links, so they work with the standalone package
 perl -pi -e 's%../../../boost.png%boost.png%' index.html
@@ -41,6 +42,7 @@ perl -pi -e 's%../../../doc/html/bbv2.installation.html%doc/html/bbv2.installati
 find . -name CVS | xargs rm -rf
 rm roll.sh
 chmod a+x jam_src/build.bat
+date >> timestamp.txt
 cd .. && zip -r boost-build.zip boost-build && tar --bzip2 -cf boost-build.tar.bz2 boost-build
 cd boost-build
 

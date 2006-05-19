@@ -6,10 +6,8 @@
 // accompanying file LICENSE_1_0.txt or copy at
 // http://www.boost.org/LICENSE_1_0.txt)
 //=======================================================================
-
-
-#ifndef ______adj_list_io_______
-#define ______adj_list_io_______
+#ifndef BOOST_GRAPH_ADJACENCY_LIST_IO_HPP
+#define BOOST_GRAPH_ADJACENCY_LIST_IO_HPP
 
 #include <iostream>
 #include <vector>
@@ -89,7 +87,7 @@ void getSubset
 template<class Tag, class Value, class Next, 
         class Stag, class Svalue>
 void getSubset
-( property<Tag,Value,Next>& p, const property<Stag,Svalue,no_property>& s )
+( property<Tag,Value,Next>& p, const property<Stag,Svalue,no_property>& s)
 {
         get( p, s.m_value, Stag() );
 }
@@ -99,9 +97,25 @@ inline void getSubset
 {
 }
 
+#if !defined(BOOST_GRAPH_NO_BUNDLED_PROPERTIES)
+template<typename T, typename U>
+void getSubset(T& p, const U& s)
+{
+  p = s;
+}
+
+template<typename T>
+void getSubset(T&, const no_property&)
+{
+}
+
+
+#endif
+
 //  get property subset
 //===========================================================================
 // graph parser
+typedef enum{ PARSE_NUM_NODES, PARSE_VERTEX, PARSE_EDGE } GraphParserState;
 
 template<class Graph_t, class VertexProperty, class EdgeProperty, class VertexPropertySubset,
 class EdgePropertySubset>
@@ -118,8 +132,7 @@ struct GraphParser
                 typedef typename graph_traits<Graph>::vertex_descriptor Vertex;
                 std::vector<Vertex> nodes;
 
-                typedef enum{ PARSE_NUM_NODES, PARSE_VERTEX, PARSE_EDGE } State;
-                State state = PARSE_VERTEX;
+                GraphParserState state = PARSE_VERTEX;
 
                 unsigned int numLine = 1;
                 char c;
@@ -188,6 +201,7 @@ protected:
 //=======================================================================
 // property printer
 
+#if defined(BOOST_GRAPH_NO_BUNDLED_PROPERTIES)
 template<class Graph, class Property>
 struct PropertyPrinter
 {
@@ -195,7 +209,7 @@ struct PropertyPrinter
         typedef typename Property::tag_type Tag;
         typedef typename Property::next_type Next;
         
-        PropertyPrinter( Graph& g ):graph(&g){}
+        PropertyPrinter( const Graph& g ):graph(&g){}
         
         template<class Iterator>
         PropertyPrinter& operator () ( std::ostream& out, Iterator it )
@@ -207,12 +221,47 @@ struct PropertyPrinter
                 return (*this);
         }
 private:
-        Graph* graph;
+        const Graph* graph;
 };
+#else
+template<class Graph, typename Property>
+struct PropertyPrinter
+{
+        PropertyPrinter( const Graph& g ):graph(&g){}
+        
+        template<class Iterator>
+        PropertyPrinter& operator () ( std::ostream& out, Iterator it )
+        {
+                out << (*graph)[ *it ] <<" ";
+                return (*this);
+        }
+private:
+        const Graph* graph;
+};
+
+template<class Graph, typename Tag, typename Value, typename Next>
+struct PropertyPrinter<Graph, property<Tag, Value, Next> >
+{
+        PropertyPrinter( const Graph& g ):graph(&g){}
+        
+        template<class Iterator>
+        PropertyPrinter& operator () ( std::ostream& out, Iterator it )
+        {
+                typename property_map<Graph,Tag>::type ps = get(Tag(), *graph);
+                out << ps[ *it ] <<" ";
+                PropertyPrinter<Graph,Next> print(*graph);
+                print(out, it);
+                return (*this);
+        }
+private:
+        const Graph* graph;
+};
+#endif
+
 template<class Graph>
 struct PropertyPrinter<Graph, no_property>
 {
-        PropertyPrinter( Graph& ){}
+        PropertyPrinter( const Graph& ){}
 
         template<class Iterator>
         PropertyPrinter& operator () ( std::ostream&, Iterator it ){ return *this; }
@@ -229,7 +278,7 @@ struct EdgePrinter
         typedef Graph_t Graph;
         typedef typename graph_traits<Graph>::vertex_descriptor Vertex;
         
-        EdgePrinter( Graph& g )
+        EdgePrinter( const Graph& g )
                 : graph(g)
         {}      
         
@@ -258,14 +307,14 @@ struct EdgePrinter
         
 protected:
 
-        Graph& graph;
+        const Graph& graph;
         
 };
 
 template<class Graph, class V, class E>
 struct GraphPrinter: public EdgePrinter<Graph,E>
 {
-        GraphPrinter( Graph& g )
+        GraphPrinter( const Graph& g )
           : EdgePrinter<Graph,E>(g)
         {}
         
@@ -288,7 +337,7 @@ template<class Graph, class E>
 struct GraphPrinter<Graph,no_property,E> 
   : public EdgePrinter<Graph,E>
 {
-        GraphPrinter( Graph& g )
+        GraphPrinter( const Graph& g )
           : EdgePrinter<Graph,E>(g)
         {}
         
@@ -340,7 +389,7 @@ std::ostream& operator << ( std::ostream& out, const GraphPrinter<Graph,VP,EP>& 
 /// write the graph with given property subsets
 template<class EL, class VL, class D, class VP, class EP, class GP, class VPS, class EPS>
 GraphPrinter<adjacency_list<EL,VL,D,VP,EP,GP>,VPS,EPS> 
-write( adjacency_list<EL,VL,D,VP,EP,GP>& g, VPS, EPS )
+write( const adjacency_list<EL,VL,D,VP,EP,GP>& g, VPS, EPS )
 {
         return GraphPrinter<adjacency_list<EL,VL,D,VP,EP,GP>,VPS,EPS>(g);
 }
@@ -348,7 +397,7 @@ write( adjacency_list<EL,VL,D,VP,EP,GP>& g, VPS, EPS )
 /// write the graph with all internal vertex and edge properties
 template<class EL, class VL, class D, class VP, class EP, class GP>
 GraphPrinter<adjacency_list<EL,VL,D,VP,EP,GP>,VP,EP> 
-write( adjacency_list<EL,VL,D,VP,EP,GP>& g )
+write( const adjacency_list<EL,VL,D,VP,EP,GP>& g )
 {
         return GraphPrinter<adjacency_list<EL,VL,D,VP,EP,GP>,VP,EP>(g);
 }

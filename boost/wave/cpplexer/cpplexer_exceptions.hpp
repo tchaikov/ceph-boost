@@ -3,7 +3,7 @@
 
     http://www.boost.org/
 
-    Copyright (c) 2001-2005 Hartmut Kaiser. Distributed under the Boost
+    Copyright (c) 2001-2006 Hartmut Kaiser. Distributed under the Boost
     Software License, Version 1.0. (See accompanying file
     LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
 =============================================================================*/
@@ -16,7 +16,14 @@
 
 #include <boost/assert.hpp>
 #include <boost/config.hpp>
+#include <boost/throw_exception.hpp>
+
 #include <boost/wave/wave_config.hpp>
+
+// this must occur after all of the includes and before any code appears
+#ifdef BOOST_HAS_ABI_HEADERS
+#include BOOST_ABI_PREFIX
+#endif
 
 ///////////////////////////////////////////////////////////////////////////////
 // helper macro for throwing exceptions
@@ -29,10 +36,11 @@
     std::strstream stream;                                                    \
         stream << cls::severity_text(cls::code) << ": "                       \
         << cls::error_text(cls::code);                                        \
-    if (msg[0] != 0) stream << ": " << msg;                                   \
+    if ((msg)[0] != 0) stream << ": " << (msg);                               \
     stream << std::ends;                                                      \
     std::string throwmsg = stream.str(); stream.freeze(false);                \
-    throw cls(throwmsg.c_str(), cls::code, line, column, name);               \
+    boost::throw_exception(cls(throwmsg.c_str(), cls::code, line, column,     \
+        name));                                                               \
     }                                                                         \
     /**/
 #else
@@ -43,9 +51,10 @@
     std::stringstream stream;                                                 \
         stream << cls::severity_text(cls::code) << ": "                       \
         << cls::error_text(cls::code);                                        \
-    if (msg[0] != 0) stream << ": " << msg;                                   \
+    if ((msg)[0] != 0) stream << ": " << (msg);                               \
     stream << std::ends;                                                      \
-    throw cls(stream.str().c_str(), cls::code, line, column, name);           \
+    boost::throw_exception(cls(stream.str().c_str(), cls::code, line, column, \
+        name));                                                               \
     }                                                                         \
     /**/
 #endif // BOOST_NO_STRINGSTREAM
@@ -92,7 +101,7 @@ public:
     :   line(line_), column(column_) 
     {
         unsigned int off = 0;
-        while (off < sizeof(filename) && *filename_)
+        while (off < sizeof(filename)-1 && *filename_)
             filename[off++] = *filename_++;
         filename[off] = 0;
     }
@@ -129,7 +138,7 @@ public:
     lexing_exception(char const *what_, error_code code, int line_, 
         int column_, char const *filename_) throw() 
     :   cpplexer_exception(line_, column_, filename_), 
-        level(severity_level(code))
+        level(severity_level(code)), code(code)
     {
         unsigned int off = 0;
         while (off < sizeof(buffer) && *what_)
@@ -146,11 +155,15 @@ public:
     {
         return buffer;
     }
-    util::severity get_severity()
+    util::severity get_severity() const
     {
         return level;
     }
-
+    int get_errorcode() const
+    {
+        return code;
+    }
+    
     static char const *error_text(int code)
     {
     // error texts in this array must appear in the same order as the items in
@@ -188,11 +201,17 @@ public:
 private:
     char buffer[512];
     util::severity level;
+    error_code code;
 };
 
 ///////////////////////////////////////////////////////////////////////////////
 }   // namespace cpplexer
 }   // namespace wave
 }   // namespace boost 
+
+// the suffix header occurs after all of the code
+#ifdef BOOST_HAS_ABI_HEADERS
+#include BOOST_ABI_SUFFIX
+#endif
 
 #endif // !defined(CPPLEXER_EXCEPTIONS_HPP_1A09DE1A_6D1F_4091_AF7F_5F13AB0D31AB_INCLUDED)

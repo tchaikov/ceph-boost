@@ -2,7 +2,7 @@
     Boost.Wave: A Standard compliant C++ preprocessor library
     http://www.boost.org/
 
-    Copyright (c) 2001-2005 Hartmut Kaiser. Distributed under the Boost
+    Copyright (c) 2001-2006 Hartmut Kaiser. Distributed under the Boost
     Software License, Version 1.0. (See accompanying file
     LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
 =============================================================================*/
@@ -109,6 +109,10 @@ protected:
     //  construct a MAX macro definition string and predefine this macro
     template <typename T, typename Context>
     bool add_max_definition(Context& ctx, char const *name);
+
+    //  Predefine __TESTWAVE_HAS_STRICT_LEXER__
+    template <typename Context>
+    bool add_strict_lexer_definition(Context& ctx);
 
 private:
     int debuglevel;

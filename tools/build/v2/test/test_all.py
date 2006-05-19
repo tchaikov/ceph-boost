@@ -131,6 +131,17 @@ tests = [ "rebuilds",
           "source_locations",
           "out_of_tree",
           "notfile",
+          "project_root_rule",
+          "resolution",
+          "build_file",
+          "indirect_conditional",
+          "build_no",
+          "disambiguation",
+          "clean",
+          "lib_source_property",
+          "implicit_dependency",
+          "example_libraries",
+          "example_make",
           ]
 
 if os.name == 'posix':
@@ -146,13 +157,15 @@ if os.name == 'posix':
 if string.find(get_toolset(), 'gcc') == 0:
     tests.append("gcc_runtime")
 
-if os.environ.has_key('QTDIR'):
-    tests.append("railsys")
-else:
-    print 'skipping railsys test since QTDIR environment variable is unset'
-
 if "--extras" in sys.argv:
     tests.append("boostbook")
+    tests.append("example_qt4")
+    # Requires ./whatever.py to work, so is
+    # not guaranted to work everywhere.
+    tests.append("example_customization")
+    # Requires gettext tools.
+    tests.append("example_gettext")
+    
 else:
     print 'Note: skipping extra tests'
 

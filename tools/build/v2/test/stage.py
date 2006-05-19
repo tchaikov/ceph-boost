@@ -210,9 +210,33 @@ alias h : ..//dist2 ;
 t.run_build_system(subdir="sub")
 t.expect_addition("dist2/b/c.h")
 
+# Test that when installing .cpp files, we don't scan
+# include dependencies.
+t.rm(".")
+t.write("Jamroot", """
+install dist : a.cpp ;
+""")
+t.write("a.cpp", """
+#include "a.h"
+""")
+t.write("a.h", "")
+t.run_build_system()
+t.expect_addition("dist/a.cpp")
 
+t.touch("a.h")
+t.run_build_system()
+t.expect_nothing("dist/a.cpp")
 
+# Test that <name> property works, when there's just
+# one file in sources.
+t.rm(".")
+t.write("Jamroot", """
+install dist : a.cpp : <name>b.cpp ;
+""")
+t.write("a.cpp", "test file")
+t.run_build_system()
 
+t.expect_addition("dist/b.cpp")
 
 t.cleanup()
 

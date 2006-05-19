@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE library PUBLIC "-//Boost//DTD BoostBook XML V1.0//EN"
 "http://www.boost.org/tools/boostbook/dtd/boostbook.dtd">
-<section id="string_algo.usage" last-revision="$Date: 2005/12/01 13:42:02 $">
+<section id="string_algo.usage" last-revision="$Date: 2005/12/08 03:14:31 $">
     <title>Usage</title>
 
     <using-namespace name="boost"/>

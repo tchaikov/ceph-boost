@@ -46,7 +46,7 @@ boost-build build-system ;
         definitions, loads two files, which can be provided/customised by
         user: <filename>site-config.jam</filename> and <filename>user-config.jam</filename>.</para>
 
-      <para>Locations where those files a search are summarized below:</para>
+      <para>Locations where those files are searched are summarized below:</para>
 
       <table id="bbv2.reference.init.config">
         <title>Search paths for configuration files</title>
@@ -175,7 +175,7 @@ borland/runtime-link=static,dynamic
               taking all possible combinations
                 <!-- Be specific.  Do you mean the cross-product? -->
               of the property sets. Each split
-              part should have the either the form
+              part should have either the form
 
 <programlisting>
 <emphasis>feature-name</emphasis>=<emphasis>feature-value1</emphasis>[","<emphasis>feature-valueN</emphasis>]*   
@@ -218,70 +218,9 @@ target1 debug gcc/runtime-link=dynamic,static
         <para>All of the Boost.Build options start with the "--" prefix.
           They are described in the following table.</para>
 
-        <table>
-          <title>Command line options</title>
-          <tgroup cols="2">
+        <para>FIXME: That table has moved into "User documentation" section
+        and there's nothing we can add here. Remove this part?</para>
 
-            <thead>
-              <row>
-                <entry>Option</entry>
-
-                <entry>Description</entry>
-              </row>
-            </thead>
-
-            <tbody>
-              <row>
-                <entry><literal>--version</literal></entry>
-
-                <entry>Prints information on Boost.Build and Boost.Jam
-                  versions.</entry>
-              </row>
-
-              <row id="bbv2.reference.init.options.help">
-                <entry><literal>--help</literal></entry>
-
-                <entry>Access to the online help system. This prints general
-                  information on how to use the help system with additional
-                  --help* options.</entry>
-              </row>
-
-              <row>
-                <entry><literal>--clean</literal></entry>
-
-                <entry>Removes everything instead of building. Unlike
-                  <literal>clean</literal> target in make, it is possible to clean only
-                  some targets.</entry>
-              </row>
-
-              <row>
-                <entry><literal>--debug</literal></entry>
-
-                <entry>Enables internal checks.</entry>
-              </row>
-
-              <row>
-                <entry><literal>--dump-projects</literal></entry>
-
-                <entry>Cause the project structure to be output.</entry>
-              </row>
-
-              <row>
-                <entry><literal>--no-error-backtrace</literal></entry>
-
-                <entry>Don't print backtrace on errors. Primary useful for
-                  testing.</entry>
-              </row>
-
-              <row>
-                <entry><literal>--ignore-config</literal></entry>
-
-                <entry>Do not load <literal>site-config.jam</literal> and
-                  <literal>user-config.jam</literal></entry>
-              </row>
-            </tbody>
-          </tgroup>
-        </table>
 
       </section>
     </section>
@@ -349,17 +288,17 @@ exe app : app.cpp : &lt;implicit-dependency&gt;parser ;
         <listitem><para>selecting the main target alternative to use,
           </para></listitem>
 
-        <listitem><para>determining "common" properties</para></listitem>
+        <listitem><para>determining "common" properties,</para></listitem>
 
         <listitem><para>building targets referred by the sources list and
-            dependency properties</para></listitem>
+            dependency properties,</para></listitem>
 
         <listitem><para>adding the usage requirements produces when building
-            dependencies to the "common" properties</para></listitem>
+            dependencies to the "common" properties,</para></listitem>
 
-        <listitem><para>building the target using generators</para></listitem>
+        <listitem><para>building the target using generators,</para></listitem>
 
-        <listitem><para>computing the usage requirements to be returned</para></listitem>
+        <listitem><para>computing the usage requirements to be returned.</para></listitem>
 
       </orderedlist>
     </para>
@@ -391,10 +330,10 @@ exe app : app.cpp : &lt;implicit-dependency&gt;parser ;
           <simpara>
             If there's one viable alternative, it's choosen. Otherwise,
             an attempt is made to find one best alternative. An alternative
-            a is better than another alternative b, iff set of properties
-            in b's condition is strict subset of the set of properities of
+            a is better than another alternative b, iff the set of properties
+            in b's condition is a strict subset of the set of properities of
             'a's condition. If there's one viable alternative, which is
-            better than all other, it's selected. Otherwise, an error is
+            better than all others, it's selected. Otherwise, an error is
             reported.
           </simpara>
         </listitem>

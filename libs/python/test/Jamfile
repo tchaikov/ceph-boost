@@ -22,6 +22,20 @@ rule turn-off-intel-debug-symbols ( toolset variant : properties * )
     return $(properties) ;
 }
 
+# Some tests hang when compiled with HP-CXX and executed on Tru64.
+rule disable-for-cxx-tru64 ( toolset variant : properties * )
+{
+    if $(UNIX) && $(OS) = OSF
+    {
+        switch $(toolset)
+        {
+            case tru64cxx* : properties =
+                [ replace-properties $(properties) : <build>no ] ;
+        }
+    }
+    return $(properties) ;
+}
+
 template py-unit-test
   :
   : $(PYTHON_PROPERTIES) <define>BOOST_PYTHON_SUPPRESS_REGISTRY_INITIALIZATION
@@ -74,10 +88,10 @@ rule bpl-test ( name ? : files * : requirements * )
 
 test-suite python
   :
-   [
-    run ../test/embedding.cpp <lib>../build/boost_python
+  [
+    run ../test/exec.cpp <lib>../build/boost_python
       : # program args
-      : # input files
+      : exec.py
       : # requirements
       $(PYTHON_PROPERTIES)
         <define>BOOST_PYTHON_STATIC_LIB
@@ -152,9 +166,12 @@ bpl-test crossmod_exception
 
 [ bpl-test iterator : iterator.py iterator.cpp input_iterator.cpp ]
 
+[ bpl-test stl_iterator : stl_iterator.py stl_iterator.cpp ]
+
 [ bpl-test extract ]
 
 [ bpl-test opaque ]
+[ bpl-test voidptr ]
 
 [ bpl-test pickle1 ]
 [ bpl-test pickle2 ]
@@ -166,7 +183,11 @@ bpl-test crossmod_exception
 [ bpl-test docstring ]
 
 [ bpl-test vector_indexing_suite ]
-[ bpl-test pointer_vector ]
+[ bpl-test pointer_vector
+  : # files
+  : # requirements
+  disable-for-cxx-tru64 # Runs forever when executed.
+]
 
 [ extension map_indexing_suite_ext
     : map_indexing_suite.cpp int_map_indexing_suite.cpp <template>../build/extension ]

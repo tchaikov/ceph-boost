@@ -69,6 +69,7 @@ rule run-invoke ( test-name : sources * : defns * )
             # msvc stlport 4.5.3 only works with static lib
             <msvc-stlport><*><runtime-link>static
             <vc-6_5-stlport><*><runtime-link>static
+            <vc-7_0-stlport><*><runtime-link>static
             <define>$(defns)
             <define>BOOST_LIB_DIAGNOSTIC=1
     ] ;
@@ -106,9 +107,11 @@ rule run-winvoke ( test-name : sources * : defns * )
             # msvc stlport 4.5.3 only works with static lib
             <msvc-stlport><*><runtime-link>static
             <vc-6_5-stlport><*><runtime-link>static
+            <vc-7_0-stlport><*><runtime-link>static
             # both stlport and msvc6 define iswspace
             <msvc-stlport><*><linkflags>"-force:multiple"
             <vc-6_5-stlport><*><linkflags>"-force:multiple"
+            <vc-7_0-stlport><*><linkflags>"-force:multiple"
     ] ;
     if [ in-invocation-subdir ] { Echo $(test-name)_dll ; }
     tests += [ 
@@ -117,7 +120,7 @@ rule run-winvoke ( test-name : sources * : defns * )
             $(sources)
             <dll>../build/boost_serialization
             <dll>../build/boost_wserialization
-        : # requiremens
+        : # requirements
             toolset::require-wide-char-io-support
             toolset::require-shared-libraries-support
             <define>$(defns)
@@ -140,6 +143,7 @@ rule test-bsl-run-no-lib  ( test-name : sources * )
         : # requirements
             <msvc-stlport><*><runtime-link>static
             <vc-6_5-stlport><*><runtime-link>static
+            <vc-7_0-stlport><*><runtime-link>static
     ] ;
 }
 
@@ -213,8 +217,8 @@ test-suite "serialization" :
      [ test-bsl-run_files test_derived_class_ptr ]
      [ test-bsl-run_files test_diamond ]
      [ test-bsl-run_files test_exported ]
-     [ test-bsl-run_files test_class_info_save ]
      [ test-bsl-run_files test_class_info_load ]
+     [ test-bsl-run_files test_class_info_save ]
      [ test-bsl-run_files test_object ]
      [ test-bsl-run_files test_primitive ]
      [ test-bsl-run_files test_list ]
@@ -248,6 +252,7 @@ if $(BOOST_SERIALIZATION_TEST) {
     test-suite "serialization" : 
         [ test-bsl-run-no-lib test_iterators ]
         [ test-bsl-run-no-lib test_iterators_base64 ]
+        [ test-bsl-run-no-lib test_inclusion ]
         [ test-bsl-run test_private_ctor ]
         [ test-bsl-run test_reset_object_address ]
         [ test-bsl-run-no-lib test_smart_cast ]
@@ -288,7 +293,6 @@ if $(BOOST_SERIALIZATION_TEST) {
         [ compile-fail test_const_load_fail3_nvp.cpp : std::locale-support ]
 
         # should compile
-        [ compile test_inclusion.cpp ]
         [ compile test_traits_pass.cpp : std::locale-support ]
         [ compile test_const_pass.cpp : std::locale-support ]
     ;

@@ -12,10 +12,15 @@
 
   <!-- The root of the Boost directory -->
   <xsl:param name="boost.root" select="'../..'"/>
+  <xsl:param name="boost.header.root" select="$boost.root"/>
 
   <!-- A space-separated list of libraries to include in the
        output. If this list is empty, all libraries will be included. -->
   <xsl:param name="boost.include.libraries" select="''"/>
+
+  <!-- A space-separated list of xml elements in the input file for which
+       whitespace should be preserved -->
+  <xsl:preserve-space elements="*"/>
 
   <xsl:template match="library-reference">
     <xsl:choose>
@@ -86,7 +91,7 @@
           <xsl:text>Header &lt;</xsl:text>
           <ulink>
             <xsl:attribute name="url">
-              <xsl:value-of select="$boost.root"/>
+              <xsl:value-of select="$boost.header.root"/>
               <xsl:text>/</xsl:text>
               <xsl:value-of select="@name"/>
             </xsl:attribute>
@@ -107,11 +112,17 @@
           </xsl:call-template>
         </xsl:if>
 
-        <xsl:if test="namespace|class|struct|union">
+        <xsl:if test="descendant::class|descendant::struct|descendant::union
+                     |descendant::function|descendant::free-function-group
+                     |descendant::overloaded-function|descendant::enum
+                     |descendant::typedef">
           <xsl:call-template name="synopsis">
             <xsl:with-param name="text">
               <xsl:apply-templates mode="synopsis" 
-                select="namespace|class|struct|union">
+                select="namespace|class|struct|union
+                       |function|free-function-group
+                       |overloaded-function|enum
+                       |typedef">
                 <xsl:with-param name="indentation" select="0"/>
               </xsl:apply-templates>
             </xsl:with-param>
@@ -416,5 +427,35 @@ Error: XSL template 'link-or-anchor' called with invalid link-type '<xsl:value-o
        "reference" mode -->
   <xsl:template match="*" mode="namespace-reference">
     <xsl:apply-templates select="." mode="reference"/>
+  </xsl:template>
+  
+  <!-- Make the various blocks immediately below a "part" be
+       "chapter"-s. Must also take into account turning
+       chapters within chpaters into sections. -->
+  <xsl:template match="part/part|part/article">
+    <chapter>
+      <xsl:for-each select="./@*">
+        <xsl:attribute name="{name(.)}">
+          <xsl:value-of select="."/>
+        </xsl:attribute>
+      </xsl:for-each>
+      <xsl:apply-templates/>
+    </chapter>
+  </xsl:template>
+  <xsl:template match="part/part/partinfo|part/article/articleinfo">
+    <chapterinfo><xsl:apply-templates/></chapterinfo>
+  </xsl:template>
+  <xsl:template match="part/part/chapter">
+    <section>
+      <xsl:for-each select="./@*">
+        <xsl:attribute name="{name(.)}">
+          <xsl:value-of select="."/>
+        </xsl:attribute>
+      </xsl:for-each>
+      <xsl:apply-templates/>
+    </section>
+  </xsl:template>
+  <xsl:template match="part/part/chapter/chapterinfo">
+    <sectioninfo><xsl:apply-templates/></sectioninfo>
   </xsl:template>
 </xsl:stylesheet>

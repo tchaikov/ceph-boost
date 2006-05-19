@@ -5,7 +5,7 @@
     
     http://www.boost.org/
 
-    Copyright (c) 2001-2005 Hartmut Kaiser. Distributed under the Boost
+    Copyright (c) 2001-2006 Hartmut Kaiser. Distributed under the Boost
     Software License, Version 1.0. (See accompanying file
     LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
 =============================================================================*/
@@ -20,11 +20,17 @@
 #include <boost/shared_ptr.hpp>
 #include <boost/spirit/iterator/multi_pass.hpp>
 
+#include <boost/wave/wave_config.hpp>
 #include <boost/wave/util/file_position.hpp>
 #include <boost/wave/util/functor_input.hpp>
 #include <boost/wave/cpplexer/cpp_lex_interface.hpp>
 
 #include <boost/wave/language_support.hpp>
+
+// this must occur after all of the includes and before any code appears
+#ifdef BOOST_HAS_ABI_HEADERS
+#include BOOST_ABI_PREFIX
+#endif
 
 #if 0 != __COMO_VERSION__
 #define BOOST_WAVE_EOF_PREFIX static
@@ -74,6 +80,12 @@ public:
         BOOST_ASSERT(0 != functor_ptr.get());
         functor_ptr->set_position(pos);
     }
+#if BOOST_WAVE_SUPPORT_PRAGMA_ONCE != 0
+    bool has_include_guards(std::string& guard_name) const
+    {
+        return functor_ptr->has_include_guards(guard_name);
+    }
+#endif    
     
 private:
     boost::shared_ptr<lex_input_interface<TokenT> > functor_ptr;
@@ -160,12 +172,27 @@ public:
         }
         base_type::get_functor().set_position(currpos);
     }
+    
+#if BOOST_WAVE_SUPPORT_PRAGMA_ONCE != 0
+    // return, whether the current file has include guards
+    // this function returns meaningful results only if the file was scanned 
+    // completely
+    bool has_include_guards(std::string& guard_name) const
+    {
+        return base_type::get_functor().has_include_guards(guard_name);
+    }
+#endif    
 };
 
 ///////////////////////////////////////////////////////////////////////////////
 }   // namespace cpplexer
 }   // namespace wave
 }   // namespace boost
+
+// the suffix header occurs after all of the code
+#ifdef BOOST_HAS_ABI_HEADERS
+#include BOOST_ABI_SUFFIX
+#endif
 
 #undef BOOST_WAVE_EOF_PREFIX
 

@@ -120,6 +120,8 @@ class Tester(TestCmd.TestCmd):
                 jam_build_dir = "bin.irix"
             elif os.uname()[0] == "FreeBSD":
                 jam_build_dir = "bin.freebsd"
+            elif os.uname()[0] == "OSF1":
+                jam_build_dir = "bin.osf"
             else:
                 raise "Don't know directory where jam is build for this system: " + os.name + "/" + os.uname()[0]
         else:
@@ -139,7 +141,9 @@ class Tester(TestCmd.TestCmd):
         # Find there jam_src is located.
         # try for the debug version if it's lying around
 
-        dirs = [os.path.join('../../jam_src', jam_build_dir + '.debug'),
+        dirs = [os.path.join('../../../jam/src', jam_build_dir + '.debug'),
+                os.path.join('../../../jam/src', jam_build_dir),
+                os.path.join('../../jam_src', jam_build_dir + '.debug'),
                 os.path.join('../../jam_src', jam_build_dir),
                 os.path.join('../jam_src', jam_build_dir + '.debug'),
                 os.path.join('../jam_src', jam_build_dir),
@@ -366,7 +370,7 @@ class Tester(TestCmd.TestCmd):
         if condition and dump_stdio:
             self.dump_stdio()
 
-        if '--preserve' in sys.argv:
+        if condition and '--preserve' in sys.argv:
             print 
             print "*** Copying the state of working dir into 'failed_test' ***"
             print 
@@ -475,6 +479,7 @@ class Tester(TestCmd.TestCmd):
             self.ignore('*.pdb') # msvc program database files
             self.ignore('*.rsp') # response files
             self.ignore('*.tds') # borland debug symbols
+            self.ignore('*.manifest') # msvc DLL manifests
 
         # debug builds of bjam built with gcc produce this profiling data
         self.ignore('gmon.out')

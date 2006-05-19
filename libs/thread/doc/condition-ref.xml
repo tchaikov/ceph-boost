@@ -5,7 +5,7 @@
   %threads.entities;
 ]>
 <header name="boost/thread/condition.hpp"
-  last-revision="$Date: 2004/07/17 04:33:59 $">
+  last-revision="$Date: 2006/01/05 00:45:43 $">
   <namespace name="boost">
     <class name="condition">
       <inherit access="private">
@@ -165,6 +165,10 @@
 
           <parameter name="lock">
             <paramtype>ScopedLock&amp;</paramtype>
+          </parameter>
+
+          <parameter name="xt">
+            <paramtype>const <classname>boost::xtime</classname>&amp;</paramtype>
           </parameter>
 
           <parameter name="pred">
