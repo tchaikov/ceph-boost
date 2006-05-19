@@ -32,7 +32,6 @@
 #ifndef BOOST_TUPLE_BASIC_HPP
 #define BOOST_TUPLE_BASIC_HPP
 
-#include <boost/concept_check.hpp>
 
 #include <utility> // needed for the assignment from pair to tuple
 
@@ -367,7 +366,7 @@ struct cons {
         T6& t6, T7& t7, T8& t8, T9& t9, T10& t10 )
     : head (),
       tail (t2, t3, t4, t5, t6, t7, t8, t9, t10, detail::cnull())
-      { boost::ignore_unused_variable_warning(t1); }
+      {}
 
 
   template <class HT2, class TT2>
