@@ -14,7 +14,7 @@ export DH_COMPAT=4
 # major and minor version numbers joined by an underscore.  This label
 # appears in some of the filenames.
 #
-boost_version = 1_33_1
+boost_version = 1_34
 
 # Library suffix
 # Boost libraries encode build information in the resulting library
@@ -27,7 +27,7 @@ debug_suffix = -gcc-mt-d-$(boost_version)
 
 # Boost does not guarantee any ABI, it uses the full version in SONAME
 #
-SOVERSION = 1.33.1
+SOVERSION = 1.34.0
 DEBIAN_SUFFIX =
 
 DEB_BUILD_ARCH ?= $(shell dpkg-architecture -qDEB_BUILD_ARCH)
@@ -49,7 +49,7 @@ endif
 exampledir = debian/libboost-doc/usr/share/doc/libboost-doc/examples
 htmldir = debian/libboost-doc/usr/share/doc/libboost-doc/HTML
 
-bjam = tools/build/jam_src/bjam
+bjam = tools/jam/src/bjam
 
 JAM = $(bjam) -d2 \
 	-sTOOLS=gcc \
@@ -60,7 +60,7 @@ JAM = $(bjam) -d2 \
 	-sPYTHON_ROOT=/usr
 
 $(bjam):
-	cd tools/build/jam_src && sh build.sh gcc && mv bin.*/bjam .
+	cd tools/jam/src && sh build.sh gcc && mv bin.*/bjam .
 
 build: build-stamp
 build-stamp: $(bjam)
@@ -93,10 +93,10 @@ clean:
 	#-cd libs/graph/build/python && ../../../../$(JAM) clean
 	-$(JAM) clean
 
-	rm -rf tools/build/jam_src/bootstrap
-	rm -rf tools/build/jam_src/bootstrap.gcc
-	rm -rf tools/build/jam_src/bin.*
-	rm -ff tools/build/jam_src/bjam
+	rm -rf tools/jam/src/bootstrap
+	rm -rf tools/jam/src/bootstrap.gcc
+	rm -rf tools/jam/src/bin.*
+	rm -ff tools/jam/src/bjam
 	rm -rf bin
 
 	$(MAKE) -C libs/graph/src clean
@@ -408,23 +408,17 @@ install: build
 	# package libboost-test$(SOVERSION)
 	dh_install -plibboost-test$(SOVERSION)$(DEBIAN_SUFFIX) --autodest \
 	   debian/tmp/usr/lib/libboost_prg_exec_monitor$(release_suffix_st).so.$(SOVERSION) \
-	   debian/tmp/usr/lib/libboost_test_exec_monitor$(release_suffix_st).so.$(SOVERSION) \
 	   debian/tmp/usr/lib/libboost_unit_test_framework$(release_suffix_st).so.$(SOVERSION) \
 	   debian/tmp/usr/lib/libboost_prg_exec_monitor$(release_suffix).so.$(SOVERSION) \
-	   debian/tmp/usr/lib/libboost_test_exec_monitor$(release_suffix).so.$(SOVERSION) \
 	   debian/tmp/usr/lib/libboost_unit_test_framework$(release_suffix).so.$(SOVERSION)
 	dh_install -plibboost-dbg --autodest \
 	   debian/tmp/usr/lib/libboost_prg_exec_monitor$(debug_suffix_st).so.$(SOVERSION) \
-	   debian/tmp/usr/lib/libboost_test_exec_monitor$(debug_suffix_st).so.$(SOVERSION) \
 	   debian/tmp/usr/lib/libboost_unit_test_framework$(debug_suffix_st).so.$(SOVERSION) \
 	   debian/tmp/usr/lib/libboost_prg_exec_monitor$(debug_suffix).so.$(SOVERSION) \
-	   debian/tmp/usr/lib/libboost_test_exec_monitor$(debug_suffix).so.$(SOVERSION) \
 	   debian/tmp/usr/lib/libboost_unit_test_framework$(debug_suffix).so.$(SOVERSION)
 	dh_link -plibboost-dbg \
 	   usr/lib/libboost_prg_exec_monitor$(debug_suffix).so.$(SOVERSION) \
 	   usr/lib/debug/usr/lib/libboost_prg_exec_monitor$(release_suffix).so.$(SOVERSION) \
-	   usr/lib/libboost_test_exec_monitor$(debug_suffix).so.$(SOVERSION) \
-	   usr/lib/debug/usr/lib/libboost_test_exec_monitor$(release_suffix).so.$(SOVERSION) \
 	   usr/lib/libboost_unit_test_framework$(debug_suffix).so.$(SOVERSION) \
 	   usr/lib/debug/usr/lib/libboost_unit_test_framework$(release_suffix).so.$(SOVERSION)
 
@@ -436,14 +430,10 @@ install: build
 	dh_install -plibboost-test-dev --autodest \
 	   debian/tmp/usr/lib/libboost_prg_exec_monitor$(release_suffix_st).a \
 	   debian/tmp/usr/lib/libboost_prg_exec_monitor$(release_suffix_st).so \
-	   debian/tmp/usr/lib/libboost_test_exec_monitor$(release_suffix_st).a \
-	   debian/tmp/usr/lib/libboost_test_exec_monitor$(release_suffix_st).so \
 	   debian/tmp/usr/lib/libboost_unit_test_framework$(release_suffix_st).a \
 	   debian/tmp/usr/lib/libboost_unit_test_framework$(release_suffix_st).so \
 	   debian/tmp/usr/lib/libboost_prg_exec_monitor$(release_suffix).a \
 	   debian/tmp/usr/lib/libboost_prg_exec_monitor$(release_suffix).so \
-	   debian/tmp/usr/lib/libboost_test_exec_monitor$(release_suffix).a \
-	   debian/tmp/usr/lib/libboost_test_exec_monitor$(release_suffix).so \
 	   debian/tmp/usr/lib/libboost_unit_test_framework$(release_suffix).a \
 	   debian/tmp/usr/lib/libboost_unit_test_framework$(release_suffix).so
 	dh_link -plibboost-test-dev \
@@ -451,10 +441,6 @@ install: build
 	   usr/lib/libboost_prg_exec_monitor.a \
 	   usr/lib/libboost_prg_exec_monitor$(release_suffix).so \
 	   usr/lib/libboost_prg_exec_monitor.so \
-	   usr/lib/libboost_test_exec_monitor$(release_suffix).a \
-	   usr/lib/libboost_test_exec_monitor.a \
-	   usr/lib/libboost_test_exec_monitor$(release_suffix).so \
-	   usr/lib/libboost_test_exec_monitor.so \
 	   usr/lib/libboost_unit_test_framework$(release_suffix).a \
 	   usr/lib/libboost_unit_test_framework.a \
 	   usr/lib/libboost_unit_test_framework$(release_suffix).so \

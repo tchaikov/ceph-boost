@@ -1,6 +1,6 @@
-boost (1.33.1+1.34.0-cvs20060519-1) UNRELEASED; urgency=low
+boost (1.33.1+1.34.0-cvs20060519-1) experimental; urgency=low
 
-  * (NOT RELEASED YET) New upstream release
+  * New upstream snapshot version.
 
  -- Domenico Andreoli <cavok@debian.org>  Fri, 19 May 2006 09:48:13 +0200
 
