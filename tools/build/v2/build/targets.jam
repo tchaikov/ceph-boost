@@ -281,9 +281,7 @@ class project-target : abstract-target
         local self-location = [ get location ] ;
         for local pn in [ get projects-to-build ]
         {
-            local p = [ project.module-name 
-                [ path.root $(pn) $(self-location) ] ] ;
-            result += [ project.target $(p) ] ;
+            result += [ find $(pn) ] ;
         }
                         
         return $(result) ;
@@ -793,9 +791,10 @@ class file-reference : abstract-target
     
     rule generate ( properties )
     {
-         return [ property-set.empty ] 
-                [ virtual-target.from-file $(self.name)
-                                         : [ location ]
+        location ;
+        return [ property-set.empty ] 
+               [ virtual-target.from-file $(self.name)
+                                         : $(self.file-location)
                                          : $(self.project) ] ;        
     }    
 
@@ -805,7 +804,7 @@ class file-reference : abstract-target
         location ;
         return $(self.file-path) ;
     }
-
+           
     # Returns the location of target. Needed by 'testing.jam'
     rule location ( )
     {

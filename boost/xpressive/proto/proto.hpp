@@ -19,24 +19,47 @@ namespace boost { namespace proto
 {
     ///////////////////////////////////////////////////////////////////////////////
     // compile_result
-    template<typename Op, typename State, typename Visitor, typename DomainTag>
+    template<typename Node, typename State, typename Visitor, typename DomainTag>
     struct compile_result
     {
-        typedef typename as_op<Op>::type op_type;
-        typedef typename tag_type<op_type>::type tag_type;
-        typedef compiler<tag_type, DomainTag> compiler_type;
-        typedef typename compiler_type::BOOST_NESTED_TEMPLATE apply<op_type, State, Visitor>::type type;
+        typedef typename as_op<Node>::type op_type;
+        typedef compiler<typename tag_type<op_type>::type, DomainTag> compiler;
+        typedef typename compiler::BOOST_NESTED_TEMPLATE apply<op_type, State, Visitor>::type type;
     };
 
     ///////////////////////////////////////////////////////////////////////////////
     // compile
-    template<typename Op, typename State, typename Visitor, typename DomainTag>
-    typename compile_result<Op, State, Visitor, DomainTag>::type const
-    compile(Op const &op, State const &state, Visitor &visitor, DomainTag)
+    template<typename Node, typename State, typename Visitor, typename DomainTag>
+    typename compile_result<Node, State, Visitor, DomainTag>::type const
+    compile(Node const &node, State const &state, Visitor &visitor, DomainTag)
     {
-        typedef typename as_op<Op>::type op_type;
+        typedef typename as_op<Node>::type op_type;
         typedef compiler<typename tag_type<op_type>::type, DomainTag> compiler;
-        return compiler::call(as_op<Op>::make(op), state, visitor);
+        return compiler::call(as_op<Node>::make(node), state, visitor);
+    }
+
+    ///////////////////////////////////////////////////////////////////////////////
+    // literal, for storing and naming proto-ified constants.
+    template<typename T>
+    struct literal
+      : unary_op<T, proto::noop_tag>
+    {
+        literal(T const &t)
+          : unary_op<T, noop_tag>(t)
+        {}
+
+        template<typename U>
+        literal(literal<U> const &that)
+          : unary_op<T, noop_tag>(that.arg)
+        {}
+    };
+
+    ///////////////////////////////////////////////////////////////////////////////
+    // lit(), for creating proto literals
+    template<typename T>
+    literal<T> lit(T const &t)
+    {
+        return literal<T>(t);
     }
 
 }} // namespace boost::proto

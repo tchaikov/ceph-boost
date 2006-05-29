@@ -11,21 +11,15 @@ This class is used to build custom pointer containers with
 an underlying multiset-like container. The interface of the class is an extension
 of the interface from ``associative_ptr_container``.
 
-**Hierarchy:**
+**See also:**
 
-- `reversible_ptr_container <reversible_ptr_container.html>`_
+- reversible_ptr_container_
+- associative_ptr_container_
+- ptr_multiset_
 
-  - `associative_ptr_container <associative_ptr_container.html>`_
-  
-    - `ptr_set_adapter <ptr_set_adapter.html>`_
-    - ``ptr_multiset_adapter``
-    - `ptr_map_adapter <ptr_map_adapter.html>`_
-    - `ptr_multi_map_adapter <ptr_multimap_adapter.html>`_
-
-      - `ptr_set <ptr_set.html>`_
-      - `ptr_multi_set <ptr_multiset.html>`_ 
-      - `ptr_map <ptr_map.html>`_
-      - `ptr_multimap <ptr_multimap.html>`_
+.. _reversible_ptr_container: reversible_ptr_container.html 
+.. _associative_ptr_container: associative_ptr_container.html
+.. _ptr_multiset: ptr_multiset.html
 
 **Navigate:**
 
@@ -132,9 +126,6 @@ Semantics: pointer container requirements
 
    - Exception safety: Basic guarantee
  
-.. raw:: html 
 
-        <hr>
-
-:Copyright:     Thorsten Ottosen 2004-2006. 
+:copyright:     Thorsten Ottosen 2004-2005. 
 

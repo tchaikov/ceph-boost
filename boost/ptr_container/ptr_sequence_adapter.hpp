@@ -312,6 +312,11 @@ namespace ptr_container_detail
         template< class InputIterator >
         void assign( InputIterator first, InputIterator last ) // strong
         { 
+//#ifdef BOOST_NO_SFINAE
+//#else
+//            BOOST_STATIC_ASSERT(( boost::is_convertible< typename iterator_reference<InputIterator>::type,
+//                                                         reference_type >::value ));
+//#endif            
             base_type temp( first, last );
             this->swap( temp );
         }
@@ -350,7 +355,7 @@ namespace ptr_container_detail
                          iterator_category<InputIterator>::type() );
         } 
 
-#if defined(BOOST_NO_SFINAE) || BOOST_WORKAROUND(__SUNPRO_CC, <= 0x580)
+#if defined(BOOST_NO_SFINAE) || defined(BOOST_NO_FUNCTION_TEMPLATE_ORDERING)
 #else
         template< class Range >
         BOOST_DEDUCED_TYPENAME
@@ -392,7 +397,7 @@ namespace ptr_container_detail
             from.c_private().erase( object.base() );      // nothrow
         }
 
-#if defined(BOOST_NO_SFINAE) || BOOST_WORKAROUND(__SUNPRO_CC, <= 0x580)
+#ifdef BOOST_NO_SFINAE
 #else
         
         template< class PtrSeqAdapter, class Range >

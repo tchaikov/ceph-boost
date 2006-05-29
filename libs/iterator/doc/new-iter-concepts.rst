@@ -9,7 +9,7 @@
 :Contact: dave@boost-consulting.com, jsiek@osl.iu.edu, witt@styleadvisor.com
 :organization: `Boost Consulting`_, Indiana University `Open Systems
                Lab`_, `Zephyr Associates, Inc.`_
-:date: $Date: 2004/11/01 21:23:47 $
+:date: $Date: 2006/04/30 03:35:15 $
 
 :Number: This is a revised version of n1550_\ =03-0133, which was
          accepted for Technical Report 1 by the C++ standard
@@ -492,26 +492,30 @@ concept if the following expressions are valid and respect the stated
 semantics.
 
 
-+--------------------------------------------------------------------------------------------------------+
-|Single Pass Iterator Requirements (in addition to Incrementable Iterator and Equality                   |
-|Comparable)                                                                                             |
-+--------------------------------+-----------------------------+-------------+---------------------------+
-|Expression                      |Return Type                  | Operational |Assertion/                 | 
-|                                |                             | Semantics   |Pre-/Post-condition        |
-+================================+=============================+=============+===========================+
-|``++r``                         |``X&``                       |             |pre: ``r`` is              |
-|                                |                             |             |dereferenceable; post:     |
-|                                |                             |             |``r`` is dereferenceable or|
-|                                |                             |             |``r`` is past-the-end      |
-+--------------------------------+-----------------------------+-------------+---------------------------+
-|``a == b``                      |convertible to ``bool``      |             |``==`` is an equivalence   |
-|                                |                             |             |relation over its domain   |
-+--------------------------------+-----------------------------+-------------+---------------------------+
-|``a != b``                      |convertible to ``bool``      |``!(a == b)``|                           |
-+--------------------------------+-----------------------------+-------------+---------------------------+
-|``iterator_traversal<X>::type`` |Convertible to               |             |                           |
-|                                |``single_pass_traversal_tag``|             |                           |
-+--------------------------------+-----------------------------+-------------+---------------------------+
++----------------------------------------------------------------------------------------------------------------+
+|Single Pass Iterator Requirements (in addition to Incrementable Iterator and Equality Comparable)               |
+|                                                                                                                |
++----------------------------------------+-----------------------------+-------------+---------------------------+
+|Expression                              |Return Type                  | Operational |Assertion/                 | 
+|                                        |                             | Semantics   |Pre-/Post-condition        |
++========================================+=============================+=============+===========================+
+|``++r``                                 |``X&``                       |             |pre: ``r`` is              |
+|                                        |                             |             |dereferenceable; post:     |
+|                                        |                             |             |``r`` is dereferenceable or|
+|                                        |                             |             |``r`` is past-the-end      |
++----------------------------------------+-----------------------------+-------------+---------------------------+
+|``a == b``                              |convertible to ``bool``      |             |``==`` is an equivalence   |
+|                                        |                             |             |relation over its domain   |
++----------------------------------------+-----------------------------+-------------+---------------------------+
+|``a != b``                              |convertible to ``bool``      |``!(a == b)``|                           |
++----------------------------------------+-----------------------------+-------------+---------------------------+
+|``iterator_traits<X>::difference_type`` |A signed integral type       |             |                           |
+|                                        |representing the distance    |             |                           |
+|                                        |between iterators            |             |                           |
++----------------------------------------+-----------------------------+-------------+---------------------------+
+|``iterator_traversal<X>::type``         |Convertible to               |             |                           |
+|                                        |``single_pass_traversal_tag``|             |                           |
++----------------------------------------+-----------------------------+-------------+---------------------------+
 
 .. TR1: single_pass_iterator_tag changed to
    single_pass_traversal_tag for consistency
@@ -536,10 +540,6 @@ valid and respect the stated semantics.
 |``++r``                                |``X&``                             |``r == s`` and ``r`` is     |
 |                                       |                                   |dereferenceable implies     |
 |                                       |                                   |``++r == ++s.``             |
-+---------------------------------------+-----------------------------------+----------------------------+
-|``iterator_traits<X>::difference_type``|A signed integral type representing|                            |
-|                                       |the distance between iterators     |                            |
-|                                       |                                   |                            |
 +---------------------------------------+-----------------------------------+----------------------------+
 |``iterator_traversal<X>::type``        |Convertible to                     |                            |
 |                                       |``forward_traversal_tag``          |                            |

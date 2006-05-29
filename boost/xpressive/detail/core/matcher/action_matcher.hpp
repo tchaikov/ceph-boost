@@ -26,7 +26,7 @@ namespace boost { namespace xpressive { namespace detail
     //
     template<typename Action>
     struct action_matcher
-      : quant_style<quant_none, mpl::size_t<0>, mpl::false_>
+      : quant_style<quant_none, 0, false>
     {
         Action *action_ptr_;
 
@@ -42,7 +42,7 @@ namespace boost { namespace xpressive { namespace detail
 
         action_matcher &operator =(action_matcher const &)
         {
-            return *this; // no-op
+            return *this; // no-node
         }
 
         template<typename BidiIter, typename Next>

@@ -82,11 +82,7 @@ namespace ptr_container_detail
     class reversible_ptr_container 
     {
     private:
-#ifdef  __MWERKS__
-        enum { allow_null = Config::allow_null };
-#else
         BOOST_STATIC_CONSTANT( bool, allow_null = Config::allow_null );
-#endif        
         
         typedef BOOST_DEDUCED_TYPENAME Config::value_type Ty_;
 

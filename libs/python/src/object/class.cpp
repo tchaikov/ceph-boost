@@ -506,13 +506,14 @@ namespace objects
       // were declared, we'll use our class_type() as the single base
       // class.
       std::size_t const num_bases = (std::max)(num_types - 1, static_cast<std::size_t>(1));
-      handle<> bases(PyTuple_New(num_bases));
+      assert(num_bases <= PY_SSIZE_T_MAX);
+      handle<> bases(PyTuple_New(static_cast<Py_ssize_t>(num_bases)));
 
       for (std::size_t i = 1; i <= num_bases; ++i)
       {
           type_handle c = (i >= num_types) ? class_type() : get_class(types[i]);
           // PyTuple_SET_ITEM steals this reference
-          PyTuple_SET_ITEM(bases.get(), i - 1, upcast<PyObject>(c.release()));
+          PyTuple_SET_ITEM(bases.get(), static_cast<Py_ssize_t>(i - 1), upcast<PyObject>(c.release()));
       }
 
       // Call the class metatype to create a new class
@@ -529,6 +530,10 @@ namespace objects
       
       if (scope().ptr() != Py_None)
           scope().attr(name) = result;
+
+      // For pickle. Will lead to informative error messages if pickling
+      // is not enabled.
+      result.attr("__reduce__") = object(make_instance_reduce_function());
 
       return result;
     }
@@ -627,7 +632,6 @@ namespace objects
 
   void class_base::enable_pickling_(bool getstate_manages_dict)
   {
-      setattr("__reduce__", object(make_instance_reduce_function()));
       setattr("__safe_for_unpickling__", object(true));
       
       if (getstate_manages_dict)

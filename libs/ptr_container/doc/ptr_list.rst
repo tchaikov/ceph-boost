@@ -10,17 +10,15 @@ Class ``ptr_list``
 A ``ptr_list<T>`` is a pointer container that uses an underlying ``std:list<void*>``
 to store the pointers. 
 
-**Hierarchy:**
+**See also:**
 
-- `reversible_ptr_container <reversible_ptr_container.html>`_
+- reversible_ptr_container_
+- ptr_sequence_adapter_
 
-  - `ptr_sequence_adapter <ptr_sequence_adapter.html>`_
+.. _reversible_ptr_container: reversible_ptr_container.html 
+.. _ptr_array: ptr_array.html
+.. _`ptr_sequence_adapter`: ptr_sequence_adapter.html
 
-    - `ptr_vector <ptr_vector.html>`_
-    - ``ptr_list`` 
-    - `ptr_deque <ptr_deque.html>`_
-    - `ptr_array <ptr_array.html>`_
-    
 **Navigate:**
 
 - `home <ptr_container.html>`_
@@ -144,9 +142,6 @@ Semantics: list operations
 
     - Throws: nothing
 
-.. raw:: html 
 
-        <hr>
-
-:Copyright:     Thorsten Ottosen 2004-2006. 
+:copyright:     Thorsten Ottosen 2004-2005. 
 

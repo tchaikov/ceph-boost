@@ -11,22 +11,17 @@ This class is used to build custom pointer containers with
 an underlying map-like container. The interface of the class is an extension
 of the interface from ``associative_ptr_container``.
 
-**Hierarchy:**
+**See also:**
 
-- `reversible_ptr_container <reversible_ptr_container.html>`_
+- reversible_ptr_container_
+- associative_ptr_container_
+- ptr_map_
+- `new map iterators <reference.html#map-iterator-operations>`_
 
-  - `associative_ptr_container <associative_ptr_container.html>`_
-  
-    - `ptr_set_adapter <ptr_set_adapter.html>`_
-    - `ptr_multiset_adapter <ptr_multiset_adapter.html>`_
-    - ``ptr_map_adapter``
-    - `ptr_multi_map_adapter <ptr_multimap_adapter.html>`_
+.. _reversible_ptr_container: reversible_ptr_container.html 
+.. _associative_ptr_container: associative_ptr_container.html
+.. _ptr_map: ptr_map.html
 
-      - `ptr_set <ptr_set.html>`_
-      - `ptr_multi_set <ptr_multiset.html>`_ 
-      - `ptr_map <ptr_map.html>`_
-      - `ptr_multimap <ptr_multimap.html>`_
-      
 **Navigate:**
 
 - `home <ptr_container.html>`_
@@ -47,16 +42,6 @@ of the interface from ``associative_ptr_container``.
             >
             class ptr_map_adapter 
             {
-	    public: // `typedefs`_
-		typedef VoidPtrMap::key_type key_type;
-		typedef T*                   mapped_type;
-		typedef T&                   mapped_reference;
-		typedef const T&             const_mapped_reference;
-		typedef ...                  value_type;
-		typedef ...                  reference;
-		typedef ...                  const_reference;
-		typedef ...                  pointer;
-		typedef ...                  const_pointer;  
                 
             public: // `modifiers`_         
                 std::pair<iterator,bool>  insert( key_type& k, T* x );                         
@@ -82,36 +67,6 @@ of the interface from ``associative_ptr_container``.
             
 Semantics
 ---------
-
-.. _`typedefs`:
-
-Semantics: typedefs
-^^^^^^^^^^^^^^^^^^^
-
-The following types are implementation defined::
-
-	typedef ... value_type;
-	typedef ... reference;
-	typedef ... const_reference;
-	typedef ... pointer;
-	typedef ... const_pointer;  
-        
-However, the structure of the type mimics ``std::pair`` s.t. one
-can use ``first`` and ``second`` members. The reference-types
-are not real references and the pointer-types are not real pointers.
-However, one may still write ::
-
-    map_type::value_type       a_value      = *m.begin();
-    a_value.second->foo();
-    map_type::reference        a_reference  = *m.begin();
-    a_reference.second->foo();
-    map_type::const_reference  a_creference = *const_begin(m);
-    map_type::pointer          a_pointer    = &*m.begin();
-    a_pointer->second->foo();
-    map_type::const_pointer    a_cpointer   = &*const_begin(m);
-
-The difference compared to ``std::map<Key,T*>`` is that constness
-is propagated to the pointer (that is, to ``second``) in ``const_itertor``. 	
 
 .. _`modifiers`:
 
@@ -192,9 +147,6 @@ Semantics: pointer container requirements
 
    - Effects: ``return transfer( from.begin(), from.end(), from );``.
 
-.. raw:: html 
-
-        <hr>
  
-:Copyright:     Thorsten Ottosen 2004-2006. 
+:copyright:     Thorsten Ottosen 2004-2005. 
 

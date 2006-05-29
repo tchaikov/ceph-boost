@@ -9,7 +9,7 @@
     ]
     [authors [Holin, Hubert], [Maddock, John], [Walker, Daryle]]
     [category math]
-    [last-revision $Date: 2006/03/26 15:45:45 $]
+    [last-revision $Date: 2006/03/26 15:45:03 $]
 ]
 
 [def __asinh [link boost_math.math_special_functions.asinh asinh]]

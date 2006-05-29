@@ -13,7 +13,6 @@
 # pragma once
 #endif
 
-#include <boost/shared_ptr.hpp>
 #include <boost/noncopyable.hpp>
 #include <boost/xpressive/detail/detail_fwd.hpp>
 #include <boost/xpressive/detail/core/access.hpp>
@@ -50,7 +49,7 @@ struct match_context
     matchable<BidiIter> const *next_ptr_;
 
     // A pointer to the current traits object
-    void const *traits_;
+    detail::traits const *traits_;
 };
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -241,7 +240,7 @@ struct state_type
     template<typename Traits>
     Traits const &get_traits() const
     {
-        return *static_cast<Traits const *>(this->context_.traits_);
+        return static_cast<traits_holder<Traits> const *>(this->context_.traits_)->traits();
     }
 
 private:
@@ -307,7 +306,7 @@ inline void restore_sub_matches(memento<BidiIter> const &mem, state_type<BidiIte
 {
     typedef core_access<BidiIter> access;
     nested_results<BidiIter> &nested = access::get_nested_results(*state.context_.results_ptr_);
-    std::size_t count = state.context_.results_ptr_->nested_results().size() - mem.nested_results_count_;
+    std::size_t count = nested.size() - mem.nested_results_count_;
     state.extras_.results_cache_.reclaim_last_n(nested, count);
     std::copy(mem.old_sub_matches_, mem.old_sub_matches_ + state.mark_count_, state.sub_matches_);
     state.extras_.sub_match_stack_.unwind_to(mem.old_sub_matches_);

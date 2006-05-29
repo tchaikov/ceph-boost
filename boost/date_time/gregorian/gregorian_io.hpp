@@ -6,7 +6,7 @@
  * Boost Software License, Version 1.0. (See accompanying
  * file LICENSE-1.0 or http://www.boost.org/LICENSE-1.0)
  * Author: Jeff Garland, Bart Garst
- * $Date: 2006/03/26 21:29:10 $
+ * $Date: 2006/03/26 21:35:58 $
  */
 
 #include "boost/date_time/date_facet.hpp"

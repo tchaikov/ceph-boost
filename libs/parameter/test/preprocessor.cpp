@@ -66,6 +66,50 @@ BOOST_PARAMETER_FUNCTION((int), g, tag,
     return 1;
 }
 
+BOOST_PARAMETER_FUNCTION2((int), h, tag,
+    (required
+      (tester, *)
+      (name, *)
+    )
+    (optional
+      (value, *, 1.f)
+      (out(index), (int), 2)
+    )
+)
+{
+    BOOST_MPL_ASSERT((boost::is_same<index_type, int const>));
+
+    tester(
+        name
+      , value
+      , index
+    );
+
+    return 1;
+}
+
+BOOST_PARAMETER_FUNCTION2((int), h2, tag,
+    (required
+      (tester, *)
+      (name, *)
+    )
+    (optional
+      (value, *, 1.f)
+      (out(index), (int), (int)value * 2)
+    )
+)
+{
+    BOOST_MPL_ASSERT((boost::is_same<index_type, int const>));
+
+    tester(
+        name
+      , value
+      , index
+    );
+
+    return 1;
+}
+
 struct base
 {
     template <class Args>
@@ -190,6 +234,19 @@ int main()
       , 2
     );
 
+    h(
+        tester = values(S("foo"), 1.f, 2)
+      , name = S("foo")
+      , 1.f
+      , 2
+    );
+
+    h2(
+        tester = values(S("foo"), 1.f, 2)
+      , name = S("foo")
+      , 1.f
+    );
+    
     class_ x(
         tester = values(S("foo"), 1.f, 2)
       , S("foo"), test::index = 2
@@ -221,5 +278,6 @@ int main()
     assert(sfinae("foo") == 1);
     assert(sfinae(1) == 0);
 #endif
+    return 0;
 }
 

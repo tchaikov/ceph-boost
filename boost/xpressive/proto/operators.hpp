@@ -25,7 +25,7 @@ namespace boost { namespace proto
     struct unary_op_generator
     {
         typedef unary_op<
-            typename as_op<Arg>::type
+            typename as_op<Arg>::reference
           , Tag
         > type;
     };
@@ -36,8 +36,8 @@ namespace boost { namespace proto
     struct binary_op_generator
     {
         typedef binary_op<
-            typename as_op<Left>::type
-          , typename as_op<Right>::type
+            typename as_op<Left>::reference
+          , typename as_op<Right>::reference
           , Tag
         > type;
     };
@@ -45,29 +45,31 @@ namespace boost { namespace proto
     ///////////////////////////////////////////////////////////////////////////////
     // unary operators
     template<typename Arg>
-    unary_op<Arg, noop_tag> const
+    typename as_op<Arg>::reference
     noop(Arg const &arg)
     {
-        return make_op<noop_tag>(arg);
+        BOOST_MPL_ASSERT_NOT((is_op<Arg>));
+        return as_op<Arg>::make(arg);
     }
 
-#define BOOST_PROTO_UNARY_OP(op, tag)                                                           \
+#define BOOST_PROTO_UNARY_OP(node, tag)                                                         \
     template<typename Arg>                                                                      \
     inline typename lazy_enable_if<is_op<Arg>, unary_op_generator<Arg, tag> >::type const       \
-    operator op(Arg const &arg)                                                                 \
+    operator node(Arg const &arg)                                                               \
     {                                                                                           \
-        return make_op<tag>(as_op<Arg>::make(arg));                                             \
+        return typename unary_op_generator<Arg, tag>::type(as_op<Arg>::make(arg));              \
     }
 
-#define BOOST_PROTO_BINARY_OP(op, tag)                                                          \
+#define BOOST_PROTO_BINARY_OP(node, tag)                                                        \
     template<typename Left, typename Right>                                                     \
     inline typename lazy_enable_if<                                                             \
         mpl::or_<is_op<Left>, is_op<Right> >                                                    \
       , binary_op_generator<Left, Right, tag>                                                   \
     >::type const                                                                               \
-    operator op(Left const &left, Right const &right)                                           \
+    operator node(Left const &left, Right const &right)                                         \
     {                                                                                           \
-        return make_op<tag>(as_op<Left>::make(left), as_op<Right>::make(right));                \
+        return typename binary_op_generator<Left, Right, tag>::type(                            \
+            as_op<Left>::make(left), as_op<Right>::make(right));                                \
     }
 
     BOOST_PROTO_UNARY_OP(+, unary_plus_tag)
@@ -120,14 +122,14 @@ namespace boost { namespace proto
     inline typename lazy_enable_if<is_op<Arg>, unary_op_generator<Arg, post_inc_tag> >::type const
     operator ++(Arg const &arg, int)
     {
-        return make_op<post_inc_tag>(arg.cast());
+        return typename unary_op_generator<Arg, post_inc_tag>::type(arg.cast());
     }
 
     template<typename Arg>
     inline typename lazy_enable_if<is_op<Arg>, unary_op_generator<Arg, post_dec_tag> >::type const
     operator --(Arg const &arg, int)
     {
-        return make_op<post_dec_tag>(arg.cast());
+        return typename unary_op_generator<Arg, post_dec_tag>::type(arg.cast());
     }
 
 }}

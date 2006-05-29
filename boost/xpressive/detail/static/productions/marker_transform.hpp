@@ -17,34 +17,49 @@ namespace boost { namespace xpressive { namespace detail
 {
     ///////////////////////////////////////////////////////////////////////////////
     // is_marker
-    template<typename Op>
+    template<typename Node>
     struct is_marker
       : mpl::false_
     {};
 
     // (s1= ...) is a marker
-    template<typename Op>
-    struct is_marker<proto::binary_op<mark_tag, Op, proto::assign_tag> >
+    template<typename Node>
+    struct is_marker<proto::binary_op<mark_tag const, Node, proto::assign_tag> >
       : mpl::true_
+    {};
+
+    template<typename Node>
+    struct is_marker<proto::binary_op<mark_tag const &, Node, proto::assign_tag> >
+      : mpl::true_
+    {};
+
+    template<typename Node>
+    struct is_marker<Node &>
+      : is_marker<Node>
+    {};
+
+    template<typename Node>
+    struct is_marker<Node const>
+      : is_marker<Node>
     {};
 
     ///////////////////////////////////////////////////////////////////////////////
     // is_marker_predicate
     struct is_marker_predicate
     {
-        template<typename Op, typename, typename>
+        template<typename Node, typename, typename>
         struct apply
-          : is_marker<Op>
+          : is_marker<Node>
         {
         };
     };
 
     ///////////////////////////////////////////////////////////////////////////////
-    // marker_transform
+    // marker_insert_transform
     //   Insert mark tags before and after the expression
-    struct marker_transform
+    struct marker_insert_transform
     {
-        template<typename Op, typename, typename>
+        template<typename Node, typename, typename>
         struct apply
         {
             typedef proto::binary_op
@@ -52,7 +67,7 @@ namespace boost { namespace xpressive { namespace detail
                 proto::unary_op<mark_begin_matcher, proto::noop_tag>
               , proto::binary_op
                 <
-                    Op
+                    Node
                   , proto::unary_op<mark_end_matcher, proto::noop_tag>
                   , proto::right_shift_tag
                 >
@@ -60,9 +75,9 @@ namespace boost { namespace xpressive { namespace detail
             > type;
         };
 
-        template<typename Op, typename State, typename Visitor>
-        static typename apply<Op, State, Visitor>::type
-        call(Op const &op, State const &, Visitor &visitor, int mark_nbr = 0)
+        template<typename Node, typename State, typename Visitor>
+        static typename apply<Node, State, Visitor>::type
+        call(Node const &node, State const &, Visitor &visitor, int mark_nbr = 0)
         {
             // if we're inserting a mark, and we're not being told the mark number,
             // we're inserting a hidden mark ... so grab the next hidden mark number.
@@ -72,20 +87,26 @@ namespace boost { namespace xpressive { namespace detail
             }
 
             return proto::noop(mark_begin_matcher(mark_nbr))
-                >> (op >> proto::noop(mark_end_matcher(mark_nbr)));
+                >> (node >> proto::noop(mark_end_matcher(mark_nbr)));
         }
     };
 
     ///////////////////////////////////////////////////////////////////////////////
-    // marker_assign_transform
-    struct marker_assign_transform
-      : proto::compose_transforms<proto::right_transform, marker_transform>
+    // marker_replace_transform
+    struct marker_replace_transform
+      : proto::compose_transforms<proto::right_transform, marker_insert_transform>
     {
-        template<typename Op, typename State, typename Visitor>
-        static typename apply<Op, State, Visitor>::type
-        call(Op const &op, State const &state, Visitor &visitor)
+        template<typename Node, typename State, typename Visitor>
+        static typename apply<Node, State, Visitor>::type
+        call(Node const &node, State const &state, Visitor &visitor)
         {
-            return marker_transform::call(proto::right(op), state, visitor, proto::arg(proto::left(op)).mark_number_);
+            return marker_insert_transform::call
+            (
+                proto::right(node)
+              , state
+              , visitor
+              , proto::arg(proto::left(node)).mark_number_
+            );
         }
     };
 

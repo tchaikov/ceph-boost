@@ -236,7 +236,7 @@ public:
 #if !defined( BOOST_NO_SFINAE ) && !defined( BOOST_NO_TEMPLATE_PARTIAL_SPECIALIZATION )
 
     template<class Ap>
-    explicit shared_ptr( Ap r, typename boost::detail::sp_enable_if_auto_ptr<Ap, int>::type = 0 ): px( r.get() ), pn()
+    shared_ptr( Ap r, typename boost::detail::sp_enable_if_auto_ptr<Ap, int>::type = 0 ): px( r.get() ), pn()
     {
         typename Ap::element_type * tmp = r.get();
         pn = boost::detail::shared_count( r );
@@ -323,6 +323,8 @@ public:
 
     // implicit conversion to "bool"
 
+/*
+
 #if defined(__SUNPRO_CC) && BOOST_WORKAROUND(__SUNPRO_CC, <= 0x530)
 
     operator bool () const
@@ -331,6 +333,8 @@ public:
     }
 
 #elif defined( _MANAGED )
+
+*/
 
     static void unspecified_bool( this_type*** )
     {
@@ -342,6 +346,8 @@ public:
     {
         return px == 0? 0: unspecified_bool;
     }
+
+/*
 
 #elif \
     ( defined(__MWERKS__) && BOOST_WORKAROUND(__MWERKS__, < 0x3200) ) || \
@@ -364,6 +370,8 @@ public:
     }
 
 #endif
+
+*/
 
     // operator! is redundant, but some compilers need it
 

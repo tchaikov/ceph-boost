@@ -8,27 +8,32 @@ Class ``associative_ptr_container``
 -------------------------------------
 
 This section describes all the common operations for all associative
-pointer containers (in addition to ``reversible_ptr_container``).
+pointer containers (in addition to ``reversible_ptr_container``):
 
-**Hierarchy:**
+- ptr_map_adapter_
+- ptr_multimap_adapter_
+- ptr_map_
+- ptr_multimap_
+- ptr_set_adapter_
+- ptr_multiset_adapter_
+- ptr_set_
+- ptr_multiset_
 
-- `reversible_ptr_container <reversible_ptr_container.html>`_
-
-  - ``associative_ptr_container`` 
-  
-    - `ptr_set_adapter <ptr_set_adapter.html>`_
-    - `ptr_multiset_adapter <ptr_multiset_adapter.html>`_
-    - `ptr_map_adapter <ptr_map_adapter.html>`_
-    - `ptr_multi_map_adapter <ptr_multimap_adapter.html>`_
-
-      - `ptr_set <ptr_set.html>`_
-      - `ptr_multi_set <ptr_multiset.html>`_ 
-      - `ptr_map <ptr_map.html>`_
-      - `ptr_multimap <ptr_multimap.html>`_
+.. _ptr_map_adapter : ptr_map_adapter.html
+.. _ptr_multimap_adapter: ptr_multimap_adapter.html
+.. _ptr_map: ptr_map.html
+.. _ptr_multimap: ptr_multimap.html
+.. _ptr_set_adapter: ptr_set_adapter.html
+.. _ptr_multiset_adapter: ptr_multiset.html
+.. _ptr_set: ptr_set.html
+.. _ptr_multiset: ptr_multiset.html
 
 **See also:**
 
+- reversible_ptr_container__
 - `iterator_range <http://www.boost.org/libs/range/doc/utility_class.html#iter_range>`_
+
+__ reversible_ptr_container.html  
 
 **Navigate:**
 
@@ -214,9 +219,6 @@ Semantics: algorithms
 
 .. _`pointer container requirements`:
 
-.. raw:: html 
 
-        <hr>
-	
-:Copyright:     Thorsten Ottosen 2004-2006. 
+:copyright:     Thorsten Ottosen 2004-2005. 
 

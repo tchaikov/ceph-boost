@@ -338,14 +338,28 @@
 
                           <li><span class="library"><a href=
                           "libs/multi_array/index.html">MultiArray
-                          Library</a>:</span> Boost.MultiArray now by default
-                          provides range-checking for
-                          <code>operator[]</code>. Range checking can be
-                          disabled by defining the macro
-                          <code>BOOST_DISABLE_ASSERTS</code> before including
-                          <tt>multi_array.hpp</tt>. A bug in
-                          <code>multi_array::resize()</code> related
-                          to storage orders was fixed.</li>
+                          Library</a>:</span> 
+			    <ul>
+			      <li>Boost.MultiArray now by default
+                              provides range-checking for
+			      <code>operator[]</code>. Range checking can be
+			      disabled by defining the macro
+			      <code>BOOST_DISABLE_ASSERTS</code> before 
+			      including <tt>multi_array.hpp</tt>.</li> 
+
+			      <li> A bug in
+			      <code>multi_array::resize()</code> related
+			      to storage orders was fixed.</li>
+
+			      <li><code>multi_array::resize()</code>
+			      can now be called with a model of
+			      the <code>Collection</code> concept to
+			      specify the new extents.</li>
+
+			      <li>A bug in the comparison routine for
+			      view iterators was fixed.</li>
+			    </ul>
+                          </li>
 
                           <li>
                             <span class="library"><a href=
@@ -532,7 +546,7 @@
                               (macro tables et.al.).</li>
 
                               <li>The overall performance has been improved by upto 
-                              40-60%, depending on the concrete files to process. </li>
+                              30-40%, depending on the concrete files to process. </li>
 
                               <li>Support for new pragmas has been added allowing to 
 							   control certain library features from inside the 
@@ -541,7 +555,6 @@
 
                               <li>Optional support for #pragma message &quot;...&quot; 
 							   has been added. </li>
-							   
                               <li>This version also includes a number of bug
                               fixes and usage improvements. For a complete
                               list of changes, see the libraries <a href=
@@ -837,7 +850,7 @@
                           <div class="sidecell" id="footer">
                             <div class="sidecell-0">
                               <div id="revised">
-                                <p>Revised $Date: 2006/05/05 17:33:54 $</p>
+                                <p>Revised $Date: 2006/05/26 14:51:17 $</p>
                               </div>
 
                               <div id="copyright">

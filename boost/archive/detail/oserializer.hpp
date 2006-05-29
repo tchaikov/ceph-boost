@@ -37,6 +37,7 @@
 #include <boost/type_traits/is_volatile.hpp>
 #include <boost/type_traits/is_const.hpp>
 #include <boost/type_traits/is_same.hpp>
+#include <boost/type_traits/remove_all_extents.hpp>
 #include <boost/serialization/is_abstract.hpp>
 
 #include <boost/mpl/eval_if.hpp>
@@ -57,6 +58,7 @@
 #include <boost/archive/detail/basic_oarchive.hpp>
 #include <boost/archive/detail/basic_oserializer.hpp>
 #include <boost/archive/detail/archive_pointer_oserializer.hpp>
+#include <boost/archive/detail/dynamically_initialized.hpp>
 
 #include <boost/serialization/force_include.hpp>
 #include <boost/serialization/serialization.hpp>
@@ -66,6 +68,8 @@
 #include <boost/serialization/type_info_implementation.hpp>
 #include <boost/serialization/nvp.hpp>
 #include <boost/serialization/void_cast.hpp>
+#include <boost/serialization/array.hpp>
+#include <boost/serialization/collection_size_type.hpp>
 
 #include <boost/archive/archive_exception.hpp>
 
@@ -100,7 +104,7 @@ class oserializer : public basic_oserializer
 private:
     // private constructor to inhibit any existence other than the 
     // static one
-    explicit oserializer() :
+    explicit BOOST_DLLEXPORT oserializer() :
         basic_oserializer(
             * boost::serialization::type_info_implementation<T>::type::get_instance()
         )
@@ -151,11 +155,10 @@ BOOST_DLLEXPORT void oserializer<Archive, T>::save_object_data(
     );
 }
 
-// instantiation of this template creates a static object.  Note inversion of
-// normal argument order to workaround bizarre error in MSVC 6.0 which only
-// manifests iftself during compiler time.
-template<class T, class Archive>
-class pointer_oserializer : public archive_pointer_oserializer<Archive> 
+template<class Archive, class T>
+class pointer_oserializer
+  : public archive_pointer_oserializer<Archive>
+  , public dynamically_initialized<pointer_oserializer<Archive,T> >
 {
 private:
     virtual const basic_oserializer & get_basic_serializer() const {
@@ -171,7 +174,7 @@ public:
     // private constructor to inhibit any existence other than the 
     // static one.  Note GCC doesn't permit constructor to be private
     explicit BOOST_DLLEXPORT pointer_oserializer() BOOST_USED;
-    static const pointer_oserializer instance;
+    friend class dynamically_initialized<pointer_oserializer<Archive,T> >;
 public:
     #if !defined(__BORLANDC__)
     // at least one compiler (CW) seems to require that serialize_adl
@@ -179,25 +182,10 @@ public:
     void (* const m)(Archive &, T &, const unsigned);
     boost::serialization::extended_type_info * (* e)();
     #endif
-    static BOOST_DLLEXPORT const pointer_oserializer & instantiate() BOOST_USED;
-    virtual ~pointer_oserializer(){}
 };
 
-template<class T, class Archive>
-BOOST_DLLEXPORT const pointer_oserializer<T, Archive> & 
-pointer_oserializer<T, Archive>::instantiate(){
-    return instance;
-}
-
-// note: instances of this template to be constructed before the main
-// is called in order for things to be initialized properly.  For this
-// reason, hiding the instance in a static function as was done above
-// won't work here so we created a free instance here.
-template<class T, class Archive>
-const pointer_oserializer<T, Archive> pointer_oserializer<T, Archive>::instance;
-
-template<class T, class Archive>
-BOOST_DLLEXPORT void pointer_oserializer<T, Archive>::save_object_ptr(
+template<class Archive, class T>
+BOOST_DLLEXPORT void pointer_oserializer<Archive, T>::save_object_ptr(
     basic_oarchive & ar,
     const void * x
 ) const {
@@ -215,16 +203,16 @@ BOOST_DLLEXPORT void pointer_oserializer<T, Archive>::save_object_ptr(
     ar_impl << boost::serialization::make_nvp(NULL, * t);
 }
 
-template<class T, class Archive>
+template<class Archive, class T>
 #if !defined(__BORLANDC__)
-BOOST_DLLEXPORT pointer_oserializer<T, Archive>::pointer_oserializer() :
+BOOST_DLLEXPORT pointer_oserializer<Archive, T>::pointer_oserializer() :
     archive_pointer_oserializer<Archive>(
         * boost::serialization::type_info_implementation<T>::type::get_instance()
     ),
     m(boost::serialization::serialize_adl<Archive, T>),
     e(boost::serialization::type_info_implementation<T>::type::get_instance)
 #else
-BOOST_DLLEXPORT pointer_oserializer<T, Archive>::pointer_oserializer() :
+BOOST_DLLEXPORT pointer_oserializer<Archive, T>::pointer_oserializer() :
     archive_pointer_oserializer<Archive>(
         * boost::serialization::type_info_implementation<T>::type::get_instance()
     )
@@ -481,6 +469,8 @@ template<class Archive, class T>
 struct save_array_type
 {
     static void invoke(Archive &ar, const T &t){
+        typedef typename remove_all_extents<T>::type value_type;
+        
         save_access::end_preamble(ar);
         // consider alignment
         int count = sizeof(t) / (
@@ -488,11 +478,11 @@ struct save_array_type
             - static_cast<const char *>(static_cast<const void *>(&t[0]))
         );
         ar << BOOST_SERIALIZATION_NVP(count);
-        int i;
-        for(i = 0; i < count; ++i)
-            ar << boost::serialization::make_nvp("item", t[i]);
+        ar << serialization::make_array(static_cast<value_type const*>(&t[0]),count);
     }
 };
+
+
 
 // note bogus arguments to workaround msvc 6 silent runtime failure
 // declaration to satisfy gcc
@@ -509,9 +499,7 @@ instantiate_pointer_oserializer(
     Archive * /* ar = NULL */,
     T * /* t = NULL */
 ){
-    // note: reversal of order of arguments to work around msvc 6.0 bug
-    // that manifests itself while trying to link.
-    return pointer_oserializer<T, Archive>::instantiate();
+    return pointer_oserializer<Archive, T>::instance;
 }
 
 } // detail

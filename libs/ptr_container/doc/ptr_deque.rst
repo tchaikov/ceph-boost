@@ -10,16 +10,13 @@ Class ``ptr_deque``
 A ``ptr_deque<T>`` is a pointer container that uses an underlying ``std:deque<void*>``
 to store the pointers. 
 
-**Hierarchy:**
+**See also:**
 
-- `reversible_ptr_container <reversible_ptr_container.html>`_
+- reversible_ptr_container_
+- ptr_sequence_adapter_
 
-  - `ptr_sequence_adapter <ptr_sequence_adapter.html>`_
-
-    - `ptr_vector <ptr_vector.html>`_
-    - `ptr_list <ptr_list.html>`_ 
-    - ``ptr_deque``
-    - `ptr_array <ptr_array.html>`_
+.. _reversible_ptr_container: reversible_ptr_container.html 
+.. _ptr_map: ptr_map.html
 
 **Navigate:**
 
@@ -168,9 +165,6 @@ Semantics: pointer container requirements
 
     - Exception safety: Nothrow guarantee
 
-.. raw:: html 
 
-        <hr>
-
-:Copyright:     Thorsten Ottosen 2004-2006. 
+:copyright:     Thorsten Ottosen 2004-2005. 
 

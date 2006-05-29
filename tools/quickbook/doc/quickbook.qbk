@@ -137,6 +137,10 @@ Features include:
 * Footnotes, with the \[footnote This is the footnote\] syntax.
 * Post-processor bug fix for escaped XML code that it does not recognize.
 * Replaceable, with the \[~replacement\] syntax.
+* Generic Headers
+* Code changes to allow full recursion (i.e. Collectors and push/pop functions)
+* Various code cleanup/maintenance
+* Templates!
 
 [endsect]
 
@@ -243,8 +247,12 @@ will generate:
 
 /italic/, *bold*, _underline_, =teletype=
 
-Unlike QuickBook's standard formatting scheme, the rules for simpler alternatives
-are much stricter.
+Unlike QuickBook's standard formatting scheme, the rules for simpler 
+alternatives are much stricter[footnote Thanks to David Barrett, author of 
+[@http://quinthar.com/qwikiwiki/index.php?page=Home Qwiki], for sharing 
+these samples and teaching me these obscure formatting rules. I wasn't sure 
+at all if __spirit__, being more or less a formal EBNF parser, can handle 
+the context sensitivity and ambiguity.].
 
 * Simple markups cannot nest. You can combine a simple markup with a nestable markup.
 * A non-space character must follow the leading markup
@@ -275,11 +283,6 @@ are much stricter.
     [[[^'''['*Bold-Italic*]''']]                        [['*Bold-Italic*]]]
 ]
 
-[blurb __note__ Thanks to David Barrett, author of
-[@http://quinthar.com/qwikiwiki/index.php?page=Home Qwiki], for sharing these samples
-and teaching me these obscure formatting rules. I wasn't sure at all if __spirit__,
-being more or less a formal EBNF parser, can handle the context sensitivity and ambiguity.]
-
 [endsect]
 [section Inline code]
 
@@ -295,11 +298,9 @@ will generate:
 This text has inlined code `int main() { return 0; }` in it. The code will be
 syntax highlighted.
 
-[blurb __note__
-Note that we simply enclose the code with the tick: [^'''"`"'''], not the
-single quote: `"'"`. Note too that [^'''`some code`'''] is prefered over
-[^'''[^some code]'''].
-]
+[note We simply enclose the code with the tick: [^'''"`"'''], not the 
+single quote: `"'"`. Note too that [^'''`some code`'''] is prefered over 
+[^'''[^some code]''']. ]
 
 [endsect]
 [section Code blocks]
@@ -367,7 +368,7 @@ C++ comment `// looks like this` whereas a Python comment [python]
     [[Python]               [[^\[python\]]]]
 ]
 
-[blurb __note__ The source mode strings are lowercase.]
+[note The source mode strings are lowercase.]
 
 [endsect]
 [section line-break]
@@ -376,7 +377,7 @@ C++ comment `// looks like this` whereas a Python comment [python]
 [br]
 ''']
 
-[blurb __note__ Note that `\n` is now preferred over `[br]`.]
+[note Note that `\n` is now preferred over `[br]`.]
 
 [endsect]
 [section Anchors]
@@ -493,7 +494,7 @@ Escaping allows us to pass XML markup to __boostbook__ or __docbook__. For examp
 <emphasis role="bold">This is direct XML markup</emphasis>
 '''
 
-[blurb __alert__ Be careful when using the escape. The text must conform to
+[important Be careful when using the escape. The text must conform to 
 __boostbook__/__docbook__ syntax.]
 
 [endsect]
@@ -929,15 +930,61 @@ and all upper-case are converted to lower-case. For example: Heading
 to link to them. See __anchor_links__ and __section__ for more info.
 
 [endsect]
+[section Generic Heading]
+
+In cases when you don't want to care about the heading level (1 to 6), you 
+can use the /Generic Heading/:
+
+[pre'''
+[heading Heading]
+''']
+
+The /Generic Heading/ assumes the level, plus one, of the innermost section
+where it is placed. For example, if it is placed in the outermost section,
+then, it assumes /h2/.
+
+Headings are often used as an alternative to sections. It is used 
+particularly if you do not want to start a new section. In many cases, 
+however, headings in a particular section is just flat. Example:
+
+[pre'''
+[section A]
+[h2 X]
+[h2 Y]
+[h2 Z]
+[endsect] 
+''']
+
+Here we use h2 assuming that section A is the outermost level. If it is 
+placed in an inner level, you'll have to use h3, h4, etc. depending on 
+where the section is. In general, it is the section level plus one. It is 
+rather tedious, however, to scan the section level everytime. If you
+rewrite the example above as shown below, this will be automatic:
+
+[pre'''
+[section A]
+[heading X]
+[heading Y]
+[heading Z]
+[endsect] 
+''']
+
+They work well regardless where you place them. You can rearrange sections 
+at will without any extra work to ensure correct heading levels. In fact, 
+with /section/ and /heading/, you have all you need. /h1/../h6/ becomes 
+redundant. /h1/../h6/ might be deprecated in the future.
+
+[endsect]
 [section Macros]
 
 [pre'''
 [def macro_identifier some text]
 ''']
 
-When a macro is defined, the identifier replaces the text anywhere in the file,
-in paragraphs, in markups, etc. macro_identifier is a string of non-white space
-characters except '\]' while the replacement text can be any phrase (even
+When a macro is defined, the identifier replaces the text anywhere in the 
+file, in paragraphs, in markups, etc. macro_identifier is a string of non-
+white space characters except '\]'. A macro may not follow an alphabetic 
+character or the underscore. The replacement text can be any phrase (even 
 marked up). Example:
 
 [pre'''
@@ -950,9 +997,10 @@ Now everywhere the sf_logo is placed, the picture will be inlined.
 [def sf_logo [$http://sourceforge.net/sflogo.php?group_id=28447&type=1]]
 sf_logo
 
-[blurb __tip__ It's a good idea to use macro identifiers that are distinguishable.
-For instance, in this document, macro identifiers have two leading and trailing
-underscores (e.g. [^'''__spirit__''']). The reason is to avoid unwanted macro replacement.]
+[tip It's a good idea to use macro identifiers that are distinguishable. 
+For instance, in this document, macro identifiers have two leading and 
+trailing underscores (e.g. [^'''__spirit__''']). The reason is to avoid 
+unwanted macro replacement.]
 
 Links (URLS) and images are good candidates for macros. *1*) They tend to
 change a lot. It is a good idea to place all links and images in one place near the top
@@ -991,6 +1039,82 @@ Quickbook has some predefined macros that you can already use.
 ]
 
 [endsect]
+[section Templates]
+
+Templates provide a more versatile text substitution mechanism. Templates 
+come in handy when you need to create parameterizable, multi-line, 
+boilerplate text that you specify once and expand many times. Templates 
+accept one or more arguments. These arguments act like place-holders for 
+text replacement. Unlike simple macros, which are limited to phrase level 
+markup, templates can contain block level markup (e.g. paragraphs, code 
+blocks and tables).
+
+Example template:
+
+[pre'''
+[template person(name_, age_, id_)
+
+Hi, my name is name_. I am age_ years old. My id is id_.
+
+]
+''']
+
+[template person(name_, age_, id_)
+
+Hi, my name is *name_*. I am *age_* years old. My id is *id_*.
+
+]
+
+Template formal arguments are identifiers consisting of an initial 
+alphabetic character or the underscore, followed by zero or more 
+alphanumeric characters or the underscore. This is similar to your typical 
+C/C++ identifier. A template formal argument temporarily hides a macro of 
+the same name at the point where the template is invoked. At template 
+invocation, you supply the actual arguments. At that point, the template 
+will be expanded with your supplied arguments. Example:
+
+[pre'''
+person(James Bond, 39, 007)
+person(Santa Clause, 87, 12-25)
+''']
+
+Which will expand to:
+
+person(James Bond, 39, 007)
+person(Santa Clause, 87, 12-25)
+
+Each actual argument can be a word, a text fragment or just about any 
+[link quickbook.syntax.phrase QuickBook phrase]. Arguments are comma 
+separated and terminated by the close parenthesis. If your arguments have 
+embedded commas or close parentheses, you'll have to 
+[link quickbook.syntax.phrase.single_char_escape escape them].
+
+[caution Templates are recursive. A template can call another template or 
+even itself, directly or indirectly. There are no control structures in 
+QuickBook (yet) so this will always mean infinite recursion. QuickBook can 
+detect this situation and report an error if recursion exceeds a certain 
+limit.]
+
+Templates may be phrase or block level. Phrase templates are of the form:
+
+[pre'''
+[template sample(arg1, arg2,...argN) replacement text... ]
+''']
+
+Block templates are of the form:
+
+[pre'''
+[template sample(arg1, arg2,...argN) 
+replacement text... 
+]
+''']
+
+The basic rule is as follows: if a newline immediately follows the argument 
+list, then it is a block template, otherwise, it is a phrase template.
+Phrase templates are typically expanded as part of phrases. Like macros, 
+block level elements are not allowed in phrase templates. 
+
+[endsect]
 [section Blurbs]
 
 [pre'''
@@ -1010,6 +1134,9 @@ will generate this:
     templates allow us to approximate the syntax of Extended Backus-Normal Form
     (EBNF) completely in C++.
 ]
+
+[note Prefer [link quickbook.syntax.block.admonitions admonitions] wherever 
+appropriate.]
 
 [endsect]
 [section Tables]

@@ -113,18 +113,11 @@ insertion and deletion only invalidates the deleted
 element and elements following it; all elements before the inserted/deleted
 element remain valid.
 
-.. raw:: html 
-
-        <hr>
 
 **Navigate:**
 
 - `home <ptr_container.html>`_
 - `reference <reference.html>`_
 
-.. raw:: html 
-
-        <hr>
-
-:Copyright:     Thorsten Ottosen 2004-2006. 
+:copyright:     Thorsten Ottosen 2004-2005. 
 
