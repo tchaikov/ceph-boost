@@ -146,7 +146,8 @@ install: build
 
 	# package libboost-doc
 	rm -rf $(htmldir)
-	mkdir -p $(htmldir)
+	mkdir -p $(htmldir) $(htmldir)/more/css_0
+	cp more/css_0/* $(htmldir)/more/css_0
 	cat debian/documentation-files \
 	    | xargs cp --parents --target-directory=$(htmldir)
 	rm -rf $(htmldir)/boost
