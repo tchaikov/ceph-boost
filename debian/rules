@@ -36,8 +36,8 @@ DEB_BUILD_ARCH ?= $(shell dpkg-architecture -qDEB_BUILD_ARCH)
 #GXX=g++-3.4
 #ifneq ($(DEB_BUILD_ARCH), hppa)
 #ifneq ($(DEB_BUILD_ARCH), m68k)
-GCC=gcc
-GXX=g++
+GCC=gcc-4.1
+GXX=g++-4.1
 #endif
 #endif
 
