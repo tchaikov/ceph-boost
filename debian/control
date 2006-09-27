@@ -3,7 +3,7 @@ Section: libs
 Priority: optional
 Maintainer: Debian Boost Team <pkg-boost-devel@lists.alioth.debian.org>
 Uploaders: Steve M. Robbins <smr@debian.org>, Domenico Andreoli <cavok@debian.org>, Christophe Prud'homme <prudhomm@debian.org>
-Build-Depends: debhelper (>= 4), bison, flex, docbook-to-man, xsltproc, doxygen, python2.4-dev, zlib1g-dev, libbz2-dev, libicu34-dev, g++-4.1
+Build-Depends: debhelper (>= 4), bison, flex, docbook-to-man, xsltproc, doxygen, python2.4-dev, zlib1g-dev, libbz2-dev, libicu36-dev, g++-4.1
 Standards-Version: 3.7.2
 
 Package: bcp
@@ -26,6 +26,7 @@ Description: tool for extracting subsets of Boost C++ Libraries
 Package: libboost-dbg
 Architecture: any
 Section: libdevel
+Priority: extra
 Depends: ${shlibs:Depends}
 Suggests: libboost-dev
 Description: Boost C++ Libraries with debug symbols
@@ -276,7 +277,7 @@ Description: regular expression library for C++
 Package: libboost-regex-dev
 Architecture: any
 Section: libdevel
-Depends: libboost-dev (= ${Source-Version}), libboost-regex1.34.0 (= ${Source-Version}), libicu34-dev
+Depends: libboost-dev (= ${Source-Version}), libboost-regex1.34.0 (= ${Source-Version}), libicu36-dev
 Description: regular expression library for C++
  Part of the Boost C++ Libraries collection.
  .
