@@ -21,11 +21,13 @@ namespace boost { namespace parameter { namespace aux {
 struct empty_arg_list;
 struct arg_list_tag;
 
+struct tagged_argument_base {};
+
 // Holds a reference to an argument of type Arg associated with
 // keyword Keyword
     
 template <class Keyword, class Arg>
-struct tagged_argument
+struct tagged_argument : tagged_argument_base
 {
     typedef Keyword key_type;
     typedef Arg value_type;
@@ -38,13 +40,13 @@ struct tagged_argument
     // lookup given that default
     struct binding
     {
-        template <class KW, class Default>
+        template <class KW, class Default, class Reference>
         struct apply
         {
-          typedef typename mpl::if_<
+          typedef typename mpl::eval_if<
                 boost::is_same<KW, key_type>
-              , reference
-              , Default
+              , mpl::if_<Reference, reference, value_type>
+              , mpl::identity<Default>
           >::type type;
         };
     };
@@ -72,7 +74,7 @@ struct tagged_argument
         return value;
     }
 
-# ifdef BOOST_NO_FUNCTION_TEMPLATE_ORDERING
+# if defined(BOOST_NO_FUNCTION_TEMPLATE_ORDERING) || BOOST_WORKAROUND(__BORLANDC__, BOOST_TESTED_AT(0x564))
     template <class KW, class Default>
     Default& get_with_default(default_<KW,Default> const& x, int) const
     {
@@ -86,7 +88,7 @@ struct tagged_argument
     }
 
     template <class KW, class Default>
-    typename mpl::apply_wrap2<binding, KW, Default&>::type
+    typename mpl::apply_wrap3<binding, KW, Default&, mpl::true_>::type
     operator[](default_<KW,Default> const& x) const
     {
         return get_with_default(x, 0L);
@@ -106,9 +108,10 @@ struct tagged_argument
     }
 
     template <class KW, class F>
-    typename mpl::apply_wrap2<
+    typename mpl::apply_wrap3<
         binding,KW
       , typename result_of0<F>::type
+      , mpl::true_
     >::type
     operator[](lazy_default<KW,F> const& x) const
     {
@@ -163,23 +166,12 @@ struct tagged_argument
     typedef arg_list_tag tag; // For dispatching to sequence intrinsics
 };
 
-template <class K, class T>
-char is_tagged_argument_check(tagged_argument<K,T> const*);
-char(&is_tagged_argument_check(...))[2];
-
 // Defines a metafunction, is_tagged_argument, that identifies
-// tagged_argument specializations.
-// MAINTAINER NOTE: Not using BOOST_DETAIL_IS_XXX_DEF here because
-// we need to return true for tagged_argument<K,T> const.
+// tagged_argument specializations and their derived classes.
 template <class T>
 struct is_tagged_argument_aux
-{
-    enum { value =
-        sizeof(is_tagged_argument_check((T*)0)) == 1
-    };
-
-    typedef mpl::bool_<value> type;
-};
+  : is_convertible<T*,tagged_argument_base const*>
+{};
 
 template <class T>
 struct is_tagged_argument

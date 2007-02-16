@@ -177,7 +177,7 @@ main()
     typedef equal_op_first_archetype<> Left;
     typedef input_iterator_archetype<Left> InIter;
     InIter in;
-    function_requires< InputIterator<InIter> >();
+    function_requires< InputIteratorConcept<InIter> >();
     equal_op_second_archetype<> value(dummy_cons);
     std::iterator_traits<InIter>::difference_type
       n = std::count(in, in, value);

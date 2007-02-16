@@ -11,8 +11,8 @@
 // See http://www.boost.org/libs/mpl for documentation.
 
 // $Source: /cvsroot/boost/boost/boost/mpl/aux_/begin_end_impl.hpp,v $
-// $Date: 2006/05/16 13:35:43 $
-// $Revision: 1.9 $
+// $Date: 2006/07/22 15:08:37 $
+// $Revision: 1.8.14.1 $
 
 #include <boost/mpl/begin_end_fwd.hpp>
 #include <boost/mpl/sequence_tag_fwd.hpp>
@@ -24,7 +24,6 @@
 #include <boost/mpl/aux_/config/eti.hpp>
 
 namespace boost { namespace mpl {
-
 
 namespace aux { 
 

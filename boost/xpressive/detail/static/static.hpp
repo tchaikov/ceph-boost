@@ -18,7 +18,6 @@
 #include <boost/xpressive/detail/core/state.hpp>
 #include <boost/xpressive/detail/core/linker.hpp>
 #include <boost/xpressive/detail/core/peeker.hpp>
-#include <boost/xpressive/detail/utility/width.hpp>
 
 // Random thoughts:
 // - must support indirect repeat counts {$n,$m}
@@ -134,15 +133,6 @@ struct static_xpression
 {
     Next next_;
 
-    BOOST_STATIC_CONSTANT(bool, pure = Matcher::pure && Next::pure);
-    BOOST_STATIC_CONSTANT(
-        std::size_t
-      , width = 
-            Matcher::width != unknown_width::value && Next::width != unknown_width::value
-          ? Matcher::width + Next::width
-          : unknown_width::value
-    );
-
     static_xpression(Matcher const &matcher = Matcher(), Next const &next = Next())
       : Matcher(matcher)
       , next_(next)
@@ -178,7 +168,7 @@ struct static_xpression
     template<typename Char>
     void link(xpression_linker<Char> &linker) const
     {
-        linker.accept(*static_cast<Matcher const *>(this), &this->next_);
+        linker.link(*static_cast<Matcher const *>(this), &this->next_);
         this->next_.link(linker);
     }
 
@@ -186,16 +176,25 @@ struct static_xpression
     template<typename Char>
     void peek(xpression_peeker<Char> &peeker) const
     {
-        this->peek_next_(peeker.accept(*static_cast<Matcher const *>(this)), peeker);
+        this->peek_next_(peeker.peek(*static_cast<Matcher const *>(this)), peeker);
     }
 
     // for getting xpression width
-    detail::width get_width() const
+    template<typename BidiIter>
+    std::size_t get_width(state_type<BidiIter> *state) const
     {
-        return this->get_width_(mpl::size_t<width>());
+        // BUGBUG this gets called from the simple_repeat_matcher::match(), so this is slow.
+        // or will the compiler be able to optimize this all away?
+        std::size_t this_width = this->Matcher::get_width(state);
+        if(this_width == unknown_width())
+            return unknown_width();
+        std::size_t that_width = this->next_.get_width(state);
+        if(that_width == unknown_width())
+            return unknown_width();
+        return this_width + that_width;
     }
 
-private:
+private: // hide this
 
     static_xpression &operator =(static_xpression const &);
 
@@ -206,38 +205,37 @@ private:
     }
 
     template<typename Char>
-    void peek_next_(mpl::false_, xpression_peeker<Char> &) const
+    static void peek_next_(mpl::false_, xpression_peeker<Char> &)
     {
-        // no-node
+        // no-op
     }
 
-    template<std::size_t Width>
-    detail::width get_width_(mpl::size_t<Width>) const
-    {
-        return Width;
-    }
-
-    detail::width get_width_(unknown_width) const
-    {
-        // Should only be called in contexts where the width is
-        // known to be fixed.
-        return this->Matcher::get_width() + this->next_.get_width();
-    }
+    using Matcher::width;
+    using Matcher::pure;
 };
 
+// syntactic sugar so this xpression can be treated the same as
+// (a smart pointer to) a dynamic xpression from templates
+template<typename Matcher, typename Next>
+inline static_xpression<Matcher, Next> const *
+get_pointer(static_xpression<Matcher, Next> const &xpr)
+{
+    return &xpr;
+}
+
 ///////////////////////////////////////////////////////////////////////////////
-// make_static
+// make_static_xpression
 //
 template<typename Matcher>
 inline static_xpression<Matcher> const
-make_static(Matcher const &matcher)
+make_static_xpression(Matcher const &matcher)
 {
     return static_xpression<Matcher>(matcher);
 }
 
 template<typename Matcher, typename Next>
 inline static_xpression<Matcher, Next> const
-make_static(Matcher const &matcher, Next const &next)
+make_static_xpression(Matcher const &matcher, Next const &next)
 {
     return static_xpression<Matcher, Next>(matcher, next);
 }
@@ -248,9 +246,6 @@ make_static(Matcher const &matcher, Next const &next)
 struct no_next
   : xpression_base
 {
-    BOOST_STATIC_CONSTANT(std::size_t, width = 0);
-    BOOST_STATIC_CONSTANT(bool, pure = true);
-
     template<typename Char>
     void link(xpression_linker<Char> &) const
     {
@@ -262,10 +257,26 @@ struct no_next
         peeker.fail();
     }
 
-    detail::width get_width() const
+    template<typename BidiIter>
+    static std::size_t get_width(state_type<BidiIter> *)
     {
         return 0;
     }
+};
+
+///////////////////////////////////////////////////////////////////////////////
+// alternates_list
+//
+template<typename Alternates>
+struct alternates_list
+  : Alternates
+{
+    alternates_list(Alternates const &alternates)
+      : Alternates(alternates)
+    {
+    }
+private:
+    alternates_list &operator =(alternates_list const &);
 };
 
 ///////////////////////////////////////////////////////////////////////////////

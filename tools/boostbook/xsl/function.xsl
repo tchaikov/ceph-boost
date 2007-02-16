@@ -1,4 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
+<!--
+   Copyright (c) 2002 Douglas Gregor <doug.gregor -at- gmail.com>
+  
+   Distributed under the Boost Software License, Version 1.0.
+   (See accompanying file LICENSE_1_0.txt or copy at
+   http://www.boost.org/LICENSE_1_0.txt)
+  -->
 <xsl:stylesheet xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
                 version="1.0">
 
@@ -357,7 +364,7 @@
       <!-- Information for this parameter -->
       <xsl:variable name="parameter" select="$parameters[position()=1]"/>
       <xsl:variable name="name">
-        <xsl:if test="$include-names">
+        <xsl:if test="$include-names and $parameter/@name != ''">
           <xsl:text> </xsl:text><xsl:value-of select="$parameter/@name"/>
         </xsl:if>
       </xsl:variable>
@@ -1002,8 +1009,8 @@
 
   <!-- Group member functions together under a category name (synopsis)-->
   <xsl:template match="method-group" mode="synopsis">
+    <xsl:param name="indentation"/>
     <xsl:if test="count(child::*) &gt; 0">
-      <xsl:param name="indentation"/>
       <xsl:text>&#10;</xsl:text>
       <xsl:text>&#10;</xsl:text>
       <xsl:call-template name="indent">

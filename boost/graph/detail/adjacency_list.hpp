@@ -59,14 +59,9 @@
 
 
   Note: it would be nice to merge some of the undirected and
-  bidirectional code... it is aweful similar.
+  bidirectional code... it is awful similar.
  */
 
-
-#if BOOST_WORKAROUND(BOOST_MSVC, < 1300)
-// Stay out of the way of the concept checking class
-# define Graph Graph_
-#endif
 
 namespace boost {
 
@@ -1726,8 +1721,18 @@ namespace boost {
     inline
     typename boost::property_traits<
       typename boost::property_map<typename Config::graph_type, 
+        Property>::type
+    >::reference
+    get(Property p, adj_list_helper<Config, Base>& g, const Key& key) {
+      return get(get(p, g), key);
+    }
+
+    template <class Config, class Base, class Property, class Key>
+    inline
+    typename boost::property_traits<
+      typename boost::property_map<typename Config::graph_type, 
         Property>::const_type
-    >::value_type
+    >::reference
     get(Property p, const adj_list_helper<Config, Base>& g, const Key& key) {
       return get(get(p, g), key);
     }
@@ -2801,11 +2806,6 @@ namespace BOOST_STD_EXTENSION_NAMESPACE {
 #undef stored_edge
 #undef stored_edge_property
 #undef stored_edge_iter
-
-#if BOOST_WORKAROUND(BOOST_MSVC, < 1300)
-// Stay out of the way of the concept checking class
-#undef Graph
-#endif
 
 #endif // BOOST_GRAPH_DETAIL_DETAIL_ADJACENCY_LIST_CCT
 

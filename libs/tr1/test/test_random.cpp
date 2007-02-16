@@ -22,8 +22,8 @@ void check_uniform(T*)
 
    T t;
    result_type r = 0;
-   verify_return_type(t.min(), r);
-   verify_return_type(t.max(), r);
+   verify_return_type((t.min)(), r);
+   verify_return_type((t.max)(), r);
    verify_return_type(t(), r);
 }
 
@@ -44,9 +44,9 @@ public:
    typedef unsigned long result_type;
    result_type operator()()
    { return 0; }
-   result_type min()const
+   result_type min BOOST_PREVENT_MACRO_SUBSTITUTION()const
    { return 0; }
-   result_type max()const
+   result_type max BOOST_PREVENT_MACRO_SUBSTITUTION()const
    { return 0; }
 
    static uniform_random_generator_architype& get()
@@ -71,9 +71,9 @@ public:
    typedef unsigned long result_type;
    result_type operator()()
    { return 0; }
-   result_type min()const
+   result_type min BOOST_PREVENT_MACRO_SUBSTITUTION()const
    { return 0; }
-   result_type max()const
+   result_type max BOOST_PREVENT_MACRO_SUBSTITUTION()const
    { return 0; }
 
    pseudo_random_generator_architype(unsigned long){}
@@ -214,8 +214,8 @@ void check_generator_extended(VG* g)
    typedef typename VG::result_type result_type;
    //verify_return_type((*g)(input_type(0)), result_type(0));
    const VG* cg = g;
-   verify_return_type(cg->min(), result_type(0));
-   verify_return_type(cg->max(), result_type(0));
+   verify_return_type((cg->min)(), result_type(0));
+   verify_return_type((cg->max)(), result_type(0));
 }
 
 int main()
@@ -251,9 +251,13 @@ int main()
    verify_return_type(xorc.base1(), pseudo_random_generator_architype());
    verify_return_type(xorc.base2(), pseudo_random_generator_architype());
 
+#ifndef __SUNPRO_CC
+   // we don't normally allow workarounds in here, but this
+   // class is unsupported on this platform.
    std::tr1::random_device d;
    check_uniform(&d);
    verify_return_type(d.entropy(), double(0));
+#endif
 
    uniform_random_generator_architype& gen = uniform_random_generator_architype::get();
    std::tr1::uniform_int<unsigned long> ui;
@@ -306,8 +310,8 @@ int main()
    BOOST_STATIC_ASSERT((::boost::is_same<std::tr1::uniform_real<>::result_type, double>::value));
    BOOST_STATIC_ASSERT((::boost::is_same<std::tr1::uniform_real<>::input_type, double>::value));
    std::tr1::uniform_real<long double> urd2(0.5L, 1.5L);
-   verify_return_type(urd2.min(), (long double)(0));
-   verify_return_type(urd2.max(), (long double)(0));
+   verify_return_type((urd2.min)(), (long double)(0));
+   verify_return_type((urd2.max)(), (long double)(0));
    check_random_distribution(&urd2);
    BOOST_STATIC_ASSERT((::boost::is_same<std::tr1::uniform_real<long double>::result_type, long double>::value));
    BOOST_STATIC_ASSERT((::boost::is_same<std::tr1::uniform_real<long double>::input_type, long double>::value));
@@ -354,4 +358,6 @@ int main()
    check_generator_extended(&vg3);
    return 0;
 }
+
+
 

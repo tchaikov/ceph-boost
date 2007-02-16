@@ -41,7 +41,15 @@ namespace boost
     std::size_t hash_value(long);
     std::size_t hash_value(unsigned long);
 
-#if !BOOST_WORKAROUND(__DMC__, BOOST_TESTED_AT(0x847))
+#if defined(BOOST_MSVC) && defined(_WIN64)
+    // On 64-bit windows std::size_t is a typedef for unsigned long long, which
+    // isn't due to be supported until Boost 1.35. So add support here.
+    // (Technically, Boost.Hash isn't actually documented as supporting
+    // std::size_t. But it would be pretty silly not to).
+    std::size_t hash_value(std::size_t);
+#endif
+
+#if !BOOST_WORKAROUND(__DMC__, <= 0x848)
     template <class T> std::size_t hash_value(T* const&);
 #else
     template <class T> std::size_t hash_value(T*);
@@ -108,8 +116,20 @@ namespace boost
         return static_cast<std::size_t>(v);
     }
 
+#if defined(_M_X64) && defined(_WIN64)
+    inline std::size_t hash_value(long long v)
+    {
+        return v;
+    }
+
+    inline std::size_t hash_value(unsigned long long v)
+    {
+        return v;
+    }
+#endif
+
     // Implementation by Alberto Barbati and Dave Harris.
-#if !BOOST_WORKAROUND(__DMC__, BOOST_TESTED_AT(0x847))
+#if !BOOST_WORKAROUND(__DMC__, <= 0x848)
     template <class T> std::size_t hash_value(T* const& v)
 #else
     template <class T> std::size_t hash_value(T* v)
@@ -388,7 +408,7 @@ namespace boost
     }
 
     template <class T> struct hash
-        : public hash_detail::hash_impl<boost::is_pointer<T>::value>
+        : public boost::hash_detail::hash_impl<boost::is_pointer<T>::value>
             ::BOOST_NESTED_TEMPLATE inner<T>
     {
     };
@@ -468,7 +488,7 @@ namespace boost
 #endif
     };
 
-#if BOOST_WORKAROUND(__DMC__, BOOST_TESTED_AT(0x847))
+#if BOOST_WORKAROUND(__DMC__, <= 0x848)
     template <class T, unsigned int n> struct hash<T[n]>
         : std::unary_function<T[n], std::size_t>
     {
@@ -479,7 +499,7 @@ namespace boost
     };
 #endif
 
-#elif !BOOST_WORKAROUND(BOOST_MSVC, < 1300)
+#else // BOOST_NO_TEMPLATE_PARTIAL_SPECIALIZATION
 
     // On compilers without partial specialization, boost::hash<T>
     // has already been declared to deal with pointers, so just
@@ -487,6 +507,11 @@ namespace boost
 
     namespace hash_detail
     {
+        template <bool IsPointer>
+        struct hash_impl;
+
+#if !BOOST_WORKAROUND(BOOST_MSVC, < 1300)
+
         template <>
         struct hash_impl<false>
         {
@@ -507,15 +532,12 @@ namespace boost
 #endif
             };
         };
-    }
 
 #else // Visual C++ 6.5
 
     // There's probably a more elegant way to Visual C++ 6.5 to work
     // but I don't know what it is.
 
-    namespace hash_detail
-    {
         template <bool IsConst>
         struct hash_impl_msvc
         {
@@ -560,8 +582,10 @@ namespace boost
             template <class T>
             struct inner : public hash_impl_msvc2<T> {};
         };
+
+#endif // Visual C++ 6.5
     }
-#endif
+#endif  // BOOST_NO_TEMPLATE_PARTIAL_SPECIALIZATION
 }
 
 #endif

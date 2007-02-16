@@ -5,7 +5,7 @@
     
     http://www.boost.org/
 
-    Copyright (c) 2001-2006 Hartmut Kaiser. Distributed under the Boost 
+    Copyright (c) 2001-2007 Hartmut Kaiser. Distributed under the Boost 
     Software License, Version 1.0. (See accompanying file 
     LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
 =============================================================================*/
@@ -566,11 +566,11 @@ public:
     typedef typename lexer::lexer<IteratorT, PositionT>::token_type token_type;
 
     slex_functor(IteratorT const &first_, IteratorT const &last_, 
-            PositionT const &pos_, boost::wave::language_support language)
-    :   first(first_, last_, pos_), language(language), at_eof(false)
+            PositionT const &pos_, boost::wave::language_support language_)
+    :   first(first_, last_, pos_), language(language_), at_eof(false)
     {
         // initialize lexer dfa tables
-        init_lexer(lexer, language);  
+        init_lexer(lexer, language_);  
     }
     virtual ~slex_functor() {}
 

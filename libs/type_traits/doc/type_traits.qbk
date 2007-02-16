@@ -13,7 +13,7 @@
     [authors [authors, various]]
     [category template]
     [category generic]
-    [last-revision $Date: 2006/04/21 09:43:55 $]
+    [last-revision $Date: 2006/12/22 10:09:37 $]
 ]
 
 [def __boost_root ../../../../]
@@ -669,7 +669,7 @@ The first part guarantees the successful compilation of something like this:
    
 and the second part provides the library's users with a mechanism to make the 
 above code work not only for `char`, `int` or other built-in type, 
-but for they own types as well:
+but for their own types as well:
 
    namespace myspace{
       struct MyClass {};
@@ -1707,7 +1707,7 @@ __examples
 expression that evaluates to /true/.]
 
 [:`is_base_of<Base, Base>::value` is an integral constant 
-expression that evaluates to /false/: a class is not it's own base.]
+expression that evaluates to /true/: a class is regarded as it's own base.]
 
 [:`is_base_of<Derived, Base>::value` is an integral constant 
 expression that evaluates to /false/: the arguments are the wrong way round.]
@@ -1979,6 +1979,7 @@ expression that evaluates to /true/.]
 [endsect]
 
 [section:is_function is_function]
+
    template <class T>
    struct is_function : public __tof {};
   
@@ -2017,6 +2018,18 @@ expression that evaluates to /false/: the argument in this case is a pointer
 to a member function.]
 
 [:`is_function<T>::value_type` is the type `bool`.]
+
+[tip Don't confuse function-types with pointers to functions:\n\n
+`typedef int f(double);`\n\n
+defines a function type,\n\n
+`f foo;`\n\n
+declares a prototype for a function of type `f`,\n\n
+`f* pf = foo;`\n
+`f& fr = foo;`\n\n
+declares a pointer and a reference to the function `foo`.\n\n
+If you want to detect whether some type is a pointer-to-function then use:\n\n
+`__is_function<__remove_pointer<T>::type>::value && __is_pointer<T>::value`\n\n
+or for pointers to member functions you can just use __is_member_function_pointer directly.]
 
 [endsect]
 
@@ -2238,6 +2251,7 @@ expression that evaluates to /false/.]
 [endsect]
 
 [section:is_pointer is_pointer]
+
    template <class T>
    struct is_pointer : public __tof {};
   
@@ -2265,6 +2279,13 @@ expression that evaluates to /false/.]
 expression that evaluates to /false/.]
 
 [:`is_pointer<T>::value_type` is the type `bool`.]
+
+[important `is_pointer` detects "real" pointer types only, and /not/ smart pointers.
+Users should not specialise `is_pointer` for smart pointer types, as doing so may cause
+Boost (and other third party) code to fail to function correctly.
+Users wanting a trait to detect smart pointers should create their own. 
+However, note that there is no way in general to auto-magically detect smart pointer types, 
+so such a trait would have to be partially specialised for each supported smart pointer type.]
 
 [endsect]
 
@@ -2852,5 +2873,6 @@ should be directed to boost@lists.boost.org
 www.boost.org/more/mailing_lists.htm#main] for subscription details).
 
 [endsect]
+
 
 

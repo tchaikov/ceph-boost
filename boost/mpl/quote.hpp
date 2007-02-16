@@ -15,8 +15,8 @@
 // See http://www.boost.org/libs/mpl for documentation.
 
 // $Source: /cvsroot/boost/boost/boost/mpl/quote.hpp,v $
-// $Date: 2006/05/03 03:21:36 $
-// $Revision: 1.7 $
+// $Date: 2006/05/03 03:27:58 $
+// $Revision: 1.5.14.2 $
 
 #if !defined(BOOST_MPL_PREPROCESSING_MODE)
 #   include <boost/mpl/void.hpp>

@@ -21,6 +21,7 @@
 #include <boost/iterator/reverse_iterator.hpp>
 #include <boost/mpl/push_front.hpp>
 #include <boost/multi_index/detail/access_specifier.hpp>
+#include <boost/multi_index/detail/index_node_base.hpp>
 #include <boost/multi_index/detail/rnd_node_iterator.hpp>
 #include <boost/multi_index/detail/rnd_index_node.hpp>
 #include <boost/multi_index/detail/rnd_index_ops.hpp>
@@ -407,7 +408,7 @@ public:
     BOOST_MULTI_INDEX_CHECK_DEREFERENCEABLE_ITERATOR(i);
     BOOST_MULTI_INDEX_CHECK_IS_OWNER(i,x);
     BOOST_MULTI_INDEX_RND_INDEX_CHECK_INVARIANT;
-    if(x==*this)relocate(position,i);
+    if(&x==this)relocate(position,i);
     else{
       if(insert(position,*i).second){
 
@@ -438,7 +439,7 @@ public:
     BOOST_MULTI_INDEX_CHECK_IS_OWNER(last,x);
     BOOST_MULTI_INDEX_CHECK_VALID_RANGE(first,last);
     BOOST_MULTI_INDEX_RND_INDEX_CHECK_INVARIANT;
-    if(x==*this)relocate(position,first,last);
+    if(&x==this)relocate(position,first,last);
     else{
       size_type n=0;
       BOOST_TRY{
@@ -500,7 +501,7 @@ public:
 
   void merge(random_access_index<SuperMeta,TagList>& x)
   {
-    if(*this!=x){
+    if(this!=&x){
       BOOST_MULTI_INDEX_RND_INDEX_CHECK_INVARIANT;
       size_type s=size();
       splice(end(),x);
@@ -512,7 +513,7 @@ public:
   template <typename Compare>
   void merge(random_access_index<SuperMeta,TagList>& x,Compare comp)
   {
-    if(*this!=x){
+    if(this!=&x){
       BOOST_MULTI_INDEX_RND_INDEX_CHECK_INVARIANT;
       size_type s=size();
       splice(end(),x);

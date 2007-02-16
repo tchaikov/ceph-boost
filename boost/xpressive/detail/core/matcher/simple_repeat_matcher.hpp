@@ -64,19 +64,15 @@ namespace boost { namespace xpressive { namespace detail
 
         Xpr xpr_;
         unsigned int min_, max_;
-        std::size_t width_;
 
-        simple_repeat_matcher(Xpr const &xpr, unsigned int min, unsigned int max, std::size_t width)
+        simple_repeat_matcher(Xpr const &xpr, unsigned int min, unsigned int max)
           : xpr_(xpr)
           , min_(min)
           , max_(max)
-          , width_(width)
         {
             // it is the job of the parser to make sure this never happens
             BOOST_ASSERT(min <= max);
             BOOST_ASSERT(0 != max);
-            BOOST_ASSERT(0 != width && unknown_width() != width);
-            BOOST_ASSERT(Xpr::width == unknown_width() || Xpr::width == width);
         }
 
         template<typename BidiIter, typename Next>
@@ -91,9 +87,15 @@ namespace boost { namespace xpressive { namespace detail
         template<typename BidiIter, typename Next>
         bool match_(state_type<BidiIter> &state, Next const &next, greedy_slow_tag) const
         {
-            int const diff = -static_cast<int>(Xpr::width == unknown_width::value ? this->width_ : Xpr::width);
+            int const diff = -static_cast<int>(this->xpr_.get_width(&state));
+            BOOST_ASSERT(diff != -static_cast<int>(unknown_width()));
             unsigned int matches = 0;
             BidiIter const tmp = state.cur_;
+
+            if(0 == diff)
+            {
+                return this->xpr_.match(state) && next.match(state);
+            }
 
             // greedily match as much as we can
             while(matches < this->max_ && this->xpr_.match(state))
@@ -128,6 +130,11 @@ namespace boost { namespace xpressive { namespace detail
         {
             BidiIter const tmp = state.cur_;
             unsigned int matches = 0;
+
+            if(0 == this->xpr_.get_width(&state))
+            {
+                return this->xpr_.match(state) && next.match(state);
+            }
 
             for(; matches < this->min_; ++matches)
             {
@@ -181,13 +188,14 @@ namespace boost { namespace xpressive { namespace detail
             }
         }
 
-        detail::width get_width() const
+        template<typename BidiIter>
+        std::size_t get_width(state_type<BidiIter> *state) const
         {
             if(this->min_ != this->max_)
             {
-                return unknown_width::value;
+                return unknown_width();
             }
-            return this->min_ * this->width_;
+            return this->min_ * this->xpr_.get_width(state);
         }
 
     private:

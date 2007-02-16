@@ -3,7 +3,7 @@
 
     http://www.boost.org/
 
-    Copyright (c) 2001-2006 Hartmut Kaiser. Distributed under the Boost
+    Copyright (c) 2001-2007 Hartmut Kaiser. Distributed under the Boost
     Software License, Version 1.0. (See accompanying file
     LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
 =============================================================================*/
@@ -12,6 +12,7 @@
 #define CPP_LITERAL_GRAMMAR_GEN_HPP_67794A6C_468A_4AAB_A757_DEDDB182F5A0_INCLUDED
 
 #include <boost/wave/wave_config.hpp>
+#include <boost/wave/grammars/cpp_value_error.hpp>
 
 // this must occur after all of the includes and before any code appears
 #ifdef BOOST_HAS_ABI_HEADERS
@@ -56,7 +57,7 @@ struct BOOST_WAVE_DECL intlit_grammar_gen {
 template <typename TokenT>
 struct BOOST_WAVE_DECL chlit_grammar_gen {
 
-    static unsigned int evaluate(TokenT const &tok);
+    static unsigned int evaluate(TokenT const &tok, value_error& status);
 };
 
 ///////////////////////////////////////////////////////////////////////////////

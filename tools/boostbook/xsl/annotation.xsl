@@ -1,14 +1,22 @@
 <?xml version="1.0" encoding="utf-8"?>
+<!--
+   Copyright (c) 2002 Douglas Gregor <doug.gregor -at- gmail.com>
+  
+   Distributed under the Boost Software License, Version 1.0.
+   (See accompanying file LICENSE_1_0.txt or copy at
+   http://www.boost.org/LICENSE_1_0.txt)
+  -->
 <xsl:stylesheet xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
                 version="1.0">
   <xsl:key name="classes" match="class|struct|union" use="@name"/>
   <xsl:key name="methods" match="method|overloaded-method" use="@name"/>
   <xsl:key name="functions" match="function|overloaded-function" use="@name"/>
   <xsl:key name="enums" match="enum" use="@name"/>
+  <xsl:key name="concepts" match="concept" use="@name"/>
   <xsl:key name="libraries" match="library" use="@name"/>
   <xsl:key name="macros" match="macro" use="@name"/>
   <xsl:key name="headers" match="header" use="@name"/>
-  <xsl:key name="named-entities" match="class|struct|union|function|overloaded-function|macro|library|namespace/data-member|header/data-member|*[attribute::id]" use="@name|@id"/>
+  <xsl:key name="named-entities" match="class|struct|union|concept|function|overloaded-function|macro|library|namespace/data-member|header/data-member|*[attribute::id]" use="@name|@id"/>
 
   <xsl:template match="function|overloaded-function" mode="generate.id">
     <xsl:variable name="name" select="normalize-space(@name)"/>

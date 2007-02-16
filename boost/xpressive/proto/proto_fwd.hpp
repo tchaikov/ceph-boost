@@ -11,14 +11,8 @@
 
 #include <boost/mpl/bool.hpp>
 #include <boost/mpl/apply_fwd.hpp>
+#include <boost/spirit/fusion/sequence/tuple_forward.hpp>
 #include <boost/preprocessor/repetition/enum_params_with_a_default.hpp>
-
-#ifdef BOOST_PROTO_FUSION_V2
-# include <boost/fusion/tuple/tuple_fwd.hpp>
-# define FUSION_MAX_TUPLE_SIZE FUSION_MAX_VECTOR_SIZE
-#else
-# include <boost/spirit/fusion/sequence/tuple_forward.hpp>
-#endif
 
 #ifndef BOOST_PROTO_MAX_ARITY
 # define BOOST_PROTO_MAX_ARITY FUSION_MAX_TUPLE_SIZE
@@ -26,11 +20,6 @@
 
 namespace boost { namespace proto
 {
-    #ifdef BOOST_PROTO_FUSION_V2
-    typedef fusion::void_ void_;
-    #else
-    typedef fusion::void_t void_;
-    #endif
 
     ///////////////////////////////////////////////////////////////////////////////
     // Operator tags
@@ -95,21 +84,33 @@ namespace boost { namespace proto
     template<typename Tag>
     struct is_nary;
 
-    template<typename Arg, typename Node>
+    template<typename Arg, typename Op>
     struct unary_op;
 
-    template<typename Left, typename Right, typename Node>
+    template<typename Left, typename Right, typename Op>
     struct binary_op;
 
-    template<typename Node, typename Param = void>
+    template<typename Op, typename Param = void>
     struct op_proxy;
 
     template
     <
         typename Fun
-      , BOOST_PP_ENUM_PARAMS_WITH_A_DEFAULT(BOOST_PROTO_MAX_ARITY, typename A, void_)
+      , BOOST_PP_ENUM_PARAMS_WITH_A_DEFAULT(BOOST_PROTO_MAX_ARITY, typename A, fusion::void_t)
     >
     struct nary_op;
+
+    template<typename Op, typename Arg>
+    unary_op<Arg, Op> const
+    make_op(Arg const &arg);
+
+    template<typename Op, typename Left, typename Right>
+    binary_op<Left, Right, Op> const
+    make_op(Left const &left, Right const &right);
+
+    template<typename Arg>
+    unary_op<Arg, noop_tag> const
+    noop(Arg const &arg);
 
     struct op_root;
 
@@ -122,41 +123,29 @@ namespace boost { namespace proto
     template<typename T, bool IsOp = is_op<T>::value>
     struct as_op;
 
-    template<typename Node>
+    template<typename Op>
     struct op_base;
 
-    template<typename Node, typename Arg>
-    unary_op<Arg, Node> const
-    make_op(Arg const &arg);
+    template<typename T>
+    struct value_type;
 
-    template<typename Node, typename Left, typename Right>
-    binary_op<Left, Right, Node> const
-    make_op(Left const &left, Right const &right);
-
-    template<typename Arg>
-    typename as_op<Arg>::reference
-    noop(Arg const &arg);
-
-    template<typename Node>
+    template<typename Op>
     struct arg_type;
 
-    template<typename Node>
+    template<typename Op>
     struct left_type;
 
-    template<typename Node>
+    template<typename Op>
     struct right_type;
 
-    template<typename Node, bool IsOp = is_op<Node>::value>
+    template<typename Op>
     struct tag_type;
 
     template<typename OpTag, typename DomainTag, typename Dummy = void>
     struct compiler;
 
-    template<typename DomainTag>
+    template<typename OpTag, typename DomainTag, bool RightFirst = true>
     struct fold_compiler;
-
-    template<typename DomainTag>
-    struct reverse_fold_compiler;
 
     template<typename Lambda, typename DomainTag, typename Compiler = void>
     struct transform_compiler;
@@ -169,9 +158,6 @@ namespace boost { namespace proto
 
     template<typename Lambda, typename Map>
     struct switch_compiler;
-
-    template<typename DomainTag>
-    struct pass_through_compiler;
 
     struct error_compiler;
 
@@ -192,21 +178,21 @@ namespace boost { namespace proto
     template<typename Predicate, typename IfTransform, typename ElseTransform = identity_transform>
     struct conditional_transform;
 
-    template<typename Node>
-    typename arg_type<Node>::const_reference arg(Node const &node);
+    template<typename Op>
+    typename arg_type<Op>::const_reference arg(Op const &op);
 
-    template<typename Node>
-    typename left_type<Node>::const_reference left(Node const &node);
+    template<typename Op>
+    typename left_type<Op>::const_reference left(Op const &op);
 
-    template<typename Node>
-    typename right_type<Node>::const_reference right(Node const &node);
+    template<typename Op>
+    typename right_type<Op>::const_reference right(Op const &op);
 
-    template<typename Node, typename State, typename Visitor, typename DomainTag>
+    template<typename Op, typename State, typename Visitor, typename DomainTag>
     struct compile_result;
 
-    template<typename Node, typename State, typename Visitor, typename DomainTag>
-    typename compile_result<Node, State, Visitor, DomainTag>::type const
-    compile(Node const &node, State const &state, Visitor &visitor, DomainTag tag_type);
+    template<typename Op, typename State, typename Visitor, typename DomainTag>
+    typename compile_result<Op, State, Visitor, DomainTag>::type const
+    compile(Op const &op, State const &state, Visitor &visitor, DomainTag tag_type);
 
 }} // namespace boost::proto
 

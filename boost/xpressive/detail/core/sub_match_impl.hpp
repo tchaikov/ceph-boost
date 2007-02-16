@@ -18,10 +18,6 @@
 namespace boost { namespace xpressive { namespace detail
 {
 
-// TODO: sub_match_impl is a POD IFF BidiIter is POD. Pool allocation
-// of them can be made more efficient if they are. Or maybe all they
-// need is trivial constructor/destructor. (???)
-
 ///////////////////////////////////////////////////////////////////////////////
 // sub_match_impl
 //

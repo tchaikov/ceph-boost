@@ -18,7 +18,7 @@
 
 #include <iterator>
 #include <boost/assert.hpp>
-#include <boost/intrusive_ptr.hpp>
+#include <boost/shared_ptr.hpp>
 #include <boost/iterator_adaptors.hpp>
 #if BOOST_ITERATOR_ADAPTORS_VERSION >= 0x0200
 # include <boost/iterator/filter_iterator.hpp>
@@ -31,7 +31,6 @@
 #include <boost/xpressive/detail/core/action_state.hpp>
 #include <boost/xpressive/detail/utility/literals.hpp>
 #include <boost/xpressive/detail/utility/algorithm.hpp>
-#include <boost/xpressive/detail/utility/counted_base.hpp>
 
 namespace boost { namespace xpressive { namespace detail
 {
@@ -41,7 +40,6 @@ namespace boost { namespace xpressive { namespace detail
 //
 template<typename BidiIter>
 struct results_extras
-  : counted_base<results_extras<BidiIter> >
 {
     sequence_stack<sub_match_impl<BidiIter> > sub_match_stack_;
     results_cache<BidiIter> results_cache_;
@@ -434,7 +432,7 @@ private:
     {
         if(!this->extras_ptr_)
         {
-            this->extras_ptr_ = new extras_type;
+            this->extras_ptr_.reset(new extras_type);
         }
 
         return *this->extras_ptr_;
@@ -452,6 +450,13 @@ private:
         this->suffix_.first = (*this)[ 0 ].second;
         this->suffix_.second = end;
         this->suffix_.matched = this->suffix_.first != this->suffix_.second;
+
+        typename nested_results_type::iterator ibegin = this->nested_results_.begin();
+        typename nested_results_type::iterator iend = this->nested_results_.end();
+        for( ; ibegin != iend; ++ibegin )
+        {
+            ibegin->set_prefix_suffix_(begin, end);
+        }
     }
 
     /// INTERNAL ONLY
@@ -464,6 +469,13 @@ private:
     void set_base_(BidiIter base)
     {
         this->base_ = base;
+
+        typename nested_results_type::iterator ibegin = this->nested_results_.begin();
+        typename nested_results_type::iterator iend = this->nested_results_.end();
+        for( ; ibegin != iend; ++ibegin )
+        {
+            ibegin->set_base_(base);
+        }
     }
 
     regex_id_type regex_id_;
@@ -473,7 +485,7 @@ private:
     sub_match<BidiIter> suffix_;
     nested_results_type nested_results_;
     detail::action_state action_state_;
-    intrusive_ptr<extras_type> extras_ptr_;
+    shared_ptr<extras_type> extras_ptr_;
 };
 
 ///////////////////////////////////////////////////////////////////////////////

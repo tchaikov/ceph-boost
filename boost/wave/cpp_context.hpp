@@ -4,7 +4,7 @@
     
     http://www.boost.org/
 
-    Copyright (c) 2001-2006 Hartmut Kaiser. Distributed under the Boost
+    Copyright (c) 2001-2007 Hartmut Kaiser. Distributed under the Boost
     Software License, Version 1.0. (See accompanying file
     LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
 =============================================================================*/
@@ -68,10 +68,6 @@ namespace wave {
 //                      callbacks. This template parameter is optional and
 //                      defaults to the
 //                          context_policies::default_preprocessing_hooks
-//                      type.
-//      WhitespaceT     The is the whitespace handling policy. This template 
-//                      parameter is optional and defaults to the
-//                          context_policies::eat_whitespace<token_type>
 //                      type.
 //
 ///////////////////////////////////////////////////////////////////////////////
@@ -140,7 +136,11 @@ public:
         macros.init_predefined_macros(fname);
         includes.init_initial_path();
     }
-
+    
+// default copy constructor
+// default assignment operator
+// default destructor
+    
 // iterator interface
     iterator_type begin() 
     { 
@@ -153,19 +153,19 @@ public:
         }
         return iterator_type(*this, first, last, position_type(fname.c_str())); 
     }
-	  iterator_type begin(
-		  target_iterator_type const &first_, 
-		  target_iterator_type const &last_) 
-	  { 
-		    std::string fname(filename);
-		    if (filename != "<Unknown>" && filename != "<stdin>") {
-			      using namespace boost::filesystem;
-			      path fpath(complete(path(filename)));
-			      fname = fpath.string();
-			      includes.set_current_directory(fname.c_str());
-		    }
-		    return iterator_type(*this, first_, last_, position_type(fname.c_str())); 
-	  }
+    iterator_type begin(
+        target_iterator_type const &first_, 
+        target_iterator_type const &last_) 
+    { 
+        std::string fname(filename);
+        if (filename != "<Unknown>" && filename != "<stdin>") {
+            using namespace boost::filesystem;
+            path fpath(complete(path(filename)));
+            fname = fpath.string();
+            includes.set_current_directory(fname.c_str());
+        }
+        return iterator_type(*this, first_, last_, position_type(fname.c_str())); 
+    }
     iterator_type end() const 
         { return iterator_type(); }
 
@@ -292,19 +292,19 @@ protected:
 //
 ///////////////////////////////////////////////////////////////////////////////
     template <typename IteratorT2>
-    token_type expand_tokensequence(IteratorT2 &first, IteratorT2 const &last, 
+    token_type expand_tokensequence(IteratorT2 &first_, IteratorT2 const &last_, 
         token_sequence_type &pending, token_sequence_type &expanded, 
         bool expand_undefined = false)
     {
-        return macros.expand_tokensequence(first, last, pending, expanded, 
+        return macros.expand_tokensequence(first_, last_, pending, expanded, 
             expand_undefined);
     }
 
     template <typename IteratorT2>
-    void expand_whole_tokensequence(IteratorT2 &first, IteratorT2 const &last, 
+    void expand_whole_tokensequence(IteratorT2 &first_, IteratorT2 const &last_, 
         token_sequence_type &expanded, bool expand_undefined = true)
     {
-        macros.expand_whole_tokensequence(expanded, first, last, 
+        macros.expand_whole_tokensequence(expanded, first_, last_, 
             expand_undefined);
 
     // remove any contained placeholder
@@ -321,13 +321,21 @@ public:
         { return current_filename; }
 
 // maintain the list of known headers containing #pragma once 
-    bool has_pragma_once(std::string const &filename)
-        { return includes.has_pragma_once(filename); }
-    bool add_pragma_once_header(std::string const &filename,
+    bool has_pragma_once(std::string const &filename_)
+        { return includes.has_pragma_once(filename_); }
+    bool add_pragma_once_header(std::string const &filename_,
             std::string const& guard_name = "__BOOST_WAVE_PRAGMA_ONCE__")
-        { return includes.add_pragma_once_header(filename, guard_name); }
+        { return includes.add_pragma_once_header(filename_, guard_name); }
 #endif 
 
+// forwarding functions for the context policy hooks    
+    template <typename ContainerT>
+    bool interpret_pragma(ContainerT &pending, token_type const &option, 
+        ContainerT const &values, token_type const &act_token)
+    {
+        return hooks.interpret_pragma(*this, pending, option, values, act_token);
+    }
+    
 #if BOOST_WAVE_SERIALIZATION != 0
 public:
     BOOST_STATIC_CONSTANT(unsigned int, version = 0x10);

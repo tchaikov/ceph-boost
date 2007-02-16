@@ -1,3 +1,9 @@
+# Copyright (c) 2002 Trustees of Indiana University
+#
+# Distributed under the Boost Software License, Version 1.0.
+# (See accompanying file LICENSE_1_0.txt or copy at
+# http://www.boost.org/LICENSE_1_0.txt)
+
 # Define SGB (stanford graph base top level directory) and 
 # LEDA (also top level directory) at the command line of jam using -s
 
@@ -52,12 +58,16 @@ test-suite graph_test :
 
 
     [ run graphviz_test.cpp 
-            /boost/test//boost_test_exec_monitor 
-            ../build//bgl-viz ]
+            /boost/test//boost_test_exec_monitor/<link>static 
+            ../build//boost_graph ]
 
     [ run gursoy_atun_layout_test.cpp ]
 
     [ run layout_test.cpp : : : <test-info>always_show_run_output <toolset>intel:<debug-symbols>off ]
+
+    [ run serialize.cpp 
+          ../../serialization/build//boost_serialization
+      : : : ]
 
     [ compile reverse_graph_cc.cpp ] 
 

@@ -14,10 +14,6 @@
 #include <boost/filesystem/convenience.hpp>
 #include "./actions.hpp"
 #include "./utils.hpp"
-#include "./markups.hpp"
-#include "./actions_class.hpp"
-#include "../block.hpp"
-#include "../phrase.hpp"
 
 #if (defined(BOOST_MSVC) && (BOOST_MSVC <= 1310))
 #pragma warning(disable:4355)
@@ -25,59 +21,6 @@
 
 namespace quickbook
 {
-    collector::collector()
-        : main(default_)
-        , top(default_)
-    {
-    }
-
-    collector::collector(std::stringstream& out)
-        : main(out) 
-        , top(out) 
-    {
-    }
-    
-    collector::~collector()
-    {
-        BOOST_ASSERT(streams.empty()); // assert there are no more pushes than pops!!!
-    }
-    
-    std::ostream& 
-    collector::get() const
-    {
-        return top.get();
-    }
-    
-    std::string
-    collector::str() const
-    {
-        return top.get().str();
-    }
-    
-    void 
-    collector::str(std::string const& s)
-    {
-        top.get().str(s);
-    }
-    
-    void collector::push()
-    {
-        streams.push(new std::stringstream());
-        top = boost::ref(*streams.top());
-    }
-    
-    void collector::pop()
-    {
-        BOOST_ASSERT(!streams.empty());
-        delete streams.top();
-        streams.pop();
-
-        if (streams.empty())
-            top = boost::ref(main);
-        else
-            top = boost::ref(*streams.top());
-    }
-
     void error_action::operator()(iterator const& first, iterator const& /*last*/) const
     {
         boost::spirit::file_position const pos = first.get_position();
@@ -87,82 +30,49 @@ namespace quickbook
 
     void phrase_action::operator()(iterator const& first, iterator const& last) const
     {
-        std::string str = phrase.str();
-        detail::convert_nbsp(str);
-        phrase.str(std::string());
-        out << pre << str << post;
-    }
-
-    void header_action::operator()(iterator const& first, iterator const& last) const
-    {
-        std::string str = phrase.str();
-        detail::convert_nbsp(str);
-        phrase.str(std::string());
-
-        if (qbk_version_n < 103) // version 1.2 and below
+        if (out)
         {
-            out << "<anchor id=\""
-                << section_id << '.'
-                << detail::make_identifier(str.begin(), str.end())
-                << "\" />"
-                << pre << str << post
-                ;
-        }
-        else // version 1.3 and above
-        {
-            std::string anchor = 
-                library_id + '.' + qualified_section_id + '.' +
-                detail::make_identifier(str.begin(), str.end());
-
-            out << "<anchor id=\"" << anchor << "\"/>"
-                << pre 
-                << "<link linkend=\"" << anchor << "\">"
-                << str 
-                << "</link>"
-                << post
-                ;
+            std::string str = phrase.str();
+            detail::convert_nbsp(str);
+            phrase.str(std::string());
+            out << pre << str << post;
         }
     }
 
-    void generic_header_action::operator()(iterator const& first, iterator const& last) const
+    void anchored_phrase_action::operator()(iterator const& first, iterator const& last) const
     {
-        int level_ = section_level + 2;     // section_level is zero-based. We need to use a 
-                                            // 0ne-based heading which is one greater
-                                            // than the current. Thus: section_level + 2.
-        if (level_ > 6)                     // The max is h6, clip it if it goes 
-            level_ = 6;                     // further than that
-        std::string str = phrase.str();
-        detail::convert_nbsp(str);
-
-        std::string anchor = 
-            library_id + '.' + qualified_section_id + '.' +
-            detail::make_identifier(str.begin(), str.end());
-
-        phrase.str(std::string());
-        out 
-            << "<anchor id=\"" << anchor << "\"/>"
-            << "<bridgehead renderas=\"sect" << level_ << "\">"
-            << "<link linkend=\"" << anchor << "\">"
-            << str 
-            << "</link>"
-            << "</bridgehead>"
-            ;
+        if (out)
+        {
+            std::string str = phrase.str();
+            detail::convert_nbsp(str);
+            if (qbk_version_n < 103) // version 1.2 and below
+            {
+                out << "<anchor id=\""
+                    << section_id << '.'
+                    << detail::make_identifier(str.begin(), str.end())
+                    << "\" />";
+            }
+            else // version 1.3 and above
+            {
+                out << "<anchor id=\""
+                    << library_id << '.' << qualified_section_id << '.'
+                    << detail::make_identifier(str.begin(), str.end())
+                    << "\" />";
+            }
+            phrase.str(std::string());
+            out << pre << str << post;
+        }
     }
 
     void simple_phrase_action::operator()(iterator first, iterator const& last) const
     {
-        out << pre;
-        std::string str(first, last);
-        if (std::string const* ptr = find(macro, str.c_str()))
+        if (out)
         {
-            out << *ptr;
-        }
-        else
-        {
+            out << pre;
             while (first != last)
-                detail::print_char(*first++, out.get());
+                detail::print_char(*first++, out);
+            out << post;
         }
-        out << post;
     }
 
     void list_action::operator()(iterator const& first, iterator const& last) const
@@ -181,7 +91,7 @@ namespace quickbook
                 out << std::string("\n</listitem>");
         }
 
-        list_indent = -1; // reset
+        indent = -1; // reset
     }
 
     void list_format_action::operator()(iterator first, iterator const& last) const
@@ -205,15 +115,15 @@ namespace quickbook
         char mark = *first;
         BOOST_ASSERT(mark == '#' || mark == '*'); // expecting a mark
 
-        if (list_indent == -1) // the very start
+        if (indent == -1) // the very start
         {
             BOOST_ASSERT(new_indent == 0);
         }
 
-        if (new_indent > list_indent)
+        if (new_indent > indent)
         {
-            list_indent = new_indent;
-            list_marks.push(mark_type(mark, list_indent));
+            indent = new_indent;
+            list_marks.push(mark_type(mark, indent));
             if (list_marks.size() > 1)
             {
                 // Make this new list a child of the previous list.
@@ -231,12 +141,12 @@ namespace quickbook
             out << std::string((mark == '#') ? "<orderedlist>\n" : "<itemizedlist>\n");
         }
 
-        else if (new_indent < list_indent)
+        else if (new_indent < indent)
         {
             BOOST_ASSERT(!list_marks.empty());
-            list_indent = new_indent;
+            indent = new_indent;
 
-            while (!list_marks.empty() && (list_indent < list_marks.top().second))
+            while (!list_marks.empty() && (indent < list_marks.top().second))
             {
                 char mark = list_marks.top().first;
                 list_marks.pop();
@@ -246,7 +156,7 @@ namespace quickbook
             }
         }
 
-        if (mark != list_marks.top().first) // new_indent == list_indent
+        if (mark != list_marks.top().first) // new_indent == indent
         {
             boost::spirit::file_position const pos = first.get_position();
             detail::outerr(pos.file,pos.line)
@@ -258,23 +168,30 @@ namespace quickbook
 
     void span::operator()(iterator first, iterator const& last) const
     {
-        out << "<phrase role=\"" << name << "\">";
-        while (first != last)
-            detail::print_char(*first++, out.get());
-        out << "</phrase>";
+        if (out)
+        {
+            out << "<phrase role=\"" << name << "\">";
+            while (first != last)
+                detail::print_char(*first++, out);
+            out << "</phrase>";
+        }
     }
 
     void unexpected_char::operator()(char) const
     {
-        out << '#'; // print out an unexpected character
+        if (out)
+            out << '#'; // print out an unexpected character
     }
 
     void anchor_action::operator()(iterator first, iterator const& last) const
     {
-        out << "<anchor id=\"";
-        while (first != last)
-            detail::print_char(*first++, out.get());
-        out << "\" />\n";
+        if (out)
+        {
+            out << "<anchor id=\"";
+            while (first != last)
+                detail::print_char(*first++, out);
+            out << "\" />\n";
+        }
     }
 
     void do_macro_action::operator()(std::string const& str) const
@@ -299,14 +216,19 @@ namespace quickbook
 
     void space::operator()(char ch) const
     {
-
-        detail::print_space(ch, out.get());
+        if (out)
+        {
+            detail::print_space(ch, out);
+        }
     }
 
     void space::operator()(iterator first, iterator const& last) const
     {
-        while (first != last)
-            detail::print_space(*first++, out.get());
+        if (out)
+        {
+            while (first != last)
+                detail::print_space(*first++, out);
+        }
     }
 
     void pre_escape_back::operator()(iterator const& first, iterator const& last) const
@@ -323,41 +245,44 @@ namespace quickbook
 
     void code_action::operator()(iterator const& first, iterator const& last) const
     {
-        std::string save = phrase.str();
-        phrase.str(std::string());
-
-        // preprocess the code section to remove the initial indentation
-        std::string program_(first, last);
-        detail::unindent(program_);
-
-        // $$$ fix me $$$ this is wasteful. we have to convert
-        // back to a vector<char> so we can use the same iterator type 
-        // used by the rest of the system, otherwise, it is wasteful 
-        // of function template instantiations
-
-        std::vector<char> program(program_.begin(), program_.end());
-        iterator first_(program.begin(), program.end());
-        iterator last_(program.end(), program.end());
-        first_.set_position(first.get_position());
-
-        // print the code with syntax coloring
-        if (source_mode == "c++")
+        if (out)
         {
-            parse(first_, last_, cpp_p);
-        }
-        else if (source_mode == "python")
-        {
-            parse(first_, last_, python_p);
-        }
-        
-        std::string str = temp.str();
-        temp.str(std::string());
-        phrase.str(std::string());
-        phrase << save;
+            std::string save = phrase.str();
+            phrase.str(std::string());
 
-        out << "<programlisting>\n";
-        out << str;
-        out << "</programlisting>\n";
+            // preprocess the code section to remove the initial indentation
+            std::string program_(first, last);
+            detail::unindent(program_);
+
+            // $$$ fix me $$$ this is wasteful. we have to convert
+            // back to a vector<char> so we can use the same iterator type 
+            // used by the rest of the system, otherwise, it is wasteful 
+            // of function template instantiations
+
+            std::vector<char> program(program_.begin(), program_.end());
+            iterator first_(program.begin(), program.end());
+            iterator last_(program.end(), program.end());
+            first_.set_position(first.get_position());
+
+            // print the code with syntax coloring
+            if (source_mode == "c++")
+            {
+                parse(first_, last_, cpp_p);
+            }
+            else if (source_mode == "python")
+            {
+                parse(first_, last_, python_p);
+            }
+            
+            std::string str = temp.str();
+            temp.str(std::string());
+            phrase.str(std::string());
+            phrase << save;
+
+            out << "<programlisting>\n";
+            out << str;
+            out << "</programlisting>\n";
+        }
     }
 
     void inline_code_action::operator()(iterator const& first, iterator const& last) const
@@ -396,12 +321,12 @@ namespace quickbook
 
     void plain_char_action::operator()(char ch) const
     {
-        detail::print_char(ch, phrase.get());
+        detail::print_char(ch, phrase);
     }
 
     void plain_char_action::operator()(iterator const& first, iterator const& /*last*/) const
     {
-        detail::print_char(*first, phrase.get());
+        detail::print_char(*first, phrase);
     }
 
     void image_action::operator()(iterator first, iterator const& last) const
@@ -412,175 +337,32 @@ namespace quickbook
 
         phrase << "<imageobject><imagedata fileref=\"";
         while (first != last)
-            detail::print_char(*first++, phrase.get());
+            detail::print_char(*first++, phrase);
         phrase << "\"></imagedata></imageobject>";
 
         // Also add a textobject -- use the basename of the image file.
         // This will mean we get "alt" attributes of the HTML img.
         phrase << "<textobject><phrase>";
-        detail::print_string(fs::basename(img_path), phrase.get());
+        detail::print_string(fs::basename(img_path), phrase);
         phrase << "</phrase></textobject>";
 
         phrase << "</inlinemediaobject>";
     }
 
-    void macro_identifier_action::operator()(iterator const& first, iterator const& last) const
+    void indentifier_action::operator()(iterator const& first, iterator const& last) const
     {
         actions.macro_id.assign(first, last);
-        actions.macro_phrase_save = actions.phrase.str();
+        actions.phrase_save = actions.phrase.str();
         actions.phrase.str(std::string());
     }
 
-    void macro_definition_action::operator()(iterator const& first, iterator const& last) const
+    void macro_def_action::operator()(iterator const& first, iterator const& last) const
     {
         actions.macro.add(
             actions.macro_id.begin()
           , actions.macro_id.end()
           , actions.phrase.str());
-        actions.phrase.str(actions.macro_phrase_save);
-    }
-
-    void template_body_action::operator()(iterator const& first, iterator const& last) const
-    {
-        BOOST_ASSERT(actions.template_info.size());
-        actions.template_info.push_back(std::string(first, last));
-        actions.templates.add(
-            actions.template_info[0].begin()
-          , actions.template_info[0].end()
-          , boost::make_tuple(actions.template_info, first.get_position()));
-        actions.template_info.clear();
-    }
-
-    void do_template_action::operator()(iterator const& first, iterator const&) const
-    {
-        boost::spirit::file_position const pos = first.get_position();
-        ++actions.template_depth;
-        if (actions.template_depth > actions.max_template_depth)
-        {
-            detail::outerr(pos.file,pos.line)
-                << "Infinite loop detected" << std::endl;
-            --actions.template_depth;
-            return;
-        }
-        
-        std::string result;
-        actions.push(); // scope the actions' states
-        {
-            actions.phrase.str(std::string()); // clear the phrase
-            
-            simple_phrase_grammar<quickbook::actions> phrase_p(actions);
-            block_grammar<quickbook::actions, true> block_p(actions);
-
-            template_symbol const* symbol = 
-                find(actions.templates, actions.template_info[0].c_str());
-            BOOST_ASSERT(symbol);
-            
-            std::vector<std::string> template_ = boost::get<0>(*symbol);
-            boost::spirit::file_position template_pos = boost::get<1>(*symbol);
-
-            std::vector<std::string> template_info;
-            std::swap(template_info, actions.template_info);
-            
-            if (template_.size()-1 != template_info.size())
-            {
-                actions.pop(); // restore the actions' states
-                detail::outerr(pos.file,pos.line)
-                    << "Invalid number of arguments passed. Expecting: "
-                    << template_.size()-2
-                    << " argument(s), got: "
-                    << template_info.size()-1
-                    << " argument(s) instead."
-                    << std::endl;
-                --actions.template_depth;
-                return;
-            }
-
-            std::vector<std::string>::const_iterator arg = template_info.begin()+1; 
-            std::vector<std::string>::const_iterator tpl = template_.begin()+1; 
-
-            // Expand each of the argument passed in:
-            while (arg != template_info.end())
-            {
-                std::vector<char> temp;
-                temp.assign(arg->begin(), arg->end());
-                iterator first(temp.begin(), temp.end(), actions.filename.native_file_string().c_str());
-                first.set_position(pos);
-                iterator last(temp.end(), temp.end());
-                bool r = boost::spirit::parse(first, last, phrase_p).full;
-
-                if (!r)
-                {
-                    boost::spirit::file_position const pos = first.get_position();
-                    detail::outerr(pos.file,pos.line)
-                        << "Expanding template" << std::endl;
-                }
-                else
-                {
-                    if (std::string* s = find(actions.macro, tpl->c_str()))
-                    {
-                        *s = actions.phrase.str();
-                    }
-                    else
-                    {
-                        actions.macro.add(tpl->begin(), tpl->end(), actions.phrase.str());
-                    }
-                }
-                actions.phrase.str(std::string()); // clear the phrase
-                ++arg; ++tpl;
-            }
-            
-            // parse the template body:
-            std::vector<char> temp;
-            temp.assign(tpl->begin(), tpl->end());
-            temp.reserve(temp.size()+2); // reserve 2 more
-            
-            // How do we know if we are to parse the template as a block or
-            // a phrase? We apply a simple heuristic: if the body starts with
-            // a newline, then we regard is as a block, otherwise, we parse
-            // it as a phrase.
-            
-            std::vector<char>::const_iterator iter = temp.begin();
-            while (iter != temp.end() && ((*iter == ' ') || (*iter == '\t')))
-                ++iter; // skip spaces and tabs
-            bool is_block = (iter != temp.end()) && ((*iter == '\r') || (*iter == '\n'));
-            bool r = false;
-
-            if (!is_block)
-            {
-                //  do a phrase level parse
-                iterator first(temp.begin(), temp.end(), actions.filename.native_file_string().c_str());
-                first.set_position(template_pos);
-                iterator last(temp.end(), temp.end());
-                r = boost::spirit::parse(first, last, phrase_p).full;
-                result = actions.phrase.str();
-            }
-            else
-            {
-                //  do a block level parse
-                //  ensure that we have enough trailing newlines to eliminate
-                //  the need to check for end of file in the grammar.
-                temp.push_back('\n');
-                temp.push_back('\n');
-                while (iter != temp.end() && ((*iter == '\r') || (*iter == '\n')))
-                    ++iter; // skip initial newlines
-                iterator first(iter, temp.end(), actions.filename.native_file_string().c_str());
-                first.set_position(template_pos);
-                iterator last(temp.end(), temp.end());
-                r = boost::spirit::parse(first, last, block_p).full;
-                result = actions.out.str();
-            }
-
-            if (!r)
-            {
-                boost::spirit::file_position const pos = first.get_position();
-                detail::outerr(pos.file,pos.line)
-                    << "Expanding template" << std::endl;
-            }
-        }
-
-        actions.pop(); // restore the actions' states
-        actions.phrase << result; // print it!!!
-        --actions.template_depth;
+        actions.phrase.str(actions.phrase_save);
     }
 
     void link_action::operator()(iterator first, iterator const& last) const
@@ -588,7 +370,7 @@ namespace quickbook
         iterator save = first;
         phrase << tag;
         while (first != last)
-            detail::print_char(*first++, phrase.get());
+            detail::print_char(*first++, phrase);
         phrase << "\">";
 
         // Yes, it is safe to dereference last here. When we
@@ -600,66 +382,72 @@ namespace quickbook
         {
             first = save;
             while (first != last)
-                detail::print_char(*first++, phrase.get());
+                detail::print_char(*first++, phrase);
         }
     }
 
     void variablelist_action::operator()(iterator, iterator) const
     {
-        actions.out << "<variablelist>\n";
+        if (!!actions.out)
+        {
+            actions.out << "<variablelist>\n";
 
-        actions.out << "<title>";
-        std::string::iterator first = actions.table_title.begin();
-        std::string::iterator last = actions.table_title.end();
-        while (first != last)
-            detail::print_char(*first++, actions.out.get());
-        actions.out << "</title>\n";
+            actions.out << "<title>";
+            std::string::iterator first = actions.table_title.begin();
+            std::string::iterator last = actions.table_title.end();
+            while (first != last)
+                detail::print_char(*first++, actions.out);
+            actions.out << "</title>\n";
 
-        std::string str = actions.phrase.str();
-        actions.phrase.str(std::string());
-        actions.out << str;
+            std::string str = actions.phrase.str();
+            actions.phrase.str(std::string());
+            actions.out << str;
 
-        actions.out << "</variablelist>\n";
-        actions.table_span = 0;
-        actions.table_header.clear();
-        actions.table_title.clear();
+            actions.out << "</variablelist>\n";
+            actions.table_span = 0;
+            actions.table_header.clear();
+            actions.table_title.clear();
+        }
     }
 
     void table_action::operator()(iterator, iterator) const
     {
-        actions.out << "<informaltable frame=\"all\">\n"
-                     << "<bridgehead renderas=\"sect4\">";
-
-        std::string::iterator first = actions.table_title.begin();
-        std::string::iterator last = actions.table_title.end();
-        if (first != last) // allow no title
+        if (!!actions.out)
         {
-            actions.out << "<phrase role=\"table-title\">";
-            while (first != last)
-                detail::print_char(*first++, actions.out.get());
-            actions.out << "</phrase>";
+            actions.out << "<informaltable frame=\"all\">\n"
+                         << "<bridgehead renderas=\"sect4\">";
+
+            std::string::iterator first = actions.table_title.begin();
+            std::string::iterator last = actions.table_title.end();
+            if (first != last) // allow no title
+            {
+                actions.out << "<phrase role=\"table-title\">";
+                while (first != last)
+                    detail::print_char(*first++, actions.out);
+                actions.out << "</phrase>";
+            }
+            actions.out << "</bridgehead>\n"
+                         << "<tgroup cols=\"" << actions.table_span << "\">\n";
+
+            if (!actions.table_header.empty())
+            {
+                actions.out << "<thead>" << actions.table_header << "</thead>\n";
+            }
+
+            actions.out << "<tbody>\n";
+
+            std::string str = actions.phrase.str();
+            detail::convert_nbsp(str);
+            actions.phrase.str(std::string());
+            actions.out << str;
+
+            actions.out << "</tbody>\n"
+                         << "</tgroup>\n"
+                         << "</informaltable>\n";
+            actions.table_span = 0;
+            actions.table_header.clear();
+            actions.table_title.clear();
         }
-        actions.out << "</bridgehead>\n"
-                     << "<tgroup cols=\"" << actions.table_span << "\">\n";
-
-        if (!actions.table_header.empty())
-        {
-            actions.out << "<thead>" << actions.table_header << "</thead>\n";
-        }
-
-        actions.out << "<tbody>\n";
-
-        std::string str = actions.phrase.str();
-        detail::convert_nbsp(str);
-        actions.phrase.str(std::string());
-        actions.out << str;
-
-        actions.out << "</tbody>\n"
-                     << "</tgroup>\n"
-                     << "</informaltable>\n";
-        actions.table_span = 0;
-        actions.table_header.clear();
-        actions.table_title.clear();
     }
 
     void start_row_action::operator()(char) const
@@ -691,12 +479,12 @@ namespace quickbook
         if (section_id.empty())
             section_id = detail::make_identifier(first, last);
 
-        if (section_level != 0)
+        if (level != 0)
             qualified_section_id += '.';
         else
             BOOST_ASSERT(qualified_section_id.empty());
         qualified_section_id += section_id;
-        ++section_level;
+        ++level;
 
         if (qbk_version_n < 103) // version 1.2 and below
         {
@@ -711,35 +499,21 @@ namespace quickbook
         std::string str;
         str = phrase.str();
         phrase.str(std::string());
-
-        if (qbk_version_n < 103) // version 1.2 and below
-        {
-            out << "<title>" << str << "</title>\n";
-        }
-        else // version 1.3 and above
-        {
-            out << "<title>" 
-                << "<link linkend=\"" << library_id
-                    << "." << qualified_section_id << "\">"
-                << str 
-                << "</link>"
-                << "</title>\n"
-                ;
-        }
+        out << "<title>" << str << "</title>\n";
     }
 
     void end_section_action::operator()(iterator const& first, iterator const& last) const
     {
         out << "</section>";
 
-        --section_level;
-        if (section_level < 0)
+        --level;
+        if (level < 0)
         {
             boost::spirit::file_position const pos = first.get_position();
             detail::outerr(pos.file,pos.line)
                 << "Mismatched [endsect] near column " << pos.column << ".\n";
         }
-        if (section_level == 0)
+        if (level == 0)
         {
             qualified_section_id.clear();
         }
@@ -780,7 +554,7 @@ namespace quickbook
             xmlfile = path_difference(outdir, xmlfile);
         }
         out << "\n<xi:include href=\"";
-        detail::print_string(detail::escape_uri(xmlfile.string()), out.get());
+        detail::print_string(detail::escape_uri(xmlfile.string()), out);
         out << "\" />\n";
     }
 
@@ -806,9 +580,7 @@ namespace quickbook
         actions.doc_last_revision.swap(doc_last_revision);
 
         // scope the macros
-        string_symbols macro = actions.macro;
-        // scope the templates
-        template_symbols templates = actions.templates;
+        macros_type macro = actions.macro;
 
         // if an id is specified in this include (in in [include:id foo.qbk]
         // then use it as the doc_id.
@@ -832,10 +604,7 @@ namespace quickbook
         actions.doc_dirname.swap(doc_dirname);
         actions.doc_last_revision.swap(doc_last_revision);
 
-        // restore the macros
         actions.macro = macro;
-        // restore the templates
-        actions.templates = templates;
     }
 
     void xml_author::operator()(std::pair<std::string, std::string> const& author) const
@@ -851,7 +620,7 @@ namespace quickbook
         out << "      <year>" << year << "</year>\n";
     }
 
-    void pre(collector& out, quickbook::actions& actions, bool ignore_docinfo)
+    void pre(std::ostream& out, quickbook::actions& actions, bool ignore_docinfo)
     {
         // The doc_info in the file has been parsed. Here's what we'll do 
         // *before* anything else.
@@ -979,7 +748,7 @@ namespace quickbook
         }
     }
 
-    void post(collector& out, quickbook::actions& actions, bool ignore_docinfo)
+    void post(std::ostream& out, quickbook::actions& actions, bool ignore_docinfo)
     {
         // if we're ignoring the document info, do nothing.
         if (ignore_docinfo)
@@ -998,7 +767,7 @@ namespace quickbook
         phrase.str(std::string());
     }
 
-    actions::actions(char const* filein_, fs::path const& outdir_, std::stringstream& out_)
+    actions::actions(char const* filein_, fs::path const& outdir_, std::ostream &out_)
         : filename(fs::complete(fs::path(filein_, fs::native)))
         , outdir(outdir_)
         , out(out_)
@@ -1011,7 +780,6 @@ namespace quickbook
         , code_block(phrase, phrase, temp, source_mode, macro, *this)
         , inline_code(phrase, temp, source_mode, macro, *this)
         , paragraph(out, phrase, paragraph_pre, paragraph_post)
-        , h(out, phrase, doc_id, section_id, qualified_section_id, section_level)
         , h1(out, phrase, doc_id, section_id, qualified_section_id, h1_pre, h1_post)
         , h2(out, phrase, doc_id, section_id, qualified_section_id, h2_pre, h2_post)
         , h3(out, phrase, doc_id, section_id, qualified_section_id, h3_pre, h3_post)
@@ -1030,10 +798,11 @@ namespace quickbook
         , plain_char(phrase)
         , raw_char(phrase)
         , image(phrase)
+        , list_buffer()
         , list_marks()
-        , list_indent(-1)
-        , list(out, list_buffer, list_indent, list_marks)
-        , list_format(list_buffer, list_indent, list_marks)
+        , indent(-1)
+        , list(out, list_buffer, indent, list_marks)
+        , list_format(list_buffer, indent, list_marks)
         , list_item(list_buffer, phrase, list_item_pre, list_item_post)
         , funcref_pre(phrase, funcref_pre_)
         , funcref_post(phrase, funcref_post_)
@@ -1061,11 +830,11 @@ namespace quickbook
         , replaceable_post(phrase, replaceable_post_)
         , footnote_pre(phrase, footnote_pre_)
         , footnote_post(phrase, footnote_post_)
-        , simple_bold(phrase, bold_pre_, bold_post_, macro)
-        , simple_italic(phrase, italic_pre_, italic_post_, macro)
-        , simple_underline(phrase, underline_pre_, underline_post_, macro)
-        , simple_teletype(phrase, teletype_pre_, teletype_post_, macro)
-        , simple_strikethrough(phrase, strikethrough_pre_, strikethrough_post_, macro)
+        , simple_bold(phrase, bold_pre_, bold_post_)
+        , simple_italic(phrase, italic_pre_, italic_post_)
+        , simple_underline(phrase, underline_pre_, underline_post_)
+        , simple_teletype(phrase, teletype_pre_, teletype_post_)
+        , simple_strikethrough(phrase, strikethrough_pre_, strikethrough_post_)
         , variablelist(*this)
         , start_varlistentry(phrase, start_varlistentry_)
         , end_varlistentry(phrase, end_varlistentry_)
@@ -1074,11 +843,9 @@ namespace quickbook
         , start_varlistitem(phrase, start_varlistitem_)
         , end_varlistitem(phrase, end_varlistitem_)
         , break_(phrase, break_mark)
-        , macro_identifier(*this)
-        , macro_definition(*this)
+        , identifier(*this)
+        , macro_def(*this)
         , do_macro(phrase)
-        , template_body(*this)
-        , do_template(*this)
         , url_pre(phrase, url_pre_)
         , url_post(phrase, url_post_)
         , link_pre(phrase, link_pre_)
@@ -1089,14 +856,13 @@ namespace quickbook
         , start_cell(phrase, table_span)
         , end_cell(phrase, end_cell_)
         , anchor(out)
-        , begin_section(out, phrase, doc_id, section_id, section_level, qualified_section_id)
-        , end_section(out, section_level, qualified_section_id)
+        , begin_section(out, phrase, doc_id, section_id, level, qualified_section_id)
+        , end_section(out, level, qualified_section_id)
         , xinclude(out, *this)
         , include(*this)
-        , section_level(0)
+        , level(0)
         , escape_pre(phrase, escape_pre_)
         , escape_post(phrase, escape_post_)
-        , template_depth(0)
     {
         // turn off __FILENAME__ macro on debug mode = true
         std::string filename_str = debug_mode ? 
@@ -1109,46 +875,5 @@ namespace quickbook
             ("__TIME__", std::string(quickbook_get_time))
             ("__FILENAME__", filename_str)
         ;
-    }
-
-    void actions::push()
-    {
-        state_stack.push(
-            boost::make_tuple(
-                filename
-              , outdir
-              , macro
-              , templates
-              , section_level
-              , section_id
-              , qualified_section_id
-              , source_mode
-            )
-        );
-        
-        out.push();
-        phrase.push();
-        temp.push();
-        list_buffer.push();
-    }   
-
-    void actions::pop()
-    {
-        boost::tie(
-            filename
-          , outdir
-          , macro
-          , templates
-          , section_level
-          , section_id
-          , qualified_section_id
-          , source_mode
-        ) = state_stack.top();
-        state_stack.pop();
-
-        out.pop();
-        phrase.pop();
-        temp.pop();
-        list_buffer.pop();
     }
 }

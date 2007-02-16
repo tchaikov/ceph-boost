@@ -1,5 +1,5 @@
 //////////////////////////////////////////////////////////////////////////////
-// (c) Copyright Andreas Huber Doenni 2002-2005
+// Copyright 2002-2006 Andreas Huber Doenni
 // Distributed under the Boost Software License, Version 1.0. (See accompany-
 // ing file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
 //////////////////////////////////////////////////////////////////////////////
@@ -7,7 +7,7 @@
 
 
 //////////////////////////////////////////////////////////////////////////////
-#define NO_OF_BITS 5
+#define NO_OF_BITS 3
 //////////////////////////////////////////////////////////////////////////////
 // This program demonstrates the fact that measures must be taken to hide some
 // of the complexity (e.g. in separate .cpp file) of a Boost.Statechart state
@@ -115,16 +115,31 @@ struct FlipTransition
     BOOST_MPL_AUX_LAMBDA_SUPPORT( 2, FlipTransition, (BitNo, StateNo) );
 };
 
+//////////////////////////////////////////////////////////////////////////////
+void DisplayBits( unsigned int number )
+{
+  char buffer[ NO_OF_BITS + 1 ];
+  buffer[ NO_OF_BITS ] = 0;
+
+  for ( unsigned int bit = 0; bit < NO_OF_BITS; ++bit )
+  {
+    buffer[ bit ] = number & ( 1 << ( NO_OF_BITS - bit - 1 ) ) ? '1' : '0';
+  }
+
+  std::cout << "Current state: " << std::setw( 4 ) <<
+    number << " (" << buffer << ")" << std::endl;
+}
+
 template< class StateNo >
 struct BitState : sc::simple_state< BitState< StateNo >, BitMachine >,
   UniqueObject< BitState< StateNo > >, IDisplay
 {
-  void * operator new( size_t size )
+  void * operator new( std::size_t size )
   {
     return UniqueObject< BitState< StateNo > >::operator new( size );
   }
 
-  void operator delete( void * p, size_t size )
+  void operator delete( void * p, std::size_t size )
   {
     UniqueObject< BitState< StateNo > >::operator delete( p, size );
   }
@@ -142,21 +157,6 @@ struct BitState : sc::simple_state< BitState< StateNo >, BitMachine >,
   }
 };
 
-
-//////////////////////////////////////////////////////////////////////////////
-void DisplayBits( unsigned int number )
-{
-  char buffer[ NO_OF_BITS + 1 ];
-  buffer[ NO_OF_BITS ] = 0;
-
-  for ( unsigned int bit = 0; bit < NO_OF_BITS; ++bit )
-  {
-    buffer[ bit ] = number & ( 1 << ( NO_OF_BITS - bit - 1 ) ) ? '1' : '0';
-  }
-
-  std::cout << "Current state: " << std::setw( 4 ) <<
-    number << " (" << buffer << ")" << std::endl;
-}
 
 void DisplayMachineState( const BitMachine & bitMachine )
 {

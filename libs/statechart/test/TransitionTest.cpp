@@ -1,5 +1,5 @@
 //////////////////////////////////////////////////////////////////////////////
-// (c) Copyright Andreas Huber Doenni 2004-2006
+// Copyright 2004-2007 Andreas Huber Doenni
 // Distributed under the Boost Software License, Version 1.0. (See accompany-
 // ing file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
 //////////////////////////////////////////////////////////////////////////////
@@ -75,29 +75,28 @@ template< ActionPtr pAction >
 std::string ThrowDescription()
 {
   static const std::string throwing = "Throwing exception in ";
-  static ActionDescriptionSequence dummy;
-  dummy.clear();
-  pAction( dummy );
-  return throwing + dummy.front()();
+  ActionDescriptionSequence sequence;
+  pAction( sequence );
+  return throwing + sequence.front()();
 }
 
 
 template< class State >
 void Entry( ActionDescriptionSequence & sequence )
 {
-  sequence.push_back( EntryDescription< State > );
+  sequence.push_back( &::EntryDescription< State > );
 }
 
 template< class State >
 void ExitFn( ActionDescriptionSequence & sequence )
 {
-  sequence.push_back( ExitFnDescription< State > );
+  sequence.push_back( &::ExitFnDescription< State > );
 }
 
 template< class State >
 void Dtor( ActionDescriptionSequence & sequence )
 {
-  sequence.push_back( DtorDescription< State > );
+  sequence.push_back( &::DtorDescription< State > );
 }
 
 template< class State >
@@ -110,13 +109,13 @@ void Exit( ActionDescriptionSequence & sequence )
 template< class Context, class Event >
 void Trans( ActionDescriptionSequence & sequence )
 {
-  sequence.push_back( TransDescription< Context, Event > );
+  sequence.push_back( &::TransDescription< Context, Event > );
 }
 
 template< ActionPtr pAction >
 void Throw( ActionDescriptionSequence & sequence )
 {
-  sequence.push_back( ThrowDescription< pAction > );
+  sequence.push_back( &::ThrowDescription< pAction > );
 }
 
 const int arrayLength = 30;

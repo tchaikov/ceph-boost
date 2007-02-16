@@ -21,6 +21,7 @@
 #include <boost/mpl/push_front.hpp>
 #include <boost/multi_index/detail/access_specifier.hpp>
 #include <boost/multi_index/detail/bidir_node_iterator.hpp>
+#include <boost/multi_index/detail/index_node_base.hpp>
 #include <boost/multi_index/detail/safe_ctr_proxy.hpp>
 #include <boost/multi_index/detail/safe_mode.hpp>
 #include <boost/multi_index/detail/scope_guard.hpp>
@@ -354,7 +355,7 @@ public:
     BOOST_MULTI_INDEX_CHECK_DEREFERENCEABLE_ITERATOR(i);
     BOOST_MULTI_INDEX_CHECK_IS_OWNER(i,x);
     BOOST_MULTI_INDEX_SEQ_INDEX_CHECK_INVARIANT;
-    if(x==*this){
+    if(&x==this){
       if(position!=i)relink(position.get_node(),i.get_node());
     }
     else{
@@ -387,7 +388,7 @@ public:
     BOOST_MULTI_INDEX_CHECK_IS_OWNER(last,x);
     BOOST_MULTI_INDEX_CHECK_VALID_RANGE(first,last);
     BOOST_MULTI_INDEX_SEQ_INDEX_CHECK_INVARIANT;
-    if(x==*this){
+    if(&x==this){
       BOOST_MULTI_INDEX_CHECK_OUTSIDE_RANGE(position,first,last);
       if(position!=last)relink(
         position.get_node(),first.get_node(),last.get_node());

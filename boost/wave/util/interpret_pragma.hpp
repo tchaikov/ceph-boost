@@ -3,7 +3,7 @@
 
     http://www.boost.org/
 
-    Copyright (c) 2001-2006 Hartmut Kaiser. Distributed under the Boost
+    Copyright (c) 2001-2007 Hartmut Kaiser. Distributed under the Boost
     Software License, Version 1.0. (See accompanying file
     LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
 =============================================================================*/
@@ -126,9 +126,7 @@ interpret_pragma(ContextT &ctx, typename ContextT::token_type const &act_token,
             }
             
         // decode the option (call the context_policy hook)
-            if (!ctx.get_hooks().interpret_pragma(
-                  ctx, pending, option, values, act_token)) 
-            {
+            if (!ctx.interpret_pragma(pending, option, values, act_token)) {
             // unknown #pragma option 
             string_type option_str ((*it).get_value());
 

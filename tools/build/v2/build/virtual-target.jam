@@ -1,7 +1,8 @@
-#  Copyright (C) Vladimir Prus 2002. Permission to copy, use, modify, sell and
-#  distribute this software is granted provided this copyright notice appears in
-#  all copies. This software is provided "as is" without express or implied
-#  warranty, and with no claim as to its suitability for any purpose.
+# Copyright 2003 Dave Abrahams 
+# Copyright 2005, 2006 Rene Rivera 
+# Copyright 2002, 2003, 2004, 2005, 2006 Vladimir Prus 
+# Distributed under the Boost Software License, Version 1.0. 
+# (See accompanying file LICENSE_1_0.txt or http://www.boost.org/LICENSE_1_0.txt) 
 
 #  Implements virtual targets, which correspond to actual files created during
 #  build, but are not yet targets in Jam sense. They are needed, for example,
@@ -401,6 +402,14 @@ class abstract-file-target : virtual-target
         {
             ps = [ property-set.empty ] ;
         }
+        
+        #~ We add ourselves to the properties so that any tag rule can get
+        #~ more direct information about the target than just that available
+        #~ through the properties. This is useful in implementing
+        #~ name changes based on the sources of the target. For example to
+        #~ make unique names of object files based on the source file.
+        #~ --grafik
+        ps = [ property-set.create [ $(ps).raw ] <target>$(__name__) ] ;
         
         local tag = [ $(ps).get <tag> ] ;
 

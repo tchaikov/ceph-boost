@@ -32,6 +32,9 @@ template<class T> struct keyword;
 
 namespace aux {
 
+// Tag type passed to MPL lambda.
+struct lambda_tag;
+
 //
 // Structures used to build the tuple of actual arguments.  The
 // tuple is a nested cons-style list of arg_list specializations
@@ -67,7 +70,7 @@ struct empty_arg_list
     // lookup given that default
     struct binding
     {
-        template<class KW, class Default>
+        template<class KW, class Default, class Reference>
         struct apply
         {
             typedef Default type;
@@ -137,9 +140,9 @@ struct empty_arg_list
     // was found if we match this overload, so unless that parameter
     // has a default, we indicate that the actual arguments don't
     // match the function's requirements.
-    template <class ParameterRequirements>
+    template <class ParameterRequirements, class ArgPack>
     static typename ParameterRequirements::has_default
-    satisfies(ParameterRequirements*);
+    satisfies(ParameterRequirements*, ArgPack*);
 
     // MPL sequence support
     typedef empty_arg_list type;   // convenience
@@ -221,13 +224,13 @@ struct arg_list : Next
     // lookup given that default
     struct binding
     {
-        template <class KW, class Default>
+        template <class KW, class Default, class Reference>
         struct apply
         {
           typedef typename mpl::eval_if<
                 boost::is_same<KW, key_type>
-              , mpl::identity<reference>
-              , mpl::apply_wrap2<typename Next::binding, KW, Default>
+              , mpl::if_<Reference, reference, value_type>
+              , mpl::apply_wrap3<typename Next::binding, KW, Default, Reference>
           >::type type;
         };
     };
@@ -297,7 +300,7 @@ struct arg_list : Next
     // Outer indexing operators that dispatch to the right node's
     // get() function.
     template <class KW>
-    typename mpl::apply_wrap2<binding, KW, void_>::type
+    typename mpl::apply_wrap3<binding, KW, void_, mpl::true_>::type
     operator[](keyword<KW> const& x) const
     {
         typename mpl::apply_wrap1<key_owner, KW>::type const& sublist = *this;
@@ -305,7 +308,7 @@ struct arg_list : Next
     }
 
     template <class KW, class Default>
-    typename mpl::apply_wrap2<binding, KW, Default&>::type
+    typename mpl::apply_wrap3<binding, KW, Default&, mpl::true_>::type
     operator[](default_<KW, Default> x) const
     {
         typename mpl::apply_wrap1<key_owner, KW>::type const& sublist = *this;
@@ -313,9 +316,10 @@ struct arg_list : Next
     }
 
     template <class KW, class F>
-    typename mpl::apply_wrap2<
+    typename mpl::apply_wrap3<
         binding,KW
       , typename result_of0<F>::type
+      , mpl::true_
     >::type
     operator[](lazy_default<KW,F> x) const
     {
@@ -381,10 +385,14 @@ struct arg_list : Next
     // compile-time computation and never really called, so a
     // declaration is enough.
     //
-    template <class HasDefault, class Predicate>
-    static typename mpl::apply1<Predicate, value_type>::type
+    template <class HasDefault, class Predicate, class ArgPack>
+    static typename mpl::apply_wrap2<
+        typename mpl::lambda<Predicate, lambda_tag>::type
+      , value_type, ArgPack
+    >::type
     satisfies(
         parameter_requirements<key_type,Predicate,HasDefault>*
+      , ArgPack*
     );
 
     // Builds an overload set including satisfies functions defined

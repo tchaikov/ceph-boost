@@ -1,4 +1,11 @@
 #!/usr/bin/python
+
+# Copyright 2002-2005 Dave Abrahams.
+# Copyright 2002-2006 Vladimir Prus.
+# Distributed under the Boost Software License, Version 1.0.
+#    (See accompanying file LICENSE_1_0.txt or copy at
+#         http://www.boost.org/LICENSE_1_0.txt)
+
 import os, sys, string
 from BoostBuild import get_toolset
 
@@ -112,7 +119,7 @@ tests = [ "rebuilds",
           "suffix",
           "inherit_toolset",
           "skipping",
-          "glob",
+          "project_glob",
           "project_root_constants",
           "double_loading",
           "dll_path",
@@ -142,6 +149,7 @@ tests = [ "rebuilds",
           "implicit_dependency",
           "example_libraries",
           "example_make",
+          "remove_requirement",
           ]
 
 if os.name == 'posix':
@@ -154,8 +162,9 @@ if os.name == 'posix':
     if string.find(os.uname()[0], "CYGWIN") == -1:
         tests.append("library_order")
 
-if string.find(get_toolset(), 'gcc') == 0:
+if string.find(get_toolset(), 'gcc') == 0 or string.find(get_toolset(), 'msvc') == 0:
     tests.append("gcc_runtime")
+    tests.append("pch")
 
 if "--extras" in sys.argv:
     tests.append("boostbook")

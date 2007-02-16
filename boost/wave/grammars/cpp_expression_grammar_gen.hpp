@@ -3,7 +3,7 @@
 
     http://www.boost.org/
 
-    Copyright (c) 2001-2006 Hartmut Kaiser. Distributed under the Boost
+    Copyright (c) 2001-2007 Hartmut Kaiser. Distributed under the Boost
     Software License, Version 1.0. (See accompanying file
     LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
 =============================================================================*/
@@ -13,6 +13,7 @@
 
 #include <boost/wave/wave_config.hpp>
 #include <boost/wave/cpp_iteration_context.hpp>
+#include <boost/wave/grammars/cpp_value_error.hpp>
 
 #include <list>
 #include <boost/pool/pool_alloc.hpp>
@@ -54,7 +55,7 @@ struct BOOST_WAVE_DECL expression_grammar_gen {
         typename token_sequence_type::const_iterator const &first, 
         typename token_sequence_type::const_iterator const &last, 
         typename token_type::position_type const &tok,
-        bool if_block_status);
+        bool if_block_status, value_error &status);
 };
 
 ///////////////////////////////////////////////////////////////////////////////

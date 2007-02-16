@@ -236,7 +236,7 @@ public:
 #if !defined( BOOST_NO_SFINAE ) && !defined( BOOST_NO_TEMPLATE_PARTIAL_SPECIALIZATION )
 
     template<class Ap>
-    shared_ptr( Ap r, typename boost::detail::sp_enable_if_auto_ptr<Ap, int>::type = 0 ): px( r.get() ), pn()
+    explicit shared_ptr( Ap r, typename boost::detail::sp_enable_if_auto_ptr<Ap, int>::type = 0 ): px( r.get() ), pn()
     {
         typename Ap::element_type * tmp = r.get();
         pn = boost::detail::shared_count( r );
@@ -323,9 +323,7 @@ public:
 
     // implicit conversion to "bool"
 
-/*
-
-#if defined(__SUNPRO_CC) && BOOST_WORKAROUND(__SUNPRO_CC, <= 0x530)
+#if defined(__SUNPRO_CC) && BOOST_WORKAROUND(__SUNPRO_CC, <= 0x580)
 
     operator bool () const
     {
@@ -333,8 +331,6 @@ public:
     }
 
 #elif defined( _MANAGED )
-
-*/
 
     static void unspecified_bool( this_type*** )
     {
@@ -346,8 +342,6 @@ public:
     {
         return px == 0? 0: unspecified_bool;
     }
-
-/*
 
 #elif \
     ( defined(__MWERKS__) && BOOST_WORKAROUND(__MWERKS__, < 0x3200) ) || \
@@ -370,8 +364,6 @@ public:
     }
 
 #endif
-
-*/
 
     // operator! is redundant, but some compilers need it
 
@@ -512,6 +504,9 @@ template<class Y> std::ostream & operator<< (std::ostream & os, shared_ptr<Y> co
 
 #else
 
+// in STLport's no-iostreams mode no iostream symbols can be used
+#ifndef _STLP_NO_IOSTREAMS
+
 # if defined(BOOST_MSVC) && BOOST_WORKAROUND(BOOST_MSVC, < 1300 && __SGI_STL_PORT)
 // MSVC6 has problems finding std::basic_ostream through the using declaration in namespace _STL
 using std::basic_ostream;
@@ -524,7 +519,9 @@ template<class E, class T, class Y> std::basic_ostream<E, T> & operator<< (std::
     return os;
 }
 
-#endif
+#endif // _STLP_NO_IOSTREAMS
+
+#endif // __GNUC__ < 3
 
 // get_deleter (experimental)
 

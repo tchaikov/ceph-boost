@@ -16,11 +16,9 @@
 #endif
 
 #include <boost/noncopyable.hpp>
-#include <boost/intrusive_ptr.hpp>
 #include <boost/iterator/iterator_traits.hpp>
 #include <boost/xpressive/detail/detail_fwd.hpp>
 #include <boost/xpressive/detail/core/access.hpp>
-#include <boost/xpressive/detail/utility/counted_base.hpp>
 
 namespace boost { namespace xpressive { namespace detail
 {
@@ -30,7 +28,7 @@ namespace boost { namespace xpressive { namespace detail
 //
 template<typename BidiIter>
 struct regex_iterator_impl
-  : counted_base<regex_iterator_impl<BidiIter> >
+  : private noncopyable
 {
     typedef detail::core_access<BidiIter> access;
 
@@ -198,16 +196,19 @@ private:
     /// INTERNAL ONLY
     void fork_()
     {
-        if(1 != this->impl_->use_count())
+        if(!this->impl_.unique())
         {
-            this->impl_ = new impl_type_
+            this->impl_.reset
             (
-                this->impl_->state_.begin_
-              , this->impl_->state_.cur_
-              , this->impl_->state_.end_
-              , this->impl_->rex_
-              , this->impl_->flags_
-              , this->impl_->not_null_
+                new impl_type_
+                (
+                    this->impl_->state_.begin_
+                  , this->impl_->state_.cur_
+                  , this->impl_->state_.end_
+                  , this->impl_->rex_
+                  , this->impl_->flags_
+                  , this->impl_->not_null_
+                )
             );
         }
     }
@@ -215,14 +216,14 @@ private:
     /// INTERNAL ONLY
     void next_()
     {
-        BOOST_ASSERT(this->impl_ && 1 == this->impl_->use_count());
+        BOOST_ASSERT(this->impl_ && this->impl_.unique());
         if(!this->impl_->next())
         {
-            this->impl_ = 0;
+            this->impl_.reset();
         }
     }
 
-    intrusive_ptr<impl_type_> impl_;
+    shared_ptr<impl_type_> impl_;
 };
 
 }} // namespace boost::xpressive

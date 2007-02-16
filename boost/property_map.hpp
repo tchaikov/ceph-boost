@@ -14,8 +14,6 @@
 #include <boost/detail/iterator.hpp>
 #include <boost/concept_check.hpp>
 #include <boost/concept_archetype.hpp>
-#include <boost/mpl/assert.hpp>
-#include <boost/type_traits/is_same.hpp>
 
 namespace boost {
 
@@ -242,7 +240,8 @@ namespace boost {
       function_requires< ConvertibleConcept<Category, LvalueTag> >();
 
       typedef typename property_traits<PMap>::value_type value_type;
-      BOOST_MPL_ASSERT((boost::is_same<const value_type&, reference>));
+      typedef typename require_same<
+        const value_type&, reference>::type req;
 
       reference ref = pmap[k];
       ignore_unused_variable_warning(ref);
@@ -274,7 +273,9 @@ namespace boost {
       boost::function_requires<ConvertibleConcept<Category, LvalueTag> >();
       
       typedef typename property_traits<PMap>::value_type value_type;
-      BOOST_MPL_ASSERT((boost::is_same<value_type&, reference>));
+      typedef typename require_same<
+        value_type&,
+        reference>::type req;
 
       reference ref = pmap[k];
       ignore_unused_variable_warning(ref);

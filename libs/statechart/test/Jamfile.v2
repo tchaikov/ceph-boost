@@ -1,12 +1,13 @@
 ##############################################################################
-# (c) Copyright Andreas Huber Doenni 2005-2006
+# Copyright 2005-2006 Andreas Huber Doenni
 # Distributed under the Boost Software License, Version 1.0. (See accompany-
 # ing file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
 ##############################################################################
 
 project libs/statechart/test ;
 
-local test_monitor = ../../../libs/test/build//boost_test_exec_monitor ;
+local test_monitor =
+  ../../../libs/test/build//boost_test_exec_monitor/<link>static ;
 # Some platforms have either problems with the automatic detection of the
 # threading mode (e.g. vc-7_1 & gcc >= 3.4.0) or don't support single-
 # threaded mode (e.g. vc-8_0). We therefore manually turn MT off here
@@ -25,9 +26,7 @@ rule independent-obj-build ( name : cpp-sources + : requirements * )
 
   for local cpp-source in $(cpp-sources)
   {
-    obj $(name)$(cpp-source)
-      : $(cpp-source).cpp
-      : <threading>single:$(st-requirements) $(requirements) ;
+    obj $(name)$(cpp-source) : $(cpp-source).cpp : $(requirements) ;
     objs += $(name)$(cpp-source) ;
   }
 
@@ -39,22 +38,21 @@ rule statechart-st-lib ( name : cpp-sources + : requirements * )
   lib $(name)
     : [ independent-obj-build $(name)
           : $(cpp-sources)
-          : <threading>single <link>shared:$(dll-export) $(requirements) ] ;
+          : <threading>single $(st-requirements)
+            <link>shared:$(dll-export) $(requirements) ] ;
   
   return $(name) ;
 }
 
 rule statechart-run ( name : sources + : requirements * )
 {
-  return [ run $(sources) $(test_monitor) : :
-             : <threading>single:$(st-requirements) $(requirements)
-             : $(name) ] ;
+  return [ run $(sources) $(test_monitor) : : : $(requirements) : $(name) ] ;
 }
 
 rule statechart-st-run ( name : sources + : requirements * )
 {
-  return [ statechart-run $(name)
-             : $(sources) : <threading>single $(requirements) ] ;
+  return [ statechart-run $(name) : $(sources)
+             : <threading>single $(st-requirements) $(requirements) ] ;
 }
 
 rule statechart-st-run-variants ( cpp-source )
@@ -117,8 +115,6 @@ test-suite statechart
     [ statechart-st-run-variants TransitionTest ]
     [ statechart-compile-fail-variants InvalidTransitionTest1 ]
     [ statechart-compile-fail-variants InvalidTransitionTest2 ]
-    [ statechart-compile-fail-variants InvalidTransitionTest3 ]
-    [ statechart-compile-fail-variants InvalidTransitionTest4 ]
     [ statechart-st-run-variants InStateReactionTest ]
     [ statechart-st-run-variants TerminationTest ]
     [ statechart-st-run-variants DeferralTest ]
@@ -136,7 +132,7 @@ test-suite statechart
     [ statechart-compile-fail-variants InconsistentHistoryTest6 ]
     [ statechart-compile-fail-variants InconsistentHistoryTest7 ]
     [ statechart-compile-fail-variants InconsistentHistoryTest8 ]
-    [ statechart-compile-fail-variants UnsupportedDeepHistoryTest ]
+    [ statechart-compile-fail-variants UnsuppDeepHistoryTest ]
     [ statechart-st-run-variants StateCastTest ]
     [ statechart-st-run-variants TypeInfoTest ]
     [ statechart-st-run-variants StateIterationTest ]

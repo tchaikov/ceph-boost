@@ -20,9 +20,6 @@
 namespace boost { namespace xpressive
 {
 
-// BUGBUG store by reference here!!!
-
-
 ///////////////////////////////////////////////////////////////////////////////
 // operator +
 template<typename BidiIter>
@@ -70,8 +67,8 @@ inline typename disable_if
     proto::is_op<Right>
   , proto::binary_op
     <
-        proto::unary_op<basic_regex<BidiIter> const &, proto::noop_tag>
-      , typename proto::as_op<Right>::reference
+        proto::unary_op<basic_regex<BidiIter>, proto::noop_tag>
+      , proto::unary_op<Right, proto::noop_tag>
       , proto::right_shift_tag
     >
 >::type
@@ -88,8 +85,8 @@ inline typename disable_if
     proto::is_op<Left>
   , proto::binary_op
     <
-        typename proto::as_op<Left>::reference
-      , proto::unary_op<basic_regex<BidiIter> const &, proto::noop_tag>
+        proto::unary_op<Left, proto::noop_tag>
+      , proto::unary_op<basic_regex<BidiIter>, proto::noop_tag>
       , proto::right_shift_tag
     >
 >::type
@@ -103,8 +100,8 @@ operator >>(Left const &left, basic_regex<BidiIter> const &regex)
 template<typename BidiIter>
 inline proto::binary_op
 <
-    proto::unary_op<basic_regex<BidiIter> const &, proto::noop_tag>
-  , proto::unary_op<basic_regex<BidiIter> const &, proto::noop_tag>
+    proto::unary_op<basic_regex<BidiIter>, proto::noop_tag>
+  , proto::unary_op<basic_regex<BidiIter>, proto::noop_tag>
   , proto::right_shift_tag
 >
 operator >>(basic_regex<BidiIter> const &left, basic_regex<BidiIter> const &right)
@@ -120,8 +117,8 @@ inline typename disable_if
     proto::is_op<Right>
   , proto::binary_op
     <
-        proto::unary_op<basic_regex<BidiIter> const &, proto::noop_tag>
-      , typename proto::as_op<Right>::reference
+        proto::unary_op<basic_regex<BidiIter>, proto::noop_tag>
+      , proto::unary_op<Right, proto::noop_tag>
       , proto::bitor_tag
     >
 >::type
@@ -138,8 +135,8 @@ inline typename disable_if
     proto::is_op<Left>
   , proto::binary_op
     <
-        typename proto::as_op<Left>::reference
-      , proto::unary_op<basic_regex<BidiIter> const &, proto::noop_tag>
+        proto::unary_op<Left, proto::noop_tag>
+      , proto::unary_op<basic_regex<BidiIter>, proto::noop_tag>
       , proto::bitor_tag
     >
 >::type
@@ -153,8 +150,8 @@ operator |(Left const &left, basic_regex<BidiIter> const &regex)
 template<typename BidiIter>
 inline proto::binary_op
 <
-    proto::unary_op<basic_regex<BidiIter> const &, proto::noop_tag>
-  , proto::unary_op<basic_regex<BidiIter> const &, proto::noop_tag>
+    proto::unary_op<basic_regex<BidiIter>, proto::noop_tag>
+  , proto::unary_op<basic_regex<BidiIter>, proto::noop_tag>
   , proto::bitor_tag
 >
 operator |(basic_regex<BidiIter> const &left, basic_regex<BidiIter> const &right)

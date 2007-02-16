@@ -8,7 +8,6 @@
 // For more information, see http://www.boost.org/libs/range/
 //
 
-//#include <boost/range/as_array.hpp>
 
 #include <boost/detail/workaround.hpp>
 
@@ -16,6 +15,7 @@
 #  pragma warn -8091 // supress warning in Boost.Test
 #  pragma warn -8057 // unused argument argc/argv in Boost.Test
 #endif
+
 
 #include <boost/range/iterator_range.hpp>
 #include <boost/range/functions.hpp>
@@ -26,7 +26,7 @@
 
 using namespace boost;
 using namespace std;
-    
+
 void check_reference_type();
 
 void check_iterator_range()
@@ -65,12 +65,6 @@ void check_iterator_range()
     BOOST_CHECK_EQUAL( distance( r.begin(), r.end() ), 
                        distance( begin( r2 ), end( r2 ) ) );
     cout << r << r2;
-
-        
-#ifndef BOOST_NO_STD_WSTRING
-    wcout << make_iterator_range( wstring( L"a wide string" ) ) 
-          << make_iterator_range( L"another wide string" );
-#endif    
     
     string res  = copy_range<string>( r );
     BOOST_CHECK( equal( res.begin(), res.end(), r.begin() ) );
@@ -127,7 +121,7 @@ test_suite* init_unit_test_suite( int argc, char* argv[] )
 template< class Container >
 int test_iter_range( Container& a_cont )
 {
-    typedef BOOST_DEDUCED_TYPENAME range_iterator<Container>::type citer_type;
+    typedef BOOST_DEDUCED_TYPENAME range_result_iterator<Container>::type citer_type;
     typedef iterator_range<citer_type> riter_type;
     riter_type a_riter( make_iterator_range( a_cont ) );
     a_riter.front();

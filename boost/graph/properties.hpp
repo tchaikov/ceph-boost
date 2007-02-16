@@ -16,13 +16,6 @@
 #include <boost/graph/graph_traits.hpp>
 #include <boost/type_traits/is_convertible.hpp>
 
-
-#if BOOST_WORKAROUND(BOOST_MSVC, < 1300)
-// Stay out of the way of the concept checking class
-# define Graph Graph_
-# define RandomAccessContainer RandomAccessContainer_
-#endif
-
 namespace boost {
 
   enum default_color_type { white_color, gray_color, green_color, red_color, black_color };
@@ -339,7 +332,8 @@ namespace boost {
     typedef T value_type;
     typedef T& reference;
     typedef lvalue_property_map_tag category;
-
+ 
+    bundle_property_map() { }
     bundle_property_map(Graph* g_, T Bundle::* pm_) : g(g_), pm(pm_) {}
 
     reference operator[](key_type k) const { return (*g)[k].*pm; }
@@ -377,12 +371,5 @@ namespace boost {
 #endif
 
 } // namespace boost
-
-#if BOOST_WORKAROUND(BOOST_MSVC, < 1300)
-// Stay out of the way of the concept checking class
-# undef Graph
-# undef RandomAccessIterator
-#endif
-
 
 #endif /* BOOST_GRAPH_PROPERTIES_HPPA */

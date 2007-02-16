@@ -5,7 +5,7 @@
     
     http://www.boost.org/
 
-    Copyright (c) 2001-2006 Hartmut Kaiser. Distributed under the Boost
+    Copyright (c) 2001-2007 Hartmut Kaiser. Distributed under the Boost
     Software License, Version 1.0. (See accompanying file
     LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
 =============================================================================*/
@@ -36,19 +36,16 @@ enum universal_char_type {
     universal_char_type_not_allowed_for_identifiers = 3
 };
 
-namespace {
-
-    ///////////////////////////////////////////////////////////////////////////
-    // 
-    //  is_range is a helper function for the classification by brute force 
-    //  below
-    //
-    ///////////////////////////////////////////////////////////////////////////
-    inline bool 
-    in_range(unsigned long ch, unsigned long l, unsigned long u)
-    {
-        return (l <= ch && ch <= u);
-    }
+///////////////////////////////////////////////////////////////////////////
+// 
+//  is_range is a helper function for the classification by brute force 
+//  below
+//
+///////////////////////////////////////////////////////////////////////////
+inline bool 
+in_range(unsigned long ch, unsigned long l, unsigned long u)
+{
+    return (l <= ch && ch <= u);
 }
 
 ///////////////////////////////////////////////////////////////////////////////

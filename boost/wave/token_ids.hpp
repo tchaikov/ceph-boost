@@ -5,7 +5,7 @@
     
     http://www.boost.org/
 
-    Copyright (c) 2001-2006 Hartmut Kaiser. Distributed under the Boost
+    Copyright (c) 2001-2007 Hartmut Kaiser. Distributed under the Boost
     Software License, Version 1.0. (See accompanying file
     LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
 =============================================================================*/
@@ -307,17 +307,17 @@ enum token_id {
 #undef BASEID_FROM_TOKEN
 #define BASEID_FROM_TOKEN(tok)                                                \
     boost::wave::token_id(((tok) & ~boost::wave::ExtTokenTypeMask))           \
-  /**/
+    /**/
 #define BASE_TOKEN(tok)                                                       \
     boost::wave::token_id((tok) & boost::wave::MainTokenMask)                 \
-  /**/
+    /**/
 #define CATEGORY_FROM_TOKEN(tok) ((tok) & boost::wave::TokenTypeMask)
 #define EXTCATEGORY_FROM_TOKEN(tok) ((tok) & boost::wave::ExtTokenTypeMask)
-#define IS_CATEGORY(tok, cat)    \
-    ((CATEGORY_FROM_TOKEN(tok) == (cat)) ? true : false) \
+#define IS_CATEGORY(tok, cat)                                                 \
+    ((CATEGORY_FROM_TOKEN(tok) == (cat)) ? true : false)                      \
     /**/
-#define IS_EXTCATEGORY(tok, cat)    \
-    ((EXTCATEGORY_FROM_TOKEN(tok) == (cat)) ? true : false) \
+#define IS_EXTCATEGORY(tok, cat)                                              \
+    ((EXTCATEGORY_FROM_TOKEN(tok) == (cat)) ? true : false)                   \
     /**/
 
 ///////////////////////////////////////////////////////////////////////////////

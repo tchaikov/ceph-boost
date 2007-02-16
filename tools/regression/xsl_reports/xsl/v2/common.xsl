@@ -108,8 +108,8 @@ http://www.boost.org/LICENSE_1_0.txt)
 
 
     <func:function name="meta:test_case_status">
+        <xsl:param name="explicit_markup"/>
         <xsl:param name="test_log"/>
-        <xsl:param name="$explicit_markup"/>
 
         <xsl:variable name="status">
             <xsl:choose> 
@@ -147,8 +147,10 @@ http://www.boost.org/LICENSE_1_0.txt)
     </func:function>
 
     <func:function name="meta:is_test_log_a_test_case">
-        <xsl:param name="test_log"/>      
-        <func:result select="$test_log/@test-type='compile' or $test_log/@test-type='compile_fail' or $test_log/@test-type='run' or $test_log/@test-type='run_pyd'"/>
+        <xsl:param name="test_log"/>       
+        <xsl:variable name="type" select="$test_log/@test-type"/>
+        <func:result select="$type='compile' or $type='compile_fail' or $type='link' or $type='link_fail' 
+                             or $type='run' or $type='run_fail' or $type='run_pyd'"/>
     </func:function>
 
 

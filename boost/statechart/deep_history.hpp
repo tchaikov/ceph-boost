@@ -1,7 +1,7 @@
 #ifndef BOOST_STATECHART_DEEP_HISTORY_HPP_INCLUDED
 #define BOOST_STATECHART_DEEP_HISTORY_HPP_INCLUDED
 //////////////////////////////////////////////////////////////////////////////
-// (c) Copyright Andreas Huber Doenni 2002-2005
+// Copyright 2002-2006 Andreas Huber Doenni
 // Distributed under the Boost Software License, Version 1.0. (See accompany-
 // ing file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
 //////////////////////////////////////////////////////////////////////////////
@@ -43,8 +43,6 @@ class deep_history
     typedef typename DefaultState::context_ptr_type context_ptr_type;
     typedef typename DefaultState::context_type_list context_type_list;
     typedef typename DefaultState::orthogonal_position orthogonal_position;
-
-    typedef mpl::bool_< true > history_destination;
 
     static void deep_construct(
       const context_ptr_type & pContext,

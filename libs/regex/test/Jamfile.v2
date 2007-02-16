@@ -1,4 +1,7 @@
 # copyright John Maddock 2003
+# Distributed under the Boost Software License, Version 1.0. 
+# (See accompanying file LICENSE_1_0.txt or copy at 
+# http://www.boost.org/LICENSE_1_0.txt.
 
 project
     : requirements <threading>multi <link>shared:<define>BOOST_REGEX_DYN_LINK=1
@@ -58,6 +61,14 @@ test-suite regex
         : # requirements
         : regex_regress_dll ]
 
+      [ run regress/$(R_SOURCE) ../build//boost_regex
+                                ../../thread/build//boost_thread
+        : # command line
+        : # input files
+        : # requirements
+        <define>TEST_THREADS
+        : regex_regress_threaded ]
+
       [ regex-test posix_api_check : c_compiler_checks/posix_api_check.c ]
 
       [ compile c_compiler_checks/wide_posix_api_check.c 
@@ -97,7 +108,7 @@ test-suite regex
       ]    
 
       [ run collate_info/collate_info.cpp ../build//boost_regex
-      : : : <test-info>always_show_run_output ]
+      : : : <test-info>always_show_run_output : test_collate_info ]
 
 
       [ compile concepts/concept_check.cpp ../build//boost_regex
@@ -120,3 +131,6 @@ test-suite regex
  ]
 ;
       
+
+
+

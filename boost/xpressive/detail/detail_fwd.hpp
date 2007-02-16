@@ -16,7 +16,6 @@
 #include <climits> // for INT_MAX
 #include <boost/mpl/bool.hpp>
 #include <boost/mpl/size_t.hpp>
-#include <boost/shared_ptr.hpp>
 #include <boost/xpressive/xpressive_fwd.hpp>
 
 namespace boost { namespace xpressive { namespace detail
@@ -89,6 +88,9 @@ namespace boost { namespace xpressive { namespace detail
     struct posix_charset_matcher;
 
     template<typename BidiIter>
+    struct alternates_factory;
+
+    template<typename BidiIter>
     struct sequence;
 
     template<typename Traits, bool ICase>
@@ -133,16 +135,10 @@ namespace boost { namespace xpressive { namespace detail
     template<typename Action>
     struct action_matcher;
 
-    template<typename Xpr, bool Greedy>
-    struct optional_matcher;
-
-    template<typename Xpr, bool Greedy>
-    struct optional_mark_matcher;
-
     template<typename Xpr>
     struct is_modifiable;
 
-    template<typename Head, typename Tail>
+    template<typename Alternates>
     struct alternates_list;
 
     template<typename Modifier>
@@ -163,6 +159,8 @@ namespace boost { namespace xpressive { namespace detail
     struct regex_matcher;
 
     struct epsilon_matcher;
+
+    struct epsilon_mark_matcher;
 
     template<typename BidiIter>
     struct nested_results;
@@ -186,7 +184,7 @@ namespace boost { namespace xpressive { namespace detail
     struct word_boundary;
 
     template<typename BidiIter, typename Matcher>
-    sequence<BidiIter> make_dynamic(Matcher const &matcher);
+    sequence<BidiIter> make_dynamic_xpression(Matcher const &matcher);
 
     template<typename Char>
     struct xpression_linker;
@@ -239,17 +237,8 @@ namespace boost { namespace xpressive { namespace detail
     template<typename BidiIter>
     struct matchable;
 
-    template<typename BidiIter>
-    struct matchable_ex;
-
     template<typename Matcher, typename BidiIter>
     struct dynamic_xpression;
-
-    template<typename BidiIter>
-    struct shared_matchable;
-
-    template<typename BidiIter>
-    struct alternates_vector;
 
     template<typename Matcher, typename Next>
     struct static_xpression;
@@ -321,36 +310,16 @@ namespace boost { namespace xpressive { namespace detail
 
     template<typename Matcher>
     static_xpression<Matcher> const
-    make_static(Matcher const &matcher);
+    make_static_xpression(Matcher const &matcher);
 
     template<typename Matcher, typename Next>
     static_xpression<Matcher, Next> const
-    make_static(Matcher const &matcher, Next const &next);
+    make_static_xpression(Matcher const &matcher, Next const &next);
 
     int get_mark_number(mark_tag const &);
 
     template<typename Xpr, typename BidiIter>
-    void static_compile(Xpr const &xpr, shared_ptr<regex_impl<BidiIter> > const &impl);
-
-    struct quant_spec;
-
-    template<typename BidiIter, typename Xpr>
-    void make_simple_repeat(quant_spec const &spec, sequence<BidiIter> &seq, Xpr const &xpr);
-
-    template<typename BidiIter>
-    void make_simple_repeat(quant_spec const &spec, sequence<BidiIter> &seq);
-
-    template<typename BidiIter>
-    void make_repeat(quant_spec const &spec, sequence<BidiIter> &seq, int mark_nbr);
-
-    template<typename BidiIter>
-    void make_repeat(quant_spec const &spec, sequence<BidiIter> &seq);
-
-    template<typename BidiIter>
-    void make_optional(quant_spec const &spec, sequence<BidiIter> &seq);
-
-    template<typename BidiIter>
-    void make_optional(quant_spec const &spec, sequence<BidiIter> &seq, int mark_nbr);
+    void static_compile(Xpr const &xpr, regex_impl<BidiIter> &impl);
 
 }}} // namespace boost::xpressive::detail
 

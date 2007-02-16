@@ -1,10 +1,8 @@
-# (C) Copyright David Abrahams 2001. 
-# (C) Copyright Vladimir Prus 2003.
-# (C) Copyright Rene Rivera 2003.
-# Permission to copy, use, modify, sell and distribute this software 
-# is granted provided this copyright notice appears in all copies. This 
-# software is provided "as is" without express or implied warranty, and 
-# with no claim as to its suitability for any purpose.
+# Copyright 2005 Dave Abrahams 
+# Copyright 2003 Rene Rivera 
+# Copyright 2003, 2004, 2005 Vladimir Prus 
+# Distributed under the Boost Software License, Version 1.0. 
+# (See accompanying file LICENSE_1_0.txt or http://www.boost.org/LICENSE_1_0.txt) 
 
 #  Support for the Borland's command line compiler
 
@@ -154,13 +152,16 @@ flags borland.link LIBRARY_OPTION <toolset>borland : "" : unchecked ;
 # The NEED_IMPLIB variable controls whether we need to invoke implib.
 
 flags borland.archive AROPTIONS <archiveflags> ;
+
 # Declare action for archives. We don't use response file
 # since it's hard to get "+-" there.
+# The /P256 increases 'page' size -- with too low
+# values tlib fails when building large applications.
 # CONSIDER: don't know what 'together' is for...
 actions updated together piecemeal archive
 { 
     $(.set-path)$(.root:W)$(.old-path)
-    tlib $(AROPTIONS) /u /a /C "$(<:W)" +-"$(>:W)"
+    tlib $(AROPTIONS) /P256 /u /a /C "$(<:W)" +-"$(>:W)"
 }
 
 

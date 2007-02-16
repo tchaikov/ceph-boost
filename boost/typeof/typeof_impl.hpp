@@ -1,7 +1,7 @@
 // Copyright (C) 2004, 2005 Arkadiy Vertleyb
 // Copyright (C) 2005 Peder Holt
-// Use, modification and distribution is subject to the Boost Software
-// License, Version 1.0. (http://www.boost.org/LICENSE_1_0.txt)
+// Distributed under the Boost Software License, Version 1.0. (See accompanying
+// file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
 
 #ifndef BOOST_TYPEOF_TYPEOF_IMPL_HPP_INCLUDED
 #define BOOST_TYPEOF_TYPEOF_IMPL_HPP_INCLUDED
@@ -10,6 +10,8 @@
 #include <boost/preprocessor/repetition/enum.hpp>
 #include <boost/typeof/encode_decode.hpp>
 #include <boost/typeof/vector.hpp>
+#include <boost/type_traits/is_function.hpp>
+#include <boost/utility/enable_if.hpp>
 
 #define BOOST_TYPEOF_VECTOR(n) BOOST_PP_CAT(boost::type_of::vector, n)
 
@@ -26,13 +28,28 @@ namespace boost { namespace type_of {
 
         BOOST_PP_REPEAT(BOOST_TYPEOF_LIMIT_SIZE, BOOST_TYPEOF_sizer_item, ~)
     };
-
-    template<class V,class T> 
-    sizer<typename encode_type<V, T>::type> encode(const T&);
 }}
 
 #undef BOOST_TYPEOF_sizer_item
 
+//
+namespace boost { namespace type_of {   
+# ifdef BOOST_NO_SFINAE
+    template<class V, class T> 
+    sizer<typename encode_type<V, T>::type> encode(const T&);
+# else
+    template<class V, class T> 
+    typename enable_if<
+        typename is_function<T>::type,
+        sizer<typename encode_type<V, T>::type> >::type encode(T&);
+
+    template<class V, class T> 
+    typename disable_if<
+        typename is_function<T>::type,
+        sizer<typename encode_type<V, T>::type> >::type encode(const T&);
+# endif
+}}
+//
 namespace boost { namespace type_of {
 
     template<class V>
@@ -77,6 +94,18 @@ namespace boost { namespace type_of {
     BOOST_STATIC_CONSTANT(int,BOOST_PP_CAT(value,n) = sizeof(boost::type_of::encode<_typeof_start_vector>(expr).item ## n));\
     typedef boost::mpl::size_t<BOOST_PP_CAT(value,n)> BOOST_PP_CAT(item,n);
 
+#ifdef __DMC__
+#define BOOST_TYPEOF_NESTED_TYPEITEM_2(z,n,expr)\
+    typedef typename _typeof_encode_fraction<iteration>::BOOST_PP_CAT(item,n) BOOST_PP_CAT(item,n);
+
+#define BOOST_TYPEOF_FRACTIONTYPE()\
+    BOOST_PP_REPEAT(BOOST_TYPEOF_LIMIT_SIZE,BOOST_TYPEOF_NESTED_TYPEITEM_2,_)\
+    typedef _typeof_fraction_iter<Pos> fraction_type;
+#else
+#define BOOST_TYPEOF_FRACTIONTYPE()\
+    typedef _typeof_encode_fraction<iteration> fraction_type;
+#endif
+
 #define BOOST_TYPEOF_NESTED_TYPEDEF_IMPL(expr) \
         template<int _Typeof_Iteration>\
         struct _typeof_encode_fraction {\
@@ -89,10 +118,24 @@ namespace boost { namespace type_of {
             BOOST_STATIC_CONSTANT(int,pos=(Pos::value));\
             BOOST_STATIC_CONSTANT(int,iteration=(pos/BOOST_TYPEOF_LIMIT_SIZE));\
             BOOST_STATIC_CONSTANT(int,where=pos%BOOST_TYPEOF_LIMIT_SIZE);\
-            typedef typename boost::type_of::v_iter<_typeof_encode_fraction<iteration>,boost::mpl::int_<where> >::type type;\
+            BOOST_TYPEOF_FRACTIONTYPE();\
+            typedef typename boost::type_of::v_iter<fraction_type,boost::mpl::int_<where> >::type type;\
             typedef _typeof_fraction_iter<typename Pos::next> next;\
         };
 
+#ifdef __MWERKS__
+
+# define BOOST_TYPEOF_NESTED_TYPEDEF(name,expr) \
+template<typename T>\
+struct BOOST_PP_CAT(_typeof_template_,name) {\
+    BOOST_TYPEOF_NESTED_TYPEDEF_IMPL(expr)\
+    typedef typename boost::type_of::decode_type<_typeof_fraction_iter<boost::mpl::size_t<0> > >::type type;\
+};\
+typedef BOOST_PP_CAT(_typeof_template_,name)<int> name;
+
+# define BOOST_TYPEOF_NESTED_TYPEDEF_TPL(name,expr) BOOST_TYPEOF_NESTED_TYPEDEF(name,expr);
+
+#else
 # define BOOST_TYPEOF_NESTED_TYPEDEF_TPL(name,expr) \
     struct name {\
         BOOST_TYPEOF_NESTED_TYPEDEF_IMPL(expr)\
@@ -104,5 +147,6 @@ namespace boost { namespace type_of {
         BOOST_TYPEOF_NESTED_TYPEDEF_IMPL(expr)\
         typedef boost::type_of::decode_type<_typeof_fraction_iter<boost::mpl::size_t<0> > >::type type;\
     };
+#endif
 
 #endif//BOOST_TYPEOF_COMPLIANT_TYPEOF_IMPL_HPP_INCLUDED

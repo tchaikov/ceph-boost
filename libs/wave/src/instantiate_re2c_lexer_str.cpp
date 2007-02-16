@@ -4,7 +4,7 @@
     
     http://www.boost.org/
 
-    Copyright (c) 2001-2006 Hartmut Kaiser. Distributed under the Boost
+    Copyright (c) 2001-2007 Hartmut Kaiser. Distributed under the Boost
     Software License, Version 1.0. (See accompanying file
     LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
 =============================================================================*/
@@ -48,8 +48,10 @@
 //
 ///////////////////////////////////////////////////////////////////////////////
 
+#if !defined(BOOST_WAVE_STRINGTYPE_USE_STDSTRING)
 template struct boost::wave::cpplexer::new_lexer_gen<std::string::iterator>;
 template struct boost::wave::cpplexer::new_lexer_gen<std::string::const_iterator>;
+#endif
 
 // the suffix header occurs after all of the code
 #ifdef BOOST_HAS_ABI_HEADERS

@@ -1,13 +1,15 @@
-#  Copyright (C) Vladimir Prus 2002. Permission to copy, use, modify, sell and
-#  distribute this software is granted provided this copyright notice appears in
-#  all copies. This software is provided "as is" without express or implied
-#  warranty, and with no claim as to its suitability for any purpose.
+# Copyright 2001, 2002, 2003 Dave Abrahams 
+# Copyright 2006 Rene Rivera 
+# Copyright 2002, 2003, 2004, 2005, 2006 Vladimir Prus 
+# Distributed under the Boost Software License, Version 1.0. 
+# (See accompanying file LICENSE_1_0.txt or http://www.boost.org/LICENSE_1_0.txt) 
 
 import utility : ungrist ;
 import sequence : unique ;
 import errors : error ;
 import feature ;
 import regex ;
+import string ;
 import sequence ;
 import set ;
 import path ;
@@ -191,6 +193,30 @@ local rule path-order ( x y )
     }
 }
 
+local rule abbreviate-dashed ( string )
+{
+    local r ;
+    for local part in [ regex.split $(string) - ]
+    {
+        r += [ string.abbreviate $(part) ] ;
+    }
+    return $(r:J=-) ;
+}
+
+local rule identity ( string )
+{
+    return $(string) ;
+}
+
+if --abbreviate-paths in [ modules.peek : ARGV ]
+{
+    .abbrev = abbreviate-dashed ;
+}
+else
+{
+    .abbrev = identity ;
+}
+
 # Returns a path which represents the given expanded property set.
 rule as-path ( properties * )
 {
@@ -210,12 +236,10 @@ rule as-path ( properties * )
             if $(p:G)
             {
                 local f = [ ungrist $(p:G) ] ;
-                components += $(f)-$(p:G=) ;
+                p = $(f)-$(p:G=) ;
             }
-            else
-            {
-                components += $(p) ;
-            }
+            
+            components += [ $(.abbrev) $(p) ] ;
         }
         
         $(entry) = $(components:J=/) ;
@@ -527,7 +551,7 @@ local rule __test__ ( )
     import feature : feature subfeature compose ;
     
     # local rules must be explicitly re-imported
-    import property : path-order ;
+    import property : path-order abbreviate-dashed ;
     
     feature.prepare-test property-test-temp ;
 
@@ -555,28 +579,28 @@ local rule __test__ ( )
     assert.true path-order $(test-space) <optimization>on <rtti>on ;
     assert.false path-order $(test-space) <rtti>on <optimization>on ;
       
-    assert.result <toolset>gcc <rtti>off <define>FOO
+    assert.result-equal <toolset>gcc <rtti>off <define>FOO
         : refine <toolset>gcc <rtti>off
         : <define>FOO
         : $(test-space)
         ;
 
-    assert.result <toolset>gcc <optimization>on
+    assert.result-equal <toolset>gcc <optimization>on
         : refine <toolset>gcc <optimization>off
         : <optimization>on
         : $(test-space)
         ;
 
-    assert.result <toolset>gcc <rtti>off
+    assert.result-equal <toolset>gcc <rtti>off
         : refine <toolset>gcc : <rtti>off : $(test-space)
         ;
 
-    assert.result <toolset>gcc <rtti>off <rtti>off:<define>FOO
+    assert.result-equal <toolset>gcc <rtti>off <rtti>off:<define>FOO
         : refine <toolset>gcc : <rtti>off <rtti>off:<define>FOO 
         : $(test-space)
         ;
     
-    assert.result <toolset>gcc:<define>foo <toolset>gcc:<define>bar 
+    assert.result-equal <toolset>gcc:<define>foo <toolset>gcc:<define>bar 
         : refine <toolset>gcc:<define>foo : <toolset>gcc:<define>bar 
         : $(test-space)
         ;
@@ -597,7 +621,10 @@ local rule __test__ ( )
       : as-path <toolset>gcc <optimization>off <rtti>off <variant>debug
       : $(test-space)
       ;
-        
+
+    assert.result optmz-off : abbreviate-dashed optimization-off ;
+    assert.result rntm-lnk-sttc : abbreviate-dashed runtime-link-static ;
+    
     try ;
         validate <feature>value : $(test-space) ;
     catch "Invalid property '<feature>value': unknown feature 'feature'." ;
@@ -617,19 +644,19 @@ local rule __test__ ( )
     catch "value" is not a value of an implicit feature ;
            
 
-    assert.result <rtti>on 
+    assert.result-equal <rtti>on 
         : remove free implicit : <toolset>gcc <define>foo <rtti>on : $(test-space) ;
 
-    assert.result <include>a 
+    assert.result-equal <include>a 
         : select include : <include>a <toolset>gcc ;
 
-    assert.result <include>a 
+    assert.result-equal <include>a 
         : select include bar : <include>a <toolset>gcc ;
 
-    assert.result <include>a <toolset>gcc
+    assert.result-equal <include>a <toolset>gcc
         : select include <bar> <toolset> : <include>a <toolset>gcc ;
     
-    assert.result <toolset>kylix <include>a 
+    assert.result-equal <toolset>kylix <include>a 
         : change <toolset>gcc <include>a : <toolset> kylix ;
 
     pm = [ new property-map ] ;
@@ -658,7 +685,7 @@ local rule __test__ ( )
       ;
     
     # Test conditional feature
-    assert.result <toolset>gcc,<toolset-gcc:version>3.0 <define>FOO
+    assert.result-equal <toolset>gcc,<toolset-gcc:version>3.0 <define>FOO
       : split-conditional <toolset>gcc,<toolset-gcc:version>3.0:<define>FOO
       ;
     

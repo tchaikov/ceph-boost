@@ -77,7 +77,10 @@ BOOST_PARAMETER_FUNCTION((int), h, tag,
     )
 )
 {
-    BOOST_MPL_ASSERT((boost::is_same<index_type, int const>));
+# if !BOOST_WORKAROUND(__BORLANDC__, BOOST_TESTED_AT(0x564)) \
+  && !BOOST_WORKAROUND(BOOST_MSVC, <= 1300)
+    BOOST_MPL_ASSERT((boost::is_same<index_type, int>));
+# endif
 
     tester(
         name
@@ -99,7 +102,10 @@ BOOST_PARAMETER_FUNCTION((int), h2, tag,
     )
 )
 {
-    BOOST_MPL_ASSERT((boost::is_same<index_type, int const>));
+# if !BOOST_WORKAROUND(__BORLANDC__, BOOST_TESTED_AT(0x564)) \
+  && !BOOST_WORKAROUND(BOOST_MSVC, <= 1300)
+    BOOST_MPL_ASSERT((boost::is_same<index_type, int>));
+# endif
 
     tester(
         name
@@ -205,6 +211,22 @@ struct class_ : base
         tester(name, value, index);
         return 1;
     }
+
+
+    BOOST_PARAMETER_MEMBER_FUNCTION((int), static f_static, tag,
+        (required
+          (tester, *)
+          (name, *)
+        )
+        (optional
+          (value, *, 1.f)
+          (index, *, 2)
+        )
+    )
+    {
+        tester(name, value, index);
+        return 1;
+    }
 };
 
 BOOST_PARAMETER_FUNCTION(
@@ -232,14 +254,91 @@ sfinae(A0 const& a0)
 }
 #endif
 
+#if BOOST_WORKAROUND(__SUNPRO_CC, BOOST_TESTED_AT(0x580))
+
+// Sun has problems with this syntax:
+//
+//   template1< r* ( template2<x> ) >
+//
+// Workaround: factor template2<x> into a separate typedef
+typedef boost::is_convertible<boost::mpl::_, std::string> predicate;
+
+BOOST_PARAMETER_FUNCTION(
+    (int), sfinae1, tag,
+    (required
+       (name, *(predicate))
+    )
+)
+{
+    return 1;
 }
+
+#else
+
+BOOST_PARAMETER_FUNCTION(
+    (int), sfinae1, tag,
+    (required
+       (name, *(boost::is_convertible<boost::mpl::_, std::string>))
+    )
+)
+{
+    return 1;
+}
+#endif 
+
+#ifndef BOOST_NO_SFINAE
+// On compilers that actually support SFINAE, add another overload
+// that is an equally good match and can only be in the overload set
+// when the others are not.  This tests that the SFINAE is actually
+// working.  On all other compilers we're just checking that
+// everything about SFINAE-enabled code will work, except of course
+// the SFINAE.
+template<class A0>
+typename boost::enable_if<boost::is_same<int,A0>, int>::type
+sfinae1(A0 const& a0)
+{
+    return 0;
+}
+#endif
+
+template <class T>
+T const& as_lvalue(T const& x)
+{
+    return x;
+}
+
+struct udt
+{
+    udt(int foo, int bar)
+      : foo(foo)
+      , bar(bar)
+    {}
+
+    int foo;
+    int bar;
+};
+
+BOOST_PARAMETER_FUNCTION((int), lazy_defaults, tag,
+    (required
+      (name, *)
+    )
+    (optional
+      (value, *, name.foo)
+      (index, *, name.bar)
+    )
+)
+{
+    return 0;
+}
+
+} // namespace test
 
 int main()
 {
     using namespace test;
 
     f(
-        tester = values(S("foo"), 1.f, 2)
+        values(S("foo"), 1.f, 2)
       , S("foo")
     );
 
@@ -249,41 +348,56 @@ int main()
     );
 
     int index_lvalue = 2;
-    
+
     f(
         tester = values(S("foo"), 1.f, 2)
       , name = S("foo")
+      , value = 1.f
+      , test::index = index_lvalue
+    );
+
+    f(
+        values(S("foo"), 1.f, 2)
+      , S("foo")
       , 1.f
       , index_lvalue
     );
 
     g(
-        tester = values(S("foo"), 1.f, 2)
-      , name = S("foo")
+        values(S("foo"), 1.f, 2)
+      , S("foo")
       , 1.f
+#if BOOST_WORKAROUND(BOOST_MSVC, == 1300)
+      , as_lvalue(2)
+#else
       , 2
+#endif
     );
 
     h(
-        tester = values(S("foo"), 1.f, 2)
-      , name = S("foo")
+        values(S("foo"), 1.f, 2)
+      , S("foo")
       , 1.f
+#if BOOST_WORKAROUND(BOOST_MSVC, == 1300)
+      , as_lvalue(2)
+#else
       , 2
+#endif
     );
 
     h2(
         tester = values(S("foo"), 1.f, 2)
       , name = S("foo")
-      , 1.f
+      , value = 1.f
     );
-    
+
     class_ x(
-        tester = values(S("foo"), 1.f, 2)
+        values(S("foo"), 1.f, 2)
       , S("foo"), test::index = 2
     );
 
     x.f(
-        tester = values(S("foo"), 1.f, 2)
+        values(S("foo"), 1.f, 2)
       , S("foo")
     );
 
@@ -293,7 +407,7 @@ int main()
     );
 
     x.f2(
-        tester = values(S("foo"), 1.f, 2)
+        values(S("foo"), 1.f, 2)
       , S("foo")
     );
 
@@ -305,7 +419,7 @@ int main()
     class_ const& x_const = x;
 
     x_const.f(
-        tester = values(S("foo"), 1.f, 2)
+        values(S("foo"), 1.f, 2)
       , S("foo")
     );
 
@@ -315,7 +429,7 @@ int main()
     );
 
     x_const.f2(
-        tester = values(S("foo"), 1.f, 2)
+        values(S("foo"), 1.f, 2)
       , S("foo")
     );
 
@@ -329,10 +443,40 @@ int main()
       , name = S("foo")
     );
 
+    class_::f_static(
+        values(S("foo"), 1.f, 2)
+      , S("foo")
+    );
+
+    class_::f_static(
+        tester = values(S("foo"), 1.f, 2)
+      , name = S("foo")
+    );
+
 #ifndef BOOST_NO_SFINAE
     assert(sfinae("foo") == 1);
     assert(sfinae(1) == 0);
+
+# if !BOOST_WORKAROUND(__SUNPRO_CC, BOOST_TESTED_AT(0x580))
+    // Sun actually eliminates the desired overload for some reason.
+    // Disabling this part of the test because SFINAE abilities are
+    // not the point of this test.
+    assert(sfinae1("foo") == 1);
+# endif
+    
+    assert(sfinae1(1) == 0);
 #endif
+
+    lazy_defaults(
+        name = udt(0,1)
+    );
+
+    lazy_defaults(
+        name = 0
+      , value = 1
+      , test::index = 2
+    );
+
     return 0;
 }
 

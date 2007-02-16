@@ -1,4 +1,4 @@
-// (C) Copyright Jeremy Siek, David Abrahams 2000-2006.
+// (C) Copyright Jeremy Siek 2000.
 // Distributed under the Boost Software License, Version 1.0. (See
 // accompanying file LICENSE_1_0.txt or copy at
 // http://www.boost.org/LICENSE_1_0.txt)
@@ -11,22 +11,21 @@
 /*
 
   This file verifies that class_requires of the Boost Concept Checking
-  Library catches errors when it is supposed to.
+  Library catches errors when it is suppose to.
 
 */
 
 struct foo { };
 
-template <class T>
 class class_requires_test
 {
-    BOOST_CONCEPT_ASSERT((boost::EqualityComparable<foo>));
+  BOOST_CLASS_REQUIRE(foo, boost, EqualityComparableConcept);
 };
 
 int
 main()
 {
-    class_requires_test<int> x;
-    (void)x; // suppress unused variable warning
-    return 0;
+  class_requires_test x;
+  (void)x; // suppress unused variable warning
+  return 0;
 }

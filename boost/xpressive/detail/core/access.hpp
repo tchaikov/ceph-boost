@@ -13,7 +13,7 @@
 # pragma once
 #endif
 
-#include <boost/shared_ptr.hpp>
+#include <vector>
 #include <boost/xpressive/detail/detail_fwd.hpp>
 #include <boost/xpressive/detail/dynamic/matchable.hpp>
 
@@ -26,6 +26,12 @@ namespace boost { namespace xpressive { namespace detail
 template<typename BidiIter>
 struct core_access
 {
+    // BUGBUG give basic_regex move semantics!
+    static basic_regex<BidiIter> make_regex(regex_impl<BidiIter> const &impl)
+    {
+        return basic_regex<BidiIter>(impl);
+    }
+
     static std::size_t get_hidden_mark_count(basic_regex<BidiIter> const &rex)
     {
         return rex.impl_->hidden_mark_count_;

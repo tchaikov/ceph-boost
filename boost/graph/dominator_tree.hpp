@@ -1,8 +1,8 @@
 //=======================================================================
 // Copyright (C) 2005 Jong Soo Park <jongsoo.park -at- gmail.com>
 //
-// Distributed under the Boost Software License, Version 1.0. (See
-// accompanying file LICENSE_1_0.txt or copy at
+// Distributed under the Boost Software License, Version 1.0.
+// (See accompanying file LICENSE_1_0.txt or copy at
 // http://www.boost.org/LICENSE_1_0.txt)
 //=======================================================================
 // Dominator tree computation
@@ -217,8 +217,8 @@ namespace boost {
    *      this function would be good for saving computations.
    * @pre Unreachable nodes must be masked as
    *      graph_traits<Graph>::null_vertex in parentMap.
-   * @pre Unreachable nodes must be maksed as
-   *      std::numeric_limits<VerticesSizeType>::max() in dfnumMap.
+   * @pre Unreachable nodes must be masked as
+   *      (std::numeric_limits<VerticesSizeType>::max)() in dfnumMap.
    * 
    * @param domTreePredMap [out] : immediate dominator map (parent map
    * in dom. tree)
@@ -452,8 +452,8 @@ namespace boost {
             typename std::set<Vertex>::iterator t;
             for (t = get(domMap, *vi).begin(); t != get(domMap, *vi).end(); )
               {
-		typename std::set<Vertex>::iterator old_t = t;
-		++t; // Done early because t may become invalid
+        typename std::set<Vertex>::iterator old_t = t;
+        ++t; // Done early because t may become invalid
                 if (*old_t == *s) continue;
                 if (get(domMap, *s).find(*old_t) != get(domMap, *s).end())
                   get(domMap, *vi).erase(old_t);

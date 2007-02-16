@@ -2,11 +2,12 @@
 
 //  Copyright 2002-2005 Beman Dawes
 //  Copyright 2001 Dietmar Kuehl
-//  Use, modification, and distribution is subject to the Boost Software
-//  License, Version 1.0. (See accompanying file LICENSE_1_0.txt or copy
-//  at http://www.boost.org/LICENSE_1_0.txt)
 
-//  See library home page at http://www.boost.org/libs/filesystem
+// Distributed under the Boost Software License, Version 1.0.
+// (See accompanying file LICENSE_1_0.txt or copy at
+// http://www.boost.org/LICENSE_1_0.txt)
+
+//  See library home page at http://www.boost.org/libs/filesystem/
 
 //----------------------------------------------------------------------------// 
 
@@ -16,7 +17,11 @@
 
 #define _POSIX_PTHREAD_SEMANTICS  // Sun readdir_r() needs this
 
-#define _FILE_OFFSET_BITS 64 // at worst, these defines may have no effect,
+#if !(defined(__HP_aCC) && defined(_ILP32) && \
+      !defined(_STATVFS_ACPP_PROBLEMS_FIXED))
+# define _FILE_OFFSET_BITS 64 // at worst, these defines may have no effect,
+#endif
+
 #define __USE_FILE_OFFSET64 // but that is harmless on Windows and on POSIX
       // 64-bit systems or on 32-bit systems which don't have files larger 
       // than can be represented by a traditional POSIX/UNIX off_t type. 
@@ -1259,12 +1264,12 @@ namespace boost
         if ( result == 0 ) return dir_itr_close( handle, buffer );
         target = entry->d_name;
 #     ifdef BOOST_FILESYSTEM_STATUS_CACHE
-		    if ( entry->d_type == DT_UNKNOWN )  // filesystem does not supply d_type value
+            if ( entry->d_type == DT_UNKNOWN )  // filesystem does not supply d_type value
         {
           sf = symlink_sf = fs::file_status(fs::status_unknown);
         }
-	  	  else  // filesystem supplies d_type value
-		    {
+          else  // filesystem supplies d_type value
+            {
           if ( entry->d_type == DT_DIR )
             sf = symlink_sf = fs::file_status( fs::directory_file );
           else if ( entry->d_type == DT_REG )
@@ -1275,7 +1280,7 @@ namespace boost
             symlink_sf = fs::file_status( fs::symlink_file );
           }
           else sf = symlink_sf = fs::file_status( fs::status_unknown );
-		    }
+            }
 #     else
         sf = symlink_sf = fs::file_status( fs::status_unknown );
 #     endif

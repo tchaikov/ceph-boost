@@ -107,14 +107,12 @@ public:
     }
 
     /// \overload
-    ///
     int compare(sub_match const &sub) const
     {
         return this->str().compare(sub.str());
     }
 
     /// \overload
-    ///
     int compare(value_type const *ptr) const
     {
         return this->str().compare(ptr);

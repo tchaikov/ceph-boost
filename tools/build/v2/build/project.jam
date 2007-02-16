@@ -1,8 +1,8 @@
-#  Copyright (C) Vladimir Prus and Rene Rivera 2002.
-#  Permission to copy, use, modify, sell and
-#  distribute this software is granted provided this copyright notice appears in
-#  all copies. This software is provided "as is" without express or implied
-#  warranty, and with no claim as to its suitability for any purpose.
+# Copyright 2002, 2003 Dave Abrahams 
+# Copyright 2002, 2005, 2006 Rene Rivera 
+# Copyright 2002, 2003, 2004, 2005, 2006 Vladimir Prus 
+# Distributed under the Boost Software License, Version 1.0. 
+# (See accompanying file LICENSE_1_0.txt or http://www.boost.org/LICENSE_1_0.txt) 
 
 #  Implements project representation and loading.
 #   Each project is represented by 
@@ -76,21 +76,27 @@ rule load ( jamfile-location )
         # to child projects from parent projects, we don't immediately
         # loading child projects when seing those attributes. Instead,
         # we record the minimal information that will be used only later.
-
-        local used = [ modules.peek $(module-name) : .used-projects ] ;
-                import project ;
-        while $(used)
-        {
-            local id = $(used[1]) ;
-            local where = $(used[2]) ;
-            
-            project.use $(id) : [ path.root 
-                [ path.make $(where) ] $(jamfile-location) ] ;
-            used = $(used[3-]) ;
-        }        
+        load-used-projects $(module-name) ;
     }                
     return $(module-name) ;        
 }
+
+rule load-used-projects ( module-name )
+{
+    local used = [ modules.peek $(module-name) : .used-projects ] ;
+    local location = [ attribute $(module-name) location ] ;
+    import project ;
+    while $(used)
+    {
+        local id = $(used[1]) ;
+        local where = $(used[2]) ;
+        
+        project.use $(id) : [ path.root 
+            [ path.make $(where) ] $(location) ] ;
+        used = $(used[3-]) ;
+    }            
+}
+
 
 # Note the use of character groups, as opposed to listing
 # 'Jamroot' and 'jamroot'. With the latter, we'd get duplicate
@@ -562,16 +568,9 @@ class project-attributes
         }
         else if $(attribute) = "requirements" 
         {
-            local result = [ property-set.create-from-user-input
-                $(specification) : $(self.project-module) $(self.location) ] ;
-            
-            # If we have inherited properties, need to refine them with the
-            # specified.
-            local current = $(self.requirements) ;                                    
-            if $(current)
-            {
-                result = [ $(current).refine $(result) ] ;
-            }
+            local result = [ property-set.refine-from-user-input
+                $(self.requirements) : $(specification)
+                  : $(self.project-module) : $(self.location) ] ;
 
             if $(result[1]) = "@error"
             {
@@ -733,6 +732,78 @@ rule use ( id : location )
     }
     .current-project = $(saved-project) ;
 }
+
+# Defines a Boost.Build extension project. Such extensions usually
+# contain library targets and features that can be used by many people.
+# Even though extensions are really projects, they can be initialize as
+# a module would be with the "using" (project.project-rules.using)
+# mechanism.
+rule extension ( id : options * : * )
+{
+    # The caller is a standalone module for the extension.
+    local mod = [ CALLER_MODULE ] ;
+    
+    # We need to do the rest within the extension module.
+    module $(mod)
+    {
+        import path ;
+        
+        # Find the root project.
+        local root-project = [ project.current ] ;
+        root-project = [ $(root-project).project-module ] ;
+        while
+            [ project.attribute $(root-project) parent-module ] &&
+            [ project.attribute $(root-project) parent-module ] != user-config
+        {
+            root-project = [ project.attribute $(root-project) parent-module ] ;
+        }
+        
+        # Create the project data, and bring in the project rules
+        # into the module.
+        project.initialize $(__name__) :
+            [ path.join [ project.attribute $(root-project) location ] ext $(1:L) ] ;
+        
+        # Create the project itself, i.e. the attributes.
+        # All extensions are created in the "/ext" project space.
+        project /ext/$(1) : $(2) : $(3) : $(4) : $(5) : $(6) : $(7) : $(8) : $(9) ;
+        local attributes = [ project.attributes $(__name__) ] ;
+        
+        # Inherit from the root project of whomever is defining us.
+        project.inherit-attributes $(__name__) : $(root-project) ;
+        $(attributes).set parent-module : $(root-project) : exact ;
+    }
+}
+
+rule glob-internal ( project : wildcards + : excludes * : rule-name )
+{
+    local location = [ $(project).get source-location ] ;
+    
+    local result ;
+    local paths = [ path.$(rule-name) $(location) 
+      : [ sequence.transform path.make : $(wildcards) ] 
+        : [ sequence.transform path.make : $(excludes) ] ] ;
+    if $(wildcards:D) || $(rule-name) != glob
+    {
+        # The paths we've found are relative to current directory,
+        # but the names specified in sources list are assumed to
+        # be relative to source directory of the corresponding
+        # prject. So, just make the name absolute.
+        for local p in $(paths)
+        {
+            result += [ path.root $(p) [ path.pwd ] ] ;
+        }                
+    }
+    else 
+    {
+        # There were not directory in wildcard, so the files are all
+        # in the source directory of the project. Just drop the
+        # directory, instead of making paths absolute.
+        result = $(paths:D="") ;
+    }
+    
+    return $(result) ;                
+}
+
 
 # This module defines rules common to all projects
 module project-rules
@@ -903,50 +974,36 @@ module project-rules
         }        
     }    
     
-    rule glob ( wildcards + )
+    rule glob ( wildcards + : excludes * )
     {
-        import path ;
         import project ;
-        import sequence ;
+        return [ project.glob-internal [ project.current ] 
+          : $(wildcards) : $(excludes) : glob ] ;
+    }
+
+    rule glob-tree ( wildcards + : excludes * )
+    {
+        import project ;
         
-        local current = [ project.current ] ;
-                
-        local location = [ $(current).get source-location ] ;
-
-        local result ;
-        local paths = [ path.glob $(location) : 
-          [ sequence.transform path.make : $(wildcards) ] ] ;
-        if $(wildcards:D)
+        if $(wildcards:D) || $(excludes:D)
         {
-            # The paths we've found are relative to current directory,
-            # but the names specified in sources list are assumed to
-            # be relative to source directory of the corresponding
-            # prject. So, just make the name absolute.
-            for local p in $(paths)
-            {
-                # If the path is below source location, use relative path.
-                # Otherwise, use full path just to avoid any ambiguities.
-                local rel = [ path.relative $(p) $(location) : no-error ] ;
-                if $(rel) = not-a-child
-                {                   
-                    result += [ path.root $(p) [ path.pwd ] ] ;
-                }
-                else
-                {
-                    result += $(rel) ;
-                }                
-            }                
+            errors.user-error "The patterns to 'glob-tree' may not include directory" ;
         }
-        else 
-        {
-            # There were not directory in wildcard, so the files are all
-            # in the source directory of the project. Just drop the
-            # directory, instead of making paths absolute.
-            result = $(paths:D="") ;
-        }
+        return [ project.glob-internal [ project.current ] 
+          : $(wildcards) : $(excludes) : glob-tree ] ;
+    }
 
-        return $(result) ;                
-    }        
+    # Calculates conditional requirements for multiple requirements
+    # at once. This is a shorthand to be reduce duplication and to
+    # keep an inline declarative syntax. For example:
+    #
+    #   lib x : x.cpp : [ conditional <toolset>gcc <variant>debug :
+    #       <define>DEBUG_EXCEPTION <define>DEBUG_TRACE ] ;
+    #
+    rule conditional ( condition + : requirements * )
+    {
+        return $(condition:J=,):$(requirements) ;
+    }
 }
 
 

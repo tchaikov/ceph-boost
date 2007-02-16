@@ -1,5 +1,11 @@
 #!/bin/bash
 
+# Copyright 2004 Aleksey Gurtovoy
+# Copyright 2006 Rene Rivera 
+# Copyright 2003, 2004, 2005, 2006 Vladimir Prus 
+# Distributed under the Boost Software License, Version 1.0. 
+# (See accompanying file LICENSE_1_0.txt or http://www.boost.org/LICENSE_1_0.txt) 
+
 set -e
 # Do some renames/rearrangments
 
@@ -10,8 +16,6 @@ cd ../boost-build
 
 # This one is not fully finished
 rm -rf example/versioned
-# This one is too low-level and misleading
-rm -rf example/make
 
 # Remove unnecessary top-level files
 find . -maxdepth 1 -type f | egrep -v "roll.sh|bootstrap.jam|build-system.jam|boost_build_v2.html|boost.png|index.html|hacking.txt|site-config.jam|user-config.jam" | xargs rm -f
@@ -21,7 +25,7 @@ echo -e "boost-build kernel ;\n" > boost-build.jam
 
 # Build the documentation
 touch doc/project-root.jam
-export BOOST_ROOT=/home/ghost/Work/boost-rc
+export BOOST_BUILD_PATH=/home/ghost/Work/boost-rc/tools/build/v2
 cd doc
 /home/ghost/Work/boost-rc/tools/jam/src/bin.linuxx86/bjam --v2
 /home/ghost/Work/boost-rc/tools/jam/src/bin.linuxx86/bjam --v2 pdf

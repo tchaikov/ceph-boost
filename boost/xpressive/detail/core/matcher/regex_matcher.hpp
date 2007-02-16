@@ -30,7 +30,7 @@ namespace boost { namespace xpressive { namespace detail
     //
     template<typename BidiIter>
     struct regex_matcher
-      : quant_style<quant_variable_width, unknown_width::value, false>
+      : quant_style<quant_variable_width, unknown_width, mpl::false_>
     {
         regex_impl<BidiIter> impl_;
 
@@ -53,7 +53,7 @@ namespace boost { namespace xpressive { namespace detail
             BOOST_MPL_ASSERT((is_static_xpression<Next>));
 
             // wrap the static xpression in a matchable interface
-            xpression_adaptor<reference_wrapper<Next const>, matchable<BidiIter> > adaptor(boost::cref(next));
+            xpression_adaptor<Next const &, BidiIter> adaptor(next);
             return push_context_match(this->impl_, state, adaptor);
         }
     };

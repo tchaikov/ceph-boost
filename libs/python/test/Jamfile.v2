@@ -1,12 +1,19 @@
+# Copyright David Abrahams 2006. Distributed under the Boost
+# Software License, Version 1.0. (See accompanying
+# file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
 
 use-project /boost/python : ../build ;
 project /boost/python/test ;
 
-project : requirements <threading>multi ;
-
 rule py-run ( sources * )
 {
-    return [ run $(sources) /boost/python//boost_python ] ;
+    return [ run $(sources) /boost/python//boost_python /python//python
+      : # args
+      : # input files
+      : #requirements
+        <define>BOOST_PYTHON_SUPPRESS_REGISTRY_INITIALIZATION
+ 
+    ] ;
 }
 
 rule py-compile ( sources * )
@@ -20,10 +27,6 @@ rule py-compile-fail ( sources * )
 }
 
 
-project :
-     requirements <define>BOOST_PYTHON_SUPPRESS_REGISTRY_INITIALIZATION
-     ;
-
 
 #template py-unit-test
 #  :
@@ -36,7 +39,7 @@ test-suite python
   :
 
   [
-    run exec.cpp ../build//boost_python/<link>static
+    run exec.cpp ../build//boost_python/<link>static /python//python
       : # program args
       : exec.py
       : # requirements
@@ -65,7 +68,7 @@ bpl-test crossmod_exception
 [ bpl-test minimal ]
 [ bpl-test args ]
 [ bpl-test raw_ctor ]
-[ bpl-test numpy ]
+[ bpl-test numpy : numpy.py printer.py numeric_tests.py numarray_tests.py numpy.cpp ]
 [ bpl-test enum ]
 [ bpl-test exception_translator ]
 [ bpl-test pearu1 : test_cltree.py cltree.cpp ]
@@ -116,6 +119,10 @@ bpl-test crossmod_exception
 
 [ bpl-test extract ]
 
+[
+bpl-test crossmod_opaque
+  : crossmod_opaque.py crossmod_opaque_a.cpp crossmod_opaque_b.cpp
+]
 [ bpl-test opaque ]
 [ bpl-test voidptr ]
 

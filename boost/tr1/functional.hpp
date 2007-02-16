@@ -72,8 +72,9 @@ using boost::mem_fn;
 
 namespace std{ namespace tr1{
 
-   //using ::boost::is_bind_expression;
-   //using ::boost::is_placeholder;
+   // These aren't supported in this release but are in mainline cvs:
+   // using ::boost::is_bind_expression;
+   // using ::boost::is_placeholder;
    using ::boost::bind;
    namespace placeholders {
 #ifndef BOOST_BIND_NO_PLACEHOLDERS
@@ -98,9 +99,9 @@ namespace std{ namespace tr1{
 #include <boost/function.hpp>
 #include <boost/detail/workaround.hpp>
 
-#if !BOOST_WORKAROUND(__BORLANDC__, BOOST_TESTED_AT(0x570)) \
-	&& !BOOST_WORKAROUND(BOOST_MSVC, < 1310) \
-	&& !defined(BOOST_FUNCTION_NO_FUNCTION_TYPE_SYNTAX)
+#if !BOOST_WORKAROUND(__BORLANDC__, < 0x582) \
+    && !BOOST_WORKAROUND(BOOST_MSVC, < 1310) \
+    && !defined(BOOST_FUNCTION_NO_FUNCTION_TYPE_SYNTAX)
 namespace std{ namespace tr1{
 
    using ::boost::bad_function_call;

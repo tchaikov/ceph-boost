@@ -5,7 +5,7 @@
     
     http://www.boost.org/
 
-    Copyright (c) 2001-2005 Hartmut Kaiser. Distributed under the Boost
+    Copyright (c) 2001-2007 Hartmut Kaiser. Distributed under the Boost
     Software License, Version 1.0. (See accompanying file
     LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
 =============================================================================*/
@@ -164,10 +164,17 @@
 #if !defined(BOOST_WAVE_STRINGTYPE)
 
 #if BOOST_WORKAROUND(BOOST_MSVC, <= 1300) || \
-    BOOST_WORKAROUND(__MWERKS__, < 0x3200)
-// VC7 isn't able to compile the flex_string class, fallback to std::string 
-// CW upto 8.3 chokes as well *sigh*
+    BOOST_WORKAROUND(__MWERKS__, < 0x3200) || \
+    (defined(__DECCXX) && defined(__alpha)) || \
+    defined(BOOST_WAVE_STRINGTYPE_USE_STDSTRING)
+    
+// VC7 isn't able to compile the flex_string class, fall back to std::string 
+// CW up to 8.3 chokes as well *sigh*
+// Tru64/CXX has linker problems when using flex_string
 #define BOOST_WAVE_STRINGTYPE std::string
+#if !defined(BOOST_WAVE_STRINGTYPE_USE_STDSTRING)
+#define BOOST_WAVE_STRINGTYPE_USE_STDSTRING 1
+#endif
 
 #else
 // use the following, if you have a fast std::allocator<char>
@@ -392,27 +399,5 @@
 
 #endif  // auto-linking disabled
 #endif  // BOOST_VERSION
-
-///////////////////////////////////////////////////////////////////////////////
-//  Compatibility macros 
-//  (ensure interface compatibility to older Wave versions)
-///////////////////////////////////////////////////////////////////////////////
-
-///////////////////////////////////////////////////////////////////////////////
-//  The preprocessing hook signatures changed after the Boost V1.34.0 release
-//
-//  To use the preprocessing hook signatures as released with Boost V1.34.0 
-//  you need to define the BOOST_WAVE_USE_DEPRECIATED_PREPROCESSING_HOOKS 
-//  constant to something not equal zero.
-//
-//  To force using the new interface define this constant to zero.
-//
-#if !defined(BOOST_WAVE_USE_DEPRECIATED_PREPROCESSING_HOOKS)
-#if BOOST_VERSION < 103500  // before Boost V1.35.0
-#define BOOST_WAVE_USE_DEPRECIATED_PREPROCESSING_HOOKS 1
-#else
-#define BOOST_WAVE_USE_DEPRECIATED_PREPROCESSING_HOOKS 0
-#endif
-#endif
 
 #endif // !defined(WAVE_CONFIG_HPP_F143F90A_A63F_4B27_AC41_9CA4F14F538D_INCLUDED)

@@ -5,7 +5,7 @@
     
     http://www.boost.org/
 
-    Copyright (c) 2001-2006 Hartmut Kaiser. Distributed under the Boost
+    Copyright (c) 2001-2007 Hartmut Kaiser. Distributed under the Boost
     Software License, Version 1.0. (See accompanying file
     LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
 =============================================================================*/
@@ -53,14 +53,15 @@ namespace impl {
 template <typename TokenT> 
 class lex_iterator_functor_shim 
 {
+    typedef typename TokenT::position_type  position_type;
+
 public:
     template <typename IteratorT>
     lex_iterator_functor_shim(IteratorT const &first, IteratorT const &last, 
-            typename TokenT::position_type const &pos, 
-            boost::wave::language_support language)
+            position_type const &pos, boost::wave::language_support language)
     :   functor_ptr(lex_input_interface<TokenT>
             ::new_lexer(first, last, pos, language)) 
-#if 0 != __DECCXX_VER
+#if 0 != __DECCXX_VER || BOOST_INTEL_CXX_VERSION >= 900
       , eof()
 #endif // 0 != __DECCXX_VER
     {}
@@ -75,7 +76,7 @@ public:
         BOOST_ASSERT(0 != functor_ptr.get());
         return functor_ptr->get(); 
     }
-    void set_position(typename TokenT::position_type const &pos)
+    void set_position(position_type const &pos)
     {
         BOOST_ASSERT(0 != functor_ptr.get());
         functor_ptr->set_position(pos);

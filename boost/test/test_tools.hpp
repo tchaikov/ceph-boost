@@ -7,7 +7,7 @@
 //
 //  File        : $RCSfile: test_tools.hpp,v $
 //
-//  Version     : $Revision: 1.60 $
+//  Version     : $Revision: 1.60.2.6 $
 //
 //  Description : contains definition for all test tools in test toolbox
 // ***************************************************************************
@@ -154,13 +154,20 @@ do {                                                                \
 
 //____________________________________________________________________________//
 
+// The argument version of the following macros are causing "Internal Compiler Errors"
+// on MSVC 6.5 when inlining is turned on (i.e. usually in release builds)
+#if BOOST_WORKAROUND(BOOST_MSVC, <=1200)
+#define BOOST_WARN_EQUAL( L, R ) BOOST_WARN( (L) == (R) )
+#define BOOST_CHECK_EQUAL( L, R ) BOOST_CHECK( (L) == (R) )
+#define BOOST_REQUIRE_EQUAL( L, R ) BOOST_REQUIRE( (L) == (R) )
+#else
 #define BOOST_WARN_EQUAL( L, R ) \
     BOOST_CHECK_WITH_ARGS_IMPL( ::boost::test_tools::tt_detail::equal_impl_frwd(), "", WARN, CHECK_EQUAL, (L)(R) )
 #define BOOST_CHECK_EQUAL( L, R ) \
     BOOST_CHECK_WITH_ARGS_IMPL( ::boost::test_tools::tt_detail::equal_impl_frwd(), "", CHECK, CHECK_EQUAL, (L)(R) )
 #define BOOST_REQUIRE_EQUAL( L, R ) \
     BOOST_CHECK_WITH_ARGS_IMPL( ::boost::test_tools::tt_detail::equal_impl_frwd(), "", REQUIRE, CHECK_EQUAL, (L)(R) )
-
+#endif
 //____________________________________________________________________________//
 
 #define BOOST_WARN_CLOSE( L, R, T ) \
@@ -317,7 +324,7 @@ struct print_log_value<the_type > {                                 \
 template<typename T, std::size_t N >
 struct print_log_value< T[N] > {
     void    operator()( std::ostream& ostr, T const* t )
-    {   
+    {
         ostr << t;
     }
 };
@@ -326,28 +333,28 @@ struct print_log_value< T[N] > {
 //____________________________________________________________________________//
 
 template<>
-struct print_log_value<char> {
+struct BOOST_TEST_DECL print_log_value<char> {
     void    operator()( std::ostream& ostr, char t );
 };
 
 //____________________________________________________________________________//
 
 template<>
-struct print_log_value<unsigned char> {
+struct BOOST_TEST_DECL print_log_value<unsigned char> {
     void    operator()( std::ostream& ostr, unsigned char t );
 };
 
 //____________________________________________________________________________//
 
 template<>
-struct print_log_value<char const*> {
+struct BOOST_TEST_DECL print_log_value<char const*> {
     void    operator()( std::ostream& ostr, char const* t );
 };
 
 //____________________________________________________________________________//
 
 template<>
-struct print_log_value<wchar_t const*> {
+struct BOOST_TEST_DECL print_log_value<wchar_t const*> {
     void    operator()( std::ostream& ostr, wchar_t const* t );
 };
 
@@ -380,7 +387,7 @@ inline print_helper_t<T> print_helper( T const& t )
     return print_helper_t<T>( t );
 }
 
-#if BOOST_WORKAROUND(__SUNPRO_CC, BOOST_TESTED_AT(0x530)) 
+#if BOOST_WORKAROUND(__SUNPRO_CC, < 0x580) 
 template<typename T, std::size_t N>
 inline print_helper_t<T*> print_helper( T (&t)[N] )
 {
@@ -461,17 +468,17 @@ BOOST_PP_REPEAT( BOOST_TEST_MAX_PREDICATE_ARITY, IMPL_FRWD, _ )
 //____________________________________________________________________________//
 
 template <class Left, class Right>
-predicate_result    equal_impl( Left const& left, Right const& right )
+predicate_result equal_impl( Left const& left, Right const& right )
 {
     return left == right;
 }
 
 //____________________________________________________________________________//
 
-predicate_result        equal_impl( char const* left, char const* right );
-inline predicate_result equal_impl( char* left, char const* right ) { return equal_impl( (char const*)left, (char const*)right ); }
-inline predicate_result equal_impl( char const* left, char* right ) { return equal_impl( (char const*)left, (char const*)right ); }
-inline predicate_result equal_impl( char* left, char* right )       { return equal_impl( (char const*)left, (char const*)right ); }
+predicate_result        BOOST_TEST_DECL equal_impl( char const* left, char const* right );
+inline predicate_result BOOST_TEST_DECL equal_impl( char* left, char const* right ) { return equal_impl( (char const*)left, (char const*)right ); }
+inline predicate_result BOOST_TEST_DECL equal_impl( char const* left, char* right ) { return equal_impl( (char const*)left, (char const*)right ); }
+inline predicate_result BOOST_TEST_DECL equal_impl( char* left, char* right )       { return equal_impl( (char const*)left, (char const*)right ); }
 
 #if !defined( BOOST_NO_CWCHAR )
 predicate_result        equal_impl( wchar_t const* left, wchar_t const* right );
@@ -481,8 +488,10 @@ inline predicate_result equal_impl( wchar_t* left, wchar_t* right )       { retu
 #endif
 
 //____________________________________________________________________________//
-
-struct BOOST_TEST_DECL equal_impl_frwd {
+//
+// Declaring this class as exported causes linker errors when building
+// the serialisation tests with VC6, disable this for now. (JM 2006/10/30)
+struct /*BOOST_TEST_DECL*/ equal_impl_frwd {
     template <typename Left, typename Right>
     inline predicate_result
     call_impl( Left const& left, Right const& right, mpl::false_ ) const
@@ -580,7 +589,7 @@ bitwise_equal_impl( Left const& left, Right const& right )
 
 //____________________________________________________________________________//
 
-bool is_defined_impl( const_string symbol_name, const_string symbol_value );
+bool BOOST_TEST_DECL is_defined_impl( const_string symbol_name, const_string symbol_value );
 
 //____________________________________________________________________________//
 
@@ -600,6 +609,25 @@ namespace test_toolbox = test_tools;
 //  Revision History :
 //
 //  $Log: test_tools.hpp,v $
+//  Revision 1.60.2.6  2006/12/16 15:02:16  speedsnail
+//  Merged from HEAD
+//
+//  Revision 1.60.2.5  2006/11/14 21:33:26  jhunold
+//  Merge from HEAD: Add missing export macros for print_log_value<>
+//
+//  Revision 1.60.2.4  2006/11/14 07:35:43  jhunold
+//  Merge from HEAD: Removed wrong export declarations.
+//
+//  Revision 1.60.2.3  2006/11/13 20:06:57  jhunold
+//  Merge from HEAD:
+//  Added missing export declarations.
+//
+//  Revision 1.60.2.2  2006/10/30 18:37:36  johnmaddock
+//  Patch for serialisation test failures.
+//
+//  Revision 1.60.2.1  2006/07/24 00:43:17  gennaro_prota
+//  Tentative fix for Sun C++ 5.8 (don't add more specialized print_helper function template)
+//
 //  Revision 1.60  2006/03/19 07:27:11  rogeeff
 //  avoid warning
 //
@@ -658,3 +686,4 @@ namespace test_toolbox = test_tools;
 // ***************************************************************************
 
 #endif // BOOST_TEST_TEST_TOOLS_HPP_012705GER
+

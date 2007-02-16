@@ -1,7 +1,7 @@
 // Copyright 2005-2006 The Trustees of Indiana University.
 
-// Use, modification and distribution is subject to the Boost Software
-// License, Version 1.0. (See accompanying file LICENSE_1_0.txt or copy at
+// Distributed under the Boost Software License, Version 1.0.
+// (See accompanying file LICENSE_1_0.txt or copy at
 // http://www.boost.org/LICENSE_1_0.txt)
 
 //  Authors: Jeremiah Willcock
@@ -352,7 +352,7 @@ add_vertex(BOOST_CSR_GRAPH_TYPE& g) {
 
 template<BOOST_CSR_GRAPH_TEMPLATE_PARMS>
 inline Vertex
-add_vertices(Vertex count, BOOST_CSR_GRAPH_TYPE& g) {
+add_vertices(typename BOOST_CSR_GRAPH_TYPE::vertices_size_type count, BOOST_CSR_GRAPH_TYPE& g) {
   Vertex old_num_verts_plus_one = g.m_rowstart.size();
   g.m_rowstart.resize(old_num_verts_plus_one + count, EdgeIndex(0));
   return old_num_verts_plus_one - 1;
@@ -496,8 +496,9 @@ adjacent_vertices(Vertex v, const BOOST_CSR_GRAPH_TYPE& g)
 
 // Extra, common functions
 template<BOOST_CSR_GRAPH_TEMPLATE_PARMS>
-inline Vertex
-vertex(Vertex i, const BOOST_CSR_GRAPH_TYPE&)
+inline typename graph_traits<BOOST_CSR_GRAPH_TYPE>::vertex_descriptor
+vertex(typename graph_traits<BOOST_CSR_GRAPH_TYPE>::vertex_descriptor i, 
+       const BOOST_CSR_GRAPH_TYPE&)
 {
   return i;
 }

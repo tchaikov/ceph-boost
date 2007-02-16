@@ -419,18 +419,10 @@ BOOST_DYNAMIC_BITSET_PRIVATE:
 
 };
 
-#if defined(__IBMCPP__) && BOOST_WORKAROUND(__IBMCPP__, BOOST_TESTED_AT(600))
+#if BOOST_WORKAROUND( __IBMCPP__, <=600 )
 
 // Workaround for IBM's AIX platform.
 // See http://comments.gmane.org/gmane.comp.lib.boost.user/15331
-//
-// Note:
-//  The compiler is actually right, until core issue 454 will be settled:
-//   http://www.open-std.org/JTC1/SC22/WG21/docs/cwg_active.html#454
-//
-//  Considering the direction taken by the committee, however, the
-//  BOOST_WORKAROUND macro seems ok for the future. (G. Prota)
-
 
 template<typename Block, typename Allocator>
 dynamic_bitset<Block, Allocator>::block_width_type const
@@ -470,15 +462,18 @@ std::ostream& operator<<(std::ostream& os,
 template <typename Block, typename Allocator>
 std::istream& operator>>(std::istream& is, dynamic_bitset<Block,Allocator>& b);
 #else
-template <typename CharT, typename Traits, typename Block, typename Allocator>
-std::basic_ostream<CharT, Traits>&
-operator<<(std::basic_ostream<CharT, Traits>& os,
-           const dynamic_bitset<Block, Allocator>& b);
+// NOTE: Digital Mars wants the same template parameter names
+//       here and in the definition! [last tested: 8.48.10]
+//
+template <typename Ch, typename Tr, typename Block, typename Alloc>
+std::basic_ostream<Ch, Tr>&
+operator<<(std::basic_ostream<Ch, Tr>& os,
+           const dynamic_bitset<Block, Alloc>& b);
 
-template <typename CharT, typename Traits, typename Block, typename Allocator>
-std::basic_istream<CharT, Traits>&
-operator>>(std::basic_istream<CharT, Traits>& is,
-           dynamic_bitset<Block, Allocator>& b);
+template <typename Ch, typename Tr, typename Block, typename Alloc>
+std::basic_istream<Ch, Tr>&
+operator>>(std::basic_istream<Ch, Tr>& is,
+           dynamic_bitset<Block, Alloc>& b);
 #endif
 
 // bitset operations
@@ -1123,24 +1118,24 @@ to_ulong() const
 
   // Ok, from now on we can be sure there's no "on" bit beyond
   // the allowed positions
-  typedef unsigned long result_type;
 
-  /* if find_next() did its job correctly we don't need this if,
-     because all bits we care about are in the first block
   if (bits_per_block >= ulong_width)
-    return static_cast<result_type>(m_bits[0]);*/
+      return m_bits[0];
+
 
   size_type last_block = block_index((std::min)(m_num_bits-1, // gps
-                                       (size_type)(ulong_width-1)));
-  result_type result = 0;
+                                    (size_type)(ulong_width-1)));
+  unsigned long result = 0;
   for (size_type i = 0; i <= last_block; ++i) {
 
     assert((size_type)bits_per_block * i < (size_type)ulong_width); // gps
 
-    result |= (m_bits[i] << (bits_per_block * i));
+    unsigned long piece = m_bits[i];
+    result |= (piece << (bits_per_block * i));
   }
 
   return result;
+
 }
 
 

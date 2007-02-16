@@ -35,10 +35,10 @@ namespace boost { namespace xpressive { namespace detail
     //
     struct is_set_initializer_predicate
     {
-        template<typename Node, typename, typename>
+        template<typename Op, typename, typename>
         struct apply
         {
-            typedef typename is_same<typename proto::left_type<Node>::type, set_initializer_type const>::type type;
+            typedef typename is_same<typename proto::left_type<Op>::type, set_initializer_type>::type type;
         };
     };
 
@@ -46,22 +46,22 @@ namespace boost { namespace xpressive { namespace detail
     //
     struct action_transform
     {
-        template<typename Node, typename, typename>
+        template<typename Op, typename, typename>
         struct apply
         {
             typedef proto::binary_op
             <
-                typename proto::left_type<Node>::type
-              , typename proto::right_type<Node>::type
+                typename proto::left_type<Op>::type
+              , typename proto::right_type<Op>::type
               , proto::right_shift_tag
             > type;
         };
 
-        template<typename Node, typename State, typename Visitor>
-        static typename apply<Node, State, Visitor>::type
-        call(Node const &node, State const &, Visitor &)
+        template<typename Op, typename State, typename Visitor>
+        static typename apply<Op, State, Visitor>::type
+        call(Op const &op, State const &, Visitor &)
         {
-            return proto::left(node) >> proto::right(node);
+            return proto::left(op) >> proto::right(op);
         }
     };
 
@@ -84,10 +84,17 @@ namespace boost { namespace xpressive { namespace detail
 // misc regex compiler productions
 namespace boost { namespace proto
 {
+    template<typename BidiIter>
+    struct value_type<xpressive::basic_regex<BidiIter> >
+    {
+        // store regex objects in the parse tree by reference
+        typedef reference_wrapper<xpressive::basic_regex<BidiIter> const> type;
+    };
+
     // production for sequences in sequence
     template<>
     struct compiler<right_shift_tag, xpressive::detail::seq_tag, void>
-      : reverse_fold_compiler<xpressive::detail::seq_tag>
+      : fold_compiler<right_shift_tag, xpressive::detail::seq_tag>
     {
     };
 

@@ -5,7 +5,7 @@
     
     http://www.boost.org/
 
-    Copyright (c) 2001-2006 Hartmut Kaiser. Distributed under the Boost
+    Copyright (c) 2001-2007 Hartmut Kaiser. Distributed under the Boost
     Software License, Version 1.0. (See accompanying file
     LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
 =============================================================================*/
@@ -109,12 +109,11 @@ template <typename IteratorT, typename PositionT>
 inline
 lexer<IteratorT, PositionT>::lexer(IteratorT const &first, 
         IteratorT const &last, PositionT const &pos, 
-        boost::wave::language_support language) 
-:   filename(pos.get_file()), at_eof(false), language(language)
+        boost::wave::language_support language_) 
+:   filename(pos.get_file()), at_eof(false), language(language_)
 {
     using namespace std;        // some systems have memset in std
     memset(&scanner, '\0', sizeof(Scanner));
-    scanner.fd = -1;
     scanner.eol_offsets = aq_create();
     if (first != last) {
         scanner.first = scanner.act = (uchar *)&(*first);
@@ -126,23 +125,30 @@ lexer<IteratorT, PositionT>::lexer(IteratorT const &first,
     scanner.file_name = filename.c_str();
     
 #if BOOST_WAVE_SUPPORT_MS_EXTENSIONS != 0
-    scanner.enable_ms_extensions = 1;
+    scanner.enable_ms_extensions = true;
 #else
-    scanner.enable_ms_extensions = 0;
+    scanner.enable_ms_extensions = false;
 #endif
 
 #if BOOST_WAVE_SUPPORT_VARIADICS_PLACEMARKERS != 0
     scanner.act_in_c99_mode = boost::wave::need_c99(language);
 #endif
 
+#if BOOST_WAVE_SUPPORT_IMPORT_KEYWORD != 0
+    scanner.enable_import_keyword = !boost::wave::need_c99(language);
+#else
+    scanner.enable_import_keyword = false;
+#endif
+
     scanner.detect_pp_numbers = boost::wave::need_prefer_pp_numbers(language);
+    scanner.single_line_only = boost::wave::need_single_line(language);
 }
 
 template <typename IteratorT, typename PositionT>
 inline
 lexer<IteratorT, PositionT>::~lexer() 
 {
-    using namespace std;        // some systems have memset in std
+    using namespace std;        // some systems have free in std
     aq_terminate(scanner.eol_offsets);
     free(scanner.bot);
 }
@@ -319,20 +325,20 @@ public:
     
     lex_functor(IteratorT const &first, IteratorT const &last, 
             PositionT const &pos, boost::wave::language_support language)
-    :   lexer(first, last, pos, language)
+    :   re2c_lexer(first, last, pos, language)
     {}
     virtual ~lex_functor() {}
     
 // get the next token from the input stream
-    token_type get() { return lexer.get(); }
-    void set_position(PositionT const &pos) { lexer.set_position(pos); }
+    token_type get() { return re2c_lexer.get(); }
+    void set_position(PositionT const &pos) { re2c_lexer.set_position(pos); }
 #if BOOST_WAVE_SUPPORT_PRAGMA_ONCE != 0
     bool has_include_guards(std::string& guard_name) const 
-        { return lexer.has_include_guards(guard_name); }
+        { return re2c_lexer.has_include_guards(guard_name); }
 #endif    
 
 private:
-    lexer<IteratorT, PositionT> lexer;
+    lexer<IteratorT, PositionT> re2c_lexer;
 };
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -383,8 +389,8 @@ new_lexer_gen<IteratorT, PositionT>::new_lexer(IteratorT const &first,
     IteratorT const &last, PositionT const &pos, 
     boost::wave::language_support language)
 {
-    return new re2clex::lex_functor<IteratorT, PositionT>(first, last, pos,
-        language);
+    using re2clex::lex_functor;
+    return new lex_functor<IteratorT, PositionT>(first, last, pos, language);
 }
 
 #undef BOOST_WAVE_RE2C_NEW_LEXER_INLINE

@@ -24,7 +24,7 @@ namespace boost { namespace xpressive { namespace detail
     // mark_end_matcher
     //
     struct mark_end_matcher
-      : quant_style<quant_none, 0, false>
+      : quant_style<quant_none, mpl::size_t<0>, mpl::false_>
     {
         int mark_number_;
 

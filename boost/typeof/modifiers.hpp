@@ -1,6 +1,6 @@
 // Copyright (C) 2004 Arkadiy Vertleyb
-// Use, modification and distribution is subject to the Boost Software
-// License, Version 1.0. (http://www.boost.org/LICENSE_1_0.txt)
+// Distributed under the Boost Software License, Version 1.0. (See accompanying
+// file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
 
 #ifndef BOOST_TYPEOF_MODIFIERS_HPP_INCLUDED
 #define BOOST_TYPEOF_MODIFIERS_HPP_INCLUDED
@@ -16,14 +16,14 @@
     template<class V, class T> struct encode_type_impl<V, Fun(T)>\
     {\
         typedef\
-			typename boost::type_of::encode_type<\
+            typename boost::type_of::encode_type<\
             typename boost::type_of::push_back<\
             V\
-			, boost::mpl::size_t<ID> >::type\
+            , boost::mpl::size_t<ID> >::type\
             , T>::type\
             type;\
     };\
-	template<class Iter> struct decode_type_impl<boost::mpl::size_t<ID>, Iter>\
+    template<class Iter> struct decode_type_impl<boost::mpl::size_t<ID>, Iter>\
     {\
         typedef boost::type_of::decode_type<Iter> d1;\
         typedef Fun(typename d1::type) type;\
@@ -36,15 +36,15 @@
 #define BOOST_TYPEOF_pointer_fun(T) T*
 #define BOOST_TYPEOF_reference_fun(T) T&
 
-namespace { namespace boost_typeof {
+BOOST_TYPEOF_BEGIN_ENCODE_NS
 
-    BOOST_TYPEOF_modifier_support(BOOST_TYPEOF_UNIQUE_ID(), BOOST_TYPEOF_const_fun);
-    BOOST_TYPEOF_modifier_support(BOOST_TYPEOF_UNIQUE_ID(), BOOST_TYPEOF_volatile_fun);
-    BOOST_TYPEOF_modifier_support(BOOST_TYPEOF_UNIQUE_ID(), BOOST_TYPEOF_volatile_const_fun);
-    BOOST_TYPEOF_modifier_support(BOOST_TYPEOF_UNIQUE_ID(), BOOST_TYPEOF_pointer_fun);
-    BOOST_TYPEOF_modifier_support(BOOST_TYPEOF_UNIQUE_ID(), BOOST_TYPEOF_reference_fun);
+BOOST_TYPEOF_modifier_support(BOOST_TYPEOF_UNIQUE_ID(), BOOST_TYPEOF_const_fun);
+BOOST_TYPEOF_modifier_support(BOOST_TYPEOF_UNIQUE_ID(), BOOST_TYPEOF_volatile_fun);
+BOOST_TYPEOF_modifier_support(BOOST_TYPEOF_UNIQUE_ID(), BOOST_TYPEOF_volatile_const_fun);
+BOOST_TYPEOF_modifier_support(BOOST_TYPEOF_UNIQUE_ID(), BOOST_TYPEOF_pointer_fun);
+BOOST_TYPEOF_modifier_support(BOOST_TYPEOF_UNIQUE_ID(), BOOST_TYPEOF_reference_fun);
 
-}}
+BOOST_TYPEOF_END_ENCODE_NS
 
 #undef BOOST_TYPEOF_modifier_support
 #undef BOOST_TYPEOF_const_fun
@@ -64,13 +64,13 @@ namespace { namespace boost_typeof {
             typename boost::type_of::push_back<\
             typename boost::type_of::push_back<\
             V\
-			, boost::mpl::size_t<ID> >::type\
-			, boost::mpl::size_t<N> >::type\
+            , boost::mpl::size_t<ID> >::type\
+            , boost::mpl::size_t<N> >::type\
             , T>::type\
         type;\
     };\
     template<class Iter>\
-	struct decode_type_impl<boost::mpl::size_t<ID>, Iter>\
+    struct decode_type_impl<boost::mpl::size_t<ID>, Iter>\
     {\
         enum{n = Iter::type::value};\
         typedef boost::type_of::decode_type<typename Iter::next> d;\
@@ -78,14 +78,14 @@ namespace { namespace boost_typeof {
         typedef typename d::iter iter;\
     }
 
-namespace { namespace boost_typeof {
+BOOST_TYPEOF_BEGIN_ENCODE_NS
 
-    BOOST_TYPEOF_array_support(BOOST_TYPEOF_UNIQUE_ID(), BOOST_PP_EMPTY);
-    BOOST_TYPEOF_array_support(BOOST_TYPEOF_UNIQUE_ID(), BOOST_PP_IDENTITY(const));
-    BOOST_TYPEOF_array_support(BOOST_TYPEOF_UNIQUE_ID(), BOOST_PP_IDENTITY(volatile));
-    BOOST_TYPEOF_array_support(BOOST_TYPEOF_UNIQUE_ID(), BOOST_PP_IDENTITY(volatile const));
+BOOST_TYPEOF_array_support(BOOST_TYPEOF_UNIQUE_ID(), BOOST_PP_EMPTY);
+BOOST_TYPEOF_array_support(BOOST_TYPEOF_UNIQUE_ID(), BOOST_PP_IDENTITY(const));
+BOOST_TYPEOF_array_support(BOOST_TYPEOF_UNIQUE_ID(), BOOST_PP_IDENTITY(volatile));
+BOOST_TYPEOF_array_support(BOOST_TYPEOF_UNIQUE_ID(), BOOST_PP_IDENTITY(volatile const));
 
-}}
+BOOST_TYPEOF_END_ENCODE_NS
 
 #undef BOOST_TYPEOF_array_support
 

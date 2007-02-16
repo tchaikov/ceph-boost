@@ -1,16 +1,14 @@
 // Copyright (C) 2002-2003
 // David Moore, William E. Kempf, Michael Glassford
 //
-// Permission to use, copy, modify, distribute and sell this software
-// and its documentation for any purpose is hereby granted without fee,
-// provided that the above copyright notice appear in all copies and
-// that both that copyright notice and this permission notice appear
-// in supporting documentation.  William E. Kempf makes no representations
-// about the suitability of this software for any purpose.
-// It is provided "as is" without express or implied warranty.
+//  Distributed under the Boost Software License, Version 1.0. (See accompanying 
+//  file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
 
 /*
 PROBLEMS:
+
+The read write mutex currently is broken. Do not use it.
+The file is supplied just for reference.
 
 The algorithms are not exception safe. For instance, if conditon::wait()
 or another call throws an exception, the lock state and other state data
@@ -379,7 +377,10 @@ read_write_mutex_impl<Mutex>::read_write_mutex_impl(read_write_scheduling_policy
     , m_readers_next(true) 
 {}
 
-#if !BOOST_WORKAROUND(__BORLANDC__, <= 0x564)
+// Borland requires base class destructors to be explicitly exported from DLL's
+// even if they're not explicitly called. As this only contains postconditions,
+// it's reasonably safe to comment it out - Nicola Musatti 5/5/2006
+#if !BOOST_WORKAROUND(__BORLANDC__, BOOST_TESTED_AT(582))
 template<typename Mutex>
 read_write_mutex_impl<Mutex>::~read_write_mutex_impl()
 {

@@ -9,8 +9,8 @@
 // See http://www.boost.org/libs/mpl for documentation.
 
 // $Source: /cvsroot/boost/boost/libs/mpl/test/set.cpp,v $
-// $Date: 2006/02/20 15:45:07 $
-// $Revision: 1.11 $
+// $Date: 2006/06/12 05:11:55 $
+// $Revision: 1.11.2.1 $
 
 #include <boost/mpl/set.hpp>
 #include <boost/mpl/deref.hpp>
@@ -175,7 +175,7 @@ void test()
     BOOST_MPL_ASSERT_NOT(( is_same<BOOST_DEDUCED_TYPENAME find<S,long>::type,not_found> ));
     BOOST_MPL_ASSERT_NOT(( is_same<BOOST_DEDUCED_TYPENAME find<S,char>::type,not_found> ));
     BOOST_MPL_ASSERT(( is_same<BOOST_DEDUCED_TYPENAME find<S,char*>::type,not_found> ));
-};
+}
 
 MPL_TEST_CASE()
 {

@@ -124,7 +124,7 @@
     <li>The framework accompanying "Rhapsody in C++" by ILogix (a code
     generator solution)<br>
     <a href=
-    "http://www.ilogix.com/products/rhapsody/rhap_incplus.cfm">http://www.ilogix.com/products/rhapsody/rhap_incplus.cfm<br>
+    "http://www.ilogix.com/sublevel.aspx?id=53">http://www.ilogix.com/sublevel.aspx?id=53<br>
     </a> This might look like comparing apples with oranges. However, there
     is no inherent reason why a code generator couldn't produce code that can
     easily be understood and modified by humans. Fails to satisfy at least
@@ -134,7 +134,7 @@
     <li>The framework accompanying the article "State Machine Design in
     C++"<br>
     <a href=
-    "http://www.cuj.com/articles/2000/0005/0005f/0005f.htm?topic=articles">http://www.cuj.com/articles/2000/0005/0005f/0005f.htm?topic=articles<br>
+    "http://www.ddj.com/184401236?pgno=1">http://www.ddj.com/184401236?pgno=1<br>
     </a> Fails to satisfy at least the requirements 1, 3, 4, 5 (there is no
     direct threading support), 6, 8.</li>
   </ul>
@@ -162,8 +162,7 @@
   state machine class therefore often becomes a change hotspot what leads to
   frequent recompilations of the whole state machine.</p>
 
-  <p>The FAQ item "<a href=
-  "faq.html#WhatsSoCoolAboutStateLocalStorage">What's so cool about
+  <p>The FAQ item "<a href="faq.html#StateLocalStorage">What's so cool about
   state-local storage?</a>" further explains this by comparing the tutorial
   StopWatch to a behaviorally equivalent version that does not use
   state-local storage.</p>
@@ -216,8 +215,8 @@
     there are no transitions between orthogonal states).</li>
 
     <li>Double dispatch must inevitably be implemented with some kind of a
-    table. As argued under <a href="#DoubleDispatch">Double dispatch</a>,
-    this scales badly.</li>
+    table. As argued under <a href="performance.html#DoubleDispatch">Double
+    dispatch</a>, this scales badly.</li>
 
     <li>To warrant fast table lookup, states and events must be represented
     with an integer. To keep the table as small as possible, the numbering
@@ -589,9 +588,8 @@ struct MyChoicePoint : choice_point&lt; MyChoicePoint, Machine &gt;
 
   <h4>Transitions across orthogonal regions</h4>
 
-  <p><img alt="TransitionsAcrossOrthogonalRegions" src=
-  "TransitionsAcrossOrthogonalRegions.gif" border="0" width="226" height=
-  "271"></p>
+  <p><img alt="TransAcrossOrthRegions" src="TransAcrossOrthRegions.gif"
+  border="0" width="226" height="271"></p>
 
   <p>Transitions across orthogonal regions are currently flagged with an
   error at compile time (the UML specifications explicitly allow them while
@@ -601,15 +599,15 @@ struct MyChoicePoint : choice_point&lt; MyChoicePoint, Machine &gt;
   need to make such transitions, please do let me know!</p>
   <hr>
 
-  <p>Revised 
-  <!--webbot bot="Timestamp" s-type="EDITED" s-format="%d %B, %Y" startspan -->12 March, 2006<!--webbot bot="Timestamp" endspan i-checksum="28929" --></p>
+  <p><a href="http://validator.w3.org/check?uri=referer"><img border="0" src=
+  "http://www.w3.org/Icons/valid-html401" alt="Valid HTML 4.01 Transitional"
+  height="31" width="88"></a></p>
 
-  <p><i>&copy; Copyright <a href=
-  "mailto:ahd6974-spamgroupstrap@yahoo.com">Andreas Huber D&ouml;nni</a>
-  2003-<!--webbot bot="Timestamp" s-type="EDITED" s-format="%Y" startspan -->2006<!--webbot bot="Timestamp" endspan i-checksum="770" -->.
-  <font color="#FF0000"><b>The link refers to a <a href=
-  "http://en.wikipedia.org/wiki/Honeypot">spam honeypot</a>. Please remove
-  the words spam and trap to obtain my real address.</b></font></i></p>
+  <p>Revised 
+  <!--webbot bot="Timestamp" s-type="EDITED" s-format="%d %B, %Y" startspan -->03 December, 2006<!--webbot bot="Timestamp" endspan i-checksum="38512" --></p>
+
+  <p><i>Copyright &copy; 2003-<!--webbot bot="Timestamp" s-type="EDITED" s-format="%Y" startspan -->2006<!--webbot bot="Timestamp" endspan i-checksum="770" -->
+  <a href="contact.html">Andreas Huber D&ouml;nni</a></i></p>
 
   <p><i>Distributed under the Boost Software License, Version 1.0. (See
   accompanying file <a href="../../../LICENSE_1_0.txt">LICENSE_1_0.txt</a> or

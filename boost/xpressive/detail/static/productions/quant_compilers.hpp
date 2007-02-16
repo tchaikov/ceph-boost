@@ -24,9 +24,9 @@ namespace boost { namespace xpressive { namespace detail
     typedef proto::unary_op<epsilon_matcher, proto::noop_tag> nil_op;
 
     ///////////////////////////////////////////////////////////////////////////////
-    // repeater_compiler
+    // generic_quant_compiler
     template<bool Greedy, uint_t Min, uint_t Max>
-    struct repeater_compiler
+    struct generic_quant_compiler
       : proto::conditional_compiler
         <
             use_simple_repeat_predicate
@@ -36,7 +36,7 @@ namespace boost { namespace xpressive { namespace detail
                 proto::compose_transforms
                 <
                     proto::arg_transform
-                  , repeater_transform<Greedy, Min, Max>
+                  , repeater_if_transform<Greedy, Min, Max>
                 >
               , seq_tag
             >
@@ -46,44 +46,32 @@ namespace boost { namespace xpressive { namespace detail
 
     // degenerate case, foo{0,0} becomes nil
     template<bool Greedy>
-    struct repeater_compiler<Greedy, 0, 0>
+    struct generic_quant_compiler<Greedy, 0, 0>
       : proto::transform_compiler<proto::always_transform<nil_op>, seq_tag>
     {
     };
 
     // degenerate case, foo{1,1} becomes foo
     template<bool Greedy>
-    struct repeater_compiler<Greedy, 1, 1>
+    struct generic_quant_compiler<Greedy, 1, 1>
       : proto::transform_compiler<proto::identity_transform, seq_tag>
     {
     };
 
-    // foo{0,1} or !foo uses the optional transforms
-    template<bool Greedy>
-    struct repeater_compiler<Greedy, 0, 1>
-      : proto::conditional_compiler
-        <
-            is_marker_or_repeater_predicate
-          , proto::branch_compiler<optional_mark_branch<Greedy>, ind_tag>
-          , proto::branch_compiler<optional_branch<Greedy>, ind_tag>
-        >
-    {
-    };
-
     ///////////////////////////////////////////////////////////////////////////////
-    // min_repeater_compiler
-    struct min_repeater_compiler
+    // non_greedy_compiler
+    struct non_greedy_compiler
     {
-        template<typename Node, typename State, typename Visitor>
+        template<typename Op, typename State, typename Visitor>
         struct apply
         {
-            typedef typename proto::arg_type<Node>::type arg_type;
+            typedef typename proto::arg_type<Op>::type arg_type;
 
             // Did you apply operator- to something that wasn't a quantifier?
             BOOST_MPL_ASSERT((is_greedy_quant<arg_type>));
 
             typedef typename proto::tag_type<arg_type>::type tag_type;
-            typedef repeater_compiler
+            typedef generic_quant_compiler
             <
                 false
               , min_type<tag_type>::type::value
@@ -98,12 +86,12 @@ namespace boost { namespace xpressive { namespace detail
             >::type type;
         };
 
-        template<typename Node, typename State, typename Visitor>
-        static typename apply<Node, State, Visitor>::type
-        call(Node const &node, State const &state, Visitor &visitor)
+        template<typename Op, typename State, typename Visitor>
+        static typename apply<Op, State, Visitor>::type
+        call(Op const &op, State const &state, Visitor &visitor)
         {
-            typedef typename apply<Node, State, Visitor>::compiler_type compiler_type;
-            return compiler_type::call(proto::arg(node), state, visitor);
+            typedef typename apply<Op, State, Visitor>::compiler_type compiler_type;
+            return compiler_type::call(proto::arg(op), state, visitor);
         }
     };
 
@@ -116,35 +104,35 @@ namespace boost { namespace proto
     // production for one or more quant
     template<>
     struct compiler<unary_plus_tag, xpressive::detail::seq_tag, void>
-      : xpressive::detail::repeater_compiler<true, 1, UINT_MAX-1>
+      : xpressive::detail::generic_quant_compiler<true, 1, UINT_MAX-1>
     {
     };
 
     // production for zero or more quant
     template<>
     struct compiler<unary_star_tag, xpressive::detail::seq_tag, void>
-      : xpressive::detail::repeater_compiler<true, 0, UINT_MAX-1>
+      : xpressive::detail::generic_quant_compiler<true, 0, UINT_MAX-1>
     {
     };
 
     // production for optional
     template<>
     struct compiler<logical_not_tag, xpressive::detail::seq_tag, void>
-      : xpressive::detail::repeater_compiler<true, 0, 1>
+      : xpressive::detail::generic_quant_compiler<true, 0, 1>
     {
     };
 
     // production for generic quantifiers
     template<unsigned int Min, unsigned int Max>
     struct compiler<xpressive::detail::generic_quant_tag<Min, Max>, xpressive::detail::seq_tag, void>
-      : xpressive::detail::repeater_compiler<true, Min, Max>
+      : xpressive::detail::generic_quant_compiler<true, Min, Max>
     {
     };
 
     // production for non-greedy quantifiers
     template<>
     struct compiler<unary_minus_tag, xpressive::detail::seq_tag, void>
-      : xpressive::detail::min_repeater_compiler
+      : xpressive::detail::non_greedy_compiler
     {
     };
 

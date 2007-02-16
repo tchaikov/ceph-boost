@@ -8,7 +8,6 @@
 #ifndef BOOST_XPRESSIVE_DETAIL_STATIC_PRODUCTIONS_QUANT_TRANSFORMS_HPP_EAN_10_04_2005
 #define BOOST_XPRESSIVE_DETAIL_STATIC_PRODUCTIONS_QUANT_TRANSFORMS_HPP_EAN_10_04_2005
 
-#include <boost/mpl/or.hpp>
 #include <boost/mpl/size_t.hpp>
 #include <boost/mpl/assert.hpp>
 #include <boost/mpl/not_equal_to.hpp>
@@ -20,31 +19,6 @@
 
 namespace boost { namespace xpressive { namespace detail
 {
-    typedef proto::unary_op<repeat_begin_matcher, proto::noop_tag> repeat_tag;
-
-    ///////////////////////////////////////////////////////////////////////////////
-    // is_repeater
-    template<typename Node>
-    struct is_repeater
-      : mpl::false_
-    {};
-
-    template<typename Node>
-    struct is_repeater<proto::binary_op<repeat_tag, Node, proto::right_shift_tag> >
-      : mpl::true_
-    {};
-
-    ///////////////////////////////////////////////////////////////////////////////
-    // is_marker_or_repeater_predicate
-    struct is_marker_or_repeater_predicate
-    {
-        template<typename Node, typename, typename>
-        struct apply
-        {
-            typedef typename proto::arg_type<Node>::type op_type;
-            typedef typename mpl::or_<is_marker<op_type>, is_repeater<op_type> >::type type;
-        };
-    };
 
     ///////////////////////////////////////////////////////////////////////////////
     // simple_repeat_branch
@@ -53,69 +27,26 @@ namespace boost { namespace xpressive { namespace detail
     {
         typedef true_xpression state_type;
 
-        template<typename Node, typename State, typename>
+        template<typename Op, typename State, typename>
         struct apply
         {
-            typedef static_xpression<simple_repeat_matcher<Node, Greedy>, State> type;
+            typedef static_xpression<simple_repeat_matcher<Op, Greedy>, State> type;
         };
 
-        template<typename Node, typename State>
-        static static_xpression<simple_repeat_matcher<Node, Greedy>, State>
-        call(Node const &node, State const &state, dont_care)
+        template<typename Op, typename State, typename Visitor>
+        static typename apply<Op, State, Visitor>::type
+        call(Op const &op, State const &state, Visitor &)
         {
-            std::size_t width = node.get_width().value();
-            return make_static(simple_repeat_matcher<Node, Greedy>(node, Min, Max, width), state);
+            return make_static_xpression(simple_repeat_matcher<Op, Greedy>(op, Min, Max), state);
         }
     };
 
     ///////////////////////////////////////////////////////////////////////////////
-    // optional_branch
-    template<bool Greedy>
-    struct optional_branch
-    {
-        typedef alternate_end_xpression state_type;
-
-        template<typename Node, typename State, typename>
-        struct apply
-        {
-            typedef static_xpression<optional_matcher<Node, Greedy>, State> type;
-        };
-
-        template<typename Node, typename State>
-        static static_xpression<optional_matcher<Node, Greedy>, State>
-        call(Node const &node, State const &state, dont_care)
-        {
-            return make_static(optional_matcher<Node, Greedy>(node), state);
-        }
-    };
-
-    ///////////////////////////////////////////////////////////////////////////////
-    // optional_mark_branch
-    template<bool Greedy>
-    struct optional_mark_branch
-    {
-        typedef alternate_end_xpression state_type;
-
-        template<typename Node, typename State, typename>
-        struct apply
-        {
-            typedef static_xpression<optional_mark_matcher<Node, Greedy>, State> type;
-        };
-
-        template<typename Node, typename State>
-        static static_xpression<optional_mark_matcher<Node, Greedy>, State>
-        call(Node const &node, State const &state, dont_care)
-        {
-            return make_static(optional_mark_matcher<Node, Greedy>(node, node.mark_number_), state);
-        }
-    };
-
-    ///////////////////////////////////////////////////////////////////////////////
-    // repeater_insert_transform
+    // repeater_transform
     template<bool Greedy, uint_t Min, uint_t Max>
-    struct repeater_insert_transform
+    struct repeater_transform
     {
-        template<typename Node, typename, typename>
+        template<typename Op, typename, typename>
         struct apply
         {
             typedef proto::binary_op
@@ -123,7 +54,7 @@ namespace boost { namespace xpressive { namespace detail
                 proto::unary_op<repeat_begin_matcher, proto::noop_tag>
               , proto::binary_op
                 <
-                    Node
+                    Op
                   , proto::unary_op<repeat_end_matcher<Greedy>, proto::noop_tag>
                   , proto::right_shift_tag
                 >
@@ -131,64 +62,122 @@ namespace boost { namespace xpressive { namespace detail
             > type;
         };
 
-        template<typename Node, typename State, typename Visitor>
-        static typename apply<Node, State, Visitor>::type
-        call(Node const &node, State const &, Visitor &)
+        template<typename Op, typename State, typename Visitor>
+        static typename apply<Op, State, Visitor>::type
+        call(Op const &op, State const &, Visitor &)
         {
             // Get the mark_number from the begin_mark_matcher
-            int mark_number = proto::arg(proto::left(node)).mark_number_;
+            int mark_number = proto::arg(proto::left(op)).mark_number_;
             BOOST_ASSERT(0 != mark_number);
 
             return proto::noop(repeat_begin_matcher(mark_number))
-                >> (node >> proto::noop(repeat_end_matcher<Greedy>(mark_number, Min, Max)));
+                >> (op >> proto::noop(repeat_end_matcher<Greedy>(mark_number, Min, Max)));
         }
     };
 
-    template<bool Greedy>
+    template<typename Op>
+    epsilon_mark_matcher make_eps(Op const &op, epsilon_mark_matcher *)
+    {
+        return epsilon_mark_matcher(proto::arg(proto::left(op)).mark_number_);
+    }
+
+    template<typename Op>
+    epsilon_matcher make_eps(Op const &op, epsilon_matcher *)
+    {
+        return epsilon_matcher();
+    }
+
+    ///////////////////////////////////////////////////////////////////////////////
+    // optional_transform
+    //   make alternate with epsilon_mark_matcher
+    template<bool Greedy, typename Epsilon>
     struct optional_transform
     {
-        template<typename Node, typename, typename>
+        template<typename Op, typename, typename>
         struct apply
         {
-            typedef proto::unary_op<Node, proto::logical_not_tag> type;
+            typedef proto::binary_op
+            <
+                Op
+              , proto::unary_op<Epsilon, proto::noop_tag>
+              , proto::bitor_tag
+            > type;
         };
 
-        template<typename Node, typename State, typename Visitor>
-        static typename apply<Node, State, Visitor>::type
-        call(Node const &node, State const &, Visitor &)
+        template<typename Op, typename State, typename Visitor>
+        static typename apply<Op, State, Visitor>::type
+        call(Op const &op, State const &, Visitor &)
         {
-            return !node;
+            return op | proto::noop(make_eps(op, (Epsilon *)0));
+        }
+    };
+
+    template<typename Epsilon>
+    struct optional_transform<false, Epsilon>
+    {
+        template<typename Op, typename, typename>
+        struct apply
+        {
+            typedef proto::binary_op
+            <
+                proto::unary_op<Epsilon, proto::noop_tag>
+              , Op
+              , proto::bitor_tag
+            > type;
+        };
+
+        template<typename Op, typename State, typename Visitor>
+        static typename apply<Op, State, Visitor>::type
+        call(Op const &op, State const &, Visitor &)
+        {
+            return proto::noop(make_eps(op, (Epsilon *)0)) | op;
         }
     };
 
     ///////////////////////////////////////////////////////////////////////////////
-    // repeater_transform
+    // marker_if_transform
+    //   Insert marker matchers before and after the expression
+    typedef proto::conditional_transform<
+        is_marker_predicate
+      , marker_assign_transform
+      , marker_transform
+    > marker_if_transform;
+
+    ///////////////////////////////////////////////////////////////////////////////
+    // repeater_if_transform
     //   Insert repeat and marker matcher before and after the expression
     template<bool Greedy, uint_t Min, uint_t Max>
-    struct repeater_transform
+    struct repeater_if_transform
       : proto::compose_transforms
         <
-            proto::conditional_transform
-            <
-                is_marker_predicate
-              , marker_replace_transform
-              , marker_insert_transform
-            >
-          , repeater_insert_transform<Greedy, Min, Max>
+            marker_if_transform
+          , repeater_transform<Greedy, Min, Max>
         >
     {
     };
 
-    // transform *foo to !+foo
+    // transform *foo to (+foo | nil)
     template<bool Greedy, uint_t Max>
-    struct repeater_transform<Greedy, 0, Max>
+    struct repeater_if_transform<Greedy, 0, Max>
       : proto::compose_transforms
         <
-            repeater_transform<Greedy, 1, Max>
-          , optional_transform<Greedy>
+            repeater_if_transform<Greedy, 1, Max>
+          , optional_transform<Greedy, epsilon_mark_matcher>
         >
     {
-        BOOST_MPL_ASSERT_RELATION(1, <, Max);
+    };
+
+    // transform !(foo) to (foo | nil), with care to make sure
+    // that !(s1= foo) sets s1 to null if foo doesn't match.
+    template<bool Greedy>
+    struct repeater_if_transform<Greedy, 0, 1>
+      : proto::conditional_transform
+        <
+            is_marker_predicate
+          , optional_transform<Greedy, epsilon_mark_matcher>
+          , optional_transform<Greedy, epsilon_matcher>
+        >
+    {
     };
 
 }}}

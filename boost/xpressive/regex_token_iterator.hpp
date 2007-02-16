@@ -29,7 +29,7 @@ namespace boost { namespace xpressive { namespace detail
 //
 template<typename BidiIter>
 struct regex_token_iterator_impl
-  : counted_base<regex_token_iterator_impl<BidiIter> >
+  : private noncopyable
 {
     typedef typename iterator_value<BidiIter>::type  char_type;
 
@@ -251,18 +251,21 @@ private:
     /// INTERNAL ONLY
     void fork_()
     {
-        if(1 != this->impl_->use_count())
+        if(!this->impl_.unique())
         {
-            intrusive_ptr<impl_type_> clone = new impl_type_
+            shared_ptr<impl_type_> clone
             (
-                this->impl_->iter_.state_.begin_
-              , this->impl_->iter_.state_.cur_
-              , this->impl_->iter_.state_.end_
-              , this->impl_->iter_.rex_
-              , this->impl_->iter_.flags_
-              , this->impl_->subs_
-              , this->impl_->n_
-              , this->impl_->iter_.not_null_
+                new impl_type_
+                (
+                    this->impl_->iter_.state_.begin_
+                  , this->impl_->iter_.state_.cur_
+                  , this->impl_->iter_.state_.end_
+                  , this->impl_->iter_.rex_
+                  , this->impl_->iter_.flags_
+                  , this->impl_->subs_
+                  , this->impl_->n_
+                  , this->impl_->iter_.not_null_
+                )
             );
 
             // only copy the match_results struct if we have to. Note: if the next call
@@ -280,14 +283,14 @@ private:
     /// INTERNAL ONLY
     void next_()
     {
-        BOOST_ASSERT(this->impl_ && 1 == this->impl_->use_count());
+        BOOST_ASSERT(this->impl_ && this->impl_.unique());
         if(!this->impl_->next())
         {
-            this->impl_ = 0;
+            this->impl_.reset();
         }
     }
 
-    intrusive_ptr<impl_type_> impl_;
+    shared_ptr<impl_type_> impl_;
 };
 
 }} // namespace boost::xpressive

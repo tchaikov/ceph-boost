@@ -13,50 +13,23 @@
 # pragma once
 #endif
 
-#include <boost/intrusive_ptr.hpp>
+#include <vector>
+#include <boost/noncopyable.hpp>
 #include <boost/xpressive/detail/detail_fwd.hpp>
-#include <boost/xpressive/detail/dynamic/matchable.hpp>
 #include <boost/xpressive/detail/utility/tracking_ptr.hpp>
-#include <boost/xpressive/detail/utility/counted_base.hpp>
 
 namespace boost { namespace xpressive { namespace detail
 {
 
 ///////////////////////////////////////////////////////////////////////////////
 // finder
+//
 template<typename BidiIter>
 struct finder
-  : counted_base<finder<BidiIter> >
+  : noncopyable
 {
     virtual ~finder() {}
     virtual bool operator ()(state_type<BidiIter> &state) const = 0;
-};
-
-///////////////////////////////////////////////////////////////////////////////
-// traits
-struct traits
-  : counted_base<traits>
-{
-    virtual ~traits() {}
-};
-
-///////////////////////////////////////////////////////////////////////////////
-// traits_holder
-template<typename Traits>
-struct traits_holder
-  : traits
-{
-    explicit traits_holder(Traits const &traits)
-      : traits_(traits)
-    {
-    }
-
-    Traits const &traits() const
-    {
-        return this->traits_;
-    }
-private:
-    Traits traits_;
 };
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -111,25 +84,16 @@ struct regex_impl
         std::swap(this->hidden_mark_count_, that.hidden_mark_count_);
     }
 
-    intrusive_ptr<matchable_ex<BidiIter> const> xpr_;
-    intrusive_ptr<traits const> traits_;
-    intrusive_ptr<finder<BidiIter> > finder_;
+    shared_ptr<matchable<BidiIter> const>  xpr_;
+    shared_ptr<void const> traits_;
+    shared_ptr<finder<BidiIter> > finder_;
     std::size_t mark_count_;
     std::size_t hidden_mark_count_;
 
     #ifdef BOOST_XPRESSIVE_DEBUG_CYCLE_TEST
     static int instances;
     #endif
-
-private:
-    regex_impl &operator =(regex_impl const &);
 };
-
-template<typename BidiIter>
-void swap(regex_impl<BidiIter> &left, regex_impl<BidiIter> &right)
-{
-    left.swap(right);
-}
 
 #ifdef BOOST_XPRESSIVE_DEBUG_CYCLE_TEST
 template<typename BidiIter>

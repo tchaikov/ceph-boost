@@ -5,7 +5,7 @@
     
     http://www.boost.org/
 
-    Copyright (c) 2001-2006 Hartmut Kaiser. Distributed under the Boost
+    Copyright (c) 2001-2007 Hartmut Kaiser. Distributed under the Boost
     Software License, Version 1.0. (See accompanying file
     LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
 =============================================================================*/
@@ -223,7 +223,7 @@ public:
         case T_FLOATLIT:
             return impl::handle_floatlit(prev, beforeprev); 
         case T_STRINGLIT:
-            if (TOKEN_FROM_ID('L', UnknownTokenType) == prev)       // 'L'
+            if (TOKEN_FROM_ID('L', IdentifierTokenType) == prev)       // 'L'
                 return true;
             break;
         case T_LEFTBRACE_ALT:
@@ -312,6 +312,11 @@ public:
             if (T_IDENTIFIER == prev || T_NONREPLACABLE_IDENTIFIER == prev ||
                 IS_CATEGORY(prev, KeywordTokenType))
                 return true;
+            break;
+            
+        case T_STAR:
+            if (T_STAR == prev)
+                return false;     // '*****' do not need to be separated
             break;
         }
 

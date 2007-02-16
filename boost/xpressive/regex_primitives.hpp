@@ -546,7 +546,6 @@ repeat(Xpr const &xpr)
 }
 
 /// \overload
-///
 template<unsigned int Count, typename Xpr2>
 inline proto::unary_op
 <

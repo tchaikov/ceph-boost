@@ -4,11 +4,13 @@
     
     http://www.boost.org/
 
-    Copyright (c) 2001-2005 Hartmut Kaiser. Distributed under the Boost
+    Copyright (c) 2001-2007 Hartmut Kaiser. Distributed under the Boost
     Software License, Version 1.0. (See accompanying file
     LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
 =============================================================================*/
 
+#define BOOST_WAVE_SOURCE 1
+#include <cstring>
 #include <boost/preprocessor/stringize.hpp>
 
 #include <boost/wave/wave_config.hpp>
@@ -20,7 +22,7 @@ namespace boost { namespace wave {
     ///////////////////////////////////////////////////////////////////////////
     //  Call this function to test the configuration of the calling application
     //  against the configuration of the linked library.
-    bool 
+    BOOST_WAVE_DECL bool 
     test_configuration(unsigned int config, char const* pragma_keyword, 
         char const* string_type_str)
     {

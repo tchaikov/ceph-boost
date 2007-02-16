@@ -75,7 +75,8 @@ namespace boost { namespace xpressive { namespace detail
             return false;
         }
 
-        detail::width get_width() const
+        template<typename BidiIter>
+        std::size_t get_width(state_type<BidiIter> *) const
         {
             return this->str_.size();
         }

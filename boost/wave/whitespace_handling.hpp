@@ -5,7 +5,7 @@
     http://www.boost.org/
 
     Copyright (c) 2003 Paul Mensonides
-    Copyright (c) 2001-2006 Hartmut Kaiser. 
+    Copyright (c) 2001-2007 Hartmut Kaiser. 
     Distributed under the Boost Software License, Version 1.0. (See accompanying 
     file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
 =============================================================================*/
@@ -29,19 +29,39 @@ namespace context_policies {
 
 namespace util {
     ///////////////////////////////////////////////////////////////////////////
+    //  This function returns true if the given C style comment contains at 
+    //  least one newline
     template <typename TokenT>
     bool ccomment_has_newline(TokenT const& token)
     {
         using namespace boost::wave;
 
-        if (T_CCOMMENT == token_id(token)) {
-            if (TokenT::string_type::npos != 
-                token.get_value().find_first_of("\n"))
-            {
-                return true;
-            }
+        if (T_CCOMMENT == token_id(token) &&
+            TokenT::string_type::npos != token.get_value().find_first_of("\n"))
+        {
+            return true;
         }
         return false;
+    }
+
+    ///////////////////////////////////////////////////////////////////////////
+    //  This function returns the number of newlines in the given C style 
+    //  comment 
+    template <typename TokenT>
+    int ccomment_count_newlines(TokenT const& token)
+    {
+        using namespace boost::wave;
+        int newlines = 0;
+        if (T_CCOMMENT == token_id(token)) {
+        typename TokenT::string_type const& value = token.get_value();
+        typename TokenT::string_type::size_type p = value.find_first_of("\n");
+
+            while (TokenT::string_type::npos != p) {
+                ++newlines;
+                p = value.find_first_of("\n", p+1);
+            } 
+        }
+        return newlines;
     }
 }
 
@@ -133,9 +153,10 @@ eat_whitespace<TokenT>::newline(TokenT &token, bool &skipped_newline)
     }
 
     if (T_CCOMMENT == id) {
-        if (util::ccomment_has_newline(token))
+        if (util::ccomment_has_newline(token)) {
             skipped_newline = true;
-
+            state = &eat_whitespace::newline_2nd;
+        }
         if (preserve_comments) {
             state = &eat_whitespace::general;
             return false;

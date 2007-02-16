@@ -49,7 +49,7 @@ inline bool can_start(unsigned short c, const unsigned char* map, unsigned char 
 {
    return ((c >= (1 << CHAR_BIT)) ? true : map[c] & mask);
 }
-#if !defined(__HP_aCC)
+#if !defined(__hpux) // can't use WCHAR_MIN in pp-directive
 #if defined(WCHAR_MIN) && (WCHAR_MIN == 0) && !defined(BOOST_NO_INTRINSIC_WCHAR_T)
 inline bool can_start(wchar_t c, const unsigned char* map, unsigned char mask)
 {
@@ -427,9 +427,9 @@ private:
    // matching flags in use:
    match_flag_type m_match_flags;
    // how many states we have examined so far:
-   difference_type state_count;
+   boost::uintmax_t state_count;
    // max number of states to examine before giving up:
-   difference_type max_state_count;
+   boost::uintmax_t max_state_count;
    // whether we should ignore case or not:
    bool icase;
    // set to true when (position == last), indicates that we may have a partial match:
