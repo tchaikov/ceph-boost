@@ -807,7 +807,7 @@ def regression(
         # We can skip test only we were explictly 
         # told to have no toolsets in command line "--toolset="
         if  toolsets != '': # --toolset=,
-            test( toolsets, book, bjam_options, monitored, timeout, v2, [] )
+            test( toolsets, bjam_options, monitored, timeout, v2, [] )
             collect_logs( tag, runner, platform, user, comment, incremental, [] )
             upload_logs( tag, runner, user, ftp_proxy, debug_level, send_bjam_log )
         if book:
@@ -842,8 +842,8 @@ def regression(
 
 
 def show_revision( **unused ):
-    modified = '$Date: 2007/02/11 20:08:58 $'
-    revision = '$Revision: 1.63.2.20 $'
+    modified = '$Date: 2007/02/16 20:51:07 $'
+    revision = '$Revision: 1.63.2.21 $'
 
     import re
     re_keyword_value = re.compile( r'^\$\w+:\s+(.*)\s+\$$' )

@@ -43,9 +43,6 @@
     <mark-toolset name="gcc-4.1.0_linux" status="required"/>
     <mark-toolset name="gcc-3.4.5_linux_x86_64" status="required"/>
     <mark-toolset name="gcc-4.1.0_linux_x86_64" status="required"/>
-    <mark-toolset name="gcc-3_4_4_tru64" status="required"/>
-    <mark-toolset name="gcc-4_0_3_tru64" status="required"/>
-    <mark-toolset name="gcc-3.4.3_sunos" status="required"/>
     <mark-toolset name="darwin-4.0.1" status="required"/>
     <mark-toolset name="intel-vc71-win-9.1" status="required"/>
     <mark-toolset name="intel-linux-9.0" status="required"/>
@@ -957,10 +954,22 @@
         </mark-expected-failures>
 
         <mark-expected-failures>
+            <test name="testdate_input"/>
+            <test name="testdate_input_dll"/>
+            <toolset name="msvc-7.1_stlport4"/>
+            <note author="J. Garland">
+               The STLPort standard library has issues with some custom
+               facet settings causing an unexplained failure in these
+               facet tests.
+            </note>
+        </mark-expected-failures>
+
+        <mark-expected-failures>
             <test name="testdate_facet_new"/>
             <test name="testdate_facet_new_dll"/>
             <test name="testtime_facet"/>
             <toolset name="msvc-8.0_stlport5"/>
+            <toolset name="msvc-7.1_stlport4"/>
             <note author="J. Garland">
                The STLPort standard library has issues with the handling
                of the classic facet which causes some fo the i/o tests
@@ -1036,6 +1045,19 @@
         </mark-expected-failures>
 
         <mark-expected-failures>
+            <test name="testdate_input_facet_dll"/>
+            <test name="testdate_input_facet"/>
+            <test name="testtime_input_facet"/>
+            <test name="testlocal_time_input_facet"/>
+            <toolset name="acc"/>
+            <note author="Jeff Garland">
+            These tests rely on the ability of an std::map to be
+            instantiated on an incomplete type. The Rogue Wave
+            version 2.2 and higher does not allow this.
+            </note>
+        </mark-expected-failures>
+
+        <mark-expected-failures>
             <test name="testtime_wstream"/>
             <toolset name="hp_cxx-65*"/>
             <note author="Jeff Garland">
@@ -1082,7 +1104,7 @@
                 <note author="Gennaro Prota" refid="37" />
             </mark-failure>
         </test>
-        <test name="dyn_bitset_unit_test2">
+        <test name="dyn_bitset_unit_tests2">
             <mark-failure>
                 <toolset name="borland-5.8.2"/>
                 <note author="Roland Schwarz">
@@ -1333,6 +1355,17 @@
                 converting it to a <code>double</code>. This won't cause
                 anything to break, but means that the hash function isn't
                 as good as it should be for <code>long double</code>s.
+            </note>
+        </mark-expected-failures>
+
+        <mark-expected-failures>
+            <test name="hash_float_test"/>
+            <toolset name="gcc-cygwin*"/>
+            <note author="Daniel James">
+                On this platform both std::frexp and std::ldexp treat long
+                doubles as longs, so the hashing algorithm does the same.
+                This means that you'll get very bad results for long doubles
+                that can't be represented by doubles.
             </note>
         </mark-expected-failures>
 
@@ -2616,6 +2649,26 @@ for more information.
             <note author="Aleksey Gurtovoy" date="19 Sep 2004" refid="26"/>
         </mark-expected-failures>
 
+       <mark-expected-failures>
+            <test name="zip_iterator_test"/>
+            <toolset name="msvc-6.5_stlport4"/>
+            <note author="Thomas Witt">
+                This test fails with a link error that is most likely
+                a STLport issue. As STLport 4 is officially unsupported
+                there is no known resolution.
+            </note>
+       </mark-expected-failures>
+
+       <mark-expected-failures>
+            <test name="is_lvalue_iterator"/>
+            <toolset name="acc"/>
+            <note author="Boris Gubenko">
+                For some currently unknown reason, with aCC6, this test can be compiled
+                only in strict ansi mode. Since on HP-UX/aCC6 boost testing is done in the
+                default compilation mode, this test fails to compile on this platform.
+            </note>
+       </mark-expected-failures>
+
     </library>
 
 
@@ -2701,6 +2754,35 @@ for more information.
           </note>
        </mark-expected-failures>
        <mark-expected-failures>
+          <test name="special_functions_test"/>
+          <toolset name="msvc-7.1_stlport4"/>
+          <note author="John Maddock">
+             This appears to be a problem with STLPort's abs function: the issue only effects the
+             test code.  A workaround should be possible but users should be encouraged to use
+             STLport 5 instead.
+          </note>
+       </mark-expected-failures>
+       <mark-expected-failures>
+          <test name="quaternion_test"/>
+          <test name="octonion_test"/>
+          <toolset name="gcc-cygwin*"/>
+          <note author="John Maddock">
+            No true long double standard lib support causes these tests to fail.
+          </note>
+       </mark-expected-failures>
+
+       <mark-expected-failures>
+          <test name="quaternion_test"/>
+          <test name="complex_test"/>
+          <test name="special_functions_test"/>
+          <toolset name="intel-linux*"/>
+          <note author="John Maddock">
+            This is Intel issue 409291, it should be fixed from
+            compiler package l_cc_c_9.1.046 onwards.
+          </note>
+       </mark-expected-failures>
+
+       <mark-expected-failures>
             <test name="complex_test"/>
             <toolset name="qcc-3.3.5*cpp"/>
             <note author="Jim Douglas" date="14 Feb 06" refid="27"/>
@@ -2733,7 +2815,7 @@ for more information.
         </test>
         <test name="udt_example_0">
             <mark-failure>
-                <toolset name="msvc-6.5_stlport4"/>
+                <toolset name="acc"/>
                 <toolset name="borland-5.6.4"/>
                 <toolset name="borland-5.8.2"/>
                 <toolset name="msvc-6.5*"/>
@@ -3602,6 +3684,7 @@ for more information.
         </mark-unusable>
         <mark-expected-failures>
             <test name="DllTestNormal"/>
+            <toolset name="*cygwin*"/>
             <toolset name="*mingw*"/>
             <toolset name="hp_cxx-71*"/>
             <toolset name="cw-9*"/>
@@ -3609,9 +3692,9 @@ for more information.
                 A runtime failure of this test indicates that this platform
                 <b>dynamically</b> links code in a manner such that under
                 certain circumstances more than one instance of a
-                header-defined static class member can exist at runtime.
-                See <a href="http://tinyurl.com/d2yng">here</a> for more
-                information.
+                header-defined static class member can exist at runtime. See
+                <a href="http://www.boost.org/libs/statechart/doc/faq.html#Dll">here</a>
+                for more information.
             </note>
         </mark-expected-failures>
         <mark-expected-failures>
@@ -3621,9 +3704,9 @@ for more information.
                 A runtime failure of this test indicates that this platform
                 <b>statically</b> links code in a manner such that under
                 certain circumstances more than one instance of a
-                header-defined static class member can exist at runtime.
-                See <a href="http://tinyurl.com/d2yng">here</a> for more
-                information.
+                header-defined static class member can exist at runtime. See
+                <a href="http://www.boost.org/libs/statechart/doc/faq.html#Dll">here</a>
+                for more information.
             </note>
         </mark-expected-failures>
         <mark-expected-failures reason="?">
@@ -4056,6 +4139,26 @@ for more information.
             <toolset name="gcc-2*"/>
             <note author="John Maddock">
                These tests fail on this platform due to a lack of
+               wide character support.
+            </note>
+        </mark-expected-failures>
+
+        <mark-expected-failures>
+            <test name="test_regex"/>
+            <test name="std_test_regex"/>
+            <toolset name="gcc-mingw*"/>
+            <note author="John Maddock">
+               These tests fail on this platform due to incomplete
+               wide character support.
+            </note>
+        </mark-expected-failures>
+
+        <mark-expected-failures>
+            <test name="test_hash"/>
+            <test name="std_test_hash"/>
+            <toolset name="gcc-cygwin*"/>
+            <note author="John Maddock">
+               These tests fail on this platform due to incomplete
                wide character support.
             </note>
         </mark-expected-failures>
@@ -4673,20 +4776,23 @@ for more information.
 
         <mark-expected-failures>
             <test name="testwave"/>
-            <!-- <toolset name="qcc-3.3.5_gpp"/> -->
             <toolset name="qcc-3.3.5*gpp"/>
+            <toolset name="sun-5.8"/>
             <note author="Hartmut Kaiser" refid="29"/>
         </mark-expected-failures>
 
         <mark-expected-failures>
             <test name="testwave_dll"/>
             <toolset name="mingw-3*"/>
+            <toolset name="sun-5.8"/>
             <note author="Hartmut Kaiser" refid="29"/>
         </mark-expected-failures>
 
         <mark-expected-failures>
             <test name="testwave_dll"/>
             <toolset name="cw-9.4"/>
+            <toolset name="gcc-mingw-3.4.0"/>
+            <toolset name="gcc-mingw-3.4.2"/>
             <note author="Hartmut Kaiser" refid="2"/>
         </mark-expected-failures>
 
