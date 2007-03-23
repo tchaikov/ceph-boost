@@ -1,0 +1,7 @@
+# Boost.Build Configuration
+
+# Compiler configuration
+using gcc ; 
+
+# Python configuration
+using python : 2.4 : /usr ;
