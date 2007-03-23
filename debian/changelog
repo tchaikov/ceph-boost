@@ -1,8 +1,11 @@
 boost (1.33.1+1.34.0-cvs20070221-1) experimental; urgency=low
 
   * New upstream snapshot version.
+  * Improved the build process.
+  * Now both st/mt variants are installed as well as their new symlinks
+    to ease the linking. No, we still have not pkg-config support.
 
- -- Domenico Andreoli <cavok@debian.org>  Wed, 21 Feb 2007 22:10:36 +0100
+ -- Domenico Andreoli <cavok@debian.org>  Fri, 23 Mar 2007 13:47:15 +0100
 
 boost (1.33.1+1.34.0-cvs20060531-1) experimental; urgency=low
 
