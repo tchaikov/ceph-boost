@@ -954,8 +954,8 @@
         </mark-expected-failures>
 
         <mark-expected-failures>
-            <test name="testdate_input"/>
-            <test name="testdate_input_dll"/>
+            <test name="testdate_input_facet"/>
+            <test name="testdate_input_facet_dll"/>
             <toolset name="msvc-7.1_stlport4"/>
             <note author="J. Garland">
                The STLPort standard library has issues with some custom
@@ -1485,6 +1485,26 @@
               of class template partial specializations.
             </note>
         </mark-expected-failures>
+        <mark-expected-failures>
+            <test name="dijkstra_heap_performance"/>
+            <test name="layout_test"/>
+            <test name="relaxed_heap_test"/>
+            <toolset name="msvc-7.0"/>
+            <note author="Vladimir Prus">
+              The test fails due to compile error in relaxed_heap.hpp. 
+              The compile error is likely caused by a compiler bug.      
+            </note>
+        </mark-expected-failures>
+        <mark-expected-failures>
+          <test name="graphviz_test"/>
+          <toolset name="msvc-7.1_stlport4"/>
+          <note author="Vladimir Prus">
+            The test fails from completely unknown reason -- it might
+            be compiler bug, or compiler misconfiguration or testing
+            system bug.
+          </note>
+        </mark-expected-failures>
+  
     </library>
 
 
@@ -1640,6 +1660,14 @@
                 disable this test with BBv2 at present.
             </note>
         </mark-expected-failures>
+        <mark-expected-failures>
+            <test name="file_descriptor_test"/>
+            <toolset name="gcc-cygwin-3.4.4"/>
+            <note author="Vladimir Prus">
+              The test fails at runtime for unknown reasons.
+            </note>
+        </mark-expected-failures>
+
     </library>
 
     <!-- lambda -->
@@ -2787,6 +2815,17 @@ for more information.
             <toolset name="qcc-3.3.5*cpp"/>
             <note author="Jim Douglas" date="14 Feb 06" refid="27"/>
        </mark-expected-failures>
+
+       <mark-expected-failures>
+            <test name="common_factor_test"/>
+            <toolset name="msvc-6.5_stlport*"/>
+            <toolset name="msvc-7.1_stlport*"/>
+            <note author="John Maddock">
+            This failure appears to be caused by a compiler bug: please note
+            that the issue only effects the test suite, not the library itself.
+            A workaround is available but breaks other compilers.
+            </note>
+       </mark-expected-failures>
     </library>
 
     <!-- numeric/conversion -->
@@ -2876,6 +2915,16 @@ for more information.
             <toolset name="cw-8.3*"/>
             <note author="Aleksey Gurtovoy" refid="2"/>
         </mark-expected-failures>
+        <mark-expected-failures>
+            <test name="test_float"/>
+            <toolset name="msvc-7.1_stlport4"/>
+            <note author="Vladimir Prus">
+              This failure is unresearched. Presumably, the problem
+              is that the abs function is not available in the "right"
+              namespace with this compiler/stdlib combination.
+            </note>
+        </mark-expected-failures>
+
     </library>
 
 
@@ -3382,6 +3431,17 @@ for more information.
             <toolset name="hp_cxx*"/>
             <note author="Markus Schoepflin" refid="29"/>
         </mark-expected-failures>
+        <mark-expected-failures>
+            <test name="*"/>
+            <toolset name="gcc-cygwin-3.4.4"/>
+            <note author="Roland Schwarz">
+                The tests are failing because the libraries being built are targeted
+                to use the cygwin.dll, while the tests are run against a python
+                executable that depends on msvcrt.dll. This combination cannot be expected
+                to work. (The tests will pass if the additional compiler switch -mno-cygwin
+                is used during compile and link.) 
+            </note>
+        </mark-expected-failures>
     </library>
 
     <!-- random -->
@@ -3589,7 +3649,6 @@ for more information.
             </mark-failure>
             <mark-failure>
                 <toolset name="tru64cxx*"/>
-                <toolset name="hp_cxx*"/>
                 <note author="Markus Schoepflin" refid="3"/>
             </mark-failure>
         </test>
@@ -3644,6 +3703,19 @@ for more information.
             <note author="John Maddock">
                Test fails due to unresilved externals from STLport: appears to be
                an STLport bug. </note>
+        </mark-expected-failures>
+        <mark-expected-failures>
+            <test name="regex_regress_threaded"/>
+            <test name="static_mutex_test"/>
+            <toolset name="msvc-6.5_stlport*"/>
+            <toolset name="msvc-7.1_stlport*"/>
+            <toolset name="msvc-8.0"/>
+            <toolset name="gcc-cygwin*"/>
+            <note author="John Maddock">
+               These tests pass when run directly from the command line, 
+               but fail when run under the regression test script. 
+               The issue has never been fully pinned down, but appears
+               to be related to how long the tests take to run.</note>
         </mark-expected-failures>
     </library>
 
@@ -3825,9 +3897,24 @@ for more information.
             <test name="prg_exec_fail2"/>
             <toolset name="darwin-4.0.1"/>
             <note author="Vladimir Prus">
-              The test appears to test that division by zero is
-              detected by Boost.Test. This is not happening on
-              Darwin, for unknown reasons.
+              The test verifies that Boost.Test detects division by
+              zero. Division by zero has an undefined result 
+              on PowerPC processors. The compiler has to emit extra 
+              code to assert that the divisor isn't zero. 
+
+              Compiler options -fno-trapping-math and -fnon-call-exceptions 
+              might affect this. However, in default configuration
+              no check is done, and division by zero is not detected.
+            </note>
+        </mark-expected-failures>
+
+        <mark-expected-failures>
+            <test name="prg_exec_fail3"/>
+            <toolset name="cw-9.4"/>
+            <note author="Vladimir Prus">
+              The test appears to test that failed assertion result
+              in non-zero exit status.  That seems to be not the
+              case, for unknown reasons.
             </note>
         </mark-expected-failures>
 

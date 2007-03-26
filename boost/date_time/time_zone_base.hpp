@@ -5,11 +5,12 @@
  * Subject to the Boost Software License, Version 1.0. 
  * (See accompanying file LICENSE-1.0 or http://www.boost.org/LICENSE-1.0)
  * Author: Jeff Garland, Bart Garst
- * $Date: 2006/02/18 20:58:01 $
+ * $Date: 2007/02/23 15:29:16 $
  */
 
 
 #include <string>
+#include <sstream>
 
 namespace boost {
 namespace date_time {
