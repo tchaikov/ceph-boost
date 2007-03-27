@@ -294,6 +294,26 @@ Description: regular expression library for C++
  .
   Homepage: http://www.boost.org/libs/regex/
 
+Package: libboost-serialization1.34.0
+Architecture: any
+Section: libs
+Depends: ${shlibs:Depends}
+Description: serialization library for C++
+ This is a partial list of provided functionalities:
+ .
+  * proper restoration of pointers to shared data
+  * serialization of STL containers and other commonly used templates
+  * data portability - streams of bytes created on one platform should
+    be readable on any other
+  * archive interface must be rich enough to permit the creation of an
+    archive that presents serialized data as XML in a useful manner
+ .
+ serialization: the reversible deconstruction of an arbitrary set of
+ C++ data structures to a sequence of bytes.
+ archive: to refer to a specific rendering of this stream of bytes.
+ .
+  Homepage: http://www.boost.org/libs/serialization/
+
 Package: libboost-serialization-dev
 Architecture: any
 Section: libdevel
@@ -402,6 +422,20 @@ Description: portable C++ multi-threading
  registers.
  .
   Homepage: http://www.boost.org/libs/thread/
+
+Package: libboost-wave1.34.0
+Architecture: any
+Section: libs
+Depends: ${shlibs:Depends}
+Description: C99/C++ preprocessor library
+ Part of the Boost C++ Libraries collection.
+ .
+ The Wave C++ preprocessor library is a Standards conformant
+ implementation of the mandated C99/C++ preprocessor functionality
+ packed behind a simple to use interface, which integrates well with
+ the well known idioms of the Standard Template Library (STL).
+ .
+  Homepage: http://www.boost.org/libs/wave/
 
 Package: libboost-wave-dev
 Architecture: any

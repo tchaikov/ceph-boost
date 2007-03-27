@@ -1,8 +1,12 @@
 boost (1.33.1+1.34.0-cvs20070326-1) experimental; urgency=low
 
   * New upstream snapshot version.
+  * Added missing shared library packages of Boost.Serialization and
+    Boost.Wave.  Closes: #410157.
+  * No unqualified .so symlinks are now provided, only -st.so/-mt.so
+    are available.  Closes: #356705.
 
- -- Domenico Andreoli <cavok@debian.org>  Tue, 27 Mar 2007 00:47:14 +0200
+ -- Domenico Andreoli <cavok@debian.org>  Tue, 27 Mar 2007 13:50:30 +0200
 
 boost (1.33.1+1.34.0-cvs20070221-1) experimental; urgency=low
 

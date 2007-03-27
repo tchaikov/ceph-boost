@@ -312,20 +312,41 @@ install: build
 	   usr/lib/libboost_regex$(release_suffix_mt).so  usr/lib/libboost_regex-mt.so
 
 
+	# package libboost-serialization$(SOVERSION)
+	dh_install -plibboost-serialization$(SOVERSION)$(DEBIAN_SUFFIX) --autodest \
+	   debian/tmp/usr/lib/libboost_serialization$(release_suffix_st).so.$(SOVERSION) \
+	   debian/tmp/usr/lib/libboost_wserialization$(release_suffix_st).so.$(SOVERSION) \
+	   debian/tmp/usr/lib/libboost_serialization$(release_suffix_mt).so.$(SOVERSION) \
+	   debian/tmp/usr/lib/libboost_wserialization$(release_suffix_mt).so.$(SOVERSION)
+	dh_install -plibboost-dbg --autodest \
+	   debian/tmp/usr/lib/libboost_serialization$(debug_suffix_st).so.$(SOVERSION) \
+	   debian/tmp/usr/lib/libboost_wserialization$(debug_suffix_st).so.$(SOVERSION) \
+	   debian/tmp/usr/lib/libboost_serialization$(debug_suffix_mt).so.$(SOVERSION) \
+	   debian/tmp/usr/lib/libboost_wserialization$(debug_suffix_mt).so.$(SOVERSION)
+
+
 	# package libboost-serialization-dev
 	dh_installdirs -plibboost-serialization-dev usr/include/boost
 	mv debian/libboost-dev/usr/include/boost/*serialization* \
 	   debian/libboost-serialization-dev/usr/include/boost
 	dh_install -plibboost-serialization-dev --autodest \
 	   debian/tmp/usr/lib/libboost_serialization$(release_suffix_st).a \
+	   debian/tmp/usr/lib/libboost_serialization$(release_suffix_st).so \
 	   debian/tmp/usr/lib/libboost_wserialization$(release_suffix_st).a \
+	   debian/tmp/usr/lib/libboost_wserialization$(release_suffix_st).so \
 	   debian/tmp/usr/lib/libboost_serialization$(release_suffix_mt).a \
-	   debian/tmp/usr/lib/libboost_wserialization$(release_suffix_mt).a
+	   debian/tmp/usr/lib/libboost_serialization$(release_suffix_mt).so \
+	   debian/tmp/usr/lib/libboost_wserialization$(release_suffix_mt).a \
+	   debian/tmp/usr/lib/libboost_wserialization$(release_suffix_mt).so
 	dh_link -plibboost-serialization-dev \
-	   usr/lib/libboost_serialization$(release_suffix_st).a   usr/lib/libboost_serialization-st.a \
-	   usr/lib/libboost_wserialization$(release_suffix_st).a  usr/lib/libboost_wserialization-st.a \
-	   usr/lib/libboost_serialization$(release_suffix_mt).a   usr/lib/libboost_serialization-mt.a \
-	   usr/lib/libboost_wserialization$(release_suffix_mt).a  usr/lib/libboost_wserialization-mt.a
+	   usr/lib/libboost_serialization$(release_suffix_st).a    usr/lib/libboost_serialization-st.a \
+	   usr/lib/libboost_serialization$(release_suffix_st).so   usr/lib/libboost_serialization-st.so \
+	   usr/lib/libboost_wserialization$(release_suffix_st).a   usr/lib/libboost_wserialization-st.a \
+	   usr/lib/libboost_wserialization$(release_suffix_st).so  usr/lib/libboost_wserialization-st.so \
+	   usr/lib/libboost_serialization$(release_suffix_mt).a    usr/lib/libboost_serialization-mt.a \
+	   usr/lib/libboost_serialization$(release_suffix_mt).so   usr/lib/libboost_serialization-mt.so \
+	   usr/lib/libboost_wserialization$(release_suffix_mt).a   usr/lib/libboost_wserialization-mt.a \
+	   usr/lib/libboost_wserialization$(release_suffix_mt).so  usr/lib/libboost_wserialization-mt.so
 
 
 	# package libboost-signals$(SOVERSION)
@@ -409,16 +430,29 @@ install: build
 	   usr/lib/libboost_thread$(release_suffix_mt).so  usr/lib/libboost_thread-mt.so
 
 
+	# package libboost-wave$(SOVERSION)
+	dh_install -plibboost-wave$(SOVERSION)$(DEBIAN_SUFFIX) --autodest \
+	   debian/tmp/usr/lib/libboost_wave$(release_suffix_st).so.$(SOVERSION) \
+	   debian/tmp/usr/lib/libboost_wave$(release_suffix_mt).so.$(SOVERSION)
+	dh_install -plibboost-dbg --autodest \
+	   debian/tmp/usr/lib/libboost_wave$(debug_suffix_st).so.$(SOVERSION) \
+	   debian/tmp/usr/lib/libboost_wave$(debug_suffix_mt).so.$(SOVERSION)
+
+
 	# package libboost-wave-dev
 	dh_installdirs -plibboost-wave-dev usr/include/boost
 	mv debian/libboost-dev/usr/include/boost/wave* \
 	   debian/libboost-wave-dev/usr/include/boost
 	dh_install -plibboost-wave-dev --autodest \
 	   debian/tmp/usr/lib/libboost_wave$(release_suffix_st).a \
-	   debian/tmp/usr/lib/libboost_wave$(release_suffix_mt).a
+	   debian/tmp/usr/lib/libboost_wave$(release_suffix_st).so \
+	   debian/tmp/usr/lib/libboost_wave$(release_suffix_mt).a \
+	   debian/tmp/usr/lib/libboost_wave$(release_suffix_mt).so
 	dh_link -plibboost-wave-dev \
-	   usr/lib/libboost_wave$(release_suffix_st).a  usr/lib/libboost_wave-st.a \
-	   usr/lib/libboost_wave$(release_suffix_mt).a  usr/lib/libboost_wave-mt.a
+	   usr/lib/libboost_wave$(release_suffix_st).a   usr/lib/libboost_wave-st.a \
+	   usr/lib/libboost_wave$(release_suffix_st).so  usr/lib/libboost_wave-st.so \
+	   usr/lib/libboost_wave$(release_suffix_mt).a   usr/lib/libboost_wave-mt.a \
+	   usr/lib/libboost_wave$(release_suffix_mt).so  usr/lib/libboost_wave-mt.so
 
 
 # This single target is used to build all the packages, all at once, or
