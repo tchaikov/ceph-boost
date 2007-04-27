@@ -4,4 +4,4 @@
 using gcc ; 
 
 # Python configuration
-using python : 2.4 : /usr ;
+using python : 2.5 : /usr ;

@@ -3,7 +3,7 @@ Section: libs
 Priority: optional
 Maintainer: Debian Boost Team <pkg-boost-devel@lists.alioth.debian.org>
 Uploaders: Steve M. Robbins <smr@debian.org>, Domenico Andreoli <cavok@debian.org>, Christophe Prud'homme <prudhomm@debian.org>
-Build-Depends: debhelper (>= 4), bison, flex, docbook-to-man, xsltproc, doxygen, python2.4-dev, zlib1g-dev, libbz2-dev, libicu36-dev, g++-4.1
+Build-Depends: debhelper (>= 4), bison, flex, docbook-to-man, xsltproc, doxygen, zlib1g-dev, libbz2-dev, libicu36-dev, python | python-dev | python-all-dev, python2.5-dev, python-support (>= 0.3)
 Standards-Version: 3.7.2
 
 Package: bcp
@@ -451,3 +451,18 @@ Description: C99/C++ preprocessor library
  the well known idioms of the Standard Template Library (STL).
  .
   Homepage: http://www.boost.org/libs/wave/
+
+Package: pyste
+Architecture: all
+Section: python
+Provides: ${python:Provides}
+Depends: ${python:Depends}, python-celementtree | python-elementtree, gccxml
+XB-Python-Version: ${python:Versions}
+Description: Boost.Python code generator
+ Part of the Boost C++ Libraries collection.
+ .
+ User specifies classes and functions to be exported using a simple
+ interface file, which following the Boost.Python's philosophy, is
+ simple Python code.
+ .
+  Homepage: http://www.boost.org/libs/python/pyste/

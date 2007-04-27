@@ -38,10 +38,10 @@ endif
 
 exampledir = debian/libboost-doc/usr/share/doc/libboost-doc/examples
 htmldir = debian/libboost-doc/usr/share/doc/libboost-doc/HTML
-
+pyste_prefix = $(PWD)/debian/pyste/usr
 bjam = tools/jam/src/bjam
 
-JAM = $(bjam) --user-config=$(shell pwd)/debian-config.jam -sHAVE_ICU=1
+JAM = $(bjam) --user-config=$(shell pwd)/user-config.jam -sHAVE_ICU=1
 
 $(bjam):
 	cd tools/jam/src && sh build.sh gcc && mv bin.*/bjam .
@@ -56,6 +56,7 @@ build-stamp: $(bjam)
 	cd tools/regression/build && ../../../$(JAM)
 
 	$(JAM) -sBUILD="release debug <cflags>$(CFLAGS) <define>_REENTRANT <threading>single/multi"
+	cd libs/python/pyste/install && python2.5 setup.py build
 
 	touch build-stamp
 
@@ -66,7 +67,9 @@ clean:
 
 	-cd tools && ../$(JAM) clean
 	-$(JAM) clean
+	cd libs/python/pyste/install && python setup.py clean
 
+	rm -rf libs/python/pyste/install/build
 	rm -rf tools/jam/src/bootstrap
 	rm -rf tools/jam/src/bin.*
 	rm -ff tools/jam/src/bjam
@@ -74,7 +77,7 @@ clean:
 
 	dh_clean
 
-install: DH_OPTIONS=
+install: DH_OPTIONS=-X.svn
 install: build
 	dh_testdir
 	dh_testroot
@@ -85,6 +88,11 @@ install: build
 	find debian/tmp/usr/include -type f | xargs chmod 644
 	find debian/tmp -name .cvsignore | xargs rm -f
 	find debian -empty -type f | xargs rm -f
+
+
+	# package pyste
+	cd libs/python/pyste/install && python setup.py install --no-compile --prefix=$(pyste_prefix) --install-lib=$(pyste_prefix)/share/python-support/pyste
+	mv $(pyste_prefix)/bin/pyste.py $(pyste_prefix)/bin/pyste
 
 
 	# package bcp
@@ -469,6 +477,8 @@ binary-common:
 	dh_strip -Nlibboost-dbg
 	dh_link
 	dh_compress -Xlibboost-doc/HTML
+	dh_pysupport
+	dh_python
 	dh_fixperms
 
 	@if [ "$(DH_OPTIONS)" = "-a" ]; then \
