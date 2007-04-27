@@ -1,6 +1,7 @@
 boost (1.34.0~beta1-1) experimental; urgency=low
 
   * New upstream beta release.
+  * Boost.Python is built using python 2.5.
 
  -- Domenico Andreoli <cavok@debian.org>  Sat, 28 Apr 2007 01:08:50 +0200
 
