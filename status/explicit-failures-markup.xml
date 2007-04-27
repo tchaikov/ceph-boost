@@ -885,6 +885,20 @@
                 <note author="B. Garst" refid="22"/>
             </mark-failure>
           </test>
+        <test name="testmicrosec_time_clock">
+            <mark-failure>
+            <toolset name="borland-5.6.4"/>
+            <toolset name="borland-5.8.2"/>
+            <note author="J. Garland">
+               There is apparently a bug in Borland library
+               such that  std::local_time and std::gmtime are 
+               returning a time that's 1 hour ahead GetSystemTimeAsFileTime 
+               during DST.  This is a rather serious problem in that 
+               some of the date-time clock interfaces will give the wrong
+               current time.
+            </note>
+            </mark-failure>
+        </test>
         <test name="teststreams">
             <mark-failure>
                 <toolset name="gcc-2.95.3-linux"/>
@@ -1317,6 +1331,7 @@
             <test name="format_test3"/>
             <toolset name="tru64cxx65*"/>
             <toolset name="hp_cxx-65*"/>
+            <toolset name="acc"/>
             <note author="Markus Schoepflin" refid="33"/>
         </mark-expected-failures>
     </library>
@@ -1861,6 +1876,14 @@
              compiler release.
           </note>
        </mark-expected-failures>
+       <mark-expected-failures>
+            <test name="copy"/>
+            <toolset name="acc"/>
+            <note author="Boris Gubenko">
+                When compiling this test, aCC6 runs out of memory. The HP
+                compiler group is aware of this issue and is working on the fix.
+            </note>
+       </mark-expected-failures>
 
     </library>
 
@@ -1994,6 +2017,12 @@ for more information.
 
     <!-- optional -->
     <library name="optional">
+        <mark-expected-failures>
+            <test name="optional_test"/>
+            <toolset name="msvc-6.5*"/>
+            <toolset name="msvc-7.0"/>
+            <note author="Fernando Cacciola" refid="6"/>
+        </mark-expected-failures>
         <mark-expected-failures>
             <test name="optional_test_ref"/>
             <toolset name="msvc-6.5*"/>
@@ -3431,17 +3460,16 @@ for more information.
             <toolset name="hp_cxx*"/>
             <note author="Markus Schoepflin" refid="29"/>
         </mark-expected-failures>
-        <mark-expected-failures>
-            <test name="*"/>
-            <toolset name="gcc-cygwin-3.4.4"/>
-            <note author="Roland Schwarz">
-                The tests are failing because the libraries being built are targeted
-                to use the cygwin.dll, while the tests are run against a python
-                executable that depends on msvcrt.dll. This combination cannot be expected
-                to work. (The tests will pass if the additional compiler switch -mno-cygwin
-                is used during compile and link.) 
+       <mark-expected-failures>
+            <test name="data_members"/>
+            <toolset name="acc"/>
+            <note author="Boris Gubenko">
+                This test assumes standard-compliant dependent template name lookup which
+                is performed by aCC6 only in strict ansi mode. Since on HP-UX/aCC6 boost
+                testing is done in the default compilation mode, this test fails to
+                compile on this platform (in strict ansi mode, it compiles and succeeds).
             </note>
-        </mark-expected-failures>
+       </mark-expected-failures>
     </library>
 
     <!-- random -->
@@ -4756,6 +4784,16 @@ for more information.
                 <note refid="3" author="D. Gregor"/>
             </mark-failure>
         </test>
+        <mark-expected-failures>
+            <test name="none_test"/>
+            <toolset name="borland-5.8.2"/>
+            <toolset name="msvc-6.5*"/>
+            <toolset name="msvc-7.0"/>
+            <note author="Fernando Cacciola">
+                This failure is caused by an UNRELATED compiler bug resulted from the particular test strategy.
+                'boost::none' DOES work correctly in this compiler.
+            </note>
+        </mark-expected-failures>
         <mark-expected-failures>
             <test name="value_init_test"/>
             <toolset name="msvc-6.5*"/>
