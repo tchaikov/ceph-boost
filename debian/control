@@ -3,7 +3,7 @@ Section: libs
 Priority: optional
 Maintainer: Debian Boost Team <pkg-boost-devel@lists.alioth.debian.org>
 Uploaders: Steve M. Robbins <smr@debian.org>, Domenico Andreoli <cavok@debian.org>, Christophe Prud'homme <prudhomm@debian.org>
-Build-Depends: debhelper (>= 4), bison, flex, docbook-to-man, xsltproc, doxygen, zlib1g-dev, libbz2-dev, libicu36-dev, python | python-dev | python-all-dev, python2.5-dev, python-support (>= 0.3)
+Build-Depends: debhelper (>= 4), bison, flex, docbook-to-man, xsltproc, doxygen, zlib1g-dev, libbz2-dev, libicu36-dev, python | python-dev | python-all-dev, python2.5-dev, python-support (>= 0.3), g++-4.1 (>= 4.1.2)
 Standards-Version: 3.7.2
 
 Package: bcp
@@ -317,7 +317,7 @@ Description: serialization library for C++
 Package: libboost-serialization-dev
 Architecture: any
 Section: libdevel
-Depends: libboost-dev (=${Source-Version})
+Depends: libboost-dev (=${Source-Version}), libboost-serialization1.34.0 (= ${Source-Version})
 Replaces: libboost-dev (<< 1.32.0-5)
 Description: serialization library for C++
  This is a partial list of provided functionalities:
@@ -440,7 +440,7 @@ Description: C99/C++ preprocessor library
 Package: libboost-wave-dev
 Architecture: any
 Section: libdevel
-Depends: libboost-dev (= ${Source-Version}), libboost-filesystem-dev (= ${Source-Version})
+Depends: libboost-dev (= ${Source-Version}), libboost-wave1.34.0 (= ${Source-Version}), libboost-filesystem-dev (= ${Source-Version})
 Replaces: libboost-dev (<< 1.33.0-2)
 Description: C99/C++ preprocessor library
  Part of the Boost C++ Libraries collection.
