@@ -141,8 +141,6 @@ public:
         const void * t,
         const detail::basic_pointer_oserializer * bpos_ptr
     ) = 0;
-
-    virtual ~polymorphic_oarchive() {}
 };
 
 } // namespace archive
