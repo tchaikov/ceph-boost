@@ -42,7 +42,7 @@ htmldir = debian/libboost-doc/usr/share/doc/libboost-doc/HTML
 pyste_prefix = $(PWD)/debian/pyste/usr
 bjam = tools/jam/src/bjam
 
-JAM = $(bjam) --user-config=$(shell pwd)/user-config.jam -sHAVE_ICU=1
+JAM = $(bjam) -d2 --user-config=$(shell pwd)/user-config.jam -sHAVE_ICU=1
 
 $(bjam):
 	cd tools/jam/src && sh build.sh gcc && mv bin.*/bjam .
