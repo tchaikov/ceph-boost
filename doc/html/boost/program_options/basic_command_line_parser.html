@@ -33,69 +33,69 @@
 <span class="bold"><strong>class</strong></span> basic_command_line_parser {
 <span class="bold"><strong>public</strong></span>:
   <span class="emphasis"><em>// <a href="basic_command_line_parser.html#boost.program_options.basic_command_line_parserconstruct-copy-destruct">construct/copy/destruct</a></em></span>
-  <a href="basic_command_line_parser.html#id686218-bb">basic_command_line_parser</a>(<span class="bold"><strong>const</strong></span> std::vector&lt; std::basic_string&lt; charT &gt; &gt; &amp;);
-  <a href="basic_command_line_parser.html#id686231-bb">basic_command_line_parser</a>(<span class="bold"><strong>int</strong></span>, charT *);
+  <a href="basic_command_line_parser.html#id999260-bb">basic_command_line_parser</a>(<span class="bold"><strong>const</strong></span> std::vector&lt; std::basic_string&lt; charT &gt; &gt; &amp;);
+  <a href="basic_command_line_parser.html#id999272-bb">basic_command_line_parser</a>(<span class="bold"><strong>int</strong></span>, charT *);
 
-  <span class="emphasis"><em>// <a href="basic_command_line_parser.html#id724309-bb">public member functions</a></em></span>
-  <span class="type"><a href="basic_command_line_parser.html" title="Class template basic_command_line_parser">basic_command_line_parser</a> &amp;</span> <a href="basic_command_line_parser.html#id724312-bb">options</a>(<span class="bold"><strong>const</strong></span> <a href="options_description.html" title="Class options_description">options_description</a> &amp;) ;
+  <span class="emphasis"><em>// <a href="basic_command_line_parser.html#id999117-bb">public member functions</a></em></span>
+  <span class="type"><a href="basic_command_line_parser.html" title="Class template basic_command_line_parser">basic_command_line_parser</a> &amp;</span> <a href="basic_command_line_parser.html#id999121-bb">options</a>(<span class="bold"><strong>const</strong></span> <a href="options_description.html" title="Class options_description">options_description</a> &amp;) ;
   <span class="type"><a href="basic_command_line_parser.html" title="Class template basic_command_line_parser">basic_command_line_parser</a> &amp;</span> 
-  <a href="basic_command_line_parser.html#id689943-bb">positional</a>(<span class="bold"><strong>const</strong></span> <a href="positional_options_description.html" title="Class positional_options_description">positional_options_description</a> &amp;) ;
-  <span class="type"><a href="basic_command_line_parser.html" title="Class template basic_command_line_parser">basic_command_line_parser</a> &amp;</span> <a href="basic_command_line_parser.html#id821795-bb">style</a>(<span class="bold"><strong>int</strong></span>) ;
-  <span class="type"><a href="basic_command_line_parser.html" title="Class template basic_command_line_parser">basic_command_line_parser</a> &amp;</span> <a href="basic_command_line_parser.html#id646979-bb">extra_parser</a>(ext_parser) ;
-  <span class="type"><a href="basic_parsed_options.html" title="Class template basic_parsed_options">basic_parsed_options</a>&lt; charT &gt;</span> <a href="basic_command_line_parser.html#id686167-bb">run</a>() ;
-  <span class="type"><a href="basic_command_line_parser.html" title="Class template basic_command_line_parser">basic_command_line_parser</a> &amp;</span> <a href="basic_command_line_parser.html#id686182-bb">allow_unregistered</a>() ;
-  <span class="type"><a href="basic_command_line_parser.html" title="Class template basic_command_line_parser">basic_command_line_parser</a> &amp;</span> <a href="basic_command_line_parser.html#id686202-bb">extra_style_parser</a>(style_parser) ;
+  <a href="basic_command_line_parser.html#id999145-bb">positional</a>(<span class="bold"><strong>const</strong></span> <a href="positional_options_description.html" title="Class positional_options_description">positional_options_description</a> &amp;) ;
+  <span class="type"><a href="basic_command_line_parser.html" title="Class template basic_command_line_parser">basic_command_line_parser</a> &amp;</span> <a href="basic_command_line_parser.html#id999169-bb">style</a>(<span class="bold"><strong>int</strong></span>) ;
+  <span class="type"><a href="basic_command_line_parser.html" title="Class template basic_command_line_parser">basic_command_line_parser</a> &amp;</span> <a href="basic_command_line_parser.html#id999189-bb">extra_parser</a>(ext_parser) ;
+  <span class="type"><a href="basic_parsed_options.html" title="Class template basic_parsed_options">basic_parsed_options</a>&lt; charT &gt;</span> <a href="basic_command_line_parser.html#id999208-bb">run</a>() ;
+  <span class="type"><a href="basic_command_line_parser.html" title="Class template basic_command_line_parser">basic_command_line_parser</a> &amp;</span> <a href="basic_command_line_parser.html#id999223-bb">allow_unregistered</a>() ;
+  <span class="type"><a href="basic_command_line_parser.html" title="Class template basic_command_line_parser">basic_command_line_parser</a> &amp;</span> <a href="basic_command_line_parser.html#id999243-bb">extra_style_parser</a>(style_parser) ;
 };</pre></div>
 <div class="refsect1" lang="en">
-<a name="id1600131"></a><h2>Description</h2>
+<a name="id1600293"></a><h2>Description</h2>
 <p>Command line parser.</p>
 <p>The class allows one to specify all the information needed for parsing and to parse the command line. It is primarily needed to emulate named function parameters -- a regular function with 5 parameters will be hard to use and creating overloads with a smaller nuber of parameters will be confusing.</p>
 <p>For the most common case, the function parse_command_line is a better alternative.</p>
 <p>There are two typedefs -- command_line_parser and wcommand_line_parser, for charT == char and charT == wchar_t cases. </p>
 <div class="refsect2" lang="en">
-<a name="id1600152"></a><h3>
+<a name="id1600314"></a><h3>
 <a name="boost.program_options.basic_command_line_parserconstruct-copy-destruct"></a><code class="computeroutput">basic_command_line_parser</code> construct/copy/destruct</h3>
 <div class="orderedlist"><ol type="1">
 <li>
-<pre class="literallayout"><a name="id686218-bb"></a>basic_command_line_parser(<span class="bold"><strong>const</strong></span> std::vector&lt; std::basic_string&lt; charT &gt; &gt; &amp; args);</pre>
+<pre class="literallayout"><a name="id999260-bb"></a>basic_command_line_parser(<span class="bold"><strong>const</strong></span> std::vector&lt; std::basic_string&lt; charT &gt; &gt; &amp; args);</pre>
 <p>Creates a command line parser for the specified arguments list. The 'args' parameter should not include program name. </p>
 </li>
 <li>
-<pre class="literallayout"><a name="id686231-bb"></a>basic_command_line_parser(<span class="bold"><strong>int</strong></span> argc, charT * argv);</pre>
+<pre class="literallayout"><a name="id999272-bb"></a>basic_command_line_parser(<span class="bold"><strong>int</strong></span> argc, charT * argv);</pre>
 <p>Creates a command line parser for the specified arguments list. The parameters should be the same as passed to 'main'. </p>
 </li>
 </ol></div>
 </div>
 <div class="refsect2" lang="en">
-<a name="id1600221"></a><h3>
-<a name="id724309-bb"></a><code class="computeroutput">basic_command_line_parser</code> public member functions</h3>
+<a name="id1600383"></a><h3>
+<a name="id999117-bb"></a><code class="computeroutput">basic_command_line_parser</code> public member functions</h3>
 <div class="orderedlist"><ol type="1">
 <li>
-<pre class="literallayout"><span class="type"><a href="basic_command_line_parser.html" title="Class template basic_command_line_parser">basic_command_line_parser</a> &amp;</span> <a name="id724312-bb"></a>options(<span class="bold"><strong>const</strong></span> <a href="options_description.html" title="Class options_description">options_description</a> &amp; desc) ;</pre>
+<pre class="literallayout"><span class="type"><a href="basic_command_line_parser.html" title="Class template basic_command_line_parser">basic_command_line_parser</a> &amp;</span> <a name="id999121-bb"></a>options(<span class="bold"><strong>const</strong></span> <a href="options_description.html" title="Class options_description">options_description</a> &amp; desc) ;</pre>
 <p>Sets options descriptions to use. </p>
 </li>
 <li>
 <pre class="literallayout"><span class="type"><a href="basic_command_line_parser.html" title="Class template basic_command_line_parser">basic_command_line_parser</a> &amp;</span> 
-<a name="id689943-bb"></a>positional(<span class="bold"><strong>const</strong></span> <a href="positional_options_description.html" title="Class positional_options_description">positional_options_description</a> &amp; desc) ;</pre>
+<a name="id999145-bb"></a>positional(<span class="bold"><strong>const</strong></span> <a href="positional_options_description.html" title="Class positional_options_description">positional_options_description</a> &amp; desc) ;</pre>
 <p>Sets positional options description to use. </p>
 </li>
 <li>
-<pre class="literallayout"><span class="type"><a href="basic_command_line_parser.html" title="Class template basic_command_line_parser">basic_command_line_parser</a> &amp;</span> <a name="id821795-bb"></a>style(<span class="bold"><strong>int</strong></span>) ;</pre>
+<pre class="literallayout"><span class="type"><a href="basic_command_line_parser.html" title="Class template basic_command_line_parser">basic_command_line_parser</a> &amp;</span> <a name="id999169-bb"></a>style(<span class="bold"><strong>int</strong></span>) ;</pre>
 <p>Sets the command line style. </p>
 </li>
 <li>
-<pre class="literallayout"><span class="type"><a href="basic_command_line_parser.html" title="Class template basic_command_line_parser">basic_command_line_parser</a> &amp;</span> <a name="id646979-bb"></a>extra_parser(ext_parser) ;</pre>
+<pre class="literallayout"><span class="type"><a href="basic_command_line_parser.html" title="Class template basic_command_line_parser">basic_command_line_parser</a> &amp;</span> <a name="id999189-bb"></a>extra_parser(ext_parser) ;</pre>
 <p>Sets the extra parsers. </p>
 </li>
 <li>
-<pre class="literallayout"><span class="type"><a href="basic_parsed_options.html" title="Class template basic_parsed_options">basic_parsed_options</a>&lt; charT &gt;</span> <a name="id686167-bb"></a>run() ;</pre>
+<pre class="literallayout"><span class="type"><a href="basic_parsed_options.html" title="Class template basic_parsed_options">basic_parsed_options</a>&lt; charT &gt;</span> <a name="id999208-bb"></a>run() ;</pre>
 <p>Parses the options and returns the result of parsing. Throws on error. </p>
 </li>
 <li>
-<pre class="literallayout"><span class="type"><a href="basic_command_line_parser.html" title="Class template basic_command_line_parser">basic_command_line_parser</a> &amp;</span> <a name="id686182-bb"></a>allow_unregistered() ;</pre>
+<pre class="literallayout"><span class="type"><a href="basic_command_line_parser.html" title="Class template basic_command_line_parser">basic_command_line_parser</a> &amp;</span> <a name="id999223-bb"></a>allow_unregistered() ;</pre>
 <p>Specifies that unregistered options are allowed and should be passed though. For each command like token that looks like an option but does not contain a recognized name, an instance of basic_option&lt;charT&gt; will be added to result, with 'unrecognized' field set to 'true'. It's possible to collect all unrecognized options with the 'collect_unrecognized' funciton. </p>
 </li>
-<li><pre class="literallayout"><span class="type"><a href="basic_command_line_parser.html" title="Class template basic_command_line_parser">basic_command_line_parser</a> &amp;</span> <a name="id686202-bb"></a>extra_style_parser(style_parser s) ;</pre></li>
+<li><pre class="literallayout"><span class="type"><a href="basic_command_line_parser.html" title="Class template basic_command_line_parser">basic_command_line_parser</a> &amp;</span> <a name="id999243-bb"></a>extra_style_parser(style_parser s) ;</pre></li>
 </ol></div>
 </div>
 </div>

@@ -55,34 +55,34 @@
   <span class="bold"><strong>typedef</strong></span> base_type::special_values_parser_type::match_results                               match_results;             
 
   <span class="emphasis"><em>// <a href="time_input_facet.html#boost.date_time.time_input_facetconstruct-copy-destruct">construct/copy/destruct</a></em></span>
-  <a href="time_input_facet.html#id966532-bb">time_input_facet</a>(<span class="bold"><strong>const</strong></span> string_type &amp;, ::size_t = 0);
-  <a href="time_input_facet.html#id788969-bb">time_input_facet</a>(<span class="bold"><strong>const</strong></span> string_type &amp;, <span class="bold"><strong>const</strong></span> format_date_parser_type &amp;, 
+  <a href="time_input_facet.html#id835422-bb">time_input_facet</a>(<span class="bold"><strong>const</strong></span> string_type &amp;, ::size_t = 0);
+  <a href="time_input_facet.html#id835440-bb">time_input_facet</a>(<span class="bold"><strong>const</strong></span> string_type &amp;, <span class="bold"><strong>const</strong></span> format_date_parser_type &amp;, 
                    <span class="bold"><strong>const</strong></span> special_values_parser_type &amp;, 
                    <span class="bold"><strong>const</strong></span> period_parser_type &amp;, <span class="bold"><strong>const</strong></span> date_gen_parser_type &amp;, 
                    ::size_t = 0);
-  <a href="time_input_facet.html#id789274-bb">time_input_facet</a>(::size_t = 0);
+  <a href="time_input_facet.html#id973140-bb">time_input_facet</a>(::size_t = 0);
 
-  <span class="emphasis"><em>// <a href="time_input_facet.html#id752242-bb">public member functions</a></em></span>
-  <span class="type"><span class="bold"><strong>void</strong></span></span> <a href="time_input_facet.html#id752245-bb">time_duration_format</a>(<span class="bold"><strong>const</strong></span> char_type *<span class="bold"><strong>const</strong></span> ) ;
-  <span class="type"><span class="bold"><strong>virtual</strong></span> <span class="bold"><strong>void</strong></span></span> <a href="time_input_facet.html#id963585-bb">set_iso_format</a>() ;
-  <span class="type"><span class="bold"><strong>virtual</strong></span> <span class="bold"><strong>void</strong></span></span> <a href="time_input_facet.html#id963593-bb">set_iso_extended_format</a>() ;
-  <span class="type">InItrT</span> <a href="time_input_facet.html#id795946-bb">get</a>(InItrT &amp;, InItrT &amp;, std::ios_base &amp;, period_type &amp;) <span class="bold"><strong>const</strong></span>;
-  <span class="type">InItrT</span> <a href="time_input_facet.html#id795978-bb">get</a>(InItrT &amp;, InItrT &amp;, std::ios_base &amp;, time_duration_type &amp;) <span class="bold"><strong>const</strong></span>;
-  <span class="type">InItrT</span> <a href="time_input_facet.html#id762008-bb">get</a>(InItrT &amp;, InItrT &amp;, std::ios_base &amp;, time_type &amp;) <span class="bold"><strong>const</strong></span>;
-  <span class="type">InItrT</span> <a href="time_input_facet.html#id963614-bb">get_local_time</a>(InItrT &amp;, InItrT &amp;, std::ios_base &amp;, time_type &amp;, 
+  <span class="emphasis"><em>// <a href="time_input_facet.html#id974017-bb">public member functions</a></em></span>
+  <span class="type"><span class="bold"><strong>void</strong></span></span> <a href="time_input_facet.html#id974020-bb">time_duration_format</a>(<span class="bold"><strong>const</strong></span> char_type *<span class="bold"><strong>const</strong></span> ) ;
+  <span class="type"><span class="bold"><strong>virtual</strong></span> <span class="bold"><strong>void</strong></span></span> <a href="time_input_facet.html#id893962-bb">set_iso_format</a>() ;
+  <span class="type"><span class="bold"><strong>virtual</strong></span> <span class="bold"><strong>void</strong></span></span> <a href="time_input_facet.html#id893970-bb">set_iso_extended_format</a>() ;
+  <span class="type">InItrT</span> <a href="time_input_facet.html#id893978-bb">get</a>(InItrT &amp;, InItrT &amp;, std::ios_base &amp;, period_type &amp;) <span class="bold"><strong>const</strong></span>;
+  <span class="type">InItrT</span> <a href="time_input_facet.html#id894010-bb">get</a>(InItrT &amp;, InItrT &amp;, std::ios_base &amp;, time_duration_type &amp;) <span class="bold"><strong>const</strong></span>;
+  <span class="type">InItrT</span> <a href="time_input_facet.html#id963124-bb">get</a>(InItrT &amp;, InItrT &amp;, std::ios_base &amp;, time_type &amp;) <span class="bold"><strong>const</strong></span>;
+  <span class="type">InItrT</span> <a href="time_input_facet.html#id963157-bb">get_local_time</a>(InItrT &amp;, InItrT &amp;, std::ios_base &amp;, time_type &amp;, 
                         string_type &amp;) <span class="bold"><strong>const</strong></span>;
 
-  <span class="emphasis"><em>// <a href="time_input_facet.html#id830421-bb">protected member functions</a></em></span>
-  <span class="type">InItrT</span> <a href="time_input_facet.html#id830425-bb">get</a>(InItrT &amp;, InItrT &amp;, std::ios_base &amp;, time_type &amp;, string_type &amp;, 
+  <span class="emphasis"><em>// <a href="time_input_facet.html#id758407-bb">protected member functions</a></em></span>
+  <span class="type">InItrT</span> <a href="time_input_facet.html#id758410-bb">get</a>(InItrT &amp;, InItrT &amp;, std::ios_base &amp;, time_type &amp;, string_type &amp;, 
              <span class="bold"><strong>bool</strong></span>) <span class="bold"><strong>const</strong></span>;
   <span class="bold"><strong>template</strong></span>&lt;<span class="bold"><strong>typename</strong></span> temporal_type&gt; 
-    <span class="type">InItrT</span> <a href="time_input_facet.html#id901374-bb">check_special_value</a>(InItrT &amp;, InItrT &amp;, temporal_type &amp;, 
+    <span class="type">InItrT</span> <a href="time_input_facet.html#id827521-bb">check_special_value</a>(InItrT &amp;, InItrT &amp;, temporal_type &amp;, 
                                char_type = '\0') <span class="bold"><strong>const</strong></span>;
-  <span class="type"><span class="bold"><strong>void</strong></span></span> <a href="time_input_facet.html#id868223-bb">parse_frac_type</a>(InItrT &amp;, InItrT &amp;, fracional_seconds_type &amp;) <span class="bold"><strong>const</strong></span>;
+  <span class="type"><span class="bold"><strong>void</strong></span></span> <a href="time_input_facet.html#id858370-bb">parse_frac_type</a>(InItrT &amp;, InItrT &amp;, fracional_seconds_type &amp;) <span class="bold"><strong>const</strong></span>;
 
-  <span class="emphasis"><em>// <a href="time_input_facet.html#id799515-bb">private member functions</a></em></span>
+  <span class="emphasis"><em>// <a href="time_input_facet.html#id729084-bb">private member functions</a></em></span>
   <span class="bold"><strong>template</strong></span>&lt;<span class="bold"><strong>typename</strong></span> int_type&gt; 
-    <span class="type">int_type</span> <a href="time_input_facet.html#id799518-bb">decimal_adjust</a>(int_type, <span class="bold"><strong>const</strong></span> <span class="bold"><strong>unsigned</strong></span> <span class="bold"><strong>short</strong></span>) <span class="bold"><strong>const</strong></span>;
+    <span class="type">int_type</span> <a href="time_input_facet.html#id729088-bb">decimal_adjust</a>(int_type, <span class="bold"><strong>const</strong></span> <span class="bold"><strong>unsigned</strong></span> <span class="bold"><strong>short</strong></span>) <span class="bold"><strong>const</strong></span>;
 
   <span class="bold"><strong>static</strong></span> const  char_type * fractional_seconds_format;
   <span class="bold"><strong>static</strong></span> const  char_type * fractional_seconds_or_none_format;
@@ -101,60 +101,60 @@
   <span class="bold"><strong>static</strong></span> std::locale::id id;
 };</pre></div>
 <div class="refsect1" lang="en">
-<a name="id1116505"></a><h2>Description</h2>
+<a name="id1116523"></a><h2>Description</h2>
 <div class="refsect2" lang="en">
-<a name="id1116509"></a><h3>
+<a name="id1116526"></a><h3>
 <a name="boost.date_time.time_input_facetconstruct-copy-destruct"></a><code class="computeroutput">time_input_facet</code> construct/copy/destruct</h3>
 <div class="orderedlist"><ol type="1">
-<li><pre class="literallayout"><a name="id966532-bb"></a>time_input_facet(<span class="bold"><strong>const</strong></span> string_type &amp; format, ::size_t a_ref = 0);</pre></li>
-<li><pre class="literallayout"><a name="id788969-bb"></a>time_input_facet(<span class="bold"><strong>const</strong></span> string_type &amp; format, 
+<li><pre class="literallayout"><a name="id835422-bb"></a>time_input_facet(<span class="bold"><strong>const</strong></span> string_type &amp; format, ::size_t a_ref = 0);</pre></li>
+<li><pre class="literallayout"><a name="id835440-bb"></a>time_input_facet(<span class="bold"><strong>const</strong></span> string_type &amp; format, 
                  <span class="bold"><strong>const</strong></span> format_date_parser_type &amp; date_parser, 
                  <span class="bold"><strong>const</strong></span> special_values_parser_type &amp; sv_parser, 
                  <span class="bold"><strong>const</strong></span> period_parser_type &amp; per_parser, 
                  <span class="bold"><strong>const</strong></span> date_gen_parser_type &amp; date_gen_parser, 
                  ::size_t a_ref = 0);</pre></li>
-<li><pre class="literallayout"><a name="id789274-bb"></a>time_input_facet(::size_t a_ref = 0);</pre></li>
+<li><pre class="literallayout"><a name="id973140-bb"></a>time_input_facet(::size_t a_ref = 0);</pre></li>
 </ol></div>
 </div>
 <div class="refsect2" lang="en">
-<a name="id1116620"></a><h3>
-<a name="id752242-bb"></a><code class="computeroutput">time_input_facet</code> public member functions</h3>
+<a name="id1116637"></a><h3>
+<a name="id974017-bb"></a><code class="computeroutput">time_input_facet</code> public member functions</h3>
 <div class="orderedlist"><ol type="1">
-<li><pre class="literallayout"><span class="type"><span class="bold"><strong>void</strong></span></span> <a name="id752245-bb"></a>time_duration_format(<span class="bold"><strong>const</strong></span> char_type *<span class="bold"><strong>const</strong></span>  format) ;</pre></li>
-<li><pre class="literallayout"><span class="type"><span class="bold"><strong>virtual</strong></span> <span class="bold"><strong>void</strong></span></span> <a name="id963585-bb"></a>set_iso_format() ;</pre></li>
-<li><pre class="literallayout"><span class="type"><span class="bold"><strong>virtual</strong></span> <span class="bold"><strong>void</strong></span></span> <a name="id963593-bb"></a>set_iso_extended_format() ;</pre></li>
-<li><pre class="literallayout"><span class="type">InItrT</span> <a name="id795946-bb"></a>get(InItrT &amp; sitr, InItrT &amp; stream_end, std::ios_base &amp; a_ios, 
+<li><pre class="literallayout"><span class="type"><span class="bold"><strong>void</strong></span></span> <a name="id974020-bb"></a>time_duration_format(<span class="bold"><strong>const</strong></span> char_type *<span class="bold"><strong>const</strong></span>  format) ;</pre></li>
+<li><pre class="literallayout"><span class="type"><span class="bold"><strong>virtual</strong></span> <span class="bold"><strong>void</strong></span></span> <a name="id893962-bb"></a>set_iso_format() ;</pre></li>
+<li><pre class="literallayout"><span class="type"><span class="bold"><strong>virtual</strong></span> <span class="bold"><strong>void</strong></span></span> <a name="id893970-bb"></a>set_iso_extended_format() ;</pre></li>
+<li><pre class="literallayout"><span class="type">InItrT</span> <a name="id893978-bb"></a>get(InItrT &amp; sitr, InItrT &amp; stream_end, std::ios_base &amp; a_ios, 
            period_type &amp; p) <span class="bold"><strong>const</strong></span>;</pre></li>
-<li><pre class="literallayout"><span class="type">InItrT</span> <a name="id795978-bb"></a>get(InItrT &amp; sitr, InItrT &amp; stream_end, std::ios_base &amp; a_ios, 
+<li><pre class="literallayout"><span class="type">InItrT</span> <a name="id894010-bb"></a>get(InItrT &amp; sitr, InItrT &amp; stream_end, std::ios_base &amp; a_ios, 
            time_duration_type &amp; td) <span class="bold"><strong>const</strong></span>;</pre></li>
-<li><pre class="literallayout"><span class="type">InItrT</span> <a name="id762008-bb"></a>get(InItrT &amp; sitr, InItrT &amp; stream_end, std::ios_base &amp; a_ios, 
+<li><pre class="literallayout"><span class="type">InItrT</span> <a name="id963124-bb"></a>get(InItrT &amp; sitr, InItrT &amp; stream_end, std::ios_base &amp; a_ios, 
            time_type &amp; t) <span class="bold"><strong>const</strong></span>;</pre></li>
-<li><pre class="literallayout"><span class="type">InItrT</span> <a name="id963614-bb"></a>get_local_time(InItrT &amp; sitr, InItrT &amp; stream_end, 
+<li><pre class="literallayout"><span class="type">InItrT</span> <a name="id963157-bb"></a>get_local_time(InItrT &amp; sitr, InItrT &amp; stream_end, 
                       std::ios_base &amp; a_ios, time_type &amp; t, 
                       string_type &amp; tz_str) <span class="bold"><strong>const</strong></span>;</pre></li>
 </ol></div>
 </div>
 <div class="refsect2" lang="en">
-<a name="id1116827"></a><h3>
-<a name="id830421-bb"></a><code class="computeroutput">time_input_facet</code> protected member functions</h3>
+<a name="id1116845"></a><h3>
+<a name="id758407-bb"></a><code class="computeroutput">time_input_facet</code> protected member functions</h3>
 <div class="orderedlist"><ol type="1">
-<li><pre class="literallayout"><span class="type">InItrT</span> <a name="id830425-bb"></a>get(InItrT &amp; sitr, InItrT &amp; stream_end, std::ios_base &amp; a_ios, 
+<li><pre class="literallayout"><span class="type">InItrT</span> <a name="id758410-bb"></a>get(InItrT &amp; sitr, InItrT &amp; stream_end, std::ios_base &amp; a_ios, 
            time_type &amp; t, string_type &amp; tz_str, <span class="bold"><strong>bool</strong></span> time_is_local) <span class="bold"><strong>const</strong></span>;</pre></li>
 <li>
 <pre class="literallayout"><span class="bold"><strong>template</strong></span>&lt;<span class="bold"><strong>typename</strong></span> temporal_type&gt; 
-  <span class="type">InItrT</span> <a name="id901374-bb"></a>check_special_value(InItrT &amp; sitr, InItrT &amp; stream_end, 
+  <span class="type">InItrT</span> <a name="id827521-bb"></a>check_special_value(InItrT &amp; sitr, InItrT &amp; stream_end, 
                              temporal_type &amp; tt, char_type c = '\0') <span class="bold"><strong>const</strong></span>;</pre>
 <p>First character may have been consumed during original parse attempt. Parameter 'c' should be a copy of that character. Throws ios_base::failure if parse fails. </p>
 </li>
-<li><pre class="literallayout"><span class="type"><span class="bold"><strong>void</strong></span></span> <a name="id868223-bb"></a>parse_frac_type(InItrT &amp; sitr, InItrT &amp; stream_end, 
+<li><pre class="literallayout"><span class="type"><span class="bold"><strong>void</strong></span></span> <a name="id858370-bb"></a>parse_frac_type(InItrT &amp; sitr, InItrT &amp; stream_end, 
                      fracional_seconds_type &amp; frac) <span class="bold"><strong>const</strong></span>;</pre></li>
 </ol></div>
 </div>
 <div class="refsect2" lang="en">
-<a name="id1116945"></a><h3>
-<a name="id799515-bb"></a><code class="computeroutput">time_input_facet</code> private member functions</h3>
+<a name="id1116964"></a><h3>
+<a name="id729084-bb"></a><code class="computeroutput">time_input_facet</code> private member functions</h3>
 <div class="orderedlist"><ol type="1"><li><pre class="literallayout"><span class="bold"><strong>template</strong></span>&lt;<span class="bold"><strong>typename</strong></span> int_type&gt; 
-  <span class="type">int_type</span> <a name="id799518-bb"></a>decimal_adjust(int_type val, <span class="bold"><strong>const</strong></span> <span class="bold"><strong>unsigned</strong></span> <span class="bold"><strong>short</strong></span> places) <span class="bold"><strong>const</strong></span>;</pre></li></ol></div>
+  <span class="type">int_type</span> <a name="id729088-bb"></a>decimal_adjust(int_type val, <span class="bold"><strong>const</strong></span> <span class="bold"><strong>unsigned</strong></span> <span class="bold"><strong>short</strong></span> places) <span class="bold"><strong>const</strong></span>;</pre></li></ol></div>
 </div>
 </div>
 </div>

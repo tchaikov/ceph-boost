@@ -41,24 +41,24 @@
   <span class="bold"><strong>typedef</strong></span> std::basic_string&lt; char_type &gt;               string_type;           
 
   <span class="emphasis"><em>// <a href="tz_db_base.html#boost.date_time.tz_db_baseconstruct-copy-destruct">construct/copy/destruct</a></em></span>
-  <a href="tz_db_base.html#id907913-bb">tz_db_base</a>();
+  <a href="tz_db_base.html#id823552-bb">tz_db_base</a>();
 
-  <span class="emphasis"><em>// <a href="tz_db_base.html#id757338-bb">public member functions</a></em></span>
-  <span class="type"><span class="bold"><strong>void</strong></span></span> <a href="tz_db_base.html#id757342-bb">load_from_file</a>(<span class="bold"><strong>const</strong></span> std::string &amp;) ;
-  <span class="type"><span class="bold"><strong>bool</strong></span></span> <a href="tz_db_base.html#id837030-bb">add_record</a>(<span class="bold"><strong>const</strong></span> string_type &amp;, 
+  <span class="emphasis"><em>// <a href="tz_db_base.html#id766502-bb">public member functions</a></em></span>
+  <span class="type"><span class="bold"><strong>void</strong></span></span> <a href="tz_db_base.html#id766505-bb">load_from_file</a>(<span class="bold"><strong>const</strong></span> std::string &amp;) ;
+  <span class="type"><span class="bold"><strong>bool</strong></span></span> <a href="tz_db_base.html#id766526-bb">add_record</a>(<span class="bold"><strong>const</strong></span> string_type &amp;, 
                   boost::shared_ptr&lt; time_zone_base_type &gt;) ;
   <span class="type">boost::shared_ptr&lt; time_zone_base_type &gt;</span> 
-  <a href="tz_db_base.html#id907878-bb">time_zone_from_region</a>(<span class="bold"><strong>const</strong></span> string_type &amp;) <span class="bold"><strong>const</strong></span>;
-  <span class="type">std::vector&lt; std::string &gt;</span> <a href="tz_db_base.html#id907902-bb">region_list</a>() <span class="bold"><strong>const</strong></span>;
+  <a href="tz_db_base.html#id891444-bb">time_zone_from_region</a>(<span class="bold"><strong>const</strong></span> string_type &amp;) <span class="bold"><strong>const</strong></span>;
+  <span class="type">std::vector&lt; std::string &gt;</span> <a href="tz_db_base.html#id823541-bb">region_list</a>() <span class="bold"><strong>const</strong></span>;
 
-  <span class="emphasis"><em>// <a href="tz_db_base.html#id907917-bb">private member functions</a></em></span>
-  <span class="type">rule_type *</span> <a href="tz_db_base.html#id907920-bb">parse_rules</a>(<span class="bold"><strong>const</strong></span> string_type &amp;, <span class="bold"><strong>const</strong></span> string_type &amp;) <span class="bold"><strong>const</strong></span>;
-  <span class="type">week_num</span> <a href="tz_db_base.html#id907943-bb">get_week_num</a>(<span class="bold"><strong>int</strong></span>) <span class="bold"><strong>const</strong></span>;
-  <span class="type"><span class="bold"><strong>void</strong></span></span> <a href="tz_db_base.html#id907959-bb">split_rule_spec</a>(<span class="bold"><strong>int</strong></span> &amp;, <span class="bold"><strong>int</strong></span> &amp;, <span class="bold"><strong>int</strong></span> &amp;, string_type) <span class="bold"><strong>const</strong></span>;
-  <span class="type"><span class="bold"><strong>bool</strong></span></span> <a href="tz_db_base.html#id905547-bb">parse_string</a>(string_type &amp;) ;
+  <span class="emphasis"><em>// <a href="tz_db_base.html#id834384-bb">private member functions</a></em></span>
+  <span class="type">rule_type *</span> <a href="tz_db_base.html#id834387-bb">parse_rules</a>(<span class="bold"><strong>const</strong></span> string_type &amp;, <span class="bold"><strong>const</strong></span> string_type &amp;) <span class="bold"><strong>const</strong></span>;
+  <span class="type">week_num</span> <a href="tz_db_base.html#id963867-bb">get_week_num</a>(<span class="bold"><strong>int</strong></span>) <span class="bold"><strong>const</strong></span>;
+  <span class="type"><span class="bold"><strong>void</strong></span></span> <a href="tz_db_base.html#id830217-bb">split_rule_spec</a>(<span class="bold"><strong>int</strong></span> &amp;, <span class="bold"><strong>int</strong></span> &amp;, <span class="bold"><strong>int</strong></span> &amp;, string_type) <span class="bold"><strong>const</strong></span>;
+  <span class="type"><span class="bold"><strong>bool</strong></span></span> <a href="tz_db_base.html#id867497-bb">parse_string</a>(string_type &amp;) ;
 };</pre></div>
 <div class="refsect1" lang="en">
-<a name="id1142715"></a><h2>Description</h2>
+<a name="id1142740"></a><h2>Description</h2>
 <p>The csv file containing the zone_specs used by the tz_db_base is intended to be customized by the library user. When customizing this file (or creating your own) the file must follow a specific format.</p>
 <p>This first line is expected to contain column headings and is therefore not processed by the tz_db_base.</p>
 <p>Each record (line) must have eleven fields. Some of those fields can be empty. Every field (even empty ones) must be enclosed in double-quotes. Ex: </p>
@@ -89,40 +89,40 @@
 <p>DST End date rule: See DST Start date rule. The difference here is this is the day daylight savings ends (transition to STD).</p>
 <p>End time: Same as Start time. </p>
 <div class="refsect2" lang="en">
-<a name="id1142829"></a><h3>
+<a name="id1142854"></a><h3>
 <a name="boost.date_time.tz_db_baseconstruct-copy-destruct"></a><code class="computeroutput">tz_db_base</code> construct/copy/destruct</h3>
-<div class="orderedlist"><ol type="1"><li><pre class="literallayout"><a name="id907913-bb"></a>tz_db_base();</pre></li></ol></div>
+<div class="orderedlist"><ol type="1"><li><pre class="literallayout"><a name="id823552-bb"></a>tz_db_base();</pre></li></ol></div>
 </div>
 <div class="refsect2" lang="en">
-<a name="id1142858"></a><h3>
-<a name="id757338-bb"></a><code class="computeroutput">tz_db_base</code> public member functions</h3>
+<a name="id1142883"></a><h3>
+<a name="id766502-bb"></a><code class="computeroutput">tz_db_base</code> public member functions</h3>
 <div class="orderedlist"><ol type="1">
 <li>
-<pre class="literallayout"><span class="type"><span class="bold"><strong>void</strong></span></span> <a name="id757342-bb"></a>load_from_file(<span class="bold"><strong>const</strong></span> std::string &amp; pathspec) ;</pre>
+<pre class="literallayout"><span class="type"><span class="bold"><strong>void</strong></span></span> <a name="id766505-bb"></a>load_from_file(<span class="bold"><strong>const</strong></span> std::string &amp; pathspec) ;</pre>
 <p>May throw data_not_accessible, or bad_field_count exceptions </p>
 </li>
 <li>
-<pre class="literallayout"><span class="type"><span class="bold"><strong>bool</strong></span></span> <a name="id837030-bb"></a>add_record(<span class="bold"><strong>const</strong></span> string_type &amp; id, 
+<pre class="literallayout"><span class="type"><span class="bold"><strong>bool</strong></span></span> <a name="id766526-bb"></a>add_record(<span class="bold"><strong>const</strong></span> string_type &amp; id, 
                 boost::shared_ptr&lt; time_zone_base_type &gt; tz) ;</pre>
 <p>Takes an id string in the form of "America/Phoenix", and a time_zone object for that region. The id string must be a unique name that does not already exist in the database. </p>
 </li>
 <li>
 <pre class="literallayout"><span class="type">boost::shared_ptr&lt; time_zone_base_type &gt;</span> 
-<a name="id907878-bb"></a>time_zone_from_region(<span class="bold"><strong>const</strong></span> string_type &amp; region) <span class="bold"><strong>const</strong></span>;</pre>
+<a name="id891444-bb"></a>time_zone_from_region(<span class="bold"><strong>const</strong></span> string_type &amp; region) <span class="bold"><strong>const</strong></span>;</pre>
 <p>Returns a time_zone object built from the specs for the given region. If region does not exist a local_time::record_not_found exception will be thrown </p>
 </li>
-<li><pre class="literallayout"><span class="type">std::vector&lt; std::string &gt;</span> <a name="id907902-bb"></a>region_list() <span class="bold"><strong>const</strong></span>;</pre></li>
+<li><pre class="literallayout"><span class="type">std::vector&lt; std::string &gt;</span> <a name="id823541-bb"></a>region_list() <span class="bold"><strong>const</strong></span>;</pre></li>
 </ol></div>
 </div>
 <div class="refsect2" lang="en">
-<a name="id1142997"></a><h3>
-<a name="id907917-bb"></a><code class="computeroutput">tz_db_base</code> private member functions</h3>
+<a name="id1143020"></a><h3>
+<a name="id834384-bb"></a><code class="computeroutput">tz_db_base</code> private member functions</h3>
 <div class="orderedlist"><ol type="1">
-<li><pre class="literallayout"><span class="type">rule_type *</span> <a name="id907920-bb"></a>parse_rules(<span class="bold"><strong>const</strong></span> string_type &amp; sr, <span class="bold"><strong>const</strong></span> string_type &amp; er) <span class="bold"><strong>const</strong></span>;</pre></li>
-<li><pre class="literallayout"><span class="type">week_num</span> <a name="id907943-bb"></a>get_week_num(<span class="bold"><strong>int</strong></span> nth) <span class="bold"><strong>const</strong></span>;</pre></li>
-<li><pre class="literallayout"><span class="type"><span class="bold"><strong>void</strong></span></span> <a name="id907959-bb"></a>split_rule_spec(<span class="bold"><strong>int</strong></span> &amp; nth, <span class="bold"><strong>int</strong></span> &amp; d, <span class="bold"><strong>int</strong></span> &amp; m, string_type rule) <span class="bold"><strong>const</strong></span>;</pre></li>
+<li><pre class="literallayout"><span class="type">rule_type *</span> <a name="id834387-bb"></a>parse_rules(<span class="bold"><strong>const</strong></span> string_type &amp; sr, <span class="bold"><strong>const</strong></span> string_type &amp; er) <span class="bold"><strong>const</strong></span>;</pre></li>
+<li><pre class="literallayout"><span class="type">week_num</span> <a name="id963867-bb"></a>get_week_num(<span class="bold"><strong>int</strong></span> nth) <span class="bold"><strong>const</strong></span>;</pre></li>
+<li><pre class="literallayout"><span class="type"><span class="bold"><strong>void</strong></span></span> <a name="id830217-bb"></a>split_rule_spec(<span class="bold"><strong>int</strong></span> &amp; nth, <span class="bold"><strong>int</strong></span> &amp; d, <span class="bold"><strong>int</strong></span> &amp; m, string_type rule) <span class="bold"><strong>const</strong></span>;</pre></li>
 <li>
-<pre class="literallayout"><span class="type"><span class="bold"><strong>bool</strong></span></span> <a name="id905547-bb"></a>parse_string(string_type &amp; s) ;</pre>
+<pre class="literallayout"><span class="type"><span class="bold"><strong>bool</strong></span></span> <a name="id867497-bb"></a>parse_string(string_type &amp; s) ;</pre>
 <p>Take a line from the csv, turn it into a time_zone_type, and add it to the map. Zone_specs in csv file are expected to have eleven fields that describe the time zone. Returns true if zone_spec successfully added to database </p>
 </li>
 </ol></div>

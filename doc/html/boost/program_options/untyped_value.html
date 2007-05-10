@@ -35,56 +35,56 @@
 {
 <span class="bold"><strong>public</strong></span>:
   <span class="emphasis"><em>// <a href="untyped_value.html#boost.program_options.untyped_valueconstruct-copy-destruct">construct/copy/destruct</a></em></span>
-  <a href="untyped_value.html#id1003301-bb">untyped_value</a>(<span class="bold"><strong>bool</strong></span> = false);
+  <a href="untyped_value.html#id650403-bb">untyped_value</a>(<span class="bold"><strong>bool</strong></span> = false);
 
-  <span class="emphasis"><em>// <a href="untyped_value.html#id1003187-bb">public member functions</a></em></span>
-  <span class="type">std::string</span> <a href="untyped_value.html#id1003190-bb">name</a>() <span class="bold"><strong>const</strong></span>;
-  <span class="type"><span class="bold"><strong>unsigned</strong></span></span> <a href="untyped_value.html#id1003203-bb">min_tokens</a>() <span class="bold"><strong>const</strong></span>;
-  <span class="type"><span class="bold"><strong>unsigned</strong></span></span> <a href="untyped_value.html#id1003216-bb">max_tokens</a>() <span class="bold"><strong>const</strong></span>;
-  <span class="type"><span class="bold"><strong>bool</strong></span></span> <a href="untyped_value.html#id1003228-bb">is_composing</a>() <span class="bold"><strong>const</strong></span>;
-  <span class="type"><span class="bold"><strong>void</strong></span></span> <a href="untyped_value.html#id1003242-bb">xparse</a>(boost::any &amp;, <span class="bold"><strong>const</strong></span> std::vector&lt; std::string &gt; &amp;) <span class="bold"><strong>const</strong></span>;
-  <span class="type"><span class="bold"><strong>bool</strong></span></span> <a href="untyped_value.html#id1003268-bb">apply_default</a>(boost::any &amp;) <span class="bold"><strong>const</strong></span>;
-  <span class="type"><span class="bold"><strong>void</strong></span></span> <a href="untyped_value.html#id1003284-bb">notify</a>(<span class="bold"><strong>const</strong></span> boost::any &amp;) <span class="bold"><strong>const</strong></span>;
+  <span class="emphasis"><em>// <a href="untyped_value.html#id996450-bb">public member functions</a></em></span>
+  <span class="type">std::string</span> <a href="untyped_value.html#id996453-bb">name</a>() <span class="bold"><strong>const</strong></span>;
+  <span class="type"><span class="bold"><strong>unsigned</strong></span></span> <a href="untyped_value.html#id663832-bb">min_tokens</a>() <span class="bold"><strong>const</strong></span>;
+  <span class="type"><span class="bold"><strong>unsigned</strong></span></span> <a href="untyped_value.html#id650318-bb">max_tokens</a>() <span class="bold"><strong>const</strong></span>;
+  <span class="type"><span class="bold"><strong>bool</strong></span></span> <a href="untyped_value.html#id650330-bb">is_composing</a>() <span class="bold"><strong>const</strong></span>;
+  <span class="type"><span class="bold"><strong>void</strong></span></span> <a href="untyped_value.html#id650344-bb">xparse</a>(boost::any &amp;, <span class="bold"><strong>const</strong></span> std::vector&lt; std::string &gt; &amp;) <span class="bold"><strong>const</strong></span>;
+  <span class="type"><span class="bold"><strong>bool</strong></span></span> <a href="untyped_value.html#id650369-bb">apply_default</a>(boost::any &amp;) <span class="bold"><strong>const</strong></span>;
+  <span class="type"><span class="bold"><strong>void</strong></span></span> <a href="untyped_value.html#id650386-bb">notify</a>(<span class="bold"><strong>const</strong></span> boost::any &amp;) <span class="bold"><strong>const</strong></span>;
 };</pre></div>
 <div class="refsect1" lang="en">
-<a name="id1603349"></a><h2>Description</h2>
+<a name="id1603501"></a><h2>Description</h2>
 <p>Class which specifies a simple handling of a value: the value will have string type and only one token is allowed. </p>
 <div class="refsect2" lang="en">
-<a name="id1603357"></a><h3>
+<a name="id1603509"></a><h3>
 <a name="boost.program_options.untyped_valueconstruct-copy-destruct"></a><code class="computeroutput">untyped_value</code> construct/copy/destruct</h3>
-<div class="orderedlist"><ol type="1"><li><pre class="literallayout"><a name="id1003301-bb"></a>untyped_value(<span class="bold"><strong>bool</strong></span> zero_tokens = false);</pre></li></ol></div>
+<div class="orderedlist"><ol type="1"><li><pre class="literallayout"><a name="id650403-bb"></a>untyped_value(<span class="bold"><strong>bool</strong></span> zero_tokens = false);</pre></li></ol></div>
 </div>
 <div class="refsect2" lang="en">
-<a name="id1603396"></a><h3>
-<a name="id1003187-bb"></a><code class="computeroutput">untyped_value</code> public member functions</h3>
+<a name="id1603547"></a><h3>
+<a name="id996450-bb"></a><code class="computeroutput">untyped_value</code> public member functions</h3>
 <div class="orderedlist"><ol type="1">
 <li>
-<pre class="literallayout"><span class="type">std::string</span> <a name="id1003190-bb"></a>name() <span class="bold"><strong>const</strong></span>;</pre>
+<pre class="literallayout"><span class="type">std::string</span> <a name="id996453-bb"></a>name() <span class="bold"><strong>const</strong></span>;</pre>
 <p>Returns the name of the option. The name is only meaningful for automatic help message. </p>
 </li>
 <li>
-<pre class="literallayout"><span class="type"><span class="bold"><strong>unsigned</strong></span></span> <a name="id1003203-bb"></a>min_tokens() <span class="bold"><strong>const</strong></span>;</pre>
+<pre class="literallayout"><span class="type"><span class="bold"><strong>unsigned</strong></span></span> <a name="id663832-bb"></a>min_tokens() <span class="bold"><strong>const</strong></span>;</pre>
 <p>The minimum number of tokens for this option that should be present on the command line. </p>
 </li>
 <li>
-<pre class="literallayout"><span class="type"><span class="bold"><strong>unsigned</strong></span></span> <a name="id1003216-bb"></a>max_tokens() <span class="bold"><strong>const</strong></span>;</pre>
+<pre class="literallayout"><span class="type"><span class="bold"><strong>unsigned</strong></span></span> <a name="id650318-bb"></a>max_tokens() <span class="bold"><strong>const</strong></span>;</pre>
 <p>The maximum number of tokens for this option that should be present on the command line. </p>
 </li>
 <li>
-<pre class="literallayout"><span class="type"><span class="bold"><strong>bool</strong></span></span> <a name="id1003228-bb"></a>is_composing() <span class="bold"><strong>const</strong></span>;</pre>
+<pre class="literallayout"><span class="type"><span class="bold"><strong>bool</strong></span></span> <a name="id650330-bb"></a>is_composing() <span class="bold"><strong>const</strong></span>;</pre>
 <p>Returns true if values from different sources should be composed. Otherwise, value from the first source is used and values from other sources are discarded. </p>
 </li>
 <li>
-<pre class="literallayout"><span class="type"><span class="bold"><strong>void</strong></span></span> <a name="id1003242-bb"></a>xparse(boost::any &amp; value_store, 
+<pre class="literallayout"><span class="type"><span class="bold"><strong>void</strong></span></span> <a name="id650344-bb"></a>xparse(boost::any &amp; value_store, 
             <span class="bold"><strong>const</strong></span> std::vector&lt; std::string &gt; &amp; new_tokens) <span class="bold"><strong>const</strong></span>;</pre>
 <p>If 'value_store' is already initialized, or new_tokens has more than one elements, throws. Otherwise, assigns the first string from 'new_tokens' to 'value_store', without any modifications. </p>
 </li>
 <li>
-<pre class="literallayout"><span class="type"><span class="bold"><strong>bool</strong></span></span> <a name="id1003268-bb"></a>apply_default(boost::any &amp;) <span class="bold"><strong>const</strong></span>;</pre>
+<pre class="literallayout"><span class="type"><span class="bold"><strong>bool</strong></span></span> <a name="id650369-bb"></a>apply_default(boost::any &amp;) <span class="bold"><strong>const</strong></span>;</pre>
 <p>Does nothing. </p>
 </li>
 <li>
-<pre class="literallayout"><span class="type"><span class="bold"><strong>void</strong></span></span> <a name="id1003284-bb"></a>notify(<span class="bold"><strong>const</strong></span> boost::any &amp;) <span class="bold"><strong>const</strong></span>;</pre>
+<pre class="literallayout"><span class="type"><span class="bold"><strong>void</strong></span></span> <a name="id650386-bb"></a>notify(<span class="bold"><strong>const</strong></span> boost::any &amp;) <span class="bold"><strong>const</strong></span>;</pre>
 <p>Does nothing. </p>
 </li>
 </ol></div>

@@ -37,39 +37,39 @@
   <span class="bold"><strong>typedef</strong></span> time_type::time_duration_type time_duration_type;    
   <span class="bold"><strong>typedef</strong></span> time_duration_type::rep_type  resolution_traits_type;
 
-  <span class="emphasis"><em>// <a href="microsec_clock.html#id970349-bb">public static functions</a></em></span>
+  <span class="emphasis"><em>// <a href="microsec_clock.html#id929948-bb">public static functions</a></em></span>
   <span class="bold"><strong>template</strong></span>&lt;<span class="bold"><strong>typename</strong></span> time_zone_type&gt; 
-    <span class="type"><span class="bold"><strong>static</strong></span> time_type</span> <a href="microsec_clock.html#id970352-bb">local_time</a>(shared_ptr&lt; time_zone_type &gt;) ;
-  <span class="type"><span class="bold"><strong>static</strong></span> time_type</span> <a href="microsec_clock.html#id691310-bb">local_time</a>() ;
-  <span class="type"><span class="bold"><strong>static</strong></span> time_type</span> <a href="microsec_clock.html#id767109-bb">universal_time</a>() ;
+    <span class="type"><span class="bold"><strong>static</strong></span> time_type</span> <a href="microsec_clock.html#id929952-bb">local_time</a>(shared_ptr&lt; time_zone_type &gt;) ;
+  <span class="type"><span class="bold"><strong>static</strong></span> time_type</span> <a href="microsec_clock.html#id825745-bb">local_time</a>() ;
+  <span class="type"><span class="bold"><strong>static</strong></span> time_type</span> <a href="microsec_clock.html#id791602-bb">universal_time</a>() ;
 
-  <span class="emphasis"><em>// <a href="microsec_clock.html#id627170-bb">private static functions</a></em></span>
-  <span class="type"><span class="bold"><strong>static</strong></span> time_type</span> <a href="microsec_clock.html#id627173-bb">create_time</a>(TZ_FOR_CREATE) ;
-  <span class="type"><span class="bold"><strong>static</strong></span> time_type</span> <a href="microsec_clock.html#id870454-bb">local_time</a>() ;
-  <span class="type"><span class="bold"><strong>static</strong></span> time_type</span> <a href="microsec_clock.html#id856399-bb">universal_time</a>() ;
-  <span class="type"><span class="bold"><strong>static</strong></span> time_type</span> <a href="microsec_clock.html#id974457-bb">create_time</a>(FILETIME &amp;, TZ_FOR_CREATE) ;
+  <span class="emphasis"><em>// <a href="microsec_clock.html#id791613-bb">private static functions</a></em></span>
+  <span class="type"><span class="bold"><strong>static</strong></span> time_type</span> <a href="microsec_clock.html#id791616-bb">create_time</a>(TZ_FOR_CREATE) ;
+  <span class="type"><span class="bold"><strong>static</strong></span> time_type</span> <a href="microsec_clock.html#id791630-bb">local_time</a>() ;
+  <span class="type"><span class="bold"><strong>static</strong></span> time_type</span> <a href="microsec_clock.html#id647704-bb">universal_time</a>() ;
+  <span class="type"><span class="bold"><strong>static</strong></span> time_type</span> <a href="microsec_clock.html#id647716-bb">create_time</a>(FILETIME &amp;, TZ_FOR_CREATE) ;
 };</pre></div>
 <div class="refsect1" lang="en">
-<a name="id1104609"></a><h2>Description</h2>
+<a name="id1104903"></a><h2>Description</h2>
 <p>A high precision clock that measures the local time at a resolution up to microseconds and adjusts to the resolution of the time system. For example, for the a library configuration with nano second resolution, the last 3 places of the fractional seconds will always be 000 since there are 1000 nano-seconds in a micro second. </p>
 <div class="refsect2" lang="en">
-<a name="id1104620"></a><h3>
-<a name="id970349-bb"></a><code class="computeroutput">microsec_clock</code> public static functions</h3>
+<a name="id1104914"></a><h3>
+<a name="id929948-bb"></a><code class="computeroutput">microsec_clock</code> public static functions</h3>
 <div class="orderedlist"><ol type="1">
 <li><pre class="literallayout"><span class="bold"><strong>template</strong></span>&lt;<span class="bold"><strong>typename</strong></span> time_zone_type&gt; 
-  <span class="type"><span class="bold"><strong>static</strong></span> time_type</span> <a name="id970352-bb"></a>local_time(shared_ptr&lt; time_zone_type &gt; tz_ptr) ;</pre></li>
-<li><pre class="literallayout"><span class="type"><span class="bold"><strong>static</strong></span> time_type</span> <a name="id691310-bb"></a>local_time() ;</pre></li>
-<li><pre class="literallayout"><span class="type"><span class="bold"><strong>static</strong></span> time_type</span> <a name="id767109-bb"></a>universal_time() ;</pre></li>
+  <span class="type"><span class="bold"><strong>static</strong></span> time_type</span> <a name="id929952-bb"></a>local_time(shared_ptr&lt; time_zone_type &gt; tz_ptr) ;</pre></li>
+<li><pre class="literallayout"><span class="type"><span class="bold"><strong>static</strong></span> time_type</span> <a name="id825745-bb"></a>local_time() ;</pre></li>
+<li><pre class="literallayout"><span class="type"><span class="bold"><strong>static</strong></span> time_type</span> <a name="id791602-bb"></a>universal_time() ;</pre></li>
 </ol></div>
 </div>
 <div class="refsect2" lang="en">
-<a name="id1104714"></a><h3>
-<a name="id627170-bb"></a><code class="computeroutput">microsec_clock</code> private static functions</h3>
+<a name="id1105010"></a><h3>
+<a name="id791613-bb"></a><code class="computeroutput">microsec_clock</code> private static functions</h3>
 <div class="orderedlist"><ol type="1">
-<li><pre class="literallayout"><span class="type"><span class="bold"><strong>static</strong></span> time_type</span> <a name="id627173-bb"></a>create_time(TZ_FOR_CREATE tz) ;</pre></li>
-<li><pre class="literallayout"><span class="type"><span class="bold"><strong>static</strong></span> time_type</span> <a name="id870454-bb"></a>local_time() ;</pre></li>
-<li><pre class="literallayout"><span class="type"><span class="bold"><strong>static</strong></span> time_type</span> <a name="id856399-bb"></a>universal_time() ;</pre></li>
-<li><pre class="literallayout"><span class="type"><span class="bold"><strong>static</strong></span> time_type</span> <a name="id974457-bb"></a>create_time(FILETIME &amp; ft, TZ_FOR_CREATE tz) ;</pre></li>
+<li><pre class="literallayout"><span class="type"><span class="bold"><strong>static</strong></span> time_type</span> <a name="id791616-bb"></a>create_time(TZ_FOR_CREATE tz) ;</pre></li>
+<li><pre class="literallayout"><span class="type"><span class="bold"><strong>static</strong></span> time_type</span> <a name="id791630-bb"></a>local_time() ;</pre></li>
+<li><pre class="literallayout"><span class="type"><span class="bold"><strong>static</strong></span> time_type</span> <a name="id647704-bb"></a>universal_time() ;</pre></li>
+<li><pre class="literallayout"><span class="type"><span class="bold"><strong>static</strong></span> time_type</span> <a name="id647716-bb"></a>create_time(FILETIME &amp; ft, TZ_FOR_CREATE tz) ;</pre></li>
 </ol></div>
 </div>
 </div>

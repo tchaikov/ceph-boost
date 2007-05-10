@@ -33,31 +33,31 @@
 <span class="bold"><strong>class</strong></span> connection {
 <span class="bold"><strong>public</strong></span>:
   <span class="emphasis"><em>// <a href="connection.html#boost.signals.connectionconstruct-copy-destruct">construct/copy/destruct</a></em></span>
-  <a href="connection.html#id1218677-bb">connection</a>();
-  <a href="connection.html#id1218702-bb">connection</a>(<span class="bold"><strong>const</strong></span> <a href="connection.html" title="Class connection">connection</a>&amp;);
-  connection&amp; <a href="connection.html#id1218735-bb"><span class="bold"><strong>operator</strong></span>=</a>(<span class="bold"><strong>const</strong></span> <a href="connection.html" title="Class connection">connection</a>&amp;);
+  <a href="connection.html#id663123-bb">connection</a>();
+  <a href="connection.html#id1241307-bb">connection</a>(<span class="bold"><strong>const</strong></span> <a href="connection.html" title="Class connection">connection</a>&amp;);
+  connection&amp; <a href="connection.html#id1241340-bb"><span class="bold"><strong>operator</strong></span>=</a>(<span class="bold"><strong>const</strong></span> <a href="connection.html" title="Class connection">connection</a>&amp;);
 
-  <span class="emphasis"><em>// <a href="connection.html#id1218768-bb">connection management</a></em></span>
-  <span class="type"><span class="bold"><strong>void</strong></span></span> <a href="connection.html#id1218772-bb">disconnect</a>() <span class="bold"><strong>const</strong></span>;
-  <span class="type"><span class="bold"><strong>bool</strong></span></span> <a href="connection.html#id1218809-bb">connected</a>() <span class="bold"><strong>const</strong></span>;
+  <span class="emphasis"><em>// <a href="connection.html#id1241373-bb">connection management</a></em></span>
+  <span class="type"><span class="bold"><strong>void</strong></span></span> <a href="connection.html#id1241377-bb">disconnect</a>() <span class="bold"><strong>const</strong></span>;
+  <span class="type"><span class="bold"><strong>bool</strong></span></span> <a href="connection.html#id1241414-bb">connected</a>() <span class="bold"><strong>const</strong></span>;
 
-  <span class="emphasis"><em>// <a href="connection.html#id962297-bb">blocking</a></em></span>
-  <span class="type"><span class="bold"><strong>void</strong></span></span> <a href="connection.html#id962301-bb">block</a>(<span class="bold"><strong>bool</strong></span> = true);
-  <span class="type"><span class="bold"><strong>void</strong></span></span> <a href="connection.html#id693024-bb">unblock</a>();
-  <span class="type"><span class="bold"><strong>bool</strong></span></span> <a href="connection.html#id1040209-bb">blocked</a>() <span class="bold"><strong>const</strong></span>;
+  <span class="emphasis"><em>// <a href="connection.html#id1241444-bb">blocking</a></em></span>
+  <span class="type"><span class="bold"><strong>void</strong></span></span> <a href="connection.html#id1241448-bb">block</a>(<span class="bold"><strong>bool</strong></span> = true);
+  <span class="type"><span class="bold"><strong>void</strong></span></span> <a href="connection.html#id1040209-bb">unblock</a>();
+  <span class="type"><span class="bold"><strong>bool</strong></span></span> <a href="connection.html#id868740-bb">blocked</a>() <span class="bold"><strong>const</strong></span>;
 
-  <span class="emphasis"><em>// <a href="connection.html#id931718-bb">modifiers</a></em></span>
-  <span class="type"><span class="bold"><strong>void</strong></span></span> <a href="connection.html#id931721-bb">swap</a>(<span class="bold"><strong>const</strong></span> <a href="connection.html" title="Class connection">connection</a>&amp;);
+  <span class="emphasis"><em>// <a href="connection.html#id1034850-bb">modifiers</a></em></span>
+  <span class="type"><span class="bold"><strong>void</strong></span></span> <a href="connection.html#id1034853-bb">swap</a>(<span class="bold"><strong>const</strong></span> <a href="connection.html" title="Class connection">connection</a>&amp;);
 
-  <span class="emphasis"><em>// <a href="connection.html#id691221-bb">comparisons</a></em></span>
-  <span class="type"><span class="bold"><strong>bool</strong></span></span> <a href="connection.html#id691225-bb"><span class="bold"><strong>operator</strong></span>==</a>(<span class="bold"><strong>const</strong></span> <a href="connection.html" title="Class connection">connection</a>&amp;) <span class="bold"><strong>const</strong></span>;
-  <span class="type"><span class="bold"><strong>bool</strong></span></span> <a href="connection.html#id628063-bb"><span class="bold"><strong>operator</strong></span>&lt;</a>(<span class="bold"><strong>const</strong></span> <a href="connection.html" title="Class connection">connection</a>&amp;) <span class="bold"><strong>const</strong></span>;
+  <span class="emphasis"><em>// <a href="connection.html#id1221714-bb">comparisons</a></em></span>
+  <span class="type"><span class="bold"><strong>bool</strong></span></span> <a href="connection.html#id1221718-bb"><span class="bold"><strong>operator</strong></span>==</a>(<span class="bold"><strong>const</strong></span> <a href="connection.html" title="Class connection">connection</a>&amp;) <span class="bold"><strong>const</strong></span>;
+  <span class="type"><span class="bold"><strong>bool</strong></span></span> <a href="connection.html#id1217081-bb"><span class="bold"><strong>operator</strong></span>&lt;</a>(<span class="bold"><strong>const</strong></span> <a href="connection.html" title="Class connection">connection</a>&amp;) <span class="bold"><strong>const</strong></span>;
 };
 
-<span class="emphasis"><em>// <a href="connection.html#id1035649-bb">specialized algorithms</a></em></span>
-<span class="type"><span class="bold"><strong>void</strong></span></span> <a href="connection.html#id1035653-bb">swap</a>(<a href="connection.html" title="Class connection">connection</a>&amp;, <a href="connection.html" title="Class connection">connection</a>&amp;);</pre></div>
+<span class="emphasis"><em>// <a href="connection.html#id1217135-bb">specialized algorithms</a></em></span>
+<span class="type"><span class="bold"><strong>void</strong></span></span> <a href="connection.html#id1217139-bb">swap</a>(<a href="connection.html" title="Class connection">connection</a>&amp;, <a href="connection.html" title="Class connection">connection</a>&amp;);</pre></div>
 <div class="refsect1" lang="en">
-<a name="id1631444"></a><h2>Description</h2>
+<a name="id1631597"></a><h2>Description</h2>
 <p>The <a href="connection.html" title="Class connection">connection</a> class represents
           a connection between a Signal and a Slot. It is a
           lightweight object that has the ability to query whether the
@@ -65,11 +65,11 @@
           the signal and slot. It is always safe to query or
           disconnect a connection.</p>
 <div class="refsect2" lang="en">
-<a name="id1631465"></a><h3>
+<a name="id1631617"></a><h3>
 <a name="boost.signals.connectionconstruct-copy-destruct"></a><code class="computeroutput">connection</code> construct/copy/destruct</h3>
 <div class="orderedlist"><ol type="1">
 <li>
-<pre class="literallayout"><a name="id1218677-bb"></a>connection();</pre>
+<pre class="literallayout"><a name="id663123-bb"></a>connection();</pre>
 <div class="variablelist"><table border="0">
 <col align="left" valign="top">
 <tbody>
@@ -82,7 +82,7 @@
 <tr>
 <td>
 <span class="term">Postconditions:</span></td>
-<td><p><code class="computeroutput">!this-&gt;<a href="connection.html#id1218809-bb">connected</a>()</code>.</p></td>
+<td><p><code class="computeroutput">!this-&gt;<a href="connection.html#id1241414-bb">connected</a>()</code>.</p></td>
 </tr>
 <tr>
 <td>
@@ -93,7 +93,7 @@
 </table></div>
 </li>
 <li>
-<pre class="literallayout"><a name="id1218702-bb"></a>connection(<span class="bold"><strong>const</strong></span> <a href="connection.html" title="Class connection">connection</a>&amp; other);</pre>
+<pre class="literallayout"><a name="id1241307-bb"></a>connection(<span class="bold"><strong>const</strong></span> <a href="connection.html" title="Class connection">connection</a>&amp; other);</pre>
 <div class="variablelist"><table border="0">
 <col align="left" valign="top">
 <tbody>
@@ -113,7 +113,7 @@
 </table></div>
 </li>
 <li>
-<pre class="literallayout">connection&amp; <a name="id1218735-bb"></a><span class="bold"><strong>operator</strong></span>=(<span class="bold"><strong>const</strong></span> <a href="connection.html" title="Class connection">connection</a>&amp; other);</pre>
+<pre class="literallayout">connection&amp; <a name="id1241340-bb"></a><span class="bold"><strong>operator</strong></span>=(<span class="bold"><strong>const</strong></span> <a href="connection.html" title="Class connection">connection</a>&amp; other);</pre>
 <div class="variablelist"><table border="0">
 <col align="left" valign="top">
 <tbody>
@@ -135,11 +135,11 @@
 </ol></div>
 </div>
 <div class="refsect2" lang="en">
-<a name="id1631656"></a><h3>
-<a name="id1218768-bb"></a><code class="computeroutput">connection</code> connection management</h3>
+<a name="id1631808"></a><h3>
+<a name="id1241373-bb"></a><code class="computeroutput">connection</code> connection management</h3>
 <div class="orderedlist"><ol type="1">
 <li>
-<pre class="literallayout"><span class="type"><span class="bold"><strong>void</strong></span></span> <a name="id1218772-bb"></a>disconnect() <span class="bold"><strong>const</strong></span>;</pre>
+<pre class="literallayout"><span class="type"><span class="bold"><strong>void</strong></span></span> <a name="id1241377-bb"></a>disconnect() <span class="bold"><strong>const</strong></span>;</pre>
 <div class="variablelist"><table border="0">
 <col align="left" valign="top">
 <tbody>
@@ -147,20 +147,20 @@
 <td>
 <span class="term">Effects:</span></td>
 <td><p>If
-             <code class="computeroutput">this-&gt;<a href="connection.html#id1218809-bb">connected</a>()</code>,
+             <code class="computeroutput">this-&gt;<a href="connection.html#id1241414-bb">connected</a>()</code>,
              disconnects the signal and slot referenced by this;
              otherwise, this operation is a no-op.</p></td>
 </tr>
 <tr>
 <td>
 <span class="term">Postconditions:</span></td>
-<td><p><code class="computeroutput">!this-&gt;<a href="connection.html#id1218809-bb">connected</a>()</code>.</p></td>
+<td><p><code class="computeroutput">!this-&gt;<a href="connection.html#id1241414-bb">connected</a>()</code>.</p></td>
 </tr>
 </tbody>
 </table></div>
 </li>
 <li>
-<pre class="literallayout"><span class="type"><span class="bold"><strong>bool</strong></span></span> <a name="id1218809-bb"></a>connected() <span class="bold"><strong>const</strong></span>;</pre>
+<pre class="literallayout"><span class="type"><span class="bold"><strong>bool</strong></span></span> <a name="id1241414-bb"></a>connected() <span class="bold"><strong>const</strong></span>;</pre>
 <div class="variablelist"><table border="0">
 <col align="left" valign="top">
 <tbody>
@@ -183,11 +183,11 @@
 </ol></div>
 </div>
 <div class="refsect2" lang="en">
-<a name="id1631798"></a><h3>
-<a name="id962297-bb"></a><code class="computeroutput">connection</code> blocking</h3>
+<a name="id1631950"></a><h3>
+<a name="id1241444-bb"></a><code class="computeroutput">connection</code> blocking</h3>
 <div class="orderedlist"><ol type="1">
 <li>
-<pre class="literallayout"><span class="type"><span class="bold"><strong>void</strong></span></span> <a name="id962301-bb"></a>block(<span class="bold"><strong>bool</strong></span> should_block = true);</pre>
+<pre class="literallayout"><span class="type"><span class="bold"><strong>void</strong></span></span> <a name="id1241448-bb"></a>block(<span class="bold"><strong>bool</strong></span> should_block = true);</pre>
 <div class="variablelist"><table border="0">
 <col align="left" valign="top">
 <tbody>
@@ -210,7 +210,7 @@
 </table></div>
 </li>
 <li>
-<pre class="literallayout"><span class="type"><span class="bold"><strong>void</strong></span></span> <a name="id693024-bb"></a>unblock();</pre>
+<pre class="literallayout"><span class="type"><span class="bold"><strong>void</strong></span></span> <a name="id1040209-bb"></a>unblock();</pre>
 <div class="variablelist"><table border="0">
 <col align="left" valign="top">
 <tbody>
@@ -233,7 +233,7 @@
 </table></div>
 </li>
 <li>
-<pre class="literallayout"><span class="type"><span class="bold"><strong>bool</strong></span></span> <a name="id1040209-bb"></a>blocked() <span class="bold"><strong>const</strong></span>;</pre>
+<pre class="literallayout"><span class="type"><span class="bold"><strong>bool</strong></span></span> <a name="id868740-bb"></a>blocked() <span class="bold"><strong>const</strong></span>;</pre>
 <div class="variablelist"><table border="0">
 <col align="left" valign="top">
 <tbody>
@@ -254,10 +254,10 @@
 </ol></div>
 </div>
 <div class="refsect2" lang="en">
-<a name="id1631984"></a><h3>
-<a name="id931718-bb"></a><code class="computeroutput">connection</code> modifiers</h3>
+<a name="id1632136"></a><h3>
+<a name="id1034850-bb"></a><code class="computeroutput">connection</code> modifiers</h3>
 <div class="orderedlist"><ol type="1"><li>
-<pre class="literallayout"><span class="type"><span class="bold"><strong>void</strong></span></span> <a name="id931721-bb"></a>swap(<span class="bold"><strong>const</strong></span> <a href="connection.html" title="Class connection">connection</a>&amp; other);</pre>
+<pre class="literallayout"><span class="type"><span class="bold"><strong>void</strong></span></span> <a name="id1034853-bb"></a>swap(<span class="bold"><strong>const</strong></span> <a href="connection.html" title="Class connection">connection</a>&amp; other);</pre>
 <div class="variablelist"><table border="0">
 <col align="left" valign="top">
 <tbody>
@@ -278,11 +278,11 @@
 </li></ol></div>
 </div>
 <div class="refsect2" lang="en">
-<a name="id1632066"></a><h3>
-<a name="id691221-bb"></a><code class="computeroutput">connection</code> comparisons</h3>
+<a name="id1632218"></a><h3>
+<a name="id1221714-bb"></a><code class="computeroutput">connection</code> comparisons</h3>
 <div class="orderedlist"><ol type="1">
 <li>
-<pre class="literallayout"><span class="type"><span class="bold"><strong>bool</strong></span></span> <a name="id691225-bb"></a><span class="bold"><strong>operator</strong></span>==(<span class="bold"><strong>const</strong></span> <a href="connection.html" title="Class connection">connection</a>&amp; other) <span class="bold"><strong>const</strong></span>;</pre>
+<pre class="literallayout"><span class="type"><span class="bold"><strong>bool</strong></span></span> <a name="id1221718-bb"></a><span class="bold"><strong>operator</strong></span>==(<span class="bold"><strong>const</strong></span> <a href="connection.html" title="Class connection">connection</a>&amp; other) <span class="bold"><strong>const</strong></span>;</pre>
 <div class="variablelist"><table border="0">
 <col align="left" valign="top">
 <tbody>
@@ -305,7 +305,7 @@
 </table></div>
 </li>
 <li>
-<pre class="literallayout"><span class="type"><span class="bold"><strong>bool</strong></span></span> <a name="id628063-bb"></a><span class="bold"><strong>operator</strong></span>&lt;(<span class="bold"><strong>const</strong></span> <a href="connection.html" title="Class connection">connection</a>&amp; other) <span class="bold"><strong>const</strong></span>;</pre>
+<pre class="literallayout"><span class="type"><span class="bold"><strong>bool</strong></span></span> <a name="id1217081-bb"></a><span class="bold"><strong>operator</strong></span>&lt;(<span class="bold"><strong>const</strong></span> <a href="connection.html" title="Class connection">connection</a>&amp; other) <span class="bold"><strong>const</strong></span>;</pre>
 <div class="variablelist"><table border="0">
 <col align="left" valign="top">
 <tbody>
@@ -332,10 +332,10 @@
 </ol></div>
 </div>
 <div class="refsect2" lang="en">
-<a name="id1632258"></a><h3>
-<a name="id1035649-bb"></a><code class="computeroutput">connection</code> specialized algorithms</h3>
+<a name="id1632410"></a><h3>
+<a name="id1217135-bb"></a><code class="computeroutput">connection</code> specialized algorithms</h3>
 <div class="orderedlist"><ol type="1"><li>
-<pre class="literallayout"><span class="type"><span class="bold"><strong>void</strong></span></span> <a name="id1035653-bb"></a>swap(<a href="connection.html" title="Class connection">connection</a>&amp; x, <a href="connection.html" title="Class connection">connection</a>&amp; y);</pre>
+<pre class="literallayout"><span class="type"><span class="bold"><strong>void</strong></span></span> <a name="id1217139-bb"></a>swap(<a href="connection.html" title="Class connection">connection</a>&amp; x, <a href="connection.html" title="Class connection">connection</a>&amp; y);</pre>
 <div class="variablelist"><table border="0">
 <col align="left" valign="top">
 <tbody>

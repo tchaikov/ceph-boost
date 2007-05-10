@@ -36,38 +36,38 @@
   <span class="bold"><strong>typedef</strong></span> std::basic_string&lt; CharT &gt; string_type;
 
   <span class="emphasis"><em>// <a href="time_zone_names_base.html#boost.date_time.time_zone_names_baseconstruct-copy-destruct">construct/copy/destruct</a></em></span>
-  <a href="time_zone_names_base.html#id927041-bb">time_zone_names_base</a>();
-  <a href="time_zone_names_base.html#id927042-bb">time_zone_names_base</a>(<span class="bold"><strong>const</strong></span> string_type &amp;, <span class="bold"><strong>const</strong></span> string_type &amp;, 
+  <a href="time_zone_names_base.html#id966566-bb">time_zone_names_base</a>();
+  <a href="time_zone_names_base.html#id966567-bb">time_zone_names_base</a>(<span class="bold"><strong>const</strong></span> string_type &amp;, <span class="bold"><strong>const</strong></span> string_type &amp;, 
                        <span class="bold"><strong>const</strong></span> string_type &amp;, <span class="bold"><strong>const</strong></span> string_type &amp;);
 
-  <span class="emphasis"><em>// <a href="time_zone_names_base.html#id789533-bb">public member functions</a></em></span>
-  <span class="type">string_type</span> <a href="time_zone_names_base.html#id789536-bb">dst_zone_abbrev</a>() <span class="bold"><strong>const</strong></span>;
-  <span class="type">string_type</span> <a href="time_zone_names_base.html#id789544-bb">std_zone_abbrev</a>() <span class="bold"><strong>const</strong></span>;
-  <span class="type">string_type</span> <a href="time_zone_names_base.html#id927026-bb">dst_zone_name</a>() <span class="bold"><strong>const</strong></span>;
-  <span class="type">string_type</span> <a href="time_zone_names_base.html#id927033-bb">std_zone_name</a>() <span class="bold"><strong>const</strong></span>;
+  <span class="emphasis"><em>// <a href="time_zone_names_base.html#id766890-bb">public member functions</a></em></span>
+  <span class="type">string_type</span> <a href="time_zone_names_base.html#id766893-bb">dst_zone_abbrev</a>() <span class="bold"><strong>const</strong></span>;
+  <span class="type">string_type</span> <a href="time_zone_names_base.html#id967498-bb">std_zone_abbrev</a>() <span class="bold"><strong>const</strong></span>;
+  <span class="type">string_type</span> <a href="time_zone_names_base.html#id753240-bb">dst_zone_name</a>() <span class="bold"><strong>const</strong></span>;
+  <span class="type">string_type</span> <a href="time_zone_names_base.html#id753248-bb">std_zone_name</a>() <span class="bold"><strong>const</strong></span>;
 };</pre></div>
 <div class="refsect1" lang="en">
-<a name="id1141844"></a><h2>Description</h2>
+<a name="id1141865"></a><h2>Description</h2>
 <p>Class that holds various types of strings used for timezones. For example, for the western United States there is the full name: Pacific Standard Time and the abbreviated name: PST. During daylight savings there are additional names: Pacific Daylight Time and PDT.  CharT Allows class to support different character types </p>
 <div class="refsect2" lang="en">
-<a name="id1141856"></a><h3>
+<a name="id1141877"></a><h3>
 <a name="boost.date_time.time_zone_names_baseconstruct-copy-destruct"></a><code class="computeroutput">time_zone_names_base</code> construct/copy/destruct</h3>
 <div class="orderedlist"><ol type="1">
-<li><pre class="literallayout"><a name="id927041-bb"></a>time_zone_names_base();</pre></li>
-<li><pre class="literallayout"><a name="id927042-bb"></a>time_zone_names_base(<span class="bold"><strong>const</strong></span> string_type &amp; std_zone_name_str, 
+<li><pre class="literallayout"><a name="id966566-bb"></a>time_zone_names_base();</pre></li>
+<li><pre class="literallayout"><a name="id966567-bb"></a>time_zone_names_base(<span class="bold"><strong>const</strong></span> string_type &amp; std_zone_name_str, 
                      <span class="bold"><strong>const</strong></span> string_type &amp; std_zone_abbrev_str, 
                      <span class="bold"><strong>const</strong></span> string_type &amp; dst_zone_name_str, 
                      <span class="bold"><strong>const</strong></span> string_type &amp; dst_zone_abbrev_str);</pre></li>
 </ol></div>
 </div>
 <div class="refsect2" lang="en">
-<a name="id1141932"></a><h3>
-<a name="id789533-bb"></a><code class="computeroutput">time_zone_names_base</code> public member functions</h3>
+<a name="id1141954"></a><h3>
+<a name="id766890-bb"></a><code class="computeroutput">time_zone_names_base</code> public member functions</h3>
 <div class="orderedlist"><ol type="1">
-<li><pre class="literallayout"><span class="type">string_type</span> <a name="id789536-bb"></a>dst_zone_abbrev() <span class="bold"><strong>const</strong></span>;</pre></li>
-<li><pre class="literallayout"><span class="type">string_type</span> <a name="id789544-bb"></a>std_zone_abbrev() <span class="bold"><strong>const</strong></span>;</pre></li>
-<li><pre class="literallayout"><span class="type">string_type</span> <a name="id927026-bb"></a>dst_zone_name() <span class="bold"><strong>const</strong></span>;</pre></li>
-<li><pre class="literallayout"><span class="type">string_type</span> <a name="id927033-bb"></a>std_zone_name() <span class="bold"><strong>const</strong></span>;</pre></li>
+<li><pre class="literallayout"><span class="type">string_type</span> <a name="id766893-bb"></a>dst_zone_abbrev() <span class="bold"><strong>const</strong></span>;</pre></li>
+<li><pre class="literallayout"><span class="type">string_type</span> <a name="id967498-bb"></a>std_zone_abbrev() <span class="bold"><strong>const</strong></span>;</pre></li>
+<li><pre class="literallayout"><span class="type">string_type</span> <a name="id753240-bb"></a>dst_zone_name() <span class="bold"><strong>const</strong></span>;</pre></li>
+<li><pre class="literallayout"><span class="type">string_type</span> <a name="id753248-bb"></a>std_zone_name() <span class="bold"><strong>const</strong></span>;</pre></li>
 </ol></div>
 </div>
 </div>

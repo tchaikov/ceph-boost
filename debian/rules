@@ -484,8 +484,8 @@ binary-common:
 	@if [ "$(DH_OPTIONS)" = "-a" ]; then \
 		for name in date-time filesystem graph iostreams program-options python regex serialization signals test thread wave; do \
 			lib=libboost-$${name}$(SOVERSION)$(DEBIAN_SUFFIX); \
-			echo DH_OPTIONS=-p$${lib} dh_makeshlibs -V"$${lib}"; \
-			DH_OPTIONS=-p$${lib} dh_makeshlibs -V"$${lib}"; \
+			echo DH_OPTIONS=-p$${lib} dh_makeshlibs -V"$${lib} (>= 1.34.0~rc2-1)"; \
+			DH_OPTIONS=-p$${lib} dh_makeshlibs -V"$${lib} (>= 1.34.0~rc2-1)"; \
 		done; \
 	fi
 

@@ -33,35 +33,35 @@
 <span class="bold"><strong>class</strong></span> abstract_variables_map {
 <span class="bold"><strong>public</strong></span>:
   <span class="emphasis"><em>// <a href="abstract_variables_map.html#boost.program_options.abstract_variables_mapconstruct-copy-destruct">construct/copy/destruct</a></em></span>
-  <a href="abstract_variables_map.html#id1007636-bb">abstract_variables_map</a>();
-  <a href="abstract_variables_map.html#id1007637-bb">abstract_variables_map</a>(<span class="bold"><strong>const</strong></span> <a href="abstract_variables_map.html" title="Class abstract_variables_map">abstract_variables_map</a> *);
-  <a href="abstract_variables_map.html#id1007648-bb">~abstract_variables_map</a>();
+  <a href="abstract_variables_map.html#id1003048-bb">abstract_variables_map</a>();
+  <a href="abstract_variables_map.html#id1003049-bb">abstract_variables_map</a>(<span class="bold"><strong>const</strong></span> <a href="abstract_variables_map.html" title="Class abstract_variables_map">abstract_variables_map</a> *);
+  <a href="abstract_variables_map.html#id1003060-bb">~abstract_variables_map</a>();
 
-  <span class="emphasis"><em>// <a href="abstract_variables_map.html#id694044-bb">public member functions</a></em></span>
-  <span class="type"><span class="bold"><strong>const</strong></span>  <a href="variable_value.html" title="Class variable_value">variable_value</a> &amp;</span> <a href="abstract_variables_map.html#id694048-bb"><span class="bold"><strong>operator</strong></span>[]</a>(<span class="bold"><strong>const</strong></span> std::string &amp;) <span class="bold"><strong>const</strong></span>;
-  <span class="type"><span class="bold"><strong>void</strong></span></span> <a href="abstract_variables_map.html#id1007616-bb">next</a>(<a href="abstract_variables_map.html" title="Class abstract_variables_map">abstract_variables_map</a> *) ;
+  <span class="emphasis"><em>// <a href="abstract_variables_map.html#id1005194-bb">public member functions</a></em></span>
+  <span class="type"><span class="bold"><strong>const</strong></span>  <a href="variable_value.html" title="Class variable_value">variable_value</a> &amp;</span> <a href="abstract_variables_map.html#id1005198-bb"><span class="bold"><strong>operator</strong></span>[]</a>(<span class="bold"><strong>const</strong></span> std::string &amp;) <span class="bold"><strong>const</strong></span>;
+  <span class="type"><span class="bold"><strong>void</strong></span></span> <a href="abstract_variables_map.html#id1003027-bb">next</a>(<a href="abstract_variables_map.html" title="Class abstract_variables_map">abstract_variables_map</a> *) ;
 
-  <span class="emphasis"><em>// <a href="abstract_variables_map.html#id1007649-bb">private member functions</a></em></span>
-  <span class="type"><span class="bold"><strong>virtual</strong></span> <span class="bold"><strong>const</strong></span>  <a href="variable_value.html" title="Class variable_value">variable_value</a> &amp;</span> <a href="abstract_variables_map.html#id1007652-bb">get</a>(<span class="bold"><strong>const</strong></span> std::string &amp;) <span class="bold"><strong>const</strong></span>;
+  <span class="emphasis"><em>// <a href="abstract_variables_map.html#id1003061-bb">private member functions</a></em></span>
+  <span class="type"><span class="bold"><strong>virtual</strong></span> <span class="bold"><strong>const</strong></span>  <a href="variable_value.html" title="Class variable_value">variable_value</a> &amp;</span> <a href="abstract_variables_map.html#id1003064-bb">get</a>(<span class="bold"><strong>const</strong></span> std::string &amp;) <span class="bold"><strong>const</strong></span>;
 };</pre></div>
 <div class="refsect1" lang="en">
-<a name="id1605451"></a><h2>Description</h2>
+<a name="id1605600"></a><h2>Description</h2>
 <p>Implements string-&gt;string mapping with convenient value casting facilities. </p>
 <div class="refsect2" lang="en">
-<a name="id1605462"></a><h3>
+<a name="id1605610"></a><h3>
 <a name="boost.program_options.abstract_variables_mapconstruct-copy-destruct"></a><code class="computeroutput">abstract_variables_map</code> construct/copy/destruct</h3>
 <div class="orderedlist"><ol type="1">
-<li><pre class="literallayout"><a name="id1007636-bb"></a>abstract_variables_map();</pre></li>
-<li><pre class="literallayout"><a name="id1007637-bb"></a>abstract_variables_map(<span class="bold"><strong>const</strong></span> <a href="abstract_variables_map.html" title="Class abstract_variables_map">abstract_variables_map</a> * next);</pre></li>
-<li><pre class="literallayout"><a name="id1007648-bb"></a>~abstract_variables_map();</pre></li>
+<li><pre class="literallayout"><a name="id1003048-bb"></a>abstract_variables_map();</pre></li>
+<li><pre class="literallayout"><a name="id1003049-bb"></a>abstract_variables_map(<span class="bold"><strong>const</strong></span> <a href="abstract_variables_map.html" title="Class abstract_variables_map">abstract_variables_map</a> * next);</pre></li>
+<li><pre class="literallayout"><a name="id1003060-bb"></a>~abstract_variables_map();</pre></li>
 </ol></div>
 </div>
 <div class="refsect2" lang="en">
-<a name="id1605535"></a><h3>
-<a name="id694044-bb"></a><code class="computeroutput">abstract_variables_map</code> public member functions</h3>
+<a name="id1605684"></a><h3>
+<a name="id1005194-bb"></a><code class="computeroutput">abstract_variables_map</code> public member functions</h3>
 <div class="orderedlist"><ol type="1">
 <li>
-<pre class="literallayout"><span class="type"><span class="bold"><strong>const</strong></span>  <a href="variable_value.html" title="Class variable_value">variable_value</a> &amp;</span> <a name="id694048-bb"></a><span class="bold"><strong>operator</strong></span>[](<span class="bold"><strong>const</strong></span> std::string &amp; name) <span class="bold"><strong>const</strong></span>;</pre>
+<pre class="literallayout"><span class="type"><span class="bold"><strong>const</strong></span>  <a href="variable_value.html" title="Class variable_value">variable_value</a> &amp;</span> <a name="id1005198-bb"></a><span class="bold"><strong>operator</strong></span>[](<span class="bold"><strong>const</strong></span> std::string &amp; name) <span class="bold"><strong>const</strong></span>;</pre>
 <p>Obtains the value of variable 'name', from *this and possibly from the chain of variable maps.</p>
 <div class="itemizedlist"><ul type="disc"><li>
 <p>if there's no value in *this.</p>
@@ -90,16 +90,16 @@
 </p>
 </li>
 <li>
-<pre class="literallayout"><span class="type"><span class="bold"><strong>void</strong></span></span> <a name="id1007616-bb"></a>next(<a href="abstract_variables_map.html" title="Class abstract_variables_map">abstract_variables_map</a> * next) ;</pre>
+<pre class="literallayout"><span class="type"><span class="bold"><strong>void</strong></span></span> <a name="id1003027-bb"></a>next(<a href="abstract_variables_map.html" title="Class abstract_variables_map">abstract_variables_map</a> * next) ;</pre>
 <p>Sets next variable map, which will be used to find variables not found in *this. </p>
 </li>
 </ol></div>
 </div>
 <div class="refsect2" lang="en">
-<a name="id1605682"></a><h3>
-<a name="id1007649-bb"></a><code class="computeroutput">abstract_variables_map</code> private member functions</h3>
+<a name="id1605829"></a><h3>
+<a name="id1003061-bb"></a><code class="computeroutput">abstract_variables_map</code> private member functions</h3>
 <div class="orderedlist"><ol type="1"><li>
-<pre class="literallayout"><span class="type"><span class="bold"><strong>virtual</strong></span> <span class="bold"><strong>const</strong></span>  <a href="variable_value.html" title="Class variable_value">variable_value</a> &amp;</span> <a name="id1007652-bb"></a>get(<span class="bold"><strong>const</strong></span> std::string &amp; name) <span class="bold"><strong>const</strong></span>;</pre>
+<pre class="literallayout"><span class="type"><span class="bold"><strong>virtual</strong></span> <span class="bold"><strong>const</strong></span>  <a href="variable_value.html" title="Class variable_value">variable_value</a> &amp;</span> <a name="id1003064-bb"></a>get(<span class="bold"><strong>const</strong></span> std::string &amp; name) <span class="bold"><strong>const</strong></span>;</pre>
 <p>Returns value of variable 'name' stored in *this, or empty value otherwise. </p>
 </li></ol></div>
 </div>

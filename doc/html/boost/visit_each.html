@@ -33,7 +33,7 @@
 <span class="bold"><strong>template</strong></span>&lt;<span class="bold"><strong>typename</strong></span> Visitor, <span class="bold"><strong>typename</strong></span> T&gt; 
   <span class="type"><span class="bold"><strong>void</strong></span></span> visit_each(<span class="bold"><strong>const</strong></span> Visitor&amp; visitor, <span class="bold"><strong>const</strong></span> T&amp; t, <span class="bold"><strong>int</strong></span>);</pre></div>
 <div class="refsect1" lang="en">
-<a name="id1632873"></a><h2>Description</h2>
+<a name="id1633023"></a><h2>Description</h2>
 <p>The <code class="computeroutput"><a href="visit_each.html" title="Function template visit_each">visit_each</a></code> mechanism
         allows a visitor to be applied to every subobject in a given
         object. It is used by the Signals library to discover
@@ -55,7 +55,7 @@
       <code class="computeroutput">t</code>: 
         </p>
 <div class="itemizedlist"><ul type="disc">
-<li><p>If <code class="computeroutput">x</code> is a reference, <code class="computeroutput">visit_each(visitor, <a href="reference_wrapper.html#id683206-bb">ref</a>(x), 0)</code></p></li>
+<li><p>If <code class="computeroutput">x</code> is a reference, <code class="computeroutput">visit_each(visitor, <a href="reference_wrapper.html#id1044490-bb">ref</a>(x), 0)</code></p></li>
 <li><p>Otherwise, <code class="computeroutput">visit_each(visitor, x, 0)</code></p></li>
 </ul></div>
 <p>

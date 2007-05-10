@@ -33,64 +33,64 @@
 <span class="bold"><strong>class</strong></span> options_description {
 <span class="bold"><strong>public</strong></span>:
   <span class="emphasis"><em>// <a href="options_description.html#boost.program_options.options_descriptionconstruct-copy-destruct">construct/copy/destruct</a></em></span>
-  <a href="options_description.html#id697727-bb">options_description</a>(<span class="bold"><strong>unsigned</strong></span> = m_default_line_length);
-  <a href="options_description.html#id652825-bb">options_description</a>(<span class="bold"><strong>const</strong></span> std::string &amp;, <span class="bold"><strong>unsigned</strong></span> = m_default_line_length);
+  <a href="options_description.html#id790021-bb">options_description</a>(<span class="bold"><strong>unsigned</strong></span> = m_default_line_length);
+  <a href="options_description.html#id790033-bb">options_description</a>(<span class="bold"><strong>const</strong></span> std::string &amp;, <span class="bold"><strong>unsigned</strong></span> = m_default_line_length);
 
-  <span class="emphasis"><em>// <a href="options_description.html#id695044-bb">public member functions</a></em></span>
-  <span class="type"><span class="bold"><strong>void</strong></span></span> <a href="options_description.html#id695047-bb">add</a>(shared_ptr&lt; <a href="option_description.html" title="Class option_description">option_description</a> &gt;) ;
-  <span class="type"><a href="options_description.html" title="Class options_description">options_description</a> &amp;</span> <a href="options_description.html#id695068-bb">add</a>(<span class="bold"><strong>const</strong></span> <a href="options_description.html" title="Class options_description">options_description</a> &amp;) ;
-  <span class="type"><a href="options_description_easy_init.html" title="Class options_description_easy_init">options_description_easy_init</a></span> <a href="options_description.html#id791680-bb">add_options</a>() ;
-  <span class="type"><span class="bold"><strong>const</strong></span>  <a href="option_description.html" title="Class option_description">option_description</a> &amp;</span> <a href="options_description.html#id660960-bb">find</a>(<span class="bold"><strong>const</strong></span> std::string &amp;, <span class="bold"><strong>bool</strong></span>) <span class="bold"><strong>const</strong></span>;
-  <span class="type"><span class="bold"><strong>const</strong></span>  <a href="option_description.html" title="Class option_description">option_description</a> *</span> <a href="options_description.html#id660940-bb">find_nothrow</a>(<span class="bold"><strong>const</strong></span> std::string &amp;, <span class="bold"><strong>bool</strong></span>) <span class="bold"><strong>const</strong></span>;
-  <span class="type"><span class="bold"><strong>const</strong></span>  std::vector&lt; shared_ptr&lt; <a href="option_description.html" title="Class option_description">option_description</a> &gt; &gt; &amp;</span> <a href="options_description.html#id695728-bb">options</a>() <span class="bold"><strong>const</strong></span>;
-  <span class="type"><span class="bold"><strong>void</strong></span></span> <a href="options_description.html#id695740-bb">print</a>(std::ostream &amp;) <span class="bold"><strong>const</strong></span>;
+  <span class="emphasis"><em>// <a href="options_description.html#id1002902-bb">public member functions</a></em></span>
+  <span class="type"><span class="bold"><strong>void</strong></span></span> <a href="options_description.html#id1002905-bb">add</a>(shared_ptr&lt; <a href="option_description.html" title="Class option_description">option_description</a> &gt;) ;
+  <span class="type"><a href="options_description.html" title="Class options_description">options_description</a> &amp;</span> <a href="options_description.html#id661572-bb">add</a>(<span class="bold"><strong>const</strong></span> <a href="options_description.html" title="Class options_description">options_description</a> &amp;) ;
+  <span class="type"><a href="options_description_easy_init.html" title="Class options_description_easy_init">options_description_easy_init</a></span> <a href="options_description.html#id802074-bb">add_options</a>() ;
+  <span class="type"><span class="bold"><strong>const</strong></span>  <a href="option_description.html" title="Class option_description">option_description</a> &amp;</span> <a href="options_description.html#id626239-bb">find</a>(<span class="bold"><strong>const</strong></span> std::string &amp;, <span class="bold"><strong>bool</strong></span>) <span class="bold"><strong>const</strong></span>;
+  <span class="type"><span class="bold"><strong>const</strong></span>  <a href="option_description.html" title="Class option_description">option_description</a> *</span> <a href="options_description.html#id659412-bb">find_nothrow</a>(<span class="bold"><strong>const</strong></span> std::string &amp;, <span class="bold"><strong>bool</strong></span>) <span class="bold"><strong>const</strong></span>;
+  <span class="type"><span class="bold"><strong>const</strong></span>  std::vector&lt; shared_ptr&lt; <a href="option_description.html" title="Class option_description">option_description</a> &gt; &gt; &amp;</span> <a href="options_description.html#id759208-bb">options</a>() <span class="bold"><strong>const</strong></span>;
+  <span class="type"><span class="bold"><strong>void</strong></span></span> <a href="options_description.html#id759220-bb">print</a>(std::ostream &amp;) <span class="bold"><strong>const</strong></span>;
 
   <span class="bold"><strong>static</strong></span> const  unsigned m_default_line_length;
 };</pre></div>
 <div class="refsect1" lang="en">
-<a name="id1598539"></a><h2>Description</h2>
+<a name="id1598699"></a><h2>Description</h2>
 <p>A set of option descriptions. This provides convenient interface for adding new option (the add_options) method, and facilities to search for options by name.</p>
 <p>See here  for option adding interface discussion. </p>
 <p>option_description </p>
 <p>
 </p>
 <div class="refsect2" lang="en">
-<a name="id1598554"></a><h3>
+<a name="id1598714"></a><h3>
 <a name="boost.program_options.options_descriptionconstruct-copy-destruct"></a><code class="computeroutput">options_description</code> construct/copy/destruct</h3>
 <div class="orderedlist"><ol type="1">
 <li>
-<pre class="literallayout"><a name="id697727-bb"></a>options_description(<span class="bold"><strong>unsigned</strong></span> line_length = m_default_line_length);</pre>
+<pre class="literallayout"><a name="id790021-bb"></a>options_description(<span class="bold"><strong>unsigned</strong></span> line_length = m_default_line_length);</pre>
 <p>Creates the instance. </p>
 </li>
 <li>
-<pre class="literallayout"><a name="id652825-bb"></a>options_description(<span class="bold"><strong>const</strong></span> std::string &amp; caption, 
+<pre class="literallayout"><a name="id790033-bb"></a>options_description(<span class="bold"><strong>const</strong></span> std::string &amp; caption, 
                     <span class="bold"><strong>unsigned</strong></span> line_length = m_default_line_length);</pre>
 <p>Creates the instance. The 'caption' parameter gives the name of this 'options_description' instance. Primarily useful for output. </p>
 </li>
 </ol></div>
 </div>
 <div class="refsect2" lang="en">
-<a name="id1598629"></a><h3>
-<a name="id695044-bb"></a><code class="computeroutput">options_description</code> public member functions</h3>
+<a name="id1598790"></a><h3>
+<a name="id1002902-bb"></a><code class="computeroutput">options_description</code> public member functions</h3>
 <div class="orderedlist"><ol type="1">
 <li>
-<pre class="literallayout"><span class="type"><span class="bold"><strong>void</strong></span></span> <a name="id695047-bb"></a>add(shared_ptr&lt; <a href="option_description.html" title="Class option_description">option_description</a> &gt; desc) ;</pre>
+<pre class="literallayout"><span class="type"><span class="bold"><strong>void</strong></span></span> <a name="id1002905-bb"></a>add(shared_ptr&lt; <a href="option_description.html" title="Class option_description">option_description</a> &gt; desc) ;</pre>
 <p>Adds new variable description. Throws duplicate_variable_error if either short or long name matches that of already present one. </p>
 </li>
 <li>
-<pre class="literallayout"><span class="type"><a href="options_description.html" title="Class options_description">options_description</a> &amp;</span> <a name="id695068-bb"></a>add(<span class="bold"><strong>const</strong></span> <a href="options_description.html" title="Class options_description">options_description</a> &amp; desc) ;</pre>
+<pre class="literallayout"><span class="type"><a href="options_description.html" title="Class options_description">options_description</a> &amp;</span> <a name="id661572-bb"></a>add(<span class="bold"><strong>const</strong></span> <a href="options_description.html" title="Class options_description">options_description</a> &amp; desc) ;</pre>
 <p>Adds a group of option description. This has the same effect as adding all option_descriptions in 'desc' individually, except that output operator will show a separate group. Returns *this. </p>
 </li>
 <li>
-<pre class="literallayout"><span class="type"><a href="options_description_easy_init.html" title="Class options_description_easy_init">options_description_easy_init</a></span> <a name="id791680-bb"></a>add_options() ;</pre>
+<pre class="literallayout"><span class="type"><a href="options_description_easy_init.html" title="Class options_description_easy_init">options_description_easy_init</a></span> <a name="id802074-bb"></a>add_options() ;</pre>
 <p>Returns an object of implementation-defined type suitable for adding options to options_description. The returned object will have overloaded operator() with parameter type matching 'option_description' constructors. Calling the operator will create new option_description instance and add it. </p>
 </li>
-<li><pre class="literallayout"><span class="type"><span class="bold"><strong>const</strong></span>  <a href="option_description.html" title="Class option_description">option_description</a> &amp;</span> <a name="id660960-bb"></a>find(<span class="bold"><strong>const</strong></span> std::string &amp; name, <span class="bold"><strong>bool</strong></span> approx) <span class="bold"><strong>const</strong></span>;</pre></li>
+<li><pre class="literallayout"><span class="type"><span class="bold"><strong>const</strong></span>  <a href="option_description.html" title="Class option_description">option_description</a> &amp;</span> <a name="id626239-bb"></a>find(<span class="bold"><strong>const</strong></span> std::string &amp; name, <span class="bold"><strong>bool</strong></span> approx) <span class="bold"><strong>const</strong></span>;</pre></li>
 <li><pre class="literallayout"><span class="type"><span class="bold"><strong>const</strong></span>  <a href="option_description.html" title="Class option_description">option_description</a> *</span> 
-<a name="id660940-bb"></a>find_nothrow(<span class="bold"><strong>const</strong></span> std::string &amp; name, <span class="bold"><strong>bool</strong></span> approx) <span class="bold"><strong>const</strong></span>;</pre></li>
-<li><pre class="literallayout"><span class="type"><span class="bold"><strong>const</strong></span>  std::vector&lt; shared_ptr&lt; <a href="option_description.html" title="Class option_description">option_description</a> &gt; &gt; &amp;</span> <a name="id695728-bb"></a>options() <span class="bold"><strong>const</strong></span>;</pre></li>
+<a name="id659412-bb"></a>find_nothrow(<span class="bold"><strong>const</strong></span> std::string &amp; name, <span class="bold"><strong>bool</strong></span> approx) <span class="bold"><strong>const</strong></span>;</pre></li>
+<li><pre class="literallayout"><span class="type"><span class="bold"><strong>const</strong></span>  std::vector&lt; shared_ptr&lt; <a href="option_description.html" title="Class option_description">option_description</a> &gt; &gt; &amp;</span> <a name="id759208-bb"></a>options() <span class="bold"><strong>const</strong></span>;</pre></li>
 <li>
-<pre class="literallayout"><span class="type"><span class="bold"><strong>void</strong></span></span> <a name="id695740-bb"></a>print(std::ostream &amp; os) <span class="bold"><strong>const</strong></span>;</pre>
+<pre class="literallayout"><span class="type"><span class="bold"><strong>void</strong></span></span> <a name="id759220-bb"></a>print(std::ostream &amp; os) <span class="bold"><strong>const</strong></span>;</pre>
 <p>Output 'desc' to the specified stream, calling 'f' to output each option_description element. </p>
 </li>
 </ol></div>

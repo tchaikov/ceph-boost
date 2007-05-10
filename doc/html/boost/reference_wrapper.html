@@ -39,19 +39,19 @@
   <span class="bold"><strong>typedef</strong></span> T type;
 
   <span class="emphasis"><em>// <a href="reference_wrapper.html#boost.reference_wrapperconstruct-copy-destruct">construct/copy/destruct</a></em></span>
-  <span class="bold"><strong>explicit</strong></span> <a href="reference_wrapper.html#id825153-bb">reference_wrapper</a>(T&amp;);
+  <span class="bold"><strong>explicit</strong></span> <a href="reference_wrapper.html#id661560-bb">reference_wrapper</a>(T&amp;);
 
-  <span class="emphasis"><em>// <a href="reference_wrapper.html#id859522-bb">access</a></em></span>
-  <a href="reference_wrapper.html#id859526-bb"><span class="bold"><strong>operator</strong></span> T&amp;</a>() <span class="bold"><strong>const</strong></span>;
-  <span class="type">T&amp;</span> <a href="reference_wrapper.html#id859545-bb">get</a>() <span class="bold"><strong>const</strong></span>;
-  <span class="type">T*</span> <a href="reference_wrapper.html#id656025-bb">get_pointer</a>() <span class="bold"><strong>const</strong></span>;
+  <span class="emphasis"><em>// <a href="reference_wrapper.html#id757326-bb">access</a></em></span>
+  <a href="reference_wrapper.html#id757330-bb"><span class="bold"><strong>operator</strong></span> T&amp;</a>() <span class="bold"><strong>const</strong></span>;
+  <span class="type">T&amp;</span> <a href="reference_wrapper.html#id801504-bb">get</a>() <span class="bold"><strong>const</strong></span>;
+  <span class="type">T*</span> <a href="reference_wrapper.html#id623846-bb">get_pointer</a>() <span class="bold"><strong>const</strong></span>;
 };
 
-<span class="emphasis"><em>// <a href="reference_wrapper.html#id683202-bb">constructors</a></em></span>
-<span class="type">reference_wrapper&lt;T&gt;</span> <a href="reference_wrapper.html#id683206-bb">ref</a>(T&amp;);
+<span class="emphasis"><em>// <a href="reference_wrapper.html#id1044486-bb">constructors</a></em></span>
+<span class="type">reference_wrapper&lt;T&gt;</span> <a href="reference_wrapper.html#id1044490-bb">ref</a>(T&amp;);
 <span class="type">reference_wrapper&lt;T <span class="bold"><strong>const</strong></span>&gt;</span> <a href="reference_wrapper.html#boost.cref">cref</a>(T <span class="bold"><strong>const</strong></span>&amp;);</pre></div>
 <div class="refsect1" lang="en">
-<a name="id1607521"></a><h2>Description</h2>
+<a name="id1607666"></a><h2>Description</h2>
 <p><code class="computeroutput"><a href="reference_wrapper.html" title="Class template reference_wrapper">reference_wrapper</a></code>
         is primarily used to "feed" references to function templates
         (algorithms) that take their parameter by value.  It provides
@@ -60,10 +60,10 @@
         the function templates to work on references
         unmodified.</p>
 <div class="refsect2" lang="en">
-<a name="id1607549"></a><h3>
+<a name="id1607693"></a><h3>
 <a name="boost.reference_wrapperconstruct-copy-destruct"></a><code class="computeroutput">reference_wrapper</code> construct/copy/destruct</h3>
 <div class="orderedlist"><ol type="1"><li>
-<pre class="literallayout"><span class="bold"><strong>explicit</strong></span> <a name="id825153-bb"></a>reference_wrapper(T&amp; t);</pre>
+<pre class="literallayout"><span class="bold"><strong>explicit</strong></span> <a name="id661560-bb"></a>reference_wrapper(T&amp; t);</pre>
 <div class="variablelist"><table border="0">
 <col align="left" valign="top">
 <tbody>
@@ -85,11 +85,11 @@
 </li></ol></div>
 </div>
 <div class="refsect2" lang="en">
-<a name="id1607624"></a><h3>
-<a name="id859522-bb"></a><code class="computeroutput">reference_wrapper</code> access</h3>
+<a name="id1607769"></a><h3>
+<a name="id757326-bb"></a><code class="computeroutput">reference_wrapper</code> access</h3>
 <div class="orderedlist"><ol type="1">
 <li>
-<pre class="literallayout"><a name="id859526-bb"></a><span class="bold"><strong>operator</strong></span> T&amp;() <span class="bold"><strong>const</strong></span>;</pre>
+<pre class="literallayout"><a name="id757330-bb"></a><span class="bold"><strong>operator</strong></span> T&amp;() <span class="bold"><strong>const</strong></span>;</pre>
 <div class="variablelist"><table border="0">
 <col align="left" valign="top">
 <tbody>
@@ -107,7 +107,7 @@
 </table></div>
 </li>
 <li>
-<pre class="literallayout"><span class="type">T&amp;</span> <a name="id859545-bb"></a>get() <span class="bold"><strong>const</strong></span>;</pre>
+<pre class="literallayout"><span class="type">T&amp;</span> <a name="id801504-bb"></a>get() <span class="bold"><strong>const</strong></span>;</pre>
 <div class="variablelist"><table border="0">
 <col align="left" valign="top">
 <tbody>
@@ -125,7 +125,7 @@
 </table></div>
 </li>
 <li>
-<pre class="literallayout"><span class="type">T*</span> <a name="id656025-bb"></a>get_pointer() <span class="bold"><strong>const</strong></span>;</pre>
+<pre class="literallayout"><span class="type">T*</span> <a name="id623846-bb"></a>get_pointer() <span class="bold"><strong>const</strong></span>;</pre>
 <div class="variablelist"><table border="0">
 <col align="left" valign="top">
 <tbody>
@@ -145,11 +145,11 @@
 </ol></div>
 </div>
 <div class="refsect2" lang="en">
-<a name="id1607770"></a><h3>
-<a name="id683202-bb"></a><code class="computeroutput">reference_wrapper</code> constructors</h3>
+<a name="id1625391"></a><h3>
+<a name="id1044486-bb"></a><code class="computeroutput">reference_wrapper</code> constructors</h3>
 <div class="orderedlist"><ol type="1">
 <li>
-<pre class="literallayout"><span class="type">reference_wrapper&lt;T&gt;</span> <a name="id683206-bb"></a>ref(T&amp; t);</pre>
+<pre class="literallayout"><span class="type">reference_wrapper&lt;T&gt;</span> <a name="id1044490-bb"></a>ref(T&amp; t);</pre>
 <div class="variablelist"><table border="0">
 <col align="left" valign="top">
 <tbody>

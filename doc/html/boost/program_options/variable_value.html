@@ -33,51 +33,51 @@
 <span class="bold"><strong>class</strong></span> variable_value {
 <span class="bold"><strong>public</strong></span>:
   <span class="emphasis"><em>// <a href="variable_value.html#boost.program_options.variable_valueconstruct-copy-destruct">construct/copy/destruct</a></em></span>
-  <a href="variable_value.html#id1007772-bb">variable_value</a>();
-  <a href="variable_value.html#id1007773-bb">variable_value</a>(<span class="bold"><strong>const</strong></span> boost::any &amp;, <span class="bold"><strong>bool</strong></span>);
+  <a href="variable_value.html#id873676-bb">variable_value</a>();
+  <a href="variable_value.html#id873677-bb">variable_value</a>(<span class="bold"><strong>const</strong></span> boost::any &amp;, <span class="bold"><strong>bool</strong></span>);
 
-  <span class="emphasis"><em>// <a href="variable_value.html#id1007682-bb">public member functions</a></em></span>
-  <span class="bold"><strong>template</strong></span>&lt;<span class="bold"><strong>typename</strong></span> T&gt; <span class="type"><span class="bold"><strong>const</strong></span>  T &amp;</span> <a href="variable_value.html#id1007686-bb">as</a>() <span class="bold"><strong>const</strong></span>;
-  <span class="bold"><strong>template</strong></span>&lt;<span class="bold"><strong>typename</strong></span> T&gt; <span class="type">T &amp;</span> <a href="variable_value.html#id1007706-bb">as</a>() ;
-  <span class="type"><span class="bold"><strong>bool</strong></span></span> <a href="variable_value.html#id1007726-bb">empty</a>() <span class="bold"><strong>const</strong></span>;
-  <span class="type"><span class="bold"><strong>bool</strong></span></span> <a href="variable_value.html#id1007737-bb">defaulted</a>() <span class="bold"><strong>const</strong></span>;
-  <span class="type"><span class="bold"><strong>const</strong></span>  boost::any &amp;</span> <a href="variable_value.html#id1007749-bb">value</a>() <span class="bold"><strong>const</strong></span>;
-  <span class="type">boost::any &amp;</span> <a href="variable_value.html#id1007761-bb">value</a>() ;
+  <span class="emphasis"><em>// <a href="variable_value.html#id869888-bb">public member functions</a></em></span>
+  <span class="bold"><strong>template</strong></span>&lt;<span class="bold"><strong>typename</strong></span> T&gt; <span class="type"><span class="bold"><strong>const</strong></span>  T &amp;</span> <a href="variable_value.html#id869892-bb">as</a>() <span class="bold"><strong>const</strong></span>;
+  <span class="bold"><strong>template</strong></span>&lt;<span class="bold"><strong>typename</strong></span> T&gt; <span class="type">T &amp;</span> <a href="variable_value.html#id695713-bb">as</a>() ;
+  <span class="type"><span class="bold"><strong>bool</strong></span></span> <a href="variable_value.html#id690463-bb">empty</a>() <span class="bold"><strong>const</strong></span>;
+  <span class="type"><span class="bold"><strong>bool</strong></span></span> <a href="variable_value.html#id690473-bb">defaulted</a>() <span class="bold"><strong>const</strong></span>;
+  <span class="type"><span class="bold"><strong>const</strong></span>  boost::any &amp;</span> <a href="variable_value.html#id690486-bb">value</a>() <span class="bold"><strong>const</strong></span>;
+  <span class="type">boost::any &amp;</span> <a href="variable_value.html#id690497-bb">value</a>() ;
 };</pre></div>
 <div class="refsect1" lang="en">
-<a name="id1605964"></a><h2>Description</h2>
+<a name="id1606110"></a><h2>Description</h2>
 <p>Class holding value of option. Contains details about how the value is set and allows to conveniently obtain the value. </p>
 <div class="refsect2" lang="en">
-<a name="id1605972"></a><h3>
+<a name="id1606118"></a><h3>
 <a name="boost.program_options.variable_valueconstruct-copy-destruct"></a><code class="computeroutput">variable_value</code> construct/copy/destruct</h3>
 <div class="orderedlist"><ol type="1">
-<li><pre class="literallayout"><a name="id1007772-bb"></a>variable_value();</pre></li>
-<li><pre class="literallayout"><a name="id1007773-bb"></a>variable_value(<span class="bold"><strong>const</strong></span> boost::any &amp; v, <span class="bold"><strong>bool</strong></span> defaulted);</pre></li>
+<li><pre class="literallayout"><a name="id873676-bb"></a>variable_value();</pre></li>
+<li><pre class="literallayout"><a name="id873677-bb"></a>variable_value(<span class="bold"><strong>const</strong></span> boost::any &amp; v, <span class="bold"><strong>bool</strong></span> defaulted);</pre></li>
 </ol></div>
 </div>
 <div class="refsect2" lang="en">
-<a name="id1606030"></a><h3>
-<a name="id1007682-bb"></a><code class="computeroutput">variable_value</code> public member functions</h3>
+<a name="id1606176"></a><h3>
+<a name="id869888-bb"></a><code class="computeroutput">variable_value</code> public member functions</h3>
 <div class="orderedlist"><ol type="1">
 <li>
-<pre class="literallayout"><span class="bold"><strong>template</strong></span>&lt;<span class="bold"><strong>typename</strong></span> T&gt; <span class="type"><span class="bold"><strong>const</strong></span>  T &amp;</span> <a name="id1007686-bb"></a>as() <span class="bold"><strong>const</strong></span>;</pre>
+<pre class="literallayout"><span class="bold"><strong>template</strong></span>&lt;<span class="bold"><strong>typename</strong></span> T&gt; <span class="type"><span class="bold"><strong>const</strong></span>  T &amp;</span> <a name="id869892-bb"></a>as() <span class="bold"><strong>const</strong></span>;</pre>
 <p>If stored value if of type T, returns that value. Otherwise, throws boost::bad_any_cast exception. </p>
 </li>
 <li>
-<pre class="literallayout"><span class="bold"><strong>template</strong></span>&lt;<span class="bold"><strong>typename</strong></span> T&gt; <span class="type">T &amp;</span> <a name="id1007706-bb"></a>as() ;</pre>
+<pre class="literallayout"><span class="bold"><strong>template</strong></span>&lt;<span class="bold"><strong>typename</strong></span> T&gt; <span class="type">T &amp;</span> <a name="id695713-bb"></a>as() ;</pre>
 <p>This is an overloaded member function, provided for convenience. It differs from the above function only in what argument(s) it accepts. </p>
 </li>
-<li><pre class="literallayout"><span class="type"><span class="bold"><strong>bool</strong></span></span> <a name="id1007726-bb"></a>empty() <span class="bold"><strong>const</strong></span>;</pre></li>
+<li><pre class="literallayout"><span class="type"><span class="bold"><strong>bool</strong></span></span> <a name="id690463-bb"></a>empty() <span class="bold"><strong>const</strong></span>;</pre></li>
 <li>
-<pre class="literallayout"><span class="type"><span class="bold"><strong>bool</strong></span></span> <a name="id1007737-bb"></a>defaulted() <span class="bold"><strong>const</strong></span>;</pre>
+<pre class="literallayout"><span class="type"><span class="bold"><strong>bool</strong></span></span> <a name="id690473-bb"></a>defaulted() <span class="bold"><strong>const</strong></span>;</pre>
 <p>Returns true if the value was not explicitly given, but has default value. </p>
 </li>
 <li>
-<pre class="literallayout"><span class="type"><span class="bold"><strong>const</strong></span>  boost::any &amp;</span> <a name="id1007749-bb"></a>value() <span class="bold"><strong>const</strong></span>;</pre>
+<pre class="literallayout"><span class="type"><span class="bold"><strong>const</strong></span>  boost::any &amp;</span> <a name="id690486-bb"></a>value() <span class="bold"><strong>const</strong></span>;</pre>
 <p>Returns the contained value. </p>
 </li>
 <li>
-<pre class="literallayout"><span class="type">boost::any &amp;</span> <a name="id1007761-bb"></a>value() ;</pre>
+<pre class="literallayout"><span class="type">boost::any &amp;</span> <a name="id690497-bb"></a>value() ;</pre>
 <p>Returns the contained value. </p>
 </li>
 </ol></div>

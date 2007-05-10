@@ -45,9 +45,9 @@
   <span class="emphasis"><em>// <a href="any.html#id717384-bb">modifiers</a></em></span>
   <span class="type"><a href="any.html" title="Class any">any</a> &amp;</span> <a href="any.html#id717388-bb">swap</a>(<a href="any.html" title="Class any">any</a> &amp;);
 
-  <span class="emphasis"><em>// <a href="any.html#id717431-bb">queries</a></em></span>
-  <span class="type"><span class="bold"><strong>bool</strong></span></span> <a href="any.html#id717435-bb">empty</a>() <span class="bold"><strong>const</strong></span>;
-  <span class="type"><span class="bold"><strong>const</strong></span> std::type_info &amp;</span> <a href="any.html#id717460-bb">type</a>() <span class="bold"><strong>const</strong></span>;
+  <span class="emphasis"><em>// <a href="any.html#id717430-bb">queries</a></em></span>
+  <span class="type"><span class="bold"><strong>bool</strong></span></span> <a href="any.html#id717434-bb">empty</a>() <span class="bold"><strong>const</strong></span>;
+  <span class="type"><span class="bold"><strong>const</strong></span> std::type_info &amp;</span> <a href="any.html#id717459-bb">type</a>() <span class="bold"><strong>const</strong></span>;
 };</pre></div>
 <div class="refsect1" lang="en">
 <a name="id937772"></a><h2>Description</h2>
@@ -62,7 +62,7 @@
 <tbody><tr>
 <td>
 <span class="term">Postconditions:</span></td>
-<td><code class="computeroutput">this-&gt;<a href="any.html#id717435-bb">empty</a>()</code></td>
+<td><code class="computeroutput">this-&gt;<a href="any.html#id717434-bb">empty</a>()</code></td>
 </tr></tbody>
 </table></div>
 </li>
@@ -127,7 +127,7 @@
             current instance, discarding previous content, so that the
             new content is equivalent in both type and value to the
             content of <code class="computeroutput">rhs</code>, or empty if
-            <code class="computeroutput">rhs.<a href="any.html#id717435-bb">empty</a>()</code>.</td>
+            <code class="computeroutput">rhs.<a href="any.html#id717434-bb">empty</a>()</code>.</td>
 </tr>
 <tr>
 <td>
@@ -218,10 +218,10 @@
 </div>
 <div class="refsect2" lang="en">
 <a name="id938267"></a><h3>
-<a name="id717431-bb"></a><code class="computeroutput">any</code> queries</h3>
+<a name="id717430-bb"></a><code class="computeroutput">any</code> queries</h3>
 <div class="orderedlist"><ol type="1">
 <li>
-<pre class="literallayout"><span class="type"><span class="bold"><strong>bool</strong></span></span> <a name="id717435-bb"></a>empty() <span class="bold"><strong>const</strong></span>;</pre>
+<pre class="literallayout"><span class="type"><span class="bold"><strong>bool</strong></span></span> <a name="id717434-bb"></a>empty() <span class="bold"><strong>const</strong></span>;</pre>
 <div class="variablelist"><table border="0">
 <col align="left" valign="top">
 <tbody>
@@ -241,7 +241,7 @@
 </table></div>
 </li>
 <li>
-<pre class="literallayout"><span class="type"><span class="bold"><strong>const</strong></span> std::type_info &amp;</span> <a name="id717460-bb"></a>type() <span class="bold"><strong>const</strong></span>;</pre>
+<pre class="literallayout"><span class="type"><span class="bold"><strong>const</strong></span> std::type_info &amp;</span> <a name="id717459-bb"></a>type() <span class="bold"><strong>const</strong></span>;</pre>
 <div class="variablelist"><table border="0">
 <col align="left" valign="top">
 <tbody>

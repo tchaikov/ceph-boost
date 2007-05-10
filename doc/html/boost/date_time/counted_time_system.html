@@ -40,55 +40,55 @@
   <span class="bold"><strong>typedef</strong></span> time_rep_type::date_type                    date_type;              
   <span class="bold"><strong>typedef</strong></span> time_rep_type::date_duration_type           date_duration_type;     
 
-  <span class="emphasis"><em>// <a href="counted_time_system.html#id897421-bb">public static functions</a></em></span>
-  <span class="bold"><strong>template</strong></span>&lt;<span class="bold"><strong>typename</strong></span> T&gt; <span class="type"><span class="bold"><strong>static</strong></span> <span class="bold"><strong>void</strong></span></span> <a href="counted_time_system.html#id897424-bb">unused_var</a>(<span class="bold"><strong>const</strong></span> T &amp;) ;
+  <span class="emphasis"><em>// <a href="counted_time_system.html#id932847-bb">public static functions</a></em></span>
+  <span class="bold"><strong>template</strong></span>&lt;<span class="bold"><strong>typename</strong></span> T&gt; <span class="type"><span class="bold"><strong>static</strong></span> <span class="bold"><strong>void</strong></span></span> <a href="counted_time_system.html#id932851-bb">unused_var</a>(<span class="bold"><strong>const</strong></span> T &amp;) ;
   <span class="type"><span class="bold"><strong>static</strong></span> time_rep_type</span> 
-  <a href="counted_time_system.html#id803117-bb">get_time_rep</a>(<span class="bold"><strong>const</strong></span> date_type &amp;, <span class="bold"><strong>const</strong></span> time_duration_type &amp;, 
+  <a href="counted_time_system.html#id937314-bb">get_time_rep</a>(<span class="bold"><strong>const</strong></span> date_type &amp;, <span class="bold"><strong>const</strong></span> time_duration_type &amp;, 
                date_time::dst_flags = not_dst) ;
-  <span class="type"><span class="bold"><strong>static</strong></span> time_rep_type</span> <a href="counted_time_system.html#id791419-bb">get_time_rep</a>(special_values) ;
-  <span class="type"><span class="bold"><strong>static</strong></span> date_type</span> <a href="counted_time_system.html#id869827-bb">get_date</a>(<span class="bold"><strong>const</strong></span> time_rep_type &amp;) ;
-  <span class="type"><span class="bold"><strong>static</strong></span> time_duration_type</span> <a href="counted_time_system.html#id832113-bb">get_time_of_day</a>(<span class="bold"><strong>const</strong></span> time_rep_type &amp;) ;
-  <span class="type"><span class="bold"><strong>static</strong></span> std::string</span> <a href="counted_time_system.html#id654571-bb">zone_name</a>(<span class="bold"><strong>const</strong></span> time_rep_type &amp;) ;
-  <span class="type"><span class="bold"><strong>static</strong></span> <span class="bold"><strong>bool</strong></span></span> <a href="counted_time_system.html#id828316-bb">is_equal</a>(<span class="bold"><strong>const</strong></span> time_rep_type &amp;, <span class="bold"><strong>const</strong></span> time_rep_type &amp;) ;
-  <span class="type"><span class="bold"><strong>static</strong></span> <span class="bold"><strong>bool</strong></span></span> <a href="counted_time_system.html#id899049-bb">is_less</a>(<span class="bold"><strong>const</strong></span> time_rep_type &amp;, <span class="bold"><strong>const</strong></span> time_rep_type &amp;) ;
+  <span class="type"><span class="bold"><strong>static</strong></span> time_rep_type</span> <a href="counted_time_system.html#id937342-bb">get_time_rep</a>(special_values) ;
+  <span class="type"><span class="bold"><strong>static</strong></span> date_type</span> <a href="counted_time_system.html#id927389-bb">get_date</a>(<span class="bold"><strong>const</strong></span> time_rep_type &amp;) ;
+  <span class="type"><span class="bold"><strong>static</strong></span> time_duration_type</span> <a href="counted_time_system.html#id935148-bb">get_time_of_day</a>(<span class="bold"><strong>const</strong></span> time_rep_type &amp;) ;
+  <span class="type"><span class="bold"><strong>static</strong></span> std::string</span> <a href="counted_time_system.html#id935161-bb">zone_name</a>(<span class="bold"><strong>const</strong></span> time_rep_type &amp;) ;
+  <span class="type"><span class="bold"><strong>static</strong></span> <span class="bold"><strong>bool</strong></span></span> <a href="counted_time_system.html#id935175-bb">is_equal</a>(<span class="bold"><strong>const</strong></span> time_rep_type &amp;, <span class="bold"><strong>const</strong></span> time_rep_type &amp;) ;
+  <span class="type"><span class="bold"><strong>static</strong></span> <span class="bold"><strong>bool</strong></span></span> <a href="counted_time_system.html#id873516-bb">is_less</a>(<span class="bold"><strong>const</strong></span> time_rep_type &amp;, <span class="bold"><strong>const</strong></span> time_rep_type &amp;) ;
   <span class="type"><span class="bold"><strong>static</strong></span> time_rep_type</span> 
-  <a href="counted_time_system.html#id792143-bb">add_days</a>(<span class="bold"><strong>const</strong></span> time_rep_type &amp;, <span class="bold"><strong>const</strong></span> date_duration_type &amp;) ;
+  <a href="counted_time_system.html#id864161-bb">add_days</a>(<span class="bold"><strong>const</strong></span> time_rep_type &amp;, <span class="bold"><strong>const</strong></span> date_duration_type &amp;) ;
   <span class="type"><span class="bold"><strong>static</strong></span> time_rep_type</span> 
-  <a href="counted_time_system.html#id892976-bb">subtract_days</a>(<span class="bold"><strong>const</strong></span> time_rep_type &amp;, <span class="bold"><strong>const</strong></span> date_duration_type &amp;) ;
+  <a href="counted_time_system.html#id934691-bb">subtract_days</a>(<span class="bold"><strong>const</strong></span> time_rep_type &amp;, <span class="bold"><strong>const</strong></span> date_duration_type &amp;) ;
   <span class="type"><span class="bold"><strong>static</strong></span> time_rep_type</span> 
-  <a href="counted_time_system.html#id892996-bb">subtract_time_duration</a>(<span class="bold"><strong>const</strong></span> time_rep_type &amp;, <span class="bold"><strong>const</strong></span> time_duration_type &amp;) ;
+  <a href="counted_time_system.html#id934711-bb">subtract_time_duration</a>(<span class="bold"><strong>const</strong></span> time_rep_type &amp;, <span class="bold"><strong>const</strong></span> time_duration_type &amp;) ;
   <span class="type"><span class="bold"><strong>static</strong></span> time_rep_type</span> 
-  <a href="counted_time_system.html#id793248-bb">add_time_duration</a>(<span class="bold"><strong>const</strong></span> time_rep_type &amp;, time_duration_type) ;
+  <a href="counted_time_system.html#id933422-bb">add_time_duration</a>(<span class="bold"><strong>const</strong></span> time_rep_type &amp;, time_duration_type) ;
   <span class="type"><span class="bold"><strong>static</strong></span> time_duration_type</span> 
-  <a href="counted_time_system.html#id756980-bb">subtract_times</a>(<span class="bold"><strong>const</strong></span> time_rep_type &amp;, <span class="bold"><strong>const</strong></span> time_rep_type &amp;) ;
+  <a href="counted_time_system.html#id933442-bb">subtract_times</a>(<span class="bold"><strong>const</strong></span> time_rep_type &amp;, <span class="bold"><strong>const</strong></span> time_rep_type &amp;) ;
 };</pre></div>
 <div class="refsect1" lang="en">
-<a name="id1139049"></a><h2>Description</h2>
+<a name="id1139071"></a><h2>Description</h2>
 <div class="refsect2" lang="en">
-<a name="id1139052"></a><h3>
-<a name="id897421-bb"></a><code class="computeroutput">counted_time_system</code> public static functions</h3>
+<a name="id1139074"></a><h3>
+<a name="id932847-bb"></a><code class="computeroutput">counted_time_system</code> public static functions</h3>
 <div class="orderedlist"><ol type="1">
-<li><pre class="literallayout"><span class="bold"><strong>template</strong></span>&lt;<span class="bold"><strong>typename</strong></span> T&gt; <span class="type"><span class="bold"><strong>static</strong></span> <span class="bold"><strong>void</strong></span></span> <a name="id897424-bb"></a>unused_var(<span class="bold"><strong>const</strong></span> T &amp;) ;</pre></li>
+<li><pre class="literallayout"><span class="bold"><strong>template</strong></span>&lt;<span class="bold"><strong>typename</strong></span> T&gt; <span class="type"><span class="bold"><strong>static</strong></span> <span class="bold"><strong>void</strong></span></span> <a name="id932851-bb"></a>unused_var(<span class="bold"><strong>const</strong></span> T &amp;) ;</pre></li>
 <li><pre class="literallayout"><span class="type"><span class="bold"><strong>static</strong></span> time_rep_type</span> 
-<a name="id803117-bb"></a>get_time_rep(<span class="bold"><strong>const</strong></span> date_type &amp; day, <span class="bold"><strong>const</strong></span> time_duration_type &amp; tod, 
+<a name="id937314-bb"></a>get_time_rep(<span class="bold"><strong>const</strong></span> date_type &amp; day, <span class="bold"><strong>const</strong></span> time_duration_type &amp; tod, 
              date_time::dst_flags dst = not_dst) ;</pre></li>
-<li><pre class="literallayout"><span class="type"><span class="bold"><strong>static</strong></span> time_rep_type</span> <a name="id791419-bb"></a>get_time_rep(special_values sv) ;</pre></li>
-<li><pre class="literallayout"><span class="type"><span class="bold"><strong>static</strong></span> date_type</span> <a name="id869827-bb"></a>get_date(<span class="bold"><strong>const</strong></span> time_rep_type &amp; val) ;</pre></li>
-<li><pre class="literallayout"><span class="type"><span class="bold"><strong>static</strong></span> time_duration_type</span> <a name="id832113-bb"></a>get_time_of_day(<span class="bold"><strong>const</strong></span> time_rep_type &amp; val) ;</pre></li>
-<li><pre class="literallayout"><span class="type"><span class="bold"><strong>static</strong></span> std::string</span> <a name="id654571-bb"></a>zone_name(<span class="bold"><strong>const</strong></span> time_rep_type &amp;) ;</pre></li>
-<li><pre class="literallayout"><span class="type"><span class="bold"><strong>static</strong></span> <span class="bold"><strong>bool</strong></span></span> <a name="id828316-bb"></a>is_equal(<span class="bold"><strong>const</strong></span> time_rep_type &amp; lhs, <span class="bold"><strong>const</strong></span> time_rep_type &amp; rhs) ;</pre></li>
-<li><pre class="literallayout"><span class="type"><span class="bold"><strong>static</strong></span> <span class="bold"><strong>bool</strong></span></span> <a name="id899049-bb"></a>is_less(<span class="bold"><strong>const</strong></span> time_rep_type &amp; lhs, <span class="bold"><strong>const</strong></span> time_rep_type &amp; rhs) ;</pre></li>
+<li><pre class="literallayout"><span class="type"><span class="bold"><strong>static</strong></span> time_rep_type</span> <a name="id937342-bb"></a>get_time_rep(special_values sv) ;</pre></li>
+<li><pre class="literallayout"><span class="type"><span class="bold"><strong>static</strong></span> date_type</span> <a name="id927389-bb"></a>get_date(<span class="bold"><strong>const</strong></span> time_rep_type &amp; val) ;</pre></li>
+<li><pre class="literallayout"><span class="type"><span class="bold"><strong>static</strong></span> time_duration_type</span> <a name="id935148-bb"></a>get_time_of_day(<span class="bold"><strong>const</strong></span> time_rep_type &amp; val) ;</pre></li>
+<li><pre class="literallayout"><span class="type"><span class="bold"><strong>static</strong></span> std::string</span> <a name="id935161-bb"></a>zone_name(<span class="bold"><strong>const</strong></span> time_rep_type &amp;) ;</pre></li>
+<li><pre class="literallayout"><span class="type"><span class="bold"><strong>static</strong></span> <span class="bold"><strong>bool</strong></span></span> <a name="id935175-bb"></a>is_equal(<span class="bold"><strong>const</strong></span> time_rep_type &amp; lhs, <span class="bold"><strong>const</strong></span> time_rep_type &amp; rhs) ;</pre></li>
+<li><pre class="literallayout"><span class="type"><span class="bold"><strong>static</strong></span> <span class="bold"><strong>bool</strong></span></span> <a name="id873516-bb"></a>is_less(<span class="bold"><strong>const</strong></span> time_rep_type &amp; lhs, <span class="bold"><strong>const</strong></span> time_rep_type &amp; rhs) ;</pre></li>
 <li><pre class="literallayout"><span class="type"><span class="bold"><strong>static</strong></span> time_rep_type</span> 
-<a name="id792143-bb"></a>add_days(<span class="bold"><strong>const</strong></span> time_rep_type &amp; base, <span class="bold"><strong>const</strong></span> date_duration_type &amp; dd) ;</pre></li>
+<a name="id864161-bb"></a>add_days(<span class="bold"><strong>const</strong></span> time_rep_type &amp; base, <span class="bold"><strong>const</strong></span> date_duration_type &amp; dd) ;</pre></li>
 <li><pre class="literallayout"><span class="type"><span class="bold"><strong>static</strong></span> time_rep_type</span> 
-<a name="id892976-bb"></a>subtract_days(<span class="bold"><strong>const</strong></span> time_rep_type &amp; base, <span class="bold"><strong>const</strong></span> date_duration_type &amp; dd) ;</pre></li>
+<a name="id934691-bb"></a>subtract_days(<span class="bold"><strong>const</strong></span> time_rep_type &amp; base, <span class="bold"><strong>const</strong></span> date_duration_type &amp; dd) ;</pre></li>
 <li><pre class="literallayout"><span class="type"><span class="bold"><strong>static</strong></span> time_rep_type</span> 
-<a name="id892996-bb"></a>subtract_time_duration(<span class="bold"><strong>const</strong></span> time_rep_type &amp; base, 
+<a name="id934711-bb"></a>subtract_time_duration(<span class="bold"><strong>const</strong></span> time_rep_type &amp; base, 
                        <span class="bold"><strong>const</strong></span> time_duration_type &amp; td) ;</pre></li>
 <li><pre class="literallayout"><span class="type"><span class="bold"><strong>static</strong></span> time_rep_type</span> 
-<a name="id793248-bb"></a>add_time_duration(<span class="bold"><strong>const</strong></span> time_rep_type &amp; base, time_duration_type td) ;</pre></li>
+<a name="id933422-bb"></a>add_time_duration(<span class="bold"><strong>const</strong></span> time_rep_type &amp; base, time_duration_type td) ;</pre></li>
 <li><pre class="literallayout"><span class="type"><span class="bold"><strong>static</strong></span> time_duration_type</span> 
-<a name="id756980-bb"></a>subtract_times(<span class="bold"><strong>const</strong></span> time_rep_type &amp; lhs, <span class="bold"><strong>const</strong></span> time_rep_type &amp; rhs) ;</pre></li>
+<a name="id933442-bb"></a>subtract_times(<span class="bold"><strong>const</strong></span> time_rep_type &amp; lhs, <span class="bold"><strong>const</strong></span> time_rep_type &amp; rhs) ;</pre></li>
 </ol></div>
 </div>
 </div>

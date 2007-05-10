@@ -32,23 +32,23 @@
 <div xmlns:rev="http://www.cs.rpi.edu/~gregod/boost/tools/doc/revision" class="refsynopsisdiv"><pre class="synopsis">
 <span class="bold"><strong>struct</strong></span> c_time {
 
-  <span class="emphasis"><em>// <a href="c_time.html#id837474-bb">public static functions</a></em></span>
-  <span class="type"><span class="bold"><strong>static</strong></span> std::tm *</span> <a href="c_time.html#id837478-bb">localtime</a>(<span class="bold"><strong>const</strong></span> std::time_t *, std::tm *) ;
-  <span class="type"><span class="bold"><strong>static</strong></span> std::tm *</span> <a href="c_time.html#id803239-bb">gmtime</a>(<span class="bold"><strong>const</strong></span> std::time_t *, std::tm *) ;
-  <span class="type"><span class="bold"><strong>static</strong></span> std::tm *</span> <a href="c_time.html#id789149-bb">localtime</a>(<span class="bold"><strong>const</strong></span> std::time_t *, std::tm *) ;
-  <span class="type"><span class="bold"><strong>static</strong></span> std::tm *</span> <a href="c_time.html#id789172-bb">gmtime</a>(<span class="bold"><strong>const</strong></span> std::time_t *, std::tm *) ;
+  <span class="emphasis"><em>// <a href="c_time.html#id792169-bb">public static functions</a></em></span>
+  <span class="type"><span class="bold"><strong>static</strong></span> std::tm *</span> <a href="c_time.html#id792173-bb">localtime</a>(<span class="bold"><strong>const</strong></span> std::time_t *, std::tm *) ;
+  <span class="type"><span class="bold"><strong>static</strong></span> std::tm *</span> <a href="c_time.html#id792196-bb">gmtime</a>(<span class="bold"><strong>const</strong></span> std::time_t *, std::tm *) ;
+  <span class="type"><span class="bold"><strong>static</strong></span> std::tm *</span> <a href="c_time.html#id831545-bb">localtime</a>(<span class="bold"><strong>const</strong></span> std::time_t *, std::tm *) ;
+  <span class="type"><span class="bold"><strong>static</strong></span> std::tm *</span> <a href="c_time.html#id861268-bb">gmtime</a>(<span class="bold"><strong>const</strong></span> std::time_t *, std::tm *) ;
 };</pre></div>
 <div class="refsect1" lang="en">
-<a name="id1031245"></a><h2>Description</h2>
+<a name="id1031249"></a><h2>Description</h2>
 <p>Provides a uniform interface to some ctime functions and their '_r' counterparts. The '_r' functions require a pointer to a user created std::tm struct whereas the regular functions use a staticly created struct and return a pointer to that. These wrapper functions require the user to create a std::tm struct and send in a pointer to it. A pointer to the user created struct will be returned. </p>
 <div class="refsect2" lang="en">
-<a name="id1031257"></a><h3>
-<a name="id837474-bb"></a><code class="computeroutput">c_time</code> public static functions</h3>
+<a name="id1031262"></a><h3>
+<a name="id792169-bb"></a><code class="computeroutput">c_time</code> public static functions</h3>
 <div class="orderedlist"><ol type="1">
-<li><pre class="literallayout"><span class="type"><span class="bold"><strong>static</strong></span> std::tm *</span> <a name="id837478-bb"></a>localtime(<span class="bold"><strong>const</strong></span> std::time_t * t, std::tm * result) ;</pre></li>
-<li><pre class="literallayout"><span class="type"><span class="bold"><strong>static</strong></span> std::tm *</span> <a name="id803239-bb"></a>gmtime(<span class="bold"><strong>const</strong></span> std::time_t * t, std::tm * result) ;</pre></li>
-<li><pre class="literallayout"><span class="type"><span class="bold"><strong>static</strong></span> std::tm *</span> <a name="id789149-bb"></a>localtime(<span class="bold"><strong>const</strong></span> std::time_t * t, std::tm * result) ;</pre></li>
-<li><pre class="literallayout"><span class="type"><span class="bold"><strong>static</strong></span> std::tm *</span> <a name="id789172-bb"></a>gmtime(<span class="bold"><strong>const</strong></span> std::time_t * t, std::tm * result) ;</pre></li>
+<li><pre class="literallayout"><span class="type"><span class="bold"><strong>static</strong></span> std::tm *</span> <a name="id792173-bb"></a>localtime(<span class="bold"><strong>const</strong></span> std::time_t * t, std::tm * result) ;</pre></li>
+<li><pre class="literallayout"><span class="type"><span class="bold"><strong>static</strong></span> std::tm *</span> <a name="id792196-bb"></a>gmtime(<span class="bold"><strong>const</strong></span> std::time_t * t, std::tm * result) ;</pre></li>
+<li><pre class="literallayout"><span class="type"><span class="bold"><strong>static</strong></span> std::tm *</span> <a name="id831545-bb"></a>localtime(<span class="bold"><strong>const</strong></span> std::time_t * t, std::tm * result) ;</pre></li>
+<li><pre class="literallayout"><span class="type"><span class="bold"><strong>static</strong></span> std::tm *</span> <a name="id861268-bb"></a>gmtime(<span class="bold"><strong>const</strong></span> std::time_t * t, std::tm * result) ;</pre></li>
 </ol></div>
 </div>
 </div>

@@ -47,10 +47,10 @@
   <span class="bold"><strong>static</strong></span> <span class="bold"><strong>const</strong></span> size_type static_size = N;
 
   <span class="emphasis"><em>// <a href="array.html#boost.arrayconstruct-copy-destruct">construct/copy/destruct</a></em></span>
-  <span class="bold"><strong>template</strong></span>&lt;<span class="bold"><strong>typename</strong></span> U&gt; array&amp; <a href="array.html#id718719-bb"><span class="bold"><strong>operator</strong></span>=</a>(<span class="bold"><strong>const</strong></span> <a href="array.html" title="Class template array">array</a>&lt;U, N&gt;&amp;);
+  <span class="bold"><strong>template</strong></span>&lt;<span class="bold"><strong>typename</strong></span> U&gt; array&amp; <a href="array.html#id718718-bb"><span class="bold"><strong>operator</strong></span>=</a>(<span class="bold"><strong>const</strong></span> <a href="array.html" title="Class template array">array</a>&lt;U, N&gt;&amp;);
 
-  <span class="emphasis"><em>// <a href="array.html#id718756-bb">iterator support</a></em></span>
-  <span class="type">iterator</span> <a href="array.html#id718764-bb">begin</a>();
+  <span class="emphasis"><em>// <a href="array.html#id718755-bb">iterator support</a></em></span>
+  <span class="type">iterator</span> <a href="array.html#id718763-bb">begin</a>();
   <span class="type">const_iterator</span> <a href="array.html#id718770-bb">begin</a>() <span class="bold"><strong>const</strong></span>;
   <span class="type">iterator</span> <a href="array.html#id718792-bb">end</a>();
   <span class="type">const_iterator</span> <a href="array.html#id718798-bb">end</a>() <span class="bold"><strong>const</strong></span>;
@@ -70,12 +70,12 @@
   <span class="type">reference</span> <a href="array.html#id718936-bb"><span class="bold"><strong>operator</strong></span>[]</a>(size_type);
   <span class="type">const_reference</span> <a href="array.html#id718950-bb"><span class="bold"><strong>operator</strong></span>[]</a>(size_type) <span class="bold"><strong>const</strong></span>;
   <span class="type">reference</span> <a href="array.html#id718988-bb">at</a>(size_type);
-  <span class="type">const_reference</span> <a href="array.html#id719003-bb">at</a>(size_type) <span class="bold"><strong>const</strong></span>;
+  <span class="type">const_reference</span> <a href="array.html#id719002-bb">at</a>(size_type) <span class="bold"><strong>const</strong></span>;
   <span class="type">reference</span> <a href="array.html#id719040-bb">front</a>();
-  <span class="type">const_reference</span> <a href="array.html#id719047-bb">front</a>() <span class="bold"><strong>const</strong></span>;
+  <span class="type">const_reference</span> <a href="array.html#id719046-bb">front</a>() <span class="bold"><strong>const</strong></span>;
   <span class="type">reference</span> <a href="array.html#id719074-bb">back</a>();
   <span class="type">const_reference</span> <a href="array.html#id719080-bb">back</a>() <span class="bold"><strong>const</strong></span>;
-  <span class="type"><span class="bold"><strong>const</strong></span> T*</span> <a href="array.html#id719104-bb">data</a>() <span class="bold"><strong>const</strong></span>;
+  <span class="type"><span class="bold"><strong>const</strong></span> T*</span> <a href="array.html#id719103-bb">data</a>() <span class="bold"><strong>const</strong></span>;
   <span class="type">T*</span> <a href="array.html#id719123-bb">c_array</a>();
 
   <span class="emphasis"><em>// <a href="array.html#id719142-bb">modifiers</a></em></span>
@@ -85,8 +85,8 @@
   T elems[N];
 };
 
-<span class="emphasis"><em>// <a href="array.html#id719223-bb">specialized algorithms</a></em></span>
-<span class="bold"><strong>template</strong></span>&lt;<span class="bold"><strong>typename</strong></span> T, std::size_t N&gt; <span class="type"><span class="bold"><strong>void</strong></span></span> <a href="array.html#id719227-bb">swap</a>(<a href="array.html" title="Class template array">array</a>&lt;T, N&gt;&amp;, <a href="array.html" title="Class template array">array</a>&lt;T, N&gt;&amp;);
+<span class="emphasis"><em>// <a href="array.html#id719222-bb">specialized algorithms</a></em></span>
+<span class="bold"><strong>template</strong></span>&lt;<span class="bold"><strong>typename</strong></span> T, std::size_t N&gt; <span class="type"><span class="bold"><strong>void</strong></span></span> <a href="array.html#id719226-bb">swap</a>(<a href="array.html" title="Class template array">array</a>&lt;T, N&gt;&amp;, <a href="array.html" title="Class template array">array</a>&lt;T, N&gt;&amp;);
 
 <span class="emphasis"><em>// <a href="array.html#id719285-bb">comparisons</a></em></span>
 <span class="bold"><strong>template</strong></span>&lt;<span class="bold"><strong>typename</strong></span> T, std::size_t N&gt; 
@@ -96,35 +96,35 @@
 <span class="bold"><strong>template</strong></span>&lt;<span class="bold"><strong>typename</strong></span> T, std::size_t N&gt; 
   <span class="type"><span class="bold"><strong>bool</strong></span></span> <a href="array.html#id719405-bb"><span class="bold"><strong>operator</strong></span>&lt;</a>(<span class="bold"><strong>const</strong></span> <a href="array.html" title="Class template array">array</a>&lt;T, N&gt;&amp;, <span class="bold"><strong>const</strong></span> <a href="array.html" title="Class template array">array</a>&lt;T, N&gt;&amp;);
 <span class="bold"><strong>template</strong></span>&lt;<span class="bold"><strong>typename</strong></span> T, std::size_t N&gt; 
-  <span class="type"><span class="bold"><strong>bool</strong></span></span> <a href="array.html#id719471-bb"><span class="bold"><strong>operator</strong></span>&gt;</a>(<span class="bold"><strong>const</strong></span> <a href="array.html" title="Class template array">array</a>&lt;T, N&gt;&amp;, <span class="bold"><strong>const</strong></span> <a href="array.html" title="Class template array">array</a>&lt;T, N&gt;&amp;);
+  <span class="type"><span class="bold"><strong>bool</strong></span></span> <a href="array.html#id719470-bb"><span class="bold"><strong>operator</strong></span>&gt;</a>(<span class="bold"><strong>const</strong></span> <a href="array.html" title="Class template array">array</a>&lt;T, N&gt;&amp;, <span class="bold"><strong>const</strong></span> <a href="array.html" title="Class template array">array</a>&lt;T, N&gt;&amp;);
 <span class="bold"><strong>template</strong></span>&lt;<span class="bold"><strong>typename</strong></span> T, std::size_t N&gt; 
-  <span class="type"><span class="bold"><strong>bool</strong></span></span> <a href="array.html#id719523-bb"><span class="bold"><strong>operator</strong></span>&lt;=</a>(<span class="bold"><strong>const</strong></span> <a href="array.html" title="Class template array">array</a>&lt;T, N&gt;&amp;, <span class="bold"><strong>const</strong></span> <a href="array.html" title="Class template array">array</a>&lt;T, N&gt;&amp;);
+  <span class="type"><span class="bold"><strong>bool</strong></span></span> <a href="array.html#id719522-bb"><span class="bold"><strong>operator</strong></span>&lt;=</a>(<span class="bold"><strong>const</strong></span> <a href="array.html" title="Class template array">array</a>&lt;T, N&gt;&amp;, <span class="bold"><strong>const</strong></span> <a href="array.html" title="Class template array">array</a>&lt;T, N&gt;&amp;);
 <span class="bold"><strong>template</strong></span>&lt;<span class="bold"><strong>typename</strong></span> T, std::size_t N&gt; 
-  <span class="type"><span class="bold"><strong>bool</strong></span></span> <a href="array.html#id719575-bb"><span class="bold"><strong>operator</strong></span>&gt;=</a>(<span class="bold"><strong>const</strong></span> <a href="array.html" title="Class template array">array</a>&lt;T, N&gt;&amp;, <span class="bold"><strong>const</strong></span> <a href="array.html" title="Class template array">array</a>&lt;T, N&gt;&amp;);</pre></div>
+  <span class="type"><span class="bold"><strong>bool</strong></span></span> <a href="array.html#id719574-bb"><span class="bold"><strong>operator</strong></span>&gt;=</a>(<span class="bold"><strong>const</strong></span> <a href="array.html" title="Class template array">array</a>&lt;T, N&gt;&amp;, <span class="bold"><strong>const</strong></span> <a href="array.html" title="Class template array">array</a>&lt;T, N&gt;&amp;);</pre></div>
 <div class="refsect1" lang="en">
-<a name="id940358"></a><h2>Description</h2>
+<a name="id940357"></a><h2>Description</h2>
 <div class="refsect2" lang="en">
 <a name="id940361"></a><h3>
 <a name="boost.arrayconstruct-copy-destruct"></a><code class="computeroutput">array</code> construct/copy/destruct</h3>
 <div class="orderedlist"><ol type="1"><li>
-<pre class="literallayout"><span class="bold"><strong>template</strong></span>&lt;<span class="bold"><strong>typename</strong></span> U&gt; array&amp; <a name="id718719-bb"></a><span class="bold"><strong>operator</strong></span>=(<span class="bold"><strong>const</strong></span> <a href="array.html" title="Class template array">array</a>&lt;U, N&gt;&amp; other);</pre>
+<pre class="literallayout"><span class="bold"><strong>template</strong></span>&lt;<span class="bold"><strong>typename</strong></span> U&gt; array&amp; <a name="id718718-bb"></a><span class="bold"><strong>operator</strong></span>=(<span class="bold"><strong>const</strong></span> <a href="array.html" title="Class template array">array</a>&lt;U, N&gt;&amp; other);</pre>
 <div class="variablelist"><table border="0">
 <col align="left" valign="top">
 <tbody><tr>
 <td>
 <span class="term">Effects:</span></td>
-<td><code class="computeroutput">std::copy(rhs.<a href="array.html#id718760-bb">begin</a>(),rhs.<a href="array.html#id718788-bb">end</a>(), <a href="array.html#id718760-bb">begin</a>())</code></td>
+<td><code class="computeroutput">std::copy(rhs.<a href="array.html#id718759-bb">begin</a>(),rhs.<a href="array.html#id718788-bb">end</a>(), <a href="array.html#id718759-bb">begin</a>())</code></td>
 </tr></tbody>
 </table></div>
 </li></ol></div>
 </div>
 <div class="refsect2" lang="en">
 <a name="id940459"></a><h3>
-<a name="id718756-bb"></a><code class="computeroutput">array</code> iterator support</h3>
+<a name="id718755-bb"></a><code class="computeroutput">array</code> iterator support</h3>
 <div class="orderedlist"><ol type="1">
 <li>
-<p><a name="id718760-bb"></a></p>
-<pre class="literallayout"><span class="type">iterator</span> <a name="id718764-bb"></a>begin();
+<p><a name="id718759-bb"></a></p>
+<pre class="literallayout"><span class="type">iterator</span> <a name="id718763-bb"></a>begin();
 <span class="type">const_iterator</span> <a name="id718770-bb"></a>begin() <span class="bold"><strong>const</strong></span>;</pre>
 <div class="variablelist"><table border="0">
 <col align="left" valign="top">
@@ -282,7 +282,7 @@
 <li>
 <p><a name="id718984-bb"></a></p>
 <pre class="literallayout"><span class="type">reference</span> <a name="id718988-bb"></a>at(size_type i);
-<span class="type">const_reference</span> <a name="id719003-bb"></a>at(size_type i) <span class="bold"><strong>const</strong></span>;</pre>
+<span class="type">const_reference</span> <a name="id719002-bb"></a>at(size_type i) <span class="bold"><strong>const</strong></span>;</pre>
 <div class="variablelist"><table border="0">
 <col align="left" valign="top">
 <tbody>
@@ -305,7 +305,7 @@
 <li>
 <p><a name="id719036-bb"></a></p>
 <pre class="literallayout"><span class="type">reference</span> <a name="id719040-bb"></a>front();
-<span class="type">const_reference</span> <a name="id719047-bb"></a>front() <span class="bold"><strong>const</strong></span>;</pre>
+<span class="type">const_reference</span> <a name="id719046-bb"></a>front() <span class="bold"><strong>const</strong></span>;</pre>
 <div class="variablelist"><table border="0">
 <col align="left" valign="top">
 <tbody>
@@ -353,7 +353,7 @@
 </table></div>
 </li>
 <li>
-<pre class="literallayout"><span class="type"><span class="bold"><strong>const</strong></span> T*</span> <a name="id719104-bb"></a>data() <span class="bold"><strong>const</strong></span>;</pre>
+<pre class="literallayout"><span class="type"><span class="bold"><strong>const</strong></span> T*</span> <a name="id719103-bb"></a>data() <span class="bold"><strong>const</strong></span>;</pre>
 <div class="variablelist"><table border="0">
 <col align="left" valign="top">
 <tbody>
@@ -391,7 +391,7 @@
 </ol></div>
 </div>
 <div class="refsect2" lang="en">
-<a name="id941200"></a><h3>
+<a name="id941201"></a><h3>
 <a name="id719142-bb"></a><code class="computeroutput">array</code> modifiers</h3>
 <div class="orderedlist"><ol type="1">
 <li>
@@ -402,7 +402,7 @@
 <tr>
 <td>
 <span class="term">Effects:</span></td>
-<td><code class="computeroutput">std::swap_ranges(<a href="array.html#id718760-bb">begin</a>(), <a href="array.html#id718788-bb">end</a>(), other.<a href="array.html#id718760-bb">begin</a>())</code></td>
+<td><code class="computeroutput">std::swap_ranges(<a href="array.html#id718759-bb">begin</a>(), <a href="array.html#id718788-bb">end</a>(), other.<a href="array.html#id718759-bb">begin</a>())</code></td>
 </tr>
 <tr>
 <td>
@@ -420,17 +420,17 @@
 <tbody><tr>
 <td>
 <span class="term">Effects:</span></td>
-<td><code class="computeroutput">std::fill_n(<a href="array.html#id718760-bb">begin</a>(), N, value)</code></td>
+<td><code class="computeroutput">std::fill_n(<a href="array.html#id718759-bb">begin</a>(), N, value)</code></td>
 </tr></tbody>
 </table></div>
 </li>
 </ol></div>
 </div>
 <div class="refsect2" lang="en">
-<a name="id941338"></a><h3>
-<a name="id719223-bb"></a><code class="computeroutput">array</code> specialized algorithms</h3>
+<a name="id941339"></a><h3>
+<a name="id719222-bb"></a><code class="computeroutput">array</code> specialized algorithms</h3>
 <div class="orderedlist"><ol type="1"><li>
-<pre class="literallayout"><span class="bold"><strong>template</strong></span>&lt;<span class="bold"><strong>typename</strong></span> T, std::size_t N&gt; <span class="type"><span class="bold"><strong>void</strong></span></span> <a name="id719227-bb"></a>swap(<a href="array.html" title="Class template array">array</a>&lt;T, N&gt;&amp; x, <a href="array.html" title="Class template array">array</a>&lt;T, N&gt;&amp; y);</pre>
+<pre class="literallayout"><span class="bold"><strong>template</strong></span>&lt;<span class="bold"><strong>typename</strong></span> T, std::size_t N&gt; <span class="type"><span class="bold"><strong>void</strong></span></span> <a name="id719226-bb"></a>swap(<a href="array.html" title="Class template array">array</a>&lt;T, N&gt;&amp; x, <a href="array.html" title="Class template array">array</a>&lt;T, N&gt;&amp; y);</pre>
 <div class="variablelist"><table border="0">
 <col align="left" valign="top">
 <tbody>
@@ -460,7 +460,7 @@
 <tbody><tr>
 <td>
 <span class="term">Returns:</span></td>
-<td><code class="computeroutput">std::equal(x.<a href="array.html#id718760-bb">begin</a>(), x.<a href="array.html#id718788-bb">end</a>(), y.<a href="array.html#id718760-bb">begin</a>())</code></td>
+<td><code class="computeroutput">std::equal(x.<a href="array.html#id718759-bb">begin</a>(), x.<a href="array.html#id718788-bb">end</a>(), y.<a href="array.html#id718759-bb">begin</a>())</code></td>
 </tr></tbody>
 </table></div>
 </li>
@@ -484,13 +484,13 @@
 <tbody><tr>
 <td>
 <span class="term">Returns:</span></td>
-<td><code class="computeroutput">std::lexicographical_compare(x.<a href="array.html#id718760-bb">begin</a>(), x.<a href="array.html#id718788-bb">end</a>(), y.<a href="array.html#id718760-bb">begin</a>(), y.<a href="array.html#id718788-bb">end</a>())</code></td>
+<td><code class="computeroutput">std::lexicographical_compare(x.<a href="array.html#id718759-bb">begin</a>(), x.<a href="array.html#id718788-bb">end</a>(), y.<a href="array.html#id718759-bb">begin</a>(), y.<a href="array.html#id718788-bb">end</a>())</code></td>
 </tr></tbody>
 </table></div>
 </li>
 <li>
 <pre class="literallayout"><span class="bold"><strong>template</strong></span>&lt;<span class="bold"><strong>typename</strong></span> T, std::size_t N&gt; 
-  <span class="type"><span class="bold"><strong>bool</strong></span></span> <a name="id719471-bb"></a><span class="bold"><strong>operator</strong></span>&gt;(<span class="bold"><strong>const</strong></span> <a href="array.html" title="Class template array">array</a>&lt;T, N&gt;&amp; x, <span class="bold"><strong>const</strong></span> <a href="array.html" title="Class template array">array</a>&lt;T, N&gt;&amp; y);</pre>
+  <span class="type"><span class="bold"><strong>bool</strong></span></span> <a name="id719470-bb"></a><span class="bold"><strong>operator</strong></span>&gt;(<span class="bold"><strong>const</strong></span> <a href="array.html" title="Class template array">array</a>&lt;T, N&gt;&amp; x, <span class="bold"><strong>const</strong></span> <a href="array.html" title="Class template array">array</a>&lt;T, N&gt;&amp; y);</pre>
 <div class="variablelist"><table border="0">
 <col align="left" valign="top">
 <tbody><tr>
@@ -502,7 +502,7 @@
 </li>
 <li>
 <pre class="literallayout"><span class="bold"><strong>template</strong></span>&lt;<span class="bold"><strong>typename</strong></span> T, std::size_t N&gt; 
-  <span class="type"><span class="bold"><strong>bool</strong></span></span> <a name="id719523-bb"></a><span class="bold"><strong>operator</strong></span>&lt;=(<span class="bold"><strong>const</strong></span> <a href="array.html" title="Class template array">array</a>&lt;T, N&gt;&amp; x, <span class="bold"><strong>const</strong></span> <a href="array.html" title="Class template array">array</a>&lt;T, N&gt;&amp; y);</pre>
+  <span class="type"><span class="bold"><strong>bool</strong></span></span> <a name="id719522-bb"></a><span class="bold"><strong>operator</strong></span>&lt;=(<span class="bold"><strong>const</strong></span> <a href="array.html" title="Class template array">array</a>&lt;T, N&gt;&amp; x, <span class="bold"><strong>const</strong></span> <a href="array.html" title="Class template array">array</a>&lt;T, N&gt;&amp; y);</pre>
 <div class="variablelist"><table border="0">
 <col align="left" valign="top">
 <tbody><tr>
@@ -514,7 +514,7 @@
 </li>
 <li>
 <pre class="literallayout"><span class="bold"><strong>template</strong></span>&lt;<span class="bold"><strong>typename</strong></span> T, std::size_t N&gt; 
-  <span class="type"><span class="bold"><strong>bool</strong></span></span> <a name="id719575-bb"></a><span class="bold"><strong>operator</strong></span>&gt;=(<span class="bold"><strong>const</strong></span> <a href="array.html" title="Class template array">array</a>&lt;T, N&gt;&amp; x, <span class="bold"><strong>const</strong></span> <a href="array.html" title="Class template array">array</a>&lt;T, N&gt;&amp; y);</pre>
+  <span class="type"><span class="bold"><strong>bool</strong></span></span> <a name="id719574-bb"></a><span class="bold"><strong>operator</strong></span>&gt;=(<span class="bold"><strong>const</strong></span> <a href="array.html" title="Class template array">array</a>&lt;T, N&gt;&amp; x, <span class="bold"><strong>const</strong></span> <a href="array.html" title="Class template array">array</a>&lt;T, N&gt;&amp; y);</pre>
 <div class="variablelist"><table border="0">
 <col align="left" valign="top">
 <tbody><tr>
