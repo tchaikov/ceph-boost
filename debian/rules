@@ -127,14 +127,14 @@ install: build
 	rm -rf $(htmldir)
 	mkdir -p $(htmldir) $(htmldir)/more/css_0
 	cp more/css_0/* $(htmldir)/more/css_0
-	#cat debian/documentation-files | xargs cp --parents --target-directory=$(htmldir)
+	cat debian/documentation-files | xargs cp --parents --target-directory=$(htmldir)
 	rm -rf $(htmldir)/boost
 	dh_link -plibboost-doc \
 	   usr/include/boost \
 	   usr/share/doc/libboost-doc/HTML/boost
 
 	mkdir -p $(exampledir)
-	#cat debian/example-files | xargs cp -a --parents --target-directory=$(exampledir)
+	cat debian/example-files | xargs cp -a --parents --target-directory=$(exampledir)
 	#find $(exampledir) -type f | xargs chmod 644
 	dh_installdirs -plibboost-doc usr/share/lintian/overrides
 	dh_install -plibboost-doc \
