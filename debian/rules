@@ -132,7 +132,7 @@ install: build
 
 	mkdir -p $(exampledir)
 	cat debian/example-files | xargs cp -a --parents --target-directory=$(exampledir)
-	#find $(exampledir) -type f | xargs chmod 644
+	find $(exampledir) -type f | xargs chmod 644
 	dh_installdirs -plibboost-doc usr/share/lintian/overrides
 	dh_install -plibboost-doc \
 	   debian/libboost-doc.lintian-overrides \
