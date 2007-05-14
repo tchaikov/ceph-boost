@@ -1,6 +1,7 @@
 boost (1.34.0-1) unstable; urgency=low
 
   * New upstream release.
+  * libboost-doc is properly created and filled, also on hppa (closes: #406883).
 
  -- Domenico Andreoli <cavok@debian.org>  Mon, 14 May 2007 00:06:49 +0200
 
