@@ -11,7 +11,7 @@ export DH_OPTIONS
 # major and minor version numbers joined by an underscore.
 #
 boost_version = 1_34
-gcc_version = gcc41
+gcc_version = gcc42
 
 # Library suffix
 # Boost libraries encode build information in the resulting library
@@ -24,13 +24,13 @@ debug_suffix_mt = -$(gcc_version)-mt-d-$(boost_version)
 
 # Boost does not guarantee any ABI, it uses the full version in SONAME
 SOVERSION = 1.34.0
-DEBIAN_SUFFIX =
+DEBIAN_SUFFIX = -gcc-4.2
 
 DEB_BUILD_ARCH ?= $(shell dpkg-architecture -qDEB_BUILD_ARCH)
 
 TOOLSET_CONFIG="using gcc : : : <define>_REENTRANT <compileflags>-mlong-calls ;"
 ifneq ($(DEB_BUILD_ARCH), hppa)
-TOOLSET_CONFIG="using gcc : : : <define>_REENTRANT ;"
+TOOLSET_CONFIG="using gcc : 4.2 : g++-4.2 : <define>_REENTRANT ;"
 endif
 PYTHON_CONFIG="using python : 2.5 : /usr ;"
 
@@ -56,7 +56,7 @@ build-stamp: $(bjam)
 	cd tools/wave/build && ../../../$(JAM)
 	cd tools/regression/build && ../../../$(JAM)
 
-	$(JAM) -sBUILD="release debug <threading>single/multi"
+	$(JAM) variant=release,debug threading=single,multi
 	cd libs/python/pyste/install && python2.5 setup.py build
 
 	touch build-stamp
