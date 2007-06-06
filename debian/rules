@@ -271,10 +271,6 @@ install: build
 	dh_install -plibboost-dbg --autodest \
 	   debian/tmp/usr/lib/libboost_python$(debug_suffix_st).so.$(SOVERSION) \
 	   debian/tmp/usr/lib/libboost_python$(debug_suffix_mt).so.$(SOVERSION)
-	dh_installdirs -plibboost-python$(SOVERSION)${DEBIAN_SUFFIX} usr/share/lintian/overrides
-	dh_install -plibboost-python$(SOVERSION)${DEBIAN_SUFFIX} \
-	   debian/libboost-python$(SOVERSION)${DEBIAN_SUFFIX}.lintian-overrides \
-	   usr/share/lintian/overrides/libboost-python$(SOVERSION)${DEBIAN_SUFFIX}
 
 
 	# package libboost-python-dev
