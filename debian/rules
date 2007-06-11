@@ -176,7 +176,7 @@ install: build
 
 	# package libboost-filesystem-dev
 	dh_installdirs -plibboost-filesystem-dev usr/include/boost
-	mv debian/libboost-dev/usr/include/boost/filesystem \
+	mv debian/libboost-dev/usr/include/boost/filesystem* \
 	   debian/libboost-filesystem-dev/usr/include/boost
 	dh_install -plibboost-filesystem-dev --autodest \
 	   debian/tmp/usr/lib/libboost_filesystem$(release_suffix_st).a \

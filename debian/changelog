@@ -1,3 +1,9 @@
+boost (1.34.0-4) UNRELEASED; urgency=low
+
+  * Moved boost/filesystem.hpp to libboost-filesystem-dev (closes: #428179).
+
+ -- Domenico Andreoli <cavok@debian.org>  Mon, 11 Jun 2007 11:34:56 +0200
+
 boost (1.34.0-3) experimental; urgency=low
 
   * Build with python 2.4 (closes: #426871).
