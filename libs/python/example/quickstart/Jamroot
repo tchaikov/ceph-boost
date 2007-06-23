@@ -10,8 +10,12 @@ use-project boost
 # Set up the project-wide requirements that everything uses the
 # boost_python library defined in the project whose global ID is
 # /boost/python.
-project
-  : requirements <library>/boost/python//boost_python ;
+project boost-python-quickstart
+  : requirements <library>/boost/python//boost_python 
+    ;
+
+# Make the definition of the python-extension rule available
+import python ;
 
 # Declare a Python extension called hello.
 python-extension extending : extending.cpp ;
