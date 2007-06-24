@@ -4,8 +4,9 @@ boost (1.34.1~rc1-1) experimental; urgency=low
   * Drop ${Source-Version} substvar from rules.
   * Moved boost/filesystem.hpp to libboost-filesystem-dev (closes: #428179).
   * Build with g++ 4.2 (g++ 4.1 is still used for bjam).
+  * Updated README to reflect the new naming scheme for libraries linking.
 
- -- Domenico Andreoli <cavok@debian.org>  Sat, 23 Jun 2007 02:38:40 +0200
+ -- Domenico Andreoli <cavok@debian.org>  Sun, 24 Jun 2007 23:52:28 +0200
 
 boost (1.34.0-1) unstable; urgency=low
 
