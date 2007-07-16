@@ -10,8 +10,26 @@ reports and send me hints or patches if you have extra information.
 Getting Started
 ---------------
 
-Many Boost components are headers only.  Others have a static library,
-a shared library, or both.
+One of the main goals of Boost is source portability across operating
+systems and compilers. Nothing is instead guaranted about binary
+compability, which in C++ is much more difficult topic than in C.
+
+To protect users from harming themselves, Boost developers encode as
+much information as possible in the library names. So Boost libraries
+get scary names like libboost_wserialization-gcc42-mt-d-1_34_1.so.
+
+Please refer to the Boost documentation in order to understand how to
+build the library name you are looking for:
+
+  http://www.boost.org/more/getting_started/unix-variants.html#library-naming
+
+Currently does not exist a portable and automatic way to build these
+names. You may guess pkg-config may be of help here but only if pushed
+by the upstream developers. Work is still in progress.
+
+
+Unportable Debian-specific way to solve the above problem
+---------------------------------------------------------
 
 The following table shows which components use a library (shared or
 static) and the corresponding "-l" flag.
