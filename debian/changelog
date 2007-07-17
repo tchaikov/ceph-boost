@@ -3,8 +3,7 @@ boost (1.34.1~rc3-1) experimental; urgency=low
   * New upstream release candidate.
   * README.Debian explains how programs should link to the Boost
     libraries both the portable and the Debian-specific way.
-    Closes: #429533, #424038, #424666, #425992, #428419, #433342,
-    #425264, #431502.
+    Closes: #429533, #424038, #424666, #425992, #428419, #425264, #431502.
 
  -- Domenico Andreoli <cavok@debian.org>  Tue, 17 Jul 2007 00:24:49 +0200
 
