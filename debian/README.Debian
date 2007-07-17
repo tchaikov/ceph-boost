@@ -12,7 +12,7 @@ Getting Started
 
 One of the main goals of Boost is source portability across operating
 systems and compilers. Nothing is instead guaranted about binary
-compability, which in C++ is much more difficult topic than in C.
+compatibility, which in C++ is much more difficult topic than in C.
 
 To protect users from harming themselves, Boost developers encode as
 much information as possible in the library names. So Boost libraries
