@@ -1,6 +1,7 @@
 boost (1.34.1-1) unstable; urgency=low
 
   * New upstream release
+  * Moved date_time.hpp to libboost-date-time-dev (closes: #434370)
   * README.Debian explains how programs should link to the Boost
     libraries both the portable and the Debian-specific way.
 

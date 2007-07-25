@@ -41,6 +41,7 @@ Package: libboost-dev
 Architecture: any
 Section: libdevel
 Depends: libstdc++-dev
+Replaces: libboost-dev (<< 1.34.1-1)
 Suggests: libboost-doc, libboost-date-time-dev, libboost-filesystem-dev, libboost-graph-dev, libboost-iostreams-dev, libboost-program-options-dev, libboost-python-dev, libboost-regex-dev, libboost-serialization-dev, libboost-signals-dev, libboost-test-dev, libboost-thread-dev, libboost-wave-dev
 Description: Boost C++ Libraries development files
  The Boost web site provides free, peer-reviewed, portable C++ source
