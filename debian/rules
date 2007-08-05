@@ -42,7 +42,8 @@ mk_a_files = $(shell echo $(call mk_full_name,$(2),$(3)).a >> debian/libboost-$(
 mk_so_files = $(shell echo $(call mk_full_name,$(2),$(3)).so.$(SOVERSION) >> debian/libboost-$(1)$(SOVERSION)$(DEBIAN_SUFFIX).install)
 mk_ln_files = $(shell echo $(call mk_full_name,$(2),$(3)).so.$(SOVERSION) $(call mk_full_name,$(2),$(3)).so >> debian/libboost-$(1)-dev.links)
 mk_ln2_files = $(shell echo $(call mk_full_name,$(2),$(3)).so $(call mk_base_name,$(2),$(3)).so >> debian/libboost-$(1)-dev.links)
-mk_files = $(foreach fn,a so ln ln2,$(call mk_$(fn)_files,$(1),$(2),$(3)))
+mk_ln3_files = $(shell echo $(call mk_full_name,$(2),$(3)).a $(call mk_base_name,$(2),$(3)).a >> debian/libboost-$(1)-dev.links)
+mk_files = $(foreach fn,a so ln ln2 ln3,$(call mk_$(fn)_files,$(1),$(2),$(3)))
 
 # invokes mk_files of every variant of every shared library of every Boost library
 mk_debhelper_files = \
