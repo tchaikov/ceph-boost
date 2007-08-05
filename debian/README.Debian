@@ -16,7 +16,7 @@ compatibility, which in C++ is much more difficult topic than in C.
 
 To protect users from harming themselves, Boost developers encode as
 much information as possible in the library names. So Boost libraries
-get scary names like libboost_wserialization-gcc42-mt-d-1_34_1.so.
+get scary names like libboost_wserialization-gcc42-mt-d-1_34_1.so.1.34.1.
 
 Please refer to the Boost documentation in order to understand how to
 build the library name you are looking for:
@@ -24,8 +24,8 @@ build the library name you are looking for:
   http://www.boost.org/more/getting_started/unix-variants.html#library-naming
 
 Currently does not exist a portable and automatic way to build these
-names. You may guess pkg-config may be of help here but only if pushed
-by the upstream developers. Work is still in progress.
+names. You may guess pkg-config may be of help here but work is still
+in progress.
 
 
 Unportable Debian-specific way to solve the above problem
@@ -34,11 +34,11 @@ Unportable Debian-specific way to solve the above problem
 The following table shows which components use a library (shared or
 static) and the corresponding "-l" flag.
 
-Beware that every shared library comes in two flavors, one
-for single-thread and one for multi-threaded applications (except
-Boost.Thread, which is only multi-threaded). To the following "-l" flags
-you will need to add -st for single-threaded and -mt for multi-threaded
-flavors (ie. -lboost_date_time-st and -lboost_date_time-mt).
+Beware that every library comes in two flavors, one for single-thread
+and one for multi-thread uses (except Boost.Thread, which is only
+multi-thread). To the following "-l" flags you need to append -mt in
+case the multi-thread flavour is wanted (e.g. -lboost_date_time for
+single-thread, -lboost_date_time-mt for multi-thread).
 
   Component              Link Flag                    Library Type
   ---------              ---------                    ------------
@@ -69,8 +69,7 @@ Threaded Applications
 ---------------------
 
 You need to specify -pthread switch on the gcc command line to build
-threaded applications. Remember to use the -mt library flavor in place
-of the -st.
+multi-thread applications. Remember to use the -mt library flavour.
 
 
 Example Code

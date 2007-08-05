@@ -6,28 +6,54 @@
 # This has to be exported to make some magic below work.
 export DH_OPTIONS
 
-# Boost Version
-# This is the "short label" for the Boost library version, consisting of the
-# major and minor version numbers joined by an underscore.
-#
-boost_version = 1_34_1
-gcc_version = gcc42
-shlibs_version =
-
-# Library suffix
-# Boost libraries encode build information in the resulting library
-# filename: toolset, threading, runtime, and version.
-#
-release_suffix_st = -$(gcc_version)-$(boost_version)
-debug_suffix_st = -$(gcc_version)-d-$(boost_version)
-release_suffix_mt = -$(gcc_version)-mt-$(boost_version)
-debug_suffix_mt = -$(gcc_version)-mt-d-$(boost_version)
+DEB_BUILD_ARCH ?= $(shell dpkg-architecture -qDEB_BUILD_ARCH)
 
 # Boost does not guarantee any ABI, it uses the full version in SONAME
 SOVERSION = 1.34.1
+SHLIBS_VERSION =
 DEBIAN_SUFFIX =
 
-DEB_BUILD_ARCH ?= $(shell dpkg-architecture -qDEB_BUILD_ARCH)
+# tags for library name decoration
+boost_version = $(subst .,_,$(SOVERSION))
+gcc_version = gcc42
+
+# Boost libraries for which we want separate packages
+boost_libs := date-time filesystem graph iostreams program-options python regex serialization signals test thread wave
+
+# these are special cases, where shared library has not the same name of the Boost library
+boost_lib_serialization := serialization wserialization
+boost_lib_test := prg_exec_monitor unit_test_framework
+
+# these are special cases for variants. normal cases have <empty>, -d, -mt, -mt-d variants
+boost_variants_thread := -mt -mt-d
+
+# return shared libraries for the given Boost library
+boost_lib = $(if $(boost_lib_$(1)), $(boost_lib_$(1)), $(1))
+
+# return variants for the given Boost library
+boost_variants = $(if $(boost_variants_$(1)), $(boost_variants_$(1)), -st -st-d -mt -mt-d)
+
+# helpers to make basic and decorated library names
+mk_base_name = usr/lib/libboost_$(subst -,_,$(1))$(2)
+mk_full_name = usr/lib/libboost_$(subst -,_,$(1))-$(gcc_version)$(2)-$(boost_version)
+
+# helpers with the side effect of writing debhelper files
+mk_a_files = $(shell echo $(call mk_full_name,$(2),$(3)).a >> debian/libboost-$(1)-dev.install)
+mk_so_files = $(shell echo $(call mk_full_name,$(2),$(3)).so.$(SOVERSION) >> debian/libboost-$(1)$(SOVERSION)$(DEBIAN_SUFFIX).install)
+mk_ln_files = $(shell echo $(call mk_full_name,$(2),$(3)).so.$(SOVERSION) $(call mk_full_name,$(2),$(3)).so >> debian/libboost-$(1)-dev.links)
+mk_ln2_files = $(shell echo $(call mk_full_name,$(2),$(3)).so $(call mk_base_name,$(2),$(3)).so >> debian/libboost-$(1)-dev.links)
+mk_files = $(foreach fn,a so ln ln2,$(call mk_$(fn)_files,$(1),$(2),$(3)))
+
+# invokes mk_files of every variant of every shared library of every Boost library
+mk_debhelper_files = \
+	$(foreach l, $(boost_libs), \
+		echo "making debhelper files for $(l)..."; \
+		$(foreach ll, $(call boost_lib,$(l)), \
+			$(foreach v, $(call boost_variants,$(l)), \
+				$(call mk_files,$(l),$(ll),$(subst -st,,$(v))) \
+			) \
+		) \
+	)
 
 TOOLSET_CONFIG="using gcc : : : <define>_REENTRANT <compileflags>-mlong-calls ;"
 ifneq ($(DEB_BUILD_ARCH), hppa)
@@ -78,6 +104,10 @@ clean:
 	rm -rf bin.v2 dist
 	rm -rf user-config.jam
 
+	rm -rf debian/libboost-*$(SOVERSION).install
+	rm -rf debian/libboost-*-dev.install
+	rm -rf debian/libboost-*-dev.links
+
 	dh_clean
 
 install: DH_OPTIONS=-X.svn
@@ -92,24 +122,17 @@ install: build
 	find debian/tmp -name .cvsignore | xargs rm -f
 	find debian -empty -type f | xargs rm -f
 
+	# generate debhelper files
+	@$(call mk_debhelper_files)
 
 	# package pyste
 	cd libs/python/pyste/install && python setup.py install --no-compile --prefix=$(pyste_prefix) --install-lib=$(pyste_prefix)/share/python-support/pyste
 	mv $(pyste_prefix)/bin/pyste.py $(pyste_prefix)/bin/pyste
 
-
 	# package bcp
 	dh_installdirs -pbcp usr/bin
 	dh_install -pbcp dist/bin/bcp usr/bin
 	dh_installman -pbcp debian/bcp.1
-
-
-	# package libboost-dbg
-	dh_installdirs -plibboost-dbg usr/share/lintian/overrides
-	dh_install -plibboost-dbg \
-	   debian/libboost-dbg.lintian-overrides \
-	   usr/share/lintian/overrides/libboost-dbg
-
 
 	# package libboost-dev
 	dh_install -plibboost-dev \
@@ -141,368 +164,118 @@ install: build
 
 
 	# package libboost-date-time$(SOVERSION)
-	dh_install -plibboost-date-time$(SOVERSION)$(DEBIAN_SUFFIX) --autodest \
-	   debian/tmp/usr/lib/libboost_date_time$(release_suffix_st).so.$(SOVERSION) \
-	   debian/tmp/usr/lib/libboost_date_time$(release_suffix_mt).so.$(SOVERSION) \
-	   debian/tmp/usr/lib/libboost_date_time$(debug_suffix_st).so.$(SOVERSION) \
-	   debian/tmp/usr/lib/libboost_date_time$(debug_suffix_mt).so.$(SOVERSION)
-
-
+	dh_install --sourcedir=debian/tmp -plibboost-date-time$(SOVERSION)$(DEBIAN_SUFFIX)
 	# package libboost-date-time-dev
 	dh_installdirs -plibboost-date-time-dev usr/include/boost
 	mv debian/libboost-dev/usr/include/boost/date_time* \
 	   debian/libboost-date-time-dev/usr/include/boost
-	dh_install -plibboost-date-time-dev --autodest \
-	   debian/tmp/usr/lib/libboost_date_time$(release_suffix_mt).a \
-	   debian/tmp/usr/lib/libboost_date_time$(release_suffix_mt).so \
-	   debian/tmp/usr/lib/libboost_date_time$(release_suffix_st).a \
-	   debian/tmp/usr/lib/libboost_date_time$(release_suffix_st).so \
-	   debian/tmp/usr/lib/libboost_date_time$(debug_suffix_mt).a \
-	   debian/tmp/usr/lib/libboost_date_time$(debug_suffix_mt).so \
-	   debian/tmp/usr/lib/libboost_date_time$(debug_suffix_st).a \
-	   debian/tmp/usr/lib/libboost_date_time$(debug_suffix_st).so
-	dh_link -plibboost-date-time-dev \
-	   usr/lib/libboost_date_time$(release_suffix_st).a   usr/lib/libboost_date_time-st.a \
-	   usr/lib/libboost_date_time$(release_suffix_st).so  usr/lib/libboost_date_time-st.so \
-	   usr/lib/libboost_date_time$(release_suffix_mt).a   usr/lib/libboost_date_time-mt.a \
-	   usr/lib/libboost_date_time$(release_suffix_mt).so  usr/lib/libboost_date_time-mt.so
-
+	dh_install --sourcedir=debian/tmp -plibboost-date-time-dev
+	dh_link -plibboost-date-time-dev
 
 	# package libboost-filesystem$(SOVERSION)
-	dh_install -plibboost-filesystem$(SOVERSION)$(DEBIAN_SUFFIX) --autodest \
-	   debian/tmp/usr/lib/libboost_filesystem$(release_suffix_st).so.$(SOVERSION) \
-	   debian/tmp/usr/lib/libboost_filesystem$(release_suffix_mt).so.$(SOVERSION) \
-	   debian/tmp/usr/lib/libboost_filesystem$(debug_suffix_st).so.$(SOVERSION) \
-	   debian/tmp/usr/lib/libboost_filesystem$(debug_suffix_mt).so.$(SOVERSION)
-
-
+	dh_install --sourcedir=debian/tmp -plibboost-filesystem$(SOVERSION)$(DEBIAN_SUFFIX)
 	# package libboost-filesystem-dev
 	dh_installdirs -plibboost-filesystem-dev usr/include/boost
 	mv debian/libboost-dev/usr/include/boost/filesystem* \
 	   debian/libboost-filesystem-dev/usr/include/boost
-	dh_install -plibboost-filesystem-dev --autodest \
-	   debian/tmp/usr/lib/libboost_filesystem$(release_suffix_st).a \
-	   debian/tmp/usr/lib/libboost_filesystem$(release_suffix_st).so \
-	   debian/tmp/usr/lib/libboost_filesystem$(release_suffix_mt).a \
-	   debian/tmp/usr/lib/libboost_filesystem$(release_suffix_mt).so \
-	   debian/tmp/usr/lib/libboost_filesystem$(debug_suffix_st).a \
-	   debian/tmp/usr/lib/libboost_filesystem$(debug_suffix_st).so \
-	   debian/tmp/usr/lib/libboost_filesystem$(debug_suffix_mt).a \
-	   debian/tmp/usr/lib/libboost_filesystem$(debug_suffix_mt).so
-	dh_link -plibboost-filesystem-dev \
-	   usr/lib/libboost_filesystem$(release_suffix_st).a   usr/lib/libboost_filesystem-st.a \
-	   usr/lib/libboost_filesystem$(release_suffix_st).so  usr/lib/libboost_filesystem-st.so \
-	   usr/lib/libboost_filesystem$(release_suffix_mt).a   usr/lib/libboost_filesystem-mt.a \
-	   usr/lib/libboost_filesystem$(release_suffix_mt).so  usr/lib/libboost_filesystem-mt.so
-
+	dh_install --sourcedir=debian/tmp -plibboost-filesystem-dev
+	dh_link -plibboost-filesystem-dev
 
 	# package libboost-graph$(SOVERSION)
-	dh_install -plibboost-graph$(SOVERSION)$(DEBIAN_SUFFIX) --autodest \
-	   debian/tmp/usr/lib/libboost_graph$(release_suffix_st).so.$(SOVERSION) \
-	   debian/tmp/usr/lib/libboost_graph$(release_suffix_mt).so.$(SOVERSION) \
-	   debian/tmp/usr/lib/libboost_graph$(debug_suffix_st).so.$(SOVERSION) \
-	   debian/tmp/usr/lib/libboost_graph$(debug_suffix_mt).so.$(SOVERSION)
-
-
+	dh_install --sourcedir=debian/tmp -plibboost-graph$(SOVERSION)$(DEBIAN_SUFFIX)
 	# package libboost-graph-dev
 	dh_installdirs -plibboost-graph-dev usr/include/boost
 	mv debian/libboost-dev/usr/include/boost/graph \
 	   debian/libboost-graph-dev/usr/include/boost
-	dh_install -plibboost-graph-dev --autodest \
-	   debian/tmp/usr/lib/libboost_graph$(release_suffix_st).a \
-	   debian/tmp/usr/lib/libboost_graph$(release_suffix_st).so \
-	   debian/tmp/usr/lib/libboost_graph$(release_suffix_mt).a \
-	   debian/tmp/usr/lib/libboost_graph$(release_suffix_mt).so \
-	   debian/tmp/usr/lib/libboost_graph$(release_suffix_st).a \
-	   debian/tmp/usr/lib/libboost_graph$(release_suffix_st).so \
-	   debian/tmp/usr/lib/libboost_graph$(release_suffix_mt).a \
-	   debian/tmp/usr/lib/libboost_graph$(release_suffix_mt).so
-	dh_link -plibboost-graph-dev \
-	   usr/lib/libboost_graph$(release_suffix_st).a   usr/lib/libboost_graph-st.a \
-	   usr/lib/libboost_graph$(release_suffix_st).so  usr/lib/libboost_graph-st.so \
-	   usr/lib/libboost_graph$(release_suffix_mt).a   usr/lib/libboost_graph-mt.a \
-	   usr/lib/libboost_graph$(release_suffix_mt).so  usr/lib/libboost_graph-mt.so
-
+	dh_install --sourcedir=debian/tmp -plibboost-graph-dev
+	dh_link -plibboost-graph-dev
 
 	# package libboost-iostreams$(SOVERSION)
-	dh_install -plibboost-iostreams$(SOVERSION)$(DEBIAN_SUFFIX) --autodest \
-	   debian/tmp/usr/lib/libboost_iostreams$(release_suffix_st).so.$(SOVERSION) \
-	   debian/tmp/usr/lib/libboost_iostreams$(release_suffix_mt).so.$(SOVERSION) \
-	   debian/tmp/usr/lib/libboost_iostreams$(debug_suffix_st).so.$(SOVERSION) \
-	   debian/tmp/usr/lib/libboost_iostreams$(debug_suffix_mt).so.$(SOVERSION)
-
-
+	dh_install --sourcedir=debian/tmp -plibboost-iostreams$(SOVERSION)$(DEBIAN_SUFFIX)
 	# package libboost-iostreams-dev
 	dh_installdirs -plibboost-iostreams-dev usr/include/boost
 	mv debian/libboost-dev/usr/include/boost/iostreams* \
 	   debian/libboost-iostreams-dev/usr/include/boost
-	dh_install -plibboost-iostreams-dev --autodest \
-	   debian/tmp/usr/lib/libboost_iostreams$(release_suffix_st).a \
-	   debian/tmp/usr/lib/libboost_iostreams$(release_suffix_st).so \
-	   debian/tmp/usr/lib/libboost_iostreams$(release_suffix_mt).a \
-	   debian/tmp/usr/lib/libboost_iostreams$(release_suffix_mt).so \
-	   debian/tmp/usr/lib/libboost_iostreams$(release_suffix_st).a \
-	   debian/tmp/usr/lib/libboost_iostreams$(release_suffix_st).so \
-	   debian/tmp/usr/lib/libboost_iostreams$(release_suffix_mt).a \
-	   debian/tmp/usr/lib/libboost_iostreams$(release_suffix_mt).so
-	dh_link -plibboost-iostreams-dev \
-	   usr/lib/libboost_iostreams$(release_suffix_st).a   usr/lib/libboost_iostreams-st.a \
-	   usr/lib/libboost_iostreams$(release_suffix_st).so  usr/lib/libboost_iostreams-st.so \
-	   usr/lib/libboost_iostreams$(release_suffix_mt).a   usr/lib/libboost_iostreams-mt.a \
-	   usr/lib/libboost_iostreams$(release_suffix_mt).so  usr/lib/libboost_iostreams-mt.so
-
+	dh_install --sourcedir=debian/tmp -plibboost-iostreams-dev
+	dh_link -plibboost-iostreams-dev
 
 	# package libboost-program-options$(SOVERSION)
-	dh_install -plibboost-program-options$(SOVERSION)$(DEBIAN_SUFFIX) --autodest \
-	   debian/tmp/usr/lib/libboost_program_options$(release_suffix_st).so.$(SOVERSION) \
-	   debian/tmp/usr/lib/libboost_program_options$(release_suffix_mt).so.$(SOVERSION) \
-	   debian/tmp/usr/lib/libboost_program_options$(debug_suffix_st).so.$(SOVERSION) \
-	   debian/tmp/usr/lib/libboost_program_options$(debug_suffix_mt).so.$(SOVERSION)
-
-
+	dh_install --sourcedir=debian/tmp -plibboost-program-options$(SOVERSION)$(DEBIAN_SUFFIX)
 	# package libboost-program-options-dev
 	dh_installdirs -plibboost-program-options-dev usr/include/boost
 	mv debian/libboost-dev/usr/include/boost/program_options* \
 	   debian/libboost-program-options-dev/usr/include/boost
-	dh_install -plibboost-program-options-dev --autodest \
-	   debian/tmp/usr/lib/libboost_program_options$(release_suffix_st).a \
-	   debian/tmp/usr/lib/libboost_program_options$(release_suffix_st).so \
-	   debian/tmp/usr/lib/libboost_program_options$(release_suffix_mt).a \
-	   debian/tmp/usr/lib/libboost_program_options$(release_suffix_mt).so \
-	   debian/tmp/usr/lib/libboost_program_options$(release_suffix_st).a \
-	   debian/tmp/usr/lib/libboost_program_options$(release_suffix_st).so \
-	   debian/tmp/usr/lib/libboost_program_options$(release_suffix_mt).a \
-	   debian/tmp/usr/lib/libboost_program_options$(release_suffix_mt).so
-	dh_link -plibboost-program-options-dev \
-	   usr/lib/libboost_program_options$(release_suffix_st).a   usr/lib/libboost_program_options-st.a \
-	   usr/lib/libboost_program_options$(release_suffix_st).so  usr/lib/libboost_program_options-st.so \
-	   usr/lib/libboost_program_options$(release_suffix_mt).a   usr/lib/libboost_program_options-mt.a \
-	   usr/lib/libboost_program_options$(release_suffix_mt).so  usr/lib/libboost_program_options-mt.so
-
+	dh_install --sourcedir=debian/tmp -plibboost-program-options-dev
+	dh_link -plibboost-program-options-dev
 
 	# package libboost-python$(SOVERSION)
-	dh_install -plibboost-python$(SOVERSION)$(DEBIAN_SUFFIX) --autodest \
-	   debian/tmp/usr/lib/libboost_python$(release_suffix_st).so.$(SOVERSION) \
-	   debian/tmp/usr/lib/libboost_python$(release_suffix_mt).so.$(SOVERSION) \
-	   debian/tmp/usr/lib/libboost_python$(debug_suffix_st).so.$(SOVERSION) \
-	   debian/tmp/usr/lib/libboost_python$(debug_suffix_mt).so.$(SOVERSION)
-
-
+	dh_install --sourcedir=debian/tmp -plibboost-python$(SOVERSION)$(DEBIAN_SUFFIX)
 	# package libboost-python-dev
 	dh_installdirs -plibboost-python-dev usr/include/boost
 	mv debian/libboost-dev/usr/include/boost/python* \
 	   debian/libboost-python-dev/usr/include/boost
-	dh_install -plibboost-python-dev --autodest \
-	   debian/tmp/usr/lib/libboost_python$(release_suffix_st).a \
-	   debian/tmp/usr/lib/libboost_python$(release_suffix_st).so \
-	   debian/tmp/usr/lib/libboost_python$(release_suffix_mt).a \
-	   debian/tmp/usr/lib/libboost_python$(release_suffix_mt).so \
-	   debian/tmp/usr/lib/libboost_python$(release_suffix_st).a \
-	   debian/tmp/usr/lib/libboost_python$(release_suffix_st).so \
-	   debian/tmp/usr/lib/libboost_python$(release_suffix_mt).a \
-	   debian/tmp/usr/lib/libboost_python$(release_suffix_mt).so
-	dh_link -plibboost-python-dev \
-	   usr/lib/libboost_python$(release_suffix_st).a   usr/lib/libboost_python-st.a \
-	   usr/lib/libboost_python$(release_suffix_st).so  usr/lib/libboost_python-st.so \
-	   usr/lib/libboost_python$(release_suffix_mt).a   usr/lib/libboost_python-mt.a \
-	   usr/lib/libboost_python$(release_suffix_mt).so  usr/lib/libboost_python-mt.so
+	dh_install --sourcedir=debian/tmp -plibboost-python-dev
+	dh_link -plibboost-python-dev
+	dh_install --sourcedir=debian/tmp -plibboost-python-dev
 	dh_installdirs -plibboost-python-dev usr/share/lintian/overrides
-	dh_install -plibboost-python-dev \
-	   debian/libboost-python-dev.lintian-overrides \
-	   usr/share/lintian/overrides/libboost-python-dev
-
+	cp debian/libboost-python-dev.lintian-overrides \
+	   debian/libboost-python-dev/usr/share/lintian/overrides/libboost-python-dev
 
 	# package libboost-regex$(SOVERSION)
-	dh_install -plibboost-regex$(SOVERSION)$(DEBIAN_SUFFIX) --autodest \
-	   debian/tmp/usr/lib/libboost_regex$(release_suffix_st).so.$(SOVERSION) \
-	   debian/tmp/usr/lib/libboost_regex$(release_suffix_mt).so.$(SOVERSION) \
-	   debian/tmp/usr/lib/libboost_regex$(debug_suffix_st).so.$(SOVERSION) \
-	   debian/tmp/usr/lib/libboost_regex$(debug_suffix_mt).so.$(SOVERSION)
-
-
+	dh_install --sourcedir=debian/tmp -plibboost-regex$(SOVERSION)$(DEBIAN_SUFFIX)
 	# package libboost-regex-dev
 	dh_installdirs -plibboost-regex-dev usr/include/boost
 	mv debian/libboost-dev/usr/include/boost/*regex* \
 	   debian/libboost-regex-dev/usr/include/boost
-	dh_install -plibboost-regex-dev --autodest \
-	   debian/tmp/usr/lib/libboost_regex$(release_suffix_st).a \
-	   debian/tmp/usr/lib/libboost_regex$(release_suffix_st).so \
-	   debian/tmp/usr/lib/libboost_regex$(release_suffix_mt).a \
-	   debian/tmp/usr/lib/libboost_regex$(release_suffix_mt).so \
-	   debian/tmp/usr/lib/libboost_regex$(release_suffix_st).a \
-	   debian/tmp/usr/lib/libboost_regex$(release_suffix_st).so \
-	   debian/tmp/usr/lib/libboost_regex$(release_suffix_mt).a \
-	   debian/tmp/usr/lib/libboost_regex$(release_suffix_mt).so
-	dh_link -plibboost-regex-dev \
-	   usr/lib/libboost_regex$(release_suffix_st).a   usr/lib/libboost_regex-st.a \
-	   usr/lib/libboost_regex$(release_suffix_st).so  usr/lib/libboost_regex-st.so \
-	   usr/lib/libboost_regex$(release_suffix_mt).a   usr/lib/libboost_regex-mt.a \
-	   usr/lib/libboost_regex$(release_suffix_mt).so  usr/lib/libboost_regex-mt.so
-
+	dh_install --sourcedir=debian/tmp -plibboost-regex-dev
+	dh_link -plibboost-regex-dev
 
 	# package libboost-serialization$(SOVERSION)
-	dh_install -plibboost-serialization$(SOVERSION)$(DEBIAN_SUFFIX) --autodest \
-	   debian/tmp/usr/lib/libboost_serialization$(release_suffix_st).so.$(SOVERSION) \
-	   debian/tmp/usr/lib/libboost_wserialization$(release_suffix_st).so.$(SOVERSION) \
-	   debian/tmp/usr/lib/libboost_serialization$(release_suffix_mt).so.$(SOVERSION) \
-	   debian/tmp/usr/lib/libboost_wserialization$(release_suffix_mt).so.$(SOVERSION) \
-	   debian/tmp/usr/lib/libboost_serialization$(debug_suffix_st).so.$(SOVERSION) \
-	   debian/tmp/usr/lib/libboost_wserialization$(debug_suffix_st).so.$(SOVERSION) \
-	   debian/tmp/usr/lib/libboost_serialization$(debug_suffix_mt).so.$(SOVERSION) \
-	   debian/tmp/usr/lib/libboost_wserialization$(debug_suffix_mt).so.$(SOVERSION)
-
-
+	dh_install --sourcedir=debian/tmp -plibboost-serialization$(SOVERSION)$(DEBIAN_SUFFIX)
 	# package libboost-serialization-dev
 	dh_installdirs -plibboost-serialization-dev usr/include/boost
 	mv debian/libboost-dev/usr/include/boost/*serialization* \
 	   debian/libboost-serialization-dev/usr/include/boost
-	dh_install -plibboost-serialization-dev --autodest \
-	   debian/tmp/usr/lib/libboost_serialization$(release_suffix_st).a \
-	   debian/tmp/usr/lib/libboost_serialization$(release_suffix_st).so \
-	   debian/tmp/usr/lib/libboost_wserialization$(release_suffix_st).a \
-	   debian/tmp/usr/lib/libboost_wserialization$(release_suffix_st).so \
-	   debian/tmp/usr/lib/libboost_serialization$(release_suffix_mt).a \
-	   debian/tmp/usr/lib/libboost_serialization$(release_suffix_mt).so \
-	   debian/tmp/usr/lib/libboost_wserialization$(release_suffix_mt).a \
-	   debian/tmp/usr/lib/libboost_wserialization$(release_suffix_mt).so \
-	   debian/tmp/usr/lib/libboost_serialization$(release_suffix_st).a \
-	   debian/tmp/usr/lib/libboost_serialization$(release_suffix_st).so \
-	   debian/tmp/usr/lib/libboost_wserialization$(release_suffix_st).a \
-	   debian/tmp/usr/lib/libboost_wserialization$(release_suffix_st).so \
-	   debian/tmp/usr/lib/libboost_serialization$(release_suffix_mt).a \
-	   debian/tmp/usr/lib/libboost_serialization$(release_suffix_mt).so \
-	   debian/tmp/usr/lib/libboost_wserialization$(release_suffix_mt).a \
-	   debian/tmp/usr/lib/libboost_wserialization$(release_suffix_mt).so
-	dh_link -plibboost-serialization-dev \
-	   usr/lib/libboost_serialization$(release_suffix_st).a    usr/lib/libboost_serialization-st.a \
-	   usr/lib/libboost_serialization$(release_suffix_st).so   usr/lib/libboost_serialization-st.so \
-	   usr/lib/libboost_wserialization$(release_suffix_st).a   usr/lib/libboost_wserialization-st.a \
-	   usr/lib/libboost_wserialization$(release_suffix_st).so  usr/lib/libboost_wserialization-st.so \
-	   usr/lib/libboost_serialization$(release_suffix_mt).a    usr/lib/libboost_serialization-mt.a \
-	   usr/lib/libboost_serialization$(release_suffix_mt).so   usr/lib/libboost_serialization-mt.so \
-	   usr/lib/libboost_wserialization$(release_suffix_mt).a   usr/lib/libboost_wserialization-mt.a \
-	   usr/lib/libboost_wserialization$(release_suffix_mt).so  usr/lib/libboost_wserialization-mt.so
-
+	dh_install --sourcedir=debian/tmp -plibboost-serialization-dev
+	dh_link -plibboost-serialization-dev
 
 	# package libboost-signals$(SOVERSION)
-	dh_install -plibboost-signals$(SOVERSION)$(DEBIAN_SUFFIX) --autodest \
-	   debian/tmp/usr/lib/libboost_signals$(release_suffix_st).so.$(SOVERSION) \
-	   debian/tmp/usr/lib/libboost_signals$(release_suffix_mt).so.$(SOVERSION) \
-	   debian/tmp/usr/lib/libboost_signals$(debug_suffix_st).so.$(SOVERSION) \
-	   debian/tmp/usr/lib/libboost_signals$(debug_suffix_mt).so.$(SOVERSION)
-
-
+	dh_install --sourcedir=debian/tmp -plibboost-signals$(SOVERSION)$(DEBIAN_SUFFIX)
 	# package libboost-signals-dev
 	dh_installdirs -plibboost-signals-dev usr/include/boost
 	mv debian/libboost-dev/usr/include/boost/*signal* \
 	   debian/libboost-signals-dev/usr/include/boost
-	dh_install -plibboost-signals-dev --autodest \
-	   debian/tmp/usr/lib/libboost_signals$(release_suffix_st).a \
-	   debian/tmp/usr/lib/libboost_signals$(release_suffix_st).so \
-	   debian/tmp/usr/lib/libboost_signals$(release_suffix_mt).a \
-	   debian/tmp/usr/lib/libboost_signals$(release_suffix_mt).so \
-	   debian/tmp/usr/lib/libboost_signals$(debug_suffix_st).a \
-	   debian/tmp/usr/lib/libboost_signals$(debug_suffix_st).so \
-	   debian/tmp/usr/lib/libboost_signals$(debug_suffix_mt).a \
-	   debian/tmp/usr/lib/libboost_signals$(debug_suffix_mt).so
-	dh_link -plibboost-signals-dev \
-	   usr/lib/libboost_signals$(release_suffix_st).a   usr/lib/libboost_signals-st.a \
-	   usr/lib/libboost_signals$(release_suffix_st).so  usr/lib/libboost_signals-st.so \
-	   usr/lib/libboost_signals$(release_suffix_mt).a   usr/lib/libboost_signals-mt.a \
-	   usr/lib/libboost_signals$(release_suffix_mt).so  usr/lib/libboost_signals-mt.so
-
+	dh_install --sourcedir=debian/tmp -plibboost-signals-dev
+	dh_link -plibboost-signals-dev
 
 	# package libboost-test$(SOVERSION)
-	dh_install -plibboost-test$(SOVERSION)$(DEBIAN_SUFFIX) --autodest \
-	   debian/tmp/usr/lib/libboost_prg_exec_monitor$(release_suffix_st).so.$(SOVERSION) \
-	   debian/tmp/usr/lib/libboost_unit_test_framework$(release_suffix_st).so.$(SOVERSION) \
-	   debian/tmp/usr/lib/libboost_prg_exec_monitor$(release_suffix_mt).so.$(SOVERSION) \
-	   debian/tmp/usr/lib/libboost_unit_test_framework$(release_suffix_mt).so.$(SOVERSION) \
-	   debian/tmp/usr/lib/libboost_prg_exec_monitor$(debug_suffix_st).so.$(SOVERSION) \
-	   debian/tmp/usr/lib/libboost_unit_test_framework$(debug_suffix_st).so.$(SOVERSION) \
-	   debian/tmp/usr/lib/libboost_prg_exec_monitor$(debug_suffix_mt).so.$(SOVERSION) \
-	   debian/tmp/usr/lib/libboost_unit_test_framework$(debug_suffix_mt).so.$(SOVERSION)
-
-
+	dh_install --sourcedir=debian/tmp -plibboost-test$(SOVERSION)$(DEBIAN_SUFFIX)
 	# package libboost-test-dev
 	dh_installdirs -plibboost-test-dev usr/include/boost
 	mv debian/libboost-dev/usr/include/boost/test \
 	   debian/libboost-test-dev/usr/include/boost
-	dh_install -plibboost-test-dev --autodest \
-	   debian/tmp/usr/lib/libboost_prg_exec_monitor$(release_suffix_st).a \
-	   debian/tmp/usr/lib/libboost_prg_exec_monitor$(release_suffix_st).so \
-	   debian/tmp/usr/lib/libboost_unit_test_framework$(release_suffix_st).a \
-	   debian/tmp/usr/lib/libboost_unit_test_framework$(release_suffix_st).so \
-	   debian/tmp/usr/lib/libboost_prg_exec_monitor$(release_suffix_mt).a \
-	   debian/tmp/usr/lib/libboost_prg_exec_monitor$(release_suffix_mt).so \
-	   debian/tmp/usr/lib/libboost_unit_test_framework$(release_suffix_mt).a \
-	   debian/tmp/usr/lib/libboost_unit_test_framework$(release_suffix_mt).so \
-	   debian/tmp/usr/lib/libboost_prg_exec_monitor$(debug_suffix_st).a \
-	   debian/tmp/usr/lib/libboost_prg_exec_monitor$(debug_suffix_st).so \
-	   debian/tmp/usr/lib/libboost_unit_test_framework$(debug_suffix_st).a \
-	   debian/tmp/usr/lib/libboost_unit_test_framework$(debug_suffix_st).so \
-	   debian/tmp/usr/lib/libboost_prg_exec_monitor$(debug_suffix_mt).a \
-	   debian/tmp/usr/lib/libboost_prg_exec_monitor$(debug_suffix_mt).so \
-	   debian/tmp/usr/lib/libboost_unit_test_framework$(debug_suffix_mt).a \
-	   debian/tmp/usr/lib/libboost_unit_test_framework$(debug_suffix_mt).so
-	dh_link -plibboost-test-dev \
-	   usr/lib/libboost_prg_exec_monitor$(release_suffix_st).a   usr/lib/libboost_prg_exec_monitor-st.a \
-	   usr/lib/libboost_prg_exec_monitor$(release_suffix_st).so  usr/lib/libboost_prg_exec_monitor-st.so \
-	   usr/lib/libboost_unit_test_framework$(release_suffix_st).a  usr/lib/libboost_unit_test_framework-st.a \
-	   usr/lib/libboost_unit_test_framework$(release_suffix_st).so usr/lib/libboost_unit_test_framework-st.so \
-	   usr/lib/libboost_prg_exec_monitor$(release_suffix_mt).a   usr/lib/libboost_prg_exec_monitor-mt.a \
-	   usr/lib/libboost_prg_exec_monitor$(release_suffix_mt).so  usr/lib/libboost_prg_exec_monitor-mt.so \
-	   usr/lib/libboost_unit_test_framework$(release_suffix_mt).a  usr/lib/libboost_unit_test_framework-mt.a \
-	   usr/lib/libboost_unit_test_framework$(release_suffix_mt).so usr/lib/libboost_unit_test_framework-mt.so
-
+	dh_install --sourcedir=debian/tmp -plibboost-test-dev
+	dh_link -plibboost-test-dev
 
 	# package libboost-thread$(SOVERSION)
-	dh_install -plibboost-thread$(SOVERSION)$(DEBIAN_SUFFIX) --autodest \
-	   debian/tmp/usr/lib/libboost_thread$(release_suffix_mt).so.$(SOVERSION) \
-	   debian/tmp/usr/lib/libboost_thread$(debug_suffix_mt).so.$(SOVERSION)
-
-
+	dh_install --sourcedir=debian/tmp -plibboost-thread$(SOVERSION)$(DEBIAN_SUFFIX)
 	# package libboost-thread-dev
 	dh_installdirs -plibboost-thread-dev usr/include/boost
 	mv debian/libboost-dev/usr/include/boost/thread* \
 	   debian/libboost-thread-dev/usr/include/boost
-	dh_install -plibboost-thread-dev --autodest \
-	   debian/tmp/usr/lib/libboost_thread$(release_suffix_mt).a \
-	   debian/tmp/usr/lib/libboost_thread$(release_suffix_mt).so \
-	   debian/tmp/usr/lib/libboost_thread$(debug_suffix_mt).a \
-	   debian/tmp/usr/lib/libboost_thread$(debug_suffix_mt).so
+	dh_install --sourcedir=debian/tmp -plibboost-thread-dev
 	dh_link -plibboost-thread-dev \
-	   usr/lib/libboost_thread$(release_suffix_mt).a   usr/lib/libboost_thread-mt.a \
-	   usr/lib/libboost_thread$(release_suffix_mt).so  usr/lib/libboost_thread-mt.so
-
+	   usr/lib/libboost_thread-mt.so usr/lib/libboost_thread.so \
+	   usr/lib/libboost_thread-mt-d.so usr/lib/libboost_thread-d.so
 
 	# package libboost-wave$(SOVERSION)
-	dh_install -plibboost-wave$(SOVERSION)$(DEBIAN_SUFFIX) --autodest \
-	   debian/tmp/usr/lib/libboost_wave$(release_suffix_st).so.$(SOVERSION) \
-	   debian/tmp/usr/lib/libboost_wave$(release_suffix_mt).so.$(SOVERSION) \
-	   debian/tmp/usr/lib/libboost_wave$(debug_suffix_st).so.$(SOVERSION) \
-	   debian/tmp/usr/lib/libboost_wave$(debug_suffix_mt).so.$(SOVERSION)
-
-
+	dh_install --sourcedir=debian/tmp -plibboost-wave$(SOVERSION)$(DEBIAN_SUFFIX)
 	# package libboost-wave-dev
 	dh_installdirs -plibboost-wave-dev usr/include/boost
 	mv debian/libboost-dev/usr/include/boost/wave* \
 	   debian/libboost-wave-dev/usr/include/boost
-	dh_install -plibboost-wave-dev --autodest \
-	   debian/tmp/usr/lib/libboost_wave$(release_suffix_st).a \
-	   debian/tmp/usr/lib/libboost_wave$(release_suffix_st).so \
-	   debian/tmp/usr/lib/libboost_wave$(release_suffix_mt).a \
-	   debian/tmp/usr/lib/libboost_wave$(release_suffix_mt).so \
-	   debian/tmp/usr/lib/libboost_wave$(debug_suffix_st).a \
-	   debian/tmp/usr/lib/libboost_wave$(debug_suffix_st).so \
-	   debian/tmp/usr/lib/libboost_wave$(debug_suffix_mt).a \
-	   debian/tmp/usr/lib/libboost_wave$(debug_suffix_mt).so
-	dh_link -plibboost-wave-dev \
-	   usr/lib/libboost_wave$(release_suffix_st).a   usr/lib/libboost_wave-st.a \
-	   usr/lib/libboost_wave$(release_suffix_st).so  usr/lib/libboost_wave-st.so \
-	   usr/lib/libboost_wave$(release_suffix_mt).a   usr/lib/libboost_wave-mt.a \
-	   usr/lib/libboost_wave$(release_suffix_mt).so  usr/lib/libboost_wave-mt.so
-
+	dh_install --sourcedir=debian/tmp -plibboost-wave-dev
+	dh_link -plibboost-wave-dev
 
 # This single target is used to build all the packages, all at once, or
 # one at a time. So keep in mind: any options passed to commands here will
@@ -525,8 +298,8 @@ binary-common:
 	@if [ "$(DH_OPTIONS)" = "-a" ]; then \
 		for name in date-time filesystem graph iostreams program-options python regex serialization signals test thread wave; do \
 			lib=libboost-$${name}$(SOVERSION)$(DEBIAN_SUFFIX); \
-			echo DH_OPTIONS=-p$${lib} dh_makeshlibs -V"$${lib} $(shlibs_version)"; \
-			DH_OPTIONS=-p$${lib} dh_makeshlibs -V"$${lib} $(shlibs_version)"; \
+			echo DH_OPTIONS=-p$${lib} dh_makeshlibs -V"$${lib} $(SHLIBS_VERSION)"; \
+			DH_OPTIONS=-p$${lib} dh_makeshlibs -V"$${lib} $(SHLIBS_VERSION)"; \
 		done; \
 	fi
 

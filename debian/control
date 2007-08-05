@@ -23,20 +23,6 @@ Description: tool for extracting subsets of Boost C++ Libraries
  .
   Homepage: http://www.boost.org/tools/bcp/bcp.html
 
-Package: libboost-dbg
-Architecture: any
-Section: libdevel
-Priority: extra
-Depends: ${shlibs:Depends}
-Suggests: libboost-dev
-Description: Boost C++ Libraries with debug symbols
- Part of the Boost C++ Libraries collection.
- .
- These libraries are built with debug symbols. They are useful to debug
- programs which use Boost.
- .
-  Homepage: http://www.boost.org/
-
 Package: libboost-dev
 Architecture: any
 Section: libdevel

@@ -1,11 +1,15 @@
-boost (1.34.1-1) unstable; urgency=low
+boost (1.34.1-1) experimental; urgency=low
 
-  * New upstream release
-  * Moved date_time.hpp to libboost-date-time-dev (closes: #434370)
-  * README.Debian explains how programs should link to the Boost
+  * New upstream release (closes: #436091).
+  * Moved date_time.hpp to libboost-date-time-dev (closes: #434370).
+  * Removed libboost-dbg package. Debug libraries are now installed in
+    their respective libboost-* packages.
+  * Reworked libraries installation to binary packages.
+  * README.Debian now explains how programs should link to the Boost
     libraries both the portable and the Debian-specific way.
+    Closes: #429533, #424038, #425264, #428419, #431502, #425992.
 
- -- Domenico Andreoli <cavok@debian.org>  Wed, 25 Jul 2007 13:51:11 +0200
+ -- Domenico Andreoli <cavok@debian.org>  Sun, 05 Aug 2007 15:32:38 +0200
 
 boost (1.34.1~rc1-1) experimental; urgency=low
 
