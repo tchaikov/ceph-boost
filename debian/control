@@ -41,7 +41,6 @@ Package: libboost-dev
 Architecture: any
 Section: libdevel
 Depends: libstdc++-dev
-Replaces: libboost-dev (<< 1.34.1-1)
 Suggests: libboost-doc, libboost-date-time-dev, libboost-filesystem-dev, libboost-graph-dev, libboost-iostreams-dev, libboost-program-options-dev, libboost-python-dev, libboost-regex-dev, libboost-serialization-dev, libboost-signals-dev, libboost-test-dev, libboost-thread-dev, libboost-wave-dev
 Description: Boost C++ Libraries development files
  The Boost web site provides free, peer-reviewed, portable C++ source
@@ -93,7 +92,7 @@ Package: libboost-date-time-dev
 Architecture: any
 Section: libdevel
 Depends: libboost-dev (= ${binary:Version}), libboost-date-time1.34.1 (= ${binary:Version})
-Replaces: libboost-dev (<< 1.30.0-1)
+Replaces: libboost-dev (<< 1.34.1-1)
 Description: set of date-time libraries based on generic programming concepts
  Part of the Boost C++ Libraries collection.
  .
