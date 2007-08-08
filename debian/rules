@@ -56,9 +56,9 @@ mk_debhelper_files = \
 		) \
 	)
 
-TOOLSET_CONFIG="using gcc : : : <define>_REENTRANT <compileflags>-mlong-calls ;"
-ifneq ($(DEB_BUILD_ARCH), hppa)
 TOOLSET_CONFIG="using gcc : 4.2 : g++-4.2 : <define>_REENTRANT ;"
+ifeq ($(DEB_BUILD_ARCH), hppa)
+TOOLSET_CONFIG="using gcc : 4.2 : g++-4.2 : <define>_REENTRANT <compileflags>-mlong-calls ;"
 endif
 PYTHON_CONFIG="using python : 2.5 : /usr ;"
 
