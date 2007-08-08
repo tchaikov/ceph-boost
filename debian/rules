@@ -3,8 +3,8 @@
 # Uncomment this to turn on verbose mode.
 #export DH_VERBOSE=1
 
-# This has to be exported to make some magic below work.
 export DH_OPTIONS
+export CC
 
 DEB_BUILD_ARCH ?= $(shell dpkg-architecture -qDEB_BUILD_ARCH)
 
@@ -69,8 +69,9 @@ bjam = tools/jam/src/bjam
 
 JAM = $(bjam) -d2 --user-config=$(shell pwd)/user-config.jam -sHAVE_ICU=1
 
+$(bjam): CC=gcc-4.1
 $(bjam):
-	cd tools/jam/src && sh build.sh gcc && mv bin.*/bjam .
+	cd tools/jam/src && sh build.sh cc && mv bin.*/bjam .
 
 build: build-stamp
 build-stamp: $(bjam)
