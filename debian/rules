@@ -37,12 +37,18 @@ boost_variants = $(if $(boost_variants_$(1)), $(boost_variants_$(1)), -st -st-d 
 mk_base_name = usr/lib/libboost_$(subst -,_,$(1))$(2)
 mk_full_name = usr/lib/libboost_$(subst -,_,$(1))-$(gcc_version)$(2)-$(boost_version)
 
+# helpers to make proper release/debug package names
+mk_pkg_lib = libboost-$(if $(findstring -d,$(2)),dbg,$(1)$(SOVERSION)$(DEBIAN_SUFFIX))
+mk_pkg_dev = libboost-$(if $(findstring -d,$(2)),dbg,$(1)-dev)
+mk_deb_lib = debian/$(call mk_pkg_lib,$(1),$(2))
+mk_deb_dev = debian/$(call mk_pkg_dev,$(1),$(2))
+
 # helpers with the side effect of writing debhelper files
-mk_a_files = $(shell echo $(call mk_full_name,$(2),$(3)).a >> debian/libboost-$(1)-dev.install)
-mk_so_files = $(shell echo $(call mk_full_name,$(2),$(3)).so.$(SOVERSION) >> debian/libboost-$(1)$(SOVERSION)$(DEBIAN_SUFFIX).install)
-mk_ln_files = $(shell echo $(call mk_full_name,$(2),$(3)).so.$(SOVERSION) $(call mk_full_name,$(2),$(3)).so >> debian/libboost-$(1)-dev.links)
-mk_ln2_files = $(shell echo $(call mk_full_name,$(2),$(3)).so $(call mk_base_name,$(2),$(3)).so >> debian/libboost-$(1)-dev.links)
-mk_ln3_files = $(shell echo $(call mk_full_name,$(2),$(3)).a $(call mk_base_name,$(2),$(3)).a >> debian/libboost-$(1)-dev.links)
+mk_a_files = $(shell echo $(call mk_full_name,$(2),$(3)).a >> $(call mk_deb_dev,$(1),$(3)).install)
+mk_so_files = $(shell echo $(call mk_full_name,$(2),$(3)).so.$(SOVERSION) >> $(call mk_deb_lib,$(1),$(3)).install)
+mk_ln_files = $(shell echo $(call mk_full_name,$(2),$(3)).so.$(SOVERSION) $(call mk_full_name,$(2),$(3)).so >> $(call mk_deb_dev,$(1),$(3)).links)
+mk_ln2_files = $(shell echo $(call mk_full_name,$(2),$(3)).so $(call mk_base_name,$(2),$(3)).so >> $(call mk_deb_dev,$(1),$(3)).links)
+mk_ln3_files = $(shell echo $(call mk_full_name,$(2),$(3)).a $(call mk_base_name,$(2),$(3)).a >> $(call mk_deb_dev,$(1),$(3)).links)
 mk_files = $(foreach fn,a so ln ln2 ln3,$(call mk_$(fn)_files,$(1),$(2),$(3)))
 
 # invokes mk_files of every variant of every shared library of every Boost library
@@ -109,6 +115,8 @@ clean:
 	rm -rf debian/libboost-*$(SOVERSION).install
 	rm -rf debian/libboost-*-dev.install
 	rm -rf debian/libboost-*-dev.links
+	rm -rf debian/libboost-dbg.install
+	rm -rf debian/libboost-dbg.links
 
 	dh_clean
 
@@ -136,6 +144,12 @@ install: build
 	dh_install -pbcp dist/bin/bcp usr/bin
 	dh_installman -pbcp debian/bcp.1
 
+	# package libboost-dbg
+	dh_install --sourcedir=debian/tmp -plibboost-dbg
+	dh_link -plibboost-dbg \
+	   usr/lib/libboost_thread-mt-d.a usr/lib/libboost_thread-d.a \
+	   usr/lib/libboost_thread-mt-d.so usr/lib/libboost_thread-d.so
+
 	# package libboost-dev
 	dh_install -plibboost-dev \
 	   debian/tmp/usr/include/boost-$(boost_version)/boost \
@@ -144,7 +158,6 @@ install: build
 	dh_install -plibboost-dev \
 	   debian/libboost-dev.lintian-overrides \
 	   usr/share/lintian/overrides/libboost-dev
-
 
 	# package libboost-doc
 	rm -rf $(htmldir)
@@ -267,8 +280,8 @@ install: build
 	   debian/libboost-thread-dev/usr/include/boost
 	dh_install --sourcedir=debian/tmp -plibboost-thread-dev
 	dh_link -plibboost-thread-dev \
-	   usr/lib/libboost_thread-mt.so usr/lib/libboost_thread.so \
-	   usr/lib/libboost_thread-mt-d.so usr/lib/libboost_thread-d.so
+	   usr/lib/libboost_thread-mt.a usr/lib/libboost_thread.a \
+	   usr/lib/libboost_thread-mt.so usr/lib/libboost_thread.so
 
 	# package libboost-wave$(SOVERSION)
 	dh_install --sourcedir=debian/tmp -plibboost-wave$(SOVERSION)$(DEBIAN_SUFFIX)
