@@ -71,7 +71,7 @@ PYTHON_CONFIG="using python : 2.5 : /usr ;"
 exampledir = debian/libboost-doc/usr/share/doc/libboost-doc/examples
 htmldir = debian/libboost-doc/usr/share/doc/libboost-doc/HTML
 pyste_prefix = $(PWD)/debian/pyste/usr
-bjam = tools/jam/src/bjam
+bjam = $(shell pwd)/tools/jam/src/bjam
 
 JAM = $(bjam) -d2 --user-config=$(shell pwd)/user-config.jam -sHAVE_ICU=1
 
@@ -86,10 +86,10 @@ build-stamp: $(bjam)
 	echo $(TOOLSET_CONFIG) >> user-config.jam
 	echo $(PYTHON_CONFIG) >> user-config.jam
 
-	cd tools/bcp && ../../$(JAM)
-	cd tools/inspect/build && ../../../$(JAM)
-	cd tools/wave/build && ../../../$(JAM)
-	cd tools/regression/build && ../../../$(JAM)
+	cd tools/bcp && $(JAM)
+	cd tools/inspect/build && $(JAM)
+	cd tools/wave/build && $(JAM)
+	cd tools/regression/build && $(JAM)
 
 	$(JAM) variant=release,debug threading=single,multi
 	cd libs/python/pyste/install && python2.5 setup.py build
@@ -101,7 +101,7 @@ clean:
 	dh_testroot
 	rm -f build-stamp
 
-	-cd tools && ../$(JAM) clean
+	-cd tools && $(JAM) clean
 	-$(JAM) clean
 	cd libs/python/pyste/install && python2.5 setup.py clean
 
