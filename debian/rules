@@ -75,6 +75,8 @@ bjam = $(shell pwd)/tools/jam/src/bjam
 
 JAM = $(bjam) -d2 --user-config=$(shell pwd)/user-config.jam -sHAVE_ICU=1
 
+# BJAM segfaults if built with GCC 4.2, so build with GCC 4.1 to avoid problems.
+# See 367825 for a proper fix.
 $(bjam): CC=gcc-4.1
 $(bjam):
 	cd tools/jam/src && sh build.sh cc && mv bin.*/bjam .
