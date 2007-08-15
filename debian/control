@@ -3,7 +3,7 @@ Section: libs
 Priority: optional
 Maintainer: Debian Boost Team <pkg-boost-devel@lists.alioth.debian.org>
 Uploaders: Steve M. Robbins <smr@debian.org>, Domenico Andreoli <cavok@debian.org>, Christophe Prud'homme <prudhomm@debian.org>
-Build-Depends: debhelper (>= 4), bison, flex, docbook-to-man, xsltproc, doxygen, zlib1g-dev, libbz2-dev, libicu36-dev, python-dev | python-all-dev, python2.5-dev, python-support (>= 0.3), g++-4.1, g++-4.2
+Build-Depends: debhelper (>= 4), bison, flex, docbook-to-man, xsltproc, doxygen, zlib1g-dev, libbz2-dev, libicu36-dev, python-dev | python-all-dev, python2.4-dev, python-support (>= 0.3), g++-4.1
 Standards-Version: 3.7.2
 
 Package: bcp
@@ -236,7 +236,7 @@ Description: Boost.Python Library
 Package: libboost-python-dev
 Architecture: any
 Section: libdevel
-Depends: libboost-dev (= ${binary:Version}), libboost-python1.34.1 (= ${binary:Version}), python2.5-dev
+Depends: libboost-dev (= ${binary:Version}), libboost-python1.34.1 (= ${binary:Version}), python2.4-dev
 Replaces: libboost-dev (<< 1.31.0-3)
 Description: Boost.Python Library development files
  Part of the Boost C++ Libraries collection.
