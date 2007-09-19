@@ -11,11 +11,11 @@ DEB_BUILD_ARCH ?= $(shell dpkg-architecture -qDEB_BUILD_ARCH)
 # Boost does not guarantee any ABI, it uses the full version in SONAME
 SOVERSION = 1.34.1
 SHLIBS_VERSION =
-DEBIAN_SUFFIX =
+DEBIAN_SUFFIX = -2
 
 # tags for library name decoration
 boost_version = $(subst .,_,$(SOVERSION))
-gcc_version = gcc41
+gcc_version = gcc42
 
 # Boost libraries for which we want separate packages
 boost_libs := date-time filesystem graph iostreams program-options python regex serialization signals test thread wave
@@ -44,8 +44,8 @@ mk_deb_lib = debian/$(call mk_pkg_lib,$(1),$(2))
 mk_deb_dev = debian/$(call mk_pkg_dev,$(1),$(2))
 
 # helpers with the side effect of writing debhelper files
-mk_a_files = $(shell echo $(call mk_full_name,$(2),$(3)).a >> $(call mk_deb_dev,$(1),$(3)).install)
-mk_so_files = $(shell echo $(call mk_full_name,$(2),$(3)).so.$(SOVERSION) >> $(call mk_deb_lib,$(1),$(3)).install)
+mk_a_files = $(shell echo debian/tmp/$(call mk_full_name,$(2),$(3)).a >> $(call mk_deb_dev,$(1),$(3)).install)
+mk_so_files = $(shell echo debian/tmp/$(call mk_full_name,$(2),$(3)).so.$(SOVERSION) >> $(call mk_deb_lib,$(1),$(3)).install)
 mk_ln_files = $(shell echo $(call mk_full_name,$(2),$(3)).so.$(SOVERSION) $(call mk_full_name,$(2),$(3)).so >> $(call mk_deb_dev,$(1),$(3)).links)
 mk_ln2_files = $(shell echo $(call mk_full_name,$(2),$(3)).so $(call mk_base_name,$(2),$(3)).so >> $(call mk_deb_dev,$(1),$(3)).links)
 mk_ln3_files = $(shell echo $(call mk_full_name,$(2),$(3)).a $(call mk_base_name,$(2),$(3)).a >> $(call mk_deb_dev,$(1),$(3)).links)
@@ -62,9 +62,9 @@ mk_debhelper_files = \
 		) \
 	)
 
-TOOLSET_CONFIG="using gcc : 4.1 : g++-4.1 : <define>_REENTRANT ;"
+TOOLSET_CONFIG="using gcc : 4.2 : g++-4.2 : <define>_REENTRANT ;"
 ifeq ($(DEB_BUILD_ARCH), hppa)
-TOOLSET_CONFIG="using gcc : 4.1 : g++-4.1 : <define>_REENTRANT <compileflags>-mlong-calls ;"
+TOOLSET_CONFIG="using gcc : 4.2 : g++-4.2 : <define>_REENTRANT <compileflags>-mlong-calls ;"
 endif
 PYTHON_CONFIG="using python : 2.4 : /usr ;"
 
@@ -114,7 +114,7 @@ clean:
 	rm -rf bin.v2 dist
 	rm -rf user-config.jam
 
-	rm -rf debian/libboost-*$(SOVERSION).install
+	rm -rf debian/libboost-*$(SOVERSION)$(DEBIAN_SUFFIX).install
 	rm -rf debian/libboost-*-dev.install
 	rm -rf debian/libboost-*-dev.links
 	rm -rf debian/libboost-dbg.install
@@ -134,7 +134,7 @@ install: build
 	find debian/tmp -name .cvsignore | xargs rm -f
 	find debian -empty -type f | xargs rm -f
 
-	# generate debhelper files
+	# generate (some) debhelper files
 	@$(call mk_debhelper_files)
 
 	# package pyste
@@ -147,7 +147,7 @@ install: build
 	dh_installman -pbcp debian/bcp.1
 
 	# package libboost-dbg
-	dh_install --sourcedir=debian/tmp -plibboost-dbg
+	dh_install -plibboost-dbg
 	dh_link -plibboost-dbg \
 	   usr/lib/libboost_thread-mt-d.a usr/lib/libboost_thread-d.a \
 	   usr/lib/libboost_thread-mt-d.so usr/lib/libboost_thread-d.so
@@ -181,117 +181,117 @@ install: build
 
 
 	# package libboost-date-time$(SOVERSION)
-	dh_install --sourcedir=debian/tmp -plibboost-date-time$(SOVERSION)$(DEBIAN_SUFFIX)
+	dh_install -plibboost-date-time$(SOVERSION)$(DEBIAN_SUFFIX)
 	# package libboost-date-time-dev
 	dh_installdirs -plibboost-date-time-dev usr/include/boost
 	mv debian/libboost-dev/usr/include/boost/date_time* \
 	   debian/libboost-date-time-dev/usr/include/boost
-	dh_install --sourcedir=debian/tmp -plibboost-date-time-dev
+	dh_install -plibboost-date-time-dev
 	dh_link -plibboost-date-time-dev
 
 	# package libboost-filesystem$(SOVERSION)
-	dh_install --sourcedir=debian/tmp -plibboost-filesystem$(SOVERSION)$(DEBIAN_SUFFIX)
+	dh_install -plibboost-filesystem$(SOVERSION)$(DEBIAN_SUFFIX)
 	# package libboost-filesystem-dev
 	dh_installdirs -plibboost-filesystem-dev usr/include/boost
 	mv debian/libboost-dev/usr/include/boost/filesystem* \
 	   debian/libboost-filesystem-dev/usr/include/boost
-	dh_install --sourcedir=debian/tmp -plibboost-filesystem-dev
+	dh_install -plibboost-filesystem-dev
 	dh_link -plibboost-filesystem-dev
 
 	# package libboost-graph$(SOVERSION)
-	dh_install --sourcedir=debian/tmp -plibboost-graph$(SOVERSION)$(DEBIAN_SUFFIX)
+	dh_install -plibboost-graph$(SOVERSION)$(DEBIAN_SUFFIX)
 	# package libboost-graph-dev
 	dh_installdirs -plibboost-graph-dev usr/include/boost
 	mv debian/libboost-dev/usr/include/boost/graph \
 	   debian/libboost-graph-dev/usr/include/boost
-	dh_install --sourcedir=debian/tmp -plibboost-graph-dev
+	dh_install -plibboost-graph-dev
 	dh_link -plibboost-graph-dev
 
 	# package libboost-iostreams$(SOVERSION)
-	dh_install --sourcedir=debian/tmp -plibboost-iostreams$(SOVERSION)$(DEBIAN_SUFFIX)
+	dh_install -plibboost-iostreams$(SOVERSION)$(DEBIAN_SUFFIX)
 	# package libboost-iostreams-dev
 	dh_installdirs -plibboost-iostreams-dev usr/include/boost
 	mv debian/libboost-dev/usr/include/boost/iostreams* \
 	   debian/libboost-iostreams-dev/usr/include/boost
-	dh_install --sourcedir=debian/tmp -plibboost-iostreams-dev
+	dh_install -plibboost-iostreams-dev
 	dh_link -plibboost-iostreams-dev
 
 	# package libboost-program-options$(SOVERSION)
-	dh_install --sourcedir=debian/tmp -plibboost-program-options$(SOVERSION)$(DEBIAN_SUFFIX)
+	dh_install -plibboost-program-options$(SOVERSION)$(DEBIAN_SUFFIX)
 	# package libboost-program-options-dev
 	dh_installdirs -plibboost-program-options-dev usr/include/boost
 	mv debian/libboost-dev/usr/include/boost/program_options* \
 	   debian/libboost-program-options-dev/usr/include/boost
-	dh_install --sourcedir=debian/tmp -plibboost-program-options-dev
+	dh_install -plibboost-program-options-dev
 	dh_link -plibboost-program-options-dev
 
 	# package libboost-python$(SOVERSION)
-	dh_install --sourcedir=debian/tmp -plibboost-python$(SOVERSION)$(DEBIAN_SUFFIX)
+	dh_install -plibboost-python$(SOVERSION)$(DEBIAN_SUFFIX)
 	# package libboost-python-dev
 	dh_installdirs -plibboost-python-dev usr/include/boost
 	mv debian/libboost-dev/usr/include/boost/python* \
 	   debian/libboost-python-dev/usr/include/boost
-	dh_install --sourcedir=debian/tmp -plibboost-python-dev
+	dh_install -plibboost-python-dev
 	dh_link -plibboost-python-dev
-	dh_install --sourcedir=debian/tmp -plibboost-python-dev
+	dh_install -plibboost-python-dev
 	dh_installdirs -plibboost-python-dev usr/share/lintian/overrides
 	cp debian/libboost-python-dev.lintian-overrides \
 	   debian/libboost-python-dev/usr/share/lintian/overrides/libboost-python-dev
 
 	# package libboost-regex$(SOVERSION)
-	dh_install --sourcedir=debian/tmp -plibboost-regex$(SOVERSION)$(DEBIAN_SUFFIX)
+	dh_install -plibboost-regex$(SOVERSION)$(DEBIAN_SUFFIX)
 	# package libboost-regex-dev
 	dh_installdirs -plibboost-regex-dev usr/include/boost
 	mv debian/libboost-dev/usr/include/boost/*regex* \
 	   debian/libboost-regex-dev/usr/include/boost
-	dh_install --sourcedir=debian/tmp -plibboost-regex-dev
+	dh_install -plibboost-regex-dev
 	dh_link -plibboost-regex-dev
 
 	# package libboost-serialization$(SOVERSION)
-	dh_install --sourcedir=debian/tmp -plibboost-serialization$(SOVERSION)$(DEBIAN_SUFFIX)
+	dh_install -plibboost-serialization$(SOVERSION)$(DEBIAN_SUFFIX)
 	# package libboost-serialization-dev
 	dh_installdirs -plibboost-serialization-dev usr/include/boost
 	mv debian/libboost-dev/usr/include/boost/*serialization* \
 	   debian/libboost-serialization-dev/usr/include/boost
-	dh_install --sourcedir=debian/tmp -plibboost-serialization-dev
+	dh_install -plibboost-serialization-dev
 	dh_link -plibboost-serialization-dev
 
 	# package libboost-signals$(SOVERSION)
-	dh_install --sourcedir=debian/tmp -plibboost-signals$(SOVERSION)$(DEBIAN_SUFFIX)
+	dh_install -plibboost-signals$(SOVERSION)$(DEBIAN_SUFFIX)
 	# package libboost-signals-dev
 	dh_installdirs -plibboost-signals-dev usr/include/boost
 	mv debian/libboost-dev/usr/include/boost/*signal* \
 	   debian/libboost-signals-dev/usr/include/boost
-	dh_install --sourcedir=debian/tmp -plibboost-signals-dev
+	dh_install -plibboost-signals-dev
 	dh_link -plibboost-signals-dev
 
 	# package libboost-test$(SOVERSION)
-	dh_install --sourcedir=debian/tmp -plibboost-test$(SOVERSION)$(DEBIAN_SUFFIX)
+	dh_install -plibboost-test$(SOVERSION)$(DEBIAN_SUFFIX)
 	# package libboost-test-dev
 	dh_installdirs -plibboost-test-dev usr/include/boost
 	mv debian/libboost-dev/usr/include/boost/test \
 	   debian/libboost-test-dev/usr/include/boost
-	dh_install --sourcedir=debian/tmp -plibboost-test-dev
+	dh_install -plibboost-test-dev
 	dh_link -plibboost-test-dev
 
 	# package libboost-thread$(SOVERSION)
-	dh_install --sourcedir=debian/tmp -plibboost-thread$(SOVERSION)$(DEBIAN_SUFFIX)
+	dh_install -plibboost-thread$(SOVERSION)$(DEBIAN_SUFFIX)
 	# package libboost-thread-dev
 	dh_installdirs -plibboost-thread-dev usr/include/boost
 	mv debian/libboost-dev/usr/include/boost/thread* \
 	   debian/libboost-thread-dev/usr/include/boost
-	dh_install --sourcedir=debian/tmp -plibboost-thread-dev
+	dh_install -plibboost-thread-dev
 	dh_link -plibboost-thread-dev \
 	   usr/lib/libboost_thread-mt.a usr/lib/libboost_thread.a \
 	   usr/lib/libboost_thread-mt.so usr/lib/libboost_thread.so
 
 	# package libboost-wave$(SOVERSION)
-	dh_install --sourcedir=debian/tmp -plibboost-wave$(SOVERSION)$(DEBIAN_SUFFIX)
+	dh_install -plibboost-wave$(SOVERSION)$(DEBIAN_SUFFIX)
 	# package libboost-wave-dev
 	dh_installdirs -plibboost-wave-dev usr/include/boost
 	mv debian/libboost-dev/usr/include/boost/wave* \
 	   debian/libboost-wave-dev/usr/include/boost
-	dh_install --sourcedir=debian/tmp -plibboost-wave-dev
+	dh_install -plibboost-wave-dev
 	dh_link -plibboost-wave-dev
 
 # This single target is used to build all the packages, all at once, or
