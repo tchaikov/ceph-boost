@@ -42,6 +42,7 @@ mk_pkg_lib = libboost-$(if $(findstring -d,$(2)),dbg,$(1)$(SOVERSION)$(DEBIAN_SU
 mk_pkg_dev = libboost-$(if $(findstring -d,$(2)),dbg,$(1)-dev)
 mk_deb_lib = debian/$(call mk_pkg_lib,$(1),$(2))
 mk_deb_dev = debian/$(call mk_pkg_dev,$(1),$(2))
+mk_ove_lib = $(call mk_deb_lib,$(1),$(2))/usr/share/lintian/overrides/$(call mk_pkg_lib,$(1),$(2))
 
 # helpers with the side effect of writing debhelper files
 mk_a_files = $(shell echo debian/tmp/$(call mk_full_name,$(2),$(3)).a >> $(call mk_deb_dev,$(1),$(3)).install)
@@ -51,10 +52,15 @@ mk_ln2_files = $(shell echo $(call mk_full_name,$(2),$(3)).so $(call mk_base_nam
 mk_ln3_files = $(shell echo $(call mk_full_name,$(2),$(3)).a $(call mk_base_name,$(2),$(3)).a >> $(call mk_deb_dev,$(1),$(3)).links)
 mk_files = $(foreach fn,a so ln ln2 ln3,$(call mk_$(fn)_files,$(1),$(2),$(3)))
 
+# helpers to make and install lintian override files
+mk_override_files = echo $(call mk_pkg_lib,$(1)): package-name-doesnt-match-sonames >> $(call mk_ove_lib,$(1));
+ins_lintian_overrides = install -m644 debian/$(1).lintian-overrides debian/$(1)/usr/share/lintian/overrides/$(1);
+
 # invokes mk_files of every variant of every shared library of every Boost library
 mk_debhelper_files = \
 	$(foreach l, $(boost_libs), \
 		echo "making debhelper files for $(l)..."; \
+		$(call mk_override_files,$(l)) \
 		$(foreach ll, $(call boost_lib,$(l)), \
 			$(foreach v, $(call boost_variants,$(l)), \
 				$(call mk_files,$(l),$(ll),$(subst -st,,$(v))) \
@@ -114,6 +120,7 @@ clean:
 	rm -rf bin.v2 dist
 	rm -rf user-config.jam
 
+	rm -rf debian/libboost-*$(SOVERSION)$(DEBIAN_SUFFIX).lintian-overrides
 	rm -rf debian/libboost-*$(SOVERSION)$(DEBIAN_SUFFIX).install
 	rm -rf debian/libboost-*-dev.install
 	rm -rf debian/libboost-*-dev.links
@@ -134,6 +141,8 @@ install: build
 	find debian/tmp -name .cvsignore | xargs rm -f
 	find debian -empty -type f | xargs rm -f
 
+	dh_installdirs -A usr/share/lintian/overrides
+
 	# generate (some) debhelper files
 	@$(call mk_debhelper_files)
 
@@ -151,15 +160,13 @@ install: build
 	dh_link -plibboost-dbg \
 	   usr/lib/libboost_thread-mt-d.a usr/lib/libboost_thread-d.a \
 	   usr/lib/libboost_thread-mt-d.so usr/lib/libboost_thread-d.so
+	$(call ins_lintian_overrides,libboost-dbg)
 
 	# package libboost-dev
 	dh_install -plibboost-dev \
 	   debian/tmp/usr/include/boost-$(boost_version)/boost \
 	   usr/include
-	dh_installdirs -plibboost-dev usr/share/lintian/overrides
-	dh_install -plibboost-dev \
-	   debian/libboost-dev.lintian-overrides \
-	   usr/share/lintian/overrides/libboost-dev
+	$(call ins_lintian_overrides,libboost-dev)
 
 	# package libboost-doc
 	rm -rf $(htmldir)
@@ -174,10 +181,7 @@ install: build
 	mkdir -p $(exampledir)
 	cat debian/example-files | xargs cp -a --parents --target-directory=$(exampledir)
 	find $(exampledir) -type f | xargs chmod 644
-	dh_installdirs -plibboost-doc usr/share/lintian/overrides
-	dh_install -plibboost-doc \
-	   debian/libboost-doc.lintian-overrides \
-	   usr/share/lintian/overrides/libboost-doc
+	$(call ins_lintian_overrides,libboost-doc)
 
 
 	# package libboost-date-time$(SOVERSION)
@@ -234,9 +238,7 @@ install: build
 	dh_install -plibboost-python-dev
 	dh_link -plibboost-python-dev
 	dh_install -plibboost-python-dev
-	dh_installdirs -plibboost-python-dev usr/share/lintian/overrides
-	cp debian/libboost-python-dev.lintian-overrides \
-	   debian/libboost-python-dev/usr/share/lintian/overrides/libboost-python-dev
+	$(call ins_lintian_overrides,libboost-python-dev)
 
 	# package libboost-regex$(SOVERSION)
 	dh_install -plibboost-regex$(SOVERSION)$(DEBIAN_SUFFIX)
@@ -313,6 +315,8 @@ binary-common:
 	dh_fixperms
 
 	@if [ "$(DH_OPTIONS)" = "-a" ]; then \
+		echo DH_OPTIONS=-plibboost-dbg dh_makeshlibs -V"libboost-dbg $(SHLIBS_VERSION)"; \
+		DH_OPTIONS=-plibboost-dbg dh_makeshlibs -V"libboost-dbg $(SHLIBS_VERSION)"; \
 		for name in date-time filesystem graph iostreams program-options python regex serialization signals test thread wave; do \
 			lib=libboost-$${name}$(SOVERSION)$(DEBIAN_SUFFIX); \
 			echo DH_OPTIONS=-p$${lib} dh_makeshlibs -V"$${lib} $(SHLIBS_VERSION)"; \
