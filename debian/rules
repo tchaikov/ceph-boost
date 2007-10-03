@@ -6,6 +6,9 @@
 export DH_OPTIONS
 export CC
 
+# set the number of build jobs
+#JOBS = -j2
+
 DEB_BUILD_ARCH ?= $(shell dpkg-architecture -qDEB_BUILD_ARCH)
 
 # Boost does not guarantee any ABI, it uses the full version in SONAME
@@ -79,7 +82,7 @@ htmldir = debian/libboost-doc/usr/share/doc/libboost-doc/HTML
 pyste_prefix = $(PWD)/debian/pyste/usr
 bjam = $(shell pwd)/tools/jam/src/bjam
 
-JAM = $(bjam) -d2 --user-config=$(shell pwd)/user-config.jam -sHAVE_ICU=1
+JAM = $(bjam) $(JOBS) -d2 --user-config=$(shell pwd)/user-config.jam -sHAVE_ICU=1
 
 # BJAM segfaults if built with GCC 4.2, so build with GCC 4.1 to avoid problems.
 # See 367825 for a proper fix.
