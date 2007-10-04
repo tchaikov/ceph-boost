@@ -1,6 +1,6 @@
 boost (1.34.1-3) experimental; urgency=low
 
-  * API change: switched back to gcc 4.2
+  * ABI change: switched back to gcc 4.2
   * bjam is built using gcc 4.1 (closes: #367825).
   * libboost-dev now recommends all the other libboost-*-dev packages
     (closes: #443160).
