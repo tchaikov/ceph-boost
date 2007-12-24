@@ -1,3 +1,36 @@
+boost (1.34.1-4) unstable; urgency=low
+
+  * Merged Steve Langasek's -2.1 and -2.2 changes into
+  the experimental -3 version.
+
+ -- Steve M. Robbins <smr@debian.org>  Sun, 23 Dec 2007 21:14:55 -0600
+
+boost (1.34.1-2.2) unstable; urgency=low
+
+  * Non-maintainer upload.
+  * Change libicu-dev dependency in addition to the build-dependency.
+    Closes: #456844.
+  * Add back build dependency on gcc-4.1, since bjam currently segfaults
+    with gcc-4.2; this is superseded already in 1.34.1-3 in experimental.
+    Closes: #456915.
+
+ -- Steve Langasek <vorlon@debian.org>  Wed, 19 Dec 2007 00:58:39 -0800
+
+boost (1.34.1-2.1) unstable; urgency=low
+
+  * Non-maintainer upload.
+  * Build-depend on libicu-dev instead of libicu36-dev for the icu library
+    transition.  Closes: #454605.
+  * Bump the Build-Depends from g++-4.1 to g++-4.2, and add
+    backwards-compatibility "-gcc41" symlinks for all libraries to avoid
+    gratuitous ABI breakage for the rebuild since the gcc version
+    doesn't change the ABI, contrary to upstream assertion.  Bump the
+    shlibs to match.
+  * Add shlibs to libboost-dbg package, for compatibility with new
+    dpkg-shlibdeps behavior.
+
+ -- Steve Langasek <vorlon@debian.org>  Sun, 16 Dec 2007 13:59:29 -0800
+
 boost (1.34.1-3) experimental; urgency=low
 
   * ABI change: switched back to gcc 4.2
