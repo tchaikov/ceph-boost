@@ -1,5 +1,6 @@
 boost (1.34.1-5) UNRELEASED; urgency=low
 
+  [ Domenico Andreoli ]
   * Re-synchronized with friends from Ubuntu (thanks Jamie Strandboge).
     - got fixes for CVE-2008-0171 and CVE-2008-0172.  Closes: #461236.
   * debian/patches/05_regex_fixes.patch: fix for
@@ -10,8 +11,14 @@ boost (1.34.1-5) UNRELEASED; urgency=low
     CVE-2008-0172
     http://svn.boost.org/trac/boost/changeset/42674
     http://svn.boost.org/trac/boost/changeset/42745
+  
+  [ Steve Robbins ]
+  * boost/function/function_base.hpp:
+  * boost/function/function_template.hpp: Replace with SVN head version to
+    fix boost http://svn.boost.org/trac/boost/ticket/1260.  
+    Closes: #458743.
 
- -- Domenico Andreoli <cavok@debian.org>  Thu, 17 Jan 2008 19:00:27 +0100
+ -- Steve M. Robbins <smr@debian.org>  Thu, 24 Jan 2008 00:04:17 -0600
 
 boost (1.34.1-4) unstable; urgency=low
 
