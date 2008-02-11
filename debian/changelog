@@ -1,4 +1,4 @@
-boost (1.34.1-6) UNRELEASED; urgency=low
+boost (1.34.1-6) unstable; urgency=low
 
   [Fixes for GCC 4.3]
   * boost/regex/v4/cpp_regex_traits.hpp:
