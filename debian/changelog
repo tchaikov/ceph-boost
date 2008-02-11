@@ -1,9 +1,18 @@
 boost (1.34.1-6) UNRELEASED; urgency=low
 
+  [Fixes for GCC 4.3]
+  * boost/regex/v4/cpp_regex_traits.hpp:
   * boost/test/test_tools.hpp: Add #include <climits> to pick up
     definition of CHAR_BIT (thanks, Jiri Palecek).  Closes: #444359.
+  * boost/python/detail/def_helper.hpp: Change keywords<0> to
+    detail::keywords<0>, avoiding a "changes meaning" error.  Patch from
+    upstream SVN.
+  * Verified that tagpy builds.  Closes: #444359.
+  * Verified that twinkle builds (after fixing #465187).  Closes: #454815.
+  * Verified that kdeedu builds (had to omit uninstallable libfacile-ocaml-dev
+    build-dep).  Closes: #463464.
 
- -- Steve M. Robbins <smr@debian.org>  Sun, 10 Feb 2008 20:58:34 -0600
+ -- Steve M. Robbins <smr@debian.org>  Mon, 11 Feb 2008 01:40:05 -0600
 
 boost (1.34.1-5) unstable; urgency=medium
 
