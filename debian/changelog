@@ -1,3 +1,10 @@
+boost (1.34.1-6) UNRELEASED; urgency=low
+
+  * boost/test/test_tools.hpp: Add #include <climits> to pick up
+    definition of CHAR_BIT (thanks, Jiri Palecek).  Closes: #444359.
+
+ -- Steve M. Robbins <smr@debian.org>  Sun, 10 Feb 2008 20:58:34 -0600
+
 boost (1.34.1-5) unstable; urgency=medium
 
   [ Domenico Andreoli ]
