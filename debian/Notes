@@ -44,7 +44,9 @@ localhost to get the source tree
     rm -rf boost
     for f in `find * -type f`; do
         test -f /usr/local/src/devel/Boost/boost-svn/trunk/$f && echo $f;
-    done > documentation-files
+    done > df1
+    find * -name '*.htm' -or '*.html' > df2
+    cat df1 df2 | sort | uniq > documentation-files
 
 ** On my machine, "http://localhost/lsrc" resolves to "/usr/local/src",
    which is where I unpack and build boost.

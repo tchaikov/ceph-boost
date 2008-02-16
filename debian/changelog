@@ -1,4 +1,4 @@
-boost (1.34.1-7) unstable; urgency=low
+boost (1.34.1-7) UNRELEASED; urgency=low
 
   * debian/control (libboost-dev): Move libboost-serialization-dev from
     Recommends to Depends since ptr_vector needs it.  Closes: 457654,
@@ -6,6 +6,10 @@ boost (1.34.1-7) unstable; urgency=low
     uses a non-intrusive implementation of serialization, decoupling the
     libraries [http://thread.gmane.org/gmane.comp.lib.boost.devel/169668].
     This change can be reverted when the new upstream is packaged.
+  
+  * debian/documentation-files: Updated as per procedure in debian/Notes.
+    Closes: #338106.  
+  * debian/rules (libboost-doc): Also copy in all doc directories.
 
  -- Steve M. Robbins <smr@debian.org>  Sat, 16 Feb 2008 03:54:41 -0600
 
