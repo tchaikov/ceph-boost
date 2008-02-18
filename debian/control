@@ -1,4 +1,5 @@
 Source: boost
+Homepage: http://www.boost.org/
 Section: libs
 Priority: optional
 Maintainer: Debian Boost Team <pkg-boost-devel@lists.alioth.debian.org>
@@ -7,6 +8,7 @@ Build-Depends: debhelper (>= 4), bison, flex, docbook-to-man, xsltproc, doxygen,
 Standards-Version: 3.7.2
 
 Package: bcp
+Homepage: http://www.boost.org/tools/bcp/bcp.html
 Architecture: any
 Section: libdevel
 Depends: ${shlibs:Depends}, libboost-dev, libboost-date-time-dev, libboost-filesystem-dev, libboost-graph-dev, libboost-iostreams-dev, libboost-program-options-dev, libboost-python-dev, libboost-regex-dev, libboost-serialization-dev, libboost-signals-dev, libboost-test-dev, libboost-thread-dev, libboost-wave-dev
@@ -20,8 +22,6 @@ Description: tool for extracting subsets of Boost C++ Libraries
  .
  bcp can also report on which parts of Boost your code is dependent on,
  and what licences are used by those dependencies.
- .
-  Homepage: http://www.boost.org/tools/bcp/bcp.html
 
 Package: libboost-dbg
 Architecture: any
@@ -34,8 +34,6 @@ Description: Boost C++ Libraries with debug symbols
  .
  These libraries are built with debug symbols. They are useful to debug
  programs which use Boost. These must be used also at build/link time.
- .
-  Homepage: http://www.boost.org/
 
 Package: libboost-dev
 Architecture: any
@@ -53,10 +51,9 @@ Description: Boost C++ Libraries development files
  .
  For the following subprojects separate packages exist: 
  date-time, filesystem, graph, python, regex, signals, test, and thread.
- .
-  Homepage: http://www.boost.org/
 
 Package: libboost-doc
+Homepage: http://www.boost.org/libs/
 Architecture: all
 Section: doc
 Replaces: libboost-dev (<< 1.27.0-4)
@@ -73,8 +70,6 @@ Description: Boost.org libraries documentation
  This is documentation for the libboost-dev package in HTML format.
  Some pages point to header files provided in libboost-dev package,
  so it is suggested to install the latter as well.
- .
-  Homepage: http://www.boost.org/libs/
 
 Package: libboost-date-time1.34.1
 Architecture: any
@@ -89,6 +84,7 @@ Description: set of date-time libraries based on generic programming concepts
   Homepage: http://www.boost.org/libs/date_time/
 
 Package: libboost-date-time-dev
+Homepage: http://www.boost.org/libs/date_time/
 Architecture: any
 Section: libdevel
 Depends: libboost-dev (= ${binary:Version}), libboost-date-time1.34.1 (= ${binary:Version})
@@ -98,10 +94,9 @@ Description: set of date-time libraries based on generic programming concepts
  .
  These libraries are intended to make programming with dates and times
  almost as simple and natural as programming with strings and integers.
- .
-  Homepage: http://www.boost.org/libs/date_time/
 
 Package: libboost-filesystem1.34.1
+Homepage: http://boost.org/libs/filesystem/
 Architecture: any
 Section: libs
 Depends: ${shlibs:Depends}
@@ -111,10 +106,9 @@ Description: filesystem operations (portable paths, iteration over directories, 
  The Boost Filesystem Library provides portable facilities to query and 
  manipulate paths, files, and directories.  The goal is to
  facilitate portable script-like operations from within C++ programs.
- .
-  Homepage: http://boost.org/libs/filesystem/
 
 Package: libboost-filesystem-dev
+Homepage: http://boost.org/libs/filesystem/
 Architecture: any
 Section: libdevel
 Depends: libboost-dev (= ${binary:Version}), libboost-filesystem1.34.1 (= ${binary:Version})
@@ -125,10 +119,9 @@ Description: filesystem operations (portable paths, iteration over directories, 
  The Boost Filesystem Library provides portable facilities to query and 
  manipulate paths, files, and directories.  The goal is to
  facilitate portable script-like operations from within C++ programs.
- .
-  Homepage: http://boost.org/libs/filesystem/
 
 Package: libboost-graph1.34.1
+Homepage: http://www.boost.org/libs/graph/
 Architecture: any
 Section: libs
 Depends: ${shlibs:Depends}
@@ -141,10 +134,9 @@ Description: generic graph components and algorithms in C++
  abstractions must also be represented in computer programs. A
  standardized generic interface for traversing graphs is of utmost
  importance to encourage reuse of graph algorithms and data structures.
- .
-  Homepage: http://www.boost.org/libs/graph/
 
 Package: libboost-graph-dev
+Homepage: http://www.boost.org/libs/graph/
 Architecture: any
 Section: libdevel
 Depends: libboost-dev (= ${binary:Version})
@@ -157,10 +149,9 @@ Description: generic graph components and algorithms in C++
  abstractions must also be represented in computer programs. A
  standardized generic interface for traversing graphs is of utmost
  importance to encourage reuse of graph algorithms and data structures.
- .
-  Homepage: http://www.boost.org/libs/graph/
 
 Package: libboost-iostreams1.34.1
+Homepage: http://www.boost.org/libs/iostreams/
 Architecture: any
 Section: libs
 Depends: ${shlibs:Depends}
@@ -170,10 +161,9 @@ Description: Boost.Iostreams Library
  Boost.Iostreams are a collection of concepts and set of templates
  which turn models of these concepts into C++ standard library streams
  and stream buffers.
- .
-  Homepage: http://www.boost.org/libs/iostreams/
 
 Package: libboost-iostreams-dev
+Homepage: http://www.boost.org/libs/iostreams/
 Architecture: any
 Section: libdevel
 Depends: libboost-dev (= ${binary:Version}), libboost-iostreams1.34.1 (= ${binary:Version})
@@ -184,10 +174,9 @@ Description: Boost.Iostreams Library development files
  Boost.Iostreams are a collection of concepts and set of templates
  which turn models of these concepts into C++ standard library streams
  and stream buffers.
- .
-  Homepage: http://www.boost.org/libs/iostreams/
 
 Package: libboost-program-options1.34.1
+Homepage: http://www.boost.org/libs/program_options/
 Architecture: any
 Section: libs
 Depends: ${shlibs:Depends}
@@ -197,10 +186,9 @@ Description: program options library for C++
  Library to let program developers obtain program options, that is
  (name, value) pairs from the user, via conventional methods such as
  command line and config file.
- .
-  Homepage: http://www.boost.org/libs/program_options/
 
 Package: libboost-program-options-dev
+Homepage: http://www.boost.org/libs/program_options/
 Architecture: any
 Section: libdevel
 Depends: libboost-dev (= ${binary:Version}), libboost-program-options1.34.1 (= ${binary:Version})
@@ -210,10 +198,9 @@ Description: program options library for C++
  Library to let program developers obtain program options, that is
  (name, value) pairs from the user, via conventional methods such as
  command line and config file.
- .
-  Homepage: http://www.boost.org/libs/program_options/
 
 Package: libboost-python1.34.1
+Homepage: http://www.boost.org/libs/python/
 Architecture: any
 Section: python
 Depends: ${shlibs:Depends}
@@ -230,10 +217,9 @@ Description: Boost.Python Library
  Subclassing extension types in Python, Overriding virtual functions
  in Python, Member function Overloading, Automatic wrapping of
  numeric operators among others.
- .
-  Homepage: http://www.boost.org/libs/python/
 
 Package: libboost-python-dev
+Homepage: http://www.boost.org/libs/python/
 Architecture: any
 Section: libdevel
 Depends: libboost-dev (= ${binary:Version}), libboost-python1.34.1 (= ${binary:Version}), python2.4-dev
@@ -251,10 +237,9 @@ Description: Boost.Python Library development files
  Subclassing extension types in Python, Overriding virtual functions
  in Python, Member function Overloading, Automatic wrapping of
  numeric operators among others.
- .
-  Homepage: http://www.boost.org/libs/python/
 
 Package: libboost-regex1.34.1
+Homepage: http://www.boost.org/libs/regex/
 Architecture: any
 Section: libs
 Depends: ${shlibs:Depends}
@@ -271,10 +256,9 @@ Description: regular expression library for C++
  with wide character strings, or search and replace operations (in a
  manner analogous to either sed or perl), something that traditional C
  libraries can not do.
- .
-  Homepage: http://www.boost.org/libs/regex/
 
 Package: libboost-regex-dev
+Homepage: http://www.boost.org/libs/regex/
 Architecture: any
 Section: libdevel
 Depends: libboost-dev (= ${binary:Version}), libboost-regex1.34.1 (= ${binary:Version}), libicu-dev
@@ -291,10 +275,9 @@ Description: regular expression library for C++
  with wide character strings, or search and replace operations (in a
  manner analogous to either sed or perl), something that traditional C
  libraries can not do.
- .
-  Homepage: http://www.boost.org/libs/regex/
 
 Package: libboost-serialization1.34.1
+Homepage: http://www.boost.org/libs/serialization/
 Architecture: any
 Section: libs
 Depends: ${shlibs:Depends}
@@ -311,10 +294,9 @@ Description: serialization library for C++
  serialization: the reversible deconstruction of an arbitrary set of
  C++ data structures to a sequence of bytes.
  archive: to refer to a specific rendering of this stream of bytes.
- .
-  Homepage: http://www.boost.org/libs/serialization/
 
 Package: libboost-serialization-dev
+Homepage: http://www.boost.org/libs/serialization/
 Architecture: any
 Section: libdevel
 Depends: libboost-dev (= ${binary:Version}), libboost-serialization1.34.1 (= ${binary:Version})
@@ -332,10 +314,9 @@ Description: serialization library for C++
  serialization: the reversible deconstruction of an arbitrary set of
  C++ data structures to a sequence of bytes.
  archive: to refer to a specific rendering of this stream of bytes.
- .
-  Homepage: http://www.boost.org/libs/serialization/
 
 Package: libboost-signals1.34.1
+Homepage: http://www.boost.org/libs/signals/
 Architecture: any
 Section: libs
 Depends: ${shlibs:Depends}
@@ -347,10 +328,9 @@ Description: managed signals and slots library for C++
  to some set of slots, which are callback receivers (also called event
  targets or subscribers), which are called when the signal is
  "emitted."
- .
-  Homepage: http://www.boost.org/libs/signals/
 
 Package: libboost-signals-dev
+Homepage: http://www.boost.org/libs/signals/
 Architecture: any
 Section: libdevel
 Depends: libboost-dev (= ${binary:Version}), libboost-signals1.34.1 (= ${binary:Version})
@@ -362,10 +342,9 @@ Description: managed signals and slots library for C++
  to some set of slots, which are callback receivers (also called event
  targets or subscribers), which are called when the signal is
  "emitted."
- .
-  Homepage: http://www.boost.org/libs/signals/
 
 Package: libboost-test1.34.1
+Homepage: http://www.boost.org/libs/test/
 Architecture: any
 Section: libs
 Depends: ${shlibs:Depends}
@@ -376,10 +355,9 @@ Description: components for writing and executing test suites
   * Basic execution, error detection, and reporting facility.
   * Facilities to monitor program execution and produce error reports.
   * Unit test framework to simplify writing test cases.
- .
-  Homepage: http://www.boost.org/libs/test/
 
 Package: libboost-test-dev
+Homepage: http://www.boost.org/libs/test/
 Architecture: any
 Section: libdevel
 Depends: libboost-dev (= ${binary:Version}), libboost-test1.34.1 (= ${binary:Version})
@@ -391,10 +369,9 @@ Description: components for writing and executing test suites
   * Basic execution, error detection, and reporting facility.
   * Facilities to monitor program execution and produce error reports.
   * Unit test framework to simplify writing test cases.
- .
-  Homepage: http://www.boost.org/libs/test/
 
 Package: libboost-thread1.34.1
+Homepage: http://www.boost.org/libs/thread/
 Architecture: any
 Section: libs
 Depends: ${shlibs:Depends}
@@ -405,10 +382,9 @@ Description: portable C++ multi-threading
  asynchronous, independent, threads-of-execution. Each thread has its
  own machine state including program instruction counter and
  registers.
- .
-  Homepage: http://www.boost.org/libs/thread/
 
 Package: libboost-thread-dev
+Homepage: http://www.boost.org/libs/thread/
 Architecture: any
 Section: libdevel
 Depends: libboost-dev (= ${binary:Version}), libboost-thread1.34.1 (= ${binary:Version})
@@ -420,10 +396,9 @@ Description: portable C++ multi-threading
  asynchronous, independent, threads-of-execution. Each thread has its
  own machine state including program instruction counter and
  registers.
- .
-  Homepage: http://www.boost.org/libs/thread/
 
 Package: libboost-wave1.34.1
+Homepage: http://www.boost.org/libs/wave/
 Architecture: any
 Section: libs
 Depends: ${shlibs:Depends}
@@ -434,10 +409,9 @@ Description: C99/C++ preprocessor library
  implementation of the mandated C99/C++ preprocessor functionality
  packed behind a simple to use interface, which integrates well with
  the well known idioms of the Standard Template Library (STL).
- .
-  Homepage: http://www.boost.org/libs/wave/
 
 Package: libboost-wave-dev
+Homepage: http://www.boost.org/libs/wave/
 Architecture: any
 Section: libdevel
 Depends: libboost-dev (= ${binary:Version}), libboost-wave1.34.1 (= ${binary:Version}), libboost-filesystem-dev (= ${binary:Version})
@@ -449,10 +423,9 @@ Description: C99/C++ preprocessor library
  implementation of the mandated C99/C++ preprocessor functionality
  packed behind a simple to use interface, which integrates well with
  the well known idioms of the Standard Template Library (STL).
- .
-  Homepage: http://www.boost.org/libs/wave/
 
 Package: pyste
+Homepage: http://www.boost.org/libs/python/pyste/
 Architecture: all
 Section: python
 Provides: ${python:Provides}
@@ -464,5 +437,3 @@ Description: Boost.Python code generator
  User specifies classes and functions to be exported using a simple
  interface file, which following the Boost.Python's philosophy, is
  simple Python code.
- .
-  Homepage: http://www.boost.org/libs/python/pyste/
