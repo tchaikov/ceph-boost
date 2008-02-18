@@ -81,10 +81,10 @@ PYTHON_CONFIG="using python : 2.4 : /usr ;"
 
 exampledir = debian/libboost-doc/usr/share/doc/libboost-doc/examples
 htmldir = debian/libboost-doc/usr/share/doc/libboost-doc/HTML
-pyste_prefix = $(PWD)/debian/pyste/usr
-bjam = $(shell pwd)/tools/jam/src/bjam
+pyste_prefix = $(CURDIR)/debian/pyste/usr
+bjam = $(CURDIR)/tools/jam/src/bjam
 
-JAM = $(bjam) $(JOBS) -d2 --user-config=$(shell pwd)/user-config.jam -sHAVE_ICU=1
+JAM = $(bjam) $(JOBS) -d2 --user-config=$(CURDIR)/user-config.jam -sHAVE_ICU=1
 
 # BJAM segfaults if built with GCC 4.2, so build with GCC 4.1 to avoid problems.
 # See 367825 for a proper fix.
@@ -141,7 +141,7 @@ install: build
 	dh_testroot
 	dh_clean -k
 
-	$(JAM) --prefix=`pwd`/debian/tmp/usr install
+	$(JAM) --prefix=$(CURDIR)/debian/tmp/usr install
 
 	find debian/tmp/usr/include -type f | xargs chmod 644
 	find debian/tmp -name .cvsignore | xargs rm -f
