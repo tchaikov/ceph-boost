@@ -179,7 +179,7 @@ install: build
 	mkdir -p $(htmldir) $(htmldir)/more/css_0
 	cp more/css_0/* $(htmldir)/more/css_0
 	cat debian/documentation-files | xargs cp --parents --target-directory=$(htmldir)
-	find * -name doc | xargs cp --archive --target-directory=$(htmldir)
+	find doc libs -name doc | xargs -n1 cp --archive --target-directory=$(htmldir)
 	rm -rf $(htmldir)/boost
 	dh_link -plibboost-doc \
 	   usr/include/boost \
