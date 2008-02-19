@@ -6,6 +6,12 @@ boost (1.34.1-8) UNRELEASED; urgency=low
   * debian/control: Move the homepage lines from the extended descriptions
     to a proper header; clears up lintian warning
     description-contains-homepage.
+  
+  * tools/jam/src/build.jam: Build using -fno-strict-aliasing, to avoid a
+    segfault.  Patch obtained from upstream changeset 41036; c.f. bug
+    #367825 and boost ticket 977 (http://svn.boost.org/trac/boost/ticket/977).
+  * debian/rules: Do not build bjam with CC=gcc-4.1.
+  * debian/control: Do not build-depend on gcc-4.1.  Closes: #463287.
 
  -- Steve M. Robbins <smr@debian.org>  Mon, 18 Feb 2008 16:13:32 -0600
 
