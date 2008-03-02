@@ -30,38 +30,55 @@ boost_lib_test := prg_exec_monitor unit_test_framework
 # these are special cases for variants. normal cases have <empty>, -d, -mt, -mt-d variants
 boost_variants_thread := -mt -mt-d
 
-# return shared libraries for the given Boost library
+# Function to map Boost component name to set of shared library names
+# Input: Boost component name
+# Return: shared library names for the given Boost library
 boost_lib = $(if $(boost_lib_$(1)), $(boost_lib_$(1)), $(1))
 
-# return variants for the given Boost library
+# Function to map Boost component name to set of variants for the library
+# Input: Boost component name
+# Return: variants for the given Boost component
 boost_variants = $(if $(boost_variants_$(1)), $(boost_variants_$(1)), -st -st-d -mt -mt-d)
 
-# helpers to make basic and decorated library names
+# Helpers to make basic and decorated library names
+# Input: library, variant
+# Return: base library filename for short, full, or gcc41-compatibility name
 mk_base_name = usr/lib/libboost_$(subst -,_,$(1))$(2)
 mk_full_name = usr/lib/libboost_$(subst -,_,$(1))-$(gcc_version)$(2)-$(boost_version)
 mk_compat_name = usr/lib/libboost_$(subst -,_,$(1))-gcc41$(2)-$(boost_version)
 
-# helpers to make proper release/debug package names
+# Input: component, variant
+# Return: package name for shared library or development
 mk_pkg_lib = libboost-$(if $(findstring -d,$(2)),dbg,$(1)$(SOVERSION)$(DEBIAN_SUFFIX))
 mk_pkg_dev = libboost-$(if $(findstring -d,$(2)),dbg,$(1)-dev)
+
+# Helpers to generate debhelper input filenames.
+# Input: component, variant
+# Return: prefix to debhelper filenames
 mk_deb_lib = debian/$(call mk_pkg_lib,$(1),$(2))
 mk_deb_dev = debian/$(call mk_pkg_dev,$(1),$(2))
 mk_ove_lib = $(call mk_deb_lib,$(1),$(2))/usr/share/lintian/overrides/$(call mk_pkg_lib,$(1),$(2))
 
-# helpers with the side effect of writing debhelper files
+# Helpers that update debhelper .install or .links files
+# Input: component, library, variant
+# Output: none
 mk_a_files = $(shell echo debian/tmp/$(call mk_full_name,$(2),$(3)).a >> $(call mk_deb_dev,$(1),$(3)).install)
 mk_so_files = $(shell echo debian/tmp/$(call mk_full_name,$(2),$(3)).so.$(SOVERSION) >> $(call mk_deb_lib,$(1),$(3)).install)
 mk_ln_files = $(shell echo $(call mk_full_name,$(2),$(3)).so.$(SOVERSION) $(call mk_full_name,$(2),$(3)).so >> $(call mk_deb_dev,$(1),$(3)).links)
 mk_ln2_files = $(shell echo $(call mk_full_name,$(2),$(3)).so $(call mk_base_name,$(2),$(3)).so >> $(call mk_deb_dev,$(1),$(3)).links)
 mk_ln3_files = $(shell echo $(call mk_full_name,$(2),$(3)).a $(call mk_base_name,$(2),$(3)).a >> $(call mk_deb_dev,$(1),$(3)).links)
 mk_ln4_files = $(shell echo $(call mk_full_name,$(2),$(3)).so.$(SOVERSION) $(call mk_compat_name,$(2),$(3)).so.$(SOVERSION) >> $(call mk_deb_lib,$(1),$(3)).links)
+
+# Function that updates debhelper files for a given library variant
+# Input: component, library, variant
+# Output: none
 mk_files = $(foreach fn,a so ln ln2 ln3 ln4,$(call mk_$(fn)_files,$(1),$(2),$(3)))
 
 # helpers to make and install lintian override files
 mk_override_files = echo $(call mk_pkg_lib,$(1)): package-name-doesnt-match-sonames >> $(call mk_ove_lib,$(1));
 ins_lintian_overrides = install -m644 debian/$(1).lintian-overrides debian/$(1)/usr/share/lintian/overrides/$(1);
 
-# invokes mk_files of every variant of every shared library of every Boost library
+# Function that Updates debhelper files for all library variants shipped.
 mk_debhelper_files = \
 	$(foreach l, $(boost_libs), \
 		echo "making debhelper files for $(l)..."; \
