@@ -1,0 +1,11 @@
+#! /bin/sh
+
+set -e
+
+update=/usr/share/python/runtime.d/libboost-python-dev.rtupdate
+
+which pyversions >/dev/null \
+    && $update rtupdate none $(pyversions -d)
+
+#DEBHELPER#
+

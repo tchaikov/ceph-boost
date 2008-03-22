@@ -1,0 +1,73 @@
+#! /bin/sh
+#
+# Update link-library symlinks after a Python default runtime change
+
+set -e
+
+version=1_34_1
+
+die() {
+    echo "$@" >&2
+    exit 1
+}
+
+update_linklibs() {
+    py=$1
+    suf=$2
+
+    cd /usr/lib
+    for thread in "" -mt; do
+	for gcc in gcc41 gcc42; do
+	    ln -s -f libboost_python-${gcc}${thread}${debug}-${version}-${py}.${suf} \
+	             libboost_python-${gcc}${thread}${debug}-${version}.${suf}
+        done
+	ln -s -f libboost_python${thread}${debug}-${py}.${suf} \
+	         libboost_python${thread}${debug}.${suf} 
+    done
+}
+
+remove_linklibs() {
+    suf=$1
+
+    cd /usr/lib
+    for thread in "" -mt; do
+	for gcc in gcc41 gcc42; do
+	    rm -f libboost_python-${gcc}${thread}${debug}-${version}.${suf}
+        done
+	rm -f libboost_python${thread}${debug}.${suf} 
+    done
+}
+
+rtupdate() {
+    case "$1" in
+	python2.4)  py=py24 ;;
+	python2.5)  py=py25 ;;
+	*)          die $0 unknown python version $1 ;;
+    esac
+
+    update_linklibs $py a
+    update_linklibs $py so
+}
+
+remove() {
+    remove_linklibs a
+    remove_linklibs so
+}
+
+
+debug=
+case "$0" in
+    */libboost-dbg.rtupdate)  debug=-d ;;
+esac
+
+action="$1"
+shift
+
+case "$action" in
+    pre-rtupdate)  ;;
+    post-rtupdate) ;;
+    rtupdate)      rtupdate $2 ;;
+    remove)        remove ;;
+    *)             die "$0 called with unknown argument '$action'" ;;
+esac
+
