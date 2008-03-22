@@ -1,24 +1,37 @@
-The BOOST Python library is intended only for use in constructing
-a Python module, so only a shared library is supplied.
+		Multiple Python Runtime Support
+		-------------------------------
 
-David Abrahams, the upstream maintainer posted this to the BOOST
-mailing list.
+The Debian Boost.Python packages support python versions: 2.4, 2.5.
 
-  1. AFAIK libboost_python is only useful from a shared lib (python
-  module) -- oh, I suppose you could use it for embedding python in
-  another app, but I've never tried it, and libboost_python.so would
-  work just as well, wouldn't it?
+As is typical of Boost (see /usr/share/doc/libboost-dev/README.Debian)
+the library names encode the boost version, gcc version, thread
+support, and the like.  The upstream names do NOT encode the python
+version.  However, for Debian to support multiple Python runtimes, we
+do need to encode the python version.  
 
-  2. It was originally implemented as a static lib just because that's
-  much simpler to get right across platforms. There was no
-  libboost_python.so. Since a static lib on Unix is just an archive of
-  .o files, those .os had to be shared-linkable.
+	Choosing the default Python
+	---------------------------
 
-  3. Eventually I made libboost_python.so as a replacement, which
-  saves lots of space in every extension module. I kept
-  libboost_python_static.a, as I've said, to keep people who were
-  attached to using the static lib happy.
+To keep backwards compatibility, the standard upstream link library
+names are generated as symlinks to the default python version.
 
-  Message-ID: <24af01c1c244$5b845b50$0500a8c0@boostconsulting.com>
+If you want to use the non-standard Debian-specific simplified
+library names, you may simply link with -lboost_python.  This
+will always be the default python version.
+
+These default symlinks are automatically updated when the Python
+runtime version changes.
 
 
+	Choosing a specific Python Version
+	----------------------------------
+
+The library names are suffixed by "-py24" and "-py25", allowing you to
+select the specific Python version desired.  This holds true
+for both the upstream names and the simplified Debian names.
+
+So if you want to use the simplified names, link against
+-lboost_python-py24 for Python 2.4.
+
+
+ -- Steve M. Robbins <smr@debian.org>, Fri, 21 Mar 2008 13:33:53 z

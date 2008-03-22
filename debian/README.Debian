@@ -101,23 +101,4 @@ generally good enough for most linux users. Please add it to your build
 process before filing another bug report against Boost Debian packages.
 
 
-STLport
--------
-
-Debian's boost packages prior to release 1.29.0-3 were built using
-libstlport.  This is no longer the case.
-
-If you have old boost-using code, you will need to change your build
-process, removing any -I/usr/include/stlport or -llstport options.
-
-* Why the change?
-
-Until January 2003, Debian's default compiler was GCC 2.95.x.  The
-standard C++ library that came with GCC 2.x was sufficiently buggy to
-cause problems with boost.  STLport was a better implementation of STL
-and enabled boost to function.
-
-Debian now uses GCC 3.2 (or newer).  The standard C++ library has
-improved enough to use with boost, so STLport is not longer used.
-
- -- Steve M. Robbins <smr@debian.org>, Fri Mar  5 22:42:23 2004
+ -- Steve M. Robbins <smr@debian.org>, Fri, 21 Mar 2008 11:18:32 z
