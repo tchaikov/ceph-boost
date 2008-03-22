@@ -13,7 +13,16 @@ boost (1.34.1-8) UNRELEASED; urgency=low
   * debian/rules: Do not build bjam with CC=gcc-4.1.
   * debian/control: Do not build-depend on gcc-4.1.  Closes: #463287.
 
- -- Steve M. Robbins <smr@debian.org>  Mon, 18 Feb 2008 16:13:32 -0600
+  * debian/control: Change Build-Depends from "python-dev |
+    python-all-dev, python2.4-dev" to simply "python-all-dev"; this brings
+    in all current Python -dev packages.  Update python-support required
+    version from 0.3 to 0.6, following README of current python-support
+    package.  Remove "python2.4-dev" from dependency of
+    libboost-python-dev; add python2.4-dev and python2.5-dev to its
+    Suggests line since users of this package may need any of the
+    currently-supported Python development packages.
+
+ -- Steve M. Robbins <smr@debian.org>  Sat, 22 Mar 2008 10:25:19 -0500
 
 boost (1.34.1-7) unstable; urgency=low
 

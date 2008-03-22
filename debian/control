@@ -4,7 +4,8 @@ Section: libs
 Priority: optional
 Maintainer: Debian Boost Team <pkg-boost-devel@lists.alioth.debian.org>
 Uploaders: Steve M. Robbins <smr@debian.org>, Domenico Andreoli <cavok@debian.org>, Christophe Prud'homme <prudhomm@debian.org>
-Build-Depends: debhelper (>= 4), bison, flex, docbook-to-man, xsltproc, doxygen, zlib1g-dev, libbz2-dev, libicu-dev, python-dev | python-all-dev, python2.4-dev, python-support (>= 0.3), g++-4.2
+Build-Depends: debhelper (>= 4), bison, flex, docbook-to-man, xsltproc, doxygen, zlib1g-dev, libbz2-dev, libicu-dev, python-all-dev, python-support (>= 0.6), g++-4.2
+XS-Python-Version: 2.4 2.5
 Standards-Version: 3.7.2
 
 Package: bcp
@@ -222,7 +223,8 @@ Package: libboost-python-dev
 Homepage: http://www.boost.org/libs/python/
 Architecture: any
 Section: libdevel
-Depends: libboost-dev (= ${binary:Version}), libboost-python1.34.1 (= ${binary:Version}), python2.4-dev
+Depends: libboost-dev (= ${binary:Version}), libboost-python1.34.1 (= ${binary:Version})
+Suggests: python2.4-dev, python2.5-dev
 Replaces: libboost-dev (<< 1.31.0-3)
 Description: Boost.Python Library development files
  Part of the Boost C++ Libraries collection.
@@ -237,6 +239,9 @@ Description: Boost.Python Library development files
  Subclassing extension types in Python, Overriding virtual functions
  in Python, Member function Overloading, Automatic wrapping of
  numeric operators among others.
+ .
+ Code using this library will need also one of the suggested python
+ development packages.
 
 Package: libboost-regex1.34.1
 Homepage: http://www.boost.org/libs/regex/
