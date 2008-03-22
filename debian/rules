@@ -29,6 +29,9 @@ boost_lib_test := prg_exec_monitor unit_test_framework
 # these are special cases for variants. normal cases have <empty>, -d, -mt, -mt-d variants
 boost_variants_thread := -mt -mt-d
 
+# These are special cases for suffixes.  Generally come from --buildid, so begin with a dash.
+boost_suffixes_python := -py24 -py25
+
 # Function to map Boost component name to set of shared library names
 # Input: Boost component name
 # Return: shared library names for the given Boost library
@@ -39,12 +42,17 @@ boost_lib = $(if $(boost_lib_$(1)), $(boost_lib_$(1)), $(1))
 # Return: variants for the given Boost component
 boost_variants = $(if $(boost_variants_$(1)), $(boost_variants_$(1)), -st -st-d -mt -mt-d)
 
+# Function to map Boost component name to set of suffixes for the library
+# Input: Boost component name
+# Return: suffixes for the given Boost component
+boost_suffixes = $(if $(boost_suffixes_$(1)), $(boost_suffixes_$(1)),"")
+
 # Helpers to make basic and decorated library names
-# Input: library, variant
+# Input: library, variant, suffix
 # Return: base library filename for short, full, or gcc41-compatibility name
-mk_base_name = usr/lib/libboost_$(subst -,_,$(1))$(2)
-mk_full_name = usr/lib/libboost_$(subst -,_,$(1))-$(gcc_version)$(2)-$(boost_version)
-mk_compat_name = usr/lib/libboost_$(subst -,_,$(1))-gcc41$(2)-$(boost_version)
+mk_base_name = usr/lib/libboost_$(subst -,_,$(1))$(2)$(3)
+mk_full_name = usr/lib/libboost_$(subst -,_,$(1))-$(gcc_version)$(2)-$(boost_version)$(3)
+mk_compat_name = usr/lib/libboost_$(subst -,_,$(1))-gcc41$(2)-$(boost_version)$(3)
 
 # Input: component, variant
 # Return: package name for shared library or development
@@ -59,41 +67,60 @@ mk_deb_dev = debian/$(call mk_pkg_dev,$(1),$(2))
 mk_ove_lib = $(call mk_deb_lib,$(1),$(2))/usr/share/lintian/overrides/$(call mk_pkg_lib,$(1),$(2))
 
 # Helpers that update debhelper .install or .links files
-# Input: component, library, variant
+# Input: component, library, variant, suffix
 # Output: none
-mk_a_files = $(shell echo debian/tmp/$(call mk_full_name,$(2),$(3)).a >> $(call mk_deb_dev,$(1),$(3)).install)
-mk_so_files = $(shell echo debian/tmp/$(call mk_full_name,$(2),$(3)).so.$(SOVERSION) >> $(call mk_deb_lib,$(1),$(3)).install)
-mk_ln_files = $(shell echo $(call mk_full_name,$(2),$(3)).so.$(SOVERSION) $(call mk_full_name,$(2),$(3)).so >> $(call mk_deb_dev,$(1),$(3)).links)
-mk_ln2_files = $(shell echo $(call mk_full_name,$(2),$(3)).so $(call mk_base_name,$(2),$(3)).so >> $(call mk_deb_dev,$(1),$(3)).links)
-mk_ln3_files = $(shell echo $(call mk_full_name,$(2),$(3)).a $(call mk_base_name,$(2),$(3)).a >> $(call mk_deb_dev,$(1),$(3)).links)
-mk_ln4_files = $(shell echo $(call mk_full_name,$(2),$(3)).so.$(SOVERSION) $(call mk_compat_name,$(2),$(3)).so.$(SOVERSION) >> $(call mk_deb_lib,$(1),$(3)).links)
+mk_a_files = $(shell echo debian/tmp/$(call mk_full_name,$(2),$(3),$(4)).a >> $(call mk_deb_dev,$(1),$(3)).install)
+mk_so_files = $(shell echo debian/tmp/$(call mk_full_name,$(2),$(3),$(4)).so.$(SOVERSION) >> $(call mk_deb_lib,$(1),$(3)).install)
+mk_ln_files = $(shell echo $(call mk_full_name,$(2),$(3),$(4)).so.$(SOVERSION) $(call mk_full_name,$(2),$(3),$(4)).so >> $(call mk_deb_dev,$(1),$(3)).links)
+mk_ln2_files = $(shell echo $(call mk_full_name,$(2),$(3),$(4)).so $(call mk_base_name,$(2),$(3),$(4)).so >> $(call mk_deb_dev,$(1),$(3)).links)
+mk_ln3_files = $(shell echo $(call mk_full_name,$(2),$(3),$(4)).a $(call mk_base_name,$(2),$(3),$(4)).a >> $(call mk_deb_dev,$(1),$(3)).links)
+mk_ln4_files = $(shell echo $(call mk_full_name,$(2),$(3),$(4)).so.$(SOVERSION) $(call mk_compat_name,$(2),$(3),$(4)).so.$(SOVERSION) >> $(call mk_deb_lib,$(1),$(3)).links)
+
+# Link shared lib with suffix2 to suffix1
+# Input: component, library, variant, suffix1, suffix2
+mk_ln_suffices = $(shell echo $(call mk_full_name,$(2),$(3),$(4)).so.$(SOVERSION) $(call mk_full_name,$(2),$(3),$(5)).so.$(SOVERSION) >> $(call mk_deb_lib,$(1),$(3)).links)
+mk_ln_suffices_compat = $(shell echo $(call mk_full_name,$(2),$(3),$(4)).so.$(SOVERSION) $(call mk_compat_name,$(2),$(3),$(5)).so.$(SOVERSION) >> $(call mk_deb_lib,$(1),$(3)).links)
 
 # Function that updates debhelper files for a given library variant
-# Input: component, library, variant
+# Input: component, library, variant, suffix
 # Output: none
-mk_files = $(foreach fn,a so ln ln2 ln3 ln4,$(call mk_$(fn)_files,$(1),$(2),$(3)))
+mk_files = $(foreach fn,a so ln ln2 ln3 ln4,$(call mk_$(fn)_files,$(1),$(2),$(3),$(4)))
 
 # helpers to make and install lintian override files
 mk_override_files = echo $(call mk_pkg_lib,$(1)): package-name-doesnt-match-sonames >> $(call mk_ove_lib,$(1));
 ins_lintian_overrides = install -m644 debian/$(1).lintian-overrides debian/$(1)/usr/share/lintian/overrides/$(1);
 
-# Function that Updates debhelper files for all library variants shipped.
+# Function that updates debhelper files for all library variants shipped.
 mk_debhelper_files = \
 	$(foreach l, $(boost_libs), \
 		echo "making debhelper files for $(l)..."; \
 		$(call mk_override_files,$(l)) \
 		$(foreach ll, $(call boost_lib,$(l)), \
 			$(foreach v, $(call boost_variants,$(l)), \
-				$(call mk_files,$(l),$(ll),$(subst -st,,$(v))) \
+				$(foreach suf, $(call boost_suffixes,$(l)), \
+					$(call mk_files,$(l),$(ll),$(subst -st,,$(v)),$(suf)) \
+				) \
 			) \
 		) \
 	)
+
+# Add to debhelper links files to create compatibility links for 
+# Boost.Python
+mk_python_debhelper_files = \
+	$(foreach ll, $(call boost_lib,python), \
+		$(foreach v, $(call boost_variants,python), \
+			echo "Links for python$(subst -st,,$(v))"; \
+			$(call mk_ln_suffices,python,$(ll),$(subst -st,,$(v)),-py24,) \
+		) \
+	)
+
 
 TOOLSET_CONFIG="using gcc : 4.2 : g++-4.2 : <define>_REENTRANT ;"
 ifeq ($(DEB_BUILD_ARCH), hppa)
 TOOLSET_CONFIG="using gcc : 4.2 : g++-4.2 : <define>_REENTRANT <compileflags>-mlong-calls ;"
 endif
-PYTHON_CONFIG="using python : 2.4 : /usr ;"
+PYTHON_CONFIG1 = "using python : 2.4 : /usr ;"
+PYTHON_CONFIG2 = "using python : 2.5 : /usr ;"
 
 exampledir = debian/libboost-doc/usr/share/doc/libboost-doc/examples
 htmldir = debian/libboost-doc/usr/share/doc/libboost-doc/HTML
@@ -109,20 +136,32 @@ build: build-stamp
 build-stamp: $(bjam)
 	dh_testdir
 
-	echo $(TOOLSET_CONFIG) >> user-config.jam
-	echo $(PYTHON_CONFIG) >> user-config.jam
+	echo $(TOOLSET_CONFIG) > user-config.jam
+	echo $(PYTHON_CONFIG1) >> user-config.jam
+	echo $(PYTHON_CONFIG2) >> user-config.jam
 
 	cd tools/bcp && $(JAM)
 	cd tools/inspect/build && $(JAM)
 	cd tools/wave/build && $(JAM)
 	cd tools/regression/build && $(JAM)
 
-	$(JAM) variant=release,debug threading=single,multi
+	$(JAM) --without-python             variant=release,debug threading=single,multi
+	$(JAM) --with-python --buildid=py24 variant=release,debug threading=single,multi python=2.4
+	$(JAM) --with-python --buildid=py25 variant=release,debug threading=single,multi python=2.5
 	cd libs/python/pyste/install && python setup.py build
 
 	touch build-stamp
 
-clean:
+clean-debhelper:
+	rm -rf debian/libboost-*$(SOVERSION)$(DEBIAN_SUFFIX).lintian-overrides
+	rm -rf debian/libboost-*$(SOVERSION)$(DEBIAN_SUFFIX).install
+	rm -rf debian/libboost-*-dev.install
+	rm -rf debian/libboost-*-dev.links
+	rm -rf debian/libboost-*$(SOVERSION).links
+	rm -rf debian/libboost-dbg.install
+	rm -rf debian/libboost-dbg.links
+
+clean: clean-debhelper
 	dh_testdir
 	dh_testroot
 	rm -f build-stamp
@@ -138,23 +177,21 @@ clean:
 	rm -rf bin.v2 dist
 	rm -rf user-config.jam
 
-	rm -rf debian/libboost-*$(SOVERSION)$(DEBIAN_SUFFIX).lintian-overrides
-	rm -rf debian/libboost-*$(SOVERSION)$(DEBIAN_SUFFIX).install
-	rm -rf debian/libboost-*-dev.install
-	rm -rf debian/libboost-*-dev.links
-	rm -rf debian/libboost-*$(SOVERSION).links
-	rm -rf debian/libboost-dbg.install
-	rm -rf debian/libboost-dbg.links
-
 	dh_clean
 
 install: DH_OPTIONS=-X.svn
-install: build
+install: build clean-debhelper
 	dh_testdir
 	dh_testroot
 	dh_clean -k
 
 	$(JAM) --prefix=$(CURDIR)/debian/tmp/usr install
+	install --mode=755 -D debian/rtupdate debian/tmp/usr/share/python/runtime.d/libboost-python-dev.rtupdate
+	install --mode=755 -D debian/rtupdate debian/tmp/usr/share/python/runtime.d/libboost-dbg.rtupdate
+
+	# Remove undecorated Boost.Python libraries and install decorated ones
+	rm debian/tmp/usr/lib/lib*python*
+	find bin.v2/libs/python -name libboost_python*-py2* | xargs install -t debian/tmp/usr/lib
 
 	find debian/tmp/usr/include -type f | xargs chmod 644
 	find debian/tmp -name .cvsignore | xargs rm -f
@@ -164,6 +201,7 @@ install: build
 
 	# generate (some) debhelper files
 	@$(call mk_debhelper_files)
+	@$(call mk_python_debhelper_files)
 
 	# package pyste
 	cd libs/python/pyste/install && python setup.py install --no-compile --prefix=$(pyste_prefix) --install-lib=$(pyste_prefix)/share/python-support/pyste
@@ -176,6 +214,8 @@ install: build
 
 	# package libboost-dbg
 	dh_install -plibboost-dbg
+	dh_install -plibboost-dbg --autodest \
+	   debian/tmp/usr/share/python/runtime.d/libboost-dbg.rtupdate
 	dh_link -plibboost-dbg \
 	   usr/lib/libboost_thread-mt-d.a usr/lib/libboost_thread-d.a \
 	   usr/lib/libboost_thread-mt-d.so usr/lib/libboost_thread-d.so
@@ -255,9 +295,9 @@ install: build
 	dh_installdirs -plibboost-python-dev usr/include/boost
 	mv debian/libboost-dev/usr/include/boost/python* \
 	   debian/libboost-python-dev/usr/include/boost
-	dh_install -plibboost-python-dev
+	dh_install -plibboost-python-dev --autodest \
+	   debian/tmp/usr/share/python/runtime.d/libboost-python-dev.rtupdate
 	dh_link -plibboost-python-dev
-	dh_install -plibboost-python-dev
 	$(call ins_lintian_overrides,libboost-python-dev)
 
 	# package libboost-regex$(SOVERSION)
@@ -331,7 +371,6 @@ binary-common:
 	dh_link
 	dh_compress -Xlibboost-doc/HTML
 	dh_pysupport
-	dh_python
 	dh_fixperms
 
 	@if [ "$(DH_OPTIONS)" = "-a" ]; then \

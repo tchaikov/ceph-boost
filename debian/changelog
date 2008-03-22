@@ -21,6 +21,17 @@ boost (1.34.1-8) UNRELEASED; urgency=low
     libboost-python-dev; add python2.4-dev and python2.5-dev to its
     Suggests line since users of this package may need any of the
     currently-supported Python development packages.
+  * debian/rules: Introduce a suffix on library names, intended to handle
+    the -py24 and -py25 suffices added using --buildid.  This requires
+    some new functions, and updates to existing functions: mk_base_name,
+    mk_full_name, mk_compat_name, mk_xxx_files, mk_files, and
+    mk_debhelper_files.  Add lines for Python 2.4 and 2.5 to
+    user-config.jam file and build each python version explicitly.  Factor
+    code to remove generated debhelper files from clean to new rule
+    clean-debhelper, called from both clean and install rules.  Install
+    debian/rtupdate files, ensure the -py24 and -py25 libraries are
+    installed and remove those without suffices.  Remove unnecessary use
+    of dh_python.
 
  -- Steve M. Robbins <smr@debian.org>  Sat, 22 Mar 2008 10:25:19 -0500
 
