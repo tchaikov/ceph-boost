@@ -1,4 +1,4 @@
-boost (1.34.1-8) UNRELEASED; urgency=low
+boost (1.34.1-8) unstable; urgency=low
 
   * debian/rules: Replace all use of $(PWD) and `pwd` by $(CURDIR); clears
     up lintian warning debian-rules-uses-pwd.
@@ -31,7 +31,7 @@ boost (1.34.1-8) UNRELEASED; urgency=low
     clean-debhelper, called from both clean and install rules.  Install
     debian/rtupdate files, ensure the -py24 and -py25 libraries are
     installed and remove those without suffices.  Remove unnecessary use
-    of dh_python.
+    of dh_python.  Closes: #445381, #425881, #466820.
   * debian/rtupdate: New.  Updates or removes symlinks for link libraries,
     depending on the default Python runtime version.
   * debian/libboost-dbg.postinst: New.  Call rtupdate to create symlinks.
@@ -44,7 +44,7 @@ boost (1.34.1-8) UNRELEASED; urgency=low
   * debian/Notes: Add notes about multiple Python runtime support, remove
     some obsolete notes.
 
- -- Steve M. Robbins <smr@debian.org>  Sat, 22 Mar 2008 11:24:49 -0500
+ -- Steve M. Robbins <smr@debian.org>  Sat, 22 Mar 2008 11:33:22 -0500
 
 boost (1.34.1-7) unstable; urgency=low
 
