@@ -5,7 +5,7 @@ Priority: optional
 Maintainer: Debian Boost Team <pkg-boost-devel@lists.alioth.debian.org>
 Uploaders: Steve M. Robbins <smr@debian.org>, Domenico Andreoli <cavok@debian.org>, Christophe Prud'homme <prudhomm@debian.org>
 Build-Depends: debhelper (>= 4), bison, flex, docbook-to-man, xsltproc, doxygen, zlib1g-dev, libbz2-dev, libicu-dev, python-all-dev, python-support (>= 0.6), g++-4.2
-XS-Python-Version: 2.4 2.5
+XS-Python-Version: 2.4, 2.5
 Standards-Version: 3.7.2
 
 Package: bcp
@@ -73,6 +73,7 @@ Description: Boost.org libraries documentation
  so it is suggested to install the latter as well.
 
 Package: libboost-date-time1.34.1
+Homepage: http://www.boost.org/libs/date_time/
 Architecture: any
 Section: libs
 Depends: ${shlibs:Depends}
@@ -81,8 +82,6 @@ Description: set of date-time libraries based on generic programming concepts
  .
  These libraries are intended to make programming with dates and times
  almost as simple and natural as programming with strings and integers.
- .
-  Homepage: http://www.boost.org/libs/date_time/
 
 Package: libboost-date-time-dev
 Homepage: http://www.boost.org/libs/date_time/
@@ -240,7 +239,7 @@ Description: Boost.Python Library development files
  in Python, Member function Overloading, Automatic wrapping of
  numeric operators among others.
  .
- Code using this library will need also one of the suggested python
+ Code using this library will need also one of the suggested Python
  development packages.
 
 Package: libboost-regex1.34.1
