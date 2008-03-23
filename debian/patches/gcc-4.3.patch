@@ -29,3 +29,25 @@
            , char const*
            , void(not_specified::*)()   // A function pointer type which is never an
                                         // appropriate default implementation
+--- trunk.orig/boost/date_time/date_facet.hpp
++++ trunk/boost/date_time/date_facet.hpp
+@@ -429,7 +429,7 @@
+     typedef std::basic_string<CharT> string_type;
+     typedef CharT                    char_type;
+     typedef boost::date_time::period_parser<date_type, CharT>  period_parser_type;
+-    typedef special_values_parser<date_type,CharT> special_values_parser_type; 
++    typedef boost::date_time::special_values_parser<date_type,CharT> special_values_parser_type; 
+     typedef std::vector<std::basic_string<CharT> > input_collection_type;
+     typedef format_date_parser<date_type, CharT> format_date_parser_type;
+     // date_generators stuff goes here
+--- trunk.orig/boost/spirit/phoenix/operators.hpp
++++ trunk/boost/spirit/phoenix/operators.hpp
+@@ -25,6 +25,8 @@
+ #include <boost/config.hpp>
+ #include <boost/mpl/if.hpp>
+ 
++#include <climits>
++
+ ///////////////////////////////////////////////////////////////////////////////
+ namespace phoenix {
+ 

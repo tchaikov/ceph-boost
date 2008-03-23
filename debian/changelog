@@ -22,6 +22,14 @@ boost (1.34.1-9) UNRELEASED; urgency=low
     - debian/patches/05_regex_fixes.patch
     - debian/patches/04-ublas_warnings.patch
 
+  * boost/date_time/date_facet.hpp: Qualify special_values_parser<>, to
+    build with GCC 4.3; patch added to gcc-4.3.patch (thanks, Anibal
+    Avelar).  Closes: #468061.
+  
+  * boost/spirit/phoenix/operators.hpp: Include <climits>, to build with
+    GCC 4.3; patch added to gcc-4.3.patch (thanks, Dominic Hargreaves).
+    Closes: #470080.
+
  -- Steve M. Robbins <smr@debian.org>  Sun, 23 Mar 2008 00:32:07 -0500
 
 boost (1.34.1-8) unstable; urgency=low
