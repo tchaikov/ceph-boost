@@ -1,4 +1,4 @@
-boost (1.34.1-9) UNRELEASED; urgency=low
+boost (1.34.1-9) unstable; urgency=low
 
   * debian/control:
   * debian/rules: Set up to use Quilt for maintaining patches.
@@ -41,7 +41,7 @@ boost (1.34.1-9) UNRELEASED; urgency=low
   * debian/patches/gcc-4.3.patch: Include relevant patches from Boost
     ticket tracker, issues: 1570, 1615, and 1617.
 
- -- Steve M. Robbins <smr@debian.org>  Sun, 23 Mar 2008 01:08:43 -0500
+ -- Steve M. Robbins <smr@debian.org>  Sun, 23 Mar 2008 02:18:20 -0500
 
 boost (1.34.1-8) unstable; urgency=low
 
