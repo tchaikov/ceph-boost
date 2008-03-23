@@ -239,6 +239,7 @@ install: build clean-debhelper
 	dh_link -plibboost-doc \
 	   usr/include/boost \
 	   usr/share/doc/libboost-doc/HTML/boost
+	dh_installdocs -plibboost-doc
 
 	mkdir -p $(exampledir)
 	cat debian/example-files | xargs cp -a --parents --target-directory=$(exampledir)
