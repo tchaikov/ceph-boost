@@ -1,3 +1,26 @@
+	GCC 4.3 Patches
+	---------------
+
+As of 2008-03-23, there are a number of issues with respect to GCC
+4.3.  A post on the Boost list gives a query to list all the open
+reports in the Boost trac system:
+
+  http://svn.boost.org/trac/boost/query?status=new&status=assigned&status=reopened&summary=~4.3&order=priority
+
+Here we track the open tickets and status with respect to the Debian
+gcc-4.3.patch:
+
+  Ticket  Inc?  Comment
+  ------  ----  ----------------------------------
+  1528     no   Not clear whether patch is good.
+  1570    yes   Patch of 2008-01-15.
+  1605     no   Library property_tree not present in 1.34.1
+  1615    yes   Patch of 2008-02-02.
+  1617    yes   Partial: in patch of 2008-02-02, first two files failed, 
+                only numerics_tests.cpp applied.
+  1630     no   No patch given as of 2008-03-23.
+
+
 	Thread Support
 	--------------
 
@@ -120,9 +143,6 @@ List of example directories obtained using
 
 	TODO
 	----
-
-* Use the quilt system
-  - move all source patches to debian/patches
 
 * Patch the build system to NOT embed the compiler name in shared libraries.
   - retain the link library symlinks with compiler name, for compatibility

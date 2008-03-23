@@ -37,6 +37,9 @@ boost (1.34.1-9) UNRELEASED; urgency=low
   
   * debian/rules: Add dh_installdocs for package libboost-doc.  
     Closes: #471284.
+  
+  * debian/patches/gcc-4.3.patch: Include relevant patches from Boost
+    ticket tracker, issues: 1570, 1615, and 1617.
 
  -- Steve M. Robbins <smr@debian.org>  Sun, 23 Mar 2008 01:08:43 -0500
 
