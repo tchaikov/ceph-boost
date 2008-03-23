@@ -208,6 +208,7 @@ install: build clean-debhelper
 	# package pyste
 	cd libs/python/pyste/install && python setup.py install --no-compile --prefix=$(pyste_prefix) --install-lib=$(pyste_prefix)/share/python-support/pyste
 	mv $(pyste_prefix)/bin/pyste.py $(pyste_prefix)/bin/pyste
+	dh_installman -ppyste debian/pyste.1
 
 	# package bcp
 	dh_installdirs -pbcp usr/bin
