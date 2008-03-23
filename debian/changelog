@@ -14,8 +14,15 @@ boost (1.34.1-9) UNRELEASED; urgency=low
     - debian/patches/function-template-thread-safety.patch
     - debian/patches/bjam-no-strict-aliasing.patch
     - debian/patches/gcc-4.3.patch
+  
+  * Remove obsolete patch files:
+    - debian/patches/03-st_mt.patch
+    - debian/patches/02-is_incrementable1331.patch
+    - debian/patches/01-ublas1331.patch
+    - debian/patches/05_regex_fixes.patch
+    - debian/patches/04-ublas_warnings.patch
 
- -- Steve M. Robbins <steve@sumost.ca>  Sat, 22 Mar 2008 22:41:18 -0500
+ -- Steve M. Robbins <smr@debian.org>  Sun, 23 Mar 2008 00:32:07 -0500
 
 boost (1.34.1-8) unstable; urgency=low
 
