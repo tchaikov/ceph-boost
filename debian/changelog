@@ -29,8 +29,13 @@ boost (1.34.1-9) UNRELEASED; urgency=low
   * boost/spirit/phoenix/operators.hpp: Include <climits>, to build with
     GCC 4.3; patch added to gcc-4.3.patch (thanks, Dominic Hargreaves).
     Closes: #470080.
+  
+  * boost/date_time/date_formatting.hpp: Format year with classic locale
+    to force correct formatting; new patch date_time_date_formatting_hpp
+    (thanks, Jean Pierre LeJacq).  Also reported upstream as ticket/1674.
+    Closes: #469771.
 
- -- Steve M. Robbins <smr@debian.org>  Sun, 23 Mar 2008 00:32:07 -0500
+ -- Steve M. Robbins <smr@debian.org>  Sun, 23 Mar 2008 00:51:35 -0500
 
 boost (1.34.1-8) unstable; urgency=low
 
