@@ -5,6 +5,8 @@
 
 export DH_OPTIONS
 
+include /usr/share/quilt/quilt.make
+
 # set the number of build jobs
 #JOBS = -j2
 
@@ -133,7 +135,7 @@ $(bjam):
 	cd tools/jam/src && sh build.sh cc && mv bin.*/bjam .
 
 build: build-stamp
-build-stamp: $(bjam)
+build-stamp: $(QUILT_STAMPFN) $(bjam)
 	dh_testdir
 
 	echo $(TOOLSET_CONFIG) > user-config.jam
@@ -161,7 +163,7 @@ clean-debhelper:
 	rm -rf debian/libboost-dbg.install
 	rm -rf debian/libboost-dbg.links
 
-clean: clean-debhelper
+clean: unpatch clean-debhelper
 	dh_testdir
 	dh_testroot
 	rm -f build-stamp
@@ -177,7 +179,7 @@ clean: clean-debhelper
 	rm -rf bin.v2 dist
 	rm -rf user-config.jam
 
-	dh_clean
+	dh_clean build-stamp
 
 install: DH_OPTIONS=-X.svn
 install: build clean-debhelper

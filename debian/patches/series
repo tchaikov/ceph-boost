@@ -1,0 +1,5 @@
+suppress-compiler-warnings.patch
+gcc-4.3.patch
+function-template-thread-safety.patch
+regex-vulnerability.patch
+bjam-no-strict-aliasing.patch

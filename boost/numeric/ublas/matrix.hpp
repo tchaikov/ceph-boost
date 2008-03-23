@@ -2271,7 +2271,6 @@ namespace boost { namespace numeric { namespace ublas {
             BOOST_UBLAS_INLINE
             const_iterator2 &operator = (const const_iterator2 &it) {
                 container_const_reference<self_type>::assign (&it ());
-                detail::ignore_unused_variable_warning(it);
                 return *this;
             }
 

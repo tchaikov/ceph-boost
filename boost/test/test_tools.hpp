@@ -44,7 +44,6 @@
 // STL
 #include <cstddef>          // for std::size_t
 #include <iosfwd>
-#include <climits>          // for CHAR_BIT
 
 #include <boost/test/detail/suppress_warnings.hpp>
 

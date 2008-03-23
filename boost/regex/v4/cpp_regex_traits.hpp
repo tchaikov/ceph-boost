@@ -41,7 +41,6 @@
 
 #include <istream>
 #include <ios>
-#include <climits>
 
 #ifdef BOOST_HAS_ABI_HEADERS
 #  include BOOST_ABI_PREFIX

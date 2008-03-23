@@ -1,0 +1,11 @@
+--- trunk.orig/tools/jam/src/build.jam
++++ trunk/tools/jam/src/build.jam
+@@ -152,7 +152,7 @@
+     : -L$(--python-lib[1]) -l$(--python-lib[2]) ;
+ ## GCC 2.x, 3.x, 4.x
+ toolset gcc gcc : "-o " : -D
+-    : -pedantic
++    : -pedantic -fno-strict-aliasing
+     [ opt --release : [ opt --symbols : -g : -s ] -O3 ]
+     [ opt --debug : -g -O0 -fno-inline ]
+     -I$(--python-include) -Wno-long-long

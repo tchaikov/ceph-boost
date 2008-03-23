@@ -2681,7 +2681,6 @@ namespace boost { namespace numeric { namespace ublas {
         void resize (size_type size1, size_type size2, bool preserve = true) {
             // FIXME preserve unimplemented
             BOOST_UBLAS_CHECK (!preserve, internal_logic ());
-            detail::ignore_unused_variable_warning(preserve);
             size1_ = size1;
             size2_ = size2;
             capacity_ = restrict_capacity (capacity_);

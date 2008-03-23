@@ -1,0 +1,31 @@
+--- trunk.orig/boost/regex/v4/cpp_regex_traits.hpp
++++ trunk/boost/regex/v4/cpp_regex_traits.hpp
+@@ -41,6 +41,7 @@
+ 
+ #include <istream>
+ #include <ios>
++#include <climits>
+ 
+ #ifdef BOOST_HAS_ABI_HEADERS
+ #  include BOOST_ABI_PREFIX
+--- trunk.orig/boost/test/test_tools.hpp
++++ trunk/boost/test/test_tools.hpp
+@@ -44,6 +44,7 @@
+ // STL
+ #include <cstddef>          // for std::size_t
+ #include <iosfwd>
++#include <climits>          // for CHAR_BIT
+ 
+ #include <boost/test/detail/suppress_warnings.hpp>
+ 
+--- trunk.orig/boost/python/detail/def_helper.hpp
++++ trunk/boost/python/detail/def_helper.hpp
+@@ -155,7 +155,7 @@
+           , T3 const&
+           , T4 const&
+           , default_call_policies
+-          , keywords<0>
++          , detail::keywords<0>
+           , char const*
+           , void(not_specified::*)()   // A function pointer type which is never an
+                                        // appropriate default implementation
