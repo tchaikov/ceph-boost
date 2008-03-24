@@ -14,7 +14,7 @@ DEB_BUILD_ARCH ?= $(shell dpkg-architecture -qDEB_BUILD_ARCH)
 
 # Boost does not guarantee any ABI, it uses the full version in SONAME
 SOVERSION = 1.34.1
-SHLIBS_VERSION = (>= 1.34.1-2.1)
+SHLIBS_VERSION = (>= 1.34.1-8)
 DEBIAN_SUFFIX =
 
 # tags for library name decoration
