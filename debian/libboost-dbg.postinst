@@ -4,8 +4,9 @@ set -e
 
 update=/usr/share/python/runtime.d/libboost-dbg.rtupdate
 
-which pyversions >/dev/null \
-    && $update rtupdate none $(pyversions -d)
+if which pyversions >/dev/null; then
+    $update rtupdate none $(pyversions -d)
+fi
 
 #DEBHELPER#
 
