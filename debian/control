@@ -222,8 +222,7 @@ Package: libboost-python-dev
 Homepage: http://www.boost.org/libs/python/
 Architecture: any
 Section: libdevel
-Depends: libboost-dev (= ${binary:Version}), libboost-python1.34.1 (= ${binary:Version})
-Suggests: python2.4-dev, python2.5-dev
+Depends: libboost-dev (= ${binary:Version}), libboost-python1.34.1 (= ${binary:Version}), python-dev
 Replaces: libboost-dev (<< 1.31.0-3)
 Description: Boost.Python Library development files
  Part of the Boost C++ Libraries collection.
@@ -239,8 +238,9 @@ Description: Boost.Python Library development files
  in Python, Member function Overloading, Automatic wrapping of
  numeric operators among others.
  .
- Code using this library will need also one of the suggested Python
- development packages.
+ This package allows development of a Python interface for all current
+ versions of Python in Debian.  Code using this library will need also
+ one of the Python development packages.
 
 Package: libboost-regex1.34.1
 Homepage: http://www.boost.org/libs/regex/
