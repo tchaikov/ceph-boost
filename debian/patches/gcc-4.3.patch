@@ -1,48 +1,6 @@
---- trunk.orig/boost/regex/v4/cpp_regex_traits.hpp
-+++ trunk/boost/regex/v4/cpp_regex_traits.hpp
-@@ -41,6 +41,7 @@
- 
- #include <istream>
- #include <ios>
-+#include <climits>
- 
- #ifdef BOOST_HAS_ABI_HEADERS
- #  include BOOST_ABI_PREFIX
---- trunk.orig/boost/test/test_tools.hpp
-+++ trunk/boost/test/test_tools.hpp
-@@ -44,6 +44,7 @@
- // STL
- #include <cstddef>          // for std::size_t
- #include <iosfwd>
-+#include <climits>          // for CHAR_BIT
- 
- #include <boost/test/detail/suppress_warnings.hpp>
- 
---- trunk.orig/boost/python/detail/def_helper.hpp
-+++ trunk/boost/python/detail/def_helper.hpp
-@@ -155,7 +155,7 @@
-           , T3 const&
-           , T4 const&
-           , default_call_policies
--          , keywords<0>
-+          , detail::keywords<0>
-           , char const*
-           , void(not_specified::*)()   // A function pointer type which is never an
-                                        // appropriate default implementation
---- trunk.orig/boost/date_time/date_facet.hpp
-+++ trunk/boost/date_time/date_facet.hpp
-@@ -429,7 +429,7 @@
-     typedef std::basic_string<CharT> string_type;
-     typedef CharT                    char_type;
-     typedef boost::date_time::period_parser<date_type, CharT>  period_parser_type;
--    typedef special_values_parser<date_type,CharT> special_values_parser_type; 
-+    typedef boost::date_time::special_values_parser<date_type,CharT> special_values_parser_type; 
-     typedef std::vector<std::basic_string<CharT> > input_collection_type;
-     typedef format_date_parser<date_type, CharT> format_date_parser_type;
-     // date_generators stuff goes here
---- trunk.orig/boost/spirit/phoenix/operators.hpp
-+++ trunk/boost/spirit/phoenix/operators.hpp
-@@ -24,6 +24,7 @@
+--- boost-posix-2008-03-21.orig/boost/spirit/phoenix/operators.hpp
++++ boost-posix-2008-03-21/boost/spirit/phoenix/operators.hpp
+@@ -25,6 +25,7 @@
  #include <boost/spirit/phoenix/composite.hpp>
  #include <boost/config.hpp>
  #include <boost/mpl/if.hpp>
@@ -50,8 +8,8 @@
  
  ///////////////////////////////////////////////////////////////////////////////
  namespace phoenix {
---- trunk.orig/boost/date_time/tz_db_base.hpp
-+++ trunk/boost/date_time/tz_db_base.hpp
+--- boost-posix-2008-03-21.orig/boost/date_time/tz_db_base.hpp
++++ boost-posix-2008-03-21/boost/date_time/tz_db_base.hpp
 @@ -158,7 +158,7 @@
        typedef typename time_zone_type::base_type time_zone_base_type;
        typedef typename time_zone_type::time_duration_type time_duration_type;
@@ -61,20 +19,10 @@
        typedef std::basic_string<char_type> string_type;
  
        //! Constructs an empty database
---- trunk.orig/boost/wave/util/flex_string.hpp
-+++ trunk/boost/wave/util/flex_string.hpp
-@@ -94,6 +94,7 @@
- #include <limits>
- #include <stdexcept>
- #include <cstddef>
-+#include <cstring>
- 
- // this must occur after all of the includes and before any code appears
- #ifdef BOOST_HAS_ABI_HEADERS
---- trunk.orig/libs/spirit/test/numerics_tests.cpp
-+++ trunk/libs/spirit/test/numerics_tests.cpp
-@@ -11,6 +11,7 @@
- #include <boost/spirit/actor/assign_actor.hpp>
+--- boost-posix-2008-03-21.orig/libs/spirit/test/numerics_tests.cpp
++++ boost-posix-2008-03-21/libs/spirit/test/numerics_tests.cpp
+@@ -12,6 +12,7 @@
+ #include <climits>
  #include <iostream>
  #include <boost/detail/lightweight_test.hpp>
 +#include <climits>

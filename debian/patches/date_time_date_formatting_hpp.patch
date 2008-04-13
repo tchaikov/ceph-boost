@@ -14,23 +14,3 @@
        if (format_type::has_date_sep_chars()) {
          ss << format_type::month_sep_char();
        }
---- trunk.orig/boost/date_time/posix_time/time_formatters.hpp
-+++ trunk/boost/date_time/posix_time/time_formatters.hpp
-@@ -144,6 +144,9 @@
-         date_time::absolute_value(td.fractional_seconds());
- #endif
-       if (frac_sec != 0) {
-+        // Temporarily switch to classic locale to prevent possible formatting
-+        // of frac_sec with comma or other character (for example 123,456).
-+        ss.imbue(std::locale::classic());
-         ss  << "." << std::setw(time_duration::num_fractional_digits())
-             << std::setfill(fill_char)
-           
-@@ -153,6 +156,7 @@
- #else
-         << frac_sec;
- #endif
-+        ss.imbue(std::locale::locale());
-       }
-     }// else
-     return ss.str();
