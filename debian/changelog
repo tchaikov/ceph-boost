@@ -6,11 +6,13 @@ boost (1.35.0-1) UNRELEASED; urgency=low
   
   * debian/patches/library-naming.patch: New.  Remove toolset and boost
     version from library names.
+  
+  * debian/rtupdate: Remove logic for links with toolset name.
 
   * debian/control: Substitute 1.34.1 --> 1.35.0 on all library package
     names.  Add packages libboost-system1.35.0 and libboost-system-dev.
   
- -- Steve M. Robbins <smr@debian.org>  Sat, 19 Apr 2008 00:16:03 -0500
+ -- Steve M. Robbins <smr@debian.org>  Sat, 19 Apr 2008 00:19:39 -0500
 
 boost (1.34.1-11) unstable; urgency=low
 
