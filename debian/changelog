@@ -9,10 +9,22 @@ boost (1.35.0-1) UNRELEASED; urgency=low
   
   * debian/rtupdate: Remove logic for links with toolset name.
 
+  * debian/rules: Adjust SOVERSION, SHLIBS_VERSION, and boost_version to
+    new version.  
+    Add system to boost_libs.  
+    Adjust link functions:
+      - Create compatibility links with toolset and boost version, rather
+        than simplified name links.
+      - Don't create gcc41 compatibility links.
+      - Don't create Boost.Python compatibility links.
+    Add "link=shared,static" to all jam invocations, including "jam install".
+    Don't need to copy more/css_0 to -doc package.  
+    Add rules for new system library
+
   * debian/control: Substitute 1.34.1 --> 1.35.0 on all library package
     names.  Add packages libboost-system1.35.0 and libboost-system-dev.
   
- -- Steve M. Robbins <smr@debian.org>  Sat, 19 Apr 2008 00:19:39 -0500
+ -- Steve M. Robbins <smr@debian.org>  Sat, 19 Apr 2008 00:46:58 -0500
 
 boost (1.34.1-11) unstable; urgency=low
 
