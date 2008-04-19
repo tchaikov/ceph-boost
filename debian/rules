@@ -384,7 +384,6 @@ binary-common:
 			echo DH_OPTIONS=-p$${lib} dh_makeshlibs -V"$${lib} $(SHLIBS_VERSION)"; \
 			DH_OPTIONS=-p$${lib} dh_makeshlibs -V"$${lib} $(SHLIBS_VERSION)"; \
 		done; \
-		DH_OPTIONS=-plibboost-dbg dh_makeshlibs -V"libboost-dbg $(SHLIBS_VERSION)"; \
 	fi
 
 	dh_installdeb
