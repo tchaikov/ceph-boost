@@ -112,14 +112,15 @@ new python runtime.
 Generate the list of documentation files using wget going through
 localhost to get the source tree
 
+    path=Packages/boost/alioth/build-area/boost-1.35.0
     wget -r --no-parent --domains=localhost \
-	http://localhost/lsrc/devel/Boost/boost-svn/trunk/index.htm
+	http://localhost/lsrc/$path/index.html
     cd localhost/....
     rm -rf boost
     for f in `find * -type f`; do
-        test -f /usr/local/src/devel/Boost/boost-svn/trunk/$f && echo $f;
+        test -f /usr/local/src/$path/$f && echo $f;
     done > df1
-    find * -name '*.htm' -or '*.html' > df2
+    find * -name '*.htm' -or -name '*.html' > df2
     cat df1 df2 | sort | uniq > documentation-files
 
 ** On my machine, "http://localhost/lsrc" resolves to "/usr/local/src",
