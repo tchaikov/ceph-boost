@@ -4,8 +4,8 @@ boost (1.35.0-1) UNRELEASED; urgency=low
     debian/documentation-files: 
     debian/patches: Adjust to new version.
   
-  * debian/patches/library-naming.patch: New.  Remove toolset and boost
-    version from library names.
+  * debian/patches/library-naming.patch: New.  Remove toolset decoration
+    from library names.
   
   * debian/rtupdate: Remove logic for links with toolset name.
 
