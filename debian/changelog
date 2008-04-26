@@ -7,7 +7,9 @@ boost (1.35.0-1) UNRELEASED; urgency=low
   * debian/patches/library-naming.patch: New.  Remove toolset decoration
     from library names.
   
-  * debian/rtupdate: Remove logic for links with toolset name.
+  * debian/rtupdate: Rename ...
+  * debian/rtupdate.in: ... to this.  Build rtupdate script, substituting
+    the boost version string.  Remove logic for links with toolset name.
 
   * debian/rules: Adjust SOVERSION, SHLIBS_VERSION, and boost_version to
     new version.  
@@ -32,7 +34,7 @@ boost (1.35.0-1) UNRELEASED; urgency=low
     Abstract continuation lines by a single space.  The latter means
     "display verbatim", which is not desired.
   
- -- Steve M. Robbins <smr@debian.org>  Sat, 19 Apr 2008 01:41:37 -0500
+ -- Steve M. Robbins <smr@debian.org>  Sat, 26 Apr 2008 13:56:43 -0500
 
 boost (1.34.1-11) unstable; urgency=low
 

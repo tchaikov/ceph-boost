@@ -168,8 +168,11 @@ clean: unpatch clean-debhelper
 
 	dh_clean build-stamp
 
+debian/rtupdate: debian/rtupdate.in
+	sed 's/@@BOOST_VERSION@@/$(boost_version)/' $< > $@
+
 install: DH_OPTIONS=-X.svn
-install: build clean-debhelper
+install: build clean-debhelper debian/rtupdate
 	dh_testdir
 	dh_testroot
 	dh_clean -k
