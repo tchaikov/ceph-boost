@@ -142,9 +142,3 @@ List of example directories obtained using
     find * -name 'example*' -type d > debian/example-files
 
 
-	TODO
-	----
-
-* Patch the build system to NOT embed the compiler name in shared libraries.
-  - retain the link library symlinks with compiler name, for compatibility
-
