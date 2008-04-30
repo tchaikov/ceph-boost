@@ -4,8 +4,6 @@
 
 set -e
 
-version=@@BOOST_VERSION@@
-
 die() {
     echo "$@" >&2
     exit 1
@@ -17,8 +15,8 @@ update_linklibs() {
 
     cd /usr/lib
     for thread in "" -mt; do
-	ln -s -f libboost_python${thread}${debug}-${version}-${py}.${suf} \
-	         libboost_python${thread}${debug}-${version}.${suf} 
+	ln -s -f libboost_python${thread}${debug}-${py}.${suf} \
+	         libboost_python${thread}${debug}.${suf} 
     done
 }
 
@@ -27,7 +25,7 @@ remove_linklibs() {
 
     cd /usr/lib
     for thread in "" -mt; do
-	rm -f libboost_python${thread}${debug}-${version}.${suf} 
+	rm -f libboost_python${thread}${debug}.${suf} 
     done
 }
 
