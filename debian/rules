@@ -198,11 +198,6 @@ install: build clean-debhelper
 	mv $(pyste_prefix)/bin/pyste.py $(pyste_prefix)/bin/pyste
 	dh_installman -ppyste$(PKGVERSION) debian/pyste.1
 
-	# package bcp
-	dh_installdirs -pbcp$(PKGVERSION) usr/bin
-	dh_install -pbcp$(PKGVERSION) dist/bin/bcp usr/bin
-	dh_installman -pbcp$(PKGVERSION) debian/bcp.1
-
 	# package libboost-dbg
 	dh_install -plibboost$(PKGVERSION)-dbg
 	dh_install -plibboost$(PKGVERSION)-dbg --autodest \
@@ -216,6 +211,8 @@ install: build clean-debhelper
 	dh_install -plibboost$(PKGVERSION)-dev \
 	   debian/tmp/usr/include/boost-$(boost_version)/boost \
 	   usr/include
+	dh_install -plibboost$(PKGVERSION)-dev dist/bin/bcp usr/bin
+	dh_installman -plibboost$(PKGVERSION)-dev debian/bcp.1
 	$(call ins_lintian_overrides,libboost-dev,libboost$(PKGVERSION)-dev)
 
 	# package libboost-doc

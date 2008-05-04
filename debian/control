@@ -8,23 +8,6 @@ Build-Depends: debhelper (>= 4), quilt, bison, flex, docbook-to-man, xsltproc, d
 XS-Python-Version: 2.4, 2.5
 Standards-Version: 3.7.3
 
-Package: bcp1.35
-Homepage: http://www.boost.org/tools/bcp/bcp.html
-Architecture: any
-Section: libdevel
-Depends: ${shlibs:Depends}, libboost1.35-dev, libboost-date-time1.35-dev, libboost-filesystem1.35-dev, libboost-graph1.35-dev, libboost-iostreams1.35-dev, libboost-program-options1.35-dev, libboost-python1.35-dev, libboost-regex1.35-dev, libboost-serialization1.35-dev, libboost-signals1.35-dev, libboost-test1.35-dev, libboost-thread1.35-dev, libboost-wave1.35-dev
-Conflicts: bcp
-Description: tool for extracting subsets of Boost C++ Libraries
- Part of the Boost C++ Libraries collection.
- .
- The bcp utility is a tool for extracting subsets of Boost, it's useful
- for Boost authors who want to distribute their library separately from
- Boost, and for Boost users who want to distribute a subset of Boost
- with their application.
- .
- bcp can also report on which parts of Boost your code is dependent on,
- and what licences are used by those dependencies.
-
 Package: libboost1.35-dbg
 Architecture: any
 Section: libdevel
@@ -41,9 +24,9 @@ Description: Boost C++ Libraries with debug symbols
 Package: libboost1.35-dev
 Architecture: any
 Section: libdevel
-Depends: libstdc++-dev, libboost-serialization-dev
+Depends: ${shlibs:Depends}, libstdc++-dev, libboost-serialization-dev
 Recommends: libboost1.35-doc, libboost-date-time1.35-dev, libboost-filesystem1.35-dev, libboost-graph1.35-dev, libboost-iostreams1.35-dev, libboost-program-options1.35-dev, libboost-python1.35-dev, libboost-regex1.35-dev, libboost-signals1.35-dev, libboost-test1.35-dev, libboost-thread1.35-dev, libboost-wave1.35-dev
-Conflicts: libboost-dev
+Conflicts: libboost-dev, bcp
 Description: Boost C++ Libraries development files
  The Boost web site provides free, peer-reviewed, portable C++ source
  libraries. The emphasis is on libraries which work well with the C++
@@ -52,6 +35,8 @@ Description: Boost C++ Libraries development files
  suitable for eventual standardization. Some of the libraries have
  already been proposed for inclusion in the C++ Standards Committee's
  upcoming C++ Standard Library Technical Report.
+ .
+ This package provides headers and the auxiliary tool bcp.
  .
  For the following subprojects separate packages exist: 
  date-time, filesystem, graph, python, regex, signals, test, and thread.

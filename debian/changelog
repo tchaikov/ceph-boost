@@ -34,6 +34,9 @@ boost1.35 (1.35.0-1) UNRELEASED; urgency=low
     Abstract continuation lines by a single space.  The latter means
     "display verbatim", which is not desired.
   
+  * debian/control: Remove package bcp1.35.
+  * debian/rules: Package /usr/bin/bcp and its manpage in libboost1.35-dev.
+  
  -- Steve M. Robbins <smr@debian.org>  Sun, 04 May 2008 11:06:39 -0500
 
 boost (1.34.1-11) unstable; urgency=low
