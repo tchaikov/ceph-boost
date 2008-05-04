@@ -12,10 +12,9 @@ include /usr/share/quilt/quilt.make
 
 DEB_BUILD_ARCH ?= $(shell dpkg-architecture -qDEB_BUILD_ARCH)
 
-# Boost does not guarantee any ABI, it uses the full version in SONAME
+PKGVERSION = 1.35
 SOVERSION = 1.35.0
 SHLIBS_VERSION = (>= 1.35.0-1)
-DEBIAN_SUFFIX =
 
 # tags for library name decoration
 boost_version = 1_35
@@ -57,8 +56,8 @@ mk_full_name = usr/lib/libboost_$(subst -,_,$(1))-$(gcc_version)$(2)-$(boost_ver
 
 # Input: component, variant
 # Return: package name for shared library or development
-mk_pkg_lib = libboost-$(if $(findstring -d,$(2)),dbg,$(1)$(SOVERSION)$(DEBIAN_SUFFIX))
-mk_pkg_dev = libboost-$(if $(findstring -d,$(2)),dbg,$(1)-dev)
+mk_pkg_lib = libboost$(if $(findstring -d,$(2)),$(PKGVERSION)-dbg,-$(1)$(SOVERSION))
+mk_pkg_dev = libboost$(if $(findstring -d,$(2)),$(PKGVERSION)-dbg,-$(1)$(PKGVERSION)-dev)
 
 # Helpers to generate debhelper input filenames.
 # Input: component, variant
@@ -76,10 +75,6 @@ mk_ln_files = $(shell echo $(call mk_base_name,$(2),$(3),$(4)).so.$(SOVERSION) $
 mk_ln2_files = $(shell echo $(call mk_base_name,$(2),$(3),$(4)).so $(call mk_full_name,$(2),$(3),$(4)).so >> $(call mk_deb_dev,$(1),$(3)).links)
 mk_ln3_files = $(shell echo $(call mk_base_name,$(2),$(3),$(4)).a $(call mk_full_name,$(2),$(3),$(4)).a >> $(call mk_deb_dev,$(1),$(3)).links)
 
-# Link shared lib with suffix2 to suffix1
-# Input: component, library, variant, suffix1, suffix2
-mk_ln_suffices = $(shell echo $(call mk_base_name,$(2),$(3),$(4)).so.$(SOVERSION) $(call mk_base_name,$(2),$(3),$(5)).so.$(SOVERSION) >> $(call mk_deb_lib,$(1),$(3)).links)
-
 # Function that updates debhelper files for a given library variant
 # Input: component, library, variant, suffix
 # Output: none
@@ -87,7 +82,9 @@ mk_files = $(foreach fn,a so ln ln2 ln3,$(call mk_$(fn)_files,$(1),$(2),$(3),$(4
 
 # helpers to make and install lintian override files
 mk_override_files = echo $(call mk_pkg_lib,$(1)): package-name-doesnt-match-sonames >> $(call mk_ove_lib,$(1));
-ins_lintian_overrides = install -m644 debian/$(1).lintian-overrides debian/$(1)/usr/share/lintian/overrides/$(1);
+ins_lintian_overrides = install -m644 debian/$(1).lintian-overrides debian/$(2)/usr/share/lintian/overrides/$(2);
+cp_debhelper = for s in doc-base examples postinst prerm README.Debian; do \
+	if test -f debian/$(1).$$s; then cp -f debian/$(1).$$s debian/$(2).$$s; fi; done
 
 # Function that updates debhelper files for all library variants shipped.
 mk_debhelper_files = \
@@ -110,16 +107,16 @@ endif
 PYTHON_CONFIG1 = "using python : 2.4 : /usr ;"
 PYTHON_CONFIG2 = "using python : 2.5 : /usr ;"
 
-exampledir = debian/libboost-doc/usr/share/doc/libboost-doc/examples
-htmldir = debian/libboost-doc/usr/share/doc/libboost-doc/HTML
-pyste_prefix = $(CURDIR)/debian/pyste/usr
+exampledir = debian/libboost$(PKGVERSION)-doc/usr/share/doc/libboost$(PKGVERSION)-doc/examples
+htmldir = debian/libboost$(PKGVERSION)-doc/usr/share/doc/libboost$(PKGVERSION)-doc/HTML
+pyste_prefix = $(CURDIR)/debian/pyste$(PKGVERSION)/usr
 bjam = $(CURDIR)/tools/jam/src/bjam
 
 JAM = $(bjam) $(JOBS) -d2 --user-config=$(CURDIR)/user-config.jam -sHAVE_ICU=1
 jam_variants = variant=release,debug threading=single,multi link=shared,static
 
 $(bjam):
-	cd tools/jam/src && sh build.sh cc && mv bin.*/bjam .
+	cd tools/jam/src && CFLAGS=-fno-strict-aliasing sh build.sh cc && mv bin.*/bjam .
 
 build: build-stamp
 build-stamp: $(QUILT_STAMPFN) $(bjam)
@@ -142,13 +139,13 @@ build-stamp: $(QUILT_STAMPFN) $(bjam)
 	touch build-stamp
 
 clean-debhelper:
-	rm -rf debian/libboost-*$(SOVERSION)$(DEBIAN_SUFFIX).lintian-overrides
-	rm -rf debian/libboost-*$(SOVERSION)$(DEBIAN_SUFFIX).install
-	rm -rf debian/libboost-*-dev.install
-	rm -rf debian/libboost-*-dev.links
+	rm -rf debian/libboost-*$(SOVERSION).lintian-overrides
+	rm -rf debian/libboost-*$(SOVERSION).install
+	rm -rf debian/libboost-*$(PKGVERSION)-dev.install
+	rm -rf debian/libboost-*$(PKGVERSION)-dev.links
 	rm -rf debian/libboost-*$(SOVERSION).links
-	rm -rf debian/libboost-dbg.install
-	rm -rf debian/libboost-dbg.links
+	rm -rf debian/libboost$(PKGVERSION)-dbg.install
+	rm -rf debian/libboost$(PKGVERSION)-dbg.links
 
 clean: unpatch clean-debhelper
 	dh_testdir
@@ -174,9 +171,14 @@ install: build clean-debhelper
 	dh_testroot
 	dh_clean -k
 
+	@$(call cp_debhelper,libboost-dbg,libboost$(PKGVERSION)-dbg)
+	@$(call cp_debhelper,libboost-dev,libboost$(PKGVERSION)-dev)
+	@$(call cp_debhelper,libboost-doc,libboost$(PKGVERSION)-doc)
+	@$(call cp_debhelper,libboost-python-dev,libboost-python$(PKGVERSION)-dev)
+
 	$(JAM) --prefix=$(CURDIR)/debian/tmp/usr $(jam_variants) install
-	install --mode=755 -D debian/rtupdate debian/tmp/usr/share/python/runtime.d/libboost-python-dev.rtupdate
-	install --mode=755 -D debian/rtupdate debian/tmp/usr/share/python/runtime.d/libboost-dbg.rtupdate
+	install --mode=755 -D debian/rtupdate debian/tmp/usr/share/python/runtime.d/libboost-python$(PKGVERSION)-dev.rtupdate
+	install --mode=755 -D debian/rtupdate debian/tmp/usr/share/python/runtime.d/libboost$(PKGVERSION)-dbg.rtupdate
 
 	# Remove undecorated Boost.Python libraries and install decorated ones
 	rm debian/tmp/usr/lib/lib*python*
@@ -194,27 +196,27 @@ install: build clean-debhelper
 	# package pyste
 	cd libs/python/pyste/install && python setup.py install --no-compile --prefix=$(pyste_prefix) --install-lib=$(pyste_prefix)/share/python-support/pyste
 	mv $(pyste_prefix)/bin/pyste.py $(pyste_prefix)/bin/pyste
-	dh_installman -ppyste debian/pyste.1
+	dh_installman -ppyste$(PKGVERSION) debian/pyste.1
 
 	# package bcp
-	dh_installdirs -pbcp usr/bin
-	dh_install -pbcp dist/bin/bcp usr/bin
-	dh_installman -pbcp debian/bcp.1
+	dh_installdirs -pbcp$(PKGVERSION) usr/bin
+	dh_install -pbcp$(PKGVERSION) dist/bin/bcp usr/bin
+	dh_installman -pbcp$(PKGVERSION) debian/bcp.1
 
 	# package libboost-dbg
-	dh_install -plibboost-dbg
-	dh_install -plibboost-dbg --autodest \
-	   debian/tmp/usr/share/python/runtime.d/libboost-dbg.rtupdate
-	dh_link -plibboost-dbg \
+	dh_install -plibboost$(PKGVERSION)-dbg
+	dh_install -plibboost$(PKGVERSION)-dbg --autodest \
+	   debian/tmp/usr/share/python/runtime.d/libboost$(PKGVERSION)-dbg.rtupdate
+	dh_link -plibboost$(PKGVERSION)-dbg \
 	   usr/lib/libboost_thread-mt-d.a usr/lib/libboost_thread-d.a \
 	   usr/lib/libboost_thread-mt-d.so usr/lib/libboost_thread-d.so
-	$(call ins_lintian_overrides,libboost-dbg)
+	$(call ins_lintian_overrides,libboost-dbg,libboost$(PKGVERSION)-dbg)
 
-	# package libboost-dev
-	dh_install -plibboost-dev \
+	# package libboost$(PKGVERSION)-dev
+	dh_install -plibboost$(PKGVERSION)-dev \
 	   debian/tmp/usr/include/boost-$(boost_version)/boost \
 	   usr/include
-	$(call ins_lintian_overrides,libboost-dev)
+	$(call ins_lintian_overrides,libboost-dev,libboost$(PKGVERSION)-dev)
 
 	# package libboost-doc
 	rm -rf $(htmldir)
@@ -222,136 +224,136 @@ install: build clean-debhelper
 	cat debian/documentation-files | xargs cp --parents --target-directory=$(htmldir)
 	find doc libs -name doc | xargs -n1 cp --archive --target-directory=$(htmldir)
 	rm -rf $(htmldir)/boost
-	dh_link -plibboost-doc \
+	dh_link -plibboost$(PKGVERSION)-doc \
 	   usr/include/boost \
-	   usr/share/doc/libboost-doc/HTML/boost
+	   usr/share/doc/libboost$(PKGVERSION)-doc/HTML/boost
 
 	mkdir -p $(exampledir)
 	cat debian/example-files | xargs cp -a --parents --target-directory=$(exampledir)
 	find $(exampledir) -type f | xargs chmod 644
-	$(call ins_lintian_overrides,libboost-doc)
+	$(call ins_lintian_overrides,libboost-doc,libboost$(PKGVERSION)-doc)
 
 
 	# package libboost-date-time$(SOVERSION)
-	dh_install -plibboost-date-time$(SOVERSION)$(DEBIAN_SUFFIX)
-	# package libboost-date-time-dev
-	dh_installdirs -plibboost-date-time-dev usr/include/boost
-	mv debian/libboost-dev/usr/include/boost/date_time* \
-	   debian/libboost-date-time-dev/usr/include/boost
-	dh_install -plibboost-date-time-dev
-	dh_link -plibboost-date-time-dev
+	dh_install -plibboost-date-time$(SOVERSION)
+	# package libboost-date-time$(PKGVERSION)-dev
+	dh_installdirs -plibboost-date-time$(PKGVERSION)-dev usr/include/boost
+	mv debian/libboost$(PKGVERSION)-dev/usr/include/boost/date_time* \
+	   debian/libboost-date-time$(PKGVERSION)-dev/usr/include/boost
+	dh_install -plibboost-date-time$(PKGVERSION)-dev
+	dh_link -plibboost-date-time$(PKGVERSION)-dev
 
 	# package libboost-filesystem$(SOVERSION)
-	dh_install -plibboost-filesystem$(SOVERSION)$(DEBIAN_SUFFIX)
-	# package libboost-filesystem-dev
-	dh_installdirs -plibboost-filesystem-dev usr/include/boost
-	mv debian/libboost-dev/usr/include/boost/filesystem* \
-	   debian/libboost-filesystem-dev/usr/include/boost
-	dh_install -plibboost-filesystem-dev
-	dh_link -plibboost-filesystem-dev
+	dh_install -plibboost-filesystem$(SOVERSION)
+	# package libboost-filesystem$(PKGVERSION)-dev
+	dh_installdirs -plibboost-filesystem$(PKGVERSION)-dev usr/include/boost
+	mv debian/libboost$(PKGVERSION)-dev/usr/include/boost/filesystem* \
+	   debian/libboost-filesystem$(PKGVERSION)-dev/usr/include/boost
+	dh_install -plibboost-filesystem$(PKGVERSION)-dev
+	dh_link -plibboost-filesystem$(PKGVERSION)-dev
 
 	# package libboost-graph$(SOVERSION)
-	dh_install -plibboost-graph$(SOVERSION)$(DEBIAN_SUFFIX)
-	# package libboost-graph-dev
-	dh_installdirs -plibboost-graph-dev usr/include/boost
-	mv debian/libboost-dev/usr/include/boost/graph \
-	   debian/libboost-graph-dev/usr/include/boost
-	dh_install -plibboost-graph-dev
-	dh_link -plibboost-graph-dev
+	dh_install -plibboost-graph$(SOVERSION)
+	# package libboost-graph$(PKGVERSION)-dev
+	dh_installdirs -plibboost-graph$(PKGVERSION)-dev usr/include/boost
+	mv debian/libboost$(PKGVERSION)-dev/usr/include/boost/graph \
+	   debian/libboost-graph$(PKGVERSION)-dev/usr/include/boost
+	dh_install -plibboost-graph$(PKGVERSION)-dev
+	dh_link -plibboost-graph$(PKGVERSION)-dev
 
 	# package libboost-iostreams$(SOVERSION)
-	dh_install -plibboost-iostreams$(SOVERSION)$(DEBIAN_SUFFIX)
-	# package libboost-iostreams-dev
-	dh_installdirs -plibboost-iostreams-dev usr/include/boost
-	mv debian/libboost-dev/usr/include/boost/iostreams* \
-	   debian/libboost-iostreams-dev/usr/include/boost
-	dh_install -plibboost-iostreams-dev
-	dh_link -plibboost-iostreams-dev
+	dh_install -plibboost-iostreams$(SOVERSION)
+	# package libboost-iostreams$(PKGVERSION)-dev
+	dh_installdirs -plibboost-iostreams$(PKGVERSION)-dev usr/include/boost
+	mv debian/libboost$(PKGVERSION)-dev/usr/include/boost/iostreams* \
+	   debian/libboost-iostreams$(PKGVERSION)-dev/usr/include/boost
+	dh_install -plibboost-iostreams$(PKGVERSION)-dev
+	dh_link -plibboost-iostreams$(PKGVERSION)-dev
 
 	# package libboost-program-options$(SOVERSION)
-	dh_install -plibboost-program-options$(SOVERSION)$(DEBIAN_SUFFIX)
-	# package libboost-program-options-dev
-	dh_installdirs -plibboost-program-options-dev usr/include/boost
-	mv debian/libboost-dev/usr/include/boost/program_options* \
-	   debian/libboost-program-options-dev/usr/include/boost
-	dh_install -plibboost-program-options-dev
-	dh_link -plibboost-program-options-dev
+	dh_install -plibboost-program-options$(SOVERSION)
+	# package libboost-program-options$(PKGVERSION)-dev
+	dh_installdirs -plibboost-program-options$(PKGVERSION)-dev usr/include/boost
+	mv debian/libboost$(PKGVERSION)-dev/usr/include/boost/program_options* \
+	   debian/libboost-program-options$(PKGVERSION)-dev/usr/include/boost
+	dh_install -plibboost-program-options$(PKGVERSION)-dev
+	dh_link -plibboost-program-options$(PKGVERSION)-dev
 
 	# package libboost-python$(SOVERSION)
-	dh_install -plibboost-python$(SOVERSION)$(DEBIAN_SUFFIX)
-	# package libboost-python-dev
-	dh_installdirs -plibboost-python-dev usr/include/boost
-	mv debian/libboost-dev/usr/include/boost/python* \
-	   debian/libboost-python-dev/usr/include/boost
-	dh_install -plibboost-python-dev --autodest \
-	   debian/tmp/usr/share/python/runtime.d/libboost-python-dev.rtupdate
-	dh_link -plibboost-python-dev
-	$(call ins_lintian_overrides,libboost-python-dev)
+	dh_install -plibboost-python$(SOVERSION)
+	# package libboost-python$(PKGVERSION)-dev
+	dh_installdirs -plibboost-python$(PKGVERSION)-dev usr/include/boost
+	mv debian/libboost$(PKGVERSION)-dev/usr/include/boost/python* \
+	   debian/libboost-python$(PKGVERSION)-dev/usr/include/boost
+	dh_install -plibboost-python$(PKGVERSION)-dev --autodest \
+	   debian/tmp/usr/share/python/runtime.d/libboost-python$(PKGVERSION)-dev.rtupdate
+	dh_link -plibboost-python$(PKGVERSION)-dev
+	$(call ins_lintian_overrides,libboost-python-dev,libboost-python$(PKGVERSION)-dev)
 
 	# package libboost-regex$(SOVERSION)
-	dh_install -plibboost-regex$(SOVERSION)$(DEBIAN_SUFFIX)
-	# package libboost-regex-dev
-	dh_installdirs -plibboost-regex-dev usr/include/boost
-	mv debian/libboost-dev/usr/include/boost/*regex* \
-	   debian/libboost-regex-dev/usr/include/boost
-	dh_install -plibboost-regex-dev
-	dh_link -plibboost-regex-dev
+	dh_install -plibboost-regex$(SOVERSION)
+	# package libboost-regex$(PKGVERSION)-dev
+	dh_installdirs -plibboost-regex$(PKGVERSION)-dev usr/include/boost
+	mv debian/libboost$(PKGVERSION)-dev/usr/include/boost/*regex* \
+	   debian/libboost-regex$(PKGVERSION)-dev/usr/include/boost
+	dh_install -plibboost-regex$(PKGVERSION)-dev
+	dh_link -plibboost-regex$(PKGVERSION)-dev
 
 	# package libboost-serialization$(SOVERSION)
-	dh_install -plibboost-serialization$(SOVERSION)$(DEBIAN_SUFFIX)
-	# package libboost-serialization-dev
-	dh_installdirs -plibboost-serialization-dev usr/include/boost
-	mv debian/libboost-dev/usr/include/boost/*serialization* \
-	   debian/libboost-serialization-dev/usr/include/boost
-	dh_install -plibboost-serialization-dev
-	dh_link -plibboost-serialization-dev
+	dh_install -plibboost-serialization$(SOVERSION)
+	# package libboost-serialization$(PKGVERSION)-dev
+	dh_installdirs -plibboost-serialization$(PKGVERSION)-dev usr/include/boost
+	mv debian/libboost$(PKGVERSION)-dev/usr/include/boost/*serialization* \
+	   debian/libboost-serialization$(PKGVERSION)-dev/usr/include/boost
+	dh_install -plibboost-serialization$(PKGVERSION)-dev
+	dh_link -plibboost-serialization$(PKGVERSION)-dev
 
 	# package libboost-signals$(SOVERSION)
-	dh_install -plibboost-signals$(SOVERSION)$(DEBIAN_SUFFIX)
-	# package libboost-signals-dev
-	dh_installdirs -plibboost-signals-dev usr/include/boost
-	mv debian/libboost-dev/usr/include/boost/*signal* \
-	   debian/libboost-signals-dev/usr/include/boost
-	dh_install -plibboost-signals-dev
-	dh_link -plibboost-signals-dev
+	dh_install -plibboost-signals$(SOVERSION)
+	# package libboost-signals$(PKGVERSION)-dev
+	dh_installdirs -plibboost-signals$(PKGVERSION)-dev usr/include/boost
+	mv debian/libboost$(PKGVERSION)-dev/usr/include/boost/*signal* \
+	   debian/libboost-signals$(PKGVERSION)-dev/usr/include/boost
+	dh_install -plibboost-signals$(PKGVERSION)-dev
+	dh_link -plibboost-signals$(PKGVERSION)-dev
 
 	# package libboost-system$(SOVERSION)
-	dh_install -plibboost-system$(SOVERSION)$(DEBIAN_SUFFIX)
-	# package libboost-system-dev
-	dh_installdirs -plibboost-system-dev usr/include/boost
-	mv debian/libboost-dev/usr/include/boost/system \
-	   debian/libboost-system-dev/usr/include/boost
-	dh_install -plibboost-system-dev
-	dh_link -plibboost-system-dev
+	dh_install -plibboost-system$(SOVERSION)
+	# package libboost-system$(PKGVERSION)-dev
+	dh_installdirs -plibboost-system$(PKGVERSION)-dev usr/include/boost
+	mv debian/libboost$(PKGVERSION)-dev/usr/include/boost/system \
+	   debian/libboost-system$(PKGVERSION)-dev/usr/include/boost
+	dh_install -plibboost-system$(PKGVERSION)-dev
+	dh_link -plibboost-system$(PKGVERSION)-dev
 
 	# package libboost-test$(SOVERSION)
-	dh_install -plibboost-test$(SOVERSION)$(DEBIAN_SUFFIX)
-	# package libboost-test-dev
-	dh_installdirs -plibboost-test-dev usr/include/boost
-	mv debian/libboost-dev/usr/include/boost/test \
-	   debian/libboost-test-dev/usr/include/boost
-	dh_install -plibboost-test-dev
-	dh_link -plibboost-test-dev
+	dh_install -plibboost-test$(SOVERSION)
+	# package libboost-test$(PKGVERSION)-dev
+	dh_installdirs -plibboost-test$(PKGVERSION)-dev usr/include/boost
+	mv debian/libboost$(PKGVERSION)-dev/usr/include/boost/test \
+	   debian/libboost-test$(PKGVERSION)-dev/usr/include/boost
+	dh_install -plibboost-test$(PKGVERSION)-dev
+	dh_link -plibboost-test$(PKGVERSION)-dev
 
 	# package libboost-thread$(SOVERSION)
-	dh_install -plibboost-thread$(SOVERSION)$(DEBIAN_SUFFIX)
-	# package libboost-thread-dev
-	dh_installdirs -plibboost-thread-dev usr/include/boost
-	mv debian/libboost-dev/usr/include/boost/thread* \
-	   debian/libboost-thread-dev/usr/include/boost
-	dh_install -plibboost-thread-dev
-	dh_link -plibboost-thread-dev \
+	dh_install -plibboost-thread$(SOVERSION)
+	# package libboost-thread$(PKGVERSION)-dev
+	dh_installdirs -plibboost-thread$(PKGVERSION)-dev usr/include/boost
+	mv debian/libboost$(PKGVERSION)-dev/usr/include/boost/thread* \
+	   debian/libboost-thread$(PKGVERSION)-dev/usr/include/boost
+	dh_install -plibboost-thread$(PKGVERSION)-dev
+	dh_link -plibboost-thread$(PKGVERSION)-dev \
 	   usr/lib/libboost_thread-mt.a usr/lib/libboost_thread.a \
 	   usr/lib/libboost_thread-mt.so usr/lib/libboost_thread.so
 
 	# package libboost-wave$(SOVERSION)
-	dh_install -plibboost-wave$(SOVERSION)$(DEBIAN_SUFFIX)
-	# package libboost-wave-dev
-	dh_installdirs -plibboost-wave-dev usr/include/boost
-	mv debian/libboost-dev/usr/include/boost/wave* \
-	   debian/libboost-wave-dev/usr/include/boost
-	dh_install -plibboost-wave-dev
-	dh_link -plibboost-wave-dev
+	dh_install -plibboost-wave$(SOVERSION)
+	# package libboost-wave$(PKGVERSION)-dev
+	dh_installdirs -plibboost-wave$(PKGVERSION)-dev usr/include/boost
+	mv debian/libboost$(PKGVERSION)-dev/usr/include/boost/wave* \
+	   debian/libboost-wave$(PKGVERSION)-dev/usr/include/boost
+	dh_install -plibboost-wave$(PKGVERSION)-dev
+	dh_link -plibboost-wave$(PKGVERSION)-dev
 
 # This single target is used to build all the packages, all at once, or
 # one at a time. So keep in mind: any options passed to commands here will
@@ -366,15 +368,15 @@ binary-common:
 	dh_installchangelogs
 	dh_strip -Nlibboost-dbg
 	dh_link
-	dh_compress -Xlibboost-doc/HTML
+	dh_compress -Xlibboost$(PKGVERSION)-doc/HTML
 	dh_pysupport
 	dh_fixperms
 
 	@if [ "$(DH_OPTIONS)" = "-a" ]; then \
-		echo DH_OPTIONS=-plibboost-dbg dh_makeshlibs -V"libboost-dbg $(SHLIBS_VERSION)"; \
-		DH_OPTIONS=-plibboost-dbg dh_makeshlibs -V"libboost-dbg $(SHLIBS_VERSION)"; \
+		echo DH_OPTIONS=-plibboost$(PKGVERSION)-dbg dh_makeshlibs -V"libboost$(PKGVERSION)-dbg $(SHLIBS_VERSION)"; \
+		DH_OPTIONS=-plibboost$(PKGVERSION)-dbg dh_makeshlibs -V"libboost$(PKGVERSION)-dbg $(SHLIBS_VERSION)"; \
 		for name in $(boost_libs); do \
-			lib=libboost-$${name}$(SOVERSION)$(DEBIAN_SUFFIX); \
+			lib=libboost-$${name}$(SOVERSION); \
 			echo DH_OPTIONS=-p$${lib} dh_makeshlibs -V"$${lib} $(SHLIBS_VERSION)"; \
 			DH_OPTIONS=-p$${lib} dh_makeshlibs -V"$${lib} $(SHLIBS_VERSION)"; \
 		done; \
