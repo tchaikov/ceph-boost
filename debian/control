@@ -24,7 +24,7 @@ Description: Boost C++ Libraries with debug symbols
 Package: libboost1.35-dev
 Architecture: any
 Section: libdevel
-Depends: ${shlibs:Depends}, libstdc++-dev, libboost-serialization-dev
+Depends: ${shlibs:Depends}, libstdc++-dev
 Recommends: libboost1.35-doc, libboost-date-time1.35-dev, libboost-filesystem1.35-dev, libboost-graph1.35-dev, libboost-iostreams1.35-dev, libboost-program-options1.35-dev, libboost-python1.35-dev, libboost-regex1.35-dev, libboost-signals1.35-dev, libboost-test1.35-dev, libboost-thread1.35-dev, libboost-wave1.35-dev
 Conflicts: libboost-dev, bcp
 Description: Boost C++ Libraries development files
