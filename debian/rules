@@ -64,7 +64,6 @@ mk_pkg_dev = libboost$(if $(findstring -d,$(2)),$(PKGVERSION)-dbg,-$(1)$(PKGVERS
 # Return: prefix to debhelper filenames
 mk_deb_lib = debian/$(call mk_pkg_lib,$(1),$(2))
 mk_deb_dev = debian/$(call mk_pkg_dev,$(1),$(2))
-mk_ove_lib = $(call mk_deb_lib,$(1),$(2))/usr/share/lintian/overrides/$(call mk_pkg_lib,$(1),$(2))
 
 # Helpers that update debhelper .install or .links files
 # Input: component, library, variant, suffix
@@ -81,16 +80,33 @@ mk_ln3_files = $(shell echo $(call mk_base_name,$(2),$(3),$(4)).a $(call mk_full
 mk_files = $(foreach fn,a so ln ln2 ln3,$(call mk_$(fn)_files,$(1),$(2),$(3),$(4)))
 
 # helpers to make and install lintian override files
-mk_override_files = echo $(call mk_pkg_lib,$(1)): package-name-doesnt-match-sonames >> $(call mk_ove_lib,$(1));
-ins_lintian_overrides = install -m644 debian/$(1).lintian-overrides debian/$(2)/usr/share/lintian/overrides/$(2);
+
+# Input: package, override
+add_override = echo $(1): $(2) >> debian/$(1).lintian-overrides;
+
+# Input: override
+add_dbg_override = $(call add_override,libboost$(PKGVERSION)-dbg,$(1))
+add_dev_override = $(call add_override,libboost$(PKGVERSION)-dev,$(1))
+add_doc_override = $(call add_override,libboost$(PKGVERSION)-doc,$(1))
+
+# Input: component, variant, lintian-warning
+add_lib_override = $(call add_override,$(call mk_pkg_lib,$(1),$(2)),$(3))
+add_libdev_override = $(call add_override,$(call mk_pkg_dev,$(1),$(2)),$(3))
+
 cp_debhelper = for s in doc-base examples postinst prerm README.Debian; do \
 	if test -f debian/$(1).$$s; then cp -f debian/$(1).$$s debian/$(2).$$s; fi; done
 
 # Function that updates debhelper files for all library variants shipped.
 mk_debhelper_files = \
+	$(call add_dbg_override,package-name-doesnt-match-sonames) \
+	$(call add_dbg_override,non-dev-pkg-with-shlib-symlink) \
+	$(call add_dev_override,description-synopsis-starts-with-a-capital-letter) \
+	$(call add_doc_override,description-synopsis-starts-with-a-capital-letter) \
+	$(call add_doc_override,extra-license-file) \
+	$(call add_libdev_override,python,,description-synopsis-starts-with-a-capital-letter) \
 	$(foreach l, $(boost_libs), \
 		echo "making debhelper files for $(l)..."; \
-		$(call mk_override_files,$(l)) \
+		$(call add_lib_override,$(1),,package-name-doesnt-match-sonames) \
 		$(foreach ll, $(call boost_lib,$(l)), \
 			$(foreach v, $(call boost_variants,$(l)), \
 				$(foreach suf, $(call boost_suffixes,$(l)), \
@@ -139,13 +155,9 @@ build-stamp: $(QUILT_STAMPFN) $(bjam)
 	touch build-stamp
 
 clean-debhelper:
-	rm -rf debian/libboost-*$(SOVERSION).lintian-overrides
-	rm -rf debian/libboost-*$(SOVERSION).install
-	rm -rf debian/libboost-*$(PKGVERSION)-dev.install
-	rm -rf debian/libboost-*$(PKGVERSION)-dev.links
-	rm -rf debian/libboost-*$(SOVERSION).links
-	rm -rf debian/libboost$(PKGVERSION)-dbg.install
-	rm -rf debian/libboost$(PKGVERSION)-dbg.links
+	rm -rf debian/*.install
+	rm -rf debian/*.links
+	rm -rf debian/*.lintian-overrides
 
 clean: unpatch clean-debhelper
 	dh_testdir
@@ -164,6 +176,10 @@ clean: unpatch clean-debhelper
 	rm -rf user-config.jam
 
 	dh_clean build-stamp
+
+# This rule is for debugging debian/rules.
+make-debhelper: clean-debhelper
+	@$(call mk_debhelper_files)
 
 install: DH_OPTIONS=-X.svn
 install: build clean-debhelper
@@ -188,8 +204,6 @@ install: build clean-debhelper
 	find debian/tmp -name .cvsignore | xargs rm -f
 	find debian -empty -type f | xargs rm -f
 
-	dh_installdirs -A usr/share/lintian/overrides
-
 	# generate (some) debhelper files
 	@$(call mk_debhelper_files)
 
@@ -205,7 +219,6 @@ install: build clean-debhelper
 	dh_link -plibboost$(PKGVERSION)-dbg \
 	   usr/lib/libboost_thread-mt-d.a usr/lib/libboost_thread-d.a \
 	   usr/lib/libboost_thread-mt-d.so usr/lib/libboost_thread-d.so
-	$(call ins_lintian_overrides,libboost-dbg,libboost$(PKGVERSION)-dbg)
 
 	# package libboost$(PKGVERSION)-dev
 	dh_install -plibboost$(PKGVERSION)-dev \
@@ -213,7 +226,6 @@ install: build clean-debhelper
 	   usr/include
 	dh_install -plibboost$(PKGVERSION)-dev dist/bin/bcp usr/bin
 	dh_installman -plibboost$(PKGVERSION)-dev debian/bcp.1
-	$(call ins_lintian_overrides,libboost-dev,libboost$(PKGVERSION)-dev)
 
 	# package libboost-doc
 	rm -rf $(htmldir)
@@ -228,7 +240,6 @@ install: build clean-debhelper
 	mkdir -p $(exampledir)
 	cat debian/example-files | xargs cp -a --parents --target-directory=$(exampledir)
 	find $(exampledir) -type f | xargs chmod 644
-	$(call ins_lintian_overrides,libboost-doc,libboost$(PKGVERSION)-doc)
 
 
 	# package libboost-date-time$(SOVERSION)
@@ -285,7 +296,6 @@ install: build clean-debhelper
 	dh_install -plibboost-python$(PKGVERSION)-dev --autodest \
 	   debian/tmp/usr/share/python/runtime.d/libboost-python$(PKGVERSION)-dev.rtupdate
 	dh_link -plibboost-python$(PKGVERSION)-dev
-	$(call ins_lintian_overrides,libboost-python-dev,libboost-python$(PKGVERSION)-dev)
 
 	# package libboost-regex$(SOVERSION)
 	dh_install -plibboost-regex$(SOVERSION)
@@ -363,6 +373,7 @@ binary-common:
 	dh_installexamples
 	dh_installinfo
 	dh_installchangelogs
+	dh_lintian
 	dh_strip -Nlibboost-dbg
 	dh_link
 	dh_compress -Xlibboost$(PKGVERSION)-doc/HTML

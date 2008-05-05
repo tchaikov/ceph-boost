@@ -1,2 +1,0 @@
-libboost-dbg: package-name-doesnt-match-sonames
-libboost-dbg: non-dev-pkg-with-shlib-symlink
