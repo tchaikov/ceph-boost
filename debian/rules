@@ -127,7 +127,7 @@ PYTHON_CONFIG2 = "using python : 2.5 : /usr ;"
 
 exampledir = debian/libboost$(PKGVERSION)-doc/usr/share/doc/libboost$(PKGVERSION)-doc/examples
 htmldir = debian/libboost$(PKGVERSION)-doc/usr/share/doc/libboost$(PKGVERSION)-doc/HTML
-pyste_prefix = $(CURDIR)/debian/pyste$(PKGVERSION)/usr
+pyste_prefix = $(CURDIR)/debian/libboost-python$(PKGVERSION)-dev/usr
 bjam = $(CURDIR)/tools/jam/src/bjam
 
 JAM = $(bjam) $(JOBS) -d2 --user-config=$(CURDIR)/user-config.jam -sHAVE_ICU=1
@@ -208,11 +208,6 @@ install: build clean-debhelper
 
 	# generate (some) debhelper files
 	@$(call mk_debhelper_files)
-
-	# package pyste
-	cd libs/python/pyste/install && python setup.py install --no-compile --prefix=$(pyste_prefix) --install-lib=$(pyste_prefix)/share/python-support/pyste
-	mv $(pyste_prefix)/bin/pyste.py $(pyste_prefix)/bin/pyste
-	dh_installman -ppyste$(PKGVERSION) debian/pyste.1
 
 	# package libboost-dbg
 	dh_install -plibboost$(PKGVERSION)-dbg
@@ -298,6 +293,10 @@ install: build clean-debhelper
 	dh_install -plibboost-python$(PKGVERSION)-dev --autodest \
 	   debian/tmp/usr/share/python/runtime.d/libboost-python$(PKGVERSION)-dev.rtupdate
 	dh_link -plibboost-python$(PKGVERSION)-dev
+
+	cd libs/python/pyste/install && python setup.py install --no-compile --prefix=$(pyste_prefix) --install-lib=$(pyste_prefix)/share/python-support/pyste
+	mv $(pyste_prefix)/bin/pyste.py $(pyste_prefix)/bin/pyste
+	dh_installman -plibboost-python$(PKGVERSION)-dev debian/pyste.1
 
 	# package libboost-regex$(SOVERSION)
 	dh_install -plibboost-regex$(SOVERSION)

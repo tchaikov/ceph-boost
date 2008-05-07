@@ -212,8 +212,9 @@ Package: libboost-python1.35-dev
 Homepage: http://www.boost.org/libs/python/
 Architecture: any
 Section: libdevel
-Depends: libboost1.35-dev (= ${binary:Version}), libboost-python1.35.0 (= ${binary:Version}), python-dev
-Conflicts: libboost-python-dev
+Depends: libboost1.35-dev (= ${binary:Version}), libboost-python1.35.0 (= ${binary:Version}), python-dev, ${python:Depends}, python-celementtree | python-elementtree, gccxml
+Suggests: libboost1.35-doc
+Conflicts: libboost-python-dev, pyste
 Description: Boost.Python Library development files
  Part of the Boost C++ Libraries collection.
  .
@@ -227,6 +228,11 @@ Description: Boost.Python Library development files
  Subclassing extension types in Python, Overriding virtual functions
  in Python, Member function Overloading, Automatic wrapping of
  numeric operators among others.
+ .
+ This package also contains the pyste Boost.Python code generator that
+ allows the user to specify classes and functions to be exported using
+ a simple interface file, which following the Boost.Python's
+ philosophy, is simple Python code.
  .
  This package allows development of a Python interface for all current
  versions of Python in Debian.  Code using this library will need also
@@ -451,21 +457,3 @@ Description: C99/C++ preprocessor library
  implementation of the mandated C99/C++ preprocessor functionality
  packed behind a simple to use interface, which integrates well with
  the well known idioms of the Standard Template Library (STL).
-
-Package: pyste1.35
-Homepage: http://www.boost.org/libs/python/pyste/
-Architecture: all
-Section: python
-Provides: ${python:Provides}
-Depends: ${python:Depends}, python-celementtree | python-elementtree, gccxml
-XB-Python-Version: ${python:Versions}
-Suggests: libboost1.35-doc
-Conflicts: pyste
-Description: Boost.Python code generator
- Part of the Boost C++ Libraries collection.
- .
- User specifies classes and functions to be exported using a simple
- interface file, which following the Boost.Python's philosophy, is
- simple Python code.
- .
- Documentation is included in libboost-doc package.
