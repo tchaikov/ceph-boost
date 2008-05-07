@@ -37,6 +37,7 @@ boost_suffixes_python := -py24 -py25
 filtered_files = \
 	debian/libboost-dbg.postinst \
 	debian/libboost-dbg.prerm \
+	debian/libboost-doc.doc-base \
 	debian/libboost-python-dev.postinst \
 	debian/libboost-python-dev.prerm
 
