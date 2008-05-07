@@ -46,6 +46,7 @@ Homepage: http://www.boost.org/libs/
 Architecture: all
 Section: doc
 Suggests: libboost1.35-dev (>= ${source:Version})
+Conflicts: libboost-doc
 Description: Boost.org libraries documentation
  The Boost web site provides free, peer-reviewed, portable C++ source
  libraries. The emphasis is on libraries which work well with the C++
