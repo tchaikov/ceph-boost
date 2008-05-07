@@ -2,7 +2,7 @@
 
 set -e
 
-update=/usr/share/python/runtime.d/libboost-dbg.rtupdate
+update=/usr/share/python/runtime.d/libboost-python@PKGVERSION@-dev.rtupdate
 
 if which pyversions >/dev/null; then
     $update rtupdate none $(pyversions -d)
