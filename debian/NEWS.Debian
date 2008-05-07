@@ -1,5 +1,13 @@
 Boost 1.35.0-1
 --------------
+
+  * All packages now incorporate the boost version.  The -doc, -dbg, and
+    -dev packages are labelled with 1.35 under the assumption that 1.35.x
+    will all be API compatible.  The shared lib packages are labelled with
+    the SOVERSION (1.35.0) as always.  The new packages conflict with the
+    old (versions 1.34.x) since they install into the same directories.
+    The new packages have a new source name, however, so both 1.34 and
+    1.35 will be available from the Debian repository.
   
   * Removed package bcp.  The binary "bcp" is now found in libboost-dev.
 
