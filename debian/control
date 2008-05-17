@@ -24,7 +24,7 @@ Description: Boost C++ Libraries with debug symbols
 Package: libboost1.35-dev
 Architecture: any
 Section: libdevel
-Depends: ${shlibs:Depends}, libstdc++-dev
+Depends: ${shlibs:Depends}, libstdc++-dev, libboost-serialization1.35-dev (= ${binary:Version})
 Recommends: libboost1.35-doc, libboost-date-time1.35-dev, libboost-filesystem1.35-dev, libboost-graph1.35-dev, libboost-iostreams1.35-dev, libboost-program-options1.35-dev, libboost-python1.35-dev, libboost-regex1.35-dev, libboost-signals1.35-dev, libboost-test1.35-dev, libboost-thread1.35-dev, libboost-wave1.35-dev
 Conflicts: libboost-dev, bcp
 Description: Boost C++ Libraries development files
@@ -75,7 +75,7 @@ Package: libboost-date-time1.35-dev
 Homepage: http://www.boost.org/libs/date_time/
 Architecture: any
 Section: libdevel
-Depends: libboost1.35-dev (= ${binary:Version}), libboost-date-time1.35.0 (= ${binary:Version})
+Depends: libboost1.35-dev (= ${binary:Version}), libboost-date-time1.35.0 (= ${binary:Version}), libboost-serialization1.35-dev (= ${binary:Version})
 Conflicts: libboost-date-time-dev
 Description: set of date-time libraries based on generic programming concepts
  Part of the Boost C++ Libraries collection.
@@ -99,7 +99,7 @@ Package: libboost-filesystem1.35-dev
 Homepage: http://boost.org/libs/filesystem/
 Architecture: any
 Section: libdevel
-Depends: libboost1.35-dev (= ${binary:Version}), libboost-filesystem1.35.0 (= ${binary:Version})
+Depends: libboost1.35-dev (= ${binary:Version}), libboost-filesystem1.35.0 (= ${binary:Version}), libboost-system1.35-dev (= ${binary:Version})
 Conflicts: libboost-filesystem-dev
 Description: filesystem operations (portable paths, iteration over directories, etc) in C++
  Part of the Boost C++ Libraries collection.
@@ -127,7 +127,7 @@ Package: libboost-graph1.35-dev
 Homepage: http://www.boost.org/libs/graph/
 Architecture: any
 Section: libdevel
-Depends: libboost1.35-dev (= ${binary:Version})
+Depends: libboost1.35-dev (= ${binary:Version}), libboost-serialization1.35-dev (= ${binary:Version}), libboost-test1.35-dev (= ${binary:Version})
 Recommends: libboost-graph1.35.0 (= ${binary:Version})
 Conflicts: libboost-graph-dev
 Description: generic graph components and algorithms in C++
@@ -155,7 +155,7 @@ Package: libboost-iostreams1.35-dev
 Homepage: http://www.boost.org/libs/iostreams/
 Architecture: any
 Section: libdevel
-Depends: libboost1.35-dev (= ${binary:Version}), libboost-iostreams1.35.0 (= ${binary:Version})
+Depends: libboost1.35-dev (= ${binary:Version}), libboost-regex1.35-dev (= ${binary:Version}), libboost-iostreams1.35.0 (= ${binary:Version})
 Conflicts: libboost-iostreams-dev
 Description: Boost.Iostreams Library development files
  Part of the Boost C++ Libraries collection.
@@ -421,7 +421,7 @@ Package: libboost-thread1.35-dev
 Homepage: http://www.boost.org/libs/thread/
 Architecture: any
 Section: libdevel
-Depends: libboost1.35-dev (= ${binary:Version}), libboost-thread1.35.0 (= ${binary:Version})
+Depends: libboost1.35-dev (= ${binary:Version}), libboost-date-time1.35-dev (= ${binary:Version}), libboost-thread1.35.0 (= ${binary:Version})
 Conflicts: libboost-thread-dev
 Description: portable C++ multi-threading
  Part of the Boost C++ Libraries collection.
@@ -448,7 +448,7 @@ Package: libboost-wave1.35-dev
 Homepage: http://www.boost.org/libs/wave/
 Architecture: any
 Section: libdevel
-Depends: libboost1.35-dev (= ${binary:Version}), libboost-wave1.35.0 (= ${binary:Version}), libboost-filesystem1.35-dev (= ${binary:Version})
+Depends: libboost1.35-dev (= ${binary:Version}), libboost-serialization1.35-dev (= ${binary:Version}), libboost-wave1.35.0 (= ${binary:Version}), libboost-filesystem1.35-dev (= ${binary:Version})
 Conflicts: libboost-wave-dev
 Description: C99/C++ preprocessor library
  Part of the Boost C++ Libraries collection.

@@ -1,3 +1,17 @@
+boost1.35 (1.35.0-2) unstable; urgency=low
+
+  * debian/control: Add missing dependencies.  Closes: #480948.
+    date_time 	depends on serialization
+    filesystem 	depends on system
+    graph 	depends on serialization test
+    iostreams 	depends on regex
+    regex 	depends on thread
+    thread 	depends on date_time
+    wave 	depends on filesystem serialization
+    multi_index [libboost-dev] depends on serialization 
+
+ -- Steve M. Robbins <smr@debian.org>  Sat, 17 May 2008 03:50:02 -0500
+
 boost1.35 (1.35.0-1) unstable; urgency=low
 
   * New upstream version.  Closes: #473752.

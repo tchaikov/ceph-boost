@@ -29,83 +29,6 @@ All debian libraries are supposed to be built with _REENTRANT defined
 on command line in debian/rules.  For graph library, set in Makefile.
 
 
-	Boost.Python
-	------------
-
-Versions up to 1.34.1-7 built only with python 2.4.  Various people
-agitated for a python 2.5 version, and several desired both 2.4 and
-2.5 simultaneously.  This sparked some mailing list talk, e.g.
-http://lists.debian.org/debian-python/2008/02/msg00033.html
-
-Runtime Shared Libraries
-------------------------
-
-Of the four options presented in the above post the easiest solution
-is to use --buildid, as that embeds the buildid into the SONAME.  The
-py24 and py25 shared libraries can thus happily coexist.
-
-The next challenge is to ensure that all the existing Boost.Python
-SONAMES continue to work.
-
-libboost-python1.34.1 installs:
-
-    /usr/lib/libboost_python-gcc42-1_34_1.so.1.34.1
-    /usr/lib/libboost_python-gcc42-mt-1_34_1.so.1.34.1
-    /usr/lib/libboost_python-gcc41-mt-1_34_1.so.1.34.1
-    /usr/lib/libboost_python-gcc41-1_34_1.so.1.34.1
-
-while libboost-dbg installs:
-
-    /usr/lib/libboost_python-gcc42-d-1_34_1.so.1.34.1
-    /usr/lib/libboost_python-gcc42-mt-d-1_34_1.so.1.34.1
-    /usr/lib/libboost_python-gcc41-mt-d-1_34_1.so.1.34.1
-    /usr/lib/libboost_python-gcc41-d-1_34_1.so.1.34.1
-
-Which means the following 8 SONAMEs must exist:
-
-    libboost_python-gcc42-1_34_1.so.1.34.1
-    libboost_python-gcc42-mt-1_34_1.so.1.34.1
-    libboost_python-gcc42-d-1_34_1.so.1.34.1
-    libboost_python-gcc42-mt-d-1_34_1.so.1.34.1
-
-    libboost_python-gcc41-1_34_1.so.1.34.1
-    libboost_python-gcc41-mt-1_34_1.so.1.34.1
-    libboost_python-gcc41-d-1_34_1.so.1.34.1
-    libboost_python-gcc41-mt-d-1_34_1.so.1.34.1
-
-And these must be python 2.4 versions, i.e. symlinks
-such as
-
-    libboost_python-gcc42-1_34_1.so.1.34.1 -->
-    libboost_python-gcc42-1_34_1-py24.so.1.34.1
-
-Link Libraries
---------------
-
-The link libraries are similarly generated in fully-decorated
-form, e.g. 
-
-    libboost_python-gcc42-1_34_1-py24.so
-    libboost_python-gcc42-1_34_1-py25.so
-
-We generate simpler names without gcc and boost versioning:
-
-    libboost_python-py24.so -> libboost_python-gcc42-1_34_1-py24.so
-    libboost_python-py25.so -> libboost_python-gcc42-1_34_1-py25.so
-
-This lets packagers link with an explicit python version, perhaps
-building an extension for all supported python versions.
-
-For those who just want to build against the default python
-version, there is an extra set of symlinks:
-
-    libboost_python.so -> libboost_python-py24.so
-
-There is also a script (libboost-python-dev.rtupdate) that is run when
-the python runtime version is changed, which changes symlinks to the
-new python runtime.
-
-
 	Documentation
 	-------------
 
@@ -142,3 +65,20 @@ List of example directories obtained using
     find * -name 'example*' -type d > debian/example-files
 
 
+	Interdependencies
+	-----------------
+
+Check using check-interdep.sh
+
+For 1.35.0:
+
+date_time 	depends on serialization
+filesystem 	depends on system
+graph 		depends on serialization test
+iostreams 	depends on regex
+regex 		depends on thread
+thread 		depends on date_time
+wave 		depends on filesystem serialization
+
+Also, bug report #480948 indicates that multi_index, from libboost-dev
+itself depends on serialization.
