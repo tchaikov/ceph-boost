@@ -1,3 +1,10 @@
+boost1.35 (1.35.0-4) unstable; urgency=low
+
+  * debian/rules: Fix syntax error creating user-config.jam; the final
+    semicolon needs a space before it.
+
+ -- Steve M. Robbins <smr@debian.org>  Mon, 19 May 2008 14:18:48 -0500
+
 boost1.35 (1.35.0-3) unstable; urgency=low
 
   * debian/patches/serialization-intrinsic64.patch: New.  Patch from
