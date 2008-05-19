@@ -2,8 +2,11 @@ boost1.35 (1.35.0-3) unstable; urgency=low
 
   * debian/patches/serialization-intrinsic64.patch: New.  Patch from
     upstream to fix build problem with GCC 4.3 on 64-bit systems.
+  
+  * debian/rules: The gcc module of bjam no longer honours <define>, so
+    use <compileflags>-D_REENTRANT in user-config.jam.
 
- -- Steve M. Robbins <smr@debian.org>  Mon, 19 May 2008 00:18:12 -0500
+ -- Steve M. Robbins <smr@debian.org>  Mon, 19 May 2008 01:18:27 -0500
 
 boost1.35 (1.35.0-2) unstable; urgency=low
 
