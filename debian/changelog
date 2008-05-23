@@ -1,3 +1,9 @@
+boost1.35 (1.35.0-5) unstable; urgency=low
+
+  * debian/rules: Build using -DBOOST_SP_USE_PTHREADS for armel.
+
+ -- Steve M. Robbins <smr@debian.org>  Tue, 20 May 2008 21:44:38 -0500
+
 boost1.35 (1.35.0-4) unstable; urgency=low
 
   * debian/rules: Fix syntax error creating user-config.jam; the final
