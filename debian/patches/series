@@ -1,3 +1,4 @@
+test-child-exit-t1723.patch
 serialization-intrinsic64.patch
 library-naming.patch
 suppress-compiler-warnings.patch

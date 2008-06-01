@@ -1,0 +1,29 @@
+Fix for http://svn.boost.org/trac/boost/ticket/1723
+Boost.Test will report an error if a child process exits normally.
+
+Derived from change 44392 of Boost cvs.
+ignore SIGCHLD in case of regular child exit with code 0
+
+
+--- boost1.35-1.35.0.orig/boost/test/impl/execution_monitor.ipp
++++ boost1.35-1.35.0/boost/test/impl/execution_monitor.ipp
+@@ -680,6 +680,9 @@
+ 
+ static void execution_monitor_jumping_signal_handler( int sig, siginfo_t* info, void* context )
+ {
++    if( info->si_signo == SIGCHLD && info->si_code == CLD_EXITED && (int)info->si_status == 0 )
++        return;
++
+     signal_handler::sys_sig()( info, context );
+ 
+     siglongjmp( signal_handler::jump_buffer(), sig );
+@@ -689,6 +692,9 @@
+ 
+ static void execution_monitor_attaching_signal_handler( int sig, siginfo_t* info, void* context )
+ {
++    if( info->si_signo == SIGCHLD && info->si_code == CLD_EXITED && (int)info->si_status == 0 )
++        return;
++
+     if( !debug::attach_debugger( false ) )
+     execution_monitor_jumping_signal_handler( sig, info, context );
+ 
