@@ -8,7 +8,9 @@ export DH_OPTIONS
 include /usr/share/quilt/quilt.make
 
 # set the number of build jobs
-#JOBS = -j2
+ifneq (,$(filter parallel=%,$(DEB_BUILD_OPTIONS)))
+	JOBS := -j$(patsubst parallel=%,%,$(filter parallel=%,$(DEB_BUILD_OPTIONS)))
+endif
 
 DEB_BUILD_ARCH ?= $(shell dpkg-architecture -qDEB_BUILD_ARCH)
 

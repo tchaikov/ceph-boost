@@ -1,9 +1,13 @@
 boost1.35 (1.35.0-6) unstable; urgency=low
 
+  [ Steve M. Robbins ]
   * debian/patches/test-child-exit-t1723.patch: New.  Ignore child process
     if return status is zero (normal); fix for Boost ticket 1723.
 
- -- Steve M. Robbins <smr@debian.org>  Sun, 01 Jun 2008 10:06:55 -0500
+  [ Domenico Andreoli ]
+  * debian/rules: perform parallel builds as per $DEB_BUILD_OPTIONS 
+
+ -- Domenico Andreoli <cavok@debian.org>  Tue, 10 Jun 2008 17:41:35 +0200
 
 boost1.35 (1.35.0-5) unstable; urgency=low
 
