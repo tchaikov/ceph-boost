@@ -1,3 +1,4 @@
+python2.5-elementtree.patch
 test-child-exit-t1723.patch
 serialization-intrinsic64.patch
 library-naming.patch
