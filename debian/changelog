@@ -2,6 +2,9 @@ boost1.35 (1.35.0-6) UNRELEASED; urgency=low
 
   [ Steve M. Robbins ]
 
+  * debian/patches/gcc-4.3.patch: Qualify typedef in
+    boost/gil/bit_aligned_pixel_reference.hpp.  Closes: #485512.
+  
   * debian/patches/test-child-exit-t1723.patch: New.  Ignore child process
     if return status is zero (normal); fix for Boost ticket 1723.
   
@@ -12,7 +15,7 @@ boost1.35 (1.35.0-6) UNRELEASED; urgency=low
   
   * debian/rules: perform parallel builds as per $DEB_BUILD_OPTIONS 
 
- -- Steve M. Robbins <smr@debian.org>  Sun, 06 Jul 2008 22:58:37 -0500
+ -- Steve M. Robbins <smr@debian.org>  Sat, 02 Aug 2008 20:30:36 -0500
 
 boost1.35 (1.35.0-5) unstable; urgency=low
 
