@@ -4,6 +4,8 @@ boost1.35 (1.35.0-6) experimental; urgency=low
   
   * Uploading to experimental to avoid messing with the Etch freeze.
   
+  * debian/control: Set Standards-Version to 3.8.0; no changes required.
+
   * debian/rules: Set gcc_version to gcc43 for the upstream-compatible
     symlinks.
 
