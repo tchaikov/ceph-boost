@@ -20,7 +20,7 @@ SHLIBS_VERSION = (>= 1.35.0-1)
 
 # tags for library name decoration
 boost_version = 1_35
-gcc_version = gcc42
+gcc_version = gcc43
 
 # Boost libraries for which we want separate packages
 boost_libs := date-time filesystem graph iostreams program-options python regex serialization signals system test thread wave
