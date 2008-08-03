@@ -1,0 +1,23 @@
+The FreeBSD kernel uses the same value for POLL_ERR and POLL_HUP,
+see http://www.freebsd.org/cgi/cvsweb.cgi/src/sys/sys/signal.h
+
+Fix for BTS #492786.
+Reported upstream as http://svn.boost.org/trac/boost/ticket/2152.
+
+
+--- boost1.35-1.35.0.orig/boost/test/impl/execution_monitor.ipp
++++ boost1.35-1.35.0/boost/test/impl/execution_monitor.ipp
+@@ -465,11 +465,13 @@
+                               "high priority input available; band event %d",
+                               (int)m_sig_info->si_band );
+                 break;
++#if defined(POLL_ERR) && defined(POLL_HUP) && (POLL_ERR - POLL_HUP)
+             case POLL_HUP:
+                 report_error( execution_exception::system_error,
+                               "device disconnected; band event %d",
+                               (int)m_sig_info->si_band );
+                 break;
++#endif
+             }
+             break;
+ 
