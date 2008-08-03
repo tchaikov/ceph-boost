@@ -1,0 +1,15 @@
+Fix for #491225, taken from upstream
+http://svn.boost.org/trac/boost/ticket/1822
+
+
+
+--- boost1.35-1.35.0.orig/boost/serialization/utility.hpp
++++ boost1.35-1.35.0/boost/serialization/utility.hpp
+@@ -23,6 +23,7 @@
+ #include <boost/type_traits/remove_const.hpp>
+ #include <boost/serialization/nvp.hpp>
+ #include <boost/serialization/is_bitwise_serializable.hpp>
++#include <boost/mpl/and.hpp>
+ 
+ namespace boost { 
+ namespace serialization {

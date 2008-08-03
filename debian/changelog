@@ -5,6 +5,10 @@ boost1.35 (1.35.0-6) UNRELEASED; urgency=low
   * debian/patches/gcc-4.3.patch: Qualify typedef in
     boost/gil/bit_aligned_pixel_reference.hpp.  Closes: #485512.
   
+  * debian/patches/serialisation-utility-include.patch: New.  Apply
+    suggested patch, from upstream
+    http://svn.boost.org/trac/boost/ticket/1822.  Closes: #491225.
+  
   * debian/patches/test-child-exit-t1723.patch: New.  Ignore child process
     if return status is zero (normal); fix for Boost ticket 1723.
   

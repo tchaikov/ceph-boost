@@ -3,5 +3,6 @@ test-child-exit-t1723.patch
 serialization-intrinsic64.patch
 library-naming.patch
 suppress-compiler-warnings.patch
+serialisation-utility-include.patch
 gcc-4.3.patch
 date_time_date_formatting_hpp.patch
