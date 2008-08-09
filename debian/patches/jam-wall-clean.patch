@@ -1,14 +1,3 @@
---- boost1.35-1.35.0.orig/tools/jam/src/build.sh
-+++ boost1.35-1.35.0/tools/jam/src/build.sh
-@@ -129,7 +129,7 @@
-     ;;
-     
-     gcc)
--    BOOST_JAM_CC=gcc
-+    BOOST_JAM_CC="gcc -Wall -Werror"
-     ;;
-     
-     darwin)
 --- boost1.35-1.35.0.orig/tools/jam/src/builtins.c
 +++ boost1.35-1.35.0/tools/jam/src/builtins.c
 @@ -157,7 +157,6 @@
@@ -258,7 +247,34 @@
  		break;
  
  	    case T_BIND_EXISTS:
-@@ -667,7 +667,7 @@
+@@ -447,7 +447,7 @@
+ 		if( fate < c->target->fate )
+ 		    printf( "fate change  %s from %s to %s by dependency %s\n",
+ 			    t->name,
+-			    target_fate[fate], target_fate[c->target->fate],
++			    target_fate[(int)fate], target_fate[(int)c->target->fate],
+ 			    c->target->name);
+ #endif
+ 
+@@ -571,7 +571,8 @@
+ 	    fate = T_FATE_STABLE;
+ 	}
+ #ifdef OPT_GRAPH_DEBUG_EXT
+-	if( DEBUG_FATE && fate != savedFate )
++	if( DEBUG_FATE && ( fate != savedFate ) )
++	{
+ 	    if( savedFate == T_FATE_STABLE )
+ 		printf( "fate change  %s set to %s%s\n",
+ 		       t->name, target_fate[fate],
+@@ -580,6 +581,7 @@
+ 		printf( "fate change  %s from %s to %s%s\n",
+ 		       t->name, target_fate[savedFate], target_fate[fate],
+ 		       oldTimeStamp ? " (by timestamp)" : "" );
++	}
+ #endif
+ 
+ 	/* Step 4e: handle missing files */
+@@ -667,7 +669,7 @@
  
  	if( DEBUG_MAKEPROG )
  	    printf( "made%s\t%s\t%s%s\n", 
@@ -267,6 +283,15 @@
  		spaces( depth ), t->name );
  
  /* We don't have DEBUG_CAUSES. 
+@@ -776,7 +778,7 @@
+     for( c = t->depends; c; c = c->next )
+     {
+ 	printf( "  %s       : Depends on %s (%s)", spaces(depth),
+-	       target_name(c->target), target_fate[ c->target->fate ] );
++		target_name(c->target), target_fate[ (int)c->target->fate ] );
+     if (c->target->time == t->time)
+         printf( " (max time)");
+     printf("\n");
 --- boost1.35-1.35.0.orig/tools/jam/src/make1.c
 +++ boost1.35-1.35.0/tools/jam/src/make1.c
 @@ -65,7 +65,7 @@
@@ -435,3 +460,50 @@
  # endif
  	    {
  		LIST *l = L0;
+--- boost1.35-1.35.0.orig/tools/jam/src/hcache.c
++++ boost1.35-1.35.0/tools/jam/src/hcache.c
+@@ -162,7 +162,7 @@
+ {
+     if (!s)
+ 	s = "";
+-    fprintf(f, "%lu\t%s\n", strlen(s), s);
++    fprintf(f, "%zu\t%s\n", strlen(s), s);
+ }
+ 
+ void
+@@ -314,10 +314,10 @@
+ 	else if (c->age > maxage)
+ 	    continue;
+ 
+-	sprintf(includes_count_str, "%lu", list_length(c->includes));
+-	sprintf(hdrscan_count_str, "%lu", list_length(c->hdrscan));
++	sprintf(includes_count_str, "%d", list_length(c->includes));
++	sprintf(hdrscan_count_str, "%d", list_length(c->hdrscan));
+ 	sprintf(time_str, "%lu", c->time);
+-	sprintf(age_str, "%lu", c->age);
++	sprintf(age_str, "%d", c->age);
+ 
+ 	write_netstring(f, CACHE_RECORD_HEADER);
+ 	write_netstring(f, c->boundname);
+--- boost1.35-1.35.0.orig/tools/jam/src/headers.c
++++ boost1.35-1.35.0/tools/jam/src/headers.c
+@@ -60,7 +60,6 @@
+ {
+     LIST	*hdrscan;
+     LIST	*hdrrule;
+-    LIST	*headlist = 0;
+     regexp	*re[ MAXINC ];
+     int	rec = 0;
+         
+@@ -88,7 +87,10 @@
+ #ifdef OPT_HEADER_CACHE_EXT
+         lol_add( frame->args, hcache( t, rec, re, hdrscan ) );
+ #else
+-        lol_add( frame->args, headers1( headlist, t->boundname, rec, re ) );
++	{
++	    LIST	*headlist = 0;
++	    lol_add( frame->args, headers1( headlist, t->boundname, rec, re ) );
++	}
+ #endif
+ 
+         if( lol_get( frame->args, 1 ) )

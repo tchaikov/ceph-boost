@@ -3,11 +3,12 @@ boost1.35 (1.35.0-7) experimental; urgency=low
   * debian/patches/avoid-PATH_MAX.patch: Define symbol _GNU_SOURCE in
     order that get_current_dir_name() is declared.  Should fix the build
     failure #494346.
-  
-  * debian/patches/jam-wall-clean.patch: Build with -Wall -Werror and
-    clean source to remove all warnings from -Wall.
 
- -- Steve M. Robbins <smr@debian.org>  Sat, 09 Aug 2008 06:44:54 -0500
+  * debian/patches/jam-wall-clean.patch: Patch jam sources to build
+    cleanly with -Wall.
+  * debian/rules: Build with -Wall -Werror.
+
+ -- Steve M. Robbins <smr@debian.org>  Sat, 09 Aug 2008 09:01:23 -0500
 
 boost1.35 (1.35.0-6) experimental; urgency=low
 
