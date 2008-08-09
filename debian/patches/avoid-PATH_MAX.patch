@@ -1,6 +1,16 @@
 --- boost1.35-1.35.0.orig/tools/jam/src/pwd.c
 +++ boost1.35-1.35.0/tools/jam/src/pwd.c
-@@ -24,7 +24,9 @@
+@@ -2,6 +2,9 @@
+ /* Software License, Version 1.0. (See accompanying */
+ /* file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt) */
+ 
++/* Define _GNU_SOURCE to expose get_current_dir_name() */
++#define _GNU_SOURCE
++
+ #include "jam.h"
+ #include "lists.h"
+ #include "newstr.h"
+@@ -24,7 +27,9 @@
  /* The current directory can't change in bjam, so optimize this to cache
  ** the result.
  */
@@ -10,7 +20,7 @@
  static char * pwd_result = NULL;
  
  
-@@ -33,11 +35,16 @@
+@@ -33,11 +38,16 @@
  {
      if (!pwd_result)
      {
@@ -27,7 +37,7 @@
          else
          {
  #ifdef NT
-@@ -46,6 +53,7 @@
+@@ -46,6 +56,7 @@
              pwd_result = newstr(pwd_buffer);
  #endif
          }
