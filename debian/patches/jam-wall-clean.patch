@@ -1,0 +1,437 @@
+--- boost1.35-1.35.0.orig/tools/jam/src/build.sh
++++ boost1.35-1.35.0/tools/jam/src/build.sh
+@@ -129,7 +129,7 @@
+     ;;
+     
+     gcc)
+-    BOOST_JAM_CC=gcc
++    BOOST_JAM_CC="gcc -Wall -Werror"
+     ;;
+     
+     darwin)
+--- boost1.35-1.35.0.orig/tools/jam/src/builtins.c
++++ boost1.35-1.35.0/tools/jam/src/builtins.c
+@@ -157,7 +157,6 @@
+                     builtin_flags, T_FLAG_TEMP, 0 ) );
+ 
+     {
+-        char * args[] = { "targets", "*", 0 };
+         bind_builtin(
+             "ISFILE",
+             builtin_flags, T_FLAG_ISFILE, 0 );
+@@ -1157,7 +1156,7 @@
+ void backtrace( FRAME *frame )
+ {
+ 	if ( !frame ) return;
+-    while ( frame = frame->prev )
++    while ( ( frame = frame->prev ) )
+     {
+         backtrace_line( frame );
+     }
+@@ -1368,7 +1367,6 @@
+             *(current+2) = '\1';                   
+             ++dotdots;
+         } else if (dotdots) {
+-            char* p = current;
+             memset(current, '\1', end-current+1);
+             --dotdots;
+         }                 
+--- boost1.35-1.35.0.orig/tools/jam/src/class.c
++++ boost1.35-1.35.0/tools/jam/src/class.c
+@@ -52,7 +52,6 @@
+     RULE* ir2;
+     struct import_base_data* d = (struct import_base_data*)d_;
+     string qualified_name[1];
+-    int basename_lenght = strlen(d->base_name)+1;
+ 
+     string_new(qualified_name);
+     string_append(qualified_name, d->base_name);
+@@ -67,7 +66,7 @@
+ 
+     /* If we're importing class method, localize it. */
+     if (r->module == d->base_module 
+-        || r->module->class_module && r->module->class_module == d->base_module) {
++        || ( r->module->class_module && r->module->class_module == d->base_module ) ) {
+         ir1->module = ir2->module = d->class_module;        
+     }
+         
+@@ -107,7 +106,7 @@
+         printf("Class %s already defined\n", xname->string);
+         abort();
+     } else {
+-        hashenter(classes, (HASHDATA**)&pp);
++        (void)hashenter(classes, (HASHDATA**)&pp);
+     }
+     check_defined(bases);
+     
+--- boost1.35-1.35.0.orig/tools/jam/src/compile.c
++++ boost1.35-1.35.0/tools/jam/src/compile.c
+@@ -326,7 +326,7 @@
+ {
+     LIST *r = 0;
+     LIST *l;
+-    while ( l = parse_evaluate( p->left, frame ) )
++    while ( ( l = parse_evaluate( p->left, frame ) ) )
+     {
+         list_free( l );
+         if( r ) list_free( r );
+@@ -800,12 +800,13 @@
+     return locals;
+ }
+ 
+-static int python_instance_number = 0;
+-
+ RULE *
+ enter_rule( char *rulename, module_t *target_module );
+ 
+ #ifdef HAVE_PYTHON
++
++static int python_instance_number = 0;
++
+ static LIST*
+ call_python_function(RULE* r, FRAME* frame)
+ {
+--- boost1.35-1.35.0.orig/tools/jam/src/debug.c
++++ boost1.35-1.35.0/tools/jam/src/debug.c
+@@ -111,7 +111,7 @@
+         profile_total.cumulative += p->net;
+         profile_total.memory += p->memory;
+     }
+-    printf("%10d %12.6f %12.6f %12.8f %10d %10d %s\n",
++    printf("%10ld %12.6f %12.6f %12.8f %10ld %10ld %s\n",
+         p->num_entries,
+         cumulative,net,q,
+         p->memory, mem_each,
+--- boost1.35-1.35.0.orig/tools/jam/src/expand.c
++++ boost1.35-1.35.0/tools/jam/src/expand.c
+@@ -276,7 +276,7 @@
+             string_copy( variable, vars->string );
+             varname = variable->value;
+ 
+-            if( colon = strchr( varname, MAGIC_COLON ) )
++            if( ( colon = strchr( varname, MAGIC_COLON ) ) )
+             {
+                 string_truncate( variable, colon - varname );
+                 var_edit_parse( colon + 1, &edits );
+@@ -285,7 +285,7 @@
+             /* Look for [x-y] subscripting */
+             /* sub1 and sub2 are x and y. */
+ 
+-            if ( bracket = strchr( varname, MAGIC_LEFT ) )
++            if ( ( bracket = strchr( varname, MAGIC_LEFT ) ) )
+             {
+                 /*
+                 ** Make all syntax errors in [] subscripting
+@@ -607,7 +607,7 @@
+ 		fp->ptr = "";
+ 		fp->len = 0;
+ 	    }
+-	    else if( p = strchr( mods, MAGIC_COLON ) )
++	    else if( ( p = strchr( mods, MAGIC_COLON ) ) )
+ 	    {
+ 		*p = 0;
+ 		fp->ptr = ++mods;
+--- boost1.35-1.35.0.orig/tools/jam/src/fileunix.c
++++ boost1.35-1.35.0/tools/jam/src/fileunix.c
+@@ -170,10 +170,8 @@
+             printf( "scan directory %s\n", dir );
+ 
+         string_new( filename );
+-        while( dirent = readdir( dd ) )
++        while( ( dirent = readdir( dd ) ) )
+         {
+-            file_info_t * ff = 0;
+-            
+             # ifdef old_sinix
+             /* Broken structure definition on sinix. */
+             f.f_base.ptr = dirent->d_name - 2;
+--- boost1.35-1.35.0.orig/tools/jam/src/hash.c
++++ boost1.35-1.35.0/tools/jam/src/hash.c
+@@ -336,7 +336,7 @@
+ 	hp->items.size = sizeof( struct hashhdr ) + ALIGNED( datalen );
+ 	hp->items.list = -1;
+ 	hp->items.nel = 0;
+-	hp->inel = /* */ 11 /*/ 47 /* */;
++	hp->inel = /* */ 11 /* 47 */;
+ 	hp->name = name;
+ 
+ 	return hp;
+@@ -412,7 +412,7 @@
+ 
+ 	for( i = nel; i > 0; i-- )
+ 	{
+-		if( here = ( *tab++ != (ITEM *)0 ) )
++	    if( ( here = ( *tab++ != (ITEM *)0 ) ) )
+ 			count++;
+ 		if( here && !run )
+ 			sets++;
+--- boost1.35-1.35.0.orig/tools/jam/src/hdrmacro.c
++++ boost1.35-1.35.0/tools/jam/src/hdrmacro.c
+@@ -46,8 +46,6 @@
+  *		just to invoke a rule.
+  */
+ 
+-static LIST *header_macros1( LIST *l, char *file, int rec, regexp *re[] );
+-
+ /* this type is used to store a dictionary of file header macros */
+ typedef struct header_macro
+ {
+--- boost1.35-1.35.0.orig/tools/jam/src/jam.c
++++ boost1.35-1.35.0/tools/jam/src/jam.c
+@@ -308,7 +308,7 @@
+ 
+     /* Turn on/off debugging */
+ 
+-    for( n = 0; s = getoptval( optv, 'd', n ); n++ )
++    for( n = 0; ( s = getoptval( optv, 'd', n ) ); n++ )
+     {
+         int i;
+ 
+@@ -426,7 +426,7 @@
+ 
+     /* Load up variables set on command line. */
+ 
+-    for( n = 0; s = getoptval( optv, 's', n ); n++ )
++    for( n = 0; ( s = getoptval( optv, 's', n ) ); n++ )
+     {
+         char *symv[2];
+         symv[0] = s;
+@@ -469,7 +469,7 @@
+     {
+         FRAME frame[1];
+         frame_init( frame );
+-	for( n = 0; s = getoptval( optv, 'f', n ); n++ )
++	for( n = 0; ( s = getoptval( optv, 'f', n ) ); n++ )
+ 	    parse_file( s, frame );
+ 
+ 	if( !n )
+@@ -480,12 +480,12 @@
+ 
+     /* Manually touch -t targets */
+ 
+-    for( n = 0; s = getoptval( optv, 't', n ); n++ )
++    for( n = 0; ( s = getoptval( optv, 't', n ) ); n++ )
+         touchtarget( s );
+ 
+     /* If an output file is specified, set globs.cmdout to that */
+ 
+-    if( s = getoptval( optv, 'o', 0 ) )
++    if( ( s = getoptval( optv, 'o', 0 ) ) )
+     {
+         if( !( globs.cmdout = fopen( s, "w" ) ) )
+         {
+--- boost1.35-1.35.0.orig/tools/jam/src/make.c
++++ boost1.35-1.35.0/tools/jam/src/make.c
+@@ -201,7 +201,7 @@
+             if (DEBUG_FATE)
+             {
+                 printf( "fate change  %s from %s to %s (as dependent of %s)\n",
+-                        p->name, target_fate[fate0], target_fate[p->fate], t->name);
++                        p->name, target_fate[(int)fate0], target_fate[(int)p->fate], t->name);
+             }
+     
+             /* If we're done visiting it, go back and make sure its
+@@ -226,7 +226,7 @@
+         {
+             if (DEBUG_FATE)
+                 printf( "fate change  %s from %s to %s (by rebuild)\n",
+-                        r->name, target_fate[r->fate], target_fate[T_FATE_REBUILD]);
++                        r->name, target_fate[(int)r->fate], target_fate[(int)T_FATE_REBUILD]);
+             
+             /* Force rebuild it */
+             r->fate = T_FATE_REBUILD;
+@@ -251,7 +251,7 @@
+ 	COUNTS	*counts,	/* for reporting */
+ 	int	anyhow )	/* forcibly touch all (real) targets */
+ {
+-	TARGETS	*c, *d, *incs;
++	TARGETS	*c, *incs;
+ 	TARGET 	*ptime = t;
+ 	time_t	last, leaf, hlast;
+ 	int	fate;
+@@ -365,7 +365,7 @@
+ 	    case T_BIND_MISSING:
+ 	    case T_BIND_PARENTS:
+ 		printf( "time\t--\t%s%s: %s\n",
+-			spaces( depth ), t->name, target_bind[ t->binding ] );
++			spaces( depth ), t->name, target_bind[ (int)t->binding ] );
+ 		break;
+ 
+ 	    case T_BIND_EXISTS:
+@@ -667,7 +667,7 @@
+ 
+ 	if( DEBUG_MAKEPROG )
+ 	    printf( "made%s\t%s\t%s%s\n", 
+-		flag, target_fate[ t->fate ], 
++		    flag, target_fate[ (int)t->fate ], 
+ 		spaces( depth ), t->name );
+ 
+ /* We don't have DEBUG_CAUSES. 
+--- boost1.35-1.35.0.orig/tools/jam/src/make1.c
++++ boost1.35-1.35.0/tools/jam/src/make1.c
+@@ -65,7 +65,7 @@
+ 
+ # include <stdlib.h>
+ 
+-#if defined(sun) || defined(__sun)
++#if defined(sun) || defined(__sun) || defined(linux)
+ #include <unistd.h> /* for unlink */
+ #endif
+ 
+@@ -506,15 +506,15 @@
+ 	{
+             char *rule_name = 0;
+             char *target = 0;
+-		if( DEBUG_MAKEQ || 
+-            ! ( cmd->rule->actions->flags & RULE_QUIETLY ) && DEBUG_MAKE)
++	    if( DEBUG_MAKEQ || 
++		( ! ( cmd->rule->actions->flags & RULE_QUIETLY ) && DEBUG_MAKE ) )
+ 	    {
+-            rule_name = cmd->rule->name;
+-            target = lol_get(&cmd->args, 0)->string;
+-            if ( globs.noexec )
+-            {
+-                out_action(rule_name,target,cmd->buf,"","",EXIT_OK);
+-            }
++		rule_name = cmd->rule->name;
++		target = lol_get(&cmd->args, 0)->string;
++		if ( globs.noexec )
++		{
++		    out_action(rule_name,target,cmd->buf,"","",EXIT_OK);
++		}
+ 	    }
+ 
+ 	    if( globs.noexec )
+--- boost1.35-1.35.0.orig/tools/jam/src/modules.c
++++ boost1.35-1.35.0/tools/jam/src/modules.c
+@@ -135,7 +135,7 @@
+         char* s = module_names->string;
+         char** ss = &s;
+         
+-        hashenter(h, (HASHDATA**)&ss);
++        (void)hashenter(h, (HASHDATA**)&ss);
+     }
+     
+     PROFILE_EXIT(IMPORT_MODULE);
+--- boost1.35-1.35.0.orig/tools/jam/src/modules/order.c
++++ boost1.35-1.35.0/tools/jam/src/modules/order.c
+@@ -77,7 +77,7 @@
+     LIST* arg = lol_get( frame->args, 0 );  
+     LIST* tmp;
+     LIST* result = 0;
+-    int src, dst;
++    int src;
+ 
+     /* We need to create a graph of order dependencies between
+        the passed objects. We assume that there are no duplicates
+--- boost1.35-1.35.0.orig/tools/jam/src/modules/property-set.c
++++ boost1.35-1.35.0/tools/jam/src/modules/property-set.c
+@@ -45,7 +45,9 @@
+ {
+     LIST* properties = lol_get( frame->args, 0 );    
+     LIST* sorted = 0;
++#if 0
+     LIST* order_sensitive = 0;
++#endif
+     LIST* unique;
+     LIST* tmp;
+     LIST* val;
+--- boost1.35-1.35.0.orig/tools/jam/src/native.c
++++ boost1.35-1.35.0/tools/jam/src/native.c
+@@ -32,7 +32,7 @@
+         }
+         n.procedure = parse_make( f, P0, P0, P0, C0, C0, 0 );        
+         n.version = version;
+-        hashenter(m->native_rules, (HASHDATA**)&np);
++        (void)hashenter(m->native_rules, (HASHDATA**)&np);
+     }
+ }
+ 
+--- boost1.35-1.35.0.orig/tools/jam/src/output.c
++++ boost1.35-1.35.0/tools/jam/src/output.c
+@@ -67,7 +67,7 @@
+             if ( action )
+             {
+                 /* but only output for non-quietly actions */
+-                fprintf(bjam_out, "%d second time limit exceeded\n", globs.timeout);
++                fprintf(bjam_out, "%ld second time limit exceeded\n", globs.timeout);
+             }
+             break;
+         }
+--- boost1.35-1.35.0.orig/tools/jam/src/pathunix.c
++++ boost1.35-1.35.0/tools/jam/src/pathunix.c
+@@ -124,7 +124,7 @@
+ 	p = 0;
+ 	q = file;
+ 
+-	while( q = (char *)memchr( q, '.', end - q ) )
++	while( ( q = (char *)memchr( q, '.', end - q ) ) )
+ 	    p = q++;
+ 
+ 	if( p )
+--- boost1.35-1.35.0.orig/tools/jam/src/rules.c
++++ boost1.35-1.35.0/tools/jam/src/rules.c
+@@ -342,8 +342,6 @@
+ 	TARGETS	*chain,
+ 	TARGETS	*targets )
+ {
+-	TARGETS *c;
+-
+ 	if( !targets )
+ 	    return chain;
+ 	else if( !chain )
+--- boost1.35-1.35.0.orig/tools/jam/src/search.c
++++ boost1.35-1.35.0/tools/jam/src/search.c
+@@ -115,7 +115,7 @@
+     f->f_grist.ptr = 0;
+     f->f_grist.len = 0;
+ 
+-    if( varlist = var_get( "LOCATE" ) )
++    if( ( varlist = var_get( "LOCATE" ) ) )
+       {
+         f->f_root.ptr = varlist->string;
+         f->f_root.len = strlen( varlist->string );
+@@ -130,7 +130,7 @@
+         timestamp( buf->value, time );
+         found = 1;
+     }
+-    else if( varlist = var_get( "SEARCH" ) )
++    else if( ( varlist = var_get( "SEARCH" ) ) )
+     {
+         while( varlist )
+         {
+@@ -198,7 +198,7 @@
+         /* CONSIDER: we probably should issue a warning is another file
+            is explicitly bound to the same location. This might break
+            compatibility, though. */
+-        hashenter(explicit_bindings, (HASHDATA**)&ba);
++        (void)hashenter(explicit_bindings, (HASHDATA**)&ba);
+     }
+         
+     /* prepare a call to BINDRULE if the variable is set */
+--- boost1.35-1.35.0.orig/tools/jam/src/timestamp.c
++++ boost1.35-1.35.0/tools/jam/src/timestamp.c
+@@ -75,10 +75,10 @@
+ 	PATHNAME f1, f2;
+ 	BINDING	binding, *b = &binding;
+ 	string buf[1];
+-    string path; 
+-	char *p;
+ 
+ # ifdef DOWNSHIFT_PATHS
++	string path; 
++	char *p;
+ 
+         string_copy( &path, target );
+         p = path.value;
+--- boost1.35-1.35.0.orig/tools/jam/src/variable.c
++++ boost1.35-1.35.0/tools/jam/src/variable.c
+@@ -109,7 +109,7 @@
+ 	
+ 	    if( ( val = strchr( *e, '=' ) ) || ( val = *e + strlen( *e ) ) )
+ # else
+-	    if( val = strchr( *e, '=' ) )
++	    if( ( val = strchr( *e, '=' ) ) )
+ # endif
+ 	    {
+ 		LIST *l = L0;
