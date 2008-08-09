@@ -138,6 +138,7 @@ TOOLSET_CONFIG="using gcc : : : <compileflags>-D_REENTRANT <compileflags>-DBOOST
 else ifeq ($(DEB_BUILD_ARCH), armel)
 TOOLSET_CONFIG="using gcc : : : <compileflags>-D_REENTRANT <compileflags>-DBOOST_SP_USE_PTHREADS ;"
 endif
+
 PYTHON_CONFIG1 = "using python : 2.4 : /usr ;"
 PYTHON_CONFIG2 = "using python : 2.5 : /usr ;"
 
@@ -146,19 +147,23 @@ htmldir = debian/libboost$(PKGVERSION)-doc/usr/share/doc/libboost$(PKGVERSION)-d
 pyste_prefix = $(CURDIR)/debian/libboost-python$(PKGVERSION)-dev/usr
 bjam = $(CURDIR)/tools/jam/src/bjam
 
+# FIXME: find a flag to disable reading /etc/site-config.jam
 JAM = $(bjam) $(JOBS) -d2 --user-config=$(CURDIR)/user-config.jam -sHAVE_ICU=1
 jam_variants = variant=release,debug threading=single,multi link=shared,static
 
 $(bjam):
-	cd tools/jam/src && CFLAGS='-Wall -Werror -fno-strict-aliasing' sh build.sh cc && mv bin.*/bjam .
+	cd tools/jam/src && \
+	CFLAGS='-Wall -Werror -fno-strict-aliasing' sh build.sh cc && \
+	mv bin.*/bjam .
+
+user-config.jam:
+	echo $(TOOLSET_CONFIG) > $@
+	echo $(PYTHON_CONFIG1) >> $@
+	echo $(PYTHON_CONFIG2) >> $@
 
 build: build-stamp
-build-stamp: $(QUILT_STAMPFN) $(bjam)
+build-stamp: $(QUILT_STAMPFN) $(bjam) user-config.jam
 	dh_testdir
-
-	echo $(TOOLSET_CONFIG) > user-config.jam
-	echo $(PYTHON_CONFIG1) >> user-config.jam
-	echo $(PYTHON_CONFIG2) >> user-config.jam
 
 	$(JAM) --without-python                        $(jam_variants)
 	$(JAM) --with-python --buildid=py24 python=2.4 $(jam_variants)
@@ -232,6 +237,8 @@ install: build clean-debhelper $(filtered_files)
 	dh_install -plibboost$(PKGVERSION)-dbg
 	dh_install -plibboost$(PKGVERSION)-dbg --autodest \
 	   debian/tmp/usr/share/python/runtime.d/libboost$(PKGVERSION)-dbg.rtupdate
+	# These links create a "nonthreaded" version of Boost.Thread;
+	# do we need such links?
 	dh_link -plibboost$(PKGVERSION)-dbg \
 	   usr/lib/libboost_thread-mt-d.a usr/lib/libboost_thread-d.a \
 	   usr/lib/libboost_thread-mt-d.so usr/lib/libboost_thread-d.so
