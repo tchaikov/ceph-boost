@@ -507,3 +507,14 @@
  #endif
  
          if( lol_get( frame->args, 1 ) )
+--- boost1.35-1.35.0.orig/tools/jam/src/regexp.c
++++ boost1.35-1.35.0/tools/jam/src/regexp.c
+@@ -307,7 +307,7 @@
+ 	register char *ret;
+ 	register char *br;
+ 	register char *ender;
+-	register int parno;
++	register int parno = 0;
+ 	int flags;
+ 
+ 	*flagp = HASWIDTH;	/* Tentatively. */
