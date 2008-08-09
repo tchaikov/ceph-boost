@@ -150,7 +150,7 @@ JAM = $(bjam) $(JOBS) -d2 --user-config=$(CURDIR)/user-config.jam -sHAVE_ICU=1
 jam_variants = variant=release,debug threading=single,multi link=shared,static
 
 $(bjam):
-	cd tools/jam/src && CFLAGS=-fno-strict-aliasing sh build.sh cc && mv bin.*/bjam .
+	cd tools/jam/src && CFLAGS='-Wall -Werror -fno-strict-aliasing' sh build.sh cc && mv bin.*/bjam .
 
 build: build-stamp
 build-stamp: $(QUILT_STAMPFN) $(bjam)
