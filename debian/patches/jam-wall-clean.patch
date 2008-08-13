@@ -91,8 +91,19 @@
          p->num_entries,
          cumulative,net,q,
          p->memory, mem_each,
+# 
+# Pointer difference is long int on amd64; cast to int
 --- boost1.35-1.35.0.orig/tools/jam/src/expand.c
 +++ boost1.35-1.35.0/tools/jam/src/expand.c
+@@ -87,7 +87,7 @@
+     int depth;
+ 
+     if( DEBUG_VAREXP )
+-        printf( "expand '%.*s'\n", end - in, in );
++        printf( "expand '%.*s'\n", (int) (end - in), in );
+ 
+     /* This gets alot of cases: $(<) and $(>) */
+ 
 @@ -276,7 +276,7 @@
              string_copy( variable, vars->string );
              varname = variable->value;
@@ -134,6 +145,9 @@
              # ifdef old_sinix
              /* Broken structure definition on sinix. */
              f.f_base.ptr = dirent->d_name - 2;
+#
+# Hunk 3: sizeof( ITEM ** ) is long unsigned int on amd64 and s390
+# cast to int.
 --- boost1.35-1.35.0.orig/tools/jam/src/hash.c
 +++ boost1.35-1.35.0/tools/jam/src/hash.c
 @@ -336,7 +336,7 @@
@@ -149,11 +163,19 @@
  
  	for( i = nel; i > 0; i-- )
  	{
--		if( here = ( *tab++ != (ITEM *)0 ) )
+-	    if( here = ( *tab++ != (ITEM *)0 ) )
 +	    if( ( here = ( *tab++ != (ITEM *)0 ) ) )
  			count++;
  		if( here && !run )
  			sets++;
+@@ -425,6 +425,6 @@
+ 		hp->items.nel,
+ 		hp->tab.nel,
+ 		hp->items.nel * hp->items.size / 1024,
+-		hp->tab.nel * sizeof( ITEM ** ) / 1024,
++		hp->tab.nel * (int) sizeof( ITEM ** ) / 1024,
+ 		(float)count / (float)sets );
+ }
 --- boost1.35-1.35.0.orig/tools/jam/src/hdrmacro.c
 +++ boost1.35-1.35.0/tools/jam/src/hdrmacro.c
 @@ -46,8 +46,6 @@

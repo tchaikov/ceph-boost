@@ -1,3 +1,10 @@
+boost1.35 (1.35.0-8) experimental; urgency=low
+
+  * debian/patches/jam-wall-clean.patch: Additional changes to expand.c,
+    hash.c to remove warnings from amd64 & s390.
+
+ -- Steve M. Robbins <smr@debian.org>  Wed, 13 Aug 2008 03:07:01 -0500
+
 boost1.35 (1.35.0-7) experimental; urgency=low
 
   * debian/patches/avoid-PATH_MAX.patch: Define symbol _GNU_SOURCE in
