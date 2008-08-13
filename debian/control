@@ -212,7 +212,7 @@ Package: libboost-python1.35-dev
 Homepage: http://www.boost.org/libs/python/
 Architecture: any
 Section: libdevel
-Depends: libboost1.35-dev (= ${binary:Version}), libboost-python1.35.0 (= ${binary:Version}), python-dev, ${python:Depends}, python-celementtree | python-elementtree, gccxml
+Depends: libboost1.35-dev (= ${binary:Version}), libboost-python1.35.0 (= ${binary:Version}), python-dev, ${python:Depends}, python (>= 2.5) | python-celementtree | python-elementtree, gccxml
 Suggests: libboost1.35-doc
 Conflicts: libboost-python-dev, pyste
 Description: Boost.Python Library development files
