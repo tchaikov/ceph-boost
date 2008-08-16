@@ -1,3 +1,10 @@
+The fixes to time.hpp are applied to upstream SVN post 1.36.0
+see http://svn.boost.org/trac/boost/changeset/47957
+
+The fix for topological_sort.hpp reported upstream
+as http://svn.boost.org/trac/boost/ticket/2209
+
+
 --- boost-posix-2008-03-21.orig/boost/date_time/time.hpp
 +++ boost-posix-2008-03-21/boost/date_time/time.hpp
 @@ -77,14 +77,14 @@

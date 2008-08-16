@@ -1,3 +1,5 @@
+# Reported upstream as http://svn.boost.org/trac/boost/ticket/2207
+
 --- boost1.35-1.35.0.orig/tools/jam/src/builtins.c
 +++ boost1.35-1.35.0/tools/jam/src/builtins.c
 @@ -157,7 +157,6 @@
