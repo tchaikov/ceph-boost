@@ -1,16 +1,6 @@
---- boost1.35-1.35.0.orig/boost/spirit/phoenix/operators.hpp
-+++ boost1.35-1.35.0/boost/spirit/phoenix/operators.hpp
-@@ -25,6 +25,7 @@
- #include <boost/spirit/phoenix/composite.hpp>
- #include <boost/config.hpp>
- #include <boost/mpl/if.hpp>
-+#include <climits>
- 
- ///////////////////////////////////////////////////////////////////////////////
- namespace phoenix {
 --- boost1.35-1.35.0.orig/boost/date_time/tz_db_base.hpp
 +++ boost1.35-1.35.0/boost/date_time/tz_db_base.hpp
-@@ -158,7 +158,7 @@
+@@ -158,8 +158,8 @@
        typedef typename time_zone_type::base_type time_zone_base_type;
        typedef typename time_zone_type::time_duration_type time_duration_type;
        typedef time_zone_names_base<char_type> time_zone_names;
@@ -19,24 +9,3 @@
        typedef std::basic_string<char_type> string_type;
  
        //! Constructs an empty database
---- boost1.35-1.35.0.orig/libs/spirit/test/numerics_tests.cpp
-+++ boost1.35-1.35.0/libs/spirit/test/numerics_tests.cpp
-@@ -12,6 +12,7 @@
- #include <climits>
- #include <iostream>
- #include <boost/detail/lightweight_test.hpp>
-+#include <climits>
- 
- using namespace std;
- using namespace boost::spirit;
---- boost1.35-1.35.0.orig/boost/gil/bit_aligned_pixel_reference.hpp
-+++ boost1.35-1.35.0/boost/gil/bit_aligned_pixel_reference.hpp
-@@ -121,7 +121,7 @@
-           bool IsMutable>
- struct bit_aligned_pixel_reference {
-     BOOST_STATIC_CONSTANT(int, bit_size = (mpl::accumulate<ChannelBitSizes, mpl::int_<0>, mpl::plus<mpl::_1, mpl::_2> >::type::value));
--    typedef bit_range<bit_size,IsMutable>                                           bit_range_t;
-+    typedef boost::gil::bit_range<bit_size,IsMutable>                               bit_range_t;
-     typedef BitField                                                                bitfield_t;  
-     typedef typename mpl::if_c<IsMutable,unsigned char*,const unsigned char*>::type data_ptr_t;
- 
