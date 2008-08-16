@@ -14,12 +14,12 @@ endif
 
 DEB_BUILD_ARCH ?= $(shell dpkg-architecture -qDEB_BUILD_ARCH)
 
-PKGVERSION = 1.35
-SOVERSION = 1.35.0
-SHLIBS_VERSION = (>= 1.35.0-1)
+PKGVERSION = 1.36
+SOVERSION = 1.36.0
+SHLIBS_VERSION = (>= 1.36.0-1)
 
 # tags for library name decoration
-boost_version = 1_35
+boost_version = 1_36
 gcc_version = gcc43
 
 # Boost libraries for which we want separate packages
