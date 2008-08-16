@@ -1,24 +1,27 @@
 	GCC 4.3 Patches
 	---------------
 
-As of 2008-03-23, there are a number of issues with respect to GCC
+As of 2008-08-16, there are a number of issues with respect to GCC
 4.3.  A post on the Boost list gives a query to list all the open
 reports in the Boost trac system:
 
   http://svn.boost.org/trac/boost/query?status=new&status=assigned&status=reopened&summary=~4.3&order=priority
 
 Here we track the open tickets and status with respect to the Debian
-gcc-4.3.patch:
+patch series.
 
   Ticket  Inc?  Comment
   ------  ----  ----------------------------------
-  1528     no   Not clear whether patch is good.
-  1570    yes   Patch of 2008-01-15.
-  1605     no   Library property_tree not present in 1.34.1
-  1615    yes   Patch of 2008-02-02.
-  1617    yes   Partial: in patch of 2008-02-02, first two files failed, 
-                only numerics_tests.cpp applied.
-  1630     no   No patch given as of 2008-03-23.
+  1528     no   Patch applied upstream, present in 1.36.0
+  1570     no   Patch applied upstream, present in 1.36.0
+  1605     no   Library property_tree not present in 1.36.0
+  1615    yes   gcc43-date_time.patch
+  1617    yes   gcc43-spirit-1617.patch
+  1630     no   No patch given as of 2008-08-16
+  1955     no   Library property_tree not present in 1.36.0
+  2083     no   Duplicate of ticket 1615
+  2091     no   Duplicate of ticket 1615
+
 
 
 	Thread Support
