@@ -1,6 +1,11 @@
 boost1.36 (1.36.0-1) UNRELEASED; urgency=low
 
   * New upstream version.  Closes: #495179.
+    - patches/serialisation-utility-include.patch:
+    - patches/serialization-intrinsic64.patch:
+    - patches/sp_counted_base.patch: Remove.  Applied upstream.
+  
+  * patches/gcc-4.3.patch: Adjust.
 
  -- Steve M. Robbins <smr@debian.org>  Fri, 15 Aug 2008 20:03:17 -0500
 
