@@ -4,6 +4,7 @@ libs='date_time
 filesystem 
 graph 
 iostreams 
+math
 program_options 
 python 
 regex 
