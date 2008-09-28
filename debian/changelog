@@ -1,4 +1,4 @@
-boost1.36 (1.36.0-1) UNRELEASED; urgency=low
+boost1.36 (1.36.0-1) unstable; urgency=low
 
   * New upstream version.  Closes: #495179.
     - patches/serialisation-utility-include.patch:
@@ -11,10 +11,13 @@ boost1.36 (1.36.0-1) UNRELEASED; urgency=low
 
   * patches/gcc-4.3.patch: Remove.  Most of this was applied upstream;
     remainder is now in gcc43-date_time.patch.
+
+  * control:
+  * rules: Add packages for Boost.Math.
   
   * copyright: Convert to UTF-8.
 
- -- Steve M. Robbins <smr@debian.org>  Sat, 27 Sep 2008 23:47:10 -0500
+ -- Steve M. Robbins <smr@debian.org>  Sun, 28 Sep 2008 00:26:01 -0500
 
 boost1.35 (1.35.0-8) experimental; urgency=low
 

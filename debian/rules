@@ -23,9 +23,10 @@ boost_version = 1_36
 gcc_version = gcc43
 
 # Boost libraries for which we want separate packages
-boost_libs := date-time filesystem graph iostreams program-options python regex serialization signals system test thread wave
+boost_libs := date-time filesystem graph iostreams math program-options python regex serialization signals system test thread wave
 
 # these are special cases, where shared library has not the same name of the Boost library
+boost_lib_math := math_c99 math_c99f math_c99l math_tr1 math_tr1f math_tr1l
 boost_lib_serialization := serialization wserialization
 boost_lib_test := prg_exec_monitor unit_test_framework
 
@@ -300,6 +301,15 @@ install: build clean-debhelper $(filtered_files)
 	   debian/libboost-iostreams$(PKGVERSION)-dev/usr/include/boost
 	dh_install -plibboost-iostreams$(PKGVERSION)-dev
 	dh_link -plibboost-iostreams$(PKGVERSION)-dev
+
+	# package libboost-math$(SOVERSION)
+	dh_install -plibboost-math$(SOVERSION)
+	# package libboost-math$(PKGVERSION)-dev
+	dh_installdirs -plibboost-math$(PKGVERSION)-dev usr/include/boost
+	mv debian/libboost$(PKGVERSION)-dev/usr/include/boost/math* \
+	   debian/libboost-math$(PKGVERSION)-dev/usr/include/boost
+	dh_install -plibboost-math$(PKGVERSION)-dev
+	dh_link -plibboost-math$(PKGVERSION)-dev
 
 	# package libboost-program-options$(SOVERSION)
 	dh_install -plibboost-program-options$(SOVERSION)
