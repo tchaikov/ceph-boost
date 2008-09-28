@@ -159,7 +159,7 @@ Terms of the Boost Software License appear later in this file.
 	enable_if <boost/utility/enable_if.hpp>
 	---------------------------------------
 
-// Copyright 2003 © The Trustees of Indiana University.
+// Copyright 2003 Â© The Trustees of Indiana University.
 
 // Use, modification, and distribution is subject to the Boost Software
 // License, Version 1.0.
@@ -170,7 +170,7 @@ Terms of the Boost Software License appear later in this file.
 	filesystem <boost/filesystem/path.hpp>
 	--------------------------------------
 
-//  © Copyright Beman Dawes 2002-2003
+//  Â© Copyright Beman Dawes 2002-2003
 //  Use, modification, and distribution is subject to the Boost Software
 //  License, Version 1.0.
 
@@ -233,7 +233,7 @@ Terms of the Boost Software License appear later in this file.
 	-------------------------------------
 
  * Copyright Jens Maurer 2000
- * Copyright Hervé Brönnimann, Guillaume Melquiond, Sylvain Pion 2002
+ * Copyright HervÃ© BrÃ¶nnimann, Guillaume Melquiond, Sylvain Pion 2002
  * Permission to use, copy, modify, sell, and distribute this software
  * is hereby granted without fee provided that the above copyright notice
  * appears in all copies and that both that copyright notice and this
@@ -269,7 +269,7 @@ Terms of the Boost Software License appear later in this file.
 	lambda <boost/lambda/lambda.hpp>
 	--------------------------------
 
-// Copyright (C) 1999, 2000 Jaakko Järvi (jaakko.jarvi@cs.utu.fi)
+// Copyright (C) 1999, 2000 Jaakko JÃ¤rvi (jaakko.jarvi@cs.utu.fi)
 //
 // Permission to copy, use, sell and distribute this software is granted
 // provided this copyright notice appears in all copies. 
@@ -453,7 +453,7 @@ Terms of the Boost Software License appear later in this file.
 	ref <boost/ref.hpp>
 	-------------------
 
-//  Copyright (C) 1999, 2000 Jaakko Järvi (jaakko.jarvi@cs.utu.fi)
+//  Copyright (C) 1999, 2000 Jaakko JÃ¤rvi (jaakko.jarvi@cs.utu.fi)
 //  Copyright (C) 2001, 2002 Peter Dimov
 //  Copyright (C) 2002 David Abrahams
 //
@@ -567,7 +567,7 @@ Terms of the Boost Software License appear later in this file.
 	tokenizer <boost/tokenizer.hpp>
 	-------------------------------
 
-// © Copyright Jeremy Siek and John R. Bandela 2001. 
+// Â© Copyright Jeremy Siek and John R. Bandela 2001. 
  
 // Permission to copy, use, modify, sell and distribute this software
 // is granted provided this copyright notice appears in all
@@ -579,7 +579,7 @@ Terms of the Boost Software License appear later in this file.
 	tuple <boost/tuple/tuple.hpp>
 	-----------------------------
 
-// Copyright (C) 1999, 2000 Jaakko Järvi (jaakko.jarvi@cs.utu.fi)
+// Copyright (C) 1999, 2000 Jaakko JÃ¤rvi (jaakko.jarvi@cs.utu.fi)
 //
 // Permission to copy, use, sell and distribute this software is granted
 // provided this copyright notice appears in all copies. 
