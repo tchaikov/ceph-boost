@@ -3771,7 +3771,6 @@ libs/bimap/example/bimap_and_boost/range.cpp
 libs/bimap/example/bimap_and_boost/serialization.cpp
 libs/bimap/example/bimap_and_boost/typeof.cpp
 libs/bimap/example/bimap_and_boost/xpressive.cpp
-libs/bimap/example/index.html
 libs/bimap/example/mi_to_b_path/bidirectional_map.cpp
 libs/bimap/example/mi_to_b_path/hashed_indices.cpp
 libs/bimap/example/mi_to_b_path/mi_bidirectional_map.cpp
@@ -3929,14 +3928,12 @@ libs/filesystem/doc/portability_guide.htm
 libs/filesystem/doc/reference.html
 libs/filesystem/example/Jamfile.v2
 libs/filesystem/example/file_size.cpp
-libs/filesystem/example/index.html
 libs/filesystem/example/mbcopy.cpp
 libs/filesystem/example/mbpath.cpp
 libs/filesystem/example/mbpath.hpp
 libs/filesystem/example/path_table.cpp
 libs/filesystem/example/simple_ls.cpp
 libs/filesystem/index.html
-libs/filesystem/src/index.html
 libs/filesystem/src/operations.cpp
 libs/filesystem/src/path.cpp
 libs/filesystem/src/portability.cpp
@@ -7263,7 +7260,6 @@ libs/serialization/example/demo_xml_save.cpp
 libs/serialization/example/demofile.txt
 libs/serialization/index.html
 libs/serialization/src/extended_type_info.cpp
-libs/serialization/src/index.html
 libs/serialization/test/dll_a.cpp
 libs/serialization/test/test_delete_pointer.cpp
 libs/serialization/test/test_diamond.cpp
