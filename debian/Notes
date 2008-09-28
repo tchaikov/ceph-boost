@@ -21,7 +21,7 @@ patch series.
   1955     no   Library property_tree not present in 1.36.0
   2083     no   Duplicate of ticket 1615
   2091     no   Duplicate of ticket 1615
-
+  2210    yes	gcc43-path_name_check.patch
 
 
 	Thread Support
@@ -38,9 +38,9 @@ on command line in debian/rules.  For graph library, set in Makefile.
 Generate the list of documentation files using wget going through
 localhost to get the source tree
 
-    path=Packages/boost/alioth/build-area/boost-1.35.0
+    path=boost_1_36_0
     wget -r --no-parent --domains=localhost \
-	http://localhost/lsrc/$path/index.html
+	http://localhost/$path/index.html
     cd localhost/....
     rm -rf boost
     for f in `find * -type f`; do
@@ -73,12 +73,13 @@ List of example directories obtained using
 
 Check using check-interdep.sh
 
-For 1.35.0:
+For 1.36.0:
 
 date_time 	depends on serialization
 filesystem 	depends on system
 graph 		depends on serialization test
 iostreams 	depends on regex
+math		depends on test
 regex 		depends on thread
 thread 		depends on date_time
 wave 		depends on filesystem serialization
