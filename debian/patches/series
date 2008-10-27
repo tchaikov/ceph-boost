@@ -1,3 +1,4 @@
+endian.patch
 avoid-PATH_MAX.patch
 jam-wall-clean.patch
 python2.5-elementtree.patch

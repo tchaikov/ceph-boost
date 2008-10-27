@@ -1,3 +1,10 @@
+boost1.36 (1.36.0-2) unstable; urgency=low
+
+  * debian/patches/endian.patch: New.  Include <endian.h> unconditionally
+    on all Debian systems.
+
+ -- Steve M. Robbins <smr@debian.org>  Mon, 27 Oct 2008 00:49:42 -0500
+
 boost1.36 (1.36.0-1) unstable; urgency=low
 
   * New upstream version.  Closes: #495179.
