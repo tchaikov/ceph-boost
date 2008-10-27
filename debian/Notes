@@ -12,7 +12,6 @@ patch series.
 
   Ticket  Inc?  Comment
   ------  ----  ----------------------------------
-  1528     no   Patch applied upstream, present in 1.36.0
   1570     no   Patch applied upstream, present in 1.36.0
   1605     no   Library property_tree not present in 1.36.0
   1615    yes   gcc43-date_time.patch
