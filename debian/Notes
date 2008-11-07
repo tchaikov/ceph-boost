@@ -15,13 +15,16 @@ patch series.
   1570     no   Patch applied upstream, present in 1.36.0
   1605     no   Library property_tree not present in 1.36.0
   1615    yes   gcc43-date_time.patch
-  1617    yes   gcc43-spirit-1617.patch
-  1630     no   No patch given as of 2008-08-16
-  1955     no   Library property_tree not present in 1.36.0
+  1955     no   Library property_tree not present in 1.37.0
   2083     no   Duplicate of ticket 1615
   2091     no   Duplicate of ticket 1615
-  2210    yes	gcc43-path_name_check.patch
-
+  2321     no	Warning
+  2388     no	Warning
+  2389     no	Warning
+  2390     no   Warning
+  2462     no	Warning
+  2465     no	Duplicate of ticket 1615
+  2474    yes	(request to merge 2210 to release branch) gcc43-path_name_check.patch
 
 	Thread Support
 	--------------
@@ -37,19 +40,19 @@ on command line in debian/rules.  For graph library, set in Makefile.
 Generate the list of documentation files using wget going through
 localhost to get the source tree
 
-    path=boost_1_36_0
+    path=boost_1_37_0
+    cd ~/public_html
+    ... unpack boost
+    cd /tmp
     wget -r --no-parent --domains=localhost \
-	http://localhost/$path/index.html
+	http://localhost/~steve/$path/index.html
     cd localhost/....
     rm -rf boost
-    for f in `find * -type f`; do
-        test -f /usr/local/src/$path/$f && echo $f;
+    for f in `find * -type f`; do \
+        test -f ~/public_html/$path/$f && echo $f;
     done > df1
     find * -name '*.htm' -or -name '*.html' > df2
     cat df1 df2 | sort | uniq > documentation-files
-
-** On my machine, "http://localhost/lsrc" resolves to "/usr/local/src",
-   which is where I unpack and build boost.
 
 * need to symlink .../HTML/boost to /usr/include/boost; when put
   the symlink into the deb, it got converted to a directory during
@@ -71,17 +74,19 @@ List of example directories obtained using
 	-----------------
 
 Check using check-interdep.sh
+** must do this after installing the -dev packages **
 
 For 1.36.0:
 
 date_time 	depends on serialization
 filesystem 	depends on system
-graph 		depends on serialization test
+graph 		depends on serialization, test
 iostreams 	depends on regex
 math		depends on test
+mpi		depends on graph, python, serialization
 regex 		depends on thread
 thread 		depends on date_time
-wave 		depends on filesystem serialization
+wave 		depends on filesystem, serialization
 
 Also, bug report #480948 indicates that multi_index, from libboost-dev
 itself depends on serialization.
