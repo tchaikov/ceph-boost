@@ -2,9 +2,11 @@
 
 libs='date_time 
 filesystem 
+function_types
 graph 
 iostreams 
 math
+mpi
 program_options 
 python 
 regex 

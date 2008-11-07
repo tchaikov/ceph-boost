@@ -1,3 +1,17 @@
+boost1.37 (1.37.0-1) unstable; urgency=low
+
+  * New upstream.
+
+  * patches/test-child-exit-t1723.patch:
+  * patches/kfreebsd-poll-symbols.patch:
+  * patches/gcc43-spirit-1617.patch: Remove, applied upstream.
+  
+  * check-interdep.sh:
+  * documention-files:
+  * example-files: Update for new version.
+
+ -- Steve M. Robbins <smr@debian.org>  Fri, 07 Nov 2008 05:34:48 -0600
+
 boost1.36 (1.36.0-2) unstable; urgency=low
 
   * debian/patches/endian.patch: New.  Include <endian.h> unconditionally
