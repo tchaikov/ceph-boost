@@ -79,8 +79,8 @@ mk_deb_dev = debian/$(call mk_pkg_dev,$(1),$(2))
 # Helpers that update debhelper .install or .links files
 # Input: component, library, variant, suffix
 # Output: none
-mk_a_files = $(shell echo debian/tmp/$(call mk_base_name,$(2),$(3),$(4)).a >> $(call mk_deb_dev,$(1),$(3)).install)
 mk_so_files = $(shell echo debian/tmp/$(call mk_base_name,$(2),$(3),$(4)).so.$(SOVERSION) >> $(call mk_deb_lib,$(1),$(3)).install)
+mk_a_files = $(shell echo debian/tmp/$(call mk_base_name,$(2),$(3),$(4)).a >> $(call mk_deb_dev,$(1),$(3)).install)
 mk_ln_files = $(shell echo $(call mk_base_name,$(2),$(3),$(4)).so.$(SOVERSION) $(call mk_base_name,$(2),$(3),$(4)).so >> $(call mk_deb_dev,$(1),$(3)).links)
 
 # Function that updates debhelper files for a given library variant
