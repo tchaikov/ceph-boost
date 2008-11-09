@@ -20,7 +20,6 @@ SHLIBS_VERSION = (>= 1.37.0-1)
 
 # tags for library name decoration
 boost_version = 1_37
-gcc_version = gcc43
 
 # Boost libraries for which we want separate packages
 boost_libs := date-time filesystem graph iostreams math program-options python regex serialization signals system test thread wave
@@ -52,7 +51,7 @@ boost_lib = $(if $(boost_lib_$(1)), $(boost_lib_$(1)), $(1))
 # Function to map Boost component name to set of variants for the library
 # Input: Boost component name
 # Return: variants for the given Boost component
-boost_variants = $(if $(boost_variants_$(1)), $(boost_variants_$(1)), -st -st-d -mt -mt-d)
+boost_variants = $(if $(boost_variants_$(1)), $(boost_variants_$(1)), -mt -mt-d)
 
 # Function to map Boost component name to set of suffixes for the library
 # Input: Boost component name
@@ -63,7 +62,6 @@ boost_suffixes = $(if $(boost_suffixes_$(1)), $(boost_suffixes_$(1)),"")
 # Input: library, variant, suffix
 # Return: base library filename for short or full name
 mk_base_name = usr/lib/libboost_$(subst -,_,$(1))$(2)$(3)
-mk_full_name = usr/lib/libboost_$(subst -,_,$(1))-$(gcc_version)$(2)-$(boost_version)$(3)
 
 # Input: component, variant
 # Return: package name for shared library or development
@@ -82,13 +80,11 @@ mk_deb_dev = debian/$(call mk_pkg_dev,$(1),$(2))
 mk_a_files = $(shell echo debian/tmp/$(call mk_base_name,$(2),$(3),$(4)).a >> $(call mk_deb_dev,$(1),$(3)).install)
 mk_so_files = $(shell echo debian/tmp/$(call mk_base_name,$(2),$(3),$(4)).so.$(SOVERSION) >> $(call mk_deb_lib,$(1),$(3)).install)
 mk_ln_files = $(shell echo $(call mk_base_name,$(2),$(3),$(4)).so.$(SOVERSION) $(call mk_base_name,$(2),$(3),$(4)).so >> $(call mk_deb_dev,$(1),$(3)).links)
-mk_ln2_files = $(shell echo $(call mk_base_name,$(2),$(3),$(4)).so $(call mk_full_name,$(2),$(3),$(4)).so >> $(call mk_deb_dev,$(1),$(3)).links)
-mk_ln3_files = $(shell echo $(call mk_base_name,$(2),$(3),$(4)).a $(call mk_full_name,$(2),$(3),$(4)).a >> $(call mk_deb_dev,$(1),$(3)).links)
 
 # Function that updates debhelper files for a given library variant
 # Input: component, library, variant, suffix
 # Output: none
-mk_files = $(foreach fn,a so ln ln2 ln3,$(call mk_$(fn)_files,$(1),$(2),$(3),$(4)))
+mk_files = $(foreach fn,a so ln,$(call mk_$(fn)_files,$(1),$(2),$(3),$(4)))
 
 # helpers to make and install lintian override files
 
@@ -150,7 +146,7 @@ bjam = $(CURDIR)/tools/jam/src/bjam
 
 # FIXME: find a flag to disable reading /etc/site-config.jam
 JAM = $(bjam) $(JOBS) -d2 --user-config=$(CURDIR)/user-config.jam -sHAVE_ICU=1
-jam_variants = variant=release,debug threading=single,multi link=shared,static
+jam_variants = variant=release,debug threading=multi link=shared,static
 
 $(bjam):
 	cd tools/jam/src && \
@@ -238,11 +234,6 @@ install: build clean-debhelper $(filtered_files)
 	dh_install -plibboost$(PKGVERSION)-dbg
 	dh_install -plibboost$(PKGVERSION)-dbg --autodest \
 	   debian/tmp/usr/share/python/runtime.d/libboost$(PKGVERSION)-dbg.rtupdate
-	# These links create a "nonthreaded" version of Boost.Thread;
-	# do we need such links?
-	dh_link -plibboost$(PKGVERSION)-dbg \
-	   usr/lib/libboost_thread-mt-d.a usr/lib/libboost_thread-d.a \
-	   usr/lib/libboost_thread-mt-d.so usr/lib/libboost_thread-d.so
 
 	# package libboost$(PKGVERSION)-dev
 	dh_install -plibboost$(PKGVERSION)-dev \
@@ -387,9 +378,6 @@ install: build clean-debhelper $(filtered_files)
 	mv debian/libboost$(PKGVERSION)-dev/usr/include/boost/thread* \
 	   debian/libboost-thread$(PKGVERSION)-dev/usr/include/boost
 	dh_install -plibboost-thread$(PKGVERSION)-dev
-	dh_link -plibboost-thread$(PKGVERSION)-dev \
-	   usr/lib/libboost_thread-mt.a usr/lib/libboost_thread.a \
-	   usr/lib/libboost_thread-mt.so usr/lib/libboost_thread.so
 
 	# package libboost-wave$(SOVERSION)
 	dh_install -plibboost-wave$(SOVERSION)
