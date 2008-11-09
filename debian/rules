@@ -402,7 +402,7 @@ binary-common:
 	dh_installinfo
 	dh_installchangelogs
 	dh_lintian
-	dh_strip --dbg-package=libboost-dbg -X"-d-"
+	dh_strip --dbg-package=libboost1.37-dbg -X"-d-"
 	dh_link
 	dh_compress -Xlibboost$(PKGVERSION)-doc/HTML
 	dh_pysupport
