@@ -22,7 +22,9 @@ SHLIBS_VERSION = (>= 1.37.0-1)
 boost_version = 1_37
 
 # Boost libraries for which we want separate packages
-boost_libs := date-time filesystem graph iostreams math program-options python regex serialization signals system test thread wave
+boost_libs := date-time filesystem graph iostreams math		       \
+	program-options python regex serialization signals system test \
+	thread wave
 
 # these are special cases, where shared library has not the same name of the Boost library
 boost_lib_math := math_c99 math_c99f math_c99l math_tr1 math_tr1f math_tr1l
