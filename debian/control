@@ -108,44 +108,6 @@ Description: filesystem operations (portable paths, iteration over directories, 
  manipulate paths, files, and directories.  The goal is to
  facilitate portable script-like operations from within C++ programs.
 
-Package: libboost-function-types1.37.0
-Homepage: http://boost.org/libs/function-types/
-Architecture: any
-Section: libs
-Depends: ${shlibs:Depends}
-Description: classify, decompose and synthesize function, function pointer, etc., types in C++
- Part of the Boost C++ Libraries collection.
- .
- Boost.FunctionTypes provides functionality to classify, decompose and
- synthesize function, function pointer, function reference and pointer
- to member types.
- .
- We collectively refer to these types as callable builtin types.
- .
- In particular, the library can be used to:
-  * test whether a type is a specific callable, builtin type, 
-  * extract all component properties from callable, builtin types, and 
-  * create callable, builtin types from specified properties.
-
-Package: libboost-function-types1.37-dev
-Homepage: http://boost.org/libs/function-types/
-Architecture: any
-Section: libdevel
-Depends: libboost1.37-dev (= ${binary:Version}), libboost-function-types1.37.0 (= ${binary:Version}), libboost-system1.37-dev (= ${binary:Version})
-Description: classify, decompose and synthesize function, function pointer, etc., types in C++
- Part of the Boost C++ Libraries collection.
- .
- Boost.FunctionTypes provides functionality to classify, decompose and
- synthesize function, function pointer, function reference and pointer
- to member types.
- .
- We collectively refer to these types as callable builtin types.
- .
- In particular, the library can be used to:
-  * test whether a type is a specific callable, builtin type, 
-  * extract all component properties from callable, builtin types, and 
-  * create callable, builtin types from specified properties.
-
 Package: libboost-graph1.37.0
 Homepage: http://www.boost.org/libs/graph/
 Architecture: any
