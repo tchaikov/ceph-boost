@@ -14,16 +14,16 @@ endif
 
 DEB_BUILD_ARCH ?= $(shell dpkg-architecture -qDEB_BUILD_ARCH)
 
-PKGVERSION = 1.36
-SOVERSION = 1.36.0
-SHLIBS_VERSION = (>= 1.36.0-1)
+PKGVERSION = 1.37
+SOVERSION = 1.37.0
+SHLIBS_VERSION = (>= 1.37.0-1)
 
 # tags for library name decoration
-boost_version = 1_36
+boost_version = 1_37
 gcc_version = gcc43
 
 # Boost libraries for which we want separate packages
-boost_libs := date-time filesystem graph iostreams math program-options python regex serialization signals system test thread wave
+boost_libs := date-time filesystem function-types graph iostreams math program-options python regex serialization signals system test thread wave
 
 # these are special cases, where shared library has not the same name of the Boost library
 boost_lib_math := math_c99 math_c99f math_c99l math_tr1 math_tr1f math_tr1l
@@ -284,6 +284,15 @@ install: build clean-debhelper $(filtered_files)
 	   debian/libboost-filesystem$(PKGVERSION)-dev/usr/include/boost
 	dh_install -plibboost-filesystem$(PKGVERSION)-dev
 	dh_link -plibboost-filesystem$(PKGVERSION)-dev
+
+	# package libboost-function-types$(SOVERSION)
+	dh_install -plibboost-function-types$(SOVERSION)
+	# package libboost-function-types$(PKGVERSION)-dev
+	dh_installdirs -plibboost-function-types$(PKGVERSION)-dev usr/include/boost
+	mv debian/libboost$(PKGVERSION)-dev/usr/include/boost/function_types* \
+	   debian/libboost-function-types$(PKGVERSION)-dev/usr/include/boost
+	dh_install -plibboost-function-types$(PKGVERSION)-dev
+	dh_link -plibboost-function-types$(PKGVERSION)-dev
 
 	# package libboost-graph$(SOVERSION)
 	dh_install -plibboost-graph$(SOVERSION)
