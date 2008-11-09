@@ -147,7 +147,7 @@ pyste_prefix = $(CURDIR)/debian/libboost-python$(PKGVERSION)-dev/usr
 bjam = $(CURDIR)/tools/jam/src/bjam
 
 # FIXME: find a flag to disable reading /etc/site-config.jam
-JAM = $(bjam) $(JOBS) -d2 --user-config=$(CURDIR)/user-config.jam -sHAVE_ICU=1
+JAM = $(bjam) $(JOBS) -d2 --user-config=$(CURDIR)/user-config.jam -sHAVE_ICU=1 debug-symbols=on
 jam_variants = variant=release,debug threading=multi link=shared,static
 
 $(bjam):
@@ -402,7 +402,7 @@ binary-common:
 	dh_installinfo
 	dh_installchangelogs
 	dh_lintian
-	dh_strip -Nlibboost-dbg
+	dh_strip --dbg-package=libboost-dbg -X"-d-"
 	dh_link
 	dh_compress -Xlibboost$(PKGVERSION)-doc/HTML
 	dh_pysupport
