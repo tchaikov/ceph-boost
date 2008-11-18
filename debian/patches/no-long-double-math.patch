@@ -1,0 +1,10 @@
+--- boost1.37-1.37.0.orig/boost/math/special_functions/log1p.hpp
++++ boost1.37-1.37.0/boost/math/special_functions/log1p.hpp
+@@ -388,6 +388,7 @@
+    else
+       return log(u)*(x/(u-1.0));
+ }
++#ifndef BOOST_MATH_NO_LONG_DOUBLE_MATH_FUNCTIONS
+ template <class Policy>
+ inline float log1p(float x, const Policy& pol)
+ {

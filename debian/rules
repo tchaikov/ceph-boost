@@ -27,7 +27,8 @@ boost_libs := date-time filesystem graph iostreams math		       \
 	thread wave
 
 # these are special cases, where shared library has not the same name of the Boost library
-boost_lib_math := math_c99 math_c99f math_c99l math_tr1 math_tr1f math_tr1l
+boost_lib_math := math_c99 math_c99f math_tr1 math_tr1f
+boost_lib_math_long_double := math_c99l math_tr1l
 boost_lib_serialization := serialization wserialization
 boost_lib_test := prg_exec_monitor unit_test_framework
 
@@ -127,15 +128,30 @@ mk_debhelper_files = \
 		) \
 	)
 
+BUILD_LONG_DOUBLE = yes
+
 TOOLSET_CONFIG="using gcc : : : <compileflags>-D_REENTRANT ;"
 ifeq ($(DEB_BUILD_ARCH), hppa)
 TOOLSET_CONFIG="using gcc : : : <compileflags>-D_REENTRANT <compileflags>-mlong-calls <compileflags>-DBOOST_SP_USE_PTHREADS ;"
+BUILD_LONG_DOUBLE = no
 else ifeq ($(DEB_BUILD_ARCH), sparc)
 TOOLSET_CONFIG="using gcc : : : <compileflags>-D_REENTRANT <compileflags>-DBOOST_SP_USE_PTHREADS ;"
 else ifeq ($(DEB_BUILD_ARCH), arm)
 TOOLSET_CONFIG="using gcc : : : <compileflags>-D_REENTRANT <compileflags>-DBOOST_SP_USE_PTHREADS ;"
+BUILD_LONG_DOUBLE = no
 else ifeq ($(DEB_BUILD_ARCH), armel)
 TOOLSET_CONFIG="using gcc : : : <compileflags>-D_REENTRANT <compileflags>-DBOOST_SP_USE_PTHREADS ;"
+BUILD_LONG_DOUBLE = no
+else ifeq ($(DEB_BUILD_ARCH), mips)
+BUILD_LONG_DOUBLE = no
+else ifeq ($(DEB_BUILD_ARCH), mipsel)
+BUILD_LONG_DOUBLE = no
+endif
+
+ifeq ($(BUILD_LONG_DOUBLE), yes)
+boost_lib_math += $(boost_lib_math_long_double)
+else
+JAM_OPT += --disable-long-double
 endif
 
 PYTHON_CONFIG1 = "using python : 2.4 : /usr ;"
@@ -147,7 +163,7 @@ pyste_prefix = $(CURDIR)/debian/libboost-python$(PKGVERSION)-dev/usr
 bjam = $(CURDIR)/tools/jam/src/bjam
 
 # FIXME: find a flag to disable reading /etc/site-config.jam
-JAM = $(bjam) $(JOBS) -d2 --user-config=$(CURDIR)/user-config.jam -sHAVE_ICU=1 debug-symbols=on
+JAM = $(bjam) $(JOBS) -d2 $(JAM_OPT) --user-config=$(CURDIR)/user-config.jam -sHAVE_ICU=1 debug-symbols=on
 jam_variants = variant=release,debug threading=multi link=shared,static
 
 $(bjam):

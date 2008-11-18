@@ -1,3 +1,8 @@
+atomic_count.patch
+math_tools_config.patch
+add-disable-long-double.patch
+atomic_count_gcc.patch
+jam-hardening.patch
 endian.patch
 avoid-PATH_MAX.patch
 jam-wall-clean.patch
