@@ -1,3 +1,5 @@
+Reported upstream as https://svn.boost.org/trac/boost/ticket/2526
+
 --- boost1.37-1.37.0.orig/boost/math/tools/config.hpp
 +++ boost1.37-1.37.0/boost/math/tools/config.hpp
 @@ -24,6 +24,7 @@

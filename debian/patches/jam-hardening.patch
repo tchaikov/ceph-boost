@@ -1,4 +1,5 @@
 From Kees Cook, Debian BTS #505734
+Reported upstream as https://svn.boost.org/trac/boost/ticket/2527
 
 --- boost1.37-1.37.0.orig/tools/jam/src/compile.c
 +++ boost1.37-1.37.0/tools/jam/src/compile.c

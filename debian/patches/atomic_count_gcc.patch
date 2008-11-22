@@ -1,3 +1,5 @@
+Reported upstream as https://svn.boost.org/trac/boost/ticket/2525
+
 --- boost1.36-1.36.0.orig/boost/detail/atomic_count_gcc.hpp
 +++ boost1.36-1.36.0/boost/detail/atomic_count_gcc.hpp
 @@ -17,7 +17,11 @@

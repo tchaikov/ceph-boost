@@ -1,3 +1,5 @@
+Reported upstream as https://svn.boost.org/trac/boost/ticket/2525
+
 --- boost1.37-1.37.0.orig/boost/detail/atomic_count.hpp
 +++ boost1.37-1.37.0/boost/detail/atomic_count.hpp
 @@ -98,7 +98,7 @@
