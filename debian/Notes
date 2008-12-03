@@ -26,12 +26,19 @@ patch series.
   2465     no	Duplicate of ticket 1615
   2474    yes	(request to merge 2210 to release branch) gcc43-path_name_check.patch
 
+
 	Thread Support
 	--------------
 
 All debian libraries are supposed to be built with _REENTRANT defined
 (policy 10.2).  For the jam-built libraries, use "<define>_REENTRANT"
 on command line in debian/rules.  For graph library, set in Makefile.
+
+The __sync functions are giving problems.  I think that atomic_count.hpp
+is finally patched.  It looks like sp_counted_base.hpp is still a
+problem on m68k.  Revisit the strategy of using DBOOST_SP_USE_PTHREADS 
+for the arches that don't have __sync; upsteam now has a spinlock-based
+default version of sp_counted_base.
 
 
 	Documentation
