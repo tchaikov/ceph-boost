@@ -1,5 +1,7 @@
 boost1.37 (1.37.0-2) UNRELEASED; urgency=low
 
+  * control: Add Bcs-Browser and Vcs-Svn information.
+
   * patches/atomic_count_gcc.patch: New.  GCC version >= 4.2 has moved
     <bits/atomic.h> to <ext/atomic.h>.
   
@@ -18,7 +20,7 @@ boost1.37 (1.37.0-2) UNRELEASED; urgency=low
     mips, and mipsel.  Exclude math_c99l and math_tr1l from debhelper
     .install files for these arches.
   
- -- Steve M. Robbins <smr@debian.org>  Tue, 02 Dec 2008 23:25:32 -0600
+ -- Steve M. Robbins <smr@debian.org>  Sat, 06 Dec 2008 21:16:33 -0600
 
 boost1.37 (1.37.0-1) unstable; urgency=low
 
