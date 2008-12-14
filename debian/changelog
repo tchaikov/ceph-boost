@@ -16,10 +16,6 @@ boost1.37 (1.37.0-2) UNRELEASED; urgency=low
   * patches/math-c99.patch: New.  Fix detection of long-double math
     functions such as log1pl() and expm1l().  Upstream changeset 50055.
 
-  * rules: Add --disable-long-double for architectures arm, armel, hppa,
-    mips, and mipsel.  Exclude math_c99l and math_tr1l from debhelper
-    .install files for these arches.
-  
  -- Steve M. Robbins <smr@debian.org>  Sat, 06 Dec 2008 21:16:33 -0600
 
 boost1.37 (1.37.0-1) unstable; urgency=low
