@@ -2,6 +2,9 @@ boost1.37 (1.37.0-2) unstable; urgency=low
 
   * control: Add Bcs-Browser and Vcs-Svn information.
 
+  * copyright: Update with the help of licensecheck, modified to detect
+    the Boost Software License; c.f. debian/licensecheck.diff.
+
   * patches/atomic_count_gcc.patch: New.  GCC version >= 4.2 has moved
     <bits/atomic.h> to <ext/atomic.h>.
   
@@ -32,7 +35,7 @@ boost1.37 (1.37.0-2) unstable; urgency=low
     sp_counted_base_spin, so we no longer need to specify
     BOOST_SP_USE_PTHREADS.
 
- -- Steve M. Robbins <smr@debian.org>  Sun, 14 Dec 2008 15:40:39 -0600
+ -- Steve M. Robbins <smr@debian.org>  Sun, 14 Dec 2008 16:52:08 -0600
 
 boost1.37 (1.37.0-1) unstable; urgency=low
 
