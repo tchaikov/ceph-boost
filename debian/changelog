@@ -1,4 +1,4 @@
-boost1.37 (1.37.0-2) UNRELEASED; urgency=low
+boost1.37 (1.37.0-2) unstable; urgency=low
 
   * control: Add Bcs-Browser and Vcs-Svn information.
 
@@ -16,7 +16,23 @@ boost1.37 (1.37.0-2) UNRELEASED; urgency=low
   * patches/math-c99.patch: New.  Fix detection of long-double math
     functions such as log1pl() and expm1l().  Upstream changeset 50055.
 
- -- Steve M. Robbins <smr@debian.org>  Sat, 06 Dec 2008 21:16:33 -0600
+  * patches/kfreebsd-jam.patch: New.  Include <unistd.h> for all GLIBC
+    systems; fixes a build failure for kFreeBSD.  Thanks to Petr Salinger
+    for the patch.  Closes: #506736.
+
+  * patches/system-error-code.patch: New.  Restore function
+    get_posix_category().  Closes: #503917.  Thanks to Deng Xiyue for
+    researching the fix.
+  
+  * patches/sp_counted_base.patch: New.  Add armel, m68k, and sparc to
+    list of architectures that cannot use sp_counted_base_sync (they do
+    not have __sync functions).
+  * rules: The above patch means these architectures (and arm, which
+    is already accounted for in sp_counted_base.hpp) fall through to
+    sp_counted_base_spin, so we no longer need to specify
+    BOOST_SP_USE_PTHREADS.
+
+ -- Steve M. Robbins <smr@debian.org>  Sun, 14 Dec 2008 15:40:39 -0600
 
 boost1.37 (1.37.0-1) unstable; urgency=low
 

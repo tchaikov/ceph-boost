@@ -1,0 +1,26 @@
+Changeset 49717 from Boost SVN.
+Applies to 1.36, 1.37.  Should be fixed upstream post 1.37.
+
+Fixes upstream https://svn.boost.org/trac/boost/ticket/2461
+Debian http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=503917
+
+
+--- boost1.36-1.36.0.orig/boost/system/error_code.hpp
++++ boost1.36-1.36.0/boost/system/error_code.hpp
+@@ -207,6 +207,7 @@
+     
+ # ifndef BOOST_SYSTEM_NO_DEPRECATED
+     //  deprecated synonyms
++    inline const error_category &  get_posix_category() { return get_generic_category(); }
+     static const error_category &  posix_category = get_generic_category();
+     static const error_category &  errno_ecat     = get_generic_category();
+     static const error_category &  native_ecat    = get_system_category();
+@@ -214,7 +215,7 @@
+ 
+     //  class error_condition  -----------------------------------------------//
+ 
+-    //  error_conditions are portable, error_codes are system or lib specific
++    //  error_conditions are portable, error_codes are system or library specific
+ 
+     class error_condition
+     {
