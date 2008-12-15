@@ -5810,7 +5810,7 @@ boost/graph/astar_search.hpp: Boost Software License
   [Copyright: 2004 Kristopher Beevers]
 
 boost/graph/property_iter_range.hpp: Boost Software License
-  [Copyright: François Faure, iMAGIS-GRAVIR / UJF, 2001]
+  [Copyright: FranÃ§ois Faure, iMAGIS-GRAVIR / UJF, 2001]
 
 boost/graph/graph_selectors.hpp: Boost Software License
   [Copyright: 2002 Indiana University]
@@ -6359,7 +6359,7 @@ boost/python/docstring_options.hpp: Boost Software License
   [Copyright: Ralf W. Grosse-Kunstleve 2006]
 
 boost/python/opaque_pointer_converter.hpp: Boost Software License
-  [Copyright: Gottfried Ganßauge 2003..2006]
+  [Copyright: Gottfried GanÃŸauge 2003..2006]
 
 boost/python/ssize_t.hpp: Boost Software License
   [Copyright: Ralf W. Grosse-Kunstleve & David Abrahams 2006]
@@ -6407,7 +6407,7 @@ boost/python/detail/if_else.hpp: Boost Software License
   [Copyright: David Abrahams 2002]
 
 boost/python/detail/dealloc.hpp: Boost Software License
-  [Copyright: Gottfried Ganßauge 2003]
+  [Copyright: Gottfried GanÃŸauge 2003]
 
 boost/python/detail/decref_guard.hpp: Boost Software License
   [Copyright: David Abrahams 2002]
@@ -6599,7 +6599,7 @@ boost/python/lvalue_from_pytype.hpp: Boost Software License
   [Copyright: David Abrahams 2002]
 
 boost/python/return_opaque_pointer.hpp: Boost Software License
-  [Copyright: Gottfried Ganßauge 2003]
+  [Copyright: Gottfried GanÃŸauge 2003]
 
 boost/python/object/function_object.hpp: Boost Software License
   [Copyright: David Abrahams 2002]
@@ -11839,16 +11839,16 @@ boost/numeric/ublas/banded.hpp: Boost Software License
   [Copyright: 2000-2002]
 
 boost/numeric/interval.hpp: Boost Software License
-  [Copyright: 2000 Jens Maurer / 2002 Hervé Brönnimann, Guillaume Melquiond, Sylvain Pion]
+  [Copyright: 2000 Jens Maurer / 2002 HervÃ© BrÃ¶nnimann, Guillaume Melquiond, Sylvain Pion]
 
 boost/numeric/interval/arith2.hpp: Boost Software License
-  [Copyright: 2002-2003 Hervé Brönnimann, Guillaume Melquiond, Sylvain Pion]
+  [Copyright: 2002-2003 HervÃ© BrÃ¶nnimann, Guillaume Melquiond, Sylvain Pion]
 
 boost/numeric/interval/checking.hpp: Boost Software License
-  [Copyright: 2002 Hervé Brönnimann, Guillaume Melquiond, Sylvain Pion]
+  [Copyright: 2002 HervÃ© BrÃ¶nnimann, Guillaume Melquiond, Sylvain Pion]
 
 boost/numeric/interval/ext/x86_fast_rounding_control.hpp: Boost Software License
-  [Copyright: 2002 Hervé Brönnimann, Guillaume Melquiond, Sylvain Pion]
+  [Copyright: 2002 HervÃ© BrÃ¶nnimann, Guillaume Melquiond, Sylvain Pion]
 
 boost/numeric/interval/ext/integer.hpp: Boost Software License
   [Copyright: 2003 Guillaume Melquiond]
@@ -11857,73 +11857,73 @@ boost/numeric/interval/policies.hpp: Boost Software License
   [Copyright: 2003 Guillaume Melquiond]
 
 boost/numeric/interval/rounding.hpp: Boost Software License
-  [Copyright: 2002-2003 Hervé Brönnimann, Guillaume Melquiond, Sylvain Pion]
+  [Copyright: 2002-2003 HervÃ© BrÃ¶nnimann, Guillaume Melquiond, Sylvain Pion]
 
 boost/numeric/interval/compare.hpp: Boost Software License
-  [Copyright: 2002 Hervé Brönnimann, Guillaume Melquiond, Sylvain Pion]
+  [Copyright: 2002 HervÃ© BrÃ¶nnimann, Guillaume Melquiond, Sylvain Pion]
 
 boost/numeric/interval/rounded_arith.hpp: Boost Software License
-  [Copyright: 2002-2003 Hervé Brönnimann, Guillaume Melquiond, Sylvain Pion]
+  [Copyright: 2002-2003 HervÃ© BrÃ¶nnimann, Guillaume Melquiond, Sylvain Pion]
 
 boost/numeric/interval/io.hpp: Boost Software License
   [Copyright: 2003 Guillaume Melquiond]
 
 boost/numeric/interval/transc.hpp: Boost Software License
-  [Copyright: 2000 Jens Maurer / 2002 Hervé Brönnimann, Guillaume Melquiond, Sylvain Pion]
+  [Copyright: 2000 Jens Maurer / 2002 HervÃ© BrÃ¶nnimann, Guillaume Melquiond, Sylvain Pion]
 
 boost/numeric/interval/rounded_transc.hpp: Boost Software License
-  [Copyright: 2002-2003 Hervé Brönnimann, Guillaume Melquiond, Sylvain Pion]
+  [Copyright: 2002-2003 HervÃ© BrÃ¶nnimann, Guillaume Melquiond, Sylvain Pion]
 
 boost/numeric/interval/constants.hpp: Boost Software License
-  [Copyright: 2002 Hervé Brönnimann, Guillaume Melquiond, Sylvain Pion]
+  [Copyright: 2002 HervÃ© BrÃ¶nnimann, Guillaume Melquiond, Sylvain Pion]
 
 boost/numeric/interval/hw_rounding.hpp: Boost Software License
-  [Copyright: 2005 Guillaume Melquiond / 2002 Hervé Brönnimann, Guillaume Melquiond, Sylvain Pion]
+  [Copyright: 2005 Guillaume Melquiond / 2002 HervÃ© BrÃ¶nnimann, Guillaume Melquiond, Sylvain Pion]
 
 boost/numeric/interval/limits.hpp: Boost Software License
-  [Copyright: 2000 Jens Maurer / 2002-2003 Hervé Brönnimann, Guillaume Melquiond, Sylvain Pion]
+  [Copyright: 2000 Jens Maurer / 2002-2003 HervÃ© BrÃ¶nnimann, Guillaume Melquiond, Sylvain Pion]
 
 boost/numeric/interval/detail/c99sub_rounding_control.hpp: Boost Software License
-  [Copyright: 2000 Jens Maurer / 2002 Hervé Brönnimann, Guillaume Melquiond, Sylvain Pion]
+  [Copyright: 2000 Jens Maurer / 2002 HervÃ© BrÃ¶nnimann, Guillaume Melquiond, Sylvain Pion]
 
 boost/numeric/interval/detail/x86_rounding_control.hpp: Boost Software License
-  [Copyright: 2000 Jens Maurer / 2002 Hervé Brönnimann, Guillaume Melquiond, Sylvain Pion]
+  [Copyright: 2000 Jens Maurer / 2002 HervÃ© BrÃ¶nnimann, Guillaume Melquiond, Sylvain Pion]
 
 boost/numeric/interval/detail/ppc_rounding_control.hpp: Boost Software License
-  [Copyright: 2005 Guillaume Melquiond / 2000 Jens Maurer / 2002 Hervé Brönnimann, Guillaume Melquiond, Sylvain Pion]
+  [Copyright: 2005 Guillaume Melquiond / 2000 Jens Maurer / 2002 HervÃ© BrÃ¶nnimann, Guillaume Melquiond, Sylvain Pion]
 
 boost/numeric/interval/detail/bcc_rounding_control.hpp: Boost Software License
-  [Copyright: 2000 Jens Maurer / 2002 Hervé Brönnimann, Guillaume Melquiond, Sylvain Pion]
+  [Copyright: 2000 Jens Maurer / 2002 HervÃ© BrÃ¶nnimann, Guillaume Melquiond, Sylvain Pion]
 
 boost/numeric/interval/detail/division.hpp: Boost Software License
   [Copyright: 2003 Guillaume Melquiond, Sylvain Pion]
 
 boost/numeric/interval/detail/test_input.hpp: Boost Software License
-  [Copyright: 2002 Hervé Brönnimann, Guillaume Melquiond, Sylvain Pion]
+  [Copyright: 2002 HervÃ© BrÃ¶nnimann, Guillaume Melquiond, Sylvain Pion]
 
 boost/numeric/interval/detail/c99_rounding_control.hpp: Boost Software License
-  [Copyright: 2000 Jens Maurer / 2002 Hervé Brönnimann, Guillaume Melquiond, Sylvain Pion]
+  [Copyright: 2000 Jens Maurer / 2002 HervÃ© BrÃ¶nnimann, Guillaume Melquiond, Sylvain Pion]
 
 boost/numeric/interval/detail/bugs.hpp: Boost Software License
-  [Copyright: 2000 Jens Maurer / 2002 Hervé Brönnimann, Guillaume Melquiond, Sylvain Pion]
+  [Copyright: 2000 Jens Maurer / 2002 HervÃ© BrÃ¶nnimann, Guillaume Melquiond, Sylvain Pion]
 
 boost/numeric/interval/detail/msvc_rounding_control.hpp: Boost Software License
-  [Copyright: 2000 Maarten Keijzer / 2002 Hervé Brönnimann, Guillaume Melquiond, Sylvain Pion]
+  [Copyright: 2000 Maarten Keijzer / 2002 HervÃ© BrÃ¶nnimann, Guillaume Melquiond, Sylvain Pion]
 
 boost/numeric/interval/detail/ia64_rounding_control.hpp: Boost Software License
   [Copyright: 2006-2007 Boris Gubenko]
 
 boost/numeric/interval/detail/sparc_rounding_control.hpp: Boost Software License
-  [Copyright: 2000 Jens Maurer / 2002 Hervé Brönnimann, Guillaume Melquiond, Sylvain Pion]
+  [Copyright: 2000 Jens Maurer / 2002 HervÃ© BrÃ¶nnimann, Guillaume Melquiond, Sylvain Pion]
 
 boost/numeric/interval/detail/x86gcc_rounding_control.hpp: Boost Software License
-  [Copyright: 2000 Jens Maurer / 2002 Hervé Brönnimann, Guillaume Melquiond, Sylvain Pion]
+  [Copyright: 2000 Jens Maurer / 2002 HervÃ© BrÃ¶nnimann, Guillaume Melquiond, Sylvain Pion]
 
 boost/numeric/interval/detail/alpha_rounding_control.hpp: Boost Software License
-  [Copyright: 2005 Felix Höfling, Guillaume Melquiond]
+  [Copyright: 2005 Felix HÃ¶fling, Guillaume Melquiond]
 
 boost/numeric/interval/detail/interval_prototype.hpp: Boost Software License
-  [Copyright: 2002 Hervé Brönnimann, Guillaume Melquiond, Sylvain Pion]
+  [Copyright: 2002 HervÃ© BrÃ¶nnimann, Guillaume Melquiond, Sylvain Pion]
 
 boost/numeric/interval/compare/set.hpp: Boost Software License
   [Copyright: 2002-2003 Guillaume Melquiond]
@@ -11941,19 +11941,19 @@ boost/numeric/interval/compare/lexicographic.hpp: Boost Software License
   [Copyright: 2002-2003 Guillaume Melquiond]
 
 boost/numeric/interval/compare/explicit.hpp: Boost Software License
-  [Copyright: 2000 Jens Maurer / 2002 Hervé Brönnimann, Guillaume Melquiond, Sylvain Pion]
+  [Copyright: 2000 Jens Maurer / 2002 HervÃ© BrÃ¶nnimann, Guillaume Melquiond, Sylvain Pion]
 
 boost/numeric/interval/utility.hpp: Boost Software License
-  [Copyright: 2000 Jens Maurer / 2002-2003 Hervé Brönnimann, Guillaume Melquiond, Sylvain Pion]
+  [Copyright: 2000 Jens Maurer / 2002-2003 HervÃ© BrÃ¶nnimann, Guillaume Melquiond, Sylvain Pion]
 
 boost/numeric/interval/arith.hpp: Boost Software License
-  [Copyright: 2000 Jens Maurer / 2002-2003 Hervé Brönnimann, Guillaume Melquiond, Sylvain Pion]
+  [Copyright: 2000 Jens Maurer / 2002-2003 HervÃ© BrÃ¶nnimann, Guillaume Melquiond, Sylvain Pion]
 
 boost/numeric/interval/arith3.hpp: Boost Software License
   [Copyright: 2003 Guillaume Melquiond]
 
 boost/numeric/interval/interval.hpp: Boost Software License
-  [Copyright: 2002-2003 Hervé Brönnimann, Guillaume Melquiond, Sylvain Pion]
+  [Copyright: 2002-2003 HervÃ© BrÃ¶nnimann, Guillaume Melquiond, Sylvain Pion]
 
 boost/is_placeholder.hpp: Boost Software License
   [Copyright: 2006 Peter Dimov]
@@ -12555,7 +12555,7 @@ boost/detail/compressed_pair.hpp: Boost Software License
   [Copyright: Steve Cleary, Beman Dawes, Howard Hinnant & John Maddock 2000]
 
 boost/detail/atomic_count_gcc.hpp: Boost Software License
-  [Copyright: 2001, 2002 Peter Dimov and Multi Media Ltd / 2003-2005 Peter Dimov / 2002 Lars Gullik Bjønnes <larsbj@lyx.org>]
+  [Copyright: 2001, 2002 Peter Dimov and Multi Media Ltd / 2003-2005 Peter Dimov / 2002 Lars Gullik BjÃ¸nnes <larsbj@lyx.org>]
 
 boost/detail/lightweight_test.hpp: Boost Software License
   [Copyright: 2002 Peter Dimov and Multi Media Ltd]
@@ -24615,7 +24615,7 @@ libs/graph/test/kolmogorov_max_flow_test.cpp: MIT/X11 (BSD like) Boost Software 
   [Copyright: 2006, Stephan Diederich]
 
 libs/graph/test/property_iter.cpp: Boost Software License
-  [Copyright: 2003 Jürgen Hunold, Institute of Transport, Railway Construction and Operation, University of Hanover, Germany]
+  [Copyright: 2003 JÃ¼rgen Hunold, Institute of Transport, Railway Construction and Operation, University of Hanover, Germany]
 
 libs/graph/test/csr_graph_test.cpp: Boost Software License
   [Copyright: 2005 The Trustees of Indiana University]
@@ -24735,7 +24735,7 @@ libs/graph/example/dfs-parenthesis.cpp: Boost Software License
   [Copyright: 2001 Jeremy G. Siek, Andrew Lumsdaine, Lie-Quan Lee]
 
 libs/graph/example/adjacency_list_io.cpp: Boost Software License
-  [Copyright: François Faure 2001]
+  [Copyright: FranÃ§ois Faure 2001]
 
 libs/graph/example/min_max_paths.cpp: Boost Software License
   [Copyright: 1997-2001 University of Notre Dame / = 1]
@@ -24888,7 +24888,7 @@ libs/graph/example/dfs_parenthesis.cpp: Boost Software License
   [Copyright: 1997, 1998, 1999, 2000 University of Notre Dame]
 
 libs/graph/example/property_iterator.cpp: Boost Software License
-  [Copyright: François Faure, iMAGIS-GRAVIR / UJF, 2001]
+  [Copyright: FranÃ§ois Faure, iMAGIS-GRAVIR / UJF, 2001]
 
 libs/graph/example/csr-example.cpp: Boost Software License
   [Copyright: 2005 The Trustees of Indiana University]
@@ -25164,7 +25164,7 @@ libs/conversion/test/lexical_cast_abstract_test.cpp: Boost Software License
   [Copyright: Sergey Shandar 2005, Alexander Nasonov, 2007]
 
 libs/conversion/lexical_cast_test.cpp: Boost Software License
-  [Copyright: Terje Slettebø and Kevlin Henney, 2005 / Alexander Nasonov, 2006]
+  [Copyright: Terje SlettebÃ¸ and Kevlin Henney, 2005 / Alexander Nasonov, 2006]
 
 libs/iterator/test/zip_iterator_test.cpp: Boost Software License
   [Copyright: Dave Abrahams and Thomas Becker 2003. Distributed]
@@ -25848,7 +25848,7 @@ libs/python/test/keywords_test.py: Boost Software License
   [Copyright: David Abrahams 2004. Distributed under the Boost]
 
 libs/python/test/crossmod_opaque_b.cpp: Boost Software License
-  [Copyright: Gottfried Ganßauge 2006]
+  [Copyright: Gottfried GanÃŸauge 2006]
 
 libs/python/test/string_literal.cpp: Boost Software License
   [Copyright: David Abrahams 2004. Distributed under the Boost]
@@ -25902,7 +25902,7 @@ libs/python/test/destroy_test.cpp: Boost Software License
   [Copyright: David Abrahams 2004. Distributed under the Boost]
 
 libs/python/test/crossmod_opaque.py: Boost Software License
-  [Copyright: Gottfried Ganßauge 2006]
+  [Copyright: Gottfried GanÃŸauge 2006]
 
 libs/python/test/long.cpp: Boost Software License
   [Copyright: David Abrahams 2002]
@@ -25989,7 +25989,7 @@ libs/python/test/slice.py: Boost Software License
   [Copyright: David Abrahams 2004. Distributed under the Boost]
 
 libs/python/test/opaque.py: Boost Software License
-  [Copyright: Gottfried Ganßauge 2003..2006. Distributed under the Boost]
+  [Copyright: Gottfried GanÃŸauge 2003..2006. Distributed under the Boost]
 
 libs/python/test/pickle3.py: Boost Software License
   [Copyright: David Abrahams 2004. Distributed under the Boost]
@@ -26022,7 +26022,7 @@ libs/python/test/callbacks.py: Boost Software License
   [Copyright: David Abrahams 2004. Distributed under the Boost]
 
 libs/python/test/crossmod_opaque_a.cpp: Boost Software License
-  [Copyright: Gottfried Ganßauge 2006]
+  [Copyright: Gottfried GanÃŸauge 2006]
 
 libs/python/test/numpy.py: Boost Software License
   [Copyright: David Abrahams 2004. Distributed under the Boost]
@@ -29949,7 +29949,7 @@ libs/numeric/interval/test/cmp_header.hpp: Boost Software License
   [Copyright: 2003 Guillaume Melquiond]
 
 libs/numeric/interval/test/bugs.hpp: Boost Software License
-  [Copyright: 2002-2003 Hervé Brönnimann]
+  [Copyright: 2002-2003 HervÃ© BrÃ¶nnimann]
 
 libs/numeric/interval/test/det.cpp: Boost Software License
   [Copyright: 2002-2003 Guillaume Melquiond]
@@ -34783,9 +34783,6 @@ tools/jam/src/boehm_gc/alloc.c: UNKNOWN
 
 tools/jam/src/boehm_gc/if_mach.c: *No copyright* UNKNOWN
 
-tools/jam/src/boehm_gc/ltmain.sh: GPL (v2 or later) GENERATED FILE
-  [Copyright: 1996, 1997, 1998, 1999, 2000, 2001, 2003, 2004, 2005]
-
 tools/jam/src/boehm_gc/allchblk.c: UNKNOWN
   [Copyright: 1998-1999 by Silicon Graphics. All rights reserved / 1988, 1989 Hans-J. Boehm, Alan J. Demers / 1991-1994 by Xerox Corporation. All rights reserved / 1999 by Hewlett-Packard Company. All rights reserved]
 
@@ -35015,9 +35012,6 @@ tools/jam/src/pathmac.c: Boost Software License
   [Copyright: 1993-2002 Christopher Seiwald and Perforce Software, Inc / 2001-2004 David Abrahams]
 
 tools/jam/src/subst.c: *No copyright* UNKNOWN
-
-tools/jam/src/jamgram.c: GPL (with incorrect FSF address) 
-  [Copyright: 1984, 1989, 1990, 2000, 2001, 2002 Free Software Foundation, Inc]
 
 tools/jam/src/filesys.c: *No copyright* UNKNOWN
 
@@ -35663,7 +35657,7 @@ tools/quickbook/doc_info.hpp: Boost Software License
   [Copyright: 2004 Eric Niebler / 2002 2004 2006 Joel de Guzman]
 
 tools/quickbook/test/src/text_diff.cpp: Boost Software License
-  [Copyright: 2005 JoÃ£o Abecasis]
+  [Copyright: 2005 João Abecasis]
 
 tools/quickbook/test/stub.cpp: Boost Software License
   [Copyright: 2006 Joel de Guzman]
