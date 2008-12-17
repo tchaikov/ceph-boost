@@ -4,10 +4,12 @@ a build failure.
 
 c.f. http://lists.boost.org/boost-build/2008/11/20683.php
 
+Reported upstream as https://svn.boost.org/trac/boost/ticket/2597
+
 
 --- boost1.36-1.36.0.orig/libs/math/build/Jamfile.v2
 +++ boost1.36-1.36.0/libs/math/build/Jamfile.v2
-@@ -51,7 +51,18 @@
+@@ -51,7 +51,15 @@
  sph_neumann
  ;
  
@@ -21,19 +23,15 @@ c.f. http://lists.boost.org/boost-build/2008/11/20683.php
 +    build-long-double = true ;
 +    compile has_long_double_support.cpp ;
 +}
-+
-+ECHO "Build long double: " $(build-long-double) ;
-+
  
  lib boost_math_tr1 : ../src/tr1/$(TR1_SOURCES).cpp
      :         
-@@ -63,11 +74,15 @@
+@@ -63,11 +74,14 @@
   	     <link>shared:<define>BOOST_MATH_TR1_DYN_LINK=1
     ;
  
 +if $(build-long-double) = true
 +{
-+echo "BUILDING MATH_TR1 LONG" ;
  lib boost_math_tr1l : ../src/tr1/$(TR1_SOURCES)l.cpp
      :         
   	     <link>shared:<define>BOOST_MATH_TR1_DYN_LINK=1
@@ -43,13 +41,12 @@ c.f. http://lists.boost.org/boost-build/2008/11/20683.php
  
  lib boost_math_c99 : ../src/tr1/$(C99_SOURCES).cpp
      :         
-@@ -79,12 +94,20 @@
+@@ -79,12 +94,19 @@
   	     <link>shared:<define>BOOST_MATH_TR1_DYN_LINK=1
     ;
  
 +if $(build-long-double) = true
 +{
-+echo "BUILDING MATH_C99 LONG" ;
  lib boost_math_c99l : ../src/tr1/$(C99_SOURCES)l.cpp
      :         
   	     <link>shared:<define>BOOST_MATH_TR1_DYN_LINK=1
