@@ -1,3 +1,5 @@
+Reported upstream as https://svn.boost.org/trac/boost/ticket/2596
+
 --- boost1.36-1.36.0.orig/tools/jam/src/jam.h
 +++ boost1.36-1.36.0/tools/jam/src/jam.h
 @@ -418,6 +418,10 @@
