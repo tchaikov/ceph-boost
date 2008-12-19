@@ -1,3 +1,11 @@
+boost1.37 (1.37.0-3) unstable; urgency=low
+
+  * patches/series: Add add-disable-long-double.patch to the series.
+  * rules: Suppress building long-double math libraries (math_c99l &
+    math_tr1l) on hppa, arm, armel, mips, and mipsel.  Closes: #508962.
+
+ -- Steve M. Robbins <smr@debian.org>  Thu, 18 Dec 2008 21:11:51 -0600
+
 boost1.37 (1.37.0-2) unstable; urgency=low
 
   * control: Add Bcs-Browser and Vcs-Svn information.
