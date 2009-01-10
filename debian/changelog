@@ -3,8 +3,15 @@ boost1.37 (1.37.0-4) unstable; urgency=low
   * patches/function-template.patch: New.  Fix misplaced #ifdef (thanks to
     Caolan McNamara for the patch at
     https://bugzilla.redhat.com/show_bug.cgi?id=477131).  Closes: #511073.
+  
+  * control:
+  * rules: New packages libboost-mpi1.37.0 and libboost-mpi1.37-dev.
+    Closes: #494832, #490242.  Thanks to Tilman Koschnick and Rutger ter
+    Borg for their patches.
+  * patches/mpi-python.patch: The python bindings for Boost.MPI don't
+    build; disable until I understand what's going on.
 
- -- Steve M. Robbins <smr@debian.org>  Fri, 09 Jan 2009 22:04:37 -0600
+ -- Steve M. Robbins <smr@debian.org>  Sat, 10 Jan 2009 00:52:58 -0600
 
 boost1.37 (1.37.0-3) unstable; urgency=low
 

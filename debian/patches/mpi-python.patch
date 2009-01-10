@@ -1,0 +1,11 @@
+--- boost1.37-1.37.0.orig/libs/mpi/build/Jamfile.v2
++++ boost1.37-1.37.0/libs/mpi/build/Jamfile.v2
+@@ -55,7 +55,7 @@
+   
+ libraries += boost_mpi ;  
+ 
+-  if [ python.configured ]
++  if [ python.configured ] && false
+   {
+     lib boost_mpi_python
+       : # Sources

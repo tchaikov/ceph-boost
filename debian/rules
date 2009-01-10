@@ -22,7 +22,7 @@ SHLIBS_VERSION = (>= 1.37.0-1)
 boost_version = 1_37
 
 # Boost libraries for which we want separate packages
-boost_libs := date-time filesystem graph iostreams math		       \
+boost_libs := date-time filesystem graph iostreams math mpi	       \
 	program-options python regex serialization signals system test \
 	thread wave
 
@@ -150,6 +150,7 @@ else
 JAM_OPT += --disable-long-double
 endif
 
+MPI_CONFIG = "using mpi ;"
 PYTHON_CONFIG1 = "using python : 2.4 : /usr ;"
 PYTHON_CONFIG2 = "using python : 2.5 : /usr ;"
 
@@ -169,6 +170,7 @@ $(bjam):
 
 user-config.jam:
 	echo $(TOOLSET_CONFIG) > $@
+	echo $(MPI_CONFIG)     >> $@
 	echo $(PYTHON_CONFIG1) >> $@
 	echo $(PYTHON_CONFIG2) >> $@
 
@@ -316,6 +318,15 @@ install: build clean-debhelper $(filtered_files)
 	   debian/libboost-math$(PKGVERSION)-dev/usr/include/boost
 	dh_install -plibboost-math$(PKGVERSION)-dev
 	dh_link -plibboost-math$(PKGVERSION)-dev
+
+	# package libboost-mpi$(SOVERSION)
+	dh_install -plibboost-mpi$(SOVERSION)
+	# package libboost-mpi$(PKGVERSION)-dev
+	dh_installdirs -plibboost-mpi$(PKGVERSION)-dev usr/include/boost
+	mv debian/libboost$(PKGVERSION)-dev/usr/include/boost/mpi* \
+	   debian/libboost-mpi$(PKGVERSION)-dev/usr/include/boost
+	dh_install -plibboost-mpi$(PKGVERSION)-dev
+	dh_link -plibboost-mpi$(PKGVERSION)-dev
 
 	# package libboost-program-options$(SOVERSION)
 	dh_install -plibboost-program-options$(SOVERSION)
