@@ -7,11 +7,13 @@ boost1.37 (1.37.0-4) unstable; urgency=low
   * control:
   * rules: New packages libboost-mpi1.37.0 and libboost-mpi1.37-dev.
     Closes: #494832, #490242.  Thanks to Tilman Koschnick and Rutger ter
-    Borg for their patches.
+    Borg for their patches.  New -dev package conflicts and replaces
+    libboost1.37-dev, since the headers were moved from the latter to the
+    former.
   * patches/mpi-python.patch: The python bindings for Boost.MPI don't
     build; disable until I understand what's going on.
 
- -- Steve M. Robbins <smr@debian.org>  Sat, 10 Jan 2009 00:52:58 -0600
+ -- Steve M. Robbins <smr@debian.org>  Sat, 10 Jan 2009 16:45:36 -0600
 
 boost1.37 (1.37.0-3) unstable; urgency=low
 

@@ -223,6 +223,8 @@ Homepage: http://www.boost.org/doc/html/mpi.html
 Architecture: any
 Section: libdevel
 Depends: libboost1.37-dev (= ${binary:Version}), libboost-serialization1.37-dev (= ${binary:Version}), libboost-mpi1.37.0 (= ${binary:Version}), mpi-default-dev
+Conflicts: libboost1.37-dev (<= 1.37.0-4)
+Replaces: libboost1.37-dev (<= 1.37.0-4)
 Description: C++ interface to the Message Passing Interface (MPI) - OpenMPI version
  Part of the Boost C++ Libraries collection.
  .
