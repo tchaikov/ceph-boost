@@ -1,3 +1,11 @@
+boost1.37 (1.37.0-4) unstable; urgency=low
+
+  * patches/function-template.patch: New.  Fix misplaced #ifdef (thanks to
+    Caolan McNamara for the patch at
+    https://bugzilla.redhat.com/show_bug.cgi?id=477131).  Closes: #511073.
+
+ -- Steve M. Robbins <smr@debian.org>  Fri, 09 Jan 2009 22:04:37 -0600
+
 boost1.37 (1.37.0-3) unstable; urgency=low
 
   * patches/series: Add add-disable-long-double.patch to the series.
