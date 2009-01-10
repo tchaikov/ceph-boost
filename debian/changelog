@@ -13,7 +13,10 @@ boost1.37 (1.37.0-4) unstable; urgency=low
   * patches/mpi-python.patch: The python bindings for Boost.MPI don't
     build; disable until I understand what's going on.
 
- -- Steve M. Robbins <smr@debian.org>  Sat, 10 Jan 2009 16:45:36 -0600
+  * rules: Usage of "dh_clean -k" is deprecated in debhelper 7; replace
+    with "dh_prep".
+
+ -- Steve M. Robbins <smr@debian.org>  Sat, 10 Jan 2009 16:53:03 -0600
 
 boost1.37 (1.37.0-3) unstable; urgency=low
 

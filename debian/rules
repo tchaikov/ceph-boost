@@ -224,7 +224,7 @@ install: DH_OPTIONS=-X.svn
 install: build clean-debhelper $(filtered_files)
 	dh_testdir
 	dh_testroot
-	dh_clean -k
+	dh_prep
 
 	@$(call cp_debhelper,libboost-dbg,libboost$(PKGVERSION)-dbg)
 	@$(call cp_debhelper,libboost-dev,libboost$(PKGVERSION)-dev)
