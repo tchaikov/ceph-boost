@@ -4,6 +4,10 @@ boost1.37 (1.37.0-5) unstable; urgency=low
   * libboost-python-dev.README.Debian: Revise, removing all the verbiage
     about single-threaded versions and decorated library names which was
     not relevant as of 1.37.0-1.
+  
+  * control: libboost1.37-dev depends on libboost-math1.37-dev.  Closes:
+    #515079.  Update list of separate packages in description and
+    Recommends line for libboost1.37-dev.
 
  -- Steve M. Robbins <smr@debian.org>  Mon, 16 Feb 2009 15:55:23 -0600
 

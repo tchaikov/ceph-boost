@@ -26,8 +26,8 @@ Description: Boost C++ Libraries with debug symbols
 Package: libboost1.37-dev
 Architecture: any
 Section: libdevel
-Depends: ${shlibs:Depends}, libstdc++-dev, libboost-serialization1.37-dev (= ${binary:Version})
-Recommends: libboost1.37-doc, libboost-date-time1.37-dev, libboost-filesystem1.37-dev, libboost-graph1.37-dev, libboost-iostreams1.37-dev, libboost-program-options1.37-dev, libboost-python1.37-dev, libboost-regex1.37-dev, libboost-signals1.37-dev, libboost-test1.37-dev, libboost-thread1.37-dev, libboost-wave1.37-dev
+Depends: ${shlibs:Depends}, libstdc++-dev, libboost-math1.37-dev (= ${binary:Version}), libboost-serialization1.37-dev (= ${binary:Version})
+Recommends: libboost1.37-doc, libboost-date-time1.37-dev, libboost-filesystem1.37-dev, libboost-graph1.37-dev, libboost-iostreams1.37-dev, libboost-math1.37-dev, libboost-mpi1.37-dev, libboost-program-options1.37-dev, libboost-python1.37-dev, libboost-regex1.37-dev, libboost-serialization1.37-dev, libboost-signals1.37-dev, libboost-system1.37-dev, libboost-test1.37-dev, libboost-thread1.37-dev, libboost-wave1.37-dev
 Conflicts: libboost-dev, bcp, libboost1.35-dev, libboost1.36-dev
 Description: Boost C++ Libraries development files
  The Boost web site provides free, peer-reviewed, portable C++ source
@@ -40,8 +40,9 @@ Description: Boost C++ Libraries development files
  .
  This package provides headers and the auxiliary tool bcp.
  .
- For the following subprojects separate packages exist: 
- date-time, filesystem, graph, python, regex, signals, test, and thread.
+ For the following subprojects separate packages exist: date-time,
+ filesystem, graph, iostreams, math, mpi, program_options, python,
+ regex, serialization, signals, system, test, thread, and wave.
 
 Package: libboost1.37-doc
 Homepage: http://www.boost.org/libs/
