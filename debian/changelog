@@ -2,8 +2,24 @@ boost1.38 (1.38.0-1) unstable; urgency=low
 
   * New upstream.
     - update control appropriately.
-
- -- Steve M. Robbins <smr@debian.org>  Mon, 16 Feb 2009 18:36:39 -0600
+  
+  * patches/math-c99.patch: 
+  * patches/jam-hardening.patch:
+  * patches/avoid-PATH_MAX.patch:
+  * patches/suppress-compiler-warnings.patch:
+  * patches/gcc43-date_time.patch:
+  * patches/gcc43-path_name_check.patch: 
+  * patches/system-error-code.patch: Removed.  Applied upstream.
+  
+  * patches/jam-wall-clean.patch: Updated; partially applied upstream.
+  * patches/kfreebsd-jam.patch: Refreshed.
+  
+  * patches/series: Modified to account for removed patches.  Temporarily
+    removed add-disable-long-double.patch; a variant applied upstream, but
+    my recollection is that it doesn't solve the problem.  Needs further
+    investigation.
+  
+ -- Steve M. Robbins <smr@debian.org>  Sat, 21 Feb 2009 11:12:24 -0600
 
 boost1.37 (1.37.0-5) unstable; urgency=low
 
