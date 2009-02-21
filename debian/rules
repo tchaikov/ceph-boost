@@ -14,12 +14,12 @@ endif
 
 DEB_BUILD_ARCH ?= $(shell dpkg-architecture -qDEB_BUILD_ARCH)
 
-PKGVERSION = 1.37
-SOVERSION = 1.37.0
-SHLIBS_VERSION = (>= 1.37.0-1)
+PKGVERSION = 1.38
+SOVERSION = 1.38.0
+SHLIBS_VERSION = (>= 1.38.0-1)
 
 # tags for library name decoration
-boost_version = 1_37
+boost_version = 1_38
 
 # Boost libraries for which we want separate packages
 boost_libs := date-time filesystem graph iostreams math mpi	       \
@@ -425,7 +425,7 @@ binary-common:
 	dh_installinfo
 	dh_installchangelogs
 	dh_lintian
-	dh_strip --dbg-package=libboost1.37-dbg -X"-d-"
+	dh_strip --dbg-package=libboost1.38-dbg -X"-d-"
 	dh_link
 	dh_compress -Xlibboost$(PKGVERSION)-doc/HTML
 	dh_pysupport
