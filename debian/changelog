@@ -17,12 +17,9 @@ boost1.38 (1.38.0-1) unstable; urgency=low
   * patches/boost_python_translate_exception.patch: New.  From upstream
     ticket 2582.
   
-  * patches/series: Modified to account for removed patches.  Temporarily
-    removed add-disable-long-double.patch; a variant applied upstream, but
-    my recollection is that it doesn't solve the problem.  Needs further
-    investigation.
+  * patches/series: Modified to account for removed patches.
   
- -- Steve M. Robbins <smr@debian.org>  Sat, 21 Feb 2009 11:12:24 -0600
+ -- Steve M. Robbins <smr@debian.org>  Sun, 22 Feb 2009 00:21:26 -0600
 
 boost1.37 (1.37.0-5) unstable; urgency=low
 
