@@ -77,7 +77,7 @@ List of example directories obtained using
 Check using check-interdep.sh
 ** must do this after installing the -dev packages **
 
-For 1.36.0:
+For 1.38
 
 date_time 	depends on serialization
 filesystem 	depends on system

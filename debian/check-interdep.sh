@@ -2,7 +2,6 @@
 
 libs='date_time 
 filesystem 
-function_types
 graph 
 iostreams 
 math
