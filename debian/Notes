@@ -1,7 +1,7 @@
 	GCC 4.3 Patches
 	---------------
 
-As of 2008-08-16, there are a number of issues with respect to GCC
+As of 2009-02-21, there are a number of issues with respect to GCC
 4.3.  A post on the Boost list gives a query to list all the open
 reports in the Boost trac system:
 
@@ -12,19 +12,13 @@ patch series.
 
   Ticket  Inc?  Comment
   ------  ----  ----------------------------------
-  1570     no   Patch applied upstream, present in 1.36.0
-  1605     no   Library property_tree not present in 1.36.0
-  1615    yes   gcc43-date_time.patch
-  1955     no   Library property_tree not present in 1.37.0
-  2083     no   Duplicate of ticket 1615
-  2091     no   Duplicate of ticket 1615
+  1605     no   Library property_tree not present in 1.38
+  1955     no   Library property_tree not present in 1.38
   2321     no	Warning
   2388     no	Warning
-  2389     no	Warning
   2390     no   Warning
-  2462     no	Warning
-  2465     no	Duplicate of ticket 1615
-  2474    yes	(request to merge 2210 to release branch) gcc43-path_name_check.patch
+  2582	   yes  boost_python_translate_exception.patch
+  2680     no   Test suite failure, no patch.
 
 
 	Thread Support

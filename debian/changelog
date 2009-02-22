@@ -13,6 +13,9 @@ boost1.38 (1.38.0-1) unstable; urgency=low
   
   * patches/jam-wall-clean.patch: Updated; partially applied upstream.
   * patches/kfreebsd-jam.patch: Refreshed.
+
+  * patches/boost_python_translate_exception.patch: New.  From upstream
+    ticket 2582.
   
   * patches/series: Modified to account for removed patches.  Temporarily
     removed add-disable-long-double.patch; a variant applied upstream, but

@@ -9,3 +9,4 @@ library-naming.patch
 date_time_date_formatting_hpp.patch
 mpi-python.patch
 jam-wall-clean.patch
+boost_python_translate_exception.patch
