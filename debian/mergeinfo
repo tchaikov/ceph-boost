@@ -1,46 +1,45 @@
-	1.36.0-3
-	--------
-
-Changeset on branches/1.36.0:
+	Merges from branches/1.37.0
+	---------------------------
 
 ------------------------------------------------------------------------
-r14308 | smr | 2008-11-09 15:26:09 -0600 (Sun, 09 Nov 2008) | 1 line
-Changed paths:
-   M /boost/branches/1.36.0/debian/changelog
-   M /boost/branches/1.36.0/debian/compat
-   M /boost/branches/1.36.0/debian/control
-   M /boost/branches/1.36.0/debian/rules
+r14391 | smr | 2009-03-28 04:44:28 -0500 (Sat, 28 Mar 2009) | 1 line
 
-Ensure debug symbols present in -dbg package.  Fix for 495812.
+Package -dbg is now in section debug.
+* merge
+------------------------------------------------------------------------
+r14388 | smr | 2009-03-28 02:38:43 -0500 (Sat, 28 Mar 2009) | 1 line
+
+Do not die if rtupdate called for an unknown python version.
+* merge
+------------------------------------------------------------------------
+r14385 | smr | 2009-03-22 14:58:27 -0500 (Sun, 22 Mar 2009) | 1 line
+
+Explain that Boost.Test shared lib does not supply main().
+* merge
+------------------------------------------------------------------------
+r14383 | smr | 2009-03-14 16:26:47 -0500 (Sat, 14 Mar 2009) | 1 line
+
+libboost1.37-dev now suggests libboost1.37-doc rather than recommends.
+* merge
+------------------------------------------------------------------------
+r14382 | smr | 2009-03-14 16:24:35 -0500 (Sat, 14 Mar 2009) | 1 line
+
+Add fix_eventfd_select_interrupter.patch.
+* skip as fixed in 1.38
+------------------------------------------------------------------------
+r14371 | smr | 2009-02-16 18:35:39 -0600 (Mon, 16 Feb 2009) | 2 lines
+
+Tagging 1.37.0 before converting trunk to 1.38.
+* branch point
 ------------------------------------------------------------------------
 
-Already merged by hand into 1.37.0-1:
-
-------------------------------------------------------------------------
-r14309 | smr | 2008-11-09 15:51:00 -0600 (Sun, 09 Nov 2008) | 1 line
-Changed paths:
-   M /boost/trunk/debian/changelog
-   M /boost/trunk/debian/compat
-   M /boost/trunk/debian/control
-   M /boost/trunk/debian/rules
-
-Merge CL 14308 from branches/1.36.0: Fix symbol generation for -dbg.
-------------------------------------------------------------------------
 
 
 
-	1.36.0-4 through -8
-	-------------------
+	Merges Done
+	-----------
 
-Changes to fix build failures on ARM, MIPS, SPARC, HPPA.
-Changesets on /1.36.0: r14314 through r14330.
+Merge command (execute in trunk directory):
 
-Merge command:
-
-  (execute in trunk directory)
-  svn -r 14314:14330 merge svn+ssh://smr@svn.debian.org/svn/pkg-boost/boost/branches/1.36.0
-
-Then tweaked patch set:
- - delete no-long-double-math.patch
- - updated some others by hand
+  svn -r 14383:14395 merge svn+ssh://smr@svn.debian.org/svn/pkg-boost/boost/branches/1.37.0
 
