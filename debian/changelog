@@ -18,8 +18,11 @@ boost1.38 (1.38.0-1) unstable; urgency=low
     ticket 2582.
   
   * patches/series: Modified to account for removed patches.
-  
- -- Steve M. Robbins <smr@debian.org>  Sun, 22 Feb 2009 00:21:26 -0600
+
+  * licensecheck.diff: Remove.  Licensecheck detects the Boost license as
+    of devscripts 2.10.46.
+
+ -- Steve M. Robbins <smr@debian.org>  Sat, 28 Mar 2009 22:40:48 -0500
 
 boost1.37 (1.37.0-5) unstable; urgency=low
 
