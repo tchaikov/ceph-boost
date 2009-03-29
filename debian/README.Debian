@@ -74,4 +74,16 @@ This file is generally good enough for most linux users.  Simply
 copy and modify to suit your needs.
 
 
- -- Steve M. Robbins <smr@debian.org>, Mon, 16 Feb 2009 15:53:46 z
+Boost.Test main() function
+--------------------------
+
+The Boost unit test framework defines a main() function in the static
+library boost_unit_test_framework-mt.a.  Prior to v 1.34, the shared
+library also defined main() but it no longer does.
+
+Please see the manual and the following thread for more details
+  http://www.nabble.com/Undefined-reference-to-'main'-with-Boost-Test.-Why--td15986217.html
+
+
+
+ -- Steve M. Robbins <smr@debian.org>, Sun, 22 Mar 2009 14:47:40 z
