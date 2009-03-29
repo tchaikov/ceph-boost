@@ -34,7 +34,7 @@ rtupdate() {
     case "$1" in
 	python2.4)  py=py24 ;;
 	python2.5)  py=py25 ;;
-	*)          die $0 unknown python version $1 ;;
+	*)          remove ; return ;;
     esac
 
     update_linklibs $py a

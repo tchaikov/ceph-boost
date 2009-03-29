@@ -24,6 +24,22 @@ boost1.38 (1.38.0-1) unstable; urgency=low
 
  -- Steve M. Robbins <smr@debian.org>  Sat, 28 Mar 2009 22:40:48 -0500
 
+boost1.37 (1.37.0-8) unstable; urgency=low
+
+  * rtupdate: Do not die if called for an unknown python version, just
+    remove existing symlinks.  Closes: #520749.
+  
+  * control: Package -dbg is now in section debug.
+
+ -- Steve M. Robbins <smr@debian.org>  Sat, 28 Mar 2009 04:43:41 -0500
+
+boost1.37 (1.37.0-7) unstable; urgency=low
+
+  * README.Debian: Add note about Boost.Test main() function.  Closes:
+    #516879.
+
+ -- Steve M. Robbins <smr@debian.org>  Sun, 22 Mar 2009 14:51:00 -0500
+
 boost1.37 (1.37.0-5) unstable; urgency=low
 
   * README.Debian: 

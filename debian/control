@@ -12,7 +12,7 @@ Standards-Version: 3.8.0
 
 Package: libboost1.38-dbg
 Architecture: any
-Section: libdevel
+Section: debug
 Priority: extra
 Depends: ${shlibs:Depends}
 Conflicts: libboost-dbg, libboost1.35-dbg, libboost1.36-dbg, libboost1.37-dbg
