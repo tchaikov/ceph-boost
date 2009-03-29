@@ -1,4 +1,5 @@
 Reported upstream as https://svn.boost.org/trac/boost/ticket/2469
+Fixed in upstream trunk as of 51745.
 
 --- boost1.37-1.37.0.orig/boost/function/function_template.hpp
 +++ boost1.37-1.37.0/boost/function/function_template.hpp
