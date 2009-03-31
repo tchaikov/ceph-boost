@@ -1,3 +1,18 @@
+boost1.38 (1.38.0-2) unstable; urgency=low
+
+  * Merge changes from 1.37.0-7 and 1.37.0-8:
+    - rtupdate: Do not die if called for an unknown python version, just
+      remove existing symlinks.
+    - control: Package -dbg is now in section debug.
+    - README.Debian: Add note about Boost.Test main() function.
+
+  * copyright: Update.
+  
+  * licensecheck.diff: Remove.  Licensecheck detects the Boost license as
+    of devscripts 2.10.46.
+
+ -- Steve M. Robbins <smr@debian.org>  Mon, 30 Mar 2009 21:53:13 -0500
+
 boost1.38 (1.38.0-1) unstable; urgency=low
 
   * New upstream.
@@ -18,29 +33,8 @@ boost1.38 (1.38.0-1) unstable; urgency=low
     ticket 2582.
   
   * patches/series: Modified to account for removed patches.
-
-  * copyright: Update.
   
-  * licensecheck.diff: Remove.  Licensecheck detects the Boost license as
-    of devscripts 2.10.46.
-
- -- Steve M. Robbins <smr@debian.org>  Sun, 29 Mar 2009 02:51:56 -0500
-
-boost1.37 (1.37.0-8) unstable; urgency=low
-
-  * rtupdate: Do not die if called for an unknown python version, just
-    remove existing symlinks.  Closes: #520749.
-  
-  * control: Package -dbg is now in section debug.
-
- -- Steve M. Robbins <smr@debian.org>  Sat, 28 Mar 2009 04:43:41 -0500
-
-boost1.37 (1.37.0-7) unstable; urgency=low
-
-  * README.Debian: Add note about Boost.Test main() function.  Closes:
-    #516879.
-
- -- Steve M. Robbins <smr@debian.org>  Sun, 22 Mar 2009 14:51:00 -0500
+ -- Steve M. Robbins <smr@debian.org>  Sun, 22 Feb 2009 00:21:26 -0600
 
 boost1.37 (1.37.0-5) unstable; urgency=low
 
