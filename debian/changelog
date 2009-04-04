@@ -1,3 +1,10 @@
+boost1.38 (1.38.0-3) unstable; urgency=low
+
+  * patches/jam-wall-clean.patch: Fix printf formatting in
+    tools/jam/src/hash.c and tools/jam/src/hcache.c.
+
+ -- Steve M. Robbins <smr@debian.org>  Sat, 04 Apr 2009 00:41:36 -0500
+
 boost1.38 (1.38.0-2) unstable; urgency=low
 
   * Merge changes from 1.37.0-7 and 1.37.0-8:

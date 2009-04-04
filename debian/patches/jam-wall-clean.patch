@@ -52,3 +52,25 @@
 +        (void)hashenter(m->native_rules, (HASHDATA**)&np);
      }
  }
+--- boost1.38-1.38.0.orig/tools/jam/src/hash.c
++++ boost1.38-1.38.0/tools/jam/src/hash.c
+@@ -448,7 +448,7 @@
+         run = here;
+     }
+ 
+-    printf( "%s table: %d+%d+%d (%dK+%ldK) items+table+hash, %f density\n",
++    printf( "%s table: %d+%d+%d (%dK+%udK) items+table+hash, %f density\n",
+         hp->name,
+         count,
+         hp->items.nel,
+--- boost1.38-1.38.0.orig/tools/jam/src/hcache.c
++++ boost1.38-1.38.0/tools/jam/src/hcache.c
+@@ -166,7 +166,7 @@
+ {
+     if ( !s )
+         s = "";
+-    fprintf( f, "%lu\t%s\n", strlen( s ), s );
++    fprintf( f, "%zu\t%s\n", strlen( s ), s );
+ }
+ 
+ 
