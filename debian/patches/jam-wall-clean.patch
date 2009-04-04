@@ -59,7 +59,7 @@
      }
  
 -    printf( "%s table: %d+%d+%d (%dK+%ldK) items+table+hash, %f density\n",
-+    printf( "%s table: %d+%d+%d (%dK+%udK) items+table+hash, %f density\n",
++    printf( "%s table: %d+%d+%d (%dK+%zdK) items+table+hash, %f density\n",
          hp->name,
          count,
          hp->items.nel,
