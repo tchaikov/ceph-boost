@@ -1,3 +1,11 @@
+boost1.38 (1.38.0-4) unstable; urgency=low
+
+  * control (libboost1.38-dev): weaken dependency on libboost-math1.38-dev
+    and libboost-serialization1.38-dev from Depends to Recommends.
+    Closes: #524612.
+
+ -- Steve M. Robbins <smr@debian.org>  Sun, 19 Apr 2009 12:41:52 -0500
+
 boost1.38 (1.38.0-3) unstable; urgency=low
 
   * patches/jam-wall-clean.patch: Fix printf formatting in
