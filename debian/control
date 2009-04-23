@@ -18,7 +18,7 @@ Depends: ${shlibs:Depends}
 Conflicts: libboost-dbg, libboost1.35-dbg, libboost1.36-dbg, libboost1.37-dbg
 Suggests: libboost1.38-dev (= ${binary:Version})
 Description: Boost C++ Libraries with debug symbols
- Part of the Boost C++ Libraries collection.
+ This package forms part of the Boost C++ Libraries collection.
  .
  These libraries are built with debug symbols. They are useful to debug
  programs which use Boost. These must be used also at build/link time.
@@ -69,7 +69,7 @@ Architecture: any
 Section: libs
 Depends: ${shlibs:Depends}
 Description: set of date-time libraries based on generic programming concepts
- Part of the Boost C++ Libraries collection.
+ This package forms part of the Boost C++ Libraries collection.
  .
  These libraries are intended to make programming with dates and times
  almost as simple and natural as programming with strings and integers.
@@ -81,7 +81,7 @@ Section: libdevel
 Depends: libboost1.38-dev (= ${binary:Version}), libboost-date-time1.38.0 (= ${binary:Version}), libboost-serialization1.38-dev (= ${binary:Version})
 Conflicts: libboost-date-time-dev (<< 1.35.0), libboost-date-time1.36-dev, libboost-date-time1.37-dev
 Description: set of date-time libraries based on generic programming concepts
- Part of the Boost C++ Libraries collection.
+ This package forms part of the Boost C++ Libraries collection.
  .
  These libraries are intended to make programming with dates and times
  almost as simple and natural as programming with strings and integers.
@@ -92,7 +92,7 @@ Architecture: any
 Section: libs
 Depends: ${shlibs:Depends}
 Description: filesystem operations (portable paths, iteration over directories, etc) in C++
- Part of the Boost C++ Libraries collection.
+ This package forms part of the Boost C++ Libraries collection.
  .
  The Boost Filesystem Library provides portable facilities to query and 
  manipulate paths, files, and directories.  The goal is to
@@ -105,7 +105,7 @@ Section: libdevel
 Depends: libboost1.38-dev (= ${binary:Version}), libboost-filesystem1.38.0 (= ${binary:Version}), libboost-system1.38-dev (= ${binary:Version})
 Conflicts: libboost-filesystem-dev (<< 1.35.0), libboost-filesystem1.35-dev, libboost-filesystem1.36-dev, libboost-filesystem1.37-dev
 Description: filesystem operations (portable paths, iteration over directories, etc) in C++
- Part of the Boost C++ Libraries collection.
+ This package forms part of the Boost C++ Libraries collection.
  .
  The Boost Filesystem Library provides portable facilities to query and 
  manipulate paths, files, and directories.  The goal is to
@@ -118,7 +118,7 @@ Section: libs
 Depends: ${shlibs:Depends}
 Suggests: graphviz
 Description: generic graph components and algorithms in C++
- Part of the Boost C++ Libraries collection.
+ This package forms part of the Boost C++ Libraries collection.
  .
  Graphs are mathematical abstractions that are useful for solving
  many types of problems in computer science. Consequently, these
@@ -134,7 +134,7 @@ Depends: libboost1.38-dev (= ${binary:Version}), libboost-serialization1.38-dev 
 Recommends: libboost-graph1.38.0 (= ${binary:Version})
 Conflicts: libboost-graph-dev (<< 1.35.0), libboost-graph1.35-dev, libboost-graph1.36-dev, libboost-graph1.37-dev
 Description: generic graph components and algorithms in C++
- Part of the Boost C++ Libraries collection.
+ This package forms part of the Boost C++ Libraries collection.
  .
  Graphs are mathematical abstractions that are useful for solving
  many types of problems in computer science. Consequently, these
@@ -148,7 +148,7 @@ Architecture: any
 Section: libs
 Depends: ${shlibs:Depends}
 Description: Boost.Iostreams Library
- Part of the Boost C++ Libraries collection.
+ This package forms part of the Boost C++ Libraries collection.
  .
  Boost.Iostreams are a collection of concepts and set of templates
  which turn models of these concepts into C++ standard library streams
@@ -161,7 +161,7 @@ Section: libdevel
 Depends: libboost1.38-dev (= ${binary:Version}), libboost-regex1.38-dev (= ${binary:Version}), libboost-iostreams1.38.0 (= ${binary:Version})
 Conflicts: libboost-iostreams-dev (<< 1.35.0), libboost-iostreams1.35-dev, libboost-iostreams1.36-dev, libboost-iostreams1.37-dev
 Description: Boost.Iostreams Library development files
- Part of the Boost C++ Libraries collection.
+ This package forms part of the Boost C++ Libraries collection.
  .
  Boost.Iostreams are a collection of concepts and set of templates
  which turn models of these concepts into C++ standard library streams
@@ -173,7 +173,7 @@ Architecture: any
 Section: libs
 Depends: ${shlibs:Depends}
 Description: Boost.Math Library
- Part of the Boost C++ Libraries collection.
+ This package forms part of the Boost C++ Libraries collection.
  .
  This library is divided into three interconnected parts:
   * Statistical Distributions: Provides a reasonably comprehensive set of 
@@ -192,7 +192,7 @@ Architecture: any
 Section: libdevel
 Depends: libboost1.38-dev (= ${binary:Version}), libboost-math1.38.0 (= ${binary:Version})
 Description: Boost.Math Library development files
- Part of the Boost C++ Libraries collection.
+ This package forms part of the Boost C++ Libraries collection.
  .
  This library is divided into three interconnected parts:
   * Statistical Distributions: Provides a reasonably comprehensive set of 
@@ -211,7 +211,7 @@ Architecture: any
 Section: libs
 Depends: ${shlibs:Depends}
 Description: C++ interface to the Message Passing Interface (MPI)
- Part of the Boost C++ Libraries collection.
+ This package forms part of the Boost C++ Libraries collection.
  .
  The Boost.MPI library provides a C++ interface to MPI that
  supports modern C++ development styles, including complete support for
@@ -225,8 +225,8 @@ Architecture: any
 Section: libdevel
 Depends: libboost1.38-dev (= ${binary:Version}), libboost-serialization1.38-dev (= ${binary:Version}), libboost-mpi1.38.0 (= ${binary:Version}), mpi-default-dev
 Conflicts: libboost-mpi1.37-dev
-Description: C++ interface to the Message Passing Interface (MPI) - OpenMPI version
- Part of the Boost C++ Libraries collection.
+Description: C++ interface to the Message Passing Interface (MPI)
+ This package forms part of the Boost C++ Libraries collection.
  .
  The Boost.MPI library provides a C++ interface to MPI that
  supports modern C++ development styles, including complete support for
@@ -240,7 +240,7 @@ Architecture: any
 Section: libs
 Depends: ${shlibs:Depends}
 Description: program options library for C++
- Part of the Boost C++ Libraries collection.
+ This package forms part of the Boost C++ Libraries collection.
  .
  Library to let program developers obtain program options, that is
  (name, value) pairs from the user, via conventional methods such as
@@ -253,7 +253,7 @@ Section: libdevel
 Depends: libboost1.38-dev (= ${binary:Version}), libboost-program-options1.38.0 (= ${binary:Version})
 Conflicts: libboost-program-options-dev (<< 1.35.0), libboost-program-options1.35-dev, libboost-program-options1.36-dev, libboost-program-options1.37-dev
 Description: program options library for C++
- Part of the Boost C++ Libraries collection.
+ This package forms part of the Boost C++ Libraries collection.
  .
  Library to let program developers obtain program options, that is
  (name, value) pairs from the user, via conventional methods such as
@@ -265,7 +265,7 @@ Architecture: any
 Section: python
 Depends: ${shlibs:Depends}
 Description: Boost.Python Library 
- Part of the Boost C++ Libraries collection.
+ This package forms part of the Boost C++ Libraries collection.
  .
  The Boost Python Library is used to quickly and easily export a C++
  library to Python such that the Python interface is very similar to
@@ -286,7 +286,7 @@ Depends: libboost1.38-dev (= ${binary:Version}), libboost-python1.38.0 (= ${bina
 Suggests: libboost1.38-doc
 Conflicts: libboost-python-dev (<< 1.35.0), pyste, libboost-python1.35-dev, libboost-python1.36-dev, libboost-python1.37-dev
 Description: Boost.Python Library development files
- Part of the Boost C++ Libraries collection.
+ This package forms part of the Boost C++ Libraries collection.
  .
  The Boost Python Library is used to quickly and easily export a C++
  library to Python such that the Python interface is very similar to
@@ -314,7 +314,7 @@ Architecture: any
 Section: libs
 Depends: ${shlibs:Depends}
 Description: regular expression library for C++
- Part of the Boost C++ Libraries collection.
+ This package forms part of the Boost C++ Libraries collection.
  .
  Regular expressions are a form of pattern-matching that are often
  used in text processing; many users will be familiar with the Unix
@@ -334,7 +334,7 @@ Section: libdevel
 Depends: libboost1.38-dev (= ${binary:Version}), libboost-regex1.38.0 (= ${binary:Version}), libicu-dev
 Conflicts: libboost-regex-dev (<< 1.35.0), libboost-regex1.35-dev, libboost-regex1.36-dev, libboost-regex1.37-dev
 Description: regular expression library for C++
- Part of the Boost C++ Libraries collection.
+ This package forms part of the Boost C++ Libraries collection.
  .
  Regular expressions are a form of pattern-matching that are often
  used in text processing; many users will be familiar with the Unix
@@ -353,7 +353,8 @@ Architecture: any
 Section: libs
 Depends: ${shlibs:Depends}
 Description: serialization library for C++
- This is a partial list of provided functionalities:
+ This package forms part of the Boost C++ Libraries collection,
+ containing the following functionalities:
  .
   * proper restoration of pointers to shared data
   * serialization of STL containers and other commonly used templates
@@ -362,8 +363,8 @@ Description: serialization library for C++
   * archive interface must be rich enough to permit the creation of an
     archive that presents serialized data as XML in a useful manner
  .
- serialization: the reversible deconstruction of an arbitrary set of
- C++ data structures to a sequence of bytes.
+ Here, "serialization" means the reversible deconstruction of an
+ arbitrary set of C++ data structures to a sequence of bytes.
  archive: to refer to a specific rendering of this stream of bytes.
 
 Package: libboost-serialization1.38-dev
@@ -373,7 +374,8 @@ Section: libdevel
 Depends: libboost1.38-dev (= ${binary:Version}), libboost-serialization1.38.0 (= ${binary:Version})
 Conflicts: libboost-serialization-dev (<< 1.35.0), libboost-serialization1.35-dev, libboost-serialization1.36-dev, libboost-serialization1.37-dev
 Description: serialization library for C++
- This is a partial list of provided functionalities:
+ This package forms part of the Boost C++ Libraries collection,
+ containing the following functionalities:
  .
   * proper restoration of pointers to shared data
   * serialization of STL containers and other commonly used templates
@@ -382,8 +384,8 @@ Description: serialization library for C++
   * archive interface must be rich enough to permit the creation of an
     archive that presents serialized data as XML in a useful manner
  .
- serialization: the reversible deconstruction of an arbitrary set of
- C++ data structures to a sequence of bytes.
+ Here, "serialization" means the reversible deconstruction of an
+ arbitrary set of C++ data structures to a sequence of bytes.
  archive: to refer to a specific rendering of this stream of bytes.
 
 Package: libboost-signals1.38.0
@@ -392,7 +394,7 @@ Architecture: any
 Section: libs
 Depends: ${shlibs:Depends}
 Description: managed signals and slots library for C++
- Part of the Boost C++ Libraries collection.
+ This package forms part of the Boost C++ Libraries collection.
  .
  Signals represent callbacks with multiple targets, and are also
  called publishers or events in similar systems. Signals are connected
@@ -407,7 +409,7 @@ Section: libdevel
 Depends: libboost1.38-dev (= ${binary:Version}), libboost-signals1.38.0 (= ${binary:Version})
 Conflicts: libboost-signals-dev (<< 1.35.0), libboost-signals1.35-dev, libboost-signals1.36-dev, libboost-signals1.37-dev
 Description: managed signals and slots library for C++
- Part of the Boost C++ Libraries collection.
+ This package forms part of the Boost C++ Libraries collection.
  .
  Signals represent callbacks with multiple targets, and are also
  called publishers or events in similar systems. Signals are connected
@@ -421,7 +423,7 @@ Architecture: any
 Section: libs
 Depends: ${shlibs:Depends}
 Description: Operating system (e.g. diagnostics support) library
- Part of the Boost C++ Libraries collection.
+ This package forms part of the Boost C++ Libraries collection.
  .
  The Boost System library provides simple, light-weight error_code
  objects that encapsulate system-specific error code values, yet also
@@ -437,7 +439,7 @@ Architecture: any
 Section: libdevel
 Depends: libboost1.38-dev (= ${binary:Version}), libboost-system1.38.0 (= ${binary:Version})
 Description: Operating system (e.g. diagnostics support) library
- Part of the Boost C++ Libraries collection.
+ This package forms part of the Boost C++ Libraries collection.
  .
  The Boost System library provides simple, light-weight error_code
  objects that encapsulate system-specific error code values, yet also
@@ -453,7 +455,7 @@ Architecture: any
 Section: libs
 Depends: ${shlibs:Depends}
 Description: components for writing and executing test suites
- Part of the Boost C++ Libraries collection.  The library contains
+ This package forms part of the Boost C++ Libraries collection.  The library contains
  several components.
  .
   * Basic execution, error detection, and reporting facility.
@@ -467,7 +469,7 @@ Section: libdevel
 Depends: libboost1.38-dev (= ${binary:Version}), libboost-test1.38.0 (= ${binary:Version})
 Conflicts: libboost-test-dev (<< 1.35.0), libboost-test1.35-dev, libboost-test1.36-dev, libboost-test1.37-dev
 Description: components for writing and executing test suites
- Part of the Boost C++ Libraries collection.  The library contains
+ This package forms part of the Boost C++ Libraries collection.  The library contains
  several components.
  .
   * Basic execution, error detection, and reporting facility.
@@ -480,7 +482,7 @@ Architecture: any
 Section: libs
 Depends: ${shlibs:Depends}
 Description: portable C++ multi-threading
- Part of the Boost C++ Libraries collection.
+ This package forms part of the Boost C++ Libraries collection.
  .
  Toolkit for writing C++ programs that execute as multiple,
  asynchronous, independent, threads-of-execution. Each thread has its
@@ -494,7 +496,7 @@ Section: libdevel
 Depends: libboost1.38-dev (= ${binary:Version}), libboost-date-time1.38-dev (= ${binary:Version}), libboost-thread1.38.0 (= ${binary:Version})
 Conflicts: libboost-thread-dev (<< 1.35.0), libboost-thread1.35-dev, libboost-thread1.36-dev, libboost-thread1.37-dev
 Description: portable C++ multi-threading
- Part of the Boost C++ Libraries collection.
+ This package forms part of the Boost C++ Libraries collection.
  .
  Toolkit for writing C++ programs that execute as multiple,
  asynchronous, independent, threads-of-execution. Each thread has its
@@ -507,7 +509,7 @@ Architecture: any
 Section: libs
 Depends: ${shlibs:Depends}
 Description: C99/C++ preprocessor library
- Part of the Boost C++ Libraries collection.
+ This package forms part of the Boost C++ Libraries collection.
  .
  The Wave C++ preprocessor library is a Standards conformant
  implementation of the mandated C99/C++ preprocessor functionality
@@ -521,7 +523,7 @@ Section: libdevel
 Depends: libboost1.38-dev (= ${binary:Version}), libboost-serialization1.38-dev (= ${binary:Version}), libboost-wave1.38.0 (= ${binary:Version}), libboost-filesystem1.38-dev (= ${binary:Version})
 Conflicts: libboost-wave-dev (<< 1.35.0), libboost-wave1.35-dev, libboost-wave1.36-dev, libboost-wave1.37-dev
 Description: C99/C++ preprocessor library
- Part of the Boost C++ Libraries collection.
+ This package forms part of the Boost C++ Libraries collection.
  .
  The Wave C++ preprocessor library is a Standards conformant
  implementation of the mandated C99/C++ preprocessor functionality
