@@ -455,8 +455,8 @@ Architecture: any
 Section: libs
 Depends: ${shlibs:Depends}
 Description: components for writing and executing test suites
- This package forms part of the Boost C++ Libraries collection.  The library contains
- several components.
+ This package forms part of the Boost C++ Libraries collection.  The
+ library contains several components.
  .
   * Basic execution, error detection, and reporting facility.
   * Facilities to monitor program execution and produce error reports.
@@ -469,8 +469,8 @@ Section: libdevel
 Depends: libboost1.38-dev (= ${binary:Version}), libboost-test1.38.0 (= ${binary:Version})
 Conflicts: libboost-test-dev (<< 1.35.0), libboost-test1.35-dev, libboost-test1.36-dev, libboost-test1.37-dev
 Description: components for writing and executing test suites
- This package forms part of the Boost C++ Libraries collection.  The library contains
- several components.
+ This package forms part of the Boost C++ Libraries collection.  The
+ library contains several components.
  .
   * Basic execution, error detection, and reporting facility.
   * Facilities to monitor program execution and produce error reports.
