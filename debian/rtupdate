@@ -49,7 +49,7 @@ remove() {
 
 debug=
 case "$0" in
-    */libboost-dbg.rtupdate)  debug=-d ;;
+    */libboost*-dbg.rtupdate)  debug=-d ;;
 esac
 
 action="$1"
