@@ -15,7 +15,7 @@ Architecture: any
 Section: debug
 Priority: extra
 Depends: ${shlibs:Depends}
-Conflicts: libboost-dbg, libboost1.35-dbg, libboost1.36-dbg, libboost1.37-dbg
+Conflicts: libboost-dbg (<< 1.35.0), libboost1.35-dbg, libboost1.36-dbg, libboost1.37-dbg
 Suggests: libboost1.38-dev (= ${binary:Version})
 Description: Boost C++ Libraries with debug symbols
  This package forms part of the Boost C++ Libraries collection.
@@ -49,7 +49,7 @@ Homepage: http://www.boost.org/libs/
 Architecture: all
 Section: doc
 Suggests: libboost1.38-dev (>= ${source:Version})
-Conflicts: libboost-doc, libboost1.35-doc, libboost1.36-doc, libboost1.37-doc
+Conflicts: libboost-doc (<< 1.35.0), libboost1.35-doc, libboost1.36-doc, libboost1.37-doc
 Description: Boost.org libraries documentation
  The Boost web site provides free, peer-reviewed, portable C++ source
  libraries. The emphasis is on libraries which work well with the C++
