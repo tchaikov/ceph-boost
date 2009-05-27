@@ -1,3 +1,10 @@
+boost1.38 (1.38.0-7) unstable; urgency=low
+
+  * control(libboost1.38-dev): downgrade libboost1.38-doc to a Suggests.
+    Closes: #529258.
+
+ -- Steve M. Robbins <smr@debian.org>  Tue, 26 May 2009 23:10:53 -0500
+
 boost1.38 (1.38.0-6) unstable; urgency=low
 
   * control: Add version (<< 1.35.0) to conflicts for -doc and -dbg
