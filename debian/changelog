@@ -2,8 +2,15 @@ boost1.38 (1.38.0-7) unstable; urgency=low
 
   * control(libboost1.38-dev): downgrade the -doc and all -dev packages to Suggests.
     Closes: #529258, #529622.
+  
+  * patches/boost-python-examples.patch: New.  Patch example Jamroot to
+    use installed libboost_python (thanks, Georg Schmid).  
+    Closes: #452410.
 
- -- Steve M. Robbins <smr@debian.org>  Tue, 26 May 2009 23:10:53 -0500
+  * libboost-doc.README.Debian: Explain how to build Boost.Python
+    examples.
+
+ -- Steve M. Robbins <smr@debian.org>  Sat, 30 May 2009 10:10:38 -0500
 
 boost1.38 (1.38.0-6) unstable; urgency=low
 

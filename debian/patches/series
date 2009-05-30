@@ -1,3 +1,4 @@
+boost-python-examples.patch
 function-template.patch
 atomic_count.patch
 atomic_count_gcc.patch
