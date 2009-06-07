@@ -1,8 +1,11 @@
 boost1.38 (1.38.0-7) unstable; urgency=low
 
   * control(libboost1.38-dev): downgrade the -doc and all -dev packages to Suggests.
-    Closes: #529258, #529622.
-  
+    Closes: #529258, #529622.  Add build-conflict against boost-build;
+    otherwise bjam fails with diagnostic "duplicate initialization of gcc ..."
+    because both /etc/site-config.jam and ./user-config.jam have
+    "using gcc" lines.
+
   * patches/boost-python-examples.patch: New.  Patch example Jamroot to
     use installed libboost_python (thanks, Georg Schmid).  
     Closes: #452410.
@@ -10,7 +13,7 @@ boost1.38 (1.38.0-7) unstable; urgency=low
   * libboost-doc.README.Debian: Explain how to build Boost.Python
     examples.
 
- -- Steve M. Robbins <smr@debian.org>  Sat, 30 May 2009 10:10:38 -0500
+ -- Steve M. Robbins <smr@debian.org>  Sun, 07 Jun 2009 12:55:19 -0500
 
 boost1.38 (1.38.0-6) unstable; urgency=low
 
