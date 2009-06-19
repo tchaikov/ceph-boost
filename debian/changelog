@@ -12,11 +12,16 @@ boost1.38 (1.38.0-7) unstable; urgency=low
   * patches/boost-python-examples.patch: New.  Patch example Jamroot to
     use installed libboost_python (thanks, Georg Schmid).  
     Closes: #452410.
+  
+  * rules: Set OMPI_MCA_disable_memory_allocator=1 to work around bad
+    interaction between fakeroot and OpenMPI.  Closes: #531415.
+  * control: Build-conflict with libopenmpi-dev version in unstable that
+    contains this bug.
 
   * libboost-doc.README.Debian: Explain how to build Boost.Python
     examples.
 
- -- Steve M. Robbins <smr@debian.org>  Sun, 07 Jun 2009 13:28:30 -0500
+ -- Steve M. Robbins <smr@debian.org>  Thu, 18 Jun 2009 21:03:30 -0500
 
 boost1.38 (1.38.0-6) unstable; urgency=low
 

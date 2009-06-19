@@ -1,11 +1,12 @@
 #! /usr/bin/make -f
 
-# Uncomment this to turn on verbose mode.
-#export DH_VERBOSE=1
+include /usr/share/quilt/quilt.make
 
 export DH_OPTIONS
 
-include /usr/share/quilt/quilt.make
+# Fix for mpicc.openmpi segfaulting under fakeroot; see #531415
+# This can be removed when fakeroot does this itself.
+export OMPI_MCA_disable_memory_allocator=1
 
 # set the number of build jobs
 ifneq (,$(filter parallel=%,$(DEB_BUILD_OPTIONS)))
