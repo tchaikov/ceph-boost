@@ -21,7 +21,9 @@ boost1.38 (1.38.0-7) unstable; urgency=low
   * libboost-doc.README.Debian: Explain how to build Boost.Python
     examples.
 
- -- Steve M. Robbins <smr@debian.org>  Thu, 18 Jun 2009 21:03:30 -0500
+  * rules: Build and install tools inspect and quickbook.
+
+ -- Steve M. Robbins <smr@debian.org>  Fri, 26 Jun 2009 12:04:11 -0500
 
 boost1.38 (1.38.0-6) unstable; urgency=low
 
