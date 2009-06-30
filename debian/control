@@ -28,7 +28,7 @@ Package: libboost1.38-dev
 Architecture: any
 Section: libdevel
 Depends: ${shlibs:Depends}, libstdc++-dev
-Suggests: libboost1.38-doc, libboost-date-time1.38-dev, libboost-filesystem1.38-dev, libboost-graph1.38-dev, libboost-iostreams1.38-dev, libboost-math1.38-dev, libboost-mpi1.38-dev, libboost-program-options1.38-dev, libboost-python1.38-dev, libboost-regex1.38-dev, libboost-serialization1.38-dev, libboost-signals1.38-dev, libboost-system1.38-dev, libboost-test1.38-dev, libboost-thread1.38-dev, libboost-wave1.38-dev
+Suggests: libboost1.38-doc, libboost-date-time1.38-dev, libboost-filesystem1.38-dev, libboost-graph1.38-dev, libboost-iostreams1.38-dev, libboost-math1.38-dev, libboost-mpi1.38-dev, libboost-program-options1.38-dev, libboost-python1.38-dev, libboost-regex1.38-dev, libboost-serialization1.38-dev, libboost-signals1.38-dev, libboost-system1.38-dev, libboost-test1.38-dev, libboost-thread1.38-dev, libboost-wave1.38-dev, xsltproc, doxygen, docbook-xml (>= 4.2), docbook-xsl (>= 1.73.2), default-jdk (>= 1.4), fop (>= 0.94)
 Conflicts: libboost-dev (<< 1.35.0), bcp, libboost1.35-dev, libboost1.36-dev, libboost1.37-dev
 Replaces: bcp
 Provides: bcp

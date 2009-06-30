@@ -21,9 +21,11 @@ boost1.38 (1.38.0-7) unstable; urgency=low
   * libboost-doc.README.Debian: Explain how to build Boost.Python
     examples.
 
-  * rules: Build and install tools inspect and quickbook.
+  * rules: Build and install tools inspect and quickbook.  Closes: #531653.
+  * control: Add suggests for xsltproc, doxygen, docbook-xml, docbook-xsl,
+    default-jdk, and fop to support quickbook.
 
- -- Steve M. Robbins <smr@debian.org>  Fri, 26 Jun 2009 12:04:11 -0500
+ -- Steve M. Robbins <smr@debian.org>  Mon, 29 Jun 2009 21:50:17 -0500
 
 boost1.38 (1.38.0-6) unstable; urgency=low
 
