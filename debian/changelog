@@ -1,3 +1,14 @@
+boost1.39 (1.39.0-1) unstable; urgency=low
+
+  * New upstream.  Closes: #533822.
+    - patches/function-template.patch:
+    - patches/atomic_count.patch:
+    - patches/atomic_count_gcc.patch:
+    - patches/library-naming.patch:
+    - patches/sp_counted_base.patch: Remove.  Applied upstream.
+
+ -- Steve M. Robbins <smr@debian.org>  Wed, 01 Jul 2009 02:59:48 -0500
+
 boost1.38 (1.38.0-7) unstable; urgency=low
 
   * control(libboost1.38-dev): downgrade the -doc and all -dev packages to Suggests.

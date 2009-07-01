@@ -1,4 +1,4 @@
-Source: boost1.38
+Source: boost1.39
 Homepage: http://www.boost.org/
 Section: libs
 Priority: optional
@@ -11,25 +11,25 @@ Vcs-Browser: http://svn.debian.org/wsvn/pkg-boost/boost/trunk/
 Vcs-Svn: svn://svn.debian.org/svn/pkg-boost/boost/trunk
 Standards-Version: 3.8.0
 
-Package: libboost1.38-dbg
+Package: libboost1.39-dbg
 Architecture: any
 Section: debug
 Priority: extra
 Depends: ${shlibs:Depends}
-Conflicts: libboost-dbg (<< 1.35.0), libboost1.35-dbg, libboost1.36-dbg, libboost1.37-dbg
-Suggests: libboost1.38-dev (= ${binary:Version})
+Conflicts: libboost-dbg (<< 1.35.0), libboost1.35-dbg, libboost1.36-dbg, libboost1.37-dbg, libboost1.38-dbg
+Suggests: libboost1.39-dev (= ${binary:Version})
 Description: Boost C++ Libraries with debug symbols
  This package forms part of the Boost C++ Libraries collection.
  .
  These libraries are built with debug symbols. They are useful to debug
  programs which use Boost. These must be used also at build/link time.
 
-Package: libboost1.38-dev
+Package: libboost1.39-dev
 Architecture: any
 Section: libdevel
 Depends: ${shlibs:Depends}, libstdc++-dev
-Suggests: libboost1.38-doc, libboost-date-time1.38-dev, libboost-filesystem1.38-dev, libboost-graph1.38-dev, libboost-iostreams1.38-dev, libboost-math1.38-dev, libboost-mpi1.38-dev, libboost-program-options1.38-dev, libboost-python1.38-dev, libboost-regex1.38-dev, libboost-serialization1.38-dev, libboost-signals1.38-dev, libboost-system1.38-dev, libboost-test1.38-dev, libboost-thread1.38-dev, libboost-wave1.38-dev, xsltproc, doxygen, docbook-xml (>= 4.2), docbook-xsl (>= 1.73.2), default-jdk (>= 1.4), fop (>= 0.94)
-Conflicts: libboost-dev (<< 1.35.0), bcp, libboost1.35-dev, libboost1.36-dev, libboost1.37-dev
+Suggests: libboost1.39-doc, libboost-date-time1.39-dev, libboost-filesystem1.39-dev, libboost-graph1.39-dev, libboost-iostreams1.39-dev, libboost-math1.39-dev, libboost-mpi1.39-dev, libboost-program-options1.39-dev, libboost-python1.39-dev, libboost-regex1.39-dev, libboost-serialization1.39-dev, libboost-signals1.39-dev, libboost-system1.39-dev, libboost-test1.39-dev, libboost-thread1.39-dev, libboost-wave1.39-dev, xsltproc, doxygen, docbook-xml (>= 4.2), docbook-xsl (>= 1.73.2), default-jdk (>= 1.4), fop (>= 0.94)
+Conflicts: libboost-dev (<< 1.35.0), bcp, libboost1.35-dev, libboost1.36-dev, libboost1.37-dev, libboost1.38-dev
 Replaces: bcp
 Provides: bcp
 Description: Boost C++ Libraries development files
@@ -47,12 +47,12 @@ Description: Boost C++ Libraries development files
  filesystem, graph, iostreams, math, mpi, program_options, python,
  regex, serialization, signals, system, test, thread, and wave.
 
-Package: libboost1.38-doc
+Package: libboost1.39-doc
 Homepage: http://www.boost.org/libs/
 Architecture: all
 Section: doc
-Suggests: libboost1.38-dev (>= ${source:Version})
-Conflicts: libboost-doc (<< 1.35.0), libboost1.35-doc, libboost1.36-doc, libboost1.37-doc
+Suggests: libboost1.39-dev (>= ${source:Version})
+Conflicts: libboost-doc (<< 1.35.0), libboost1.35-doc, libboost1.36-doc, libboost1.37-doc, libboost1.38-doc
 Description: Boost.org libraries documentation
  The Boost web site provides free, peer-reviewed, portable C++ source
  libraries. The emphasis is on libraries which work well with the C++
@@ -62,11 +62,11 @@ Description: Boost.org libraries documentation
  already been proposed for inclusion in the C++ Standards Committee's
  upcoming C++ Standard Library Technical Report.
  .
- This is documentation for the libboost1.38-dev package in HTML format.
- Some pages point to header files provided in libboost1.38-dev package,
+ This is documentation for the libboost1.39-dev package in HTML format.
+ Some pages point to header files provided in libboost1.39-dev package,
  so it is suggested to install the latter as well.
 
-Package: libboost-date-time1.38.0
+Package: libboost-date-time1.39.0
 Homepage: http://www.boost.org/libs/date_time/
 Architecture: any
 Section: libs
@@ -77,19 +77,19 @@ Description: set of date-time libraries based on generic programming concepts
  These libraries are intended to make programming with dates and times
  almost as simple and natural as programming with strings and integers.
 
-Package: libboost-date-time1.38-dev
+Package: libboost-date-time1.39-dev
 Homepage: http://www.boost.org/libs/date_time/
 Architecture: any
 Section: libdevel
-Depends: libboost1.38-dev (= ${binary:Version}), libboost-date-time1.38.0 (= ${binary:Version}), libboost-serialization1.38-dev (= ${binary:Version})
-Conflicts: libboost-date-time-dev (<< 1.35.0), libboost-date-time1.36-dev, libboost-date-time1.37-dev
+Depends: libboost1.39-dev (= ${binary:Version}), libboost-date-time1.39.0 (= ${binary:Version}), libboost-serialization1.39-dev (= ${binary:Version})
+Conflicts: libboost-date-time-dev (<< 1.35.0), libboost-date-time1.36-dev, libboost-date-time1.37-dev, libboost-date-time1.38-dev
 Description: set of date-time libraries based on generic programming concepts
  This package forms part of the Boost C++ Libraries collection.
  .
  These libraries are intended to make programming with dates and times
  almost as simple and natural as programming with strings and integers.
 
-Package: libboost-filesystem1.38.0
+Package: libboost-filesystem1.39.0
 Homepage: http://boost.org/libs/filesystem/
 Architecture: any
 Section: libs
@@ -101,12 +101,12 @@ Description: filesystem operations (portable paths, iteration over directories, 
  manipulate paths, files, and directories.  The goal is to
  facilitate portable script-like operations from within C++ programs.
 
-Package: libboost-filesystem1.38-dev
+Package: libboost-filesystem1.39-dev
 Homepage: http://boost.org/libs/filesystem/
 Architecture: any
 Section: libdevel
-Depends: libboost1.38-dev (= ${binary:Version}), libboost-filesystem1.38.0 (= ${binary:Version}), libboost-system1.38-dev (= ${binary:Version})
-Conflicts: libboost-filesystem-dev (<< 1.35.0), libboost-filesystem1.35-dev, libboost-filesystem1.36-dev, libboost-filesystem1.37-dev
+Depends: libboost1.39-dev (= ${binary:Version}), libboost-filesystem1.39.0 (= ${binary:Version}), libboost-system1.39-dev (= ${binary:Version})
+Conflicts: libboost-filesystem-dev (<< 1.35.0), libboost-filesystem1.35-dev, libboost-filesystem1.36-dev, libboost-filesystem1.37-dev, libboost-filesystem1.38-dev
 Description: filesystem operations (portable paths, iteration over directories, etc) in C++
  This package forms part of the Boost C++ Libraries collection.
  .
@@ -114,7 +114,7 @@ Description: filesystem operations (portable paths, iteration over directories, 
  manipulate paths, files, and directories.  The goal is to
  facilitate portable script-like operations from within C++ programs.
 
-Package: libboost-graph1.38.0
+Package: libboost-graph1.39.0
 Homepage: http://www.boost.org/libs/graph/
 Architecture: any
 Section: libs
@@ -129,13 +129,13 @@ Description: generic graph components and algorithms in C++
  standardized generic interface for traversing graphs is of utmost
  importance to encourage reuse of graph algorithms and data structures.
 
-Package: libboost-graph1.38-dev
+Package: libboost-graph1.39-dev
 Homepage: http://www.boost.org/libs/graph/
 Architecture: any
 Section: libdevel
-Depends: libboost1.38-dev (= ${binary:Version}), libboost-serialization1.38-dev (= ${binary:Version}), libboost-test1.38-dev (= ${binary:Version})
-Recommends: libboost-graph1.38.0 (= ${binary:Version})
-Conflicts: libboost-graph-dev (<< 1.35.0), libboost-graph1.35-dev, libboost-graph1.36-dev, libboost-graph1.37-dev
+Depends: libboost1.39-dev (= ${binary:Version}), libboost-serialization1.39-dev (= ${binary:Version}), libboost-test1.39-dev (= ${binary:Version})
+Recommends: libboost-graph1.39.0 (= ${binary:Version})
+Conflicts: libboost-graph-dev (<< 1.35.0), libboost-graph1.35-dev, libboost-graph1.36-dev, libboost-graph1.37-dev, libboost-graph1.38-dev
 Description: generic graph components and algorithms in C++
  This package forms part of the Boost C++ Libraries collection.
  .
@@ -145,7 +145,7 @@ Description: generic graph components and algorithms in C++
  standardized generic interface for traversing graphs is of utmost
  importance to encourage reuse of graph algorithms and data structures.
 
-Package: libboost-iostreams1.38.0
+Package: libboost-iostreams1.39.0
 Homepage: http://www.boost.org/libs/iostreams/
 Architecture: any
 Section: libs
@@ -157,12 +157,12 @@ Description: Boost.Iostreams Library
  which turn models of these concepts into C++ standard library streams
  and stream buffers.
 
-Package: libboost-iostreams1.38-dev
+Package: libboost-iostreams1.39-dev
 Homepage: http://www.boost.org/libs/iostreams/
 Architecture: any
 Section: libdevel
-Depends: libboost1.38-dev (= ${binary:Version}), libboost-regex1.38-dev (= ${binary:Version}), libboost-iostreams1.38.0 (= ${binary:Version})
-Conflicts: libboost-iostreams-dev (<< 1.35.0), libboost-iostreams1.35-dev, libboost-iostreams1.36-dev, libboost-iostreams1.37-dev
+Depends: libboost1.39-dev (= ${binary:Version}), libboost-regex1.39-dev (= ${binary:Version}), libboost-iostreams1.39.0 (= ${binary:Version})
+Conflicts: libboost-iostreams-dev (<< 1.35.0), libboost-iostreams1.35-dev, libboost-iostreams1.36-dev, libboost-iostreams1.37-dev, libboost-iostreams1.38-dev
 Description: Boost.Iostreams Library development files
  This package forms part of the Boost C++ Libraries collection.
  .
@@ -170,7 +170,7 @@ Description: Boost.Iostreams Library development files
  which turn models of these concepts into C++ standard library streams
  and stream buffers.
 
-Package: libboost-math1.38.0
+Package: libboost-math1.39.0
 Homepage: http://www.boost.org/libs/math/
 Architecture: any
 Section: libs
@@ -189,11 +189,11 @@ Description: Boost.Math Library
   * Implementation Toolkit: Provides many of the tools required to implement 
     mathematical special functions.
 
-Package: libboost-math1.38-dev
+Package: libboost-math1.39-dev
 Homepage: http://www.boost.org/libs/math/
 Architecture: any
 Section: libdevel
-Depends: libboost1.38-dev (= ${binary:Version}), libboost-math1.38.0 (= ${binary:Version})
+Depends: libboost1.39-dev (= ${binary:Version}), libboost-math1.39.0 (= ${binary:Version})
 Description: Boost.Math Library development files
  This package forms part of the Boost C++ Libraries collection.
  .
@@ -208,7 +208,7 @@ Description: Boost.Math Library development files
   * Implementation Toolkit: Provides many of the tools required to implement 
     mathematical special functions.
 
-Package: libboost-mpi1.38.0
+Package: libboost-mpi1.39.0
 Homepage: http://www.boost.org/doc/html/mpi.html
 Architecture: any
 Section: libs
@@ -222,12 +222,12 @@ Description: C++ interface to the Message Passing Interface (MPI)
  objects for collective algorithms, and the use of modern C++ library
  techniques to maintain maximal efficiency.
 
-Package: libboost-mpi1.38-dev
+Package: libboost-mpi1.39-dev
 Homepage: http://www.boost.org/doc/html/mpi.html
 Architecture: any
 Section: libdevel
-Depends: libboost1.38-dev (= ${binary:Version}), libboost-serialization1.38-dev (= ${binary:Version}), libboost-mpi1.38.0 (= ${binary:Version}), mpi-default-dev
-Conflicts: libboost-mpi1.37-dev
+Depends: libboost1.39-dev (= ${binary:Version}), libboost-serialization1.39-dev (= ${binary:Version}), libboost-mpi1.39.0 (= ${binary:Version}), mpi-default-dev
+Conflicts: libboost-mpi1.37-dev, libboost-mpi1.38-dev
 Description: C++ interface to the Message Passing Interface (MPI)
  This package forms part of the Boost C++ Libraries collection.
  .
@@ -237,7 +237,7 @@ Description: C++ interface to the Message Passing Interface (MPI)
  objects for collective algorithms, and the use of modern C++ library
  techniques to maintain maximal efficiency.
 
-Package: libboost-program-options1.38.0
+Package: libboost-program-options1.39.0
 Homepage: http://www.boost.org/libs/program_options/
 Architecture: any
 Section: libs
@@ -249,12 +249,12 @@ Description: program options library for C++
  (name, value) pairs from the user, via conventional methods such as
  command line and config file.
 
-Package: libboost-program-options1.38-dev
+Package: libboost-program-options1.39-dev
 Homepage: http://www.boost.org/libs/program_options/
 Architecture: any
 Section: libdevel
-Depends: libboost1.38-dev (= ${binary:Version}), libboost-program-options1.38.0 (= ${binary:Version})
-Conflicts: libboost-program-options-dev (<< 1.35.0), libboost-program-options1.35-dev, libboost-program-options1.36-dev, libboost-program-options1.37-dev
+Depends: libboost1.39-dev (= ${binary:Version}), libboost-program-options1.39.0 (= ${binary:Version})
+Conflicts: libboost-program-options-dev (<< 1.35.0), libboost-program-options1.35-dev, libboost-program-options1.36-dev, libboost-program-options1.37-dev, libboost-program-options1.38-dev
 Description: program options library for C++
  This package forms part of the Boost C++ Libraries collection.
  .
@@ -262,7 +262,7 @@ Description: program options library for C++
  (name, value) pairs from the user, via conventional methods such as
  command line and config file.
 
-Package: libboost-python1.38.0
+Package: libboost-python1.39.0
 Homepage: http://www.boost.org/libs/python/
 Architecture: any
 Section: python
@@ -281,13 +281,13 @@ Description: Boost.Python Library
  in Python, Member function Overloading, Automatic wrapping of
  numeric operators among others.
 
-Package: libboost-python1.38-dev
+Package: libboost-python1.39-dev
 Homepage: http://www.boost.org/libs/python/
 Architecture: any
 Section: libdevel
-Depends: libboost1.38-dev (= ${binary:Version}), libboost-python1.38.0 (= ${binary:Version}), python-dev, ${python:Depends}, python (>= 2.5) | python-celementtree | python-elementtree, gccxml
-Suggests: libboost1.38-doc
-Conflicts: libboost-python-dev (<< 1.35.0), pyste, libboost-python1.35-dev, libboost-python1.36-dev, libboost-python1.37-dev
+Depends: libboost1.39-dev (= ${binary:Version}), libboost-python1.39.0 (= ${binary:Version}), python-dev, ${python:Depends}, python (>= 2.5) | python-celementtree | python-elementtree, gccxml
+Suggests: libboost1.39-doc
+Conflicts: libboost-python-dev (<< 1.35.0), pyste, libboost-python1.35-dev, libboost-python1.36-dev, libboost-python1.37-dev, libboost-python1.38-dev
 Description: Boost.Python Library development files
  This package forms part of the Boost C++ Libraries collection.
  .
@@ -311,7 +311,7 @@ Description: Boost.Python Library development files
  versions of Python in Debian.  Code using this library will need also
  one of the Python development packages.
 
-Package: libboost-regex1.38.0
+Package: libboost-regex1.39.0
 Homepage: http://www.boost.org/libs/regex/
 Architecture: any
 Section: libs
@@ -330,12 +330,12 @@ Description: regular expression library for C++
  manner analogous to either sed or perl), something that traditional C
  libraries can not do.
 
-Package: libboost-regex1.38-dev
+Package: libboost-regex1.39-dev
 Homepage: http://www.boost.org/libs/regex/
 Architecture: any
 Section: libdevel
-Depends: libboost1.38-dev (= ${binary:Version}), libboost-regex1.38.0 (= ${binary:Version}), libicu-dev
-Conflicts: libboost-regex-dev (<< 1.35.0), libboost-regex1.35-dev, libboost-regex1.36-dev, libboost-regex1.37-dev
+Depends: libboost1.39-dev (= ${binary:Version}), libboost-regex1.39.0 (= ${binary:Version}), libicu-dev
+Conflicts: libboost-regex-dev (<< 1.35.0), libboost-regex1.35-dev, libboost-regex1.36-dev, libboost-regex1.37-dev, libboost-regex1.38-dev
 Description: regular expression library for C++
  This package forms part of the Boost C++ Libraries collection.
  .
@@ -350,7 +350,7 @@ Description: regular expression library for C++
  manner analogous to either sed or perl), something that traditional C
  libraries can not do.
 
-Package: libboost-serialization1.38.0
+Package: libboost-serialization1.39.0
 Homepage: http://www.boost.org/libs/serialization/
 Architecture: any
 Section: libs
@@ -370,12 +370,12 @@ Description: serialization library for C++
  arbitrary set of C++ data structures to a sequence of bytes.
  archive: to refer to a specific rendering of this stream of bytes.
 
-Package: libboost-serialization1.38-dev
+Package: libboost-serialization1.39-dev
 Homepage: http://www.boost.org/libs/serialization/
 Architecture: any
 Section: libdevel
-Depends: libboost1.38-dev (= ${binary:Version}), libboost-serialization1.38.0 (= ${binary:Version})
-Conflicts: libboost-serialization-dev (<< 1.35.0), libboost-serialization1.35-dev, libboost-serialization1.36-dev, libboost-serialization1.37-dev
+Depends: libboost1.39-dev (= ${binary:Version}), libboost-serialization1.39.0 (= ${binary:Version})
+Conflicts: libboost-serialization-dev (<< 1.35.0), libboost-serialization1.35-dev, libboost-serialization1.36-dev, libboost-serialization1.37-dev, libboost-serialization1.38-dev
 Description: serialization library for C++
  This package forms part of the Boost C++ Libraries collection,
  containing the following functionalities:
@@ -391,7 +391,7 @@ Description: serialization library for C++
  arbitrary set of C++ data structures to a sequence of bytes.
  archive: to refer to a specific rendering of this stream of bytes.
 
-Package: libboost-signals1.38.0
+Package: libboost-signals1.39.0
 Homepage: http://www.boost.org/libs/signals/
 Architecture: any
 Section: libs
@@ -405,12 +405,12 @@ Description: managed signals and slots library for C++
  targets or subscribers), which are called when the signal is
  "emitted."
 
-Package: libboost-signals1.38-dev
+Package: libboost-signals1.39-dev
 Homepage: http://www.boost.org/libs/signals/
 Architecture: any
 Section: libdevel
-Depends: libboost1.38-dev (= ${binary:Version}), libboost-signals1.38.0 (= ${binary:Version})
-Conflicts: libboost-signals-dev (<< 1.35.0), libboost-signals1.35-dev, libboost-signals1.36-dev, libboost-signals1.37-dev
+Depends: libboost1.39-dev (= ${binary:Version}), libboost-signals1.39.0 (= ${binary:Version})
+Conflicts: libboost-signals-dev (<< 1.35.0), libboost-signals1.35-dev, libboost-signals1.36-dev, libboost-signals1.37-dev, libboost-signals1.38-dev
 Description: managed signals and slots library for C++
  This package forms part of the Boost C++ Libraries collection.
  .
@@ -420,7 +420,7 @@ Description: managed signals and slots library for C++
  targets or subscribers), which are called when the signal is
  "emitted."
 
-Package: libboost-system1.38.0
+Package: libboost-system1.39.0
 Homepage: http://www.boost.org/libs/system/
 Architecture: any
 Section: libs
@@ -436,11 +436,11 @@ Description: Operating system (e.g. diagnostics support) library
  user-defined sources, each error_code and error_condition has an
  associated error_category.
 
-Package: libboost-system1.38-dev
+Package: libboost-system1.39-dev
 Homepage: http://www.boost.org/libs/system/
 Architecture: any
 Section: libdevel
-Depends: libboost1.38-dev (= ${binary:Version}), libboost-system1.38.0 (= ${binary:Version})
+Depends: libboost1.39-dev (= ${binary:Version}), libboost-system1.39.0 (= ${binary:Version})
 Description: Operating system (e.g. diagnostics support) library
  This package forms part of the Boost C++ Libraries collection.
  .
@@ -452,7 +452,7 @@ Description: Operating system (e.g. diagnostics support) library
  user-defined sources, each error_code and error_condition has an
  associated error_category.
 
-Package: libboost-test1.38.0
+Package: libboost-test1.39.0
 Homepage: http://www.boost.org/libs/test/
 Architecture: any
 Section: libs
@@ -465,12 +465,12 @@ Description: components for writing and executing test suites
   * Facilities to monitor program execution and produce error reports.
   * Unit test framework to simplify writing test cases.
 
-Package: libboost-test1.38-dev
+Package: libboost-test1.39-dev
 Homepage: http://www.boost.org/libs/test/
 Architecture: any
 Section: libdevel
-Depends: libboost1.38-dev (= ${binary:Version}), libboost-test1.38.0 (= ${binary:Version})
-Conflicts: libboost-test-dev (<< 1.35.0), libboost-test1.35-dev, libboost-test1.36-dev, libboost-test1.37-dev
+Depends: libboost1.39-dev (= ${binary:Version}), libboost-test1.39.0 (= ${binary:Version})
+Conflicts: libboost-test-dev (<< 1.35.0), libboost-test1.35-dev, libboost-test1.36-dev, libboost-test1.37-dev, libboost-test1.38-dev
 Description: components for writing and executing test suites
  This package forms part of the Boost C++ Libraries collection.  The
  library contains several components.
@@ -479,7 +479,7 @@ Description: components for writing and executing test suites
   * Facilities to monitor program execution and produce error reports.
   * Unit test framework to simplify writing test cases.
 
-Package: libboost-thread1.38.0
+Package: libboost-thread1.39.0
 Homepage: http://www.boost.org/libs/thread/
 Architecture: any
 Section: libs
@@ -492,12 +492,12 @@ Description: portable C++ multi-threading
  own machine state including program instruction counter and
  registers.
 
-Package: libboost-thread1.38-dev
+Package: libboost-thread1.39-dev
 Homepage: http://www.boost.org/libs/thread/
 Architecture: any
 Section: libdevel
-Depends: libboost1.38-dev (= ${binary:Version}), libboost-date-time1.38-dev (= ${binary:Version}), libboost-thread1.38.0 (= ${binary:Version})
-Conflicts: libboost-thread-dev (<< 1.35.0), libboost-thread1.35-dev, libboost-thread1.36-dev, libboost-thread1.37-dev
+Depends: libboost1.39-dev (= ${binary:Version}), libboost-date-time1.39-dev (= ${binary:Version}), libboost-thread1.39.0 (= ${binary:Version})
+Conflicts: libboost-thread-dev (<< 1.35.0), libboost-thread1.35-dev, libboost-thread1.36-dev, libboost-thread1.37-dev, libboost-thread1.38-dev
 Description: portable C++ multi-threading
  This package forms part of the Boost C++ Libraries collection.
  .
@@ -506,7 +506,7 @@ Description: portable C++ multi-threading
  own machine state including program instruction counter and
  registers.
 
-Package: libboost-wave1.38.0
+Package: libboost-wave1.39.0
 Homepage: http://www.boost.org/libs/wave/
 Architecture: any
 Section: libs
@@ -519,12 +519,12 @@ Description: C99/C++ preprocessor library
  packed behind a simple to use interface, which integrates well with
  the well known idioms of the Standard Template Library (STL).
 
-Package: libboost-wave1.38-dev
+Package: libboost-wave1.39-dev
 Homepage: http://www.boost.org/libs/wave/
 Architecture: any
 Section: libdevel
-Depends: libboost1.38-dev (= ${binary:Version}), libboost-serialization1.38-dev (= ${binary:Version}), libboost-wave1.38.0 (= ${binary:Version}), libboost-filesystem1.38-dev (= ${binary:Version})
-Conflicts: libboost-wave-dev (<< 1.35.0), libboost-wave1.35-dev, libboost-wave1.36-dev, libboost-wave1.37-dev
+Depends: libboost1.39-dev (= ${binary:Version}), libboost-serialization1.39-dev (= ${binary:Version}), libboost-wave1.39.0 (= ${binary:Version}), libboost-filesystem1.39-dev (= ${binary:Version})
+Conflicts: libboost-wave-dev (<< 1.35.0), libboost-wave1.35-dev, libboost-wave1.36-dev, libboost-wave1.37-dev, libboost-wave1.38-dev
 Description: C99/C++ preprocessor library
  This package forms part of the Boost C++ Libraries collection.
  .

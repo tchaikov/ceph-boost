@@ -1,12 +1,7 @@
 boost-python-examples.patch
-function-template.patch
-atomic_count.patch
-atomic_count_gcc.patch
-sp_counted_base.patch
 endian.patch
 kfreebsd-jam.patch
 python2.5-elementtree.patch
-library-naming.patch
 date_time_date_formatting_hpp.patch
 mpi-python.patch
 jam-wall-clean.patch
