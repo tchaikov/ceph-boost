@@ -14,7 +14,7 @@ update_linklibs() {
     suf=$2
 
     cd /usr/lib
-    for thread in "" -mt; do
+    for thread in ""; do
 	target=libboost_python${thread}${debug}-${py}.${suf}
 	link=libboost_python${thread}${debug}.${suf} 
 	test -e $target && ln -s -f $target $link

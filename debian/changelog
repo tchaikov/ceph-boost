@@ -8,10 +8,23 @@ boost1.39 (1.39.0-1) unstable; urgency=low
     - patches/sp_counted_base.patch: Remove.  Applied upstream.
   
   * patches/wave-cpp.patch: New.  Qualify std::string references.
-
   * patches/bootstrap.patch: New.  Fix setting for LIBDIR.
+  
+  * rules: Build using --layout=system, and only the variants normally
+    built by upstream default (1 shared and 1 static variant).  System
+    layout no longer has any decoration; i.e., neither -mt nor -mt-d.  Use
+    bootstrap.sh to build bjam and configure boost; use "bjam install" to
+    install all files into debian/tmp.
+  
+  * libboost-dbg.postinst.in:
+  * libboost-dbg.prerm.in: Remove.  No longer shipping "-d" variants of
+    libboost_python in /usr/lib, so don't need to call rtupdate for
+    libboost-dbg.
+  
+  * rtupdate: There is no longer separate single and multi-threaded
+    libraries to take care of.
 
- -- Steve M. Robbins <smr@debian.org>  Thu, 02 Jul 2009 20:53:42 -0500
+ -- Steve M. Robbins <smr@debian.org>  Fri, 03 Jul 2009 01:51:28 -0500
 
 boost1.38 (1.38.0-7) unstable; urgency=low
 
