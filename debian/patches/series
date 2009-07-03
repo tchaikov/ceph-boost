@@ -1,3 +1,4 @@
+bootstrap.patch
 boost-python-examples.patch
 endian.patch
 kfreebsd-jam.patch
@@ -6,3 +7,4 @@ date_time_date_formatting_hpp.patch
 mpi-python.patch
 jam-wall-clean.patch
 boost_python_translate_exception.patch
+wave-cpp.patch
