@@ -14,7 +14,10 @@ boost1.39 (1.39.0-1) unstable; urgency=low
     built by upstream default (1 shared and 1 static variant).  System
     layout no longer has any decoration; i.e., neither -mt nor -mt-d.  Use
     bootstrap.sh to build bjam and configure boost; use "bjam install" to
-    install all files into debian/tmp.
+    install all files into debian/tmp.  Bootstrap creates the file
+    project-config.jam including a line naming the default python, so
+    remove rule to add the default python to user-config.jam; add only
+    non-default versions of python.
   
   * libboost-dbg.postinst.in:
   * libboost-dbg.prerm.in: Remove.  No longer shipping "-d" variants of
@@ -24,7 +27,7 @@ boost1.39 (1.39.0-1) unstable; urgency=low
   * rtupdate: There is no longer separate single and multi-threaded
     libraries to take care of.
 
- -- Steve M. Robbins <smr@debian.org>  Fri, 03 Jul 2009 01:51:28 -0500
+ -- Steve M. Robbins <smr@debian.org>  Thu, 09 Jul 2009 22:50:17 -0500
 
 boost1.38 (1.38.0-7) unstable; urgency=low
 

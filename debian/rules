@@ -137,7 +137,6 @@ endif
 
 MPI_CONFIG = "using mpi ;"
 PYTHON_CONFIG1 = "using python : 2.4 : /usr ;"
-PYTHON_CONFIG2 = "using python : 2.5 : /usr ;"
 
 exampledir = debian/libboost$(PKGVERSION)-doc/usr/share/doc/libboost$(PKGVERSION)-doc/examples
 htmldir = debian/libboost$(PKGVERSION)-doc/usr/share/doc/libboost$(PKGVERSION)-doc/HTML
@@ -154,7 +153,6 @@ user-config.jam:
 	echo $(TOOLSET_CONFIG) > $@
 	echo $(MPI_CONFIG)     >> $@
 	echo $(PYTHON_CONFIG1) >> $@
-	echo $(PYTHON_CONFIG2) >> $@
 
 build: build-stamp
 build-stamp: $(QUILT_STAMPFN) $(bjam) user-config.jam
