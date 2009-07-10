@@ -6,9 +6,17 @@ boost1.39 (1.39.0-1) unstable; urgency=low
     - patches/atomic_count_gcc.patch:
     - patches/library-naming.patch:
     - patches/sp_counted_base.patch: Remove.  Applied upstream.
-  
+    - Google analytics code removed from docs.  Closes: #524186.
+
   * patches/wave-cpp.patch: New.  Qualify std::string references.
+  
   * patches/bootstrap.patch: New.  Fix setting for LIBDIR.
+
+  * patches/python-generic-call.patch: New.  Add generic call operator
+    support.  Closes: #523344.
+  
+  * patches/python-enum-same-value.patch: New.  Support enums with
+    duplicated values.  Closes: #523343.
   
   * rules: Build using --layout=system, and only the variants normally
     built by upstream default (1 shared and 1 static variant).  System

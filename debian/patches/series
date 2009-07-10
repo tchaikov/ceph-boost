@@ -1,3 +1,5 @@
+python-enum-same-value.patch
+python-generic-call.patch
 bootstrap.patch
 boost-python-examples.patch
 endian.patch
