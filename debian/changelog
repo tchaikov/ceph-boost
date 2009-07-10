@@ -34,8 +34,17 @@ boost1.39 (1.39.0-1) unstable; urgency=low
   
   * rtupdate: There is no longer separate single and multi-threaded
     libraries to take care of.
+  
+  * debian/quickbook.1:
+  * debian/inspect.1: New.  Manpages for installed tools.
 
- -- Steve M. Robbins <smr@debian.org>  Thu, 09 Jul 2009 22:50:17 -0500
+  * control: Set Standards-Version to 3.8.2; no changes required.  Make
+    -dbg depend on -dev.  Add non-virtual alternative for -dev dependency
+    on libstdc++-dev.
+  
+  * copyright: Add the Caramel license, used by boostbook.
+
+ -- Steve M. Robbins <smr@debian.org>  Fri, 10 Jul 2009 17:14:08 -0500
 
 boost1.38 (1.38.0-7) unstable; urgency=low
 
