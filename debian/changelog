@@ -1,3 +1,13 @@
+boost1.39 (1.39.0-2) unstable; urgency=low
+
+  * control: libboost-system1.39-dev must conflict with
+    libboost-system1.38-dev.  Closes: #543522.
+  
+  * patches/function-template.patch: Re-instated, since patch did not make
+    it to this release of Boost.  Closes: #543576.
+
+ -- Steve M. Robbins <smr@debian.org>  Tue, 25 Aug 2009 22:09:07 -0500
+
 boost1.39 (1.39.0-1) unstable; urgency=low
 
   * New upstream.  Closes: #533822.

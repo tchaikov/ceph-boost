@@ -10,3 +10,4 @@ mpi-python.patch
 jam-wall-clean.patch
 boost_python_translate_exception.patch
 wave-cpp.patch
+function-template.patch
