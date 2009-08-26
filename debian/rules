@@ -127,6 +127,8 @@ else ifeq ($(DEB_BUILD_ARCH), mips)
 BUILD_LONG_DOUBLE = no
 else ifeq ($(DEB_BUILD_ARCH), mipsel)
 BUILD_LONG_DOUBLE = no
+else ifeq ($(DEB_BUILD_ARCH), sh4)
+BUILD_LONG_DOUBLE = no
 endif
 
 ifeq ($(BUILD_LONG_DOUBLE), yes)
