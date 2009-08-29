@@ -3,9 +3,16 @@ boost1.39 (1.39.0-3) unstable; urgency=low
   * patches/mips-asm.patch: New.  Fix build failure on mips (thanks,
     Florian Lohoff).  Closes: #543975.
   
-  * control: Package -mpi-dev suggests -graph-dev.  Closes: #542067.
+  * control: Package -mpi-dev suggests -graph-dev.  Closes: #542067.  Note
+    that -dev now contains inspect, boostbook and quickbook.  Add
+    ${misc:Depends} to each package.
+  
+  * rules: Install manpages for inspect and quickbook.  Override lintian
+    warning about license file in -dev (boostbook/xsl/caramel/LICENSE).
+  
+  * README.source: New.  Point to /usr/share/doc/quilt/README.source.
 
- -- Steve M. Robbins <smr@debian.org>  Sat, 29 Aug 2009 02:41:31 -0500
+ -- Steve M. Robbins <smr@debian.org>  Sat, 29 Aug 2009 10:11:25 -0500
 
 boost1.39 (1.39.0-2) unstable; urgency=low
 

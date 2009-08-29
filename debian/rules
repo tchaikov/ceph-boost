@@ -100,6 +100,7 @@ mk_debhelper_files = \
 	$(call add_dbg_override,dbg-package-missing-depends) \
 	$(call add_dev_override,description-synopsis-starts-with-a-capital-letter) \
 	$(call add_dev_override,spelling-error-in-description) \
+	$(call add_dev_override,extra-license-file) \
 	$(call add_doc_override,description-synopsis-starts-with-a-capital-letter) \
 	$(call add_doc_override,extra-license-file) \
 	$(call add_libdev_override,python,,description-synopsis-starts-with-a-capital-letter) \
@@ -240,7 +241,7 @@ install: build clean-debhelper $(filtered_files)
 	   dist/bin/inspect \
 	   dist/bin/quickbook \
 	   usr/bin
-	dh_installman -plibboost$(PKGVERSION)-dev debian/bcp.1
+	dh_installman -plibboost$(PKGVERSION)-dev debian/bcp.1 debian/inspect.1 debian/quickbook.1
 	dh_install -plibboost$(PKGVERSION)-dev tools/boostbook/xsl/* usr/share/boostbook/xsl
 	dh_install -plibboost$(PKGVERSION)-dev tools/boostbook/dtd/* usr/share/boostbook/dtd
 
