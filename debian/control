@@ -226,6 +226,7 @@ Homepage: http://www.boost.org/doc/html/mpi.html
 Architecture: any
 Section: libdevel
 Depends: libboost1.39-dev (= ${binary:Version}), libboost-serialization1.39-dev (= ${binary:Version}), libboost-mpi1.39.0 (= ${binary:Version}), mpi-default-dev
+Suggests: libboost-graph1.39-dev
 Conflicts: libboost-mpi1.37-dev, libboost-mpi1.38-dev
 Description: C++ interface to the Message Passing Interface (MPI)
  This package forms part of the Boost C++ Libraries collection.
