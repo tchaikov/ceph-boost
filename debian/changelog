@@ -1,3 +1,10 @@
+boost1.39 (1.39.0-4) unstable; urgency=low
+
+  * rules: Create libboostX-mt.so compatibility symlinks.  Closes:
+    #541133.  See NEWS.Debian for more details.
+
+ -- Steve M. Robbins <smr@debian.org>  Sun, 30 Aug 2009 14:47:14 -0500
+
 boost1.39 (1.39.0-3) unstable; urgency=low
 
   * patches/mips-asm.patch: New.  Fix build failure on mips (thanks,

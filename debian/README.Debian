@@ -11,31 +11,34 @@ Getting Started
 ---------------
 
 The following table shows which components use a library (shared or
-static) and the corresponding "-l" flag.  Note that only the 
-multithreaded version of the libraries is shipped.
+static) and the corresponding "-l" flag.  All libraries are built
+for multithreaded applications.
 
   Component              Link Flag                    Library Type
   ---------              ---------                    ------------
-  Boost.Date_Time        -lboost_date_time-mt         	static  shared
-  Boost.Filesystem       -lboost_filesystem-mt        	static  shared
-  Boost.Graph            -lboost_graph-mt             	static  shared
-  Boost.IOStreams        -lboost_iostreams-mt         	static  shared
-  Boost.Math		 -lboost_math_c99-mt          	static  shared
-  			 -lboost_math_c99f-mt         	static  shared
-  			 -lboost_math_c99l-mt         	static  shared
-  Boost.MPI		 -lboost_mpi-mt		      	static  shared
-  Boost.Program_options  -lboost_program_options-mt   	static  shared
-  Boost.Python           -lboost_python-mt-py24       	static  shared
-  			 -lboost_python-mt-py25       	static  shared
-  Boost.Regex            -lboost_regex-mt             	static  shared
-  Boost.Serialization    -lboost_serialization-mt     	static  shared
-                         -lboost_wserialization-mt    	static  shared
-  Boost.Signals          -lboost_signals-mt           	static  shared
-  Boost.System		 -lboost_system-mt	      	static  shared
-  Boost.Test             -lboost_prg_exec_monitor-mt  	static  shared
-                         -lboost_unit_test_framework-mt	static  shared
-  Boost.Thread           -lboost_thread-mt            	static  shared
-  Boost.Wave             -lboost_wave-mt		static  shared
+  Boost.Date_Time        -lboost_date_time            	static  shared
+  Boost.Filesystem       -lboost_filesystem           	static  shared
+  Boost.Graph            -lboost_graph                	static  shared
+  Boost.IOStreams        -lboost_iostreams            	static  shared
+  Boost.Math		 -lboost_math_c99             	static  shared
+  			 -lboost_math_c99f            	static  shared
+  			 -lboost_math_c99l            	static  shared
+  			 -lboost_math_tr1            	static  shared
+  			 -lboost_math_tr1f            	static  shared
+  			 -lboost_math_tr1l            	static  shared
+  Boost.MPI		 -lboost_mpi   		      	static  shared
+  Boost.Program_options  -lboost_program_options      	static  shared
+  Boost.Python           -lboost_python-py24       	static  shared
+  			 -lboost_python-py25       	static  shared
+  Boost.Regex            -lboost_regex                	static  shared
+  Boost.Serialization    -lboost_serialization        	static  shared
+                         -lboost_wserialization       	static  shared
+  Boost.Signals          -lboost_signals              	static  shared
+  Boost.System		 -lboost_system   	      	static  shared
+  Boost.Test             -lboost_prg_exec_monitor     	static  shared
+                         -lboost_unit_test_framework   	static  shared
+  Boost.Thread           -lboost_thread               	static  shared
+  Boost.Wave             -lboost_wave   		static  shared
 
 
 Most of Boost is installed using the package libboostX.Y-dev.
@@ -78,7 +81,7 @@ Boost.Test main() function
 --------------------------
 
 The Boost unit test framework defines a main() function in the static
-library boost_unit_test_framework-mt.a.  Prior to v 1.34, the shared
+library boost_unit_test_framework.a.  Prior to v 1.34, the shared
 library also defined main() but it no longer does.
 
 Please see the manual and the following thread for more details
@@ -86,4 +89,4 @@ Please see the manual and the following thread for more details
 
 
 
- -- Steve M. Robbins <smr@debian.org>, Sun, 22 Mar 2009 14:47:40 z
+ -- Steve M. Robbins <smr@debian.org>, Sun, 30 Aug 2009 14:27:05 z

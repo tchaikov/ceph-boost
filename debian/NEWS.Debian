@@ -1,3 +1,20 @@
+Boost 1.39.0-1
+--------------
+  
+  * Since only one (the multi-threaded) variant of each library is built,
+    upstream elected to simplify the library name by removing the
+    redundant "-mt" decoration.  Debian will follow this convention, to
+    remain compatible at link time with other vendors.  The preferred form
+    of the link option is now "-lboost_regex", etc.
+  
+  * In response to the Debian 1.37 package, a number of boost-using
+    packages changed their build system to add "-mt"; see entry below.  To
+    avoid breaking all these packages, Debian is providing compatibility
+    symlinks with the "-mt" decoration; e.g. "-lboost_regex-mt" continues
+    to work.  However, note that this name is not compatible with other
+    distributions, so build-system authors are encouraged to use the
+    undecorated name.
+  
 Boost 1.37.0-1
 --------------
   

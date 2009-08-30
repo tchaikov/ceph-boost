@@ -71,10 +71,13 @@ mk_so_files = $(shell echo debian/tmp/$(call mk_base_name,$(2),$(3),$(4)).so.$(S
 mk_a_files = $(shell echo debian/tmp/$(call mk_base_name,$(2),$(3),$(4)).a >> $(call mk_deb_dev,$(1),$(3)).install)
 mk_ln_files = $(shell echo $(call mk_base_name,$(2),$(3),$(4)).so.$(SOVERSION) $(call mk_base_name,$(2),$(3),$(4)).so >> $(call mk_deb_dev,$(1),$(3)).links)
 
+# Make compatibility symlinks libfoo-mt --> libfoo
+mk_mtln_files = $(shell echo $(call mk_base_name,$(2),$(3),$(4)).so.$(SOVERSION) $(call mk_base_name,$(2),$(3),$(4))-mt.so >> $(call mk_deb_dev,$(1),$(3)).links)
+
 # Function that updates debhelper files for a given library variant
 # Input: component, library, variant, suffix
 # Output: none
-mk_files = $(foreach fn,a so ln,$(call mk_$(fn)_files,$(1),$(2),$(3),$(4)))
+mk_files = $(foreach fn,a so ln mtln,$(call mk_$(fn)_files,$(1),$(2),$(3),$(4)))
 
 # helpers to make and install lintian override files
 
