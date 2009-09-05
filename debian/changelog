@@ -13,7 +13,10 @@ boost1.40 (1.40.0-1) unstable; urgency=low
   * NEWS.Debian: Reformat to follow guidelines in Debian Developer's
     Reference, Section 6.3.4.
 
- -- Steve M. Robbins <smr@debian.org>  Sat, 05 Sep 2009 13:10:06 -0500
+  * control: New package libboost1.40-all-dev that brings in all the Boost
+    -dev packages (c.f. #537739).
+
+ -- Steve M. Robbins <smr@debian.org>  Sat, 05 Sep 2009 13:40:38 -0500
 
 boost1.39 (1.39.0-4) unstable; urgency=low
 
