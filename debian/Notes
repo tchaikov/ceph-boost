@@ -1,38 +1,9 @@
-	GCC 4.3 Patches
-	---------------
-
-As of 2009-02-21, there are a number of issues with respect to GCC
-4.3.  A post on the Boost list gives a query to list all the open
-reports in the Boost trac system:
-
-  http://svn.boost.org/trac/boost/query?status=new&status=assigned&status=reopened&summary=~4.3&order=priority
-
-Here we track the open tickets and status with respect to the Debian
-patch series.
-
-  Ticket  Inc?  Comment
-  ------  ----  ----------------------------------
-  1605     no   Library property_tree not present in 1.38
-  1955     no   Library property_tree not present in 1.38
-  2321     no	Warning
-  2388     no	Warning
-  2390     no   Warning
-  2582	   yes  boost_python_translate_exception.patch
-  2680     no   Test suite failure, no patch.
-
-
 	Thread Support
 	--------------
 
 All debian libraries are supposed to be built with _REENTRANT defined
-(policy 10.2).  For the jam-built libraries, use "<define>_REENTRANT"
-on command line in debian/rules.  For graph library, set in Makefile.
-
-The __sync functions are giving problems.  I think that atomic_count.hpp
-is finally patched.  It looks like sp_counted_base.hpp is still a
-problem on m68k.  Revisit the strategy of using DBOOST_SP_USE_PTHREADS 
-for the arches that don't have __sync; upsteam now has a spinlock-based
-default version of sp_counted_base.
+(policy 10.2).  We thus use "<define>_REENTRANT" on the bjam command
+line in debian/rules.
 
 
 	Documentation
