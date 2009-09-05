@@ -1,8 +1,10 @@
 doc/html/boost_asio/example
 doc/html/date_time/examples
+libs/signals2/example
 libs/exception/example
 libs/flyweight/example
 libs/proto/example
+libs/property_map/example
 libs/xpressive/example
 libs/functional/hash/examples
 libs/intrusive/example
@@ -29,6 +31,7 @@ libs/test/example
 libs/test/doc/src/examples
 libs/iostreams/example
 libs/numeric/interval/examples
+libs/graph_parallel/example
 libs/date_time/example
 libs/smart_ptr/example
 libs/thread/example
