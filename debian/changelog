@@ -9,8 +9,11 @@ boost1.40 (1.40.0-1) unstable; urgency=low
     - patches/boost_python_translate_exception.patch:
     - patches/wave-cpp.patch:
     - patches/function-template.patch: Remove.  Applied upstream.
+  
+  * NEWS.Debian: Reformat to follow guidelines in Debian Developer's
+    Reference, Section 6.3.4.
 
- -- Steve M. Robbins <smr@debian.org>  Sat, 05 Sep 2009 12:56:02 -0500
+ -- Steve M. Robbins <smr@debian.org>  Sat, 05 Sep 2009 13:10:06 -0500
 
 boost1.39 (1.39.0-4) unstable; urgency=low
 
