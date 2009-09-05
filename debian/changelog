@@ -1,3 +1,17 @@
+boost1.40 (1.40.0-1) unstable; urgency=low
+
+  * New upstream.  Version string updates to control & rules.  File list
+    updates to example-files & documentation-files.
+    - patches/python-enum-same-value.patch:
+    - patches/python-generic-call.patch:
+    - patches/bootstrap.patch:
+    - patches/mpi-python.patch:
+    - patches/boost_python_translate_exception.patch:
+    - patches/wave-cpp.patch:
+    - patches/function-template.patch: Remove.  Applied upstream.
+
+ -- Steve M. Robbins <smr@debian.org>  Sat, 05 Sep 2009 12:56:02 -0500
+
 boost1.39 (1.39.0-4) unstable; urgency=low
 
   * rules: Create libboostX-mt.so compatibility symlinks.  Closes:
