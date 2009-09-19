@@ -14,8 +14,8 @@ The following table shows which components use a library (shared or
 static) and the corresponding "-l" flag.  All libraries are built
 for multithreaded applications.
 
-  Component              Link Flag                    Library Type
-  ---------              ---------                    ------------
+  Component              Link Flag                      Library Type
+  ---------              ---------                      ------------
   Boost.Date_Time        -lboost_date_time            	static  shared
   Boost.Filesystem       -lboost_filesystem           	static  shared
   Boost.Graph            -lboost_graph                	static  shared
@@ -46,6 +46,33 @@ The components with a shared library have separate -dev packages.
 
 There is extensive documentation available in the libboostX.Y-doc
 package and at www.boost.org.
+
+
+Debian Packaging of Boost
+-------------------------
+
+Upstream releases quarterly without guarenteeing any backwards
+compatibility.  Debian chooses to package two versions of Boost
+simultaneously, to enable users to make the transition on their own
+time.  The -dev packages are decorated with the Boost version,
+e.g. libboost1.39-dev and libboost1.40-dev.  If your code builds only
+with a specific version of boost, you can directly install that
+specific version.
+
+On the other hand, many of the mature Boost libraries hardly change
+from one version to the next.  If your code uses only such stable
+libraries, then continually installing versioned -dev packages is a
+nuisance.  Debian therefore has a set of "default" Boost development
+packages without a version number; e.g. libboost-dev.  These packages
+will pull in the version of boost considered most suitable at any
+given time.  If your code is not tied to a specific Boost version, you
+can use the unversioned development packages.
+
+This strategy was hashed out on debian-release in the Spring of 2009.
+See threads starting at:
+    http://lists.debian.org/debian-release/2009/03/msg00147.html
+    http://lists.debian.org/debian-release/2009/04/msg00251.html
+    http://lists.debian.org/debian-release/2009/05/msg00011.html
 
 
 Example Code
@@ -88,5 +115,4 @@ Please see the manual and the following thread for more details
   http://www.nabble.com/Undefined-reference-to-'main'-with-Boost-Test.-Why--td15986217.html
 
 
-
- -- Steve M. Robbins <smr@debian.org>, Sun, 30 Aug 2009 14:27:05 z
+ -- Steve M. Robbins <smr@debian.org>, Sat, 19 Sep 2009 15:16:51 z
