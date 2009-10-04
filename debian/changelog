@@ -4,6 +4,16 @@ boost1.40 (1.40.0-2) unstable; urgency=low
   * control: New package libboost-graph-parallel (thanks, Mathieu
     Malaterre).  Closes: #549203.
 
+  * [Merge from 1.39.0-5] rules: Rule $(bjam) needs to depend on
+    $(QUILT_STAMPFN) because patches/bootstrap.patch modifies script
+    bootstrap.sh, used to build $(bjam).  Thanks to Andreas Ferber for the
+    report and astute analysis.  Closes: #545535.  Put the "-mt"
+    decoration before the final suffix for compatibility symlinks.
+    Closes: #545773.
+
+  * [Merge from 1.39.0-5] patches/boost-test-invalid-read.patch: New.  Fix
+    invalid read error detected by valgrind.  Closes: #538946.
+
  -- Steve M. Robbins <smr@debian.org>  Sat, 03 Oct 2009 22:51:20 -0500
 
 boost1.40 (1.40.0-1) unstable; urgency=low
