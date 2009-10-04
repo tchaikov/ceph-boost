@@ -281,11 +281,12 @@ install: build clean-debhelper $(filtered_files)
 	dh_install -plibboost-filesystem$(PKGVERSION)-dev
 	dh_link -plibboost-filesystem$(PKGVERSION)-dev
 
-	# Do it before graph
+# Includes for graph-parallel are a subdirectory of graph so we have
+# to move the former before moving the include/boost/graph files.
 	# package libboost-graph-parallel$(SOVERSION)
 	dh_install -plibboost-graph-parallel$(SOVERSION)
 	# package libboost-graph-parallel$(PKGVERSION)-dev
-	dh_installdirs -plibboost-graph-parallel$(PKGVERSION)-dev usr/include/boost
+	dh_installdirs -plibboost-graph-parallel$(PKGVERSION)-dev usr/include/boost/graph
 	# Move distributed & parallel
 	mv debian/libboost$(PKGVERSION)-dev/usr/include/boost/graph/distributed \
 	   debian/libboost-graph-parallel$(PKGVERSION)-dev/usr/include/boost/graph
