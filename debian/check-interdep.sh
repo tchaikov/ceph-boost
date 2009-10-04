@@ -1,8 +1,11 @@
 #! /bin/sh
 
+# TODO check no missing compare to:
+# bjam --show-libraries
 libs='date_time 
 filesystem 
 graph 
+graph_parallel
 iostreams 
 math
 mpi

@@ -1,3 +1,11 @@
+boost1.40 (1.40.0-2) unstable; urgency=low
+
+  * rules:
+  * control: New package libboost-graph-parallel (thanks, Mathieu
+    Malaterre).  Closes: #549203.
+
+ -- Steve M. Robbins <smr@debian.org>  Sat, 03 Oct 2009 22:51:20 -0500
+
 boost1.40 (1.40.0-1) unstable; urgency=low
 
   * New upstream.  Version string updates to control & rules.  File list

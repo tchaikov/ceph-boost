@@ -27,7 +27,7 @@ Package: libboost1.40-dev
 Architecture: any
 Section: libdevel
 Depends: ${misc:Depends}, ${shlibs:Depends}, libstdc++6-4.4-dev | libstdc++-dev
-Suggests: libboost1.40-doc, libboost-date-time1.40-dev, libboost-filesystem1.40-dev, libboost-graph1.40-dev, libboost-iostreams1.40-dev, libboost-math1.40-dev, libboost-mpi1.40-dev, libboost-program-options1.40-dev, libboost-python1.40-dev, libboost-regex1.40-dev, libboost-serialization1.40-dev, libboost-signals1.40-dev, libboost-system1.40-dev, libboost-test1.40-dev, libboost-thread1.40-dev, libboost-wave1.40-dev, xsltproc, doxygen, docbook-xml (>= 4.2), docbook-xsl (>= 1.73.2), default-jdk (>= 1.4), fop (>= 0.94)
+Suggests: libboost1.40-doc, libboost-date-time1.40-dev, libboost-filesystem1.40-dev, libboost-graph-parallel1.40-dev, libboost-graph1.40-dev, libboost-iostreams1.40-dev, libboost-math1.40-dev, libboost-mpi1.40-dev, libboost-program-options1.40-dev, libboost-python1.40-dev, libboost-regex1.40-dev, libboost-serialization1.40-dev, libboost-signals1.40-dev, libboost-system1.40-dev, libboost-test1.40-dev, libboost-thread1.40-dev, libboost-wave1.40-dev, xsltproc, doxygen, docbook-xml (>= 4.2), docbook-xsl (>= 1.73.2), default-jdk (>= 1.4), fop (>= 0.94)
 Conflicts: libboost-dev (<< 1.35.0), bcp, libboost1.35-dev, libboost1.36-dev, libboost1.37-dev, libboost1.38-dev, libboost1.39-dev
 Replaces: bcp
 Provides: bcp
@@ -54,6 +54,7 @@ Depends: libboost1.40-dev,
  libboost-date-time1.40-dev, 
  libboost-filesystem1.40-dev, 
  libboost-graph1.40-dev, 
+ libboost-graph-parallel1.40-dev, 
  libboost-iostreams1.40-dev, 
  libboost-math1.40-dev, 
  libboost-mpi1.40-dev, 
@@ -176,6 +177,38 @@ Description: generic graph components and algorithms in C++
  abstractions must also be represented in computer programs. A
  standardized generic interface for traversing graphs is of utmost
  importance to encourage reuse of graph algorithms and data structures.
+
+Package: libboost-graph-parallel1.40.0
+Homepage: http://www.boost.org/libs/graph_parallel/
+Architecture: any
+Section: libs
+Depends: ${misc:Depends}, ${shlibs:Depends}
+Suggests: graphviz
+Description: generic graph components and algorithms in C++
+ This package forms part of the Boost C++ Libraries collection.
+ .
+ The Parallel Boost Graph Library is an extension to the Boost Graph Library
+ (BGL) for parallel and distributed computing. It offers distributed graphs 
+ and graph algorithms to exploit coarse-grained parallelism along with 
+ parallel algorithms that exploit fine-grained parallelism, while retaining 
+ the same interfaces as the (sequential) BGL. Code written using the sequential
+ BGL should be easy to parallelize with the parallel BGL.
+
+Package: libboost-graph-parallel1.40-dev
+Homepage: http://www.boost.org/libs/graph_parallel/
+Architecture: any
+Section: libdevel
+Depends: ${misc:Depends}, libboost1.40-dev (= ${binary:Version}), libboost-serialization1.40-dev (= ${binary:Version}), libboost-test1.40-dev (= ${binary:Version})
+Recommends: libboost-graph-parallel1.40.0 (= ${binary:Version})
+Description: generic graph components and algorithms in C++
+ This package forms part of the Boost C++ Libraries collection.
+ .
+ The Parallel Boost Graph Library is an extension to the Boost Graph Library
+ (BGL) for parallel and distributed computing. It offers distributed graphs 
+ and graph algorithms to exploit coarse-grained parallelism along with 
+ parallel algorithms that exploit fine-grained parallelism, while retaining 
+ the same interfaces as the (sequential) BGL. Code written using the sequential
+ BGL should be easy to parallelize with the parallel BGL.
 
 Package: libboost-iostreams1.40.0
 Homepage: http://www.boost.org/libs/iostreams/
