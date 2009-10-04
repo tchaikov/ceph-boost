@@ -288,9 +288,9 @@ install: build clean-debhelper $(filtered_files)
 	dh_installdirs -plibboost-graph-parallel$(PKGVERSION)-dev usr/include/boost
 	# Move distributed & parallel
 	mv debian/libboost$(PKGVERSION)-dev/usr/include/boost/graph/distributed \
-	   debian/libboost-graph-parallel$(PKGVERSION)-dev/usr/include/boost
+	   debian/libboost-graph-parallel$(PKGVERSION)-dev/usr/include/boost/graph
 	mv debian/libboost$(PKGVERSION)-dev/usr/include/boost/graph/parallel \
-	   debian/libboost-graph-parallel$(PKGVERSION)-dev/usr/include/boost
+	   debian/libboost-graph-parallel$(PKGVERSION)-dev/usr/include/boost/graph
 	dh_install -plibboost-graph-parallel$(PKGVERSION)-dev
 	dh_link -plibboost-graph-parallel$(PKGVERSION)-dev
 
