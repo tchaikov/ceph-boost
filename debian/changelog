@@ -16,8 +16,11 @@ boost1.40 (1.40.0-2) unstable; urgency=low
   
   * rules: Create "-mt" compatibility links for static libs.  Closes:
     #549467.
+  
+  * control: Move libboost-python1.40-dev from Suggests to Depends of
+    libboost1.40-dev.  Workaround for #548503.
 
- -- Steve M. Robbins <smr@debian.org>  Sat, 03 Oct 2009 23:52:04 -0500
+ -- Steve M. Robbins <smr@debian.org>  Sat, 03 Oct 2009 23:58:41 -0500
 
 boost1.40 (1.40.0-1) unstable; urgency=low
 
