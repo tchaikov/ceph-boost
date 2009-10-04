@@ -50,7 +50,8 @@ Description: Boost C++ Libraries development files
 Package: libboost1.40-all-dev
 Architecture: any
 Section: libdevel
-Depends: libboost1.40-dev,
+Depends: ${misc:Depends},
+ libboost1.40-dev,
  libboost-date-time1.40-dev, 
  libboost-filesystem1.40-dev, 
  libboost-graph1.40-dev, 

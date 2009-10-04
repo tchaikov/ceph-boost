@@ -11,16 +11,18 @@ boost1.40 (1.40.0-2) unstable; urgency=low
     decoration before the final suffix for compatibility symlinks.
     Closes: #545773.
 
-  * [Merge from 1.39.0-5] patches/boost-test-invalid-read.patch: New.  Fix
+  * [Merge from 1.39.0-6] patches/boost-test-invalid-read.patch: New.  Fix
     invalid read error detected by valgrind.  Closes: #538946.
   
   * rules: Create "-mt" compatibility links for static libs.  Closes:
     #549467.
   
-  * control: Move libboost-python1.40-dev from Suggests to Depends of
-    libboost1.40-dev.  Workaround for #548503.
+  * control(libboost1.40-dev): Move libboost-python1.40-dev from Suggests
+    to Depends.  Workaround for #548503.
+  
+  * control(libboost1.40-all-dev): Add ${misc:Depends}.
 
- -- Steve M. Robbins <smr@debian.org>  Sat, 03 Oct 2009 23:58:41 -0500
+ -- Steve M. Robbins <smr@debian.org>  Sun, 04 Oct 2009 07:53:01 -0500
 
 boost1.40 (1.40.0-1) unstable; urgency=low
 
