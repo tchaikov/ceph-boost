@@ -13,8 +13,11 @@ boost1.40 (1.40.0-2) unstable; urgency=low
 
   * [Merge from 1.39.0-5] patches/boost-test-invalid-read.patch: New.  Fix
     invalid read error detected by valgrind.  Closes: #538946.
+  
+  * rules: Create "-mt" compatibility links for static libs.  Closes:
+    #549467.
 
- -- Steve M. Robbins <smr@debian.org>  Sat, 03 Oct 2009 22:51:20 -0500
+ -- Steve M. Robbins <smr@debian.org>  Sat, 03 Oct 2009 23:52:04 -0500
 
 boost1.40 (1.40.0-1) unstable; urgency=low
 
