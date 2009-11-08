@@ -1,3 +1,11 @@
+boost1.40 (1.40.0-3) unstable; urgency=low
+
+  * rules: Keep all headers in package libboostX.Y-dev to avoid bugs about
+    one boost lib using headers of another boost lib.  Boost is developed
+    as a monolith.  Closes: #550006.
+
+ -- Steve M. Robbins <smr@debian.org>  Sat, 07 Nov 2009 19:25:33 -0600
+
 boost1.40 (1.40.0-2) unstable; urgency=low
 
   * rules:
