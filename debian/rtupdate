@@ -14,20 +14,16 @@ update_linklibs() {
     suf=$2
 
     cd /usr/lib
-    for thread in ""; do
-	target=libboost_python${thread}-${py}.${suf}
-	link=libboost_python${thread}.${suf} 
-	test -e $target && ln -s -f $target $link
-    done
+    target=libboost_python-${py}.${suf}
+    link=libboost_python.${suf} 
+    test -e $target && ln -s -f $target $link
 }
 
 remove_linklibs() {
     suf=$1
 
     cd /usr/lib
-    for thread in "" -mt; do
-	rm -f libboost_python${thread}.${suf} 
-    done
+    rm -f libboost_python.${suf} 
 }
 
 rtupdate() {
