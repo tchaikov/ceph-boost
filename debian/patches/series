@@ -7,3 +7,4 @@ python2.5-elementtree.patch
 date_time_date_formatting_hpp.patch
 jam-wall-clean.patch
 sh4.patch
+boost-build-pythonid.patch

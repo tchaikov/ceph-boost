@@ -7,8 +7,17 @@ boost1.40 (1.40.0-3) unstable; urgency=low
   * control(libboost1.40-dev): Move libboost-python1.40-dev from Depends
     to Suggests; this is possible now that -dev contains all the header
     files.  Closes: #548503, #549935.
+  
+  * patches/boost-build-pythonid.patch: New (thanks, Gaudenz
+    Steinlin).  Add --pythonid parameter to the build system to only add
+    an identification to Python libraries.
 
- -- Steve M. Robbins <smr@debian.org>  Sat, 14 Nov 2009 10:45:13 -0600
+  * control:
+  * rules: Build libboost-mpi-python1.40.0 and
+    libboost-mpi-python1.40-dev.  Thanks again to Gaudenz Steinlin.
+    Closes: #552014.
+
+ -- Steve M. Robbins <smr@debian.org>  Sat, 14 Nov 2009 12:52:42 -0600
 
 boost1.40 (1.40.0-2) unstable; urgency=low
 
