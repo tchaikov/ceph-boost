@@ -13,11 +13,12 @@ boost1.40 (1.40.0-3) unstable; urgency=low
     an identification to Python libraries.
 
   * control:
+  * rtupdate:
   * rules: Build libboost-mpi-python1.40.0 and
     libboost-mpi-python1.40-dev.  Thanks again to Gaudenz Steinlin.
     Closes: #552014.
 
- -- Steve M. Robbins <smr@debian.org>  Sat, 14 Nov 2009 12:52:42 -0600
+ -- Steve M. Robbins <smr@debian.org>  Sat, 14 Nov 2009 13:57:09 -0600
 
 boost1.40 (1.40.0-2) unstable; urgency=low
 
