@@ -15,8 +15,8 @@ update_linklibs() {
 
     cd /usr/lib
     for thread in ""; do
-	target=libboost_python${thread}${debug}-${py}.${suf}
-	link=libboost_python${thread}${debug}.${suf} 
+	target=libboost_python${thread}-${py}.${suf}
+	link=libboost_python${thread}.${suf} 
 	test -e $target && ln -s -f $target $link
     done
 }
@@ -26,7 +26,7 @@ remove_linklibs() {
 
     cd /usr/lib
     for thread in "" -mt; do
-	rm -f libboost_python${thread}${debug}.${suf} 
+	rm -f libboost_python${thread}.${suf} 
     done
 }
 
@@ -46,11 +46,6 @@ remove() {
     remove_linklibs so
 }
 
-
-debug=
-case "$0" in
-    */libboost*-dbg.rtupdate)  debug=-d ;;
-esac
 
 action="$1"
 shift
