@@ -23,7 +23,9 @@ remove_linklibs() {
     suf=$1
 
     cd /usr/lib
-    rm -f libboost_python.${suf} 
+    for thread in "" -mt; do
+	rm -f libboost_python${thread}.${suf} 
+    done
 }
 
 rtupdate() {
