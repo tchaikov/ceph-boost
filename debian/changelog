@@ -17,8 +17,12 @@ boost1.40 (1.40.0-3) unstable; urgency=low
   * rules: Build libboost-mpi-python1.40.0 and
     libboost-mpi-python1.40-dev.  Thanks again to Gaudenz Steinlin.
     Closes: #552014.
+  
+  * patches/hurd-ellint_rd.patch:
+  * patches/hurd-execution_monitor.patch: New (thanks, Pino Toscano).
+    Patches for building on hurd.  Closes: #552383.
 
- -- Steve M. Robbins <smr@debian.org>  Sat, 14 Nov 2009 13:57:09 -0600
+ -- Steve M. Robbins <smr@debian.org>  Sat, 14 Nov 2009 22:44:30 -0600
 
 boost1.40 (1.40.0-2) unstable; urgency=low
 

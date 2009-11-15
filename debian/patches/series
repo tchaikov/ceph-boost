@@ -8,3 +8,5 @@ date_time_date_formatting_hpp.patch
 jam-wall-clean.patch
 sh4.patch
 boost-build-pythonid.patch
+hurd-ellint_rd.patch
+hurd-execution_monitor.patch
