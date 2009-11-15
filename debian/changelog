@@ -2,11 +2,11 @@ boost1.40 (1.40.0-3) unstable; urgency=low
 
   * rules: Keep all headers in package libboostX.Y-dev to avoid bugs about
     one boost lib using headers of another boost lib.  Boost is developed
-    as a monolith.  Closes: #553281, #550006.
+    as a monolith.  Closes: #548503, #553281, #550006.
   
   * control(libboost1.40-dev): Move libboost-python1.40-dev from Depends
     to Suggests; this is possible now that -dev contains all the header
-    files.  Closes: #548503, #549935.
+    files.  Closes: #549935.
   
   * patches/boost-build-pythonid.patch: New (thanks, Gaudenz
     Steinlin).  Add --pythonid parameter to the build system to only add
