@@ -17,7 +17,7 @@ update_linklibs() {
     for base in libboost_python libboost_mpi_python; do
 	target=${base}-${py}.${suf}
 	link=${base}.${suf} 
-	if [ test -e $target ]; then
+	if test -e $target ; then
 	    ln -s -f $target $link
 	fi
     done
