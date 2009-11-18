@@ -1,3 +1,12 @@
+boost1.40 (1.40.0-4) unstable; urgency=low
+
+  * rtupdate: Don't die if link target doesn't exist.  Update of
+    libboost_mpi_python links failed when boost-python but not
+    boost-mpi-python installed, causing postinst to fail.  
+    Closes: #556625.
+
+ -- Steve M. Robbins <smr@debian.org>  Tue, 17 Nov 2009 20:58:40 -0600
+
 boost1.40 (1.40.0-3) unstable; urgency=low
 
   * rules: Keep all headers in package libboostX.Y-dev to avoid bugs about
