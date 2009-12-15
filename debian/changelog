@@ -1,3 +1,13 @@
+boost1.40 (1.40.0-5) unstable; urgency=low
+
+  * control:
+  * rtupdate:
+  * rules: Remove hard-coded python versions (2.4 and 2.5).  Compute
+    supported python versions using "pyversions".  Thanks to Jakub Wilk
+    for the patch.  Closes: #556924.
+
+ -- Steve M. Robbins <smr@debian.org>  Tue, 15 Dec 2009 00:00:21 -0600
+
 boost1.40 (1.40.0-4) unstable; urgency=low
 
   * rtupdate: Don't die if link target doesn't exist.  Update of

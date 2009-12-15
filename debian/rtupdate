@@ -17,9 +17,7 @@ update_linklibs() {
     for base in libboost_python libboost_mpi_python; do
 	target=${base}-${py}.${suf}
 	link=${base}.${suf} 
-	if test -e $target ; then
-	    ln -s -f $target $link
-	fi
+  	test -e $target && ln -s -f $target $link || rm -f $link
     done
 }
 
@@ -35,8 +33,7 @@ remove_linklibs() {
 
 rtupdate() {
     case "$1" in
-	python2.4)  py=py24 ;;
-	python2.5)  py=py25 ;;
+	python*)  py=py`echo ${1#python} | tr -d .` ;;
 	*)          remove ; return ;;
     esac
 

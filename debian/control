@@ -6,7 +6,7 @@ Maintainer: Debian Boost Team <pkg-boost-devel@lists.alioth.debian.org>
 Uploaders: Steve M. Robbins <smr@debian.org>, Domenico Andreoli <cavok@debian.org>
 Build-Depends: debhelper (>= 7), quilt, bison, flex, docbook-to-man, xsltproc, doxygen, zlib1g-dev, libbz2-dev, libicu-dev, python-all-dev, python-support (>= 0.6), mpi-default-dev
 Build-Conflicts: boost-build, libopenmpi-dev (= 1.3.2-2)
-XS-Python-Version: 2.4, 2.5
+XS-Python-Version: >= 2.4
 Vcs-Browser: http://svn.debian.org/wsvn/pkg-boost/boost/trunk/
 Vcs-Svn: svn://svn.debian.org/svn/pkg-boost/boost/trunk
 Standards-Version: 3.8.3
