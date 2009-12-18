@@ -7,9 +7,9 @@ to Python libraries. The existing --buildid parameter adds an id to all
 libraries and leads to uneccessary duplication of libraries if only the 
 Python version for the build is different.
 
---- boost_1_40_0/Jamroot	2009-08-23 18:17:37.000000000 +0200
-+++ boost1.40-1.40.0/Jamroot	2009-10-21 20:06:00.223496183 +0200
-@@ -339,6 +339,12 @@
+--- boost_1_41_0.orig/Jamroot
++++ boost_1_41_0/Jamroot
+@@ -342,6 +342,12 @@
      constant BUILD_ID : [ regex.replace $(build-id) "[*\\/:.\"\' ]" "_" ] ;
  }
  
@@ -22,17 +22,17 @@ Python version for the build is different.
  
  # This rule is called by Boost.Build to determine the name of target. We use it
  # to encode the build variant, compiler name and boost version in the target
---- boost_1_40_0/libs/python/build/Jamfile.v2	2007-11-25 19:38:02.000000000 +0100
-+++ boost1.40-1.40.0/libs/python/build/Jamfile.v2	2009-10-21 18:21:56.656818332 +0200
+--- boost_1_41_0.orig/libs/python/build/Jamfile.v2
++++ boost_1_41_0/libs/python/build/Jamfile.v2
 @@ -3,6 +3,7 @@
  # file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
  
  import os ;
 +import indirect ;
  import modules ;
+ import feature ;
  
- import python ;
-@@ -24,8 +25,27 @@
+@@ -41,8 +42,27 @@
  
  project boost/python
    : source-location ../src
@@ -60,8 +60,8 @@ Python version for the build is different.
  rule cond ( test ? : yes * : no * ) { if $(test) { return $(yes) ; } else { return $(no) ; } }
  rule unless ( test ? : yes * : no * ) { if ! $(test) { return $(yes) ; } else { return $(no) ; } }
  
---- boost_1_40_0/libs/mpi/build/Jamfile.v2	2009-08-06 21:04:54.000000000 +0200
-+++ boost1.40-1.40.0/libs/mpi/build/Jamfile.v2	2009-10-21 18:22:35.870246226 +0200
+--- boost_1_41_0.orig/libs/mpi/build/Jamfile.v2
++++ boost_1_41_0/libs/mpi/build/Jamfile.v2
 @@ -9,6 +9,7 @@
  #           Andrew Lumsdaine
  
