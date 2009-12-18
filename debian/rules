@@ -9,9 +9,9 @@ endif
 
 DEB_BUILD_ARCH ?= $(shell dpkg-architecture -qDEB_BUILD_ARCH)
 
-PKGVERSION = 1.40
-SOVERSION = 1.40.0
-SHLIBS_VERSION = (>= 1.40.0-1)
+PKGVERSION = 1.41
+SOVERSION = 1.41.0
+SHLIBS_VERSION = (>= 1.41.0-1)
 
 # Boost libraries for which we want separate packages
 boost_libs := date-time filesystem graph-parallel graph iostreams math \

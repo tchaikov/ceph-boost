@@ -1,3 +1,9 @@
+boost1.41 (1.41.0-1) unstable; urgency=low
+
+  * New upstream.
+
+ -- Steve M. Robbins <smr@debian.org>  Fri, 18 Dec 2009 00:25:41 -0600
+
 boost1.40 (1.40.0-6) unstable; urgency=low
 
   * source/format:
