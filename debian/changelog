@@ -1,3 +1,11 @@
+boost1.40 (1.40.0-6) unstable; urgency=low
+
+  * source/format:
+  * control:
+  * rules: Switch to source format "3.0 (quilt)".
+
+ -- Steve M. Robbins <smr@debian.org>  Fri, 18 Dec 2009 00:15:40 -0600
+
 boost1.40 (1.40.0-5) unstable; urgency=low
 
   * control:
