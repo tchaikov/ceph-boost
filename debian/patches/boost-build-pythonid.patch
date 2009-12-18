@@ -1,3 +1,7 @@
+Patch from Gaudenz Steinlin <gaudenz@debian.org>
+Debian bug: #552014
+Reported upstream: https://svn.boost.org/trac/boost/ticket/3544
+
 Add --pythonid parameter to the build system to only add an identification 
 to Python libraries. The existing --buildid parameter adds an id to all 
 libraries and leads to uneccessary duplication of libraries if only the 
