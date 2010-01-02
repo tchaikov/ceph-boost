@@ -1,26 +1,12 @@
 boost1.41 (1.41.0-1) unstable; urgency=low
 
   * New upstream.
+  
+  * Merge changes from 1.40.0-5:
+    - Switch to source format "3.0 (quilt)".
+    - Remove hard-coding of python versions.
 
- -- Steve M. Robbins <smr@debian.org>  Fri, 18 Dec 2009 00:25:41 -0600
-
-boost1.40 (1.40.0-6) unstable; urgency=low
-
-  * source/format:
-  * control:
-  * rules: Switch to source format "3.0 (quilt)".
-
- -- Steve M. Robbins <smr@debian.org>  Fri, 18 Dec 2009 00:15:40 -0600
-
-boost1.40 (1.40.0-5) unstable; urgency=low
-
-  * control:
-  * rtupdate:
-  * rules: Remove hard-coded python versions (2.4 and 2.5).  Compute
-    supported python versions using "pyversions".  Thanks to Jakub Wilk
-    for the patch.  Closes: #556924.
-
- -- Steve M. Robbins <smr@debian.org>  Tue, 15 Dec 2009 00:00:21 -0600
+ -- Steve M. Robbins <smr@debian.org>  Mon, 21 Dec 2009 00:01:01 -0600
 
 boost1.40 (1.40.0-4) unstable; urgency=low
 
