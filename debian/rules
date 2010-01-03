@@ -166,6 +166,7 @@ build-stamp: $(bjam) user-config.jam
 	$(JAM) --without-python                        
 	for pyver in $(shell pyversions -rv); do \
 	 	pyid=$$(echo $$pyver | tr -d .); \
+		echo "Building Boost.Python for python version $pyver"; \
 	 	$(JAM) --with-python --with-mpi --pythonid=py$$pyid python=$$pyver; \
 	 	mv stage/lib/mpi.so stage/lib/mpi-py$$pyid.so; \
 	done
