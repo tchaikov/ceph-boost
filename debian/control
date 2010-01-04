@@ -225,6 +225,7 @@ Homepage: http://www.boost.org/libs/graph_parallel/
 Architecture: any
 Section: libdevel
 Depends: ${misc:Depends}, libboost1.41-dev (= ${binary:Version}), libboost-serialization1.41-dev (= ${binary:Version}), libboost-test1.41-dev (= ${binary:Version})
+Conflicts: libboost-graph-parallel1.40-dev
 Recommends: libboost-graph-parallel1.41.0 (= ${binary:Version})
 Description: generic graph components and algorithms in C++
  This package forms part of the Boost C++ Libraries collection.
@@ -285,6 +286,7 @@ Homepage: http://www.boost.org/libs/math/
 Architecture: any
 Section: libdevel
 Depends: ${misc:Depends}, libboost1.41-dev (= ${binary:Version}), libboost-math1.41.0 (= ${binary:Version})
+Conflicts: libboost-math1.40-dev
 Description: Boost.Math Library development files
  This package forms part of the Boost C++ Libraries collection.
  .
@@ -334,6 +336,7 @@ Homepage: http://www.boost.org/doc/html/mpi/python.html
 Architecture: any
 Section: python
 Depends: ${misc:Depends}, ${shlibs:Depends}, ${python:Depends}
+Conflicts: libboost-mpi-python1.40.0
 Description: C++ interface to the Message Passing Interface (MPI), Python Bindings
  This package forms part of the Boost C++ Libraries collection.
  .
@@ -350,6 +353,7 @@ Homepage: http://www.boost.org/doc/html/mpi/python.html
 Architecture: any
 Section: libdevel
 Depends: ${misc:Depends}, libboost-mpi1.41-dev (= ${binary:Version}), libboost-mpi-python1.41.0 (= ${binary:Version})
+Conflicts: libboost-mpi-python1.40-dev
 Description: C++ interface to the Message Passing Interface (MPI), Python Bindings
  This package forms part of the Boost C++ Libraries collection.
  .

@@ -263,6 +263,10 @@ install: build clean-debhelper $(filtered_files)
 	dh_link -plibboost$(PKGVERSION)-doc \
 	   usr/include/boost \
 	   usr/share/doc/libboost$(PKGVERSION)-doc/HTML/boost
+	# provide a constant symlink to the latest documents
+	dh_link -plibboost$(PKGVERSION)-doc \
+	   usr/share/doc/libboost$(PKGVERSION)-doc/HTML
+	   usr/share/doc/libboost-doc/HTML
 
 	mkdir -p $(exampledir)
 	cat debian/example-files | xargs cp -a --parents --target-directory=$(exampledir)

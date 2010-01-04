@@ -1,7 +1,7 @@
 boost1.41 (1.41.0-1) unstable; urgency=low
 
-  * New upstream.
-
+  * New upstream.  Closes: #563108.
+  
   * patches/boost-build-pythonid.patch:
   * rules: Switch --pythonid to --xpythonid;
     c.f. https://svn.boost.org/trac/boost/ticket/3814
@@ -10,7 +10,14 @@ boost1.41 (1.41.0-1) unstable; urgency=low
     - Switch to source format "3.0 (quilt)".
     - Remove hard-coding of python versions.
 
- -- Steve M. Robbins <smr@debian.org>  Sun, 03 Jan 2010 17:23:55 -0600
+  * rules: Provide a constant reference to latest documentation.  
+    Closes: #548270.
+  
+  * control: Package libboost-mpi-python1.41 conflicts with
+    libboost-mpi-python1.40, since both provide
+    /usr/lib/pyshared/python2.5/boost/mpi.so.
+
+ -- Steve M. Robbins <smr@debian.org>  Sun, 03 Jan 2010 20:27:34 -0600
 
 boost1.40 (1.40.0-4) unstable; urgency=low
 
