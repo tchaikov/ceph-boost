@@ -259,7 +259,6 @@ install: build clean-debhelper $(filtered_files)
 	mkdir -p $(htmldir) 
 	cat debian/documentation-files | xargs cp --parents --target-directory=$(htmldir)
 	find doc libs -name doc | xargs -n1 cp --archive --target-directory=$(htmldir)
-	rm $(htmldir)/doc/html/images/callouts/Thumbs.db
 	rm -rf $(htmldir)/boost
 	dh_link -plibboost$(PKGVERSION)-doc \
 	   usr/include/boost \
