@@ -17,7 +17,10 @@ boost1.41 (1.41.0-1) unstable; urgency=low
     libboost-mpi-python1.40, since both provide
     /usr/lib/pyshared/python2.5/boost/mpi.so.
 
- -- Steve M. Robbins <smr@debian.org>  Sun, 03 Jan 2010 20:27:34 -0600
+  * patches/mapped_file-header-guard.patch: New.  Add missing header guard
+    (thanks, Sven Geggus).
+  
+ -- Steve M. Robbins <smr@debian.org>  Sun, 03 Jan 2010 20:46:58 -0600
 
 boost1.40 (1.40.0-4) unstable; urgency=low
 
