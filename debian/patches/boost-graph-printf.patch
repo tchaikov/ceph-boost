@@ -1,0 +1,10 @@
+--- boost1.41-1.41.0.orig/boost/graph/distributed/detail/mpi_process_group.ipp
++++ boost1.41-1.41.0/boost/graph/distributed/detail/mpi_process_group.ipp
+@@ -28,6 +28,7 @@
+ #include <queue>
+ #include <stack>
+ #include <boost/graph/distributed/detail/tag_allocator.hpp>
++#include <stdio.h>
+ 
+ // #define PBGL_PROCESS_GROUP_DEBUG
+ 
