@@ -3,7 +3,10 @@ boost1.41 (1.41.0-2) unstable; urgency=low
   * patches/boost-graph-printf.patch: New.  Include stdio.h, to define
     fprintf() and stderr.
   
- -- Steve M. Robbins <smr@debian.org>  Tue, 12 Jan 2010 00:47:19 -0600
+  * patches/kfreebsd-thread.patch: New (thanks, Petr Salinger).  Fix
+    checks for __GLIBC__ source so that it builds on GNU/kFreeBSD.  
+  
+ -- Steve M. Robbins <smr@debian.org>  Tue, 12 Jan 2010 00:51:40 -0600
 
 boost1.41 (1.41.0-1) unstable; urgency=low
 
