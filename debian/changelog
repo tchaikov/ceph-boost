@@ -1,3 +1,10 @@
+boost1.41 (1.41.0-3) unstable; urgency=low
+
+  * patches/date_time_date_formatting_hpp.patch: Change
+    std::locale::locale() to std::locale().  Closes: #564860.
+
+ -- Steve M. Robbins <smr@debian.org>  Sun, 17 Jan 2010 22:17:39 -0600
+
 boost1.41 (1.41.0-2) unstable; urgency=low
 
   * patches/boost-graph-printf.patch: New.  Include stdio.h, to define
