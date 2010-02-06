@@ -1,3 +1,9 @@
+boost1.42 (1.42.0-1) unstable; urgency=low
+
+  * New upstream.
+
+ -- Steve M. Robbins <smr@debian.org>  Fri, 05 Feb 2010 21:40:15 -0600
+
 boost1.41 (1.41.0-3) unstable; urgency=low
 
   * patches/date_time_date_formatting_hpp.patch: Change
