@@ -5,9 +5,9 @@ Author: Pino Toscano <pino@kde.org>
 Bug: 552383
 Forwarded: not yet
 
---- boost1.40-1.40.0.orig/boost/test/impl/execution_monitor.ipp
-+++ boost1.40-1.40.0/boost/test/impl/execution_monitor.ipp
-@@ -264,22 +264,37 @@
+--- boost1.42-1.42.0.orig/boost/test/impl/execution_monitor.ipp
++++ boost1.42-1.42.0/boost/test/impl/execution_monitor.ipp
+@@ -301,22 +301,37 @@
  public:
      // Constructor
      system_signal_exception()
@@ -45,7 +45,7 @@ Forwarded: not yet
  };
  
  //____________________________________________________________________________//
-@@ -287,6 +302,7 @@
+@@ -324,6 +339,7 @@
  void
  system_signal_exception::report() const
  {
@@ -53,7 +53,7 @@ Forwarded: not yet
      if( !m_sig_info )
          return; // no error actually occur?
  
-@@ -571,6 +587,59 @@
+@@ -608,6 +624,59 @@
      default:
          report_error( execution_exception::system_error, "unrecognized signal" );
      }
@@ -113,7 +113,7 @@ Forwarded: not yet
  }
  
  //____________________________________________________________________________//
-@@ -581,8 +650,13 @@
+@@ -618,8 +687,13 @@
  
  // Forward declaration
  extern "C" {
@@ -127,7 +127,7 @@ Forwarded: not yet
  }
  
  class signal_action {
-@@ -625,9 +699,14 @@
+@@ -662,9 +736,14 @@
          return;
      }
  
@@ -142,7 +142,7 @@ Forwarded: not yet
      BOOST_TEST_SYS_ASSERT( sigemptyset( &m_new_action.sa_mask ) != -1 );
  
  #ifdef BOOST_TEST_USE_ALT_STACK
-@@ -769,6 +848,7 @@
+@@ -813,6 +892,7 @@
  
  extern "C" {
  
@@ -150,7 +150,7 @@ Forwarded: not yet
  static bool ignore_sigchild( siginfo_t* info )
  {
      return info->si_signo == SIGCHLD
-@@ -781,9 +861,16 @@
+@@ -825,9 +905,16 @@
              && (int)info->si_status == 0;
  #endif
  }
@@ -167,7 +167,7 @@ Forwarded: not yet
  static void execution_monitor_jumping_signal_handler( int sig, siginfo_t* info, void* context )
  {
      if( ignore_sigchild( info ) )
-@@ -810,6 +897,34 @@
+@@ -854,6 +941,34 @@
  
  //____________________________________________________________________________//
  
