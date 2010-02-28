@@ -23,7 +23,7 @@ boost_libs := date-time filesystem graph-parallel graph iostreams math \
 boost_lib_math := math_c99 math_c99f math_tr1 math_tr1f
 boost_lib_math_long_double := math_c99l math_tr1l
 boost_lib_serialization := serialization wserialization
-boost_lib_test := prg_exec_monitor unit_test_framework
+boost_lib_test := prg_exec_monitor test_exec_monitor unit_test_framework
 
 # These are special cases for suffixes.  Generally come from --xpythonid, so begin with a dash.
 boost_suffixes_python := $(addprefix -py,$(subst .,,$(shell pyversions -rv)))

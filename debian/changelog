@@ -1,3 +1,9 @@
+boost1.42 (1.42.0-2) unstable; urgency=low
+
+  * rules: Add test_exec_monitor.  Closes: #539350.
+
+ -- Steve M. Robbins <smr@debian.org>  Sat, 27 Feb 2010 22:04:09 -0600
+
 boost1.42 (1.42.0-1) unstable; urgency=low
 
   * New upstream.
