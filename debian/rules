@@ -74,7 +74,7 @@ mk_mta_files = $(shell echo $(call mk_base_name,$(2),$(3),$(4)).a $(call mk_base
 
 # Specify the type of files/links to install.
 # Special cases first, then general rule
-boost_filetypes_test_exec_monitor := "a mta"
+boost_filetypes_test_exec_monitor = a mta
 boost_filetypes = $(if $(boost_filetypes_$(1)), $(boost_filetypes_$(1)),a so ln mtso mta)
 
 # Function that updates debhelper files for a given library variant
