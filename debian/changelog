@@ -1,3 +1,10 @@
+boost1.42 (1.42.0-3) unstable; urgency=low
+
+  * rules: Add test_exec_monitor.  Closes: #539350.  (Previous upload was
+    broken.)
+
+ -- Steve M. Robbins <smr@debian.org>  Mon, 01 Mar 2010 20:33:39 -0600
+
 boost1.42 (1.42.0-2) unstable; urgency=low
 
   * rules: Add test_exec_monitor.  Closes: #539350.

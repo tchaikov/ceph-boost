@@ -19,7 +19,7 @@ boost_libs := date-time filesystem graph-parallel graph iostreams math \
 	program-options python regex serialization signals system test \
 	thread wave
 
-# these are special cases, where shared library has not the same name of the Boost library
+# these are special cases, where /usr/lib name differs from Boost library name
 boost_lib_math := math_c99 math_c99f math_tr1 math_tr1f
 boost_lib_math_long_double := math_c99l math_tr1l
 boost_lib_serialization := serialization wserialization
@@ -72,10 +72,15 @@ mk_ln_files = $(shell echo $(call mk_base_name,$(2),$(3),$(4)).so.$(SOVERSION) $
 mk_mtso_files = $(shell echo $(call mk_base_name,$(2),$(3),$(4)).so.$(SOVERSION) $(call mk_base_name,$(2),$(3)-mt,$(4)).so >> $(call mk_deb_dev,$(1),$(3)).links)
 mk_mta_files = $(shell echo $(call mk_base_name,$(2),$(3),$(4)).a $(call mk_base_name,$(2),$(3)-mt,$(4)).a >> $(call mk_deb_dev,$(1),$(3)).links)
 
+# Specify the type of files/links to install.
+# Special cases first, then general rule
+boost_filetypes_test_exec_monitor := "a mta"
+boost_filetypes = $(if $(boost_filetypes_$(1)), $(boost_filetypes_$(1)),a so ln mtso mta)
+
 # Function that updates debhelper files for a given library variant
 # Input: component, library, variant, suffix
 # Output: none
-mk_files = $(foreach fn,a so ln mtso mta,$(call mk_$(fn)_files,$(1),$(2),$(3),$(4)))
+mk_files = $(foreach fn,$(call boost_filetypes,$(2)),$(call mk_$(fn)_files,$(1),$(2),$(3),$(4)))
 
 # helpers to make and install lintian override files
 
