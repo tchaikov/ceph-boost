@@ -1,6 +1,7 @@
 Patch from Gaudenz Steinlin <gaudenz@debian.org>
 Debian bug: #552014
 Reported upstream: https://svn.boost.org/trac/boost/ticket/3544
+Fixed upstream: 2010-02-28 (post Boost 1.42)
 
 Add --xpythonid parameter to the build system to only add an identification 
 to Python libraries. The existing --buildid parameter adds an id to all 
