@@ -3,10 +3,14 @@ boost1.42 (1.42.0-4) unstable; urgency=low
   * rules: Copy "doc" directories to $htmldir with --parents option so
     that they end up in the right place.  Closes: #586578.
   
-  * lambda-include-deps.patch: New.  Adapted from upstream changeset
-    61881.  Closes: #581706.
+  * patches/lambda-include-deps.patch: New.  Adapted from upstream
+    changeset 61881.  Closes: #581706.
+  
+  * patches/boost-python-examples.patch: Remove "-mt" suffix from
+    libboost_python.  Also patch examples/tutorial/Jamroot.  
+    Closes: #577793.
 
- -- Steve M. Robbins <smr@debian.org>  Sun, 04 Jul 2010 04:59:10 -0500
+ -- Steve M. Robbins <smr@debian.org>  Sun, 04 Jul 2010 05:32:56 -0500
 
 boost1.42 (1.42.0-3) unstable; urgency=low
 
