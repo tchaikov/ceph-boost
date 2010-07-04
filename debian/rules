@@ -263,7 +263,7 @@ install: build clean-debhelper $(filtered_files)
 	rm -rf $(htmldir)
 	mkdir -p $(htmldir) 
 	cat debian/documentation-files | xargs cp --parents --target-directory=$(htmldir)
-	find doc libs -name doc | xargs -n1 cp --archive --target-directory=$(htmldir)
+	find doc libs -name doc | xargs -n1 cp --archive --parents --target-directory=$(htmldir)
 	rm -rf $(htmldir)/boost
 	dh_link -plibboost$(PKGVERSION)-doc \
 	   usr/include/boost \
