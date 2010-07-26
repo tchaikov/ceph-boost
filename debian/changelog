@@ -9,8 +9,11 @@ boost1.42 (1.42.0-4) unstable; urgency=low
   * patches/boost-python-examples.patch: Remove "-mt" suffix from
     libboost_python.  Also patch examples/tutorial/Jamroot.  
     Closes: #577793.
+  
+  * control: Raise priority of libboost-iostreams, since important package
+    aptitude depends on it.  Closes: #588608.
 
- -- Steve M. Robbins <smr@debian.org>  Sun, 04 Jul 2010 05:32:56 -0500
+ -- Steve M. Robbins <smr@debian.org>  Sun, 25 Jul 2010 22:20:42 -0500
 
 boost1.42 (1.42.0-3) unstable; urgency=low
 

@@ -311,6 +311,7 @@ Package: libboost-iostreams1.42.0
 Homepage: http://www.boost.org/libs/iostreams/
 Architecture: any
 Section: libs
+Priority: important
 Depends: ${misc:Depends}, ${shlibs:Depends}
 Description: Boost.Iostreams Library
  This package forms part of the Boost C++ Libraries collection.
