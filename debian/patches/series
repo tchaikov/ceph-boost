@@ -11,3 +11,4 @@ hurd-ellint_rd.patch
 hurd-execution_monitor.patch
 kfreebsd-thread.patch
 lambda-include-deps.patch
+fusion-name-qual.patch
