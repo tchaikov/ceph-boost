@@ -1,3 +1,15 @@
+boost1.44 (1.44.0-1) unstable; urgency=low
+
+  * New upstream.
+    - patches/boost-build-pythonid.patch: Modify.  Partially applied upstream.
+    - patches/lambda-include-deps.patch: Remove.  Applied upstream.
+    - patches/kfreebsd-thread.patch: Refresh.
+    - patches/jam-wall-clean.patch: Remove temporarily.
+  
+  * rules: The python build ID now specified using --python-buildid.
+
+ -- Steve M. Robbins <smr@debian.org>  Tue, 31 Aug 2010 20:26:01 -0500
+
 boost1.42 (1.42.0-4) unstable; urgency=low
 
   * rules: Copy "doc" directories to $htmldir with --parents option so
