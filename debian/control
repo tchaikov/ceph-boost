@@ -265,7 +265,7 @@ Conflicts: libboost-graph-dev (<< 1.35.0),
  libboost-graph1.38-dev,
  libboost-graph1.39-dev,
  libboost-graph1.40-dev,
- libboost-graph1.41-dev
+ libboost-graph1.41-dev,
  libboost-graph1.42-dev
 Description: generic graph components and algorithms in C++
  This package forms part of the Boost C++ Libraries collection.
