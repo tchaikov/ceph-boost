@@ -53,7 +53,6 @@ libs/smart_ptr/example
 libs/spirit/classic/example
 libs/spirit/classic/phoenix/example
 libs/spirit/example
-libs/spirit/example/scheme/example
 libs/spirit/phoenix/example
 libs/spirit/repository/example
 libs/statechart/example
