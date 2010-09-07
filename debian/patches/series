@@ -10,3 +10,4 @@ hurd-ellint_rd.patch
 hurd-execution_monitor.patch
 kfreebsd-thread.patch
 fusion-name-qual.patch
+remove-rpath.patch

@@ -1,4 +1,4 @@
-boost1.44 (1.44.0-1) unstable; urgency=low
+boost1.44 (1.44.0-1) UNRELEASED; urgency=low
 
   * New upstream.
     - patches/boost-build-pythonid.patch: Modify.  Partially applied upstream.
@@ -8,7 +8,9 @@ boost1.44 (1.44.0-1) unstable; urgency=low
   
   * rules: The python build ID now specified using --python-buildid.
 
- -- Steve M. Robbins <smr@debian.org>  Tue, 31 Aug 2010 20:26:01 -0500
+  * patches/remove-rpath.patch: New.  Disable rpath-setting code.
+  
+ -- Steve M. Robbins <smr@debian.org>  Mon, 06 Sep 2010 21:16:55 -0500
 
 boost1.42 (1.42.0-4) unstable; urgency=low
 
