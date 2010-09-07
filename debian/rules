@@ -151,8 +151,8 @@ htmldir = debian/libboost$(PKGVERSION)-doc/usr/share/doc/libboost$(PKGVERSION)-d
 pyste_prefix = $(CURDIR)/debian/libboost-python$(PKGVERSION)-dev/usr
 bjam = $(CURDIR)/bjam
 
-# FIXME: find a flag to disable reading /etc/site-config.jam
-JAM = $(bjam) $(JOBS) -d2 $(JAM_OPT) --layout=system --user-config=$(CURDIR)/user-config.jam debug-symbols=on
+# With --ignore-site-config, can probably drop Build-Conflicts on boost-build.
+JAM = $(bjam) $(JOBS) -d2 $(JAM_OPT) --layout=system --ignore-site-config --user-config=$(CURDIR)/user-config.jam debug-symbols=on
 
 $(bjam):
 	./bootstrap.sh --with-icu --prefix=$(CURDIR)/debian/tmp/usr
