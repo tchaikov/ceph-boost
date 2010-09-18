@@ -1,3 +1,13 @@
+boost1.44 (1.44.0-2) experimental; urgency=low
+
+  * rules, control: Build Python extensions for Python 3 in addition to
+    Python 2.
+
+  * patches/boost-1.44-py3.1.patch: New.  Fix Boost.MPI build failure for
+    Python 3 (thanks, Andreas Kloeckner).
+
+ -- Steve M. Robbins <smr@debian.org>  Sat, 18 Sep 2010 12:03:46 -0500
+
 boost1.44 (1.44.0-1) experimental; urgency=low
 
   * New upstream.  Closes: #582690, #594634.
