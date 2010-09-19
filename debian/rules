@@ -13,7 +13,7 @@ PKGVERSION = 1.44
 SOVERSION = 1.44.0
 SHLIBS_VERSION = (>= 1.44.0-1)
 
-pyversions = $(shell pyversions -rv) 3.1
+pyversions = $(shell pyversions -rv) $(shell py3versions -rv)
 
 # Boost libraries for which we want separate packages
 boost_libs := date-time filesystem graph-parallel graph iostreams math \
