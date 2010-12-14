@@ -4,7 +4,12 @@ boost1.45 (1.45.0-1) experimental; urgency=low
     - patches/kfreebsd-jam.patch: Remove.  Applied upstream.
     - patches/boost-build-pythonid.patch: Remove.  Applied upstream.
 
- -- Steve M. Robbins <smr@debian.org>  Mon, 13 Dec 2010 23:39:59 -0600
+  * control:
+  * rules:
+  * documentation-files:
+  * example-files: Updates for new version.
+  
+ -- Steve M. Robbins <smr@debian.org>  Tue, 14 Dec 2010 00:58:11 -0600
 
 boost1.44 (1.44.0-2) experimental; urgency=low
 

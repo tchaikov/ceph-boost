@@ -1,7 +1,3 @@
-debian/libboost1.44-doc/usr/share/doc/libboost1.44-doc/HTML/libs/python/example
-debian/libboost1.44-doc/usr/share/doc/libboost1.44-doc/HTML/libs/bimap/doc/html/boost_bimap/examples
-debian/libboost1.44-doc/usr/share/doc/libboost1.44-doc/HTML/libs/type_traits/doc/html/boost_typetraits/examples
-debian/libboost1.44-doc/usr/share/doc/libboost1.44-doc/HTML/doc/html/date_time/examples
 doc/html/boost_asio/example
 doc/html/date_time/examples
 libs/python/example
