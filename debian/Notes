@@ -40,25 +40,3 @@ localhost to get the source tree
 List of example directories obtained using
 
     find * -name 'example*' -type d | grep -v '/example.*/example' > debian/example-files
-
-
-	Interdependencies
-	-----------------
-
-Check using check-interdep.sh
-** must do this after installing the -dev packages **
-
-For 1.38
-
-date_time 	depends on serialization
-filesystem 	depends on system
-graph 		depends on serialization, test
-iostreams 	depends on regex
-math		depends on test
-mpi		depends on graph, python, serialization
-regex 		depends on thread
-thread 		depends on date_time
-wave 		depends on filesystem, serialization
-
-Also, bug report #480948 indicates that multi_index, from libboost-dev
-itself depends on serialization.
