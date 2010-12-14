@@ -1,3 +1,11 @@
+boost1.45 (1.45.0-1) experimental; urgency=low
+
+  * New upstream.
+    - patches/kfreebsd-jam.patch: Remove.  Applied upstream.
+    - patches/boost-build-pythonid.patch: Remove.  Applied upstream.
+
+ -- Steve M. Robbins <smr@debian.org>  Mon, 13 Dec 2010 23:39:59 -0600
+
 boost1.44 (1.44.0-2) experimental; urgency=low
 
   * rules, control: Build Python extensions for Python 3 in addition to

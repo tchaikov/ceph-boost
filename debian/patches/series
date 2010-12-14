@@ -1,11 +1,9 @@
 mips-asm.patch
 boost-python-examples.patch
 endian.patch
-kfreebsd-jam.patch
 python2.5-elementtree.patch
 date_time_date_formatting_hpp.patch
 sh4.patch
-boost-build-pythonid.patch
 hurd-ellint_rd.patch
 hurd-execution_monitor.patch
 kfreebsd-thread.patch
