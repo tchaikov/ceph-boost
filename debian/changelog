@@ -5,6 +5,7 @@ boost1.46 (1.46.0-1) UNRELEASED; urgency=low
     documentation-files.
     - Fixes Boost ticket 4631.  Closes: #595955.
     - Program.Options updated.  Closes: #593522.
+    - Also Closes: #537680.
   
   * control:
   * rules: Set versions to 1.46.  Remove obsolete conflicts.
@@ -15,7 +16,7 @@ boost1.46 (1.46.0-1) UNRELEASED; urgency=low
   * control:
   * rules: New packages for Boost.Random.  Closes: #610821.
   
- -- Steve M. Robbins <smr@debian.org>  Sun, 20 Feb 2011 21:38:07 -0600
+ -- Steve M. Robbins <smr@debian.org>  Sun, 20 Feb 2011 22:30:46 -0600
 
 boost1.45 (1.45.0-1) experimental; urgency=low
 
