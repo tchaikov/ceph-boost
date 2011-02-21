@@ -1,3 +1,10 @@
+Description: Enable building with Python 3.1
+ Fix a build problem where PyInt_Type is not defined.
+Author: Andreas Kloeckner <inform@tiker.net>
+Bug: 595786
+Forwarded: https://svn.boost.org/trac/boost/ticket/4657
+
+
 --- boost1.44-1.44.0.orig/libs/mpi/src/python/datatypes.cpp
 +++ boost1.44-1.44.0/libs/mpi/src/python/datatypes.cpp
 @@ -17,7 +17,9 @@
