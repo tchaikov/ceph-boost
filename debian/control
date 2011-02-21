@@ -469,6 +469,32 @@ Description: Boost.Python Library development files
  versions of Python in Debian.  Code using this library will need also
  one of the Python development packages.
 
+Package: libboost-random1.46.0
+Homepage: http://www.boost.org/libs/random/
+Architecture: any
+Section: libs
+Depends: ${misc:Depends}, ${shlibs:Depends}
+Description: Boost Random Number Library
+ This package forms part of the Boost C++ Libraries collection.
+ .
+ The Boost Random Number Library (Boost.Random for short) provides a
+ variety of generators and distributions to produce random numbers
+ having useful properties, such as uniform distribution.
+
+Package: libboost-random1.46-dev
+Homepage: http://www.boost.org/libs/random/
+Architecture: any
+Section: libdevel
+Depends: ${misc:Depends},
+ libboost1.46-dev (= ${binary:Version}),
+ libboost-random1.46.0 (= ${binary:Version})
+Description: Boost Random Number Library
+ This package forms part of the Boost C++ Libraries collection.
+ .
+ The Boost Random Number Library (Boost.Random for short) provides a
+ variety of generators and distributions to produce random numbers
+ having useful properties, such as uniform distribution.
+
 Package: libboost-regex1.46.0
 Homepage: http://www.boost.org/libs/regex/
 Architecture: any

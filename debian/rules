@@ -18,7 +18,8 @@ pyversions = $(shell pyversions -rv) $(shell py3versions -rv)
 # Boost libraries for which we want separate packages
 boost_libs := date-time filesystem graph-parallel graph iostreams math \
 	mpi mpi-python						       \
-	program-options python regex serialization signals system test \
+	program-options python regex random serialization signals      \
+	system test						       \
 	thread wave
 
 # these are special cases, where /usr/lib name differs from Boost library name
@@ -280,8 +281,6 @@ install: build clean-debhelper $(filtered_files)
 	mkdir -p $(exampledir)
 	cat debian/example-files | xargs cp -a --parents --target-directory=$(exampledir)
 	find $(exampledir) -type f | xargs chmod 644
-
-
 
 	# package libboost-mpi-python$(SOVERSION)
 	dh_install -plibboost-mpi-python$(SOVERSION)
