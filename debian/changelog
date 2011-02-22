@@ -1,8 +1,6 @@
 boost1.46 (1.46.0-1) unstable; urgency=low
 
-  * New upstream release candidate.  NOT READY FOR RELEASE.  Initial
-    updates to control, rules only.  Need to update example-files and
-    documentation-files.
+  * New upstream release.
     - Fixes Boost ticket 4631.  Closes: #595955.
     - Program.Options updated.  Closes: #593522.
     - Also Closes: #537680.
@@ -16,7 +14,7 @@ boost1.46 (1.46.0-1) unstable; urgency=low
   * control:
   * rules: New packages for Boost.Random.  Closes: #610821.
   
- -- Steve M. Robbins <smr@debian.org>  Mon, 21 Feb 2011 21:30:38 -0600
+ -- Steve M. Robbins <smr@debian.org>  Tue, 22 Feb 2011 00:18:43 -0600
 
 boost1.45 (1.45.0-1) experimental; urgency=low
 
