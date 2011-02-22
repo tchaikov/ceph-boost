@@ -1,3 +1,8 @@
+Description: Do not set rpath
+Author: Steve Robbins <smr@debian.org>
+Upstream: http://lists.boost.org/boost-build/2010/09/24089.php
+
+
 --- boost1.44-1.44.0.orig/tools/build/v2/tools/gcc.jam
 +++ boost1.44-1.44.0/tools/build/v2/tools/gcc.jam
 @@ -823,7 +823,7 @@
