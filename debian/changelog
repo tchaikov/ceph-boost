@@ -1,3 +1,12 @@
+boost1.46 (1.46.1-1) unstable; urgency=low
+
+  * New upstream.
+  
+  * control: Add libboost-random1.46-dev to depends of -all-dev and
+    suggests of -dev.  Closes: #615849.
+
+ -- Steve M. Robbins <smr@debian.org>  Sun, 13 Mar 2011 00:37:35 -0600
+
 boost1.46 (1.46.0-1) unstable; urgency=low
 
   * New upstream release.
