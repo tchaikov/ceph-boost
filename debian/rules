@@ -246,7 +246,8 @@ install: build clean-debhelper $(filtered_files) debian/bjam.1
 	done
 
 	# Install Boost.Build v2 & jam
-	cd $(bbv2dir) && ./bjam install --prefix=$(CURDIR)/tmp/usr
+	cd $(bbv2dir) && ./bjam install --prefix=$(CURDIR)/debian/tmp/usr
+	mv debian/tmp/usr/share/boost-build/example debian/boost-build-examples
 
 	install --mode=755 -D debian/rtupdate debian/tmp/usr/share/python/runtime.d/libboost-python$(PKGVERSION)-dev.rtupdate
 	install --mode=755 -D debian/rtupdate debian/tmp/usr/share/python/runtime.d/libboost-mpi-python$(PKGVERSION)-dev.rtupdate
@@ -273,8 +274,7 @@ install: build clean-debhelper $(filtered_files) debian/bjam.1
 	dh_installman -plibboost$(PKGVERSION)-dev debian/bjam.1 debian/bcp.1 debian/inspect.1 debian/quickbook.1
 	dh_install -plibboost$(PKGVERSION)-dev tools/boostbook/xsl/* usr/share/boostbook/xsl
 	dh_install -plibboost$(PKGVERSION)-dev tools/boostbook/dtd/* usr/share/boostbook/dtd
-	dh_install -plibboost$(PKGVERSION)-dev debian/tmp/usr/share/boost-build usr/share
-
+	dh_install -plibboost$(PKGVERSION)-dev debian/tmp/usr/share/boost-build
 
 	# package libboost-doc
 	rm -rf $(htmldir)
@@ -290,6 +290,7 @@ install: build clean-debhelper $(filtered_files) debian/bjam.1
 	   usr/share/doc/libboost$(PKGVERSION)-doc/HTML \
 	   usr/share/doc/libboost-doc/HTML
 
+	dh_installexamples -plibboost$(PKGVERSION)-doc debian/boost-build-examples
 	mkdir -p $(exampledir)
 	cat debian/example-files | xargs cp -a --parents --target-directory=$(exampledir)
 	find $(exampledir) -type f | xargs chmod 644
