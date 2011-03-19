@@ -1,6 +1,7 @@
 Description: Do not set rpath
 Author: Steve Robbins <smr@debian.org>
 Upstream: http://lists.boost.org/boost-build/2010/09/24089.php
+Upstream-Bug: https://svn.boost.org/trac/boost/ticket/5343
 
 
 --- boost1.44-1.44.0.orig/tools/build/v2/tools/gcc.jam
