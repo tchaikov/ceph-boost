@@ -155,6 +155,7 @@ exampledir = debian/libboost$(PKGVERSION)-doc/usr/share/doc/libboost$(PKGVERSION
 htmldir = debian/libboost$(PKGVERSION)-doc/usr/share/doc/libboost$(PKGVERSION)-doc/HTML
 pyste_prefix = $(CURDIR)/debian/libboost-python$(PKGVERSION)-dev/usr
 bjam = $(CURDIR)/bjam
+bbv2dir = $(CURDIR)/tools/build/v2
 
 # With --ignore-site-config, can probably drop Build-Conflicts on boost-build.
 JAM = $(bjam) $(JOBS) -d2 $(JAM_OPT) --layout=system --ignore-site-config --user-config=$(CURDIR)/user-config.jam debug-symbols=on
@@ -184,6 +185,7 @@ build-stamp: $(bjam) user-config.jam
 	 	mv stage/lib/mpi.so stage/lib/mpi-py$$pyid.so; \
 	done
 
+	cd $(bbv2dir) && ./bootstrap.sh --with-toolset=gcc
 	cd tools/bcp && $(JAM)
 	cd tools/inspect/build && $(JAM)
 	cd tools/quickbook && $(JAM)
@@ -243,6 +245,9 @@ install: build clean-debhelper $(filtered_files) debian/bjam.1
 		$(JAM) --prefix=$(CURDIR)/debian/tmp/usr install --with-python --with-mpi --python-buildid=py$$pyid python=$$pyver; \
 	done
 
+	# Install Boost.Build v2 & jam
+	cd $(bbv2dir) && ./bjam install --prefix=$(CURDIR)/tmp/usr
+
 	install --mode=755 -D debian/rtupdate debian/tmp/usr/share/python/runtime.d/libboost-python$(PKGVERSION)-dev.rtupdate
 	install --mode=755 -D debian/rtupdate debian/tmp/usr/share/python/runtime.d/libboost-mpi-python$(PKGVERSION)-dev.rtupdate
 
@@ -253,10 +258,6 @@ install: build clean-debhelper $(filtered_files) debian/bjam.1
 	# generate (some) debhelper files
 	@$(call mk_debhelper_files)
 
-	# package bjam
-	dh_install -pbjam bjam usr/bin
-	dh_installman -pbjam debian/bjam.1
-
 	# package libboost-dbg
 
 	# package libboost$(PKGVERSION)-dev
@@ -264,13 +265,16 @@ install: build clean-debhelper $(filtered_files) debian/bjam.1
 	   debian/tmp/usr/include/boost \
 	   usr/include
 	dh_install -plibboost$(PKGVERSION)-dev \
+	   debian/tmp/usr/bin/bjam \
 	   dist/bin/bcp \
 	   dist/bin/inspect \
 	   dist/bin/quickbook \
 	   usr/bin
-	dh_installman -plibboost$(PKGVERSION)-dev debian/bcp.1 debian/inspect.1 debian/quickbook.1
+	dh_installman -plibboost$(PKGVERSION)-dev debian/bjam.1 debian/bcp.1 debian/inspect.1 debian/quickbook.1
 	dh_install -plibboost$(PKGVERSION)-dev tools/boostbook/xsl/* usr/share/boostbook/xsl
 	dh_install -plibboost$(PKGVERSION)-dev tools/boostbook/dtd/* usr/share/boostbook/dtd
+	dh_install -plibboost$(PKGVERSION)-dev debian/tmp/usr/share/boost-build usr/share
+
 
 	# package libboost-doc
 	rm -rf $(htmldir)

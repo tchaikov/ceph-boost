@@ -1,3 +1,11 @@
+boost1.46 (1.46.1-3) unstable; urgency=low
+
+  * control: Remove package bjam; install bjam and Boost.Build with -dev
+    package.  The latter now conflicts and replaces the old bjam and
+    boost-build packages.
+
+ -- Steve M. Robbins <smr@debian.org>  Sat, 19 Mar 2011 17:41:33 -0500
+
 boost1.46 (1.46.1-2) unstable; urgency=low
 
   * control (libboost-mpi-python1.46.1): Add conflict with

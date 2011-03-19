@@ -12,16 +12,6 @@ Vcs-Browser: http://svn.debian.org/wsvn/pkg-boost/boost/trunk/
 Vcs-Svn: svn://svn.debian.org/svn/pkg-boost/boost/trunk
 Standards-Version: 3.8.3
 
-Package: bjam
-Architecture: any
-Depends: ${misc:Depends}, ${shlibs:Depends}
-Description: Software build tool 
- Boost.Jam (BJam) is a portable build tool with its own interpreted language,
- which allows to implement rather complex logic in a readable way and without
- resorting to external programs. It is a descendant of Jam/MR tool modified to
- suit the needs of Boost.Build. In particular, modules and rule parameters
- were added, as well as several new builtins.
-
 Package: libboost1.46-dbg
 Architecture: any
 Section: debug
@@ -62,7 +52,8 @@ Suggests: libboost1.46-doc,
  docbook-xsl (>= 1.73.2),
  default-jdk (>= 1.4),
  fop (>= 0.94)
-Conflicts: libboost1.42-dev
+Conflicts: bjam, boost-build, libboost1.42-dev
+Replaces: bjam, boost-build
 Description: Boost C++ Libraries development files
  The Boost web site provides free, peer-reviewed, portable C++ source
  libraries. The emphasis is on libraries which work well with the C++
@@ -72,8 +63,8 @@ Description: Boost C++ Libraries development files
  already been proposed for inclusion in the C++ Standards Committee's
  upcoming C++ Standard Library Technical Report.
  .
- This package provides headers and the auxiliary tools bcp, inspect,
- boostbook and quickbook.
+ This package provides headers and the auxiliary tools bjam, Boost.Build,
+ bcp, inspect, boostbook and quickbook.
  .
  For the following subprojects separate packages exist: date-time,
  filesystem, graph, iostreams, math, mpi, program_options, python,
