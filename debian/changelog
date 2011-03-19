@@ -2,8 +2,10 @@ boost1.46 (1.46.1-2) unstable; urgency=low
 
   * control (libboost-mpi-python1.46.1): Add conflict with
     libboost-mpi-python1.46.0.  Closes: #618441.
+  
+  * control: new package bjam that installs bjam and manpage.
 
- -- Steve M. Robbins <smr@debian.org>  Sat, 19 Mar 2011 13:47:13 -0500
+ -- Steve M. Robbins <smr@debian.org>  Sat, 19 Mar 2011 14:14:47 -0500
 
 boost1.46 (1.46.1-1) unstable; urgency=low
 

@@ -162,6 +162,9 @@ JAM = $(bjam) $(JOBS) -d2 $(JAM_OPT) --layout=system --ignore-site-config --user
 $(bjam):
 	./bootstrap.sh --with-icu --prefix=$(CURDIR)/debian/tmp/usr
 
+debian/bjam.1: $(bjam)
+	help2man ./bjam > $@
+
 user-config.jam:
 	echo $(TOOLSET_CONFIG) > $@
 	echo $(MPI_CONFIG)     >> $@
@@ -214,6 +217,7 @@ clean: clean-debhelper
 	rm -rf tools/regression/build/bin
 	rm -rf bin.v2 dist
 	rm -rf user-config.jam
+	rm -rf debian/bjam.1
 
 	dh_clean build-stamp
 
@@ -222,7 +226,7 @@ make-debhelper: clean-debhelper
 	@$(call mk_debhelper_files)
 
 install: DH_OPTIONS=-X.svn
-install: build clean-debhelper $(filtered_files)
+install: build clean-debhelper $(filtered_files) debian/bjam.1
 	dh_testdir
 	dh_testroot
 	dh_prep
@@ -248,6 +252,10 @@ install: build clean-debhelper $(filtered_files)
 
 	# generate (some) debhelper files
 	@$(call mk_debhelper_files)
+
+	# package bjam
+	dh_install -pbjam bjam usr/bin
+	dh_installman -pbjam debian/bjam.1
 
 	# package libboost-dbg
 
