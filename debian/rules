@@ -123,11 +123,11 @@ mk_debhelper_files = \
 		) \
 	)
 
-TOOLSET_CONFIG="using gcc : : : <compileflags>-D_REENTRANT ;"
+TOOLSET_CONFIG="using gcc ;"
 BUILD_LONG_DOUBLE = yes
 
 ifeq ($(DEB_BUILD_ARCH), hppa)
-TOOLSET_CONFIG="using gcc : : : <compileflags>-D_REENTRANT <compileflags>-mlong-calls <compileflags>-DBOOST_SP_USE_PTHREADS ;"
+TOOLSET_CONFIG="using gcc : : : <compileflags>-mlong-calls <compileflags>-DBOOST_SP_USE_PTHREADS ;"
 BUILD_LONG_DOUBLE = no
 else ifeq ($(DEB_BUILD_ARCH), arm)
 BUILD_LONG_DOUBLE = no
