@@ -164,7 +164,7 @@ $(bjam):
 	./bootstrap.sh --with-icu --prefix=$(CURDIR)/debian/tmp/usr
 
 debian/bjam.1: $(bjam)
-	help2man ./bjam > $@
+	help2man --name 'software build tool' --no-info ./bjam > $@
 
 user-config.jam:
 	echo $(TOOLSET_CONFIG) > $@
