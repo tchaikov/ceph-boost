@@ -1,3 +1,11 @@
+boost1.46 (1.46.1-4) unstable; urgency=low
+
+  * NEWS.Debian: fix format.
+
+  * patches/changeset_71050.diff: Fix build with Python 3.2.
+  
+ -- Steve M. Robbins <smr@debian.org>  Wed, 06 Apr 2011 23:08:56 -0500
+
 boost1.46 (1.46.1-3) unstable; urgency=low
 
   * control: Remove package bjam; install bjam and Boost.Build with -dev
