@@ -310,7 +310,7 @@ install: build clean-debhelper $(filtered_files) debian/bjam.1
 	dh_install -plibboost-python$(PKGVERSION)-dev --autodest \
 	   debian/tmp/usr/share/python/runtime.d/libboost-python$(PKGVERSION)-dev.rtupdate
 
-	cd libs/python/pyste/install && python setup.py install --no-compile --prefix=$(pyste_prefix) --install-lib=$(pyste_prefix)/share/python-support/pyste
+	cd libs/python/pyste/install && python setup.py install --no-compile --prefix=$(pyste_prefix) --install-lib=$(pyste_prefix)/share/pyshared
 	mv $(pyste_prefix)/bin/pyste.py $(pyste_prefix)/bin/pyste
 	dh_installman -plibboost-python$(PKGVERSION)-dev debian/pyste.1
 
@@ -331,7 +331,8 @@ binary-common:
 	dh_strip --dbg-package=libboost$(PKGVERSION)-dbg -X"-d-"
 	dh_link
 	dh_compress -Xlibboost$(PKGVERSION)-doc/HTML
-	dh_pysupport
+	dh_python2
+	dh_python3
 	dh_fixperms
 
 	@if [ "$(DH_OPTIONS)" = "-a" ]; then \

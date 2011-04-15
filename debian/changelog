@@ -4,8 +4,13 @@ boost1.46 (1.46.1-4) unstable; urgency=low
 
   * patches/changeset_71050.diff: Fix build with Python 3.2.  Closes:
     #622021
+
+  * rules: Switch from dh_pysupport to dh_python2 and dh_python3.
+  * control: Remove X-Python-Version and X-Python3-Version lines, to
+    indicate all versions supported.  Ensure all python packages use both
+    ${python:Depends} and ${python:Breaks}.
   
- -- Steve M. Robbins <smr@debian.org>  Fri, 15 Apr 2011 12:22:25 -0500
+ -- Steve M. Robbins <smr@debian.org>  Fri, 15 Apr 2011 12:46:56 -0500
 
 boost1.46 (1.46.1-3) unstable; urgency=low
 
