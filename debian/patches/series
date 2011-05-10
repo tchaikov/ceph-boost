@@ -1,3 +1,4 @@
+openssl-no-ssl2.patch
 mips-asm.patch
 boost-python-examples.patch
 endian.patch

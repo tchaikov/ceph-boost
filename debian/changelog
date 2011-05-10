@@ -1,3 +1,11 @@
+boost1.46 (1.46.1-5) unstable; urgency=low
+
+  * patches/openssl-no-ssl2.patch.  New (thanks, Lubo~ Dole~el).  Throw
+    exception if sslv2 context requested but OPENSSL_NO_SSL2 defined.
+    Closes: #621402, #622027, #622070.
+
+ -- Steve M. Robbins <smr@debian.org>  Mon, 09 May 2011 21:34:12 -0500
+
 boost1.46 (1.46.1-4) unstable; urgency=low
 
   * NEWS.Debian: fix format.
