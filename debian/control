@@ -360,6 +360,7 @@ Homepage: http://www.boost.org/doc/html/mpi/python.html
 Architecture: any
 Section: python
 Depends: ${misc:Depends}, ${shlibs:Depends}, ${python:Depends}
+Suggests: python, python3
 Breaks: ${python:Breaks}
 Conflicts: libboost-mpi-python1.40.0,
  libboost-mpi-python1.41.0,
@@ -375,6 +376,8 @@ Description: C++ interface to the Message Passing Interface (MPI), Python Bindin
  techniques to maintain maximal efficiency.
  .
  This package provides Python Bindings to the C++ interface.
+ .
+ One of the python interpreter packages is required to use the bindings.
 
 Package: libboost-mpi-python1.46-dev
 Homepage: http://www.boost.org/doc/html/mpi/python.html
@@ -427,6 +430,7 @@ Homepage: http://www.boost.org/libs/python/
 Architecture: any
 Section: python
 Depends: ${misc:Depends}, ${shlibs:Depends}, ${python:Depends}
+Suggests: python, python3
 Breaks: ${python:Breaks}
 Description: Boost.Python Library 
  This package forms part of the Boost C++ Libraries collection.
@@ -441,6 +445,9 @@ Description: Boost.Python Library
  Subclassing extension types in Python, Overriding virtual functions
  in Python, Member function Overloading, Automatic wrapping of
  numeric operators among others.
+ .
+ One of the python interpreter packages is required to use the
+ created extensions.
 
 Package: libboost-python1.46-dev
 Homepage: http://www.boost.org/libs/python/

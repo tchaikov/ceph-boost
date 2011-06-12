@@ -1,3 +1,10 @@
+boost1.46 (1.46.1-6) unstable; urgency=low
+
+  * control(libboost-mpi-python1.46.1, libboost-python1.46.1): Suggests a
+    python interpreter.  Closes: #620775.
+
+ -- Steve M. Robbins <smr@debian.org>  Sun, 12 Jun 2011 00:37:42 -0500
+
 boost1.46 (1.46.1-5) unstable; urgency=low
 
   * patches/openssl-no-ssl2.patch.  New (thanks, Lubo~ Dole~el).  Throw
