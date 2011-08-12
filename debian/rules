@@ -161,7 +161,8 @@ bbv2dir = $(CURDIR)/tools/build/v2
 JAM = $(bjam) $(JOBS) -d2 $(JAM_OPT) --layout=system --ignore-site-config --user-config=$(CURDIR)/user-config.jam debug-symbols=on
 
 $(bjam):
-	./bootstrap.sh --with-icu --prefix=$(CURDIR)/debian/tmp/usr
+	./bootstrap.sh --with-icu --prefix=$(CURDIR)/debian/tmp/usr \
+	  || cat bootstrap.log
 
 debian/bjam.1: $(bjam)
 	help2man --name 'software build tool' --no-info ./bjam > $@

@@ -260,7 +260,7 @@ Depends: ${misc:Depends}, ${shlibs:Depends}
 Description: Boost.Iostreams Library
  This package forms part of the Boost C++ Libraries collection.
  .
- Boost.Iostreams are a collection of concepts and set of templates
+ Boost.Iostreams are a collection of concepts and a set of templates
  which turn models of these concepts into C++ standard library streams
  and stream buffers.
 
@@ -276,7 +276,7 @@ Conflicts: libboost-iostreams1.42-dev
 Description: Boost.Iostreams Library development files
  This package forms part of the Boost C++ Libraries collection.
  .
- Boost.Iostreams are a collection of concepts and set of templates
+ Boost.Iostreams are a collection of concepts and a set of templates
  which turn models of these concepts into C++ standard library streams
  and stream buffers.
 

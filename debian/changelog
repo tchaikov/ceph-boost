@@ -1,3 +1,12 @@
+boost1.46 (1.46.1-7) UNRELEASED; urgency=low
+
+  * control: Fix ungrammatical description for iostreams packages.
+    Closes: #633865.
+  
+  * rules: Dump boostrap log file if bootstrapping fails.
+
+ -- Steve M. Robbins <smr@debian.org>  Thu, 11 Aug 2011 22:46:29 -0500
+
 boost1.46 (1.46.1-6) unstable; urgency=low
 
   * control(libboost-mpi-python1.46.1, libboost-python1.46.1): Suggests a
