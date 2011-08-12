@@ -4,8 +4,11 @@ boost1.46 (1.46.1-7) UNRELEASED; urgency=low
     Closes: #633865.
   
   * rules: Dump boostrap log file if bootstrapping fails.
+  
+  * libboost-doc.README.Debian: Remove reference to packages bjam and
+    boost-build; now only need boostX.YZ-dev.
 
- -- Steve M. Robbins <smr@debian.org>  Thu, 11 Aug 2011 22:46:29 -0500
+ -- Steve M. Robbins <smr@debian.org>  Thu, 11 Aug 2011 22:59:02 -0500
 
 boost1.46 (1.46.1-6) unstable; urgency=low
 
