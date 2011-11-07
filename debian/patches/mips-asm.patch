@@ -1,3 +1,14 @@
+Description: Patch to build sp_counted_base on MIPS
+ The code in sp_counted_base_gcc_mips.hpp uses mips2 opcodes
+ despite compiling for mips1.  Florian Lohoff provided the solution
+ http://lists.debian.org/debian-mips/2009/08/msg00033.html
+Author: Steve Robbins <smr@debian.org>
+Bug: 543975
+Forwarded: https://svn.boost.org/trac/boost/ticket/5327
+
+Status as of 2011-11-07: Patch applied in boost/trunk but not merged
+to release.
+
 --- boost1.39-1.39.0.obsolete.0.994080839927658.orig/boost/smart_ptr/detail/sp_counted_base_gcc_mips.hpp
 +++ boost1.39-1.39.0.obsolete.0.994080839927658/boost/smart_ptr/detail/sp_counted_base_gcc_mips.hpp
 @@ -37,9 +37,12 @@
