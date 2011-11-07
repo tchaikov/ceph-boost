@@ -1,5 +1,8 @@
-# Debian bug #489022
-# Reported upstream as http://svn.boost.org/trac/boost/ticket/2208
+Description: Use ElementTree from the python standard library
+ Patch from Ubuntu, forwarded by James Westby.
+Author: Ubuntu
+Bug: 489022
+Forwarded: http://svn.boost.org/trac/boost/ticket/2208
 
 --- boost1.35-1.35.0.orig/libs/python/pyste/src/Pyste/GCCXMLParser.py
 +++ boost1.35-1.35.0/libs/python/pyste/src/Pyste/GCCXMLParser.py
