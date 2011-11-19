@@ -1,9 +1,5 @@
-mips-asm.patch
 boost-python-examples.patch
 endian.patch
-python2.5-elementtree.patch
 sh4.patch
-hurd-ellint_rd.patch
-hurd-execution_monitor.patch
 kfreebsd-thread.patch
 boost-1.44-py3.1.patch
