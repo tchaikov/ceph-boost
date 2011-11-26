@@ -12,7 +12,7 @@ boost1.48 (1.48.0-1) unstable; urgency=low
   * patches/hurd-execution_monitor.patch: Remove.  Pino Toscano advised
     that the hurd no longer needs these.
 
- -- Steve M. Robbins <smr@debian.org>  Fri, 18 Nov 2011 22:06:47 -0600
+ -- Steve M. Robbins <smr@debian.org>  Fri, 25 Nov 2011 22:43:07 -0600
 
 boost1.46 (1.46.1-7) unstable; urgency=low
 
