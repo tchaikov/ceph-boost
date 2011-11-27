@@ -31,6 +31,7 @@ Architecture: any
 Section: libdevel
 Depends: ${misc:Depends}, ${shlibs:Depends}, libstdc++6-4.4-dev | libstdc++-dev
 Suggests: libboost1.48-doc,
+ libboost-chrono1.48-dev,
  libboost-date-time1.48-dev,
  libboost-filesystem1.48-dev,
  libboost-graph-parallel1.48-dev,
@@ -68,7 +69,7 @@ Description: Boost C++ Libraries development files
  This package provides headers and the auxiliary tools bjam, Boost.Build,
  bcp, inspect, boostbook and quickbook.
  .
- For the following subprojects separate packages exist: date-time,
+ For the following subprojects separate packages exist: chrono, date-time,
  filesystem, graph, iostreams, math, mpi, program_options, python,
  regex, serialization, signals, system, test, thread, and wave.
 
@@ -77,6 +78,7 @@ Architecture: any
 Section: libdevel
 Depends: ${misc:Depends},
  libboost1.48-dev,
+ libboost-chrono1.48-dev, 
  libboost-date-time1.48-dev, 
  libboost-filesystem1.48-dev, 
  libboost-graph1.48-dev, 
@@ -126,6 +128,94 @@ Description: Boost.org libraries documentation
  This is documentation for the libboost1.46-dev package in HTML format.
  Some pages point to header files provided in libboost1.46-dev package,
  so it is suggested to install the latter as well.
+
+Package: libboost-chrono1.48.0
+Homepage: http://www.boost.org/libs/chrono/
+Architecture: any
+Section: libs
+Depends: ${misc:Depends}, ${shlibs:Depends}
+Description: C++ representation of time duration, time point, and clocks
+ This package forms part of the Boost C++ Libraries collection.
+ .
+ The Boost.Chrono library provides:
+ .
+  * A means to represent time durations: managed by the generic
+ duration class . Examples of time durations include days, minutes,
+ seconds and nanoseconds, which can be represented with a fixed number
+ of clock ticks per unit. All of these units of time duration are
+ united with a generic interface by the duration facility.
+  * A type for representing points in time: time_point. A time_point
+ represents an epoch plus or minus a duration. The library leaves
+ epochs unspecified. A time_point is associated with a clock.
+  * Several clocks, some of which may not be available on a
+ particular platform: system_clock, steady_clock and
+ high_resolution_clock. A clock is a pairing of a time_point and
+ duration, and a function which returns a time_point representing now.
+ .
+ To make the timing facilities more generally useful, Boost.Chrono
+ provides a number of clocks that are thin wrappers around the
+ operating system's time APIs, thereby allowing the extraction of wall
+ clock time, user CPU time, system CPU time spent by the process:
+ .
+  * process_real_cpu_clock, captures wall clock CPU time spent by the
+ current process.  
+  * process_user_cpu_clock, captures user-CPU time
+ spent by the current process.  
+  * process_system_cpu_clock, captures
+ system-CPU time spent by the current process.  
+  * A tuple-like class
+ process_cpu_clock, that captures real, user-CPU, and system-CPU
+ process times together.
+  * A thread_clock thread steady clock giving
+ the time spent by the current thread (when supported by a platform).
+ .
+ Lastly, Boost.Chrono includes typeof registration for duration and
+ time_point to permit using emulated auto with C++03 compilers.
+
+Package: libboost-chrono1.48-dev
+Homepage: http://www.boost.org/libs/chrono/
+Architecture: any
+Section: libdevel
+Depends: ${misc:Depends},
+ libboost1.48-dev (= ${binary:Version}),
+ libboost-chrono1.48.0 (= ${binary:Version})
+Description: C++ representation of time duration, time point, and clocks
+ This package forms part of the Boost C++ Libraries collection.
+ .
+ The Boost.Chrono library provides:
+ .
+  * A means to represent time durations: managed by the generic
+ duration class . Examples of time durations include days, minutes,
+ seconds and nanoseconds, which can be represented with a fixed number
+ of clock ticks per unit. All of these units of time duration are
+ united with a generic interface by the duration facility.
+  * A type for representing points in time: time_point. A time_point
+ represents an epoch plus or minus a duration. The library leaves
+ epochs unspecified. A time_point is associated with a clock.
+  * Several clocks, some of which may not be available on a
+ particular platform: system_clock, steady_clock and
+ high_resolution_clock. A clock is a pairing of a time_point and
+ duration, and a function which returns a time_point representing now.
+ .
+ To make the timing facilities more generally useful, Boost.Chrono
+ provides a number of clocks that are thin wrappers around the
+ operating system's time APIs, thereby allowing the extraction of wall
+ clock time, user CPU time, system CPU time spent by the process:
+ .
+  * process_real_cpu_clock, captures wall clock CPU time spent by the
+ current process.  
+  * process_user_cpu_clock, captures user-CPU time
+ spent by the current process.  
+  * process_system_cpu_clock, captures
+ system-CPU time spent by the current process.  
+  * A tuple-like class
+ process_cpu_clock, that captures real, user-CPU, and system-CPU
+ process times together.
+  * A thread_clock thread steady clock giving
+ the time spent by the current thread (when supported by a platform).
+ .
+ Lastly, Boost.Chrono includes typeof registration for duration and
+ time_point to permit using emulated auto with C++03 compilers.
 
 Package: libboost-date-time1.48.0
 Homepage: http://www.boost.org/libs/date_time/
