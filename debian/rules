@@ -16,7 +16,7 @@ SHLIBS_VERSION = (>= 1.48.0-1)
 pyversions = $(shell pyversions -rv) $(shell py3versions -rv)
 
 # Boost libraries for which we want separate packages
-boost_libs := chrono date-time filesystem graph-parallel graph iostreams math \
+boost_libs := chrono date-time filesystem graph-parallel graph iostreams locale math \
 	mpi mpi-python						       \
 	program-options python regex random serialization signals      \
 	system test						       \
