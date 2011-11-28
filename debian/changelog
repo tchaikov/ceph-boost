@@ -1,6 +1,6 @@
 boost1.48 (1.48.0-1) unstable; urgency=low
 
-  * New upstream.
+  * New upstream.  Closes: #634245.
     - patches/changeset_71050.diff:
     - patches/date_time_date_formatting_hpp.patch:
     - patches/fusion-name-qual.patch:
@@ -8,13 +8,15 @@ boost1.48 (1.48.0-1) unstable; urgency=low
     - patches/openssl-no-ssl2.patch:
     - patches/python2.5-elementtree.patch: Removed.  Applied upstream.
   
+  * New library packages for: chrono, locale, and timer.
+  
+  * patches/pythonid.patch: New.  Fix jam option --python-buildid.
+  
   * patches/hurd-ellint_rd.patch:
   * patches/hurd-execution_monitor.patch: Remove.  Pino Toscano advised
     that the hurd no longer needs these.
 
-  * patches/pythonid.patch: New.  Fix jam option --python-buildid.
-  
- -- Steve M. Robbins <smr@debian.org>  Sun, 27 Nov 2011 13:49:27 -0600
+ -- Steve M. Robbins <smr@debian.org>  Sun, 27 Nov 2011 22:18:35 -0600
 
 boost1.46 (1.46.1-7) unstable; urgency=low
 

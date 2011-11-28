@@ -72,8 +72,8 @@ Description: Boost C++ Libraries development files
  bcp, inspect, boostbook and quickbook.
  .
  For the following subprojects separate packages exist: chrono, date-time,
- filesystem, graph, iostreams, math, mpi, program_options, python,
- regex, serialization, signals, system, test, thread, and wave.
+ filesystem, graph, iostreams, locale, math, mpi, program_options, python,
+ regex, serialization, signals, system, test, thread, timer, and wave.
 
 Package: libboost1.48-all-dev
 Architecture: any
