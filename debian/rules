@@ -20,7 +20,7 @@ boost_libs := chrono date-time filesystem graph-parallel graph iostreams locale 
 	mpi mpi-python						       \
 	program-options python regex random serialization signals      \
 	system test						       \
-	thread wave
+	thread timer wave
 
 # these are special cases, where /usr/lib name differs from Boost library name
 boost_lib_math := math_c99 math_c99f math_tr1 math_tr1f

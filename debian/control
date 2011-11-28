@@ -49,6 +49,7 @@ Suggests: libboost1.48-doc,
  libboost-system1.48-dev,
  libboost-test1.48-dev,
  libboost-thread1.48-dev,
+ libboost-timer1.48-dev,
  libboost-wave1.48-dev,
  xsltproc,
  doxygen,
@@ -98,6 +99,7 @@ Depends: ${misc:Depends},
  libboost-system1.48-dev, 
  libboost-test1.48-dev, 
  libboost-thread1.48-dev, 
+ libboost-timer1.48-dev, 
  libboost-wave1.48-dev
 Description: Boost C++ Libraries development files (ALL)
  The Boost web site provides free, peer-reviewed, portable C++ source
@@ -869,6 +871,42 @@ Description: portable C++ multi-threading
  asynchronous, independent, threads-of-execution. Each thread has its
  own machine state including program instruction counter and
  registers.
+
+Package: libboost-timer1.48.0
+Homepage: http://www.boost.org/libs/timer/
+Architecture: any
+Section: libs
+Depends: ${misc:Depends}, ${shlibs:Depends}
+Description: C++ wall clock and CPU process timers
+ This package forms part of the Boost C++ Libraries collection.
+ .
+ Portable C++ timer classes that answer the question "How long does my
+ C++ code take to run?" with as little as one #include and one
+ additional line of code.
+ .
+ Class cpu_timer measures wall clock time, user CPU process time, and
+ system CPU process time. Class auto_cpu_timer is a refinement of
+ cpu_timer that automatically reports the elapsed times when an
+ auto_cpu_timer object is destroyed.
+
+Package: libboost-timer1.48-dev
+Homepage: http://www.boost.org/libs/timer/
+Architecture: any
+Section: libdevel
+Depends: ${misc:Depends},
+ libboost1.48-dev (= ${binary:Version}),
+ libboost-timer1.48.0 (= ${binary:Version})
+Description: C++ wall clock and CPU process timers
+ This package forms part of the Boost C++ Libraries collection.
+ .
+ Portable C++ timer classes that answer the question "How long does my
+ C++ code take to run?" with as little as one #include and one
+ additional line of code.
+ .
+ Class cpu_timer measures wall clock time, user CPU process time, and
+ system CPU process time. Class auto_cpu_timer is a refinement of
+ cpu_timer that automatically reports the elapsed times when an
+ auto_cpu_timer object is destroyed.
 
 Package: libboost-wave1.48.0
 Homepage: http://www.boost.org/libs/wave/
