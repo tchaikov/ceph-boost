@@ -1,6 +1,6 @@
 Description: Fix jam option --python-buildid
 Author: Steve Robbins <smr@debian.org>
-Forwarded: http://lists.boost.org/boost-build/2011/11/25446.php
+Forwarded: https://svn.boost.org/trac/boost/ticket/6286
 
 --- boost1.48-1.48.0.orig/boostcpp.jam
 +++ boost1.48-1.48.0/boostcpp.jam
