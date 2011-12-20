@@ -1,3 +1,4 @@
+foreach.patch
 boost-python-examples.patch
 endian.patch
 sh4.patch
