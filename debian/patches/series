@@ -6,3 +6,4 @@ kfreebsd-thread.patch
 boost-1.44-py3.1.patch
 pythonid.patch
 fusion-push-front-broken.patch
+math-define-l.patch
