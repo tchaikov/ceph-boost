@@ -1,3 +1,11 @@
+boost1.48 (1.48.0-3) unstable; urgency=low
+
+  * patches/fusion-push-front-broken.patch: New.  Upstream patch that
+    fixes #include <boost/fusion/algorithm/transformation/push_front.hpp>.
+    Closes: #653812.
+
+ -- Steve M. Robbins <smr@debian.org>  Sat, 31 Dec 2011 01:39:10 -0600
+
 boost1.48 (1.48.0-2) unstable; urgency=low
 
   * patches/foreach.patch: New.  Upstream patch to fix BOOST_FOREACH build
