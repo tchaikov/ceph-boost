@@ -3,11 +3,18 @@ boost1.48 (1.48.0-3) unstable; urgency=low
   * patches/fusion-push-front-broken.patch: New.  Upstream patch that
     fixes #include <boost/fusion/algorithm/transformation/push_front.hpp>.
     Closes: #653812.
-  
+
   * patches/math-define-l.patch: New.  Rename class template parameter
     "L".  Closes: #653764.
 
- -- Steve M. Robbins <smr@debian.org>  Tue, 03 Jan 2012 00:25:20 -0600
+  * patches/gcc-4.7-threading-detection.patch: New, from upstream.  Enable
+    gcc 4.7 threading detection.  Closes: #654425.
+
+  * patches/mpi-allocator-c++0x.patch: New.  Workaround to enable using
+    Boost.MPI with -std=c++0x mode on gcc 4.6.  Fix will be in gcc 4.6.3
+    and 4.7.  Closes: #639862.
+
+ -- Steve M. Robbins <smr@debian.org>  Wed, 04 Jan 2012 23:50:52 -0600
 
 boost1.48 (1.48.0-2) unstable; urgency=low
 
