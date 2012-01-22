@@ -6,6 +6,9 @@ Description: Compute hardware_concurrency() using get_nprocs() on GLIBC systems
 Author: Petr Salinger <Petr.Salinger@seznam.cz>
 Forwarded: https://svn.boost.org/trac/boost/ticket/6100
 
+Applied to Release branch as of 2012-01-07, post 1.48.0.
+
+
 --- boost1.44-1.44.0.orig/libs/thread/src/pthread/thread.cpp
 +++ boost1.44-1.44.0/libs/thread/src/pthread/thread.cpp
 @@ -14,7 +14,7 @@
