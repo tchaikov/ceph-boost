@@ -1,3 +1,15 @@
+boost1.49 (1.49.0beta1-1) UNRELEASED; urgency=low
+
+  * Upstream Release Candidate.
+  
+  * patches/foreach.patch:
+  * patches/sh4.patch:
+  * patches/kfreebsd-thread.patch:
+  * patches/math-define-l.patch:
+  * patches/gcc-4.7-threading-detection.patch: Removed.  Applied upstream.
+
+ -- Steve M. Robbins <smr@debian.org>  Sat, 28 Jan 2012 21:31:41 -0600
+
 boost1.48 (1.48.0-3) unstable; urgency=low
 
   * patches/fusion-push-front-broken.patch: New.  Upstream patch that
