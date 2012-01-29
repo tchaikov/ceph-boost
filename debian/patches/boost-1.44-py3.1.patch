@@ -4,6 +4,8 @@ Author: Andreas Kloeckner <inform@tiker.net>
 Bug: 595786
 Forwarded: https://svn.boost.org/trac/boost/ticket/4657
 
+Boost 1.49: on trunk, not release.
+
 
 --- boost1.44-1.44.0.orig/libs/mpi/src/python/datatypes.cpp
 +++ boost1.44-1.44.0/libs/mpi/src/python/datatypes.cpp

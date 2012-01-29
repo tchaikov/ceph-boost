@@ -1,11 +1,6 @@
-foreach.patch
 boost-python-examples.patch
 endian.patch
-sh4.patch
-kfreebsd-thread.patch
 boost-1.44-py3.1.patch
 pythonid.patch
 fusion-push-front-broken.patch
-math-define-l.patch
-gcc-4.7-threading-detection.patch
 mpi-allocator-c++0x.patch

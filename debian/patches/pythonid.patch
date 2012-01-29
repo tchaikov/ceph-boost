@@ -2,6 +2,9 @@ Description: Fix jam option --python-buildid
 Author: Steve Robbins <smr@debian.org>
 Forwarded: https://svn.boost.org/trac/boost/ticket/6286
 
+Boost 1.49: Not applied
+
+
 --- boost1.48-1.48.0.orig/boostcpp.jam
 +++ boost1.48-1.48.0/boostcpp.jam
 @@ -99,13 +99,6 @@

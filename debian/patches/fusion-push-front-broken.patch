@@ -6,6 +6,8 @@ Author: Joel de Guzman
 Bug: 653812
 Forwarded: https://svn.boost.org/trac/boost/ticket/6338
 
+Boost 1.49: On trunk, not release.
+
 
 --- boost1.48-1.48.0.orig/boost/fusion/view/iterator_range/detail/segmented_iterator_range.hpp
 +++ boost1.48-1.48.0/boost/fusion/view/iterator_range/detail/segmented_iterator_range.hpp

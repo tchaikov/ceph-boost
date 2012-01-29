@@ -6,6 +6,8 @@ Author: Petar Marendic
 Bug: 639862
 Forwarded: https://svn.boost.org/trac/boost/ticket/5538
 
+Boost 1.49 status: open
+
 
 --- boost1.46-1.46.1.orig/boost/mpi/allocator.hpp
 +++ boost1.46-1.46.1/boost/mpi/allocator.hpp
