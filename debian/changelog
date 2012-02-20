@@ -1,6 +1,14 @@
-boost1.49 (1.49.0beta1-1) UNRELEASED; urgency=low
+boost1.49 (1.49.0rc1-1) UNRELEASED; urgency=low
 
   * Upstream Release Candidate.
+
+  * patches/fusion-push-front-broken.patch: Remove.  Applied upstream.
+
+ -- Steve M. Robbins <smr@debian.org>  Mon, 20 Feb 2012 15:43:41 -0600
+
+boost1.49 (1.49.0beta1-1) UNRELEASED; urgency=low
+
+  * Upstream Beta 1 Release Candidate.
   
   * patches/foreach.patch:
   * patches/sh4.patch:
