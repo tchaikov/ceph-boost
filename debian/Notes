@@ -2,21 +2,7 @@
 	-------------
 
 Generate the list of documentation files using wget going through
-localhost to get the source tree
-
-    path=boost_1_37_0
-    cd ~/public_html
-    ... unpack boost
-    cd /tmp
-    wget -r --no-parent --domains=localhost \
-	http://localhost/~steve/$path/index.html
-    cd localhost/....
-    rm -rf boost
-    for f in `find * -type f`; do \
-        test -f ~/public_html/$path/$f && echo $f;
-    done > df1
-    find * -name '*.htm' -or -name '*.html' > df2
-    cat df1 df2 | sort | uniq > documentation-files
+localhost to get the source tree.  See generate-docfiles-list.py
 
 * need to symlink .../HTML/boost to /usr/include/boost; when put
   the symlink into the deb, it got converted to a directory during
