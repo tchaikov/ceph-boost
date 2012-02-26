@@ -6,7 +6,6 @@ libs/geometry/doc/src/examples
 libs/geometry/doc/src/docutils/tools/doxygen_xml2qbk/sample/src/examples
 libs/geometry/example
 libs/range/doc/reference/adaptors/examples
-libs/phoenix/doc/html/phoenix/examples
 libs/phoenix/doc/examples
 libs/phoenix/example
 libs/icl/doc/html/boost_icl/examples
@@ -35,6 +34,7 @@ libs/program_options/example
 libs/ratio/example
 libs/container/example
 libs/functional/hash/examples
+libs/heap/examples
 libs/serialization/example
 libs/asio/example
 libs/spirit/classic/phoenix/example

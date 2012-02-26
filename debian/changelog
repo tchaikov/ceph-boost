@@ -1,3 +1,9 @@
+boost1.49 (1.49.0-1) unstable; urgency=low
+
+  * New upstream.
+
+ -- Steve M. Robbins <smr@debian.org>  Sun, 26 Feb 2012 00:31:44 -0600
+
 boost1.49 (1.49.0rc1-1) UNRELEASED; urgency=low
 
   * Upstream Release Candidate.
