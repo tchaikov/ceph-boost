@@ -183,6 +183,7 @@ Section: libdevel
 Depends: ${misc:Depends},
  libboost1.49-dev (= ${binary:Version}),
  libboost-chrono1.49.0 (= ${binary:Version})
+Conflicts: libboost-chrono1.48-dev
 Description: C++ representation of time duration, time point, and clocks
  This package forms part of the Boost C++ Libraries collection.
  .
@@ -409,6 +410,7 @@ Section: libdevel
 Depends: ${misc:Depends},
  libboost1.49-dev (= ${binary:Version}),
  libboost-locale1.49.0 (= ${binary:Version})
+Conflicts: libboost-locale1.48-dev
 Description: C++ facilities for localization
  This package forms part of the Boost C++ Libraries collection.
  .
@@ -655,6 +657,7 @@ Section: libdevel
 Depends: ${misc:Depends},
  libboost1.49-dev (= ${binary:Version}),
  libboost-random1.49.0 (= ${binary:Version})
+Conflicts: libboost-random1.42-dev, libboost-random1.46-dev, libboost-random1.48-dev
 Description: Boost Random Number Library
  This package forms part of the Boost C++ Libraries collection.
  .
@@ -896,6 +899,7 @@ Section: libdevel
 Depends: ${misc:Depends},
  libboost1.49-dev (= ${binary:Version}),
  libboost-timer1.49.0 (= ${binary:Version})
+Conflicts: libboost-timer1.42-dev, libboost-timer1.46-dev, libboost-timer1.48-dev
 Description: C++ wall clock and CPU process timers
  This package forms part of the Boost C++ Libraries collection.
  .

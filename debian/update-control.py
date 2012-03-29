@@ -48,6 +48,16 @@ def conflictsWithPrevious(paragraph):
     nameRe = re.sub('\d', '\\d', paragraph['Package'])
     return re.search(nameRe, paragraph['Conflicts']) is not None
 
+def updateConflicts(paragraph, oldPkgName):
+    newPkgName = paragraph['Package']
+    needsConflict = (newPkgName.endswith("-dev") and not newPkgName.endswith("-all-dev")) or conflictsWithPrevious(paragraph)
+    if not needsConflict: return
+    if paragraph.has_key('Conflicts'):
+        if paragraph['Conflicts'].find(oldPkgName) == -1:
+            paragraph['Conflicts'] += ', ' + oldPkgName
+    else:
+        paragraph['Conflicts'] = oldPkgName
+
 def processSourceParagraph(p):
     updateVersionedValue(p, 'Source')
 
@@ -56,8 +66,7 @@ def processPackageParagraph(p):
     updateVersionedValue(p, 'Depends')
     updateVersionedValue(p, 'Recommends')
     updateVersionedValue(p, 'Suggests')
-    if conflictsWithPrevious(p):
-        p['Conflicts'] += ', ' + oldPkgName
+    updateConflicts(p, oldPkgName)
 
 def printParagraph(p):
     for key in p.keys():
