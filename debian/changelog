@@ -1,9 +1,9 @@
-boost1.49 (1.49.0-2) UNRELEASED; urgency=low
+boost1.49 (1.49.0-2) unstable; urgency=low
 
   * control: Add missing -dev package Conflicts for: chrono, locale,
-    random, and timer.
+    random, and timer.  Closes: #666120, 666239.
 
- -- Steve M. Robbins <smr@debian.org>  Wed, 28 Mar 2012 21:30:08 -0500
+ -- Steve M. Robbins <smr@debian.org>  Thu, 29 Mar 2012 21:30:22 -0500
 
 boost1.49 (1.49.0-1) unstable; urgency=low
 
