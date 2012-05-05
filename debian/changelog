@@ -1,3 +1,16 @@
+boost1.49 (1.49.0-3) unstable; urgency=low
+
+  * gcc4.7_trac-6790.patch:
+  * gcc4.7_trac-6854.patch:
+  * gcc4.7_trac-6755.patch:
+  * gcc4.7_trac-76970.patch:
+  * gcc4.7_trac-6331.patch:
+  * gcc4.7_trac-6431.patch:
+  * gcc4.7_trac-6852.patch: New.  Fixes for gcc 4.7 from upstream.
+    Closes: #671409
+
+ -- Steve M. Robbins <smr@debian.org>  Sat, 05 May 2012 00:31:50 -0500
+
 boost1.49 (1.49.0-2) unstable; urgency=low
 
   * control: Add missing -dev package Conflicts for: chrono, locale,
