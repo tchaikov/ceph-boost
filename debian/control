@@ -33,9 +33,10 @@ Depends: ${misc:Depends}, ${shlibs:Depends}, libstdc++6-4.4-dev | libstdc++-dev
 Suggests: libboost1.50-doc,
  libboost-chrono1.50-dev,
  libboost-date-time1.50-dev,
+ libboost-exception1.50-dev,
  libboost-filesystem1.50-dev,
- libboost-graph-parallel1.50-dev,
  libboost-graph1.50-dev,
+ libboost-graph-parallel1.50-dev,
  libboost-iostreams1.50-dev,
  libboost-locale1.50-dev,
  libboost-math1.50-dev,
@@ -71,9 +72,10 @@ Description: Boost C++ Libraries development files
  This package provides headers and the auxiliary tools bjam, Boost.Build,
  bcp, inspect, boostbook and quickbook.
  .
- For the following subprojects separate packages exist: chrono, date-time,
- filesystem, graph, iostreams, locale, math, mpi, program_options, python,
- regex, serialization, signals, system, test, thread, timer, and wave.
+ For the following subprojects separate packages exist: chrono,
+ date-time, exception filesystem, graph, iostreams, locale, math, mpi,
+ program_options, python, regex, serialization, signals, system, test,
+ thread, timer, and wave.
 
 Package: libboost1.50-all-dev
 Architecture: any
@@ -82,6 +84,7 @@ Depends: ${misc:Depends},
  libboost1.50-dev,
  libboost-chrono1.50-dev, 
  libboost-date-time1.50-dev, 
+ libboost-exception1.50-dev, 
  libboost-filesystem1.50-dev, 
  libboost-graph1.50-dev, 
  libboost-graph-parallel1.50-dev, 
@@ -247,6 +250,32 @@ Description: set of date-time libraries based on generic programming concepts
  .
  These libraries are intended to make programming with dates and times
  almost as simple and natural as programming with strings and integers.
+
+Package: libboost-exception1.50.0
+Homepage: http://www.boost.org/libs/exception/
+Architecture: any
+Section: libs
+Depends: ${misc:Depends}, ${shlibs:Depends}
+Description: set of date-time libraries based on generic programming concepts
+ This package forms part of the Boost C++ Libraries collection.
+ .
+ The purpose of Boost Exception is to ease the design of exception
+ class hierarchies and to help write exception handling and error
+ reporting code.
+
+Package: libboost-exception1.50-dev
+Homepage: http://www.boost.org/libs/exception/
+Architecture: any
+Section: libdevel
+Depends: ${misc:Depends},
+ libboost1.50-dev (= ${binary:Version}),
+ libboost-exception1.50.0 (= ${binary:Version})
+Description: set of date-time libraries based on generic programming concepts
+ This package forms part of the Boost C++ Libraries collection.
+ .
+ The purpose of Boost Exception is to ease the design of exception
+ class hierarchies and to help write exception handling and error
+ reporting code.
 
 Package: libboost-filesystem1.50.0
 Homepage: http://boost.org/libs/filesystem/

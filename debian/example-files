@@ -21,14 +21,15 @@ libs/mpi/example
 libs/statechart/example
 libs/algorithm/minmax/example
 libs/algorithm/string/example
+libs/algorithm/example
 libs/function_types/example
 libs/units/example
 libs/bimap/doc/html/boost_bimap/examples
 libs/bimap/example
 libs/unordered/examples
-libs/filesystem/v2/example
-libs/filesystem/v3/example
+libs/filesystem/example
 libs/graph_parallel/example
+libs/local_function/example
 libs/multi_index/example
 libs/program_options/example
 libs/ratio/example

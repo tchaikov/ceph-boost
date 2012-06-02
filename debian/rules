@@ -9,17 +9,18 @@ endif
 
 DEB_BUILD_ARCH ?= $(shell dpkg-architecture -qDEB_BUILD_ARCH)
 
-PKGVERSION = 1.49
-SOVERSION = 1.49.0
-SHLIBS_VERSION = (>= 1.49.0-1)
+PKGVERSION = 1.50
+SOVERSION = 1.50.0
+SHLIBS_VERSION = (>= 1.50.0~beta1-1)
 
 pyversions = $(shell pyversions -rv) $(shell py3versions -rv)
 
 # Boost libraries for which we want separate packages
-boost_libs := chrono date-time filesystem graph-parallel graph iostreams locale math \
-	mpi mpi-python						       \
-	program-options python regex random serialization signals      \
-	system test						       \
+boost_libs := chrono date-time exception filesystem graph-parallel \
+	graph iostreams locale math				   \
+	mpi mpi-python						   \
+	program-options python regex random serialization signals  \
+	system test						   \
 	thread timer wave
 
 # these are special cases, where /usr/lib name differs from Boost library name
@@ -77,6 +78,7 @@ mk_mta_files = $(shell echo $(call mk_base_name,$(2),$(3),$(4)).a $(call mk_base
 
 # Specify the type of files/links to install.
 # Special cases first, then general rule
+boost_filetypes_exception = a mta
 boost_filetypes_test_exec_monitor = a mta
 boost_filetypes = $(if $(boost_filetypes_$(1)), $(boost_filetypes_$(1)),a so ln mtso mta)
 
