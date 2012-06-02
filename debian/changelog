@@ -1,12 +1,26 @@
+boost1.50 (1.50.0~beta1-1) experimental; urgency=low
+
+  * New upstream: Beta 1 release of 1.50.
+
+  * patches/gcc4.7_trac-6790.patch:
+  * patches/gcc4.7_trac-6854.patch:
+  * patches/gcc4.7_trac-6755.patch:
+  * patches/gcc4.7_trac-76970.patch:
+  * patches/gcc4.7_trac-6331.patch:
+  * patches/gcc4.7_trac-6431.patch:
+  * patches/gcc4.7_trac-6852.patch: Removed.
+
+ -- Steve M. Robbins <smr@debian.org>  Fri, 01 Jun 2012 17:57:17 -0500
+
 boost1.49 (1.49.0-3) unstable; urgency=low
 
-  * gcc4.7_trac-6790.patch:
-  * gcc4.7_trac-6854.patch:
-  * gcc4.7_trac-6755.patch:
-  * gcc4.7_trac-76970.patch:
-  * gcc4.7_trac-6331.patch:
-  * gcc4.7_trac-6431.patch:
-  * gcc4.7_trac-6852.patch: New.  Fixes for gcc 4.7 from upstream.
+  * patches/gcc4.7_trac-6790.patch:
+  * patches/gcc4.7_trac-6854.patch:
+  * patches/gcc4.7_trac-6755.patch:
+  * patches/gcc4.7_trac-76970.patch:
+  * patches/gcc4.7_trac-6331.patch:
+  * patches/gcc4.7_trac-6431.patch:
+  * patches/gcc4.7_trac-6852.patch: New.  Fixes for gcc 4.7 from upstream.
     Closes: #671409
 
  -- Steve M. Robbins <smr@debian.org>  Sat, 05 May 2012 00:31:50 -0500
