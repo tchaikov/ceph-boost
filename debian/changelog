@@ -1,3 +1,9 @@
+boost1.50 (1.50.0-1) unstable; urgency=low
+
+  * Upstream release of 1.50.0.
+
+ -- Steve M. Robbins <smr@debian.org>  Thu, 28 Jun 2012 21:28:37 -0500
+
 boost1.50 (1.50.0~beta1final-1) experimental; urgency=low
 
   * New upstream.  This is really the "1.50.0 Beta 1" release.  Last
