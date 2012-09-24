@@ -3,8 +3,11 @@ boost1.50 (1.50.0-2) unstable; urgency=low
   * control: Fix list formatting in Boost.Chrono long description.
     Closes: #687296.  Add symlink /usr/share/doc/libboost-doc/examples;
     see #687524.
+  
+  * rules: Install libs/date_time/data into
+    /usr/share/doc/libboost-date-timeX.Y-dev.  Closes: #685003.
 
- -- Steve M. Robbins <steve@sumost.ca>  Sun, 23 Sep 2012 20:37:35 -0500
+ -- Steve M. Robbins <smr@debian.org>  Sun, 23 Sep 2012 21:33:04 -0500
 
 boost1.50 (1.50.0-1) unstable; urgency=low
 

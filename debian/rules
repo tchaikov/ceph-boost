@@ -279,6 +279,9 @@ install: build clean-debhelper $(filtered_files) debian/bjam.1
 	dh_install -plibboost$(PKGVERSION)-dev tools/boostbook/dtd/* usr/share/boostbook/dtd
 	dh_install -plibboost$(PKGVERSION)-dev debian/tmp/usr/share/boost-build
 
+	# package libboost-date-time$(PKGVERSION)-dev
+	dh_installdocs -plibboost-date-time$(PKGVERSION)-dev libs/date_time/data
+
 	# package libboost-doc
 	rm -rf $(htmldir)
 	mkdir -p $(htmldir) 
