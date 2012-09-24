@@ -1,3 +1,10 @@
+boost1.50 (1.50.0-2) unstable; urgency=low
+
+  * control: Fix list formatting in Boost.Chrono long description.
+    Closes: #687296.
+
+ -- Steve M. Robbins <steve@sumost.ca>  Sun, 23 Sep 2012 19:17:38 -0500
+
 boost1.50 (1.50.0-1) unstable; urgency=low
 
   * Upstream release of 1.50.0.
