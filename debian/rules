@@ -9,9 +9,9 @@ endif
 
 DEB_BUILD_ARCH ?= $(shell dpkg-architecture -qDEB_BUILD_ARCH)
 
-PKGVERSION = 1.50
-SOVERSION = 1.50.0
-SHLIBS_VERSION = (>= 1.50.0-1)
+PKGVERSION = 1.52
+SOVERSION = 1.52.0
+SHLIBS_VERSION = (>= 1.52.0-1)
 
 pyversions = $(shell pyversions -rv) $(shell py3versions -rv)
 

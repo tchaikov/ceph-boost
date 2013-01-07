@@ -1,3 +1,9 @@
+boost1.52 (1.52.0-1) UNRELEASED; urgency=low
+
+  * New upstream.
+
+ -- Steve M. Robbins <smr@debian.org>  Sun, 06 Jan 2013 19:04:00 -0600
+
 boost1.50 (1.50.0-2) unstable; urgency=low
 
   * control: Fix list formatting in Boost.Chrono long description.
