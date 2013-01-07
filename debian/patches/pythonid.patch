@@ -2,27 +2,28 @@ Description: Fix jam option --python-buildid
 Author: Steve Robbins <smr@debian.org>
 Forwarded: https://svn.boost.org/trac/boost/ticket/6286
 
-Boost 1.49: Not applied
+Boost 1.52: Not applied
 
 
---- boost1.48-1.48.0.orig/boostcpp.jam
-+++ boost1.48-1.48.0/boostcpp.jam
-@@ -99,13 +99,6 @@
-     BUILD_ID = [ regex.replace $(build-id) "[*\\/:.\"\' ]" "_" ] ;
+--- boost1.52-1.52.0.orig/boostcpp.jam
++++ boost1.52-1.52.0/boostcpp.jam
+@@ -99,14 +99,6 @@
+     BUILD_ID = [ regex.replace $(build-id) "[*\\/:.\"\' ]" _ ] ;
  }
  
--# Python build id (only for Python libraries)
+-# Python build id (for Python libraries only).
 -python-id = [ option.get "python-buildid" ] ;
 -if $(python-id)
 -{
--    PYTHON_ID = [ regex.replace $(python-id) "[*\\/:.\"\']" "_" ] ;
+-    PYTHON_ID = [ regex.replace $(python-id) [*\\/:.\"\'] _ ] ;
 -}
 -
- ##############################################################################
+-
+ ################################################################################
  #
- # 1. The 'tag' function that adds decoration suitable to the properties if
---- boost1.48-1.48.0.orig/libs/mpi/build/Jamfile.v2
-+++ boost1.48-1.48.0/libs/mpi/build/Jamfile.v2
+ # 1. 'tag' function adding decorations suitable to the properties if versioned
+--- boost1.52-1.52.0.orig/libs/mpi/build/Jamfile.v2
++++ boost1.52-1.52.0/libs/mpi/build/Jamfile.v2
 @@ -8,6 +8,8 @@
  #  Authors: Douglas Gregor
  #           Andrew Lumsdaine
@@ -46,8 +47,8 @@ Boost 1.49: Not applied
  rule tag ( name : type ? : property-set )
  {
      local result = $(name) ;
---- boost1.48-1.48.0.orig/libs/python/build/Jamfile.v2
-+++ boost1.48-1.48.0/libs/python/build/Jamfile.v2
+--- boost1.52-1.52.0.orig/libs/python/build/Jamfile.v2
++++ boost1.52-1.52.0/libs/python/build/Jamfile.v2
 @@ -2,6 +2,8 @@
  # Software License, Version 1.0. (See accompanying
  # file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)

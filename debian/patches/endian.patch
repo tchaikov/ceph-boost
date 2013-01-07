@@ -4,9 +4,9 @@ Description: Ensure Debian systems use endian.h.
 Author: Steve Robbins <smr@debian.org>
 Forwarded: no
 
---- boost-1.34.1.orig/boost/detail/endian.hpp
-+++ boost-1.34.1/boost/detail/endian.hpp
-@@ -30,7 +30,7 @@
+--- boost1.52-1.52.0.orig/boost/detail/endian.hpp
++++ boost1.52-1.52.0/boost/detail/endian.hpp
+@@ -31,7 +31,7 @@
  // GNU libc offers the helpful header <endian.h> which defines
  // __BYTE_ORDER
  
