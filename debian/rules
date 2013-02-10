@@ -72,15 +72,11 @@ mk_so_files = $(shell echo debian/tmp/$(call mk_base_name,$(2),$(3),$(4)).so.$(S
 mk_a_files = $(shell echo debian/tmp/$(call mk_base_name,$(2),$(3),$(4)).a >> $(call mk_deb_dev,$(1),$(3)).install)
 mk_ln_files = $(shell echo $(call mk_base_name,$(2),$(3),$(4)).so.$(SOVERSION) $(call mk_base_name,$(2),$(3),$(4)).so >> $(call mk_deb_dev,$(1),$(3)).links)
 
-# Make compatibility symlinks libfoo-mt --> libfoo
-mk_mtso_files = $(shell echo $(call mk_base_name,$(2),$(3),$(4)).so.$(SOVERSION) $(call mk_base_name,$(2),$(3)-mt,$(4)).so >> $(call mk_deb_dev,$(1),$(3)).links)
-mk_mta_files = $(shell echo $(call mk_base_name,$(2),$(3),$(4)).a $(call mk_base_name,$(2),$(3)-mt,$(4)).a >> $(call mk_deb_dev,$(1),$(3)).links)
-
 # Specify the type of files/links to install.
 # Special cases first, then general rule
-boost_filetypes_exception = a mta
-boost_filetypes_test_exec_monitor = a mta
-boost_filetypes = $(if $(boost_filetypes_$(1)), $(boost_filetypes_$(1)),a so ln mtso mta)
+boost_filetypes_exception = a
+boost_filetypes_test_exec_monitor = a
+boost_filetypes = $(if $(boost_filetypes_$(1)), $(boost_filetypes_$(1)),a so ln)
 
 # Function that updates debhelper files for a given library variant
 # Input: component, library, variant, suffix

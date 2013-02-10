@@ -3,7 +3,9 @@ boost1.53 (1.53.0-1) UNRELEASED; urgency=low
   * New upstream.  Update versions in control, rules.  Update file lists
     in documentation-files and example-files.
 
- -- Steve M. Robbins <smr@debian.org>  Sat, 09 Feb 2013 19:47:09 -0600
+  * rules: Stop creating "libboost_foo-mt" compatibility symlinks.
+
+ -- Steve M. Robbins <smr@debian.org>  Sat, 09 Feb 2013 21:47:57 -0600
 
 boost1.52 (1.52.0-1) UNRELEASED; urgency=low
 

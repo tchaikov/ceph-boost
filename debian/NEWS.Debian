@@ -1,3 +1,10 @@
+boost1.53 (1.53.0-1) unstable; urgency=low
+
+  Debian no longer ships the "libboost_foo-mt" compatibility symlinks.
+  Use "-lboost_foo" only.
+
+ -- Steve M. Robbins <smr@debian.org>  Sat, 09 Feb 2013 21:12:14 -0600
+
 boost1.46 (1.46.1-3) unstable; urgency=low
 
   Boost.Build and bjam now ship in the main -dev package (currently
