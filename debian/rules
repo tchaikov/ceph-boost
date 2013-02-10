@@ -9,9 +9,13 @@ endif
 
 DEB_BUILD_ARCH ?= $(shell dpkg-architecture -qDEB_BUILD_ARCH)
 
-PKGVERSION = 1.53
-SOVERSION = 1.53.0
-SHLIBS_VERSION = (>= 1.53.0-1)
+version_full := $(shell dpkg-parsechangelog | grep Version | cut -d' ' -f2)
+version_upstream := $(shell echo $(version_full) | cut -d'-' -f1)
+version_major = $(shell echo $(version_upstream) | cut -d'.' -f1,2)
+
+PKGVERSION = $(version_major)
+SOVERSION = $(version_upstream)
+SHLIBS_VERSION = (>= $(version_full))
 
 pyversions = $(shell pyversions -rv) $(shell py3versions -rv)
 
