@@ -6,6 +6,7 @@ libs/geometry/doc/src/examples
 libs/geometry/doc/src/docutils/tools/doxygen_xml2qbk/sample/src/examples
 libs/geometry/example
 libs/range/doc/reference/adaptors/examples
+libs/phoenix/doc/html/phoenix/examples
 libs/phoenix/doc/examples
 libs/phoenix/example
 libs/icl/doc/html/boost_icl/examples
@@ -37,6 +38,7 @@ libs/container/example
 libs/functional/hash/examples
 libs/heap/examples
 libs/serialization/example
+libs/polygon/example
 libs/asio/example
 libs/spirit/classic/phoenix/example
 libs/spirit/classic/example
@@ -51,14 +53,18 @@ libs/thread/example
 libs/property_tree/examples
 libs/format/example
 libs/numeric/interval/examples
+libs/numeric/odeint/examples
 libs/random/example
 libs/signals/example
 libs/function/example
 libs/mpl/example
+libs/context/example
 libs/exception/example
 libs/dynamic_bitset/example
+libs/lockfree/examples
 libs/test/doc/src/examples
 libs/test/example
+libs/coroutine/example
 libs/smart_ptr/example
 libs/locale/examples
 libs/gil/example
@@ -66,6 +72,7 @@ libs/regex/example
 libs/property_map/example
 libs/fusion/example
 libs/signals2/example
+libs/multiprecision/example
 libs/msm/doc/PDF/examples
 libs/msm/doc/HTML/examples
 libs/msm/example
