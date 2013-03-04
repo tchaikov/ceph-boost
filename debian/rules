@@ -1,22 +1,5 @@
 #! /usr/bin/make -f
 
-# set the number of build jobs
-ifneq (,$(filter parallel=%,$(DEB_BUILD_OPTIONS)))
-	JOBS := -j$(patsubst parallel=%,%,$(filter parallel=%,$(DEB_BUILD_OPTIONS)))
-endif
-
-DEB_BUILD_ARCH ?= $(shell dpkg-architecture -qDEB_BUILD_ARCH)
-
-version_full := $(shell dpkg-parsechangelog | grep Version | cut -d' ' -f2)
-version_upstream := $(shell echo $(version_full) | cut -d'-' -f1)
-version_major = $(shell echo $(version_upstream) | cut -d'.' -f1,2)
-
-PKGVERSION = $(version_major)
-SOVERSION = $(version_upstream)
-SHLIBS_VERSION = (>= $(version_full))
-
-pyversions = $(shell pyversions -rv) $(shell py3versions -rv)
-
 # Boost libraries for which we want separate packages
 boost_libs := chrono date-time exception filesystem graph-parallel \
 	graph iostreams locale math				   \
@@ -41,131 +24,13 @@ filtered_files = \
 	debian/libboost-python-dev.postinst \
 	debian/libboost-python-dev.prerm
 
-# Function to map Boost component name to set of shared library names
-# Input: Boost component name
-# Return: shared library names for the given Boost library
-boost_lib = $(if $(boost_lib_$(1)), $(boost_lib_$(1)), $(1))
-
-# Function to map Boost component name to set of suffixes for the library
-# Input: Boost component name
-# Return: suffixes for the given Boost component
-boost_suffixes = $(if $(boost_suffixes_$(1)), $(boost_suffixes_$(1)),"")
-
-# Helpers to make basic and decorated library names
-# Input: library, variant, suffix
-# Return: base library filename for short or full name
-mk_base_name = usr/lib/libboost_$(subst -,_,$(1))$(2)$(3)
-
-# Input: component, variant
-# Return: package name for shared library or development
-mk_pkg_lib = libboost$(if $(findstring -d,$(2)),$(PKGVERSION)-dbg,-$(1)$(SOVERSION))
-mk_pkg_dev = libboost$(if $(findstring -d,$(2)),$(PKGVERSION)-dbg,-$(1)$(PKGVERSION)-dev)
-
-# Helpers to generate debhelper input filenames.
-# Input: component, variant
-# Return: prefix to debhelper filenames
-mk_deb_lib = debian/$(call mk_pkg_lib,$(1),$(2))
-mk_deb_dev = debian/$(call mk_pkg_dev,$(1),$(2))
-
-# Helpers that update debhelper .install or .links files
-# Input: component, library, variant, suffix
-# Output: none
-mk_so_files = $(shell echo debian/tmp/$(call mk_base_name,$(2),$(3),$(4)).so.$(SOVERSION) >> $(call mk_deb_lib,$(1),$(3)).install)
-mk_a_files = $(shell echo debian/tmp/$(call mk_base_name,$(2),$(3),$(4)).a >> $(call mk_deb_dev,$(1),$(3)).install)
-mk_ln_files = $(shell echo $(call mk_base_name,$(2),$(3),$(4)).so.$(SOVERSION) $(call mk_base_name,$(2),$(3),$(4)).so >> $(call mk_deb_dev,$(1),$(3)).links)
-
-# Specify the type of files/links to install.
-# Special cases first, then general rule
-boost_filetypes_exception = a
-boost_filetypes_test_exec_monitor = a
-boost_filetypes = $(if $(boost_filetypes_$(1)), $(boost_filetypes_$(1)),a so ln)
-
-# Function that updates debhelper files for a given library variant
-# Input: component, library, variant, suffix
-# Output: none
-mk_files = $(foreach fn,$(call boost_filetypes,$(2)),$(call mk_$(fn)_files,$(1),$(2),$(3),$(4)))
-
-# helpers to make and install lintian override files
-
-# Input: package, override
-add_override = echo $(1): $(2) >> debian/$(1).lintian-overrides;
-
-# Input: override
-add_dbg_override = $(call add_override,libboost$(PKGVERSION)-dbg,$(1))
-add_dev_override = $(call add_override,libboost$(PKGVERSION)-dev,$(1))
-add_doc_override = $(call add_override,libboost$(PKGVERSION)-doc,$(1))
-
-# Input: component, variant, lintian-warning
-add_lib_override = $(call add_override,$(call mk_pkg_lib,$(1),$(2)),$(3))
-add_libdev_override = $(call add_override,$(call mk_pkg_dev,$(1),$(2)),$(3))
-
-cp_debhelper = for s in doc-base examples postinst prerm README.Debian; do \
-	if test -f debian/$(1).$$s; then cp -f debian/$(1).$$s debian/$(2).$$s; fi; done
-
-# Function that updates debhelper files for all library variants shipped.
-mk_debhelper_files = \
-	$(call add_dbg_override,package-name-doesnt-match-sonames) \
-	$(call add_dbg_override,non-dev-pkg-with-shlib-symlink) \
-	$(call add_dbg_override,dbg-package-missing-depends) \
-	$(call add_dev_override,description-synopsis-starts-with-a-capital-letter) \
-	$(call add_dev_override,spelling-error-in-description) \
-	$(call add_dev_override,extra-license-file) \
-	$(call add_doc_override,description-synopsis-starts-with-a-capital-letter) \
-	$(call add_doc_override,extra-license-file) \
-	$(call add_libdev_override,python,,description-synopsis-starts-with-a-capital-letter) \
-	$(foreach l, $(boost_libs), \
-		echo "making debhelper files for $(l)..."; \
-		$(call add_lib_override,$(l),,package-name-doesnt-match-sonames) \
-		$(foreach ll, $(call boost_lib,$(l)), \
-			$(foreach suf, $(call boost_suffixes,$(l)), \
-				$(call mk_files,$(l),$(ll),,$(suf)) \
-			) \
-		) \
-	)
-
-TOOLSET_CONFIG="using gcc ;"
-BUILD_LONG_DOUBLE = yes
-
-ifeq ($(DEB_BUILD_ARCH), hppa)
-TOOLSET_CONFIG="using gcc : : : <compileflags>-mlong-calls <compileflags>-DBOOST_SP_USE_PTHREADS ;"
-BUILD_LONG_DOUBLE = no
-else ifeq ($(DEB_BUILD_ARCH), arm)
-BUILD_LONG_DOUBLE = no
-else ifeq ($(DEB_BUILD_ARCH), armel)
-BUILD_LONG_DOUBLE = no
-else ifeq ($(DEB_BUILD_ARCH), armhf)
-BUILD_LONG_DOUBLE = no
-else ifeq ($(DEB_BUILD_ARCH), mips)
-BUILD_LONG_DOUBLE = no
-else ifeq ($(DEB_BUILD_ARCH), mipsel)
-BUILD_LONG_DOUBLE = no
-else ifeq ($(DEB_BUILD_ARCH), sh4)
-BUILD_LONG_DOUBLE = no
-endif
-
-ifeq ($(BUILD_LONG_DOUBLE), yes)
-boost_lib_math += $(boost_lib_math_long_double)
-else
-JAM_OPT += --disable-long-double
-endif
-
-MPI_CONFIG = "using mpi ;"
-
-exampledir = debian/libboost$(PKGVERSION)-doc/usr/share/doc/libboost$(PKGVERSION)-doc/examples
-htmldir = debian/libboost$(PKGVERSION)-doc/usr/share/doc/libboost$(PKGVERSION)-doc/HTML
-pyste_prefix = $(CURDIR)/debian/libboost-python$(PKGVERSION)-dev/usr
-bjam = $(CURDIR)/bjam
-bbv2dir = $(CURDIR)/tools/build/v2
-
-# With --ignore-site-config, can probably drop Build-Conflicts on boost-build.
-JAM = $(bjam) $(JOBS) -d2 $(JAM_OPT) --layout=system --ignore-site-config --user-config=$(CURDIR)/user-config.jam debug-symbols=on
 
 %:
 	dh $@
 
-override_dh_auto_configure: $(bjam) user-config.jam make-debhelper
+override_dh_auto_configure: user-config.jam make-debhelper
 
-override_dh_auto_build: debian/bjam.1
+override_dh_auto_build: $(bjam) debian/bjam.1
 	$(JAM) --without-python                        
 	for pyver in $(pyversions); do \
 	 	pyid=$$(echo $$pyver | tr -d .); \
@@ -195,39 +60,6 @@ override_dh_auto_clean: clean-debhelper
 	rm -rf user-config.jam
 	rm -rf debian/bjam.1
 	dh_auto_clean
-
-
-
-$(bjam):
-	./bootstrap.sh --with-icu --prefix=$(CURDIR)/debian/tmp/usr \
-	  || cat bootstrap.log
-
-debian/bjam.1: $(bjam)
-	help2man --name 'software build tool' --no-info ./bjam > $@
-
-user-config.jam:
-	echo $(TOOLSET_CONFIG) > $@
-	echo $(MPI_CONFIG)     >> $@
-	for pyver in $(filter-out $(shell pyversions -dv),$(pyversions)); do \
-		echo "using python : $$pyver : /usr ;" >> $@; \
-	done
-
-$(filtered_files): % : %.in
-	sed -e 's/@PKGVERSION@/$(PKGVERSION)/g' < $< > $@
-
-clean-debhelper:
-	rm -rf debian/*.install
-	rm -rf debian/*.links
-	rm -rf debian/*.lintian-overrides
-
-# Make all the generated debhelper files.
-make-debhelper: clean-debhelper $(filtered_files)
-	@$(call mk_debhelper_files)
-	@$(call cp_debhelper,libboost-dbg,libboost$(PKGVERSION)-dbg)
-	@$(call cp_debhelper,libboost-dev,libboost$(PKGVERSION)-dev)
-	@$(call cp_debhelper,libboost-doc,libboost$(PKGVERSION)-doc)
-	@$(call cp_debhelper,libboost-python-dev,libboost-python$(PKGVERSION)-dev)
-	@$(call cp_debhelper,libboost-mpi-python-dev,libboost-mpi-python$(PKGVERSION)-dev)
 
 override_dh_pysupport:
 	dh_python2
@@ -319,3 +151,174 @@ override_dh_install:
 
 override_dh_strip:
 	dh_strip --dbg-package=libboost$(PKGVERSION)-dbg -X"-d-"
+
+# set the number of build jobs
+ifneq (,$(filter parallel=%,$(DEB_BUILD_OPTIONS)))
+	JOBS := -j$(patsubst parallel=%,%,$(filter parallel=%,$(DEB_BUILD_OPTIONS)))
+endif
+
+version_full := $(shell dpkg-parsechangelog | grep Version | cut -d' ' -f2)
+version_upstream := $(shell echo $(version_full) | cut -d'-' -f1)
+version_major = $(shell echo $(version_upstream) | cut -d'.' -f1,2)
+
+PKGVERSION = $(version_major)
+SOVERSION = $(version_upstream)
+
+pyversions = $(shell pyversions -rv) $(shell py3versions -rv)
+
+
+# Function to map Boost component name to set of shared library names
+# Input: Boost component name
+# Return: shared library names for the given Boost library
+boost_lib = $(if $(boost_lib_$(1)), $(boost_lib_$(1)), $(1))
+
+# Function to map Boost component name to set of suffixes for the library
+# Input: Boost component name
+# Return: suffixes for the given Boost component
+boost_suffixes = $(if $(boost_suffixes_$(1)), $(boost_suffixes_$(1)),"")
+
+# Helpers to make basic and decorated library names
+# Input: library, variant, suffix
+# Return: base library filename for short or full name
+mk_base_name = usr/lib/libboost_$(subst -,_,$(1))$(2)$(3)
+
+# Input: component, variant
+# Return: package name for shared library or development
+mk_pkg_lib = libboost$(if $(findstring -d,$(2)),$(PKGVERSION)-dbg,-$(1)$(SOVERSION))
+mk_pkg_dev = libboost$(if $(findstring -d,$(2)),$(PKGVERSION)-dbg,-$(1)$(PKGVERSION)-dev)
+
+# Helpers to generate debhelper input filenames.
+# Input: component, variant
+# Return: prefix to debhelper filenames
+mk_deb_lib = debian/$(call mk_pkg_lib,$(1),$(2))
+mk_deb_dev = debian/$(call mk_pkg_dev,$(1),$(2))
+
+# Helpers that update debhelper .install or .links files
+# Input: component, library, variant, suffix
+# Output: none
+mk_so_files = $(shell echo debian/tmp/$(call mk_base_name,$(2),$(3),$(4)).so.$(SOVERSION) >> $(call mk_deb_lib,$(1),$(3)).install)
+mk_a_files = $(shell echo debian/tmp/$(call mk_base_name,$(2),$(3),$(4)).a >> $(call mk_deb_dev,$(1),$(3)).install)
+mk_ln_files = $(shell echo $(call mk_base_name,$(2),$(3),$(4)).so.$(SOVERSION) $(call mk_base_name,$(2),$(3),$(4)).so >> $(call mk_deb_dev,$(1),$(3)).links)
+
+# Specify the type of files/links to install.
+# Special cases first, then general rule
+boost_filetypes_exception = a
+boost_filetypes_test_exec_monitor = a
+boost_filetypes = $(if $(boost_filetypes_$(1)), $(boost_filetypes_$(1)),a so ln)
+
+# Function that updates debhelper files for a given library variant
+# Input: component, library, variant, suffix
+# Output: none
+mk_files = $(foreach fn,$(call boost_filetypes,$(2)),$(call mk_$(fn)_files,$(1),$(2),$(3),$(4)))
+
+# helpers to make and install lintian override files
+
+# Input: package, override
+add_override = echo $(1): $(2) >> debian/$(1).lintian-overrides;
+
+# Input: override
+add_dbg_override = $(call add_override,libboost$(PKGVERSION)-dbg,$(1))
+add_dev_override = $(call add_override,libboost$(PKGVERSION)-dev,$(1))
+add_doc_override = $(call add_override,libboost$(PKGVERSION)-doc,$(1))
+
+# Input: component, variant, lintian-warning
+add_lib_override = $(call add_override,$(call mk_pkg_lib,$(1),$(2)),$(3))
+add_libdev_override = $(call add_override,$(call mk_pkg_dev,$(1),$(2)),$(3))
+
+cp_debhelper = for s in doc-base examples postinst prerm README.Debian; do \
+	if test -f debian/$(1).$$s; then cp -f debian/$(1).$$s debian/$(2).$$s; fi; done
+
+# Function that updates debhelper files for all library variants shipped.
+mk_debhelper_files = \
+	$(call add_dbg_override,package-name-doesnt-match-sonames) \
+	$(call add_dbg_override,non-dev-pkg-with-shlib-symlink) \
+	$(call add_dbg_override,dbg-package-missing-depends) \
+	$(call add_dev_override,description-synopsis-starts-with-a-capital-letter) \
+	$(call add_dev_override,spelling-error-in-description) \
+	$(call add_dev_override,extra-license-file) \
+	$(call add_doc_override,description-synopsis-starts-with-a-capital-letter) \
+	$(call add_doc_override,extra-license-file) \
+	$(call add_libdev_override,python,,description-synopsis-starts-with-a-capital-letter) \
+	$(foreach l, $(boost_libs), \
+		echo "making debhelper files for $(l)..."; \
+		$(call add_lib_override,$(l),,package-name-doesnt-match-sonames) \
+		$(foreach ll, $(call boost_lib,$(l)), \
+			$(foreach suf, $(call boost_suffixes,$(l)), \
+				$(call mk_files,$(l),$(ll),,$(suf)) \
+			) \
+		) \
+	)
+
+TOOLSET_CONFIG="using gcc ;"
+BUILD_LONG_DOUBLE = yes
+
+DEB_BUILD_ARCH ?= $(shell dpkg-architecture -qDEB_BUILD_ARCH)
+
+ifeq ($(DEB_BUILD_ARCH), hppa)
+TOOLSET_CONFIG="using gcc : : : <compileflags>-mlong-calls <compileflags>-DBOOST_SP_USE_PTHREADS ;"
+BUILD_LONG_DOUBLE = no
+else ifeq ($(DEB_BUILD_ARCH), arm)
+BUILD_LONG_DOUBLE = no
+else ifeq ($(DEB_BUILD_ARCH), armel)
+BUILD_LONG_DOUBLE = no
+else ifeq ($(DEB_BUILD_ARCH), armhf)
+BUILD_LONG_DOUBLE = no
+else ifeq ($(DEB_BUILD_ARCH), mips)
+BUILD_LONG_DOUBLE = no
+else ifeq ($(DEB_BUILD_ARCH), mipsel)
+BUILD_LONG_DOUBLE = no
+else ifeq ($(DEB_BUILD_ARCH), sh4)
+BUILD_LONG_DOUBLE = no
+endif
+
+ifeq ($(BUILD_LONG_DOUBLE), yes)
+boost_lib_math += $(boost_lib_math_long_double)
+else
+JAM_OPT += --disable-long-double
+endif
+
+MPI_CONFIG = "using mpi ;"
+
+exampledir = debian/libboost$(PKGVERSION)-doc/usr/share/doc/libboost$(PKGVERSION)-doc/examples
+htmldir = debian/libboost$(PKGVERSION)-doc/usr/share/doc/libboost$(PKGVERSION)-doc/HTML
+pyste_prefix = $(CURDIR)/debian/libboost-python$(PKGVERSION)-dev/usr
+bjam = $(CURDIR)/bjam
+bbv2dir = $(CURDIR)/tools/build/v2
+
+# With --ignore-site-config, can probably drop Build-Conflicts on boost-build.
+JAM = $(bjam) $(JOBS) -d2 $(JAM_OPT) --layout=system --ignore-site-config --user-config=$(CURDIR)/user-config.jam debug-symbols=on
+
+
+
+
+$(bjam):
+	./bootstrap.sh --with-icu --prefix=$(CURDIR)/debian/tmp/usr \
+	  || cat bootstrap.log
+
+debian/bjam.1: $(bjam)
+	help2man --name 'software build tool' --no-info ./bjam > $@
+
+user-config.jam:
+	echo $(TOOLSET_CONFIG) > $@
+	echo $(MPI_CONFIG)     >> $@
+	for pyver in $(filter-out $(shell pyversions -dv),$(pyversions)); do \
+		echo "using python : $$pyver : /usr ;" >> $@; \
+	done
+
+$(filtered_files): % : %.in
+	sed -e 's/@PKGVERSION@/$(PKGVERSION)/g' < $< > $@
+
+clean-debhelper:
+	rm -rf debian/*.install
+	rm -rf debian/*.links
+	rm -rf debian/*.lintian-overrides
+
+# Make all the generated debhelper files.
+make-debhelper: clean-debhelper $(filtered_files)
+	@$(call mk_debhelper_files)
+	@$(call cp_debhelper,libboost-dbg,libboost$(PKGVERSION)-dbg)
+	@$(call cp_debhelper,libboost-dev,libboost$(PKGVERSION)-dev)
+	@$(call cp_debhelper,libboost-doc,libboost$(PKGVERSION)-doc)
+	@$(call cp_debhelper,libboost-python-dev,libboost-python$(PKGVERSION)-dev)
+	@$(call cp_debhelper,libboost-mpi-python-dev,libboost-mpi-python$(PKGVERSION)-dev)
+
