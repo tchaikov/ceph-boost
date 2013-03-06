@@ -1,18 +1,18 @@
 #! /usr/bin/make -f
 
 # Boost libraries for which we want separate packages
-boost_libs := chrono date-time exception filesystem graph-parallel \
-	graph iostreams locale math				   \
-	mpi mpi-python						   \
-	program-options python regex random serialization signals  \
-	system test						   \
-	thread timer wave
+boost_libs := atomic chrono context date-time exception filesystem	\
+              graph graph-parallel iostreams locale math mpi		\
+              mpi-python program-options python random regex		\
+              serialization signals system test thread timer wave
 
 # these are special cases, where /usr/lib name differs from Boost library name
 boost_lib_math := math_c99 math_c99f math_tr1 math_tr1f
 boost_lib_math_long_double := math_c99l math_tr1l
 boost_lib_serialization := serialization wserialization
 boost_lib_test := prg_exec_monitor test_exec_monitor unit_test_framework
+
+pyversions = $(shell pyversions -rv) $(shell py3versions -rv)
 
 # These are special cases for suffixes.  Generally come from --python-buildid, so begin with a dash.
 boost_suffixes_python := $(addprefix -py,$(subst .,,$(pyversions)))
@@ -152,19 +152,18 @@ override_dh_install:
 override_dh_strip:
 	dh_strip --dbg-package=libboost$(PKGVERSION)-dbg -X"-d-"
 
+
 # set the number of build jobs
 ifneq (,$(filter parallel=%,$(DEB_BUILD_OPTIONS)))
-	JOBS := -j$(patsubst parallel=%,%,$(filter parallel=%,$(DEB_BUILD_OPTIONS)))
+  JOBS := -j$(patsubst parallel=%,%,$(filter parallel=%,$(DEB_BUILD_OPTIONS)))
 endif
 
-version_full := $(shell dpkg-parsechangelog | grep Version | cut -d' ' -f2)
-version_upstream := $(shell echo $(version_full) | cut -d'-' -f1)
+version_full = $(shell dpkg-parsechangelog | grep Version | cut -d' ' -f2)
+version_upstream = $(shell echo $(version_full) | cut -d'-' -f1)
 version_major = $(shell echo $(version_upstream) | cut -d'.' -f1,2)
 
 PKGVERSION = $(version_major)
 SOVERSION = $(version_upstream)
-
-pyversions = $(shell pyversions -rv) $(shell py3versions -rv)
 
 
 # Function to map Boost component name to set of shared library names
@@ -225,6 +224,7 @@ add_doc_override = $(call add_override,libboost$(PKGVERSION)-doc,$(1))
 add_lib_override = $(call add_override,$(call mk_pkg_lib,$(1),$(2)),$(3))
 add_libdev_override = $(call add_override,$(call mk_pkg_dev,$(1),$(2)),$(3))
 
+# Input: package-name-base, versioned-package-name
 cp_debhelper = for s in doc-base examples postinst prerm README.Debian; do \
 	if test -f debian/$(1).$$s; then cp -f debian/$(1).$$s debian/$(2).$$s; fi; done
 

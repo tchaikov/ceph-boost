@@ -6,8 +6,11 @@ boost1.53 (1.53.0-1) UNRELEASED; urgency=low
   * rules: Stop creating "libboost_foo-mt" compatibility symlinks.
     Rewrite rules using "dh".  README.Debian and NEWS.Debian no longer
     ship in all packages.
+  
+  * control: Add packages for atomic, context.  Remove empty package for
+    mpi-python-dev.
 
- -- Steve M. Robbins <smr@debian.org>  Mon, 04 Mar 2013 08:15:45 -0600
+ -- Steve M. Robbins <smr@debian.org>  Tue, 05 Mar 2013 22:14:47 -0600
 
 boost1.52 (1.52.0-1) UNRELEASED; urgency=low
 

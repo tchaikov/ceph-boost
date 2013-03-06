@@ -31,7 +31,9 @@ Architecture: any
 Section: libdevel
 Depends: ${misc:Depends}, ${shlibs:Depends}, libstdc++6-4.4-dev | libstdc++-dev
 Suggests: libboost1.53-doc,
+ libboost-atomic1.53-dev,
  libboost-chrono1.53-dev,
+ libboost-context1.53-dev,
  libboost-date-time1.53-dev,
  libboost-exception1.53-dev,
  libboost-filesystem1.53-dev,
@@ -41,6 +43,7 @@ Suggests: libboost1.53-doc,
  libboost-locale1.53-dev,
  libboost-math1.53-dev,
  libboost-mpi1.53-dev,
+ libboost-mpi-python1.53-dev,
  libboost-program-options1.53-dev,
  libboost-python1.53-dev,
  libboost-random1.53-dev,
@@ -82,27 +85,29 @@ Architecture: any
 Section: libdevel
 Depends: ${misc:Depends},
  libboost1.53-dev,
- libboost-chrono1.53-dev, 
- libboost-date-time1.53-dev, 
- libboost-exception1.53-dev, 
- libboost-filesystem1.53-dev, 
- libboost-graph1.53-dev, 
- libboost-graph-parallel1.53-dev, 
- libboost-iostreams1.53-dev, 
+ libboost-atomic1.53-dev,
+ libboost-chrono1.53-dev,
+ libboost-context1.53-dev,
+ libboost-date-time1.53-dev,
+ libboost-exception1.53-dev,
+ libboost-filesystem1.53-dev,
+ libboost-graph1.53-dev,
+ libboost-graph-parallel1.53-dev,
+ libboost-iostreams1.53-dev,
  libboost-locale1.53-dev,
- libboost-math1.53-dev, 
- libboost-mpi1.53-dev, 
- libboost-mpi-python1.53-dev, 
- libboost-program-options1.53-dev, 
- libboost-python1.53-dev, 
- libboost-random1.53-dev, 
- libboost-regex1.53-dev, 
- libboost-serialization1.53-dev, 
- libboost-signals1.53-dev, 
- libboost-system1.53-dev, 
- libboost-test1.53-dev, 
- libboost-thread1.53-dev, 
- libboost-timer1.53-dev, 
+ libboost-math1.53-dev,
+ libboost-mpi1.53-dev,
+ libboost-mpi-python1.53-dev,
+ libboost-program-options1.53-dev,
+ libboost-python1.53-dev,
+ libboost-random1.53-dev,
+ libboost-regex1.53-dev,
+ libboost-serialization1.53-dev,
+ libboost-signals1.53-dev,
+ libboost-system1.53-dev,
+ libboost-test1.53-dev,
+ libboost-thread1.53-dev,
+ libboost-timer1.53-dev,
  libboost-wave1.53-dev
 Description: Boost C++ Libraries development files (ALL)
  The Boost web site provides free, peer-reviewed, portable C++ source
@@ -135,6 +140,53 @@ Description: Boost.org libraries documentation
  This is documentation for the boost libraries in HTML format.
  Some pages point to header files provided in the corresponding -dev package,
  so it is suggested to install the latter as well.
+
+Package: libboost-atomic1.53.0
+Homepage: http://www.boost.org/libs/atomic/
+Architecture: any
+Section: libs
+Depends: ${misc:Depends}, ${shlibs:Depends}
+Description: atomic data types, operations, and memory ordering constraints
+ This package forms part of the Boost C++ Libraries collection.
+ .
+ Boost.Atomic is a library that provides atomic data types and
+ operations on these data types, as well as memory ordering
+ constraints required for coordinating multiple threads through atomic
+ variables. It implements the interface as defined by the C++11
+ standard, but makes this feature available for platforms lacking
+ system/compiler support for this particular C++11 feature.
+ .
+ Users of this library should already be familiar with concurrency in
+ general, as well as elementary concepts such as "mutual exclusion".
+ .
+ The implementation makes use of processor-specific instructions where
+ possible (via inline assembler, platform libraries or compiler
+ intrinsics), and falls back to "emulating" atomic operations through
+ locking.
+
+Package: libboost-atomic1.53-dev
+Homepage: http://www.boost.org/libs/atomic/
+Architecture: any
+Section: libdevel
+Depends: ${misc:Depends}, 
+ libboost-atomic1.53.0 (= ${binary:Version})
+Description: atomic data types, operations, and memory ordering constraints
+ This package forms part of the Boost C++ Libraries collection.
+ .
+ Boost.Atomic is a library that provides atomic data types and
+ operations on these data types, as well as memory ordering
+ constraints required for coordinating multiple threads through atomic
+ variables. It implements the interface as defined by the C++11
+ standard, but makes this feature available for platforms lacking
+ system/compiler support for this particular C++11 feature.
+ .
+ Users of this library should already be familiar with concurrency in
+ general, as well as elementary concepts such as "mutual exclusion".
+ .
+ The implementation makes use of processor-specific instructions where
+ possible (via inline assembler, platform libraries or compiler
+ intrinsics), and falls back to "emulating" atomic operations through
+ locking.
 
 Package: libboost-chrono1.53.0
 Homepage: http://www.boost.org/libs/chrono/
@@ -224,6 +276,43 @@ Description: C++ representation of time duration, time point, and clocks
  Lastly, Boost.Chrono includes typeof registration for duration and
  time_point to permit using emulated auto with C++03 compilers.
 
+Package: libboost-context1.53.0
+Homepage: http://www.boost.org/libs/context/
+Architecture: any
+Section: libs
+Depends: ${misc:Depends}, ${shlibs:Depends}
+Description: provides a sort of cooperative multitasking on a single thread
+ This package forms part of the Boost C++ Libraries collection.
+ .
+ Boost.Context is a foundational library that provides a sort of
+ cooperative multitasking on a single thread. By providing an
+ abstraction of the current execution state in the current thread,
+ including the stack (with local variables) and stack pointer, all
+ registers and CPU flags, and the instruction pointer, a fcontext_t
+ instance represents a specific point in the application's execution
+ path. This is useful for building higher-level abstractions, like
+ coroutines, cooperative threads (userland threads) or an equivalent
+ to C# keyword yield in C++.
+
+Package: libboost-context1.53-dev
+Homepage: http://www.boost.org/libs/context/
+Architecture: any
+Section: libdevel
+Depends: ${misc:Depends}, 
+ libboost-context1.53.0 (= ${binary:Version})
+Description: provides a sort of cooperative multitasking on a single thread
+ This package forms part of the Boost C++ Libraries collection.
+ .
+ Boost.Context is a foundational library that provides a sort of
+ cooperative multitasking on a single thread. By providing an
+ abstraction of the current execution state in the current thread,
+ including the stack (with local variables) and stack pointer, all
+ registers and CPU flags, and the instruction pointer, a fcontext_t
+ instance represents a specific point in the application's execution
+ path. This is useful for building higher-level abstractions, like
+ coroutines, cooperative threads (userland threads) or an equivalent
+ to C# keyword yield in C++.
+
 Package: libboost-date-time1.53.0
 Homepage: http://www.boost.org/libs/date_time/
 Architecture: any
@@ -249,18 +338,6 @@ Description: set of date-time libraries based on generic programming concepts
  .
  These libraries are intended to make programming with dates and times
  almost as simple and natural as programming with strings and integers.
-
-Package: libboost-exception1.53.0
-Homepage: http://www.boost.org/libs/exception/
-Architecture: any
-Section: libs
-Depends: ${misc:Depends}, ${shlibs:Depends}
-Description: set of date-time libraries based on generic programming concepts
- This package forms part of the Boost C++ Libraries collection.
- .
- The purpose of Boost Exception is to ease the design of exception
- class hierarchies and to help write exception handling and error
- reporting code.
 
 Package: libboost-exception1.53-dev
 Homepage: http://www.boost.org/libs/exception/
