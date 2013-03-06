@@ -1,4 +1,4 @@
-boost1.53 (1.53.0-1) UNRELEASED; urgency=low
+boost1.53 (1.53.0-1) unstable; urgency=low
 
   * New upstream.  Update versions in control, rules.  Update file lists
     in documentation-files and example-files.
