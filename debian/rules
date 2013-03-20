@@ -24,6 +24,8 @@ filtered_files = \
 	debian/libboost-python-dev.postinst \
 	debian/libboost-python-dev.prerm
 
+DPKG_EXPORT_BUILDFLAGS = 1
+include /usr/share/dpkg/buildflags.mk
 
 %:
 	dh $@ --with python2 --with python3
@@ -245,13 +247,12 @@ mk_debhelper_files = \
 		) \
 	)
 
-TOOLSET_CONFIG="using gcc ;"
+TOOLSET_CONFIG = 'using gcc : : : <compileflags>"$(CPPFLAGS)" <cflags>"$(CFLAGS)" <cxxflags>"$(CXXFLAGS)" <linkflags>"$(LDFLAGS)" ;'
 BUILD_LONG_DOUBLE = yes
 
 DEB_BUILD_ARCH ?= $(shell dpkg-architecture -qDEB_BUILD_ARCH)
 
 ifeq ($(DEB_BUILD_ARCH), hppa)
-TOOLSET_CONFIG="using gcc : : : <compileflags>-mlong-calls <compileflags>-DBOOST_SP_USE_PTHREADS ;"
 BUILD_LONG_DOUBLE = no
 else ifeq ($(DEB_BUILD_ARCH), arm)
 BUILD_LONG_DOUBLE = no
