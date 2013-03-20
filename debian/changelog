@@ -5,7 +5,10 @@ boost1.53 (1.53.0-2) unstable; urgency=low
 
   * rules: context is not supported for ia64, s390, s390x, and sparc.
   
- -- Steve M. Robbins <smr@debian.org>  Wed, 20 Mar 2013 01:24:20 -0500
+  * patches/fix-ftbfs-python-3.3.patch: New.  Allow building with
+    multiarch python3.3 (thanks, Dmitrijs Ledkovs).  Closes: #691378.
+
+ -- Steve M. Robbins <smr@debian.org>  Wed, 20 Mar 2013 01:45:32 -0500
 
 boost1.53 (1.53.0-1) unstable; urgency=low
 
