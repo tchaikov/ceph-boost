@@ -1,7 +1,8 @@
 #! /usr/bin/make -f
 
 # Boost libraries for which we want separate packages
-boost_libs := atomic chrono context date-time exception filesystem	\
+# context is special in that it is not supported yet on several architectures
+boost_libs := atomic chrono date-time exception filesystem	\
               graph graph-parallel iostreams locale math mpi		\
               mpi-python program-options python random regex		\
               serialization signals system test thread timer wave
@@ -33,7 +34,7 @@ include /usr/share/dpkg/buildflags.mk
 override_dh_auto_configure: user-config.jam make-debhelper
 
 override_dh_auto_build: $(bjam) debian/bjam.1
-	$(JAM) --without-python                        
+	$(JAM) $(JAM_WITHOUT) --without-python
 	for pyver in $(pyversions); do \
 	 	pyid=$$(echo $$pyver | tr -d .); \
 		echo "Building Boost.Python for python version $$pyver"; \
@@ -248,6 +249,7 @@ mk_debhelper_files = \
 	)
 
 TOOLSET_CONFIG = 'using gcc : : : <compileflags>"$(CPPFLAGS)" <cflags>"$(CFLAGS)" <cxxflags>"$(CXXFLAGS)" <linkflags>"$(LDFLAGS)" ;'
+BUILD_CONTEXT = yes
 BUILD_LONG_DOUBLE = yes
 
 DEB_BUILD_ARCH ?= $(shell dpkg-architecture -qDEB_BUILD_ARCH)
@@ -260,12 +262,24 @@ else ifeq ($(DEB_BUILD_ARCH), armel)
 BUILD_LONG_DOUBLE = no
 else ifeq ($(DEB_BUILD_ARCH), armhf)
 BUILD_LONG_DOUBLE = no
+else ifeq ($(DEB_BUILD_ARCH), ia64)
+BUILD_CONTEXT = no
 else ifeq ($(DEB_BUILD_ARCH), mips)
 BUILD_LONG_DOUBLE = no
 else ifeq ($(DEB_BUILD_ARCH), mipsel)
 BUILD_LONG_DOUBLE = no
+else ifeq ($(DEB_BUILD_ARCH), s390)
+BUILD_CONTEXT = no
+else ifeq ($(DEB_BUILD_ARCH), s390x)
+BUILD_CONTEXT = no
 else ifeq ($(DEB_BUILD_ARCH), sh4)
 BUILD_LONG_DOUBLE = no
+else ifeq ($(DEB_BUILD_ARCH), sparc)
+BUILD_CONTEXT = no
+endif
+
+ifneq ($(BUILD_CONTEXT), yes)
+JAM_WITHOUT += --without-context
 endif
 
 ifeq ($(BUILD_LONG_DOUBLE), yes)

@@ -3,6 +3,8 @@ boost1.53 (1.53.0-2) unstable; urgency=low
   * rules: Build with hardening flags.
   * control: Depend on dpkg-dev, to get dpkg-buildflags.
 
+  * rules: context is not supported for ia64, s390, s390x, and sparc.
+  
  -- Steve M. Robbins <smr@debian.org>  Thu, 07 Mar 2013 00:58:54 -0600
 
 boost1.53 (1.53.0-1) unstable; urgency=low
