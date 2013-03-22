@@ -1,3 +1,9 @@
+boost1.53 (1.53.0-3) unstable; urgency=low
+
+  * rules: Ensure --without-context passed during install stage, too.
+
+ -- Steve M. Robbins <smr@debian.org>  Thu, 21 Mar 2013 22:52:19 -0500
+
 boost1.53 (1.53.0-2) unstable; urgency=low
 
   * rules: Build with hardening flags.

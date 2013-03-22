@@ -68,7 +68,7 @@ override_dh_compress:
 	dh_compress -Xlibboost$(PKGVERSION)-doc/HTML
 
 override_dh_install:
-	$(JAM) --prefix=$(CURDIR)/debian/tmp/usr install --without-python                        
+	$(JAM) --prefix=$(CURDIR)/debian/tmp/usr $(JAM_WITHOUT) --without-python install
 	for pyver in $(pyversions); do \
 		pyid=`echo $$pyver | tr -d .`; \
 		$(JAM) --prefix=$(CURDIR)/debian/tmp/usr install --with-python --with-mpi --python-buildid=py$$pyid python=$$pyver; \
