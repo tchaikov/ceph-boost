@@ -6,7 +6,10 @@ boost1.53 (1.53.0-3) unstable; urgency=low
     chrono/duration.hpp and apache2/httpd.h (thanks, Kirill Spitsin).
     Closes: #703325.
 
- -- Steve M. Robbins <smr@debian.org>  Thu, 21 Mar 2013 23:27:01 -0500
+  * control: Make libboost-mpi-python depend on mpi-default-bin so that
+    mpirun is available.  Closes: #691635.
+
+ -- Steve M. Robbins <smr@debian.org>  Thu, 21 Mar 2013 23:46:40 -0500
 
 boost1.53 (1.53.0-2) unstable; urgency=low
 

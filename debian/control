@@ -618,7 +618,7 @@ Package: libboost-mpi-python1.53.0
 Homepage: http://www.boost.org/doc/html/mpi/python.html
 Architecture: any
 Section: python
-Depends: ${misc:Depends}, ${shlibs:Depends}, ${python:Depends}
+Depends: ${misc:Depends}, ${shlibs:Depends}, ${python:Depends}, mpi-default-bin
 Suggests: python, python3
 Breaks: ${python:Breaks}
 Conflicts: libboost-mpi-python1.40.0,
