@@ -254,31 +254,47 @@ BUILD_LONG_DOUBLE = yes
 
 DEB_BUILD_ARCH ?= $(shell dpkg-architecture -qDEB_BUILD_ARCH)
 
-ifeq ($(DEB_BUILD_ARCH), hppa)
-BUILD_LONG_DOUBLE = no
+ifeq ($(DEB_BUILD_ARCH), alpha)
+BUILD_CONTEXT = no
 else ifeq ($(DEB_BUILD_ARCH), arm)
 BUILD_LONG_DOUBLE = no
 else ifeq ($(DEB_BUILD_ARCH), armel)
 BUILD_LONG_DOUBLE = no
 else ifeq ($(DEB_BUILD_ARCH), armhf)
 BUILD_LONG_DOUBLE = no
+else ifeq ($(DEB_BUILD_ARCH), hppa)
+BUILD_LONG_DOUBLE = no
+BUILD_CONTEXT = no
 else ifeq ($(DEB_BUILD_ARCH), ia64)
+BUILD_CONTEXT = no
+else ifeq ($(DEB_BUILD_ARCH), m68k)
 BUILD_CONTEXT = no
 else ifeq ($(DEB_BUILD_ARCH), mips)
 BUILD_LONG_DOUBLE = no
 else ifeq ($(DEB_BUILD_ARCH), mipsel)
 BUILD_LONG_DOUBLE = no
+else ifeq ($(DEB_BUILD_ARCH), powerpcspe)
+BUILD_CONTEXT = no
+else ifeq ($(DEB_BUILD_ARCH), ppc64)
+BUILD_CONTEXT = no
 else ifeq ($(DEB_BUILD_ARCH), s390)
 BUILD_CONTEXT = no
 else ifeq ($(DEB_BUILD_ARCH), s390x)
 BUILD_CONTEXT = no
 else ifeq ($(DEB_BUILD_ARCH), sh4)
 BUILD_LONG_DOUBLE = no
+BUILD_CONTEXT = no
 else ifeq ($(DEB_BUILD_ARCH), sparc)
+BUILD_CONTEXT = no
+else ifeq ($(DEB_BUILD_ARCH), sparc64)
+BUILD_CONTEXT = no
+else ifeq ($(DEB_BUILD_ARCH), x32)
 BUILD_CONTEXT = no
 endif
 
-ifneq ($(BUILD_CONTEXT), yes)
+ifeq ($(BUILD_CONTEXT), yes)
+boost_libs += context
+else
 JAM_WITHOUT += --without-context
 endif
 

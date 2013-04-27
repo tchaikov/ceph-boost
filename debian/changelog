@@ -1,3 +1,13 @@
+boost1.53 (1.53.0-4) unstable; urgency=low
+
+  * rules: Add 'context' to list of libraries when Boost.Context is
+    supported.  Closes: #706220.
+  
+  * rules: Disable Boost.Context for additional architectures: alpha,
+    hppa, m68k, powerpcspe, ppc64, sh4, sparc64, and x32.  Closes: #703549.
+
+ -- Steve M. Robbins <smr@debian.org>  Sat, 27 Apr 2013 01:12:49 -0500
+
 boost1.53 (1.53.0-3) unstable; urgency=low
 
   * rules: Ensure --without-context passed during install stage, too.
