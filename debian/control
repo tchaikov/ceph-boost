@@ -969,7 +969,9 @@ Architecture: any
 Section: libdevel
 Depends: ${misc:Depends},
  libboost1.53-dev (= ${binary:Version}),
+ libboost-chrono1.53-dev (= ${binary:Version}),
  libboost-date-time1.53-dev (= ${binary:Version}),
+ libboost-system1.53-dev (= ${binary:Version}),
  libboost-thread1.53.0 (= ${binary:Version})
 Conflicts: libboost-thread1.42-dev, libboost-thread1.46-dev, libboost-thread1.48-dev, libboost-thread1.49-dev, libboost-thread1.50-dev, libboost-thread1.52-dev
 Description: portable C++ multi-threading

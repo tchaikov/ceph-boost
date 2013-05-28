@@ -1,3 +1,12 @@
+boost1.53 (1.53.0-5) UNRELEASED; urgency=low
+
+  * control: Boost.Thread depends on some non header-only libraries:
+    System, Chrono, and DateTime.  The latter was already present, but
+    dependencies for libboost-thread1.53-dev updated to include
+    libboost-chrono1.53-dev and libboost-system1.53-dev.  Closes: #706648.
+
+ -- Steve M. Robbins <smr@debian.org>  Sat, 25 May 2013 21:44:41 -0500
+
 boost1.53 (1.53.0-4) unstable; urgency=low
 
   * rules: Add 'context' to list of libraries when Boost.Context is
