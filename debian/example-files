@@ -1,9 +1,13 @@
+doc/html/boost_asio/examples
 doc/html/boost_asio/example
 doc/html/date_time/examples
 libs/python/example
 libs/accumulators/example
+libs/geometry/doc/html/geometry/examples
 libs/geometry/doc/src/examples
 libs/geometry/doc/src/docutils/tools/doxygen_xml2qbk/sample/src/examples
+libs/geometry/doc/index/src/examples
+libs/geometry/index/example
 libs/geometry/example
 libs/range/doc/reference/adaptors/examples
 libs/phoenix/doc/html/phoenix/examples
@@ -32,6 +36,7 @@ libs/filesystem/example
 libs/graph_parallel/example
 libs/local_function/example
 libs/multi_index/example
+libs/log/example
 libs/program_options/example
 libs/ratio/example
 libs/container/example
@@ -60,6 +65,7 @@ libs/function/example
 libs/mpl/example
 libs/context/example
 libs/exception/example
+libs/type_erasure/example
 libs/dynamic_bitset/example
 libs/lockfree/examples
 libs/test/doc/src/examples

@@ -1,3 +1,9 @@
+boost1.54 (1.54.0-1) unstable; urgency=low
+
+  * New upstream.
+
+ -- Steve M. Robbins <smr@debian.org>  Mon, 01 Jul 2013 13:59:13 -0500
+
 boost1.53 (1.53.0-6) UNRELEASED; urgency=low
 
   * Make libboost-graph[-parallel]1.53-dev packages depend on the library
