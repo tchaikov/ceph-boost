@@ -1,3 +1,10 @@
+boost1.53 (1.53.0-6) UNRELEASED; urgency=low
+
+  * Make libboost-graph[-parallel]1.53-dev packages depend on the library
+    package libboost-graph[-parallel]1.53.0 to avoid broken symlinks.
+
+ -- Dmitrijs Ledkovs <dmitrij.ledkov@ubuntu.com>  Mon, 01 Jul 2013 10:39:16 +0100
+
 boost1.53 (1.53.0-5) unstable; urgency=low
 
   * control: Boost.Thread depends on some non header-only libraries:

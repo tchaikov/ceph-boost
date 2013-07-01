@@ -402,6 +402,7 @@ Architecture: any
 Section: libdevel
 Depends: ${misc:Depends},
  libboost1.53-dev (= ${binary:Version}),
+ libboost-graph1.53.0 (= ${binary:Version}),
  libboost-serialization1.53-dev (= ${binary:Version}),
  libboost-test1.53-dev (= ${binary:Version})
 Recommends: libboost-graph1.53.0 (= ${binary:Version})
@@ -437,6 +438,7 @@ Architecture: any
 Section: libdevel
 Depends: ${misc:Depends},
  libboost1.53-dev (= ${binary:Version}),
+ libboost-graph-parallel1.53.0 (= ${binary:Version}),
  libboost-serialization1.53-dev (= ${binary:Version}),
  libboost-test1.53-dev (= ${binary:Version})
 Conflicts: libboost-graph-parallel1.42-dev, libboost-graph-parallel1.46-dev, libboost-graph-parallel1.48-dev, libboost-graph-parallel1.49-dev, libboost-graph-parallel1.50-dev, libboost-graph-parallel1.52-dev
