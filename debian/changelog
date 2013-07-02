@@ -1,9 +1,9 @@
 boost1.54 (1.54.0-1) unstable; urgency=low
 
   * New upstream.
-    - new libraries: Boost.Log.
+    - Add shared library packages for new library Boost.Log.
 
- -- Steve M. Robbins <smr@debian.org>  Mon, 01 Jul 2013 21:15:06 -0500
+ -- Steve M. Robbins <smr@debian.org>  Mon, 01 Jul 2013 21:28:11 -0500
 
 boost1.53 (1.53.0-6) UNRELEASED; urgency=low
 
