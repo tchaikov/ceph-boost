@@ -565,7 +565,7 @@ Description: C++ logging library
   * Performance. The library should have as little performance impact on
  the user's application as possible.
 
-Package: libboost-log.54-dev
+Package: libboost-log1.54-dev
 Homepage: http://www.boost.org/libs/log/
 Architecture: any
 Section: libdevel
