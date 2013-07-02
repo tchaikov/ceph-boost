@@ -2,12 +2,13 @@
 
 # Boost libraries for which we want separate packages
 # context is special in that it is not supported yet on several architectures
-boost_libs := atomic chrono date-time exception filesystem	\
-              graph graph-parallel iostreams locale math mpi		\
+boost_libs := atomic chrono date-time exception filesystem		\
+              graph graph-parallel iostreams locale log math mpi	\
               mpi-python program-options python random regex		\
               serialization signals system test thread timer wave
 
 # these are special cases, where /usr/lib name differs from Boost library name
+boost_lib_log := log log_setup
 boost_lib_math := math_c99 math_c99f math_tr1 math_tr1f
 boost_lib_math_long_double := math_c99l math_tr1l
 boost_lib_serialization := serialization wserialization

@@ -41,6 +41,7 @@ Suggests: libboost1.54-doc,
  libboost-graph-parallel1.54-dev,
  libboost-iostreams1.54-dev,
  libboost-locale1.54-dev,
+ libboost-log.54-dev,
  libboost-math1.54-dev,
  libboost-mpi1.54-dev,
  libboost-mpi-python1.54-dev,
@@ -95,6 +96,7 @@ Depends: ${misc:Depends},
  libboost-graph-parallel1.54-dev,
  libboost-iostreams1.54-dev,
  libboost-locale1.54-dev,
+ libboost-log1.54-dev,
  libboost-math1.54-dev,
  libboost-mpi1.54-dev,
  libboost-mpi-python1.54-dev,
@@ -542,6 +544,52 @@ Description: C++ facilities for localization
   * Transparent support for 8-bit character sets like Latin1
   * Support for char and wchar_t
   * Experimental support for C++0x char16_t and char32_t strings and streams.
+
+Package: libboost-log1.54.0
+Homepage: http://www.boost.org/libs/log/
+Architecture: any
+Section: libs
+Depends: ${misc:Depends}, ${shlibs:Depends}
+Description: C++ logging library
+ This package forms part of the Boost C++ Libraries collection.
+ .
+ This library aims to make logging significantly easier for the
+ application developer. It provides a wide range of out-of-the-box
+ tools along with public interfaces for extending the library. The
+ main goals of the library are:
+ .
+  * Simplicity. A small example code snippet should be enough to get
+ the feel of the library and be ready to use its basic features.
+  * Extensibility. A user should be able to extend functionality of the
+ library for collecting and storing information into logs.
+  * Performance. The library should have as little performance impact on
+ the user's application as possible.
+
+Package: libboost-log.54-dev
+Homepage: http://www.boost.org/libs/log/
+Architecture: any
+Section: libdevel
+Depends: ${misc:Depends},
+ libboost-log1.54.0 (= ${binary:Version}),
+ libboost1.54-dev (= ${binary:Version}),
+ libboost-filesystem1.54-dev (= ${binary:Version}),
+ libboost-system1.54-dev (= ${binary:Version}),
+ libboost-date-time1.54-dev (= ${binary:Version}),
+ libboost-thread1.54-dev (= ${binary:Version})
+Description: C++ logging library
+ This package forms part of the Boost C++ Libraries collection.
+ .
+ This library aims to make logging significantly easier for the
+ application developer. It provides a wide range of out-of-the-box
+ tools along with public interfaces for extending the library. The
+ main goals of the library are:
+ .
+  * Simplicity. A small example code snippet should be enough to get
+ the feel of the library and be ready to use its basic features.
+  * Extensibility. A user should be able to extend functionality of the
+ library for collecting and storing information into logs.
+  * Performance. The library should have as little performance impact on
+ the user's application as possible.
 
 Package: libboost-math1.54.0
 Homepage: http://www.boost.org/libs/math/
