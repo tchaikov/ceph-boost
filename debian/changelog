@@ -1,3 +1,10 @@
+boost1.54 (1.54.0-2) unstable; urgency=low
+
+  * patches/hurd-clock-gettime.patch: New.  GNU Hurd has clock_gettime()
+    despite not defining _POSIX_TIMERS.  Closes: #714847.
+
+ -- Steve M. Robbins <smr@debian.org>  Sat, 06 Jul 2013 14:50:33 -0500
+
 boost1.54 (1.54.0-1) unstable; urgency=low
 
   * New upstream.
