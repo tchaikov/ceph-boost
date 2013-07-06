@@ -1,3 +1,5 @@
+001-coroutine.patch
+002-date-time.patch
 chrono-duration.patch
 boost-python-examples.patch
 endian.patch
