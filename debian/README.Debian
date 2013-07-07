@@ -16,13 +16,19 @@ for multithreaded applications.
 
   Component              Link Flag                      Library Type
   ---------              ---------                      ------------
+  Boost.Atomic		 -lboost_atomic			static  shared
   Boost.Chrono           -lboost_chrono                 static  shared
+  Boost.Context		 -lboost_context		static	shared
+  Boost.Coroutine	 -lboost_coroutine		static    x
   Boost.Date_Time        -lboost_date_time            	static  shared
+  Boost.Exception	 -lboost_exception		static	  x
   Boost.Filesystem       -lboost_filesystem           	static  shared
   Boost.Graph            -lboost_graph                	static  shared
   Boost.Graph_parallel   -lboost_graph_parallel       	static  shared
   Boost.IOStreams        -lboost_iostreams            	static  shared
   Boost.Locale           -lboost_locale                 static  shared
+  Boost.log		 -lboost_log			static	shared
+			 -lboost_log_setup		static	shared
   Boost.Math		 -lboost_math_c99             	static  shared
   			 -lboost_math_c99f            	static  shared
   			 -lboost_math_c99l          [1] static  shared
@@ -130,4 +136,4 @@ Please see the manual and the following thread for more details
   http://lists.boost.org/boost-users/2008/03/34486.php
 
 
- -- Steve M. Robbins <smr@debian.org>, Sun, 27 Nov 2011 20:32:05 -0600
+ -- Steve M. Robbins <smr@debian.org>, Sat,  6 Jul 2013 20:56:17 -0500
