@@ -319,29 +319,6 @@ Description: provides a sort of cooperative multitasking on a single thread
  to C# keyword yield in C++.
 Conflicts: libboost-context1.53-dev
 
-Package: libboost-coroutine1.54.0
-Homepage: http://www.boost.org/libs/coroutine/
-Architecture: any
-Section: libs
-Depends: ${misc:Depends}, ${shlibs:Depends}
-Description: provides generalized subroutines  for cooperative multitasking 
- This package forms part of the Boost C++ Libraries collection.
- .
- Boost.Coroutine provides templates for generalized subroutines which
- allow multiple entry points for suspending and resuming execution at
- certain locations. It preserves the local state of execution and
- allows re-entering subroutines more than once (useful if state must
- be kept across function calls).
- .
- Coroutines can be viewed as a language-level construct providing a
- special kind of control flow.
- .
- In contrast to threads, which are pre-emptive, coroutine switches are
- cooperative (programmer controls when a switch will happen). The
- kernel is not involved in the coroutine switches.
- .
- The implementation uses Boost.Context for context switching.
-
 Package: libboost-coroutine1.54-dev
 Homepage: http://www.boost.org/libs/coroutine/
 Architecture: any
@@ -459,7 +436,6 @@ Depends: ${misc:Depends},
  libboost-graph1.54.0 (= ${binary:Version}),
  libboost-serialization1.54-dev (= ${binary:Version}),
  libboost-test1.54-dev (= ${binary:Version})
-Recommends: libboost-graph1.54.0 (= ${binary:Version})
 Conflicts: libboost-graph1.42-dev, libboost-graph1.46-dev, libboost-graph1.48-dev, libboost-graph1.49-dev, libboost-graph1.50-dev, libboost-graph1.52-dev, libboost-graph1.53-dev
 Description: generic graph components and algorithms in C++
  This package forms part of the Boost C++ Libraries collection.
@@ -496,7 +472,6 @@ Depends: ${misc:Depends},
  libboost-serialization1.54-dev (= ${binary:Version}),
  libboost-test1.54-dev (= ${binary:Version})
 Conflicts: libboost-graph-parallel1.42-dev, libboost-graph-parallel1.46-dev, libboost-graph-parallel1.48-dev, libboost-graph-parallel1.49-dev, libboost-graph-parallel1.50-dev, libboost-graph-parallel1.52-dev, libboost-graph-parallel1.53-dev
-Recommends: libboost-graph-parallel1.54.0 (= ${binary:Version})
 Description: generic graph components and algorithms in C++
  This package forms part of the Boost C++ Libraries collection.
  .
