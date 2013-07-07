@@ -173,6 +173,7 @@ Homepage: http://www.boost.org/libs/atomic/
 Architecture: any
 Section: libdevel
 Depends: ${misc:Depends}, 
+ libboost1.54-dev (= ${binary:Version}),
  libboost-atomic1.54.0 (= ${binary:Version})
 Description: atomic data types, operations, and memory ordering constraints
  This package forms part of the Boost C++ Libraries collection.
@@ -304,6 +305,7 @@ Homepage: http://www.boost.org/libs/context/
 Architecture: any
 Section: libdevel
 Depends: ${misc:Depends}, 
+ libboost1.54-dev (= ${binary:Version}),
  libboost-context1.54.0 (= ${binary:Version})
 Description: provides a sort of cooperative multitasking on a single thread
  This package forms part of the Boost C++ Libraries collection.
@@ -324,6 +326,7 @@ Homepage: http://www.boost.org/libs/coroutine/
 Architecture: any
 Section: libdevel
 Depends: ${misc:Depends}, 
+ libboost1.54-dev (= ${binary:Version}),
  libboost-context1.54-dev (= ${binary:Version})
 Description: provides a sort of cooperative multitasking on a single thread
  This package forms part of the Boost C++ Libraries collection.
