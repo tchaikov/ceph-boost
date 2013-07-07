@@ -347,7 +347,7 @@ Homepage: http://www.boost.org/libs/coroutine/
 Architecture: any
 Section: libdevel
 Depends: ${misc:Depends}, 
- libboost-coroutine1.54.0 (= ${binary:Version})
+ libboost-coroutine1.54.0 (= ${binary:Version}),
  libboost-context1.54-dev (= ${binary:Version})
 Description: provides a sort of cooperative multitasking on a single thread
  This package forms part of the Boost C++ Libraries collection.
