@@ -1,7 +1,8 @@
 #! /usr/bin/make -f
 
 # Boost libraries for which we want separate packages
-# context is special in that it is not supported yet on several architectures
+# context is conditionally compiled because it is not supported yet on several architectures
+# coroutine depends on context, so it is also conditionally compiled
 boost_libs := atomic chrono date-time exception filesystem		\
               graph graph-parallel iostreams locale log math mpi	\
               mpi-python program-options python random regex		\
@@ -294,9 +295,9 @@ BUILD_CONTEXT = no
 endif
 
 ifeq ($(BUILD_CONTEXT), yes)
-boost_libs += context
+boost_libs += context coroutine
 else
-JAM_WITHOUT += --without-context
+JAM_WITHOUT += --without-context --without-coroutine
 endif
 
 ifeq ($(BUILD_LONG_DOUBLE), yes)

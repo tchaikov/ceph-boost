@@ -34,6 +34,7 @@ Suggests: libboost1.54-doc,
  libboost-atomic1.54-dev,
  libboost-chrono1.54-dev,
  libboost-context1.54-dev,
+ libboost-coroutine.54-dev,
  libboost-date-time1.54-dev,
  libboost-exception1.54-dev,
  libboost-filesystem1.54-dev,
@@ -89,6 +90,7 @@ Depends: ${misc:Depends},
  libboost-atomic1.54-dev,
  libboost-chrono1.54-dev,
  libboost-context1.54-dev,
+ libboost-coroutine1.54-dev,
  libboost-date-time1.54-dev,
  libboost-exception1.54-dev,
  libboost-filesystem1.54-dev,
@@ -316,6 +318,54 @@ Description: provides a sort of cooperative multitasking on a single thread
  coroutines, cooperative threads (userland threads) or an equivalent
  to C# keyword yield in C++.
 Conflicts: libboost-context1.53-dev
+
+Package: libboost-coroutine1.54.0
+Homepage: http://www.boost.org/libs/coroutine/
+Architecture: any
+Section: libs
+Depends: ${misc:Depends}, ${shlibs:Depends}
+Description: provides generalized subroutines  for cooperative multitasking 
+ This package forms part of the Boost C++ Libraries collection.
+ .
+ Boost.Coroutine provides templates for generalized subroutines which
+ allow multiple entry points for suspending and resuming execution at
+ certain locations. It preserves the local state of execution and
+ allows re-entering subroutines more than once (useful if state must
+ be kept across function calls).
+ .
+ Coroutines can be viewed as a language-level construct providing a
+ special kind of control flow.
+ .
+ In contrast to threads, which are pre-emptive, coroutine switches are
+ cooperative (programmer controls when a switch will happen). The
+ kernel is not involved in the coroutine switches.
+ .
+ The implementation uses Boost.Context for context switching.
+
+Package: libboost-coroutine1.54-dev
+Homepage: http://www.boost.org/libs/coroutine/
+Architecture: any
+Section: libdevel
+Depends: ${misc:Depends}, 
+ libboost-coroutine1.54.0 (= ${binary:Version})
+ libboost-context1.54-dev (= ${binary:Version})
+Description: provides a sort of cooperative multitasking on a single thread
+ This package forms part of the Boost C++ Libraries collection.
+ .
+ Boost.Coroutine provides templates for generalized subroutines which
+ allow multiple entry points for suspending and resuming execution at
+ certain locations. It preserves the local state of execution and
+ allows re-entering subroutines more than once (useful if state must
+ be kept across function calls).
+ .
+ Coroutines can be viewed as a language-level construct providing a
+ special kind of control flow.
+ .
+ In contrast to threads, which are pre-emptive, coroutine switches are
+ cooperative (programmer controls when a switch will happen). The
+ kernel is not involved in the coroutine switches.
+ .
+ The implementation uses Boost.Context for context switching.
 
 Package: libboost-date-time1.54.0
 Homepage: http://www.boost.org/libs/date_time/
