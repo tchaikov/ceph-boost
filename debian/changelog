@@ -1,7 +1,11 @@
 boost1.54 (1.54.0-3) UNRELEASED; urgency=low
 
+  [ Steve M. Robbins ]
   * control: Add depends on libboost1.54-dev omitted from recently added
     libraries (atomic, context, and coroutine).
+
+  [ Matthias Klose ]
+  * Configure with --disable-long-double --wihtout-context on Aarch64
 
  -- Steve M. Robbins <smr@debian.org>  Sun, 07 Jul 2013 00:57:02 -0500
 
