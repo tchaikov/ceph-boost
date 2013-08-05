@@ -7,6 +7,9 @@ boost1.54 (1.54.0-3) UNRELEASED; urgency=low
   [ Matthias Klose ]
   * Configure with --disable-long-double --wihtout-context on Aarch64
 
+  [ Dmitrijs Ledkovs ]
+  * Use anonscm URLs.
+
  -- Steve M. Robbins <smr@debian.org>  Sun, 07 Jul 2013 00:57:02 -0500
 
 boost1.54 (1.54.0-2) unstable; urgency=low
