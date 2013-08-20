@@ -325,7 +325,7 @@ JAM = $(bjam) $(JOBS) -d2 $(JAM_OPT) --layout=system --ignore-site-config --user
 
 
 $(bjam):
-	./bootstrap.sh --with-icu --prefix=$(CURDIR)/debian/tmp/usr \
+	./bootstrap.sh --with-icu=/usr --prefix=$(CURDIR)/debian/tmp/usr \
 	  || cat bootstrap.log
 
 debian/bjam.1: $(bjam)

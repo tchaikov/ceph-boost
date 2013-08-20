@@ -12,6 +12,8 @@ boost1.54 (1.54.0-3) UNRELEASED; urgency=low
   * libboost-dev: Specify dependency on current libstdc++6-4.8-dev,
     instead of obsolete libstdc++6-4.4-dev. Fixes Multi-Arch
     installation (LP: #1209193)
+  * Specify --with-icu=/usr to unconditionally trigger HAVE_ICU define,
+    i.e. independent of icu multiarch.
 
  -- Steve M. Robbins <smr@debian.org>  Sun, 07 Jul 2013 00:57:02 -0500
 
