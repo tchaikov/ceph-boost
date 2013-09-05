@@ -6,6 +6,8 @@ boost1.54 (1.54.0-3) unstable; urgency=low
   * patches/boost-1.54.0-thread-link_atomic.patch: New.  Link Boost.Thread
     to Boost.Atomic if necessary.  Closes: #721577, #721544.  Also have
     libboost-thread1.54-dev depend on libboost-atomic1.54-dev.
+  * control: fix short description of libboost-exception1.54-dev; see
+    #720160.
 
   [ Matthias Klose ]
   * Configure with --disable-long-double --wihtout-context on Aarch64

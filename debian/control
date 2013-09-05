@@ -378,7 +378,7 @@ Architecture: any
 Section: libdevel
 Depends: ${misc:Depends},
  libboost1.54-dev (= ${binary:Version})
-Description: set of date-time libraries based on generic programming concepts
+Description: library to help write exceptions and handlers
  This package forms part of the Boost C++ Libraries collection.
  .
  The purpose of Boost Exception is to ease the design of exception
