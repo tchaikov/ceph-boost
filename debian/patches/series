@@ -8,3 +8,4 @@ pythonid.patch
 mpi-allocator-c++0x.patch
 fix-ftbfs-python-3.3.patch
 hurd-clock-gettime.patch
+boost-1.54.0-thread-link_atomic.patch

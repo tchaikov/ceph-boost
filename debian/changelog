@@ -3,6 +3,9 @@ boost1.54 (1.54.0-3) UNRELEASED; urgency=low
   [ Steve M. Robbins ]
   * control: Add depends on libboost1.54-dev omitted from recently added
     libraries (atomic, context, and coroutine).
+  * patches/boost-1.54.0-thread-link_atomic.patch: New.  Link Boost.Thread
+    to Boost.Atomic if necessary.  Closes: #721577, #721544.  Also have
+    libboost-thread1.54-dev depend on libboost-atomic1.54-dev.
 
   [ Matthias Klose ]
   * Configure with --disable-long-double --wihtout-context on Aarch64
@@ -15,7 +18,7 @@ boost1.54 (1.54.0-3) UNRELEASED; urgency=low
   * Specify --with-icu=/usr to unconditionally trigger HAVE_ICU define,
     i.e. independent of icu multiarch.
 
- -- Steve M. Robbins <smr@debian.org>  Sun, 07 Jul 2013 00:57:02 -0500
+ -- Steve M. Robbins <smr@debian.org>  Wed, 04 Sep 2013 22:07:58 -0500
 
 boost1.54 (1.54.0-2) unstable; urgency=low
 

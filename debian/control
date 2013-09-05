@@ -1048,6 +1048,7 @@ Architecture: any
 Section: libdevel
 Depends: ${misc:Depends},
  libboost1.54-dev (= ${binary:Version}),
+ libboost-atomic1.54-dev (= ${binary:Version}),
  libboost-chrono1.54-dev (= ${binary:Version}),
  libboost-date-time1.54-dev (= ${binary:Version}),
  libboost-system1.54-dev (= ${binary:Version}),
