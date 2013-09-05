@@ -1,4 +1,4 @@
-boost1.54 (1.54.0-3) UNRELEASED; urgency=low
+boost1.54 (1.54.0-3) unstable; urgency=low
 
   [ Steve M. Robbins ]
   * control: Add depends on libboost1.54-dev omitted from recently added
@@ -18,7 +18,7 @@ boost1.54 (1.54.0-3) UNRELEASED; urgency=low
   * Specify --with-icu=/usr to unconditionally trigger HAVE_ICU define,
     i.e. independent of icu multiarch.
 
- -- Steve M. Robbins <smr@debian.org>  Wed, 04 Sep 2013 22:07:58 -0500
+ -- Steve M. Robbins <smr@debian.org>  Wed, 04 Sep 2013 22:29:56 -0500
 
 boost1.54 (1.54.0-2) unstable; urgency=low
 
