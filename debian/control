@@ -29,7 +29,7 @@ Description: Boost C++ Libraries with debug symbols
 Package: libboost1.54-dev
 Architecture: any
 Section: libdevel
-Depends: ${misc:Depends}, ${shlibs:Depends}, libstdc++6-4.8-dev | libstdc++-dev
+Depends: ${misc:Depends}, ${shlibs:Depends}, libstdc++-4.8-dev | libstdc++-dev
 Suggests: libboost1.54-doc,
  libboost-atomic1.54-dev,
  libboost-chrono1.54-dev,
