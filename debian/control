@@ -796,7 +796,7 @@ Depends: ${misc:Depends},
  libboost-python1.54.0 (= ${binary:Version}),
  python-dev, ${python:Depends},
  python (>= 2.5) | python-celementtree | python-elementtree,
- gccxml
+Recommends: gccxml
 Suggests: libboost1.54-doc
 Conflicts: libboost-python1.42-dev, libboost-python1.46-dev, libboost-python1.48-dev, libboost-python1.49-dev, libboost-python1.50-dev, libboost-python1.52-dev, libboost-python1.53-dev
 Description: Boost.Python Library development files
