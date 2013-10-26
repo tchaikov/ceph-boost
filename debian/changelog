@@ -12,8 +12,10 @@ boost1.54 (1.54.0-4) UNRELEASED; urgency=low
     not libstdc++6-4.8-dev.
   * Demote gccxml from Depends to Recommends in the libboost-python-dev
     package. (Closes: #726172)
+  * Apply patch from Boost upstream to resolve BOOST_LCAST_HAS_INT128
+    issue (#8790) (Closes: #727750)
 
- -- Dmitrijs Ledkovs <dmitrij.ledkov@ubuntu.com>  Fri, 04 Oct 2013 15:13:20 +0100
+ -- Dmitrijs Ledkovs <xnox@ubuntu.com>  Sun, 27 Oct 2013 00:03:48 +0100
 
 boost1.54 (1.54.0-3) unstable; urgency=low
 
