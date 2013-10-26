@@ -1,7 +1,7 @@
 boost1.54 (1.54.0-4) UNRELEASED; urgency=low
 
   * Multi-arch most -dev packages (excluding python, mpi). Initial patches
-    based on the work by Helmut Grohne. (Closes: #710413)
+    based on the work by Helmut Grohne. (Closes: #710413, #693247)
   * Split boost auxiliary tools into a separate Multi-Arch:foreign package.
   * Build-depend on dh-python to gain arch-qualified python extension names.
   * Create permament libbost_python.[a|so] symlinks (LP: #1217237) as
