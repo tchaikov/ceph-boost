@@ -4,7 +4,7 @@ boost1.54 (1.54.0-4) UNRELEASED; urgency=low
     based on the work by Helmut Grohne. (Closes: #710413, #693247)
   * Split boost auxiliary tools into a separate Multi-Arch:foreign package.
   * Build-depend on dh-python to gain arch-qualified python extension names.
-  * Create permament libbost_python.[a|so] symlinks (LP: #1217237) as
+  * Create permament libboost_python.[a|so] symlinks (LP: #1217237) as
     python2.7 is the last python2 series release. What's the story on
     python side?  Shouldn't those be instead shipped in
     /usr/lib/pythonX.Y/config-$(MULTIARCH)?
