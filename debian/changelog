@@ -19,6 +19,9 @@ boost1.54 (1.54.0-4) UNRELEASED; urgency=low
   * patches/hppa-long-double-config.patch: New.  Fixes definition of
     BOOST_MATH_NO_LONG_DOUBLE_MATH_FUNCTIONS for hppa (thanks, Dave
     Anglin).  Closes: #729479.
+  * control.in(libboost1.54-dev): Add "Suggests" relationship to packages
+    libmpfrc++-dev & libntl-dev because Boost.Multiprecision provides
+    wrappers for them.  Closes: #731048.
 
   [ Matthias Klose ]
   * Add support for powerpc ELFv2.

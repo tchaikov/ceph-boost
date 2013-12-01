@@ -59,7 +59,8 @@ Suggests: libboost1.54-doc,
  libboost-thread1.54-dev,
  libboost-timer1.54-dev,
  libboost-wave1.54-dev,
- libboost1.54-tools-dev
+ libboost1.54-tools-dev,
+ libmpfrc++-dev, libntl-dev
 Conflicts: bjam, boost-build, libboost1.42-dev, libboost1.46-dev, libboost1.48-dev, libboost1.49-dev, libboost1.50-dev, libboost1.52-dev, libboost1.53-dev
 Description: Boost C++ Libraries development files
  The Boost web site provides free, peer-reviewed, portable C++ source
@@ -70,7 +71,11 @@ Description: Boost C++ Libraries development files
  already been proposed for inclusion in the C++ Standards Committee's
  upcoming C++ Standard Library Technical Report.
  .
- This package provides headers.
+ This package provides headers for all Boost libraries.
+ .
+ Extended precision arithmetic package libmpfrc++-dev or libntl-dev is
+ required to use the Boost.Multiprecision wrapping of the respective
+ library.
  .
  For the following subprojects separate packages exist: chrono,
  date-time, exception filesystem, graph, iostreams, locale, math, mpi,
