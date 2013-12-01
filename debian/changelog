@@ -6,9 +6,7 @@ boost1.54 (1.54.0-4) UNRELEASED; urgency=low
   * Split boost auxiliary tools into a separate Multi-Arch:foreign package.
   * Build-depend on dh-python to gain arch-qualified python extension names.
   * Create permament libboost_python.[a|so] symlinks (LP: #1217237) as
-    python2.7 is the last python2 series release. What's the story on
-    python side?  Shouldn't those be instead shipped in
-    /usr/lib/pythonX.Y/config-$(MULTIARCH)?
+    python2.7 is the last python2 series release.
   * Correct the dependency on libstdc++, it's actually libstdc++-4.8-dev,
     not libstdc++6-4.8-dev.
   * Demote gccxml from Depends to Recommends in the libboost-python-dev
