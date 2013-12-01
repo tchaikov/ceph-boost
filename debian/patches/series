@@ -10,3 +10,4 @@ fix-ftbfs-python-3.3.patch
 hurd-clock-gettime.patch
 boost-1.54.0-thread-link_atomic.patch
 85160.patch
+ELFv2-libboost1.54-dev-context-asm.patch
