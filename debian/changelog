@@ -16,7 +16,10 @@ boost1.54 (1.54.0-4) UNRELEASED; urgency=low
 
   [ Steve M. Robbins ]
   * rules: Disable context for mips64 and mips64el.  Closes: #728616.
-  
+  * patches/hppa-long-double-config.patch: New.  Fixes definition of
+    BOOST_MATH_NO_LONG_DOUBLE_MATH_FUNCTIONS for hppa (thanks, Dave
+    Anglin).  Closes: #729479.
+
   [ Matthias Klose ]
   * Add support for powerpc ELFv2.
 
