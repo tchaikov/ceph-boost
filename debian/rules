@@ -314,6 +314,10 @@ else ifeq ($(DEB_BUILD_ARCH), mips)
 BUILD_LONG_DOUBLE = no
 else ifeq ($(DEB_BUILD_ARCH), mipsel)
 BUILD_LONG_DOUBLE = no
+else ifeq ($(DEB_BUILD_ARCH), mips64)
+BUILD_CONTEXT = no
+else ifeq ($(DEB_BUILD_ARCH), mips64el)
+BUILD_CONTEXT = no
 else ifeq ($(DEB_BUILD_ARCH), powerpcspe)
 BUILD_CONTEXT = no
 else ifeq ($(DEB_BUILD_ARCH), ppc64)

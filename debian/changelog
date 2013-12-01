@@ -1,5 +1,6 @@
 boost1.54 (1.54.0-4) UNRELEASED; urgency=low
 
+  [ Dmitrijs Ledkovs ]
   * Multi-arch most -dev packages (excluding python, mpi). Initial patches
     based on the work by Helmut Grohne. (Closes: #710413, #693247)
   * Split boost auxiliary tools into a separate Multi-Arch:foreign package.
@@ -15,7 +16,10 @@ boost1.54 (1.54.0-4) UNRELEASED; urgency=low
   * Apply patch from Boost upstream to resolve BOOST_LCAST_HAS_INT128
     issue (#8790) (Closes: #727750)
 
- -- Dmitrijs Ledkovs <xnox@ubuntu.com>  Sun, 27 Oct 2013 00:03:48 +0100
+  [ Steve M. Robbins ]
+  * rules: Disable context for mips64 and mips64el.  Closes: #728616.
+  
+ -- Steve M. Robbins <smr@debian.org>  Sun, 01 Dec 2013 01:26:56 -0600
 
 boost1.54 (1.54.0-3) unstable; urgency=low
 
