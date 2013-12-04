@@ -1,4 +1,4 @@
-boost1.54 (1.54.0-4) UNRELEASED; urgency=low
+boost1.54 (1.54.0-4) unstable; urgency=low
 
   [ Dmitrijs Ledkovs ]
   * Multi-arch most -dev packages (excluding python, mpi). Initial patches
@@ -26,7 +26,7 @@ boost1.54 (1.54.0-4) UNRELEASED; urgency=low
   [ Matthias Klose ]
   * Add support for powerpc ELFv2.
 
- -- Steve M. Robbins <smr@debian.org>  Sun, 01 Dec 2013 01:26:56 -0600
+ -- Steve M. Robbins <smr@debian.org>  Wed, 04 Dec 2013 00:50:47 -0600
 
 boost1.54 (1.54.0-3) unstable; urgency=low
 
