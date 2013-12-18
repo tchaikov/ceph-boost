@@ -1,3 +1,11 @@
+boost1.54 (1.54.0-5) UNRELEASED; urgency=low
+
+  [ William Grant ]
+  * debian/patches/eglibc-long-long.patch: Fix build with eglibc 2.18.
+  * debian/rules: Treat ppc64el like ppc64.
+
+ -- Dimitri John Ledkov <xnox@ubuntu.com>  Wed, 18 Dec 2013 12:15:55 +0000
+
 boost1.54 (1.54.0-4) unstable; urgency=low
 
   [ Dmitrijs Ledkovs ]

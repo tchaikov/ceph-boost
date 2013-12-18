@@ -12,3 +12,4 @@ boost-1.54.0-thread-link_atomic.patch
 85160.patch
 ELFv2-libboost1.54-dev-context-asm.patch
 hppa-long-double-config.patch
+eglibc-long-long.patch
