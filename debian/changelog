@@ -6,6 +6,7 @@ boost1.55 (1.55.0-1) UNRELEASED; urgency=low
   * Remove patches applied upstream:
     - 001-coroutine.patch
     - 002-date-time.patch
+    - boost-1.44-py3.1.patch
     - boost-1.54.0-thread-link_atomic.patch
     - 85160.patch
     - eglibc-long-long.patch
@@ -13,10 +14,13 @@ boost1.55 (1.55.0-1) UNRELEASED; urgency=low
   * Remove other patches that no longer apply:
     - boost-python-examples.patch: Cannot apply, don't know how to fix.
     - endian.patch: Upstream changed endian detection.
-    - boost-1.44-py3.1.patch: Upstream made some python 3 fixes.
     - ELFv2-libboost1.54-dev-context-asm.patch: No idea.
 
- -- Steve M. Robbins <smr@debian.org>  Mon, 23 Dec 2013 00:54:11 -0600
+  * patches/boost-1.55.0-001-log_fix_dump_avx2.patch: New.  Upstream patch
+    to fix incorrect output of the dump manipulator, when used on
+    AVX2-enabled CPU (e.g. Intel Haswell).
+  
+ -- Steve M. Robbins <smr@debian.org>  Mon, 23 Dec 2013 16:19:05 -0600
 
 boost1.54 (1.54.0-5) UNRELEASED; urgency=low
 
