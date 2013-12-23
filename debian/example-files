@@ -50,6 +50,7 @@ libs/spirit/classic/example
 libs/spirit/phoenix/example
 libs/spirit/repository/example
 libs/spirit/example
+libs/circular_buffer/example
 libs/proto/example
 libs/pool/example
 libs/flyweight/example
@@ -57,6 +58,7 @@ libs/iostreams/example
 libs/thread/example
 libs/property_tree/examples
 libs/format/example
+libs/conversion/example
 libs/numeric/interval/examples
 libs/numeric/odeint/examples
 libs/random/example

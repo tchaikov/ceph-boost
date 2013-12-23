@@ -1,3 +1,23 @@
+boost1.55 (1.55.0-1) UNRELEASED; urgency=low
+
+  * New upstream.
+    - control.in, control: regenerated using update-control.py.
+  
+  * Remove patches applied upstream:
+    - 001-coroutine.patch
+    - 002-date-time.patch
+    - boost-1.54.0-thread-link_atomic.patch
+    - 85160.patch
+    - eglibc-long-long.patch
+  
+  * Remove other patches that no longer apply:
+    - boost-python-examples.patch: Cannot apply, don't know how to fix.
+    - endian.patch: Upstream changed endian detection.
+    - boost-1.44-py3.1.patch: Upstream made some python 3 fixes.
+    - ELFv2-libboost1.54-dev-context-asm.patch: No idea.
+
+ -- Steve M. Robbins <smr@debian.org>  Mon, 23 Dec 2013 00:54:11 -0600
+
 boost1.54 (1.54.0-5) UNRELEASED; urgency=low
 
   [ William Grant ]
