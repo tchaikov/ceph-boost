@@ -10,11 +10,14 @@ boost1.55 (1.55.0-1) UNRELEASED; urgency=low
     - boost-1.54.0-thread-link_atomic.patch
     - 85160.patch
     - eglibc-long-long.patch
+
+  * patches/endian.patch: Remove.  Upstream changed endian detection.
   
-  * Remove other patches that no longer apply:
-    - boost-python-examples.patch: Cannot apply, don't know how to fix.
-    - endian.patch: Upstream changed endian detection.
-    - ELFv2-libboost1.54-dev-context-asm.patch: No idea.
+  * patches/boost-python-examples.patch: Remove since it no longer
+    applies.  Reopens: #452410.
+  
+  * patches/ELFv2-libboost1.54-dev-context-asm.patch: Remove.  It no
+    longer applies.
 
   * patches/boost-1.55.0-001-log_fix_dump_avx2.patch: New.  Upstream patch
     to fix incorrect output of the dump manipulator, when used on
