@@ -74,7 +74,7 @@ def printParagraph(p):
 
 def processControl():
     firstParagraph = True
-    for paragraph in Deb822.iter_paragraphs(open('control')):
+    for paragraph in Deb822.iter_paragraphs(open('control.in')):
         if firstParagraph:
             processSourceParagraph(paragraph)
             printParagraph(paragraph)
@@ -86,6 +86,6 @@ def processControl():
 
 
 
-gOldVersion = BoostVersion('1.53.0')
-gNewVersion = BoostVersion('1.54.0')
+gOldVersion = BoostVersion('1.54.0')
+gNewVersion = BoostVersion('1.55.0')
 processControl()
