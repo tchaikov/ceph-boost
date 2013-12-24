@@ -1,3 +1,6 @@
+Origin: Ubuntu
+Forwarded: https://svn.boost.org/trac/boost/ticket/9522
+
 --- a/libs/context/src/asm/jump_ppc64_sysv_elf_gas.S
 +++ b/libs/context/src/asm/jump_ppc64_sysv_elf_gas.S
 @@ -80,18 +80,35 @@
