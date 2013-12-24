@@ -1,8 +1,9 @@
 boost1.55 (1.55.0-1) UNRELEASED; urgency=low
 
-  * New upstream.
-    - control.in, control: regenerated using update-control.py.
-  
+  * New upstream.  
+    - control.in, control: regenerated using update-control.py.  Set
+      Standards-Version to 3.9.5.
+
   * Remove patches applied upstream:
     - 001-coroutine.patch
     - 002-date-time.patch
