@@ -321,9 +321,9 @@ BUILD_CONTEXT = no
 else ifeq ($(DEB_BUILD_ARCH), powerpcspe)
 BUILD_CONTEXT = no
 else ifeq ($(DEB_BUILD_ARCH), ppc64)
-BUILD_CONTEXT = no
+BUILD_CONTEXT = yes
 else ifeq ($(DEB_BUILD_ARCH), ppc64el)
-BUILD_CONTEXT = no
+BUILD_CONTEXT = yes
 else ifeq ($(DEB_BUILD_ARCH), s390)
 BUILD_CONTEXT = no
 else ifeq ($(DEB_BUILD_ARCH), s390x)
