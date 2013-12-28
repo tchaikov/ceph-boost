@@ -6,3 +6,4 @@ hurd-clock-gettime.patch
 hppa-long-double-config.patch
 boost-1.55.0-001-log_fix_dump_avx2.patch
 ELFv2-libboost1.54-dev-context-asm.patch
+boost-python-examples.patch
