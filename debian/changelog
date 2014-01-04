@@ -26,10 +26,10 @@ boost1.55 (1.55.0-1) unstable; urgency=low
   [ Dimitri John Ledkov ]
   * Refresh patches/ELFv2-libboost1.54-dev-context-asm.patch
   * Refresh patches/boost-python-examples.patch: Hopefully does not
-    Reopens: #452410.
+    reopen: #452410.
   * Enable context library on ppc64, ppc64el.
 
- -- Steve M. Robbins <smr@debian.org>  Mon, 23 Dec 2013 22:16:40 -0600
+ -- Steve M. Robbins <smr@debian.org>  Sat, 04 Jan 2014 17:08:19 -0600
 
 boost1.54 (1.54.0-5) UNRELEASED; urgency=low
 

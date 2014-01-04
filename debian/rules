@@ -68,7 +68,7 @@ override_dh_auto_build: $(bjam) debian/bjam.1
 	cd tools/regression/build && $(JAM)
 	cd libs/python/pyste/install && python setup.py build
 
-override_dh_auto_test:
+testsuite:
 	cd status && $(JAM) $(JAM_WITHOUT)
 
 override_dh_auto_clean: clean-debhelper
