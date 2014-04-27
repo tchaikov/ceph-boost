@@ -4,6 +4,7 @@ boost1.55 (1.55.0-2) UNRELEASED; urgency=medium
     available on all architectures, is based upon old gcc, and not at all
     required to compile boost-python based projects.
   * Mark libboost1.55-dev & libboost-coroutine1.55-dev as Multi-Arch same.
+  * Automate more of building boost without mpi, or just mpi portions.
 
  -- Dimitri John Ledkov <xnox@ubuntu.com>  Sun, 27 Apr 2014 22:27:12 +0100
 

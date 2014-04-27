@@ -84,10 +84,13 @@ override_dh_auto_clean: clean-debhelper
 	rm -rf user-config.jam
 	rm -rf debian/bjam.1
 ifeq ($(WITHOUT_MPI),yes)
-	# TODO, should also remove/add build-deps as well.
 	grep-dctrl -FPackage -v mpi -o -FPackage graph-parallel -o -FPackage all-dev debian/control.in > debian/control
+	sed -i "s/mpi-default-dev,//" debian/control
 else
 	cp debian/control.in debian/control
+endif
+ifeq ($(JUST_MPI),yes)
+	sed -i "s/mpi-default-dev,/mpi-default-dev, libboost-serialization$(PKGVERSION)-dev, libboost-python$(PKGVERSION)-dev,/" debian/control
 endif
 	dh_auto_clean
 
