@@ -1,4 +1,4 @@
-boost1.55 (1.55.0+dfsg-1) UNRELEASED; urgency=medium
+boost1.55 (1.55.0+dfsg-1) unstable; urgency=medium
 
   * Convert debian/copyright to copyright-format 1.0.
   * Use Uscan extension https://wiki.debian.org/UscanEnhancements to
@@ -9,7 +9,7 @@ boost1.55 (1.55.0+dfsg-1) UNRELEASED; urgency=medium
   * Adjust version parsing in the debian/rules to keep the same versioning
     information.
 
- -- Dimitri John Ledkov <xnox@ubuntu.com>  Sun, 11 May 2014 00:47:26 +0100
+ -- Dimitri John Ledkov <xnox@ubuntu.com>  Sun, 11 May 2014 01:22:15 +0100
 
 boost1.55 (1.55.0-2) unstable; urgency=medium
 
