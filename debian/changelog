@@ -1,3 +1,11 @@
+boost1.55 (1.55.0+dfsg-2) UNRELEASED; urgency=medium
+
+  * Disable pch on arm64, to avoid FTBFS. (Closes: #750956)
+  * Speed up qemu-static builds a little, by not working perl many times
+    when computing version strings to use.
+
+ -- Dimitri John Ledkov <xnox@ubuntu.com>  Mon, 09 Jun 2014 14:34:47 +0100
+
 boost1.55 (1.55.0+dfsg-1) unstable; urgency=medium
 
   * Convert debian/copyright to copyright-format 1.0.

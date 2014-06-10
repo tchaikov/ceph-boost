@@ -200,9 +200,9 @@ ifneq (,$(filter parallel=%,$(DEB_BUILD_OPTIONS)))
   JOBS := -j$(patsubst parallel=%,%,$(filter parallel=%,$(DEB_BUILD_OPTIONS)))
 endif
 
-version_full = $(shell dpkg-parsechangelog | grep Version | cut -d' ' -f2)
-version_upstream = $(shell echo $(version_full) | cut -d'+' -f1)
-version_major = $(shell echo $(version_upstream) | cut -d'.' -f1,2)
+version_full := $(shell dpkg-parsechangelog | grep Version | cut -d' ' -f2)
+version_upstream := $(shell echo $(version_full) | cut -d'+' -f1)
+version_major := $(shell echo $(version_upstream) | cut -d'.' -f1,2)
 
 PKGVERSION = $(version_major)
 SOVERSION = $(version_upstream)
@@ -309,6 +309,7 @@ BUILD_LONG_DOUBLE = no
 else ifeq ($(DEB_BUILD_ARCH), arm64)
 BUILD_LONG_DOUBLE = no
 BUILD_CONTEXT = no
+JAM_OPT += pch=off
 else ifeq ($(DEB_BUILD_ARCH), hppa)
 BUILD_LONG_DOUBLE = no
 BUILD_CONTEXT = no
