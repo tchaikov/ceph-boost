@@ -3,8 +3,14 @@ boost1.55 (1.55.0+dfsg-3) unstable; urgency=medium
   * patches/boost-1.55-128bit_int_support.patch: New. Patch fixing build
     where 128-bit integer not supported, cherry-picked from upstream.
     Closes: #758892.
+  
+  * patches/ppc64el-fp_traits-ibm-long-double.patch: New.  Patch removing
+    fp_traits_non_native for long double on powerPC, which is apparently
+    broken.  Closes: #761926.
 
- -- Steve M. Robbins <smr@debian.org>  Sat, 23 Aug 2014 12:37:29 -0500
+  * control.in, control: Update vcs URLs.
+  
+ -- Steve M. Robbins <smr@debian.org>  Thu, 18 Sep 2014 22:45:15 -0500
 
 boost1.55 (1.55.0+dfsg-2) unstable; urgency=medium
 
