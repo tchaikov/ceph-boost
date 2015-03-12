@@ -64,7 +64,8 @@ override_dh_auto_build: $(bjam) debian/bjam.1
 	cd tools/bcp && $(JAM)
 	cd tools/inspect/build && $(JAM)
 	cd tools/quickbook && $(JAM)
-	cd tools/wave/build && $(JAM)
+	# No longer part of boost 1.56+
+	# cd tools/wave/build && $(JAM)
 	cd tools/regression/build && $(JAM)
 	cd libs/python/pyste/install && python setup.py build
 
@@ -362,7 +363,7 @@ exampledir = debian/libboost$(PKGVERSION)-doc/usr/share/doc/libboost$(PKGVERSION
 htmldir = debian/libboost$(PKGVERSION)-doc/usr/share/doc/libboost$(PKGVERSION)-doc/HTML
 pyste_prefix = $(CURDIR)/debian/libboost-python$(PKGVERSION)-dev/usr
 bjam = $(CURDIR)/bjam
-bbv2dir = $(CURDIR)/tools/build/v2
+bbv2dir = $(CURDIR)/tools/build
 
 # With --ignore-site-config, can probably drop Build-Conflicts on boost-build.
 JAM = $(bjam) $(JOBS) -d2 $(JAM_OPT) --layout=system --ignore-site-config --user-config=$(CURDIR)/user-config.jam debug-symbols=on

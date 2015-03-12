@@ -1,3 +1,9 @@
+boost1.57 (1.57.0+dfsg-1) UNRELEASED; urgency=medium
+
+  * New upstream release.
+
+ -- Dimitri John Ledkov <dimitri.j.ledkov@linux.intel.com>  Tue, 10 Mar 2015 01:56:44 +0000
+
 boost1.55 (1.55.0+dfsg-3) unstable; urgency=medium
 
   * patches/boost-1.55-128bit_int_support.patch: New. Patch fixing build

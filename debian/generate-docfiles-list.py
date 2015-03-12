@@ -1,6 +1,6 @@
-#! /usr/bin/python
+#!/usr/bin/python3
 
-import os, re, sys
+import os, pwd, re, sys
 from subprocess import call, check_call
 
 def extract_tar(tarfile,rootdir):
@@ -21,7 +21,7 @@ def extract_tar(tarfile,rootdir):
     cmd.append("--file")
     cmd.append(os.path.abspath(tarfile))
 
-    check_call(cmd, cwd=rootdir)
+    check_call(cmd, cwd=rootdir, universal_newlines=True)
 
 
 def wget_localhost_files(serverbase,tempdir):
@@ -35,8 +35,8 @@ def wget_localhost_files(serverbase,tempdir):
            "--recursive", "--no-parent",
            "--domains=localhost",
            "http://localhost/" + serverbase]
-    retcode = call(cmd, cwd=tempdir)
-    if not(retcode == 0 or retcode == 8):
+    retcode = call(cmd, cwd=tempdir, universal_newlines=True)
+    if retcode not in [0, 8]:
         raise RuntimeError("wget failed")
 
 def find_file_root(dirname,filename):
@@ -84,19 +84,20 @@ def list_doc_files(rootdir,src_rootdir):
 
 def main():
     if (len(sys.argv) != 3):
-        print "Usage: %s tarfile boost_x_y_z" % sys.argv[0]
+        print("Usage: %s tarfile boost_x_y_z" % sys.argv[0])
         return 1
     tarfile, path = sys.argv[1:3]
-    tar_extract_root = "/home/steve/public_html"
-    url_root = "~steve/" + path + "/index.html"
+    tar_extract_root = os.path.expanduser("~/public_html")
+    url_root = "~" + pwd.getpwuid(os.getuid()).pw_name + "/" + path + "/index.html"
     
     extract_tar(tarfile, tar_extract_root)
+    check_call(["chmod", "-R", "+x", tar_extract_root+'/'+path])
     wget_localhost_files(url_root, "/tmp")
     boost_dir = find_file_root("/tmp/localhost", "boost")
     files = list_doc_files(boost_dir,
                            os.path.join(tar_extract_root,path))
     files.sort()
     for f in files:
-        print f
+        print(f)
 
 main()

@@ -3,10 +3,10 @@ Author: Dmitrijs Ledkovs <dmitrij.ledkov@ubuntu.com>
 Last-Update: 2012-10-26
 Forwarded: no
 
-Index: b/tools/build/v2/tools/python.jam
+Index: b/tools/build/src/tools/python.jam
 ===================================================================
---- a/tools/build/v2/tools/python.jam
-+++ b/tools/build/v2/tools/python.jam
+--- a/tools/build/src/tools/python.jam
++++ b/tools/build/src/tools/python.jam
 @@ -548,7 +548,9 @@
      }
      else
