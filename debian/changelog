@@ -1,3 +1,9 @@
+boost1.57 (1.57.0+dfsg-2) experimental; urgency=medium
+
+  * Build with C++11 ABI, and gcc-5.
+
+ -- Dimitri John Ledkov <dimitri.j.ledkov@linux.intel.com>  Tue, 30 Jun 2015 10:18:19 +0100
+
 boost1.57 (1.57.0+dfsg-1) experimental; urgency=medium
 
   * New upstream release.
