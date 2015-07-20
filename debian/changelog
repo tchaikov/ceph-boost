@@ -1,3 +1,17 @@
+boost1.58 (1.58.0+dfsg-1) experimental; urgency=medium
+
+  [ Matthias Klose ]
+  * New upstream release.
+  * d/p/hurd-clock-gettime.patch: Remove, applied upstream.
+  * Update d/documentation-files.
+  * Don't call the compiler with -m{32,64} explicitly.
+  * Build using ICU 55.1
+
+  [ Dimitri John Ledkov ]
+  * Include 1.58 known issues patches.
+
+ -- Dimitri John Ledkov <dimitri.j.ledkov@linux.intel.com>  Mon, 20 Jul 2015 22:45:34 +0100
+
 boost1.57 (1.57.0+dfsg-2) experimental; urgency=medium
 
   * Build with C++11 ABI, and gcc-5.

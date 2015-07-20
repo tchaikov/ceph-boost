@@ -2,7 +2,9 @@ chrono-duration.patch
 pythonid.patch
 mpi-allocator-c++0x.patch
 fix-ftbfs-python-3.3.patch
-hurd-clock-gettime.patch
 hppa-long-double-config.patch
 boost-python-examples.patch
 ppc64el-fp_traits-ibm-long-double.patch
+no-gcc-m-options.diff
+# boost1.58 erratra
+0002-Fix-a-regression-with-non-constexpr-types.patch

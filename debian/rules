@@ -66,7 +66,8 @@ override_dh_auto_build: $(bjam) debian/bjam.1
 	cd tools/quickbook && $(JAM)
 	# No longer part of boost 1.56+
 	# cd tools/wave/build && $(JAM)
-	cd tools/regression/build && $(JAM)
+	# No longer part of boost 1.58+
+	# cd tools/regression/build && $(JAM)
 	cd libs/python/pyste/install && python setup.py build
 
 testsuite:
