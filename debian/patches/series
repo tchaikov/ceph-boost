@@ -8,3 +8,4 @@ ppc64el-fp_traits-ibm-long-double.patch
 no-gcc-m-options.diff
 # boost1.58 erratra
 0002-Fix-a-regression-with-non-constexpr-types.patch
+ec60c37295146bb80aa44a92cf416027b75b5ff7.patch
