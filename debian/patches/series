@@ -10,3 +10,6 @@ no-gcc-m-options.diff
 0002-Fix-a-regression-with-non-constexpr-types.patch
 ec60c37295146bb80aa44a92cf416027b75b5ff7.patch
 boost-context-use-sysv-not-aapcs.patch
+numeric-ublas-storage.hpp.patch
+openssl-no-ssl3.patch
+provide-missing-source-jquery.patch

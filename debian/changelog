@@ -1,8 +1,31 @@
-boost1.58 (1.58.0+dfsg-4) unreleased; urgency=medium
+boost1.58 (1.58.0+dfsg-5) unreleased; urgency=medium
 
   * Build Coroutine shared lib.  Closes: #802509.
 
  -- Steve M. Robbins <smr@debian.org>  Sun, 27 Dec 2015 14:11:18 -0600
+
+boost1.58 (1.58.0+dfsg-4.1) unstable; urgency=medium
+
+  * Non-maintainer upload.
+  * Add patch to replace minified jquery with its non-minified version, as the
+  * source was missing. (Closes: #735353)
+
+ -- Tobias Frost <tobi@debian.org>  Sat, 21 Nov 2015 14:24:59 +0100
+
+boost1.58 (1.58.0+dfsg-4) unstable; urgency=medium
+
+  * Team upload.
+  * patches/openssl-no-ssl3.patch. Throw exception if sslv3 context
+    requested but OPENSSL_NO_SSL3 defined (Closes: #803881).
+
+ -- Gianfranco Costamagna <locutusofborg@debian.org>  Wed, 04 Nov 2015 11:41:19 +0100
+
+boost1.58 (1.58.0+dfsg-3.1) unstable; urgency=medium
+
+  * Non-maintainer upload.
+  * Fix FTBFS of ompl against boost1.58 by gcc5. (Closes: #797281)
+
+ -- Anton Gladky <gladk@debian.org>  Sat, 03 Oct 2015 19:58:02 +0200
 
 boost1.58 (1.58.0+dfsg-3) unstable; urgency=medium
 
