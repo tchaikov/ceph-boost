@@ -19,7 +19,7 @@ for multithreaded applications.
   Boost.Atomic		 -lboost_atomic			static  shared
   Boost.Chrono           -lboost_chrono                 static  shared
   Boost.Context		 -lboost_context		static	shared
-  Boost.Coroutine	 -lboost_coroutine		static    x
+  Boost.Coroutine	 -lboost_coroutine		static  shared
   Boost.Date_Time        -lboost_date_time            	static  shared
   Boost.Exception	 -lboost_exception		static	  x
   Boost.Filesystem       -lboost_filesystem           	static  shared
@@ -136,4 +136,4 @@ Please see the manual and the following thread for more details
   http://lists.boost.org/boost-users/2008/03/34486.php
 
 
- -- Steve M. Robbins <smr@debian.org>, Sat,  6 Jul 2013 20:56:17 -0500
+ -- Steve M. Robbins <smr@debian.org>, Sun, 27 Dec 2015 14:09:31 -0600
