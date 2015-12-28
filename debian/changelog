@@ -1,8 +1,10 @@
 boost1.58 (1.58.0+dfsg-5) unreleased; urgency=medium
 
   * Build Coroutine shared lib.  Closes: #802509.
+  * patches/no-gcc-march-options.patch: New.  Don't use -march=i686 for
+    x86 32-bit.  Closes: #794622.
 
- -- Steve M. Robbins <smr@debian.org>  Sun, 27 Dec 2015 14:11:18 -0600
+ -- Steve M. Robbins <smr@debian.org>  Sun, 27 Dec 2015 23:59:25 -0600
 
 boost1.58 (1.58.0+dfsg-4.1) unstable; urgency=medium
 

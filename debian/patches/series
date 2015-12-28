@@ -13,3 +13,4 @@ boost-context-use-sysv-not-aapcs.patch
 numeric-ublas-storage.hpp.patch
 openssl-no-ssl3.patch
 provide-missing-source-jquery.patch
+no-gcc-march-options.patch
