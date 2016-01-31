@@ -358,6 +358,31 @@ Description: provides a sort of cooperative multitasking on a single thread
  to C# keyword yield in C++.
 Conflicts: libboost-context1.53-dev, libboost-context1.54-dev, libboost-context1.55-dev, libboost-context1.57-dev
 
+Package: libboost-coroutine1.58.0
+Homepage: http://www.boost.org/libs/coroutine/
+Architecture: any
+Multi-Arch: same
+Section: libs
+Depends: ${misc:Depends}, ${shlibs:Depends}
+Pre-Depends: ${misc:Pre-Depends}
+Description: provides a sort of cooperative multitasking on a single thread
+ This package forms part of the Boost C++ Libraries collection.
+ .
+ Boost.Coroutine provides templates for generalized subroutines which
+ allow multiple entry points for suspending and resuming execution at
+ certain locations. It preserves the local state of execution and
+ allows re-entering subroutines more than once (useful if state must
+ be kept across function calls).
+ .
+ Coroutines can be viewed as a language-level construct providing a
+ special kind of control flow.
+ .
+ In contrast to threads, which are pre-emptive, coroutine switches are
+ cooperative (programmer controls when a switch will happen). The
+ kernel is not involved in the coroutine switches.
+ .
+ The implementation uses Boost.Context for context switching.
+
 Package: libboost-coroutine1.58-dev
 Homepage: http://www.boost.org/libs/coroutine/
 Architecture: any
