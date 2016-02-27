@@ -1,6 +1,6 @@
---- boost1.58-1.58.0+dfsg.orig/tools/build/src/tools/gcc.jam
-+++ boost1.58-1.58.0+dfsg/tools/build/src/tools/gcc.jam
-@@ -1063,7 +1063,6 @@
+--- boost1.60-1.60.0+dfsg.orig/tools/build/src/tools/gcc.jam
++++ boost1.60-1.60.0+dfsg/tools/build/src/tools/gcc.jam
+@@ -1076,7 +1076,6 @@
  # x86 and compatible
  # The 'native' option appeared in gcc 4.2 so we cannot safely use it as default.
  # Use i686 instead for 32-bit.

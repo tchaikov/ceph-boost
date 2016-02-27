@@ -16,11 +16,9 @@ regressions on PPC64BE.
  boost/math/special_functions/detail/fp_traits.hpp | 9 ++++++++-
  1 file changed, 8 insertions(+), 1 deletion(-)
 
-diff --git a/boost/math/special_functions/detail/fp_traits.hpp b/boost/math/special_functions/detail/fp_traits.hpp
-index 50c034d..72ebd4e 100644
---- a/boost/math/special_functions/detail/fp_traits.hpp
-+++ b/boost/math/special_functions/detail/fp_traits.hpp
-@@ -359,6 +359,13 @@ struct fp_traits_non_native<long double, extended_double_precision>
+--- boost1.60-1.60.0+dfsg.orig/boost/math/special_functions/detail/fp_traits.hpp
++++ boost1.60-1.60.0+dfsg/boost/math/special_functions/detail/fp_traits.hpp
+@@ -366,6 +366,13 @@
  
  // PowerPC extended double precision format (128 bits)
  
@@ -34,7 +32,7 @@ index 50c034d..72ebd4e 100644
  template<>
  struct fp_traits_non_native<long double, extended_double_precision>
  {
-@@ -391,7 +398,7 @@ struct fp_traits_non_native<long double, extended_double_precision>
+@@ -398,7 +405,7 @@
      BOOST_STATIC_ASSERT(false);
  #endif
  };

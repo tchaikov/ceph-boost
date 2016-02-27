@@ -4,9 +4,9 @@ Author: Kirill Spitsin <tn@0x746e.org.ua>
 Bug: 703325
 Forwarded: no
 
---- boost1.53-1.53.0.obsolete.0.932490394234076.orig/boost/chrono/duration.hpp
-+++ boost1.53-1.53.0.obsolete.0.932490394234076/boost/chrono/duration.hpp
-@@ -566,9 +566,9 @@
+--- boost1.60-1.60.0+dfsg.orig/boost/chrono/duration.hpp
++++ boost1.60-1.60.0+dfsg/boost/chrono/duration.hpp
+@@ -572,9 +572,9 @@
      >::type
      operator*(const duration<Rep1, Period>& d, const Rep2& s)
      {
@@ -19,7 +19,7 @@ Forwarded: no
      }
  
      template <class Rep1, class Period, class Rep2>
-@@ -595,10 +595,10 @@
+@@ -601,10 +601,10 @@
      >::type
      operator/(const duration<Rep1, Period>& d, const Rep2& s)
      {
@@ -33,7 +33,7 @@ Forwarded: no
      }
  
      template <class Rep1, class Period1, class Rep2, class Period2>
-@@ -620,10 +620,10 @@
+@@ -626,10 +626,10 @@
        >::type
      operator/(const Rep1& s, const duration<Rep2, Period>& d)
      {
@@ -47,7 +47,7 @@ Forwarded: no
      }
      #endif
      // Duration %
-@@ -636,10 +636,10 @@
+@@ -642,10 +642,10 @@
      >::type
      operator%(const duration<Rep1, Period>& d, const Rep2& s)
      {
