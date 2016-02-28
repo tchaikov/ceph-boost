@@ -382,7 +382,7 @@ debian/bjam.1: $(bjam)
 user-config.jam:
 	echo $(TOOLSET_CONFIG) > $@
 	echo $(MPI_CONFIG)     >> $@
-	for pyver in $(filter-out $(shell pyversions -dv),$(pyversions)); do \
+	for pyver in $(pyversions); do \
 		echo "using python : $$pyver : /usr ;" >> $@; \
 	done
 
