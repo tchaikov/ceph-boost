@@ -5,7 +5,8 @@ boost1.60 (1.60.0+dfsg-1) UNRELEASED; urgency=medium
   * control: Updated for 1.60 using update-control.py.
 
   * copyright: Exclude *.js in repacked tarball to satisfy the pedants.
-    - patches/provide-missing-source-jquery.patch: Remove, since patched file no longer present.
+    - patches/provide-missing-source-jquery.patch: Remove since patched
+      file no longer present.
 
   * patches/chrono-duration.patch: 
   * patches/fix-ftbfs-python-3.3.patch:

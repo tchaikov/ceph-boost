@@ -72,7 +72,7 @@ package and at www.boost.org.
 Debian Packaging of Boost
 -------------------------
 
-Upstream releases quarterly without guarenteeing any backwards
+Upstream releases quarterly without guaranteeing any backwards
 compatibility.  Debian chooses to package two versions of Boost
 simultaneously, to enable users to make the transition on their own
 time.  The -dev packages are decorated with the Boost version,
@@ -136,4 +136,4 @@ Please see the manual and the following thread for more details
   http://lists.boost.org/boost-users/2008/03/34486.php
 
 
- -- Steve M. Robbins <smr@debian.org>, Sun, 27 Dec 2015 14:09:31 -0600
+ -- Steve M. Robbins <smr@debian.org>, Mon, 29 Feb 2016 00:24:20 -0600
