@@ -1,10 +1,10 @@
 Format: http://www.debian.org/doc/packaging-manuals/copyright-format/1.0/
-Upstart-Name: boost
+Upstream-Name: boost
 Source: http://sourceforge.net/projects/boost/files/boost
 Files-Excluded: doc/images/valid-html401.png *.js
 
 Files: *
-Copyright:
+Copyright: See individual source files
 License: Boost
  This software is a collection of libraries from the Boost.org site.
  Most of the libraries use the Boost Software License 1.0, which
@@ -62,7 +62,8 @@ License: Boost
     the standard version found on the Boost web site.
 
 Files: tools/jam
-License:
+Copyright: See individual source files
+License: bjam
  /*
   * /+\
   * +\   Copyright 1993-2002 Christopher Seiwald and Perforce Software, Inc.
@@ -99,7 +100,8 @@ License:
   */
 
 Files: boostbook/xsl/caramel
-License:
+Copyright: See individual source files
+License: boostbook
  Software License, Version 1.0
  .
  Copyright 2002-2003, Trustees of Indiana University.
