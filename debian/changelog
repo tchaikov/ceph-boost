@@ -4,6 +4,9 @@ boost1.60 (1.60.0+dfsg-1) UNRELEASED; urgency=medium
 
   * control: Updated for 1.60 using update-control.py.
 
+  * copyright: Exclude *.js in repacked tarball to satisfy the pedants.
+    - patches/provide-missing-source-jquery.patch: Remove, since patched file no longer present.
+
   * patches/chrono-duration.patch: 
   * patches/fix-ftbfs-python-3.3.patch:
   * patches/hppa-long-double-config.patch:
@@ -23,7 +26,7 @@ boost1.60 (1.60.0+dfsg-1) UNRELEASED; urgency=medium
   * rules: Don't filter out the python 2.7 version when building
     user-config.jam.
 
- -- Steve M. Robbins <smr@debian.org>  Sat, 27 Feb 2016 22:49:58 -0600
+ -- Steve M. Robbins <smr@debian.org>  Sun, 28 Feb 2016 23:18:58 -0600
 
 boost1.58 (1.58.0+dfsg-5) unstable; urgency=medium
 

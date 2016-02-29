@@ -1,7 +1,7 @@
 Format: http://www.debian.org/doc/packaging-manuals/copyright-format/1.0/
 Upstart-Name: boost
 Source: http://sourceforge.net/projects/boost/files/boost
-Files-Excluded: doc/images/valid-html401.png
+Files-Excluded: doc/images/valid-html401.png *.js
 
 Files: *
 Copyright:
