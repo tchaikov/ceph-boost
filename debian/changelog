@@ -25,9 +25,10 @@ boost1.60 (1.60.0+dfsg-1) UNRELEASED; urgency=medium
     supported.
 
   * rules: Don't filter out the python 2.7 version when building
-    user-config.jam.
+    user-config.jam.  Remove long-obsolete references to library "variant"
+    (formerly was single/multi threaded, debug/release).
 
- -- Steve M. Robbins <smr@debian.org>  Sun, 28 Feb 2016 23:18:58 -0600
+ -- Steve M. Robbins <smr@debian.org>  Mon, 29 Feb 2016 23:04:45 -0600
 
 boost1.58 (1.58.0+dfsg-5) unstable; urgency=medium
 

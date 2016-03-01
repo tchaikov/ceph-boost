@@ -118,8 +118,6 @@ override_dh_install:
 	find debian/tmp -name .cvsignore | xargs rm -f
 	find debian -empty -type f | xargs rm -f
 
-	# package libboost-dbg
-
 	# package libboost$(PKGVERSION)-dev
 	dh_install -plibboost$(PKGVERSION)-dev \
 	   debian/tmp/usr/include/boost \
@@ -221,27 +219,27 @@ boost_lib = $(if $(boost_lib_$(1)), $(boost_lib_$(1)), $(1))
 boost_suffixes = $(if $(boost_suffixes_$(1)), $(boost_suffixes_$(1)),"")
 
 # Helpers to make basic and decorated library names
-# Input: library, variant, suffix
+# Input: library, suffix
 # Return: base library filename for short or full name
-mk_base_name = usr/lib/$(DEB_HOST_MULTIARCH)/libboost_$(subst -,_,$(1))$(2)$(3)
+mk_base_name = usr/lib/$(DEB_HOST_MULTIARCH)/libboost_$(subst -,_,$(1))$(2)
 
-# Input: component, variant
+# Input: component
 # Return: package name for shared library or development
-mk_pkg_lib = libboost$(if $(findstring -d,$(2)),$(PKGVERSION)-dbg,-$(1)$(SOVERSION))
-mk_pkg_dev = libboost$(if $(findstring -d,$(2)),$(PKGVERSION)-dbg,-$(1)$(PKGVERSION)-dev)
+mk_pkg_lib = libboost-$(1)$(SOVERSION)
+mk_pkg_dev = libboost-$(1)$(PKGVERSION)-dev
 
 # Helpers to generate debhelper input filenames.
-# Input: component, variant
+# Input: component
 # Return: prefix to debhelper filenames
-mk_deb_lib = debian/$(call mk_pkg_lib,$(1),$(2))
-mk_deb_dev = debian/$(call mk_pkg_dev,$(1),$(2))
+mk_deb_lib = debian/$(call mk_pkg_lib,$(1))
+mk_deb_dev = debian/$(call mk_pkg_dev,$(1))
 
 # Helpers that update debhelper .install or .links files
-# Input: component, library, variant, suffix
+# Input: component, library, suffix
 # Output: none
-mk_so_files = $(shell echo debian/tmp/$(call mk_base_name,$(2),$(3),$(4)).so.$(SOVERSION) >> $(call mk_deb_lib,$(1),$(3)).install)
-mk_a_files = $(shell echo debian/tmp/$(call mk_base_name,$(2),$(3),$(4)).a >> $(call mk_deb_dev,$(1),$(3)).install)
-mk_ln_files = $(shell echo $(call mk_base_name,$(2),$(3),$(4)).so.$(SOVERSION) $(call mk_base_name,$(2),$(3),$(4)).so >> $(call mk_deb_dev,$(1),$(3)).links)
+mk_so_files = $(shell echo debian/tmp/$(call mk_base_name,$(2),$(3)).so.$(SOVERSION) >> $(call mk_deb_lib,$(1)).install)
+mk_a_files = $(shell echo debian/tmp/$(call mk_base_name,$(2),$(3)).a >> $(call mk_deb_dev,$(1)).install)
+mk_ln_files = $(shell echo $(call mk_base_name,$(2),$(3)).so.$(SOVERSION) $(call mk_base_name,$(2),$(3)).so >> $(call mk_deb_dev,$(1)).links)
 
 # Specify the type of files/links to install.
 # Special cases first, then general rule
@@ -249,10 +247,10 @@ boost_filetypes_exception = a
 boost_filetypes_test_exec_monitor = a
 boost_filetypes = $(if $(boost_filetypes_$(1)), $(boost_filetypes_$(1)),a so ln)
 
-# Function that updates debhelper files for a given library variant
-# Input: component, library, variant, suffix
+# Function that updates debhelper files for a given library
+# Input: component, library, suffix
 # Output: none
-mk_files = $(foreach fn,$(call boost_filetypes,$(2)),$(call mk_$(fn)_files,$(1),$(2),$(3),$(4)))
+mk_files = $(foreach fn,$(call boost_filetypes,$(2)),$(call mk_$(fn)_files,$(1),$(2),$(3)))
 
 # helpers to make and install lintian override files
 
@@ -264,15 +262,15 @@ add_dbg_override = $(call add_override,libboost$(PKGVERSION)-dbg,$(1))
 add_dev_override = $(call add_override,libboost$(PKGVERSION)-dev,$(1))
 add_doc_override = $(call add_override,libboost$(PKGVERSION)-doc,$(1))
 
-# Input: component, variant, lintian-warning
-add_lib_override = $(call add_override,$(call mk_pkg_lib,$(1),$(2)),$(3))
-add_libdev_override = $(call add_override,$(call mk_pkg_dev,$(1),$(2)),$(3))
+# Input: component, lintian-warning
+add_lib_override = $(call add_override,$(call mk_pkg_lib,$(1)),$(2))
+add_libdev_override = $(call add_override,$(call mk_pkg_dev,$(1)),$(2))
 
 # Input: package-name-base, versioned-package-name
 cp_debhelper = for s in doc-base examples postinst prerm README.Debian; do \
 	if test -f debian/$(1).$$s; then cp -f debian/$(1).$$s debian/$(2).$$s; fi; done
 
-# Function that updates debhelper files for all library variants shipped.
+# Function that updates debhelper files for all libraries shipped.
 mk_debhelper_files = \
 	$(call add_dbg_override,package-name-doesnt-match-sonames) \
 	$(call add_dbg_override,non-dev-pkg-with-shlib-symlink) \
@@ -288,7 +286,7 @@ mk_debhelper_files = \
 		$(call add_lib_override,$(l),,package-name-doesnt-match-sonames) \
 		$(foreach ll, $(call boost_lib,$(l)), \
 			$(foreach suf, $(call boost_suffixes,$(l)), \
-				$(call mk_files,$(l),$(ll),,$(suf)) \
+				$(call mk_files,$(l),$(ll),$(suf)) \
 			) \
 		) \
 	)
