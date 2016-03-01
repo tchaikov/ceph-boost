@@ -280,10 +280,10 @@ mk_debhelper_files = \
 	$(call add_dev_override,extra-license-file) \
 	$(call add_doc_override,description-synopsis-starts-with-a-capital-letter) \
 	$(call add_doc_override,extra-license-file) \
-	$(call add_libdev_override,python,,description-synopsis-starts-with-a-capital-letter) \
+	$(call add_libdev_override,python,description-synopsis-starts-with-a-capital-letter) \
 	$(foreach l, $(boost_libs), \
 		echo "making debhelper files for $(l)..."; \
-		$(call add_lib_override,$(l),,package-name-doesnt-match-sonames) \
+		$(call add_lib_override,$(l),package-name-doesnt-match-sonames) \
 		$(foreach ll, $(call boost_lib,$(l)), \
 			$(foreach suf, $(call boost_suffixes,$(l)), \
 				$(call mk_files,$(l),$(ll),$(suf)) \
