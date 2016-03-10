@@ -11,7 +11,8 @@ MPI_CONFIG = "using mpi ;"
 boost_libs := atomic chrono date-time exception filesystem		\
               graph graph-parallel iostreams locale log math mpi	\
               mpi-python program-options python random regex		\
-              serialization signals system test thread timer wave
+              serialization signals system test thread timer 		\
+              type-erasure wave
 
 ifeq ($(WITHOUT_MPI),yes)
 boost_libs := $(filter-out graph-parallel mpi mpi-python, $(boost_libs))

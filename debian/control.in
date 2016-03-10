@@ -1213,6 +1213,38 @@ Description: C++ wall clock and CPU process timers
  cpu_timer that automatically reports the elapsed times when an
  auto_cpu_timer object is destroyed.
 
+Package: libboost-type-erasure1.60.0
+Homepage: http://www.boost.org/doc/libs/1_60_0/doc/html/boost_typeerasure.html
+Architecture: any
+Multi-Arch: same
+Section: libs
+Depends: ${misc:Depends}, ${shlibs:Depends}
+Pre-Depends: ${misc:Pre-Depends}
+Description: C++ runtime polymorphism based on concepts
+ This package forms part of the Boost C++ Libraries collection.
+ .
+ C++ has two distinct kinds of polymorphism, virtual functions and templates,
+ each of which has its own advantages and disadvantages.  The Boost.TypeErasure
+ library combines the superior abstraction capabilities of templates, with the
+ runtime flexibility of virtual functions.
+
+Package: libboost-type-erasure1.60-dev
+Homepage: http://www.boost.org/doc/libs/1_60_0/doc/html/boost_typeerasure.html
+Architecture: any
+Multi-Arch: same
+Section: libdevel
+Depends: ${misc:Depends},
+ libboost1.60-dev (= ${binary:Version}),
+ libboost-type-erasure1.60-dev (= ${binary:Version}),
+ libboost-wave1.60.0 (= ${binary:Version})
+Description: C++ runtime polymorphism based on concepts
+ This package forms part of the Boost C++ Libraries collection.
+ .
+ C++ has two distinct kinds of polymorphism, virtual functions and templates,
+ each of which has its own advantages and disadvantages.  The Boost.TypeErasure
+ library combines the superior abstraction capabilities of templates, with the
+ runtime flexibility of virtual functions.
+
 Package: libboost-wave1.60.0
 Homepage: http://www.boost.org/libs/wave/
 Architecture: any
