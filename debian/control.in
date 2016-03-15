@@ -1235,8 +1235,7 @@ Multi-Arch: same
 Section: libdevel
 Depends: ${misc:Depends},
  libboost1.60-dev (= ${binary:Version}),
- libboost-type-erasure1.60-dev (= ${binary:Version}),
- libboost-wave1.60.0 (= ${binary:Version})
+ libboost-type-erasure1.60.0 (= ${binary:Version})
 Description: C++ runtime polymorphism based on concepts
  This package forms part of the Boost C++ Libraries collection.
  .
