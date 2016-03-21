@@ -390,7 +390,8 @@ Multi-Arch: same
 Section: libdevel
 Depends: ${misc:Depends},
  libboost1.60-dev (= ${binary:Version}),
- libboost-context1.60-dev (= ${binary:Version})
+ libboost-context1.60-dev (= ${binary:Version}),
+ libboost-coroutine1.60.0 (= ${binary:Version})
 Description: provides a sort of cooperative multitasking on a single thread
  This package forms part of the Boost C++ Libraries collection.
  .
