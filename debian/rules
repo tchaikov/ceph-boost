@@ -176,9 +176,9 @@ override_dh_install:
 	dh_install -plibboost-mpi-python$(SOVERSION)
 	for pyver in $(pyversions); do \
 		pyid=`echo $$pyver | tr -d .`; \
-		dh_install -plibboost-mpi-python$(SOVERSION) libs/mpi/build/__init__.py usr/lib/python$$pyver/site-packages/boost; \
-		dh_installdirs -plibboost-mpi-python$(SOVERSION) usr/lib/python$$pyver/site-packages/boost; \
-		cp stage/lib/mpi-py$$pyid.so debian/libboost-mpi-python$(SOVERSION)/usr/lib/python$$pyver/site-packages/boost/mpi.so || true; \
+		dh_install -plibboost-mpi-python$(SOVERSION) libs/mpi/build/__init__.py usr/lib/python$$pyver/dist-packages/boost; \
+		dh_installdirs -plibboost-mpi-python$(SOVERSION) usr/lib/python$$pyver/dist-packages/boost; \
+		cp stage/lib/mpi-py$$pyid.so debian/libboost-mpi-python$(SOVERSION)/usr/lib/python$$pyver/dist-packages/boost/mpi.so || true; \
 	done
 
 	cd libs/python/pyste/install && python setup.py install --no-compile --prefix=$(pyste_prefix) --install-lib=$(pyste_prefix)/share/pyshared
