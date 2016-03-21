@@ -117,8 +117,8 @@ Depends: ${misc:Depends},
  libboost1.60-tools-dev,
  libboost-atomic1.60-dev,
  libboost-chrono1.60-dev,
- libboost-context1.60-dev,
- libboost-coroutine1.60-dev,
+ libboost-context1.60-dev [any-i386 any-amd64 arm64 armel armhf mips mipsel powerpc ppc64el],
+ libboost-coroutine1.60-dev [any-i386 any-amd64 arm64 armel armhf mips mipsel powerpc ppc64el],
  libboost-date-time1.60-dev,
  libboost-exception1.60-dev,
  libboost-filesystem1.60-dev,
@@ -318,7 +318,7 @@ Description: C++ representation of time duration, time point, and clocks
 
 Package: libboost-context1.60.0
 Homepage: http://www.boost.org/libs/context/
-Architecture: any
+Architecture: any-i386 any-amd64 arm64 armel armhf mips mipsel powerpc ppc64el
 Multi-Arch: same
 Section: libs
 Depends: ${misc:Depends}, ${shlibs:Depends}
@@ -338,7 +338,7 @@ Description: provides a sort of cooperative multitasking on a single thread
 
 Package: libboost-context1.60-dev
 Homepage: http://www.boost.org/libs/context/
-Architecture: any
+Architecture: any-i386 any-amd64 arm64 armel armhf mips mipsel powerpc ppc64el
 Multi-Arch: same
 Section: libdevel
 Depends: ${misc:Depends},
@@ -360,7 +360,7 @@ Conflicts: libboost-context1.53-dev, libboost-context1.54-dev, libboost-context1
 
 Package: libboost-coroutine1.60.0
 Homepage: http://www.boost.org/libs/coroutine/
-Architecture: any
+Architecture: any-i386 any-amd64 arm64 armel armhf mips mipsel powerpc ppc64el
 Multi-Arch: same
 Section: libs
 Depends: ${misc:Depends}, ${shlibs:Depends}
@@ -390,7 +390,8 @@ Multi-Arch: same
 Section: libdevel
 Depends: ${misc:Depends},
  libboost1.60-dev (= ${binary:Version}),
- libboost-context1.60-dev (= ${binary:Version})
+ libboost-context1.60-dev (= ${binary:Version}),
+ libboost-coroutine1.60.0 (= ${binary:Version})
 Description: provides a sort of cooperative multitasking on a single thread
  This package forms part of the Boost C++ Libraries collection.
  .
