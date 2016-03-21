@@ -1,4 +1,4 @@
-boost1.60 (1.60.0+dfsg-1) UNRELEASED; urgency=medium
+boost1.60 (1.60.0+dfsg-1) unstable; urgency=medium
 
   * New upstream version.  Closes: #809228.
 
@@ -32,7 +32,7 @@ boost1.60 (1.60.0+dfsg-1) UNRELEASED; urgency=medium
     user-config.jam.  Remove long-obsolete references to library "variant"
     (formerly was single/multi threaded, debug/release).
 
- -- Steve M. Robbins <smr@debian.org>  Thu, 10 Mar 2016 01:27:03 -0600
+ -- Steve M. Robbins <smr@debian.org>  Mon, 21 Mar 2016 01:27:21 -0500
 
 boost1.58 (1.58.0+dfsg-5) unstable; urgency=medium
 
