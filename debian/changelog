@@ -4,7 +4,8 @@ boost1.60 (1.60.0+dfsg-1) UNRELEASED; urgency=medium
 
   * control: Updated for 1.60 using update-control.py.
     - Add packages for type-erasure.
-    - Restruct arch for context, coroutine. Closes: #808626
+    - Restrict arch for context, coroutine, to avoid empty packages.
+      Closes: #808626
     - Don't ship doc files.  Too many fail lintian checks.
 
   * copyright: Exclude *.js in repacked tarball to satisfy the pedants.
