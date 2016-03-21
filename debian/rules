@@ -277,14 +277,8 @@ cp_debhelper = for s in doc-base examples postinst prerm README.Debian; do \
 # Function that updates debhelper files for all libraries shipped.
 mk_debhelper_files = \
 	$(call add_dbg_override,package-name-doesnt-match-sonames) \
-	$(call add_dbg_override,non-dev-pkg-with-shlib-symlink) \
-	$(call add_dbg_override,dbg-package-missing-depends) \
-	$(call add_dev_override,description-synopsis-starts-with-a-capital-letter) \
-	$(call add_dev_override,spelling-error-in-description) \
 	$(call add_dev_override,extra-license-file) \
-	$(call add_doc_override,description-synopsis-starts-with-a-capital-letter) \
 	$(call add_doc_override,extra-license-file) \
-	$(call add_libdev_override,python,description-synopsis-starts-with-a-capital-letter) \
 	$(foreach l, $(boost_libs), \
 		echo "making debhelper files for $(l)..."; \
 		$(call add_lib_override,$(l),package-name-doesnt-match-sonames) \
