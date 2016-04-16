@@ -7,7 +7,7 @@ MPI_CONFIG = "using mpi ;"
 
 # Boost libraries for which we want separate packages
 # context is conditionally compiled because it is not supported yet on several architectures
-# coroutine depends on context, so it is also conditionally compiled
+# coroutine and coroutine2 depend on context, so they are also conditionally compiled
 boost_libs := atomic chrono date-time exception filesystem		\
               graph graph-parallel iostreams locale log math mpi	\
               mpi-python program-options python random regex		\
