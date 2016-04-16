@@ -7,3 +7,4 @@ ppc64el-fp_traits-ibm-long-double.patch
 no-gcc-m-options.diff
 # fixed alternatively? boost-context-use-sysv-not-aapcs.patch
 no-gcc-march-options.patch
+fenv.patch

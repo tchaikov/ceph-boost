@@ -4,7 +4,10 @@ boost1.60 (1.60.0+dfsg-2) unstable; urgency=medium
     coroutine; otherwise the build system tries to build context
     anyway.  Upstream bug https://svn.boost.org/trac/boost/ticket/9453
 
- -- Steve M. Robbins <smr@debian.org>  Sat, 16 Apr 2016 15:30:54 -0500
+  * patches/fenv.patch: New.  Fix build failure on architectures
+    (e.g. power pc) where feclearexcept() and friends may be a macro.
+
+ -- Steve M. Robbins <smr@debian.org>  Sat, 16 Apr 2016 16:12:21 -0500
 
 boost1.60 (1.60.0+dfsg-1) unstable; urgency=medium
 
