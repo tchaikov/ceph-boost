@@ -346,7 +346,7 @@ endif
 ifeq ($(BUILD_CONTEXT), yes)
 boost_libs += context coroutine
 else
-JAM_WITHOUT += --without-context --without-coroutine
+JAM_WITHOUT += --without-context --without-coroutine --without-coroutine2
 endif
 
 ifeq ($(BUILD_LONG_DOUBLE), yes)

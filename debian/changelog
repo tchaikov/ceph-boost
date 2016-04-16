@@ -1,3 +1,11 @@
+boost1.60 (1.60.0+dfsg-2) unstable; urgency=medium
+
+  * Use --without-coroutine2 on arches that can't build context or
+    coroutine; otherwise the build system tries to build context
+    anyway.  Upstream bug https://svn.boost.org/trac/boost/ticket/9453
+
+ -- Steve M. Robbins <smr@debian.org>  Sat, 16 Apr 2016 15:30:54 -0500
+
 boost1.60 (1.60.0+dfsg-1) unstable; urgency=medium
 
   * New upstream version.  Closes: #809228.
