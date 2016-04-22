@@ -4,6 +4,9 @@ boost1.60 (1.60.0+dfsg-3) UNRELEASED; urgency=medium
     as Archive Reorg is complete and packages in main can now build-depend
     on packages in universe (e.g. mpi). Boost can now be in-sync between
     Debian and Ubuntu.
+  * Drop context/coroutine from arm64, not build there.
+  * Arch qualify all context/coroutine dependencies such that we don't
+    declare dependencies on non-existant packages.
 
  -- Dimitri John Ledkov <xnox@ubuntu.com>  Fri, 22 Apr 2016 11:26:01 +0100
 
