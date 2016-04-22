@@ -1,3 +1,12 @@
+boost1.60 (1.60.0+dfsg-3) UNRELEASED; urgency=medium
+
+  * Drop all the without/just mpi build logic, Ubuntu no longer needs it,
+    as Archive Reorg is complete and packages in main can now build-depend
+    on packages in universe (e.g. mpi). Boost can now be in-sync between
+    Debian and Ubuntu.
+
+ -- Dimitri John Ledkov <xnox@ubuntu.com>  Fri, 22 Apr 2016 11:26:01 +0100
+
 boost1.60 (1.60.0+dfsg-2) unstable; urgency=medium
 
   * Use --without-coroutine2 on arches that can't build context or

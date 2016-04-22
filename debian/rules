@@ -1,10 +1,5 @@
 #! /usr/bin/make -f
 
-WITHOUT_MPI:=no
-JUST_MPI:=no
-with_mpi:=--with-mpi
-MPI_CONFIG = "using mpi ;"
-
 # Boost libraries for which we want separate packages
 # context is conditionally compiled because it is not supported yet on several architectures
 # coroutine and coroutine2 depend on context, so they are also conditionally compiled
@@ -13,18 +8,6 @@ boost_libs := atomic chrono date-time exception filesystem		\
               mpi-python program-options python random regex		\
               serialization signals system test thread timer 		\
               type-erasure wave
-
-ifeq ($(WITHOUT_MPI),yes)
-boost_libs := $(filter-out graph-parallel mpi mpi-python, $(boost_libs))
-with_mpi:=
-MPI_CONFIG:=
-export DH_OPTIONS+=$(addprefix -N,$(shell dh_listpackages | grep -e graph-parallel -e mpi -e all-dev))
-endif
-
-ifeq ($(JUST_MPI),yes)
-boost_libs := graph-parallel mpi mpi-python
-export DH_OPTIONS+=$(addprefix -N,$(shell dh_listpackages | grep -v -e graph-parallel -e mpi -e all-dev))
-endif
 
 # these are special cases, where /usr/lib name differs from Boost library name
 boost_lib_log := log log_setup
@@ -56,7 +39,7 @@ override_dh_auto_build: $(bjam) debian/bjam.1
 	for pyver in $(pyversions); do \
 	 	pyid=$$(echo $$pyver | tr -d .); \
 		echo "Building Boost.Python for python version $$pyver"; \
-	 	$(JAM) --with-python $(with_mpi) --python-buildid=py$$pyid python=$$pyver; \
+	 	$(JAM) --with-python --with-mpi --python-buildid=py$$pyid python=$$pyver; \
 	 	mv stage/lib/mpi.so stage/lib/mpi-py$$pyid.so || true; \
 	done
 
@@ -81,15 +64,6 @@ override_dh_auto_clean: clean-debhelper
 	rm -rf bin.v2 dist
 	rm -rf user-config.jam
 	rm -rf debian/bjam.1
-ifeq ($(WITHOUT_MPI),yes)
-	grep-dctrl -FPackage -v mpi -o -FPackage graph-parallel -o -FPackage all-dev debian/control.in > debian/control
-	sed -i "s/mpi-default-dev,//" debian/control
-else
-	cp debian/control.in debian/control
-endif
-ifeq ($(JUST_MPI),yes)
-	sed -i "s/mpi-default-dev,/mpi-default-dev, libboost-serialization$(PKGVERSION)-dev, libboost-python$(PKGVERSION)-dev,/" debian/control
-endif
 	dh_auto_clean
 
 override_dh_compress:
@@ -103,7 +77,7 @@ override_dh_install:
 		pyid=`echo $$pyver | tr -d .`; \
 		$(JAM) --prefix=$(CURDIR)/debian/tmp/usr \
 			--libdir=$(CURDIR)/debian/tmp/usr/lib/$(DEB_HOST_MULTIARCH) \
-			install --with-python $(with_mpi) --python-buildid=py$$pyid python=$$pyver; \
+			install --with-python --with-mpi --python-buildid=py$$pyid python=$$pyver; \
 	done
 
 	# Install Boost.Build v2 & jam
@@ -188,12 +162,7 @@ override_dh_install:
 	dh_install
 
 override_dh_strip:
-ifeq ($(JUST_MPI),no)
 	dh_strip --dbg-package=libboost$(PKGVERSION)-dbg -X"-d-"
-else
-	dh_strip -X"-d-"
-endif
-
 
 # set the number of build jobs
 ifneq (,$(filter parallel=%,$(DEB_BUILD_OPTIONS)))
@@ -373,7 +342,7 @@ debian/bjam.1: $(bjam)
 
 user-config.jam:
 	echo $(TOOLSET_CONFIG) > $@
-	echo $(MPI_CONFIG)     >> $@
+	echo "using mpi ;"     >> $@
 	for pyver in $(pyversions); do \
 		echo "using python : $$pyver : /usr ;" >> $@; \
 	done
