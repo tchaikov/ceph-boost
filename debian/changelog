@@ -1,8 +1,8 @@
-boost1.60 (1.60.0+dfsg-4) UNRELEASED; urgency=medium
+boost1.60 (1.60.0+dfsg-4) unstable; urgency=medium
 
   * Fully enable context and coroutine on arm64, as it is available there.
 
- -- Dimitri John Ledkov <xnox@ubuntu.com>  Fri, 22 Apr 2016 14:50:33 +0100
+ -- Dimitri John Ledkov <xnox@ubuntu.com>  Fri, 22 Apr 2016 14:52:41 +0100
 
 boost1.60 (1.60.0+dfsg-3) unstable; urgency=medium
 
