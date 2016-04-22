@@ -1,4 +1,4 @@
-boost1.60 (1.60.0+dfsg-3) UNRELEASED; urgency=medium
+boost1.60 (1.60.0+dfsg-3) unstable; urgency=medium
 
   * Drop all the without/just mpi build logic, Ubuntu no longer needs it,
     as Archive Reorg is complete and packages in main can now build-depend
@@ -8,7 +8,7 @@ boost1.60 (1.60.0+dfsg-3) UNRELEASED; urgency=medium
   * Arch qualify all context/coroutine dependencies such that we don't
     declare dependencies on non-existant packages.
 
- -- Dimitri John Ledkov <xnox@ubuntu.com>  Fri, 22 Apr 2016 11:26:01 +0100
+ -- Dimitri John Ledkov <xnox@ubuntu.com>  Fri, 22 Apr 2016 11:43:50 +0100
 
 boost1.60 (1.60.0+dfsg-2) unstable; urgency=medium
 
