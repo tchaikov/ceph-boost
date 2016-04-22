@@ -270,7 +270,6 @@ else ifeq ($(DEB_BUILD_ARCH), armhf)
 BUILD_LONG_DOUBLE = no
 else ifeq ($(DEB_BUILD_ARCH), arm64)
 BUILD_LONG_DOUBLE = no
-BUILD_CONTEXT = no
 JAM_OPT += pch=off
 else ifeq ($(DEB_BUILD_ARCH), hppa)
 BUILD_LONG_DOUBLE = no
