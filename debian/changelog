@@ -1,3 +1,10 @@
+boost1.60 (1.60.0+dfsg-5) UNRELEASED; urgency=medium
+
+  * Cherrypick upstream graph patch to fix ftbfs when adjacency_matrix.hpp
+    template is used. Fixes FTBFS of sfcgal.
+
+ -- Dimitri John Ledkov <xnox@ubuntu.com>  Tue, 26 Apr 2016 17:50:49 +0100
+
 boost1.60 (1.60.0+dfsg-4) unstable; urgency=medium
 
   * Fully enable context and coroutine on arm64, as it is available there.
