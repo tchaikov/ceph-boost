@@ -9,3 +9,4 @@ no-gcc-m-options.diff
 no-gcc-march-options.patch
 fenv.patch
 1d5f43d9f6e8a5295bad7593db942cc755eb664c.patch
+fix-auto-pointer-registration.patch

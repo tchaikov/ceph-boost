@@ -1,9 +1,14 @@
-boost1.60 (1.60.0+dfsg-5) UNRELEASED; urgency=medium
+boost1.60 (1.60.0+dfsg-5) unstable; urgency=medium
 
+  [ Dimitri John Ledkov ]
   * Cherrypick upstream graph patch to fix ftbfs when adjacency_matrix.hpp
     template is used. Fixes FTBFS of sfcgal.
 
- -- Dimitri John Ledkov <xnox@ubuntu.com>  Tue, 26 Apr 2016 17:50:49 +0100
+  [ Steve M. Robbins ]
+  * patches/fix-auto-pointer-registration.patch: New.  Fixes auto-pointer
+    registration in Boost.Python, affecting yade.  Closes: #823210.
+
+ -- Steve M. Robbins <smr@debian.org>  Sat, 07 May 2016 22:23:17 -0500
 
 boost1.60 (1.60.0+dfsg-4) unstable; urgency=medium
 
