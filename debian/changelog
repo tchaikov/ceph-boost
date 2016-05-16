@@ -1,3 +1,10 @@
+boost1.60 (1.60.0+dfsg-6) unstable; urgency=medium
+
+  * patches/fix-ebo_functor_holder.patch: New.  Compile fix for copy
+    constructor (thanks, Graham Inggs).  Closes: #824021.
+
+ -- Steve M. Robbins <smr@debian.org>  Sun, 15 May 2016 23:38:50 -0500
+
 boost1.60 (1.60.0+dfsg-5) unstable; urgency=medium
 
   [ Dimitri John Ledkov ]
