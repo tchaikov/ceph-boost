@@ -1,7 +1,10 @@
 boost1.60 (1.60.0+dfsg-6) unstable; urgency=medium
 
-  * patches/fix-ebo_functor_holder.patch: New.  Compile fix for copy
+  * patches/fix-ebo_functor_holder.patch: New. Compile fix for copy
     constructor (thanks, Graham Inggs).  Closes: #824021.
+
+  * patches/add-missing-list-include.patch: New.  Add missing <list>
+    include (thanks, Graham Inggs).  Closes: #824022.
 
  -- Steve M. Robbins <smr@debian.org>  Sun, 15 May 2016 23:38:50 -0500
 
