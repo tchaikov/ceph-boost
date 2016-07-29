@@ -2,6 +2,7 @@ boost1.61 (1.61.0+dfsg-1) UNRELEASED; urgency=high
 
   * New upstream release
   * Drop upstream cherrypicked patches, no longer needed
+  * Update example files and sort them
 
  -- Dimitri John Ledkov <xnox@ubuntu.com>  Fri, 29 Jul 2016 13:16:54 +0100
 
