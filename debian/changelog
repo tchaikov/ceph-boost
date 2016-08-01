@@ -6,6 +6,7 @@ boost1.61 (1.61.0+dfsg-1) UNRELEASED; urgency=high
   * Force use g++-6
   * Add python3:Depends for python packages (pacify dh_python3 warnings)
   * Drop python2.5 depends
+  * Require icu 57 or better
 
  -- Dimitri John Ledkov <xnox@ubuntu.com>  Fri, 29 Jul 2016 13:16:54 +0100
 
