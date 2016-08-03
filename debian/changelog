@@ -1,10 +1,10 @@
-boost1.61 (1.61.0+dfsg-2) UNRELEASED; urgency=high
+boost1.61 (1.61.0+dfsg-2) experimental; urgency=high
 
   * Use DEB_HOST_GNU_TYPE for the compiler, because DEB_HOST_MULTIARCH is
     a lie - i386 port doesn't really exist, nor provides/uses i386
     compiler. Fixes FTBFS on i386.
 
- -- Dimitri John Ledkov <xnox@ubuntu.com>  Tue, 02 Aug 2016 22:48:55 +0100
+ -- Dimitri John Ledkov <xnox@ubuntu.com>  Wed, 03 Aug 2016 03:21:52 +0100
 
 boost1.61 (1.61.0+dfsg-1) experimental; urgency=medium
 
