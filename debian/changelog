@@ -1,3 +1,9 @@
+boost1.61 (1.61.0+dfsg-3) UNRELEASED; urgency=high
+
+  * Actually bump standards version.
+
+ -- Dimitri John Ledkov <xnox@ubuntu.com>  Thu, 04 Aug 2016 14:14:01 +0100
+
 boost1.61 (1.61.0+dfsg-2.1) unstable; urgency=medium
 
   * Non-maintainer upload.
