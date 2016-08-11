@@ -98,6 +98,7 @@ override_dh_install:
 	   dist/bin/inspect \
 	   dist/bin/quickbook \
 	   usr/bin
+	dh_link -plibboost$(PKGVERSION)-tools-dev usr/bin/bjam usr/bin/b2
 	dh_installman -plibboost$(PKGVERSION)-tools-dev debian/bjam.1 debian/bcp.1 debian/inspect.1 debian/quickbook.1
 	dh_install -plibboost$(PKGVERSION)-tools-dev tools/boostbook/xsl/* usr/share/boostbook/xsl
 	dh_install -plibboost$(PKGVERSION)-tools-dev tools/boostbook/dtd/* usr/share/boostbook/dtd

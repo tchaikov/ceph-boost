@@ -1,8 +1,12 @@
 boost1.61 (1.61.0+dfsg-3) UNRELEASED; urgency=high
 
+  [ Dimitri John Ledkov ]
   * Actually bump standards version.
 
- -- Dimitri John Ledkov <xnox@ubuntu.com>  Thu, 04 Aug 2016 14:14:01 +0100
+  [ Steve M. Robbins ]
+  * Install /usr/bin/b2, the canonical name of bjam.  Closes: #831431.
+
+ -- Steve M. Robbins <smr@debian.org>  Mon, 08 Aug 2016 23:44:39 -0500
 
 boost1.61 (1.61.0+dfsg-2.1) unstable; urgency=medium
 
