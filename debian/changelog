@@ -5,6 +5,7 @@ boost1.61 (1.61.0+dfsg-3) UNRELEASED; urgency=high
 
   [ Steve M. Robbins ]
   * Install /usr/bin/b2, the canonical name of bjam.  Closes: #831431.
+  * libboost-iostreams1.61.0: remove Priority Important.  Closes: #829301.
 
  -- Steve M. Robbins <smr@debian.org>  Mon, 08 Aug 2016 23:44:39 -0500
 
