@@ -1,3 +1,11 @@
+boost1.62 (1.62.0+dfsg-1) unstable; urgency=medium
+
+  * New upstream 1.62.
+  * Drop package libboost1.62-dbg in favour of using automatic debug
+    package generation.
+
+ -- Steve M. Robbins <smr@debian.org>  Sat, 15 Oct 2016 13:02:48 -0500
+
 boost1.61 (1.61.0+dfsg-3) unstable; urgency=medium
 
   [ Dimitri John Ledkov ]
