@@ -1,6 +1,6 @@
---- boost1.60-1.60.0+dfsg.orig/tools/build/src/tools/gcc.jam
-+++ boost1.60-1.60.0+dfsg/tools/build/src/tools/gcc.jam
-@@ -454,17 +454,6 @@
+--- boost1.62-1.62.0+dfsg.orig/tools/build/src/tools/gcc.jam
++++ boost1.62-1.62.0+dfsg/tools/build/src/tools/gcc.jam
+@@ -463,17 +463,6 @@
          else
          {
              local arch = [ feature.get-values architecture : $(properties) ] ;
@@ -18,8 +18,8 @@
              # For darwin, the model can be 32_64. darwin.jam will handle that
              # on its own.
          }
---- boost1.60-1.60.0+dfsg.orig/tools/build/src/tools/pathscale.jam
-+++ boost1.60-1.60.0+dfsg/tools/build/src/tools/pathscale.jam
+--- boost1.62-1.62.0+dfsg.orig/tools/build/src/tools/pathscale.jam
++++ boost1.62-1.62.0+dfsg/tools/build/src/tools/pathscale.jam
 @@ -89,8 +89,6 @@
  flags pathscale.compile OPTIONS <debug-symbols>on : -ggdb ;
  flags pathscale.compile OPTIONS <profiling>on     : -pg ;
