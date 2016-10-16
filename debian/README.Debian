@@ -18,10 +18,12 @@ for multithreaded applications.
   ---------              ---------                      ------------
   Boost.Atomic		 -lboost_atomic			static  shared
   Boost.Chrono           -lboost_chrono                 static  shared
+  Boost.Container	 -lboost_container		static	shared
   Boost.Context		 -lboost_context		static	shared
   Boost.Coroutine	 -lboost_coroutine		static  shared
   Boost.Date_Time        -lboost_date_time            	static  shared
   Boost.Exception	 -lboost_exception		static	  x
+  Boost.Fiber		 -lboost_fiber			static  shared
   Boost.Filesystem       -lboost_filesystem           	static  shared
   Boost.Graph            -lboost_graph                	static  shared
   Boost.Graph_parallel   -lboost_graph_parallel       	static  shared
@@ -52,6 +54,7 @@ for multithreaded applications.
                          -lboost_unit_test_framework   	static  shared
   Boost.Thread           -lboost_thread               	static  shared
   Boost.Timer            -lboost_timer                  static  shared
+  Boost.TypeErasure	 -lboost_type_erasure		static  shared
   Boost.Wave             -lboost_wave   		static  shared
 
 
@@ -136,4 +139,4 @@ Please see the manual and the following thread for more details
   http://lists.boost.org/boost-users/2008/03/34486.php
 
 
- -- Steve M. Robbins <smr@debian.org>, Mon, 29 Feb 2016 00:24:20 -0600
+ -- Steve M. Robbins <smr@debian.org>, Sat, 15 Oct 2016 22:38:12 -0500

@@ -1,4 +1,3 @@
-doc/html/boost_asio/example
 doc/html/date_time/examples
 libs/accumulators/example
 libs/algorithm/example
@@ -24,6 +23,7 @@ libs/dll/example
 libs/dynamic_bitset/example
 libs/endian/example
 libs/exception/example
+libs/fiber/examples
 libs/filesystem/example
 libs/flyweight/example
 libs/format/example
@@ -75,7 +75,6 @@ libs/preprocessor/doc/examples
 libs/program_options/example
 libs/property_map/example
 libs/property_tree/examples
-libs/proto/doc/html/boost_proto/users_guide/examples
 libs/proto/example
 libs/python/example
 libs/random/example
