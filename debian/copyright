@@ -1,7 +1,7 @@
 Format: http://www.debian.org/doc/packaging-manuals/copyright-format/1.0/
 Upstream-Name: boost
 Source: http://sourceforge.net/projects/boost/files/boost
-Files-Excluded: doc/images/valid-html401.png *.js tools/build/src/engine/boehm_gc/config.guess tools/build/src/engine/boehm_gc/config.sub
+Files-Excluded: *.o doc/images/valid-html401.png *.js tools/build/src/engine/boehm_gc/config.guess tools/build/src/engine/boehm_gc/config.sub
 
 Files: *
 Copyright: See individual source files
