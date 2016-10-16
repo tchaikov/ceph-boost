@@ -451,8 +451,10 @@ Pre-Depends: ${misc:Pre-Depends}
 Description: cooperatively-scheduled micro-/userland-threads
  This package forms part of the Boost C++ Libraries collection.
  .
- Boost.Fiber provides a framework for micro-/userland-threads (fibers) scheduled cooperatively.
- The API contains classes and functions to manage and synchronize fibers similiarly to standard thread support library.
+ Boost.Fiber provides a framework for micro-/userland-threads (fibers)
+ scheduled cooperatively.  The API contains classes and functions to
+ manage and synchronize fibers similarly to standard thread support
+ library.
  .
  Each fiber has its own stack.
  .
@@ -481,8 +483,10 @@ Depends: ${misc:Depends},
 Description: cooperatively-scheduled micro-/userland-threads
  This package forms part of the Boost C++ Libraries collection.
  .
- Boost.Fiber provides a framework for micro-/userland-threads (fibers) scheduled cooperatively.
- The API contains classes and functions to manage and synchronize fibers similiarly to standard thread support library.
+ Boost.Fiber provides a framework for micro-/userland-threads (fibers)
+ scheduled cooperatively.  The API contains classes and functions to
+ manage and synchronize fibers similarly to standard thread support
+ library.
  .
  Each fiber has its own stack.
  .
