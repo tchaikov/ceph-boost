@@ -2,7 +2,7 @@
 
 # Boost libraries for which we want separate packages
 # context is conditionally compiled because it is not supported yet on several architectures
-# coroutine and coroutine2 depend on context, so they are also conditionally compiled
+# coroutine, coroutine2, and fiber depend on context, so they are also conditionally compiled
 boost_libs := atomic chrono date-time exception filesystem		\
               graph graph-parallel iostreams locale log math mpi	\
               mpi-python program-options python random regex		\
@@ -160,7 +160,7 @@ override_dh_install:
 	mv $(pyste_prefix)/bin/pyste.py $(pyste_prefix)/bin/pyste
 	dh_installman -plibboost-python$(PKGVERSION)-dev debian/pyste.1
 
-	dh_install
+	dh_install --list-missing
 
 override_dh_strip:
 	dh_strip --dbg-package=libboost$(PKGVERSION)-dbg -X"-d-"
@@ -309,9 +309,9 @@ BUILD_CONTEXT = no
 endif
 
 ifeq ($(BUILD_CONTEXT), yes)
-boost_libs += context coroutine
+boost_libs += context coroutine fiber
 else
-JAM_WITHOUT += --without-context --without-coroutine --without-coroutine2
+JAM_WITHOUT += --without-context --without-coroutine --without-coroutine2 --without-fiber
 endif
 
 ifeq ($(BUILD_LONG_DOUBLE), yes)

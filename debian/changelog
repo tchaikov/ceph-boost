@@ -1,6 +1,7 @@
 boost1.62 (1.62.0+dfsg-1) unstable; urgency=medium
 
   * New upstream 1.62.
+  * Add packages for Boost.Fiber.
   * Drop package libboost1.62-dbg in favour of using automatic debug
     package generation.
   * Refresh patches.  Drop add-missing-list-include.patch -- applied upstream.
