@@ -163,7 +163,7 @@ override_dh_install:
 	dh_install --list-missing
 
 override_dh_strip:
-	dh_strip --dbg-package=libboost$(PKGVERSION)-dbg -X"-d-"
+	dh_strip --dbgsym-migration='libboost1.55-dbg, libboost1.58-dbg, libboost1.61-dbg''
 
 # set the number of build jobs
 ifneq (,$(filter parallel=%,$(DEB_BUILD_OPTIONS)))
@@ -228,7 +228,6 @@ mk_files = $(foreach fn,$(call boost_filetypes,$(2)),$(call mk_$(fn)_files,$(1),
 add_override = echo $(1): $(2) >> debian/$(1).lintian-overrides;
 
 # Input: override
-add_dbg_override = $(call add_override,libboost$(PKGVERSION)-dbg,$(1))
 add_dev_override = $(call add_override,libboost$(PKGVERSION)-dev,$(1))
 add_doc_override = $(call add_override,libboost$(PKGVERSION)-doc,$(1))
 
@@ -242,7 +241,6 @@ cp_debhelper = for s in doc-base examples postinst prerm README.Debian; do \
 
 # Function that updates debhelper files for all libraries shipped.
 mk_debhelper_files = \
-	$(call add_dbg_override,package-name-doesnt-match-sonames) \
 	$(call add_dev_override,extra-license-file) \
 	$(call add_doc_override,extra-license-file) \
 	$(foreach l, $(boost_libs), \
@@ -358,7 +356,6 @@ clean-debhelper:
 # Make all the generated debhelper files.
 make-debhelper: clean-debhelper $(filtered_files)
 	@$(call mk_debhelper_files)
-	@$(call cp_debhelper,libboost-dbg,libboost$(PKGVERSION)-dbg)
 	@$(call cp_debhelper,libboost-dev,libboost$(PKGVERSION)-dev)
 	@$(call cp_debhelper,libboost-doc,libboost$(PKGVERSION)-doc)
 	@$(call cp_debhelper,libboost-python-dev,libboost-python$(PKGVERSION)-dev)
