@@ -476,6 +476,7 @@ Multi-Arch: same
 Section: libdevel
 Depends: ${misc:Depends},
  libboost1.62-dev (= ${binary:Version}),
+ libboost-context1.62-dev (= ${binary:Version}),
  libboost-fiber1.62.0 (= ${binary:Version})
 Description: cooperatively-scheduled micro-/userland-threads
  This package forms part of the Boost C++ Libraries collection.
