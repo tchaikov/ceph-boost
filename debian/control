@@ -48,6 +48,7 @@ Suggests: libboost1.62-doc,
  libboost-test1.62-dev,
  libboost-thread1.62-dev,
  libboost-timer1.62-dev,
+ libboost-type-erasure1.62-dev,
  libboost-wave1.62-dev,
  libboost1.62-tools-dev,
  libmpfrc++-dev, libntl-dev
@@ -124,6 +125,7 @@ Depends: ${misc:Depends},
  libboost-test1.62-dev,
  libboost-thread1.62-dev,
  libboost-timer1.62-dev,
+ libboost-type-erasure1.62-dev,
  libboost-wave1.62-dev
 Description: Boost C++ Libraries development files (ALL)
  The Boost web site provides free, peer-reviewed, portable C++ source
