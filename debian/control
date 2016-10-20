@@ -443,7 +443,7 @@ Conflicts: libboost-exception1.50-dev, libboost-exception1.52-dev, libboost-exce
 
 Package: libboost-fiber1.62.0
 Homepage: http://www.boost.org/libs/fiber/
-Architecture: any
+Architecture: any-i386 any-amd64 armel armhf arm64 mips mipsel powerpc ppc64el
 Multi-Arch: same
 Section: libs
 Depends: ${misc:Depends}, ${shlibs:Depends}
@@ -473,7 +473,7 @@ Description: cooperatively-scheduled micro-/userland-threads
 
 Package: libboost-fiber1.62-dev
 Homepage: http://www.boost.org/libs/fiber/
-Architecture: any
+Architecture: any-i386 any-amd64 armel armhf arm64 mips mipsel powerpc ppc64el
 Multi-Arch: same
 Section: libdevel
 Depends: ${misc:Depends},
