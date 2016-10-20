@@ -1,8 +1,8 @@
-boost1.62 (1.62.0+dfsg-2) UNRELEASED; urgency=medium
+boost1.62 (1.62.0+dfsg-2) unstable; urgency=medium
 
   * Limit boost-fiber packages to architectures it is built on.
 
- -- Dimitri John Ledkov <xnox@ubuntu.com>  Thu, 20 Oct 2016 08:34:17 +0100
+ -- Dimitri John Ledkov <xnox@ubuntu.com>  Thu, 20 Oct 2016 08:36:55 +0100
 
 boost1.62 (1.62.0+dfsg-1) unstable; urgency=medium
 
