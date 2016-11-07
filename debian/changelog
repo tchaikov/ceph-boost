@@ -1,4 +1,4 @@
-boost1.62 (1.62.0+dfsg-3) UNRELEASED; urgency=high
+boost1.62 (1.62.0+dfsg-3) unstable; urgency=high
 
   * Build Boost.Python 2 & 3 bindings in separate builddirs. Closes: #842927
 
