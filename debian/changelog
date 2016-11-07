@@ -1,3 +1,9 @@
+boost1.62 (1.62.0+dfsg-3) UNRELEASED; urgency=high
+
+  * Build Boost.Python 2 & 3 bindings in separate builddirs. Closes: #842927
+
+ -- Dimitri John Ledkov <xnox@ubuntu.com>  Mon, 07 Nov 2016 18:44:37 +0000
+
 boost1.62 (1.62.0+dfsg-2) unstable; urgency=medium
 
   * Limit boost-fiber packages to architectures it is built on.

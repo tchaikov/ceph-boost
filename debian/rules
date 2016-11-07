@@ -39,7 +39,7 @@ override_dh_auto_build: $(bjam) debian/bjam.1
 	for pyver in $(pyversions); do \
 	 	pyid=$$(echo $$pyver | tr -d .); \
 		echo "Building Boost.Python for python version $$pyver"; \
-	 	$(JAM) --with-python --with-mpi --python-buildid=py$$pyid python=$$pyver; \
+	 	$(JAM) --build-dir=build-$$pyver --user-config=$(CURDIR)/user-config-$$pyver.jam --with-python --with-mpi --python-buildid=py$$pyid python=$$pyver; \
 	 	mv stage/lib/mpi.so stage/lib/mpi-py$$pyid.so || true; \
 	done
 
@@ -63,6 +63,7 @@ override_dh_auto_clean: clean-debhelper
 	rm -rf tools/regression/build/bin
 	rm -rf bin.v2 dist
 	rm -rf user-config.jam
+	rm -rf build-* user-config-*.jam
 	rm -rf debian/bjam.1
 	dh_auto_clean
 
@@ -75,7 +76,7 @@ override_dh_install:
 		--without-python install
 	for pyver in $(pyversions); do \
 		pyid=`echo $$pyver | tr -d .`; \
-		$(JAM) --prefix=$(CURDIR)/debian/tmp/usr \
+		$(JAM) --build-dir=build-$$pyver --user-config=$(CURDIR)/user-config-$$pyver.jam --prefix=$(CURDIR)/debian/tmp/usr \
 			--libdir=$(CURDIR)/debian/tmp/usr/lib/$(DEB_HOST_MULTIARCH) \
 			install --with-python --with-mpi --python-buildid=py$$pyid python=$$pyver; \
 	done
@@ -342,7 +343,8 @@ user-config.jam:
 	echo $(TOOLSET_CONFIG) > $@
 	echo "using mpi ;"     >> $@
 	for pyver in $(pyversions); do \
-		echo "using python : $$pyver : /usr ;" >> $@; \
+		cp $@ user-config-$$pyver.jam; \
+		echo "using python : $$pyver : /usr ;" >> user-config-$$pyver.jam; \
 	done
 
 $(filtered_files): % : %.in
