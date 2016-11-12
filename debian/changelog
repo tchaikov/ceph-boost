@@ -1,3 +1,9 @@
+boost1.62 (1.62.0+dfsg-4) unstable; urgency=medium
+
+  * New patch upstream-add-degree-reverse_graph.patch.
+
+ -- Steve M. Robbins <smr@debian.org>  Sat, 12 Nov 2016 12:46:50 -0600
+
 boost1.62 (1.62.0+dfsg-3) unstable; urgency=high
 
   * Build Boost.Python 2 & 3 bindings in separate builddirs. Closes: #842927
