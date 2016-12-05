@@ -1,3 +1,7 @@
+upstream-add-degree-reverse_graph.patch
+upstream-c99-annex-f-01.patch
+upstream-c99-annex-f-02.patch
+upstream-ilogb.patch
 chrono-duration.patch
 pythonid.patch
 fix-ftbfs-python-3.3.patch
@@ -5,6 +9,4 @@ hppa-long-double-config.patch
 boost-python-examples.patch
 ppc64el-fp_traits-ibm-long-double.patch
 no-gcc-m-options.diff
-# fixed alternatively? boost-context-use-sysv-not-aapcs.patch
 no-gcc-march-options.patch
-upstream-add-degree-reverse_graph.patch
