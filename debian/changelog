@@ -1,3 +1,10 @@
+boost1.62 (1.62.0+dfsg-5) unstable; urgency=medium
+
+  * control: document fact that -doc package contains no docs.
+    Closes: #844268.
+
+ -- Steve M. Robbins <smr@debian.org>  Sun, 04 Dec 2016 22:49:48 -0600
+
 boost1.62 (1.62.0+dfsg-4) unstable; urgency=medium
 
   * New patch upstream-add-degree-reverse_graph.patch.

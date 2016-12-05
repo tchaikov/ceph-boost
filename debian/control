@@ -146,18 +146,10 @@ Section: doc
 Depends: ${misc:Depends}
 Suggests: libboost1.62-dev (>= ${source:Version})
 Conflicts: libboost1.42-doc, libboost1.46-doc, libboost1.48-doc, libboost1.49-doc, libboost1.50-doc, libboost1.52-doc, libboost1.53-doc, libboost1.54-doc, libboost1.55-doc, libboost1.57-doc, libboost1.58-doc, libboost1.60-doc, libboost1.61-doc
-Description: Boost.org libraries documentation
- The Boost web site provides free, peer-reviewed, portable C++ source
- libraries. The emphasis is on libraries which work well with the C++
- Standard Library. One goal is to establish "existing practice" and
- provide reference implementations so that the Boost libraries are
- suitable for eventual standardization. Some of the libraries have
- already been proposed for inclusion in the C++ Standards Committee's
- upcoming C++ Standard Library Technical Report.
- .
- This is documentation for the boost libraries in HTML format.
- Some pages point to header files provided in the corresponding -dev package,
- so it is suggested to install the latter as well.
+Description: Boost.org libraries documentation placeholder
+ This package originally provided documentation, but has since fallen
+ into disrepair and presently provides no documentation.  Please
+ use documentation at www.boost.org.
 
 Package: libboost-atomic1.62.0
 Homepage: http://www.boost.org/libs/atomic/
