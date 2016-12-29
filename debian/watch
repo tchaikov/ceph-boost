@@ -1,2 +1,6 @@
 version=3
 opts="uversionmangle=s/_/./g,dversionmangle=s/\+dfsg$//" http://sf.net/boost/boost_([\d_]*)\.tar.bz2
+
+# Note: the above does not work, even with the fixed reflector mentioned
+# in this thread: https://lists.debian.org/debian-devel/2016/10/msg00280.html
+# Workaround: run: mk-origtargz --repack ../boost_1_63_0.tar.bz2

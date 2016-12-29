@@ -1,14 +1,8 @@
-boost1.62 (1.62.0+dfsg-5) unstable; urgency=medium
+boost1.63 (1.63.0+dfsg-1) unstable; urgency=medium
 
-  * control: document fact that -doc package contains no docs.
-    Closes: #844268.
+  * New upstream.
 
-  * Upstream patches to fix ilogb issue.  Closes: #844495
-    - upstream-c99-annex-f-01.patch
-    - upstream-c99-annex-f-02.patch
-    - upstream-ilogb.patch
-
- -- Steve M. Robbins <smr@debian.org>  Sun, 04 Dec 2016 22:56:05 -0600
+ -- Steve M. Robbins <smr@debian.org>  Wed, 28 Dec 2016 20:28:31 -0600
 
 boost1.62 (1.62.0+dfsg-4) unstable; urgency=medium
 
