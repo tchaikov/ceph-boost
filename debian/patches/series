@@ -1,7 +1,7 @@
 chrono-duration.patch
 fix-ftbfs-python-3.3.patch
 hppa-long-double-config.patch
-boost-python-examples.patch
+# No longer applies; may not be needed boost-python-examples.patch
 ppc64el-fp_traits-ibm-long-double.patch
 no-gcc-m-options.diff
 no-gcc-march-options.patch
