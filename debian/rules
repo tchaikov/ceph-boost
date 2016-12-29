@@ -47,7 +47,6 @@ override_dh_auto_build: $(bjam) debian/bjam.1
 	cd tools/bcp && $(JAM)
 	cd tools/inspect/build && $(JAM)
 	cd tools/quickbook && $(JAM)
-	cd libs/python/pyste/install && python setup.py build
 
 testsuite:
 	cd status && $(JAM) $(JAM_WITHOUT)
@@ -55,8 +54,6 @@ testsuite:
 override_dh_auto_clean: clean-debhelper
 	-cd tools && $(JAM) clean
 	-$(JAM) clean
-	-cd libs/python/pyste/install && python setup.py clean
-	rm -rf libs/python/pyste/install/build
 	rm -rf tools/jam/src/bootstrap
 	rm -rf tools/jam/src/bin.*
 	rm -ff tools/jam/src/bjam
@@ -156,10 +153,6 @@ override_dh_install:
 		dh_installdirs -plibboost-mpi-python$(SOVERSION) $$pydistdir; \
 		cp stage/lib/mpi-py$$pyid.so debian/libboost-mpi-python$(SOVERSION)/$$pydistdir/mpi.so || true; \
 	done
-
-	cd libs/python/pyste/install && python setup.py install --no-compile --prefix=$(pyste_prefix) --install-lib=$(pyste_prefix)/share/pyshared
-	mv $(pyste_prefix)/bin/pyste.py $(pyste_prefix)/bin/pyste
-	dh_installman -plibboost-python$(PKGVERSION)-dev debian/pyste.1
 
 	dh_install --list-missing
 
@@ -321,7 +314,6 @@ endif
 
 exampledir = debian/libboost$(PKGVERSION)-doc/usr/share/doc/libboost$(PKGVERSION)-doc/examples
 htmldir = debian/libboost$(PKGVERSION)-doc/usr/share/doc/libboost$(PKGVERSION)-doc/HTML
-pyste_prefix = $(CURDIR)/debian/libboost-python$(PKGVERSION)-dev/usr
 bjam = $(CURDIR)/bjam
 bbv2dir = $(CURDIR)/tools/build
 
