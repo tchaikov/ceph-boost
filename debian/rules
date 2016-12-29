@@ -154,6 +154,7 @@ override_dh_install:
 		cp stage/lib/mpi-py$$pyid.so debian/libboost-mpi-python$(SOVERSION)/$$pydistdir/mpi.so || true; \
 	done
 
+	find debian -iname '*.so*' -type f -print0 | xargs -0 chrpath --delete
 	dh_install --list-missing
 
 override_dh_strip:
