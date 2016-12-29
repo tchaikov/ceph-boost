@@ -1,5 +1,4 @@
 chrono-duration.patch
-pythonid.patch
 fix-ftbfs-python-3.3.patch
 hppa-long-double-config.patch
 boost-python-examples.patch
