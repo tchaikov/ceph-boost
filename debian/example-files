@@ -4,8 +4,6 @@ libs/algorithm/example
 libs/algorithm/minmax/example
 libs/algorithm/string/example
 libs/align/example
-libs/asio/doc/html/boost_asio/example
-libs/asio/doc/html/boost_asio/examples
 libs/asio/example
 libs/bimap/doc/html/boost_bimap/examples
 libs/bimap/example
