@@ -1,7 +1,3 @@
-upstream-add-degree-reverse_graph.patch
-upstream-c99-annex-f-01.patch
-upstream-c99-annex-f-02.patch
-upstream-ilogb.patch
 chrono-duration.patch
 pythonid.patch
 fix-ftbfs-python-3.3.patch
