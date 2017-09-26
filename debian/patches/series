@@ -1,4 +1,3 @@
-chrono-duration.patch
 fix-ftbfs-python-3.3.patch
 hppa-long-double-config.patch
 # No longer applies; may not be needed boost-python-examples.patch
