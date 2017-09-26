@@ -1,9 +1,11 @@
+debian/libboost1.65-doc/usr/share/doc/libboost1.65-doc/examples
+doc/html/boost_asio/example
+doc/html/boost_asio/examples
 doc/html/date_time/examples
 libs/accumulators/example
 libs/algorithm/example
 libs/algorithm/minmax/example
 libs/algorithm/string/example
-libs/align/example
 libs/asio/example
 libs/bimap/doc/html/boost_bimap/examples
 libs/bimap/example
@@ -67,9 +69,11 @@ libs/numeric/odeint/examples
 libs/phoenix/doc/examples
 libs/phoenix/doc/html/phoenix/examples
 libs/phoenix/example
+libs/poly_collection/example
 libs/polygon/example
 libs/pool/example
 libs/preprocessor/doc/examples
+libs/process/example
 libs/program_options/example
 libs/property_map/example
 libs/property_tree/examples
@@ -89,6 +93,7 @@ libs/spirit/classic/example
 libs/spirit/classic/phoenix/example
 libs/spirit/example
 libs/spirit/repository/example
+libs/stacktrace/example
 libs/statechart/example
 libs/test/doc/examples
 libs/test/example
@@ -103,3 +108,4 @@ libs/unordered/examples
 libs/xpressive/example
 tools/boostdep/examples
 tools/build/example
+tools/quickbook/examples
