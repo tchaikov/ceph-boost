@@ -1,9 +1,10 @@
 boost1.65.1 (1.65.1+dfsg-1) UNRELEASED; urgency=medium
 
   * New upstream.
-    - patches/chrono-duration.patch: Remove.  Obsoleted by upstream changes.
+  * Remove "Force use g++-6"
+  * patches/chrono-duration.patch: Remove.  Obsoleted by upstream changes.
 
- -- Steve M. Robbins <smr@debian.org>  Mon, 25 Sep 2017 20:51:25 -0500
+ -- Steve M. Robbins <smr@debian.org>  Mon, 25 Sep 2017 21:44:44 -0500
 
 boost1.63 (1.63.0+dfsg-1) unstable; urgency=medium
 
