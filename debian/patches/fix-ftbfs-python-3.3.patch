@@ -3,9 +3,9 @@ Author: Dmitrijs Ledkovs <dmitrij.ledkov@ubuntu.com>
 Last-Update: 2012-10-26
 Forwarded: no
 
---- boost1.60-1.60.0+dfsg.orig/tools/build/src/tools/python.jam
-+++ boost1.60-1.60.0+dfsg/tools/build/src/tools/python.jam
-@@ -539,7 +539,9 @@
+--- boost1.65.1-1.65.1+dfsg.orig/tools/build/src/tools/python.jam
++++ boost1.65.1-1.65.1+dfsg/tools/build/src/tools/python.jam
+@@ -544,7 +544,9 @@
      }
      else
      {
