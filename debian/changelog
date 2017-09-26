@@ -1,3 +1,9 @@
+boost1.65.1 (1.65.1+dfsg-1) UNRELEASED; urgency=medium
+
+  * New upstream.
+
+ -- Steve M. Robbins <smr@debian.org>  Mon, 25 Sep 2017 20:31:27 -0500
+
 boost1.63 (1.63.0+dfsg-1) unstable; urgency=medium
 
   * New upstream.
