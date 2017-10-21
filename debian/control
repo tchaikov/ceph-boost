@@ -38,6 +38,7 @@ Suggests: libboost1.65-doc,
  libboost-math1.65-dev,
  libboost-mpi1.65-dev,
  libboost-mpi-python1.65-dev,
+ libboost-numpy1.65-dev,
  libboost-program-options1.65-dev,
  libboost-python1.65-dev,
  libboost-random1.65-dev,
@@ -115,6 +116,7 @@ Depends: ${misc:Depends},
  libboost-math1.65-dev,
  libboost-mpi1.65-dev,
  libboost-mpi-python1.65-dev,
+ libboost-numpy1.65-dev,
  libboost-program-options1.65-dev,
  libboost-python1.65-dev,
  libboost-random1.65-dev,
@@ -863,6 +865,39 @@ Description: C++ interface to the Message Passing Interface (MPI), Python Bindin
  techniques to maintain maximal efficiency.
  .
  This package provides Python Bindings to the C++ interface.
+
+Package: libboost-numpy1.65.1
+Homepage: http://www.boost.org/libs/python/
+Architecture: any
+Section: python
+Depends: ${misc:Depends}, ${shlibs:Depends}
+Pre-Depends: ${misc:Pre-Depends}
+Suggests: python, python3
+Description: Boost.Python NumPy extensions
+ This package forms part of the Boost C++ Libraries collection.
+ .
+ The Boost Python library enables exporting a C++ library to Python.
+ The NumPy extensions lets the C++ code interact with NumPy types.
+ .
+ One of the python interpreter packages is required to use the
+ created extensions.
+
+Package: libboost-numpy1.65-dev
+Homepage: http://www.boost.org/libs/python/
+Architecture: any
+Section: libdevel
+Depends: ${misc:Depends},
+ libboost-python1.65.1 (= ${binary:Version})
+Suggests: libboost1.65-doc
+Description: Boost.Python NumPy extensions development files
+ This package forms part of the Boost C++ Libraries collection.
+ .
+ The Boost Python library enables exporting a C++ library to Python.
+ The NumPy extensions lets the C++ code interact with NumPy types.
+ .
+ This package allows development of a Python interface for all current
+ versions of Python in Debian.  Code using this library will need also
+ one of the Python development packages.
 
 Package: libboost-program-options1.65.1
 Homepage: http://www.boost.org/libs/program_options/

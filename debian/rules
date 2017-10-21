@@ -5,7 +5,7 @@
 # coroutine, coroutine2, and fiber depend on context, so they are also conditionally compiled
 boost_libs := atomic chrono date-time exception filesystem		\
               graph graph-parallel iostreams locale log math mpi	\
-              mpi-python program-options python random regex		\
+              mpi-python numpy program-options python random regex	\
               serialization signals system test thread timer 		\
               type-erasure wave
 
@@ -22,6 +22,7 @@ pyversions = $(py2versions) $(py3versions)
 
 # These are special cases for suffixes.  Generally come from --python-buildid, so begin with a dash.
 boost_suffixes_python := $(addprefix 3-py,$(subst .,,$(py3versions))) $(addprefix -py,$(subst .,,$(py2versions)))
+boost_suffixes_numpy := $(boost_suffixes_python)
 boost_suffixes_mpi-python := $(boost_suffixes_python)
 
 py3default = $(subst .,,$(shell py3versions -dv))
