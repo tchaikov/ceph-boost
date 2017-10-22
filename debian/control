@@ -24,7 +24,8 @@ Depends: ${misc:Depends}, ${shlibs:Depends}, libstdc++-4.8-dev | libstdc++-dev
 Suggests: libboost1.65-doc,
  libboost-atomic1.65-dev,
  libboost-chrono1.65-dev,
- libboost-context1.65-dev [any-i386 any-amd64 armel armhf arm64 mips mipsel powerpc ppc64el],
+ libboost-container1.65-dev,
+ libboost-context1.65-dev [any-i386 any-amd64 armel armhf arm64 mips mipsel powerpc ppc64el], 
  libboost-coroutine1.65-dev [any-i386 any-amd64 armel armhf arm64 mips mipsel powerpc ppc64el],
  libboost-date-time1.65-dev,
  libboost-exception1.65-dev,
@@ -45,6 +46,7 @@ Suggests: libboost1.65-doc,
  libboost-regex1.65-dev,
  libboost-serialization1.65-dev,
  libboost-signals1.65-dev,
+ libboost-stacktrace1.65-dev,
  libboost-system1.65-dev,
  libboost-test1.65-dev,
  libboost-thread1.65-dev,
@@ -102,6 +104,7 @@ Depends: ${misc:Depends},
  libboost1.65-tools-dev,
  libboost-atomic1.65-dev,
  libboost-chrono1.65-dev,
+ libboost-container1.65-dev,
  libboost-context1.65-dev [any-i386 any-amd64 armel armhf arm64 mips mipsel powerpc ppc64el],
  libboost-coroutine1.65-dev [any-i386 any-amd64 armel armhf arm64 mips mipsel powerpc ppc64el],
  libboost-date-time1.65-dev,
@@ -123,6 +126,7 @@ Depends: ${misc:Depends},
  libboost-regex1.65-dev,
  libboost-serialization1.65-dev,
  libboost-signals1.65-dev,
+ libboost-stacktrace1.65-dev,
  libboost-system1.65-dev,
  libboost-test1.65-dev,
  libboost-thread1.65-dev,
@@ -295,6 +299,75 @@ Description: C++ representation of time duration, time point, and clocks
  .
  Lastly, Boost.Chrono includes typeof registration for duration and
  time_point to permit using emulated auto with C++03 compilers.
+
+Package: libboost-container1.65.1
+Homepage: http://boost.org/libs/container/
+Architecture: any
+Multi-Arch: same
+Section: libs
+Depends: ${misc:Depends}, ${shlibs:Depends}
+Pre-Depends: ${misc:Pre-Depends}
+Description: C++ library that implements several well-known containers
+ This package forms part of the Boost C++ Libraries collection.
+ .
+ Boost.Container library implements several well-known containers,
+ including STL containers. The aim of the library is to offers
+ advanced features not present in standard containers or to offer the
+ latest standard draft features for compilers that don't comply with
+ the latest C++ standard.
+ .
+ In short, what does Boost.Container offer?
+ .
+  * Move semantics are implemented, including move emulation
+    for pre-C++11 compilers.
+  * New advanced features (e.g. placement insertion,
+    recursive containers) are present.
+  * Containers support stateful allocators and are compatible with
+    Boost.Interprocess (they can be safely placed in shared memory).
+  * The library offers new useful containers:
+    * flat_map, flat_set, flat_multimap and flat_multiset: drop-in
+      replacements for standard associative containers but more
+      memory friendly and with faster searches.
+    * stable_vector: a std::list and std::vector hybrid container:
+      vector-like random-access iterators and list-like iterator
+      stability in insertions and erasures.
+    * slist: the classic pre-standard singly linked list implementation
+      offering constant-time size(). Note that C++11 forward_list has no size().
+
+Package: libboost-container1.65-dev
+Homepage: http://boost.org/libs/container/
+Architecture: any
+Multi-Arch: same
+Section: libdevel
+Depends: ${misc:Depends},
+ libboost1.65-dev (= ${binary:Version}),
+ libboost-container1.65.1 (= ${binary:Version})
+Description: C++ library that implements several well-known containers - dev files
+ This package forms part of the Boost C++ Libraries collection.
+ .
+ Boost.Container library implements several well-known containers,
+ including STL containers. The aim of the library is to offers
+ advanced features not present in standard containers or to offer the
+ latest standard draft features for compilers that don't comply with
+ the latest C++ standard.
+ .
+ In short, what does Boost.Container offer?
+ .
+  * Move semantics are implemented, including move emulation
+    for pre-C++11 compilers.
+  * New advanced features (e.g. placement insertion,
+    recursive containers) are present.
+  * Containers support stateful allocators and are compatible with
+    Boost.Interprocess (they can be safely placed in shared memory).
+  * The library offers new useful containers:
+    * flat_map, flat_set, flat_multimap and flat_multiset: drop-in
+      replacements for standard associative containers but more
+      memory friendly and with faster searches.
+    * stable_vector: a std::list and std::vector hybrid container:
+      vector-like random-access iterators and list-like iterator
+      stability in insertions and erasures.
+    * slist: the classic pre-standard singly linked list implementation
+      offering constant-time size(). Note that C++11 forward_list has no size().
 
 Package: libboost-context1.65.1
 Homepage: http://www.boost.org/libs/context/
@@ -1137,6 +1210,33 @@ Description: managed signals and slots library for C++
  to some set of slots, which are callback receivers (also called event
  targets or subscribers), which are called when the signal is
  "emitted."
+
+Package: libboost-stacktrace1.65.1
+Homepage: http://boost.org/libs/stacktrace/
+Architecture: any
+Multi-Arch: same
+Section: libs
+Depends: ${misc:Depends}, ${shlibs:Depends}
+Pre-Depends: ${misc:Pre-Depends}
+Description: library to capture and print stack traces
+ This package forms part of the Boost C++ Libraries collection.
+ .
+ Boost.Stacktrace library is a simple C++03 library that provides
+ information about call sequence in a human-readable form.
+
+Package: libboost-stacktrace1.65-dev
+Homepage: http://boost.org/libs/stacktrace/
+Architecture: any
+Multi-Arch: same
+Section: libdevel
+Depends: ${misc:Depends},
+ libboost1.65-dev (= ${binary:Version}),
+ libboost-stacktrace1.65.1 (= ${binary:Version})
+Description: library to capture and print stack traces - development files
+ This package forms part of the Boost C++ Libraries collection.
+ .
+ Boost.Stacktrace library is a simple C++03 library that provides
+ information about call sequence in a human-readable form.
 
 Package: libboost-system1.65.1
 Homepage: http://www.boost.org/libs/system/

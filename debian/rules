@@ -3,10 +3,10 @@
 # Boost libraries for which we want separate packages
 # context is conditionally compiled because it is not supported yet on several architectures
 # coroutine, coroutine2, and fiber depend on context, so they are also conditionally compiled
-boost_libs := atomic chrono date-time exception filesystem		\
+boost_libs := atomic chrono container date-time exception filesystem	\
               graph graph-parallel iostreams locale log math mpi	\
               mpi-python numpy program-options python random regex	\
-              serialization signals system test thread timer 		\
+              serialization signals stacktrace system test thread timer \
               type-erasure wave
 
 # these are special cases, where /usr/lib name differs from Boost library name
@@ -14,6 +14,7 @@ boost_lib_log := log log_setup
 boost_lib_math := math_c99 math_c99f math_tr1 math_tr1f
 boost_lib_math_long_double := math_c99l math_tr1l
 boost_lib_serialization := serialization wserialization
+boost_lib_stacktrace := stacktrace_noop stacktrace_addr2line stacktrace_backtrace stacktrace_basic
 boost_lib_test := prg_exec_monitor test_exec_monitor unit_test_framework
 
 py2versions = $(shell pyversions -rv)

@@ -5,6 +5,7 @@ boost1.65.1 (1.65.1+dfsg-1) UNRELEASED; urgency=medium
   * Remove "Force use g++-6"
   * patches/chrono-duration.patch: Remove.  Obsoleted by upstream changes.
   * New package for Python.NumPy.  Closes: #853734.
+  * New packages for Boost.Container, Boost.Stacktrace.
 
   [ Dimitri John Ledkov ]
   * Fixup py3 suffixes and symlinks.
