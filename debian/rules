@@ -127,6 +127,18 @@ override_dh_install:
 	   usr/share/doc/libboost$(PKGVERSION)-doc/examples \
 	   usr/share/doc/libboost-doc/examples
 
+# Debian decorates the python-using libraries with a python version suffix ("-py27")
+# Create symlinks for the upstream name to the default python version.
+# There is a separate set of links for each Python major version.
+
+	# Python2 compatibility links
+	dh_link -plibboost-numpy$(PKGVERSION)-dev \
+	   usr/lib/$(DEB_HOST_MULTIARCH)/libboost_numpy-py27.a \
+	   usr/lib/$(DEB_HOST_MULTIARCH)/libboost_numpy.a
+	dh_link -plibboost-numpy$(PKGVERSION)-dev \
+	   usr/lib/$(DEB_HOST_MULTIARCH)/libboost_numpy-py27.so \
+	   usr/lib/$(DEB_HOST_MULTIARCH)/libboost_numpy.so
+
 	dh_link -plibboost-python$(PKGVERSION)-dev \
 	   usr/lib/$(DEB_HOST_MULTIARCH)/libboost_python-py27.a \
 	   usr/lib/$(DEB_HOST_MULTIARCH)/libboost_python.a
@@ -140,6 +152,14 @@ override_dh_install:
 	dh_link -plibboost-mpi-python$(PKGVERSION)-dev \
 	   usr/lib/$(DEB_HOST_MULTIARCH)/libboost_mpi_python-py27.so \
 	   usr/lib/$(DEB_HOST_MULTIARCH)/libboost_mpi_python.so
+
+	# Python3 compatibility links
+	dh_link -plibboost-numpy$(PKGVERSION)-dev \
+	   usr/lib/$(DEB_HOST_MULTIARCH)/libboost_numpy3-py$(py3default).a \
+	   usr/lib/$(DEB_HOST_MULTIARCH)/libboost_numpy3.a
+	dh_link -plibboost-numpy$(PKGVERSION)-dev \
+	   usr/lib/$(DEB_HOST_MULTIARCH)/libboost_numpy3-py$(py3default).so \
+	   usr/lib/$(DEB_HOST_MULTIARCH)/libboost_numpy3.so
 
 	dh_link -plibboost-python$(PKGVERSION)-dev \
 	   usr/lib/$(DEB_HOST_MULTIARCH)/libboost_python3-py$(py3default).a \
