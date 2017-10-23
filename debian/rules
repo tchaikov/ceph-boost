@@ -40,7 +40,7 @@ include /usr/share/dpkg/architecture.mk
 
 override_dh_auto_configure: user-config.jam make-debhelper
 
-override_dh_auto_build: $(bjam) debian/bjam.1
+override_dh_auto_build: $(bjam) b2.1 bjam.1
 	$(JAM) $(JAM_WITHOUT) --without-python
 	for pyver in $(pyversions); do \
 	 	pyid=$$(echo $$pyver | tr -d .); \
@@ -67,7 +67,7 @@ override_dh_auto_clean: clean-debhelper
 	rm -rf bin.v2 dist
 	rm -rf user-config.jam
 	rm -rf build-* user-config-*.jam
-	rm -rf debian/bjam.1
+	rm -rf b2.1 bjam.1
 	dh_auto_clean
 
 override_dh_compress:
@@ -103,7 +103,7 @@ override_dh_install:
 	   dist/bin/quickbook \
 	   usr/bin
 	dh_link -plibboost$(PKGVERSION)-tools-dev usr/bin/bjam usr/bin/b2
-	dh_installman -plibboost$(PKGVERSION)-tools-dev debian/bjam.1 debian/bcp.1 debian/inspect.1 debian/quickbook.1
+	dh_installman -plibboost$(PKGVERSION)-tools-dev b2.1 bjam.1 debian/bcp.1 debian/inspect.1 debian/quickbook.1
 	dh_install -plibboost$(PKGVERSION)-tools-dev tools/boostbook/xsl/* usr/share/boostbook/xsl
 	dh_install -plibboost$(PKGVERSION)-tools-dev tools/boostbook/dtd/* usr/share/boostbook/dtd
 	dh_install -plibboost$(PKGVERSION)-tools-dev debian/tmp/usr/share/boost-build
@@ -369,7 +369,7 @@ $(bjam):
 		--libdir=$(CURDIR)/debian/tmp/usr/lib/$(DEB_HOST_MULTIARCH) \
 	  || cat bootstrap.log
 
-debian/bjam.1: $(bjam)
+b2.1 bjam.1: $(bjam)
 	help2man --name 'software build tool' --no-info ./bjam > $@
 
 user-config.jam:
