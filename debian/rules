@@ -176,6 +176,23 @@ override_dh_install:
 	   usr/lib/$(DEB_HOST_MULTIARCH)/libboost_mpi_python3-py$(py3default).so \
 	   usr/lib/$(DEB_HOST_MULTIARCH)/libboost_mpi_python3.so
 
+	# Python3 old debian compat links
+        # upstream started to call things python3-py3*, previously
+        # it was python-py3*, provide these old names too.
+	dh_link -plibboost-python$(PKGVERSION)-dev \
+	   usr/lib/$(DEB_HOST_MULTIARCH)/libboost_python3-py$(py3default).a \
+	   usr/lib/$(DEB_HOST_MULTIARCH)/libboost_python-py$(py3default).a
+	dh_link -plibboost-python$(PKGVERSION)-dev \
+	   usr/lib/$(DEB_HOST_MULTIARCH)/libboost_python3-py$(py3default).so \
+	   usr/lib/$(DEB_HOST_MULTIARCH)/libboost_python-py$(py3default).so
+
+	dh_link -plibboost-mpi-python$(PKGVERSION)-dev \
+	   usr/lib/$(DEB_HOST_MULTIARCH)/libboost_mpi_python3-py$(py3default).a \
+	   usr/lib/$(DEB_HOST_MULTIARCH)/libboost_mpi_python-py$(py3default).a
+	dh_link -plibboost-mpi-python$(PKGVERSION)-dev \
+	   usr/lib/$(DEB_HOST_MULTIARCH)/libboost_mpi_python3-py$(py3default).so \
+	   usr/lib/$(DEB_HOST_MULTIARCH)/libboost_mpi_python-py$(py3default).so
+
 	dh_installexamples -plibboost$(PKGVERSION)-doc debian/boost-build-examples
 	mkdir -p $(exampledir)
 	cat debian/example-files | xargs cp -a --parents --target-directory=$(exampledir)
