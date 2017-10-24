@@ -4,3 +4,4 @@ hppa-long-double-config.patch
 ppc64el-fp_traits-ibm-long-double.patch
 no-gcc-m-options.diff
 no-gcc-march-options.patch
+make-docs-use-offline-resources-only.patch

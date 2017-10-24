@@ -1,0 +1,56 @@
+Description: Offline the docs
+ Make documentation not use external webfonts and/or external javascript
+Author: Dimitri John Ledkov <xnox@ubuntu.com>
+
+--- boost1.65.1-1.65.1+dfsg.orig/libs/assert/doc/index.adoc
++++ boost1.65.1-1.65.1+dfsg/libs/assert/doc/index.adoc
+@@ -6,6 +6,7 @@ Distributed under the Boost Software Lic
+ See accompanying file LICENSE_1_0.txt or copy at
+ http://www.boost.org/LICENSE_1_0.txt
+ ////
++:webfonts!:
+ 
+ # Boost.Assert
+ Peter Dimov
+--- boost1.65.1-1.65.1+dfsg.orig/libs/geometry/doc/index/Doxyfile
++++ boost1.65.1-1.65.1+dfsg/libs/geometry/doc/index/Doxyfile
+@@ -217,7 +217,7 @@ EXT_LINKS_IN_WINDOW    = NO
+ FORMULA_FONTSIZE       = 10
+ FORMULA_TRANSPARENT    = YES
+ USE_MATHJAX            = NO
+-MATHJAX_RELPATH        = http://cdn.mathjax.org/mathjax/latest
++MATHJAX_RELPATH        = file:///usr/share/javascript/mathjax/MathJax.js
+ MATHJAX_EXTENSIONS     = 
+ SEARCHENGINE           = YES
+ SERVER_BASED_SEARCH    = NO
+--- boost1.65.1-1.65.1+dfsg.orig/libs/hana/doc/Doxyfile.in
++++ boost1.65.1-1.65.1+dfsg/libs/hana/doc/Doxyfile.in
+@@ -133,6 +133,6 @@ SEARCHENGINE            = @HANA_SEARCHEN
+ # Mathjax (HTML only)
+ USE_MATHJAX             = YES
+ MATHJAX_FORMAT          = HTML-CSS
+-MATHJAX_RELPATH         = https://cdn.mathjax.org/mathjax/latest
++MATHJAX_RELPATH         = file:///usr/share/javascript/mathjax/MathJax.js
+ MATHJAX_EXTENSIONS      =
+ MATHJAX_CODEFILE        = @Boost.Hana_SOURCE_DIR@/doc/js/mathjax-config.js
+--- boost1.65.1-1.65.1+dfsg.orig/libs/smart_ptr/doc/smart_ptr.adoc
++++ boost1.65.1-1.65.1+dfsg/libs/smart_ptr/doc/smart_ptr.adoc
+@@ -6,6 +6,7 @@ Distributed under the Boost Software Lic
+ See accompanying file LICENSE_1_0.txt or copy at
+ http://www.boost.org/LICENSE_1_0.txt
+ ////
++:webfonts!:
+ 
+ # Boost.SmartPtr: The Smart Pointer Library
+ Greg Colvin, Beman Dawes, Peter Dimov, Glen Fernandes
+--- boost1.65.1-1.65.1+dfsg.orig/libs/test/doc/doxygen/Doxyfile
++++ boost1.65.1-1.65.1+dfsg/libs/test/doc/doxygen/Doxyfile
+@@ -1468,7 +1468,7 @@ MATHJAX_FORMAT         = HTML-CSS
+ # The default value is: http://cdn.mathjax.org/mathjax/latest.
+ # This tag requires that the tag USE_MATHJAX is set to YES.
+ 
+-MATHJAX_RELPATH        = http://cdn.mathjax.org/mathjax/latest
++MATHJAX_RELPATH        = file:///usr/share/javascript/mathjax/MathJax.js
+ 
+ # The MATHJAX_EXTENSIONS tag can be used to specify one or more MathJax
+ # extension names that should be enabled during MathJax rendering. For example

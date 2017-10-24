@@ -9,6 +9,8 @@ boost1.65.1 (1.65.1+dfsg-1) UNRELEASED; urgency=medium
 
   [ Dimitri John Ledkov ]
   * Fixup py3 suffixes and symlinks.
+  * In asciidoctor docs, do not use external webfonts.
+  * In doxygen docs, use local mathjax library.
 
  -- Steve M. Robbins <smr@debian.org>  Sun, 22 Oct 2017 11:43:15 -0500
 

@@ -149,7 +149,7 @@ Package: libboost1.65-doc
 Homepage: http://www.boost.org/libs/
 Architecture: all
 Section: doc
-Depends: ${misc:Depends}
+Depends: ${misc:Depends}, libjs-mathjax
 Suggests: libboost1.65-dev (>= ${source:Version})
 Conflicts: libboost1.42-doc, libboost1.46-doc, libboost1.48-doc, libboost1.49-doc, libboost1.50-doc, libboost1.52-doc, libboost1.53-doc, libboost1.54-doc, libboost1.55-doc, libboost1.57-doc, libboost1.58-doc, libboost1.60-doc, libboost1.61-doc, libboost1.62-doc, libboost1.63-doc
 Description: Boost.org libraries documentation placeholder
