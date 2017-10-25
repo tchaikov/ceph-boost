@@ -1,4 +1,4 @@
-boost1.65.1 (1.65.1+dfsg-1) UNRELEASED; urgency=medium
+boost1.65.1 (1.65.1+dfsg-1) unstable; urgency=medium
 
   [ Steve M. Robbins ]
   * New upstream.
@@ -12,7 +12,7 @@ boost1.65.1 (1.65.1+dfsg-1) UNRELEASED; urgency=medium
   * In asciidoctor docs, do not use external webfonts.
   * In doxygen docs, use local mathjax library.
 
- -- Steve M. Robbins <smr@debian.org>  Sun, 22 Oct 2017 11:43:15 -0500
+ -- Dimitri John Ledkov <xnox@ubuntu.com>  Wed, 25 Oct 2017 15:27:28 +0100
 
 boost1.63 (1.63.0+dfsg-1) unstable; urgency=medium
 
