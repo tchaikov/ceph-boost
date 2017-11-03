@@ -15,8 +15,8 @@ use BOOST_SYMBOL_EXPORT
 
 diff --git a/boost/include/boost/python/module_init.hpp b/boost/include/boost/python/module_init.hpp
 index a9536c88e..7fe5a1c8a 100644
---- a/boost/include/boost/python/module_init.hpp
-+++ b/boost/include/boost/python/module_init.hpp
+--- a/boost/python/module_init.hpp
++++ b/boost/python/module_init.hpp
 @@ -66,25 +66,9 @@ BOOST_PYTHON_DECL PyObject* init_module(char const* name, void(*)());
  
  #  endif
