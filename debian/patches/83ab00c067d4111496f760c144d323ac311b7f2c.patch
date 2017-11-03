@@ -1,0 +1,48 @@
+From 83ab00c067d4111496f760c144d323ac311b7f2c Mon Sep 17 00:00:00 2001
+From: Marvin Schmidt <marv@exherbo.org>
+Date: Mon, 4 Sep 2017 07:43:43 +0200
+Subject: [PATCH] Fix symbol visibility of init method
+
+This was properly an oversight when switching to the BOOST_SYMBOL_*
+symbols from Boost.Config in commit 0224f54a (see #1)
+
+Since Boost.Config is already doing the differentiation between
+different platforms and compilers we can simplify this bit and just
+use BOOST_SYMBOL_EXPORT
+---
+ include/boost/python/module_init.hpp | 22 +++-------------------
+ 1 file changed, 3 insertions(+), 19 deletions(-)
+
+diff --git a/boost/include/boost/python/module_init.hpp b/boost/include/boost/python/module_init.hpp
+index a9536c88e..7fe5a1c8a 100644
+--- a/boost/include/boost/python/module_init.hpp
++++ b/boost/include/boost/python/module_init.hpp
+@@ -66,25 +66,9 @@ BOOST_PYTHON_DECL PyObject* init_module(char const* name, void(*)());
+ 
+ #  endif
+ 
+-#  if (defined(_WIN32) || defined(__CYGWIN__)) && !defined(BOOST_PYTHON_STATIC_MODULE)
+-
+-#   define BOOST_PYTHON_MODULE_INIT(name)                           \
+-  void BOOST_PP_CAT(init_module_,name)();                           \
+-extern "C" __declspec(dllexport) _BOOST_PYTHON_MODULE_INIT(name)
+-
+-#  elif BOOST_PYTHON_USE_GCC_SYMBOL_VISIBILITY
+-
+-#   define BOOST_PYTHON_MODULE_INIT(name)                               \
+-  void BOOST_PP_CAT(init_module_,name)();                               \
+-extern "C" __attribute__ ((__visibility__("default"))) _BOOST_PYTHON_MODULE_INIT(name)
+-
+-#  else
+-
+-#   define BOOST_PYTHON_MODULE_INIT(name)                               \
+-  void BOOST_PP_CAT(init_module_,name)();                               \
+-extern "C" _BOOST_PYTHON_MODULE_INIT(name)
+-
+-#  endif
++#  define BOOST_PYTHON_MODULE_INIT(name)                       \
++  void BOOST_PP_CAT(init_module_,name)();                      \
++extern "C" BOOST_SYMBOL_EXPORT _BOOST_PYTHON_MODULE_INIT(name)
+ 
+ # endif
+ 
