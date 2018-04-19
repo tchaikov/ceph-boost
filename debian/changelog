@@ -1,7 +1,11 @@
-boost1.65.1 (1.65.1+dfsg-2) UNRELEASED; urgency=medium
+boost1.67 (1.67.0-1) UNRELEASED; urgency=medium
 
+  [ Dimitri John Ledkov ]
   * coroutine2 is no longer excludable library, adjust debian/rules.
   * Cherrypick upstream patch to fix python module_init symbol visibility.
+
+  [ Giovanni Mascellani ]
+  * New upstream release.
 
  -- Dimitri John Ledkov <xnox@ubuntu.com>  Thu, 26 Oct 2017 10:14:47 +0100
 
