@@ -8,8 +8,8 @@ See github issue 89.  The Debian patch was updated to remove this.
 
 
 
---- boost1.65.1-1.65.1+dfsg.orig/boost/math/tools/config.hpp
-+++ boost1.65.1-1.65.1+dfsg/boost/math/tools/config.hpp
+--- boost1.65.1-1.65.1+dfsg.orig/libs/math/include/boost/math/tools/config.hpp
++++ boost1.65.1-1.65.1+dfsg/libs/math/include/boost/math/tools/config.hpp
 @@ -29,9 +29,10 @@
  #include <boost/math/tools/user.hpp>
  
@@ -18,7 +18,7 @@ See github issue 89.  The Debian patch was updated to remove this.
 +   || (defined(__hppa) && !defined(__OpenBSD__) && !defined(__linux__)) \
 +   || (defined(__NO_LONG_DOUBLE_MATH) && (DBL_MANT_DIG != LDBL_MANT_DIG))) \
     && !defined(BOOST_MATH_NO_LONG_DOUBLE_MATH_FUNCTIONS)
--//#  define BOOST_MATH_NO_LONG_DOUBLE_MATH_FUNCTIONS
+-#  define BOOST_MATH_NO_LONG_DOUBLE_MATH_FUNCTIONS
 +#  define BOOST_MATH_NO_LONG_DOUBLE_MATH_FUNCTIONS
  #endif
  #if BOOST_WORKAROUND(__BORLANDC__, BOOST_TESTED_AT(0x582))

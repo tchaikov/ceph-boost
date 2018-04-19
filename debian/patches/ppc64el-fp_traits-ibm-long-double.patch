@@ -16,8 +16,8 @@ regressions on PPC64BE.
  boost/math/special_functions/detail/fp_traits.hpp | 9 ++++++++-
  1 file changed, 8 insertions(+), 1 deletion(-)
 
---- boost1.65.1-1.65.1+dfsg.orig/boost/math/special_functions/detail/fp_traits.hpp
-+++ boost1.65.1-1.65.1+dfsg/boost/math/special_functions/detail/fp_traits.hpp
+--- boost1.65.1-1.65.1+dfsg.orig/libs/math/include/boost/math/special_functions/detail/fp_traits.hpp
++++ boost1.65.1-1.65.1+dfsg/libs/math/include/boost/math/special_functions/detail/fp_traits.hpp
 @@ -366,6 +366,13 @@
  
  // PowerPC extended double precision format (128 bits)
