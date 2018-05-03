@@ -6,3 +6,4 @@ no-gcc-m-options.diff
 no-gcc-march-options.patch
 make-docs-use-offline-resources-only.patch
 #83ab00c067d4111496f760c144d323ac311b7f2c.patch
+fix-python-mpi.patch
