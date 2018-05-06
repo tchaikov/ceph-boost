@@ -1,6 +1,3 @@
-doc/html/boost_asio/example
-doc/html/boost_asio/examples
-doc/html/date_time/examples
 libs/accumulators/example
 libs/algorithm/example
 libs/algorithm/minmax/example
@@ -26,11 +23,9 @@ libs/fiber/examples
 libs/filesystem/example
 libs/flyweight/example
 libs/format/example
-libs/functional/hash/examples
 libs/function/example
 libs/function_types/example
 libs/fusion/example
-libs/geometry/doc/html/geometry/examples
 libs/geometry/doc/index/src/examples
 libs/geometry/doc/src/docutils/tools/doxygen_xml2qbk/sample/src/examples
 libs/geometry/doc/src/examples
