@@ -412,6 +412,39 @@ Description: provides a sort of cooperative multitasking on a single thread
  to C# keyword yield in C++.
 Conflicts: libboost-context1.53-dev, libboost-context1.54-dev, libboost-context1.55-dev, libboost-context1.57-dev, libboost-context1.58-dev, libboost-context1.60-dev, libboost-context1.61-dev, libboost-context1.62-dev, libboost-context1.63-dev, libboost-context1.65-dev
 
+Package: libboost-contract1.67.0
+Homepage: http://boost.org/libs/contract/
+Architecture: any
+Multi-Arch: same
+Section: libs
+Depends: ${misc:Depends}, ${shlibs:Depends}
+Pre-Depends: ${misc:Pre-Depends}
+Description: Contract library for C++
+ This package forms part of the Boost C++ Libraries collection.
+ .
+ All contract programming features are supported: Subcontracting,
+ class invariants, postconditions (with old and return values),
+ preconditions, customizable actions on assertion failure (e.g.,
+ terminate or throw), optional compilation and checking of assertions,
+ etc.
+
+Package: libboost-contract1.67-dev
+Homepage: http://boost.org/libs/contract/
+Architecture: any
+Multi-Arch: same
+Section: libdevel
+Depends: ${misc:Depends},
+ libboost1.67-dev (= ${binary:Version}),
+ libboost-contract1.67.0 (= ${binary:Version})
+Description: Contract library for C++ - dev files
+ This package forms part of the Boost C++ Libraries collection.
+ .
+ All contract programming features are supported: Subcontracting,
+ class invariants, postconditions (with old and return values),
+ preconditions, customizable actions on assertion failure (e.g.,
+ terminate or throw), optional compilation and checking of assertions,
+ etc.
+
 Package: libboost-coroutine1.67.0
 Homepage: http://www.boost.org/libs/coroutine/
 Architecture: any-i386 any-amd64 armel armhf arm64 mips mipsel powerpc ppc64el
