@@ -19,12 +19,15 @@ boost_lib_test := prg_exec_monitor test_exec_monitor unit_test_framework
 
 py2versions = $(shell pyversions -rv)
 py3versions = $(shell py3versions -rv)
+py2verids = $(subst .,,$(py2versions))
+py3verids = $(subst .,,$(py3versions))
 pyversions = $(py2versions) $(py3versions)
+pyverids = $(py2verids) $(py3verids)
 
 # These are special cases for suffixes.  Generally come from --python-buildid, so begin with a dash.
-boost_suffixes_python := $(addprefix 3-py,$(subst .,,$(py3versions))) $(addprefix -py,$(subst .,,$(py2versions)))
+boost_suffixes_python := $(foreach v,$(pyverids),$(v)-py$(v))
 boost_suffixes_numpy := $(boost_suffixes_python)
-boost_suffixes_mpi-python := $(boost_suffixes_python)
+boost_suffixes_mpi-python := $(foreach v,$(pyverids),-py$(v))
 
 py3default = $(subst .,,$(shell py3versions -dv))
 
@@ -180,18 +183,18 @@ override_dh_install:
         # upstream started to call things python3-py3*, previously
         # it was python-py3*, provide these old names too.
 	dh_link -plibboost-python$(PKGVERSION)-dev \
-	   usr/lib/$(DEB_HOST_MULTIARCH)/libboost_python3-py$(py3default).a \
-	   usr/lib/$(DEB_HOST_MULTIARCH)/libboost_python-py$(py3default).a
+	   usr/lib/$(DEB_HOST_MULTIARCH)/libboost_python-py$(py3default).a \
+	   usr/lib/$(DEB_HOST_MULTIARCH)/libboost_python3-py$(py3default).a
 	dh_link -plibboost-python$(PKGVERSION)-dev \
-	   usr/lib/$(DEB_HOST_MULTIARCH)/libboost_python3-py$(py3default).so \
-	   usr/lib/$(DEB_HOST_MULTIARCH)/libboost_python-py$(py3default).so
+	   usr/lib/$(DEB_HOST_MULTIARCH)/libboost_python-py$(py3default).so \
+	   usr/lib/$(DEB_HOST_MULTIARCH)/libboost_python3-py$(py3default).so
 
 	dh_link -plibboost-mpi-python$(PKGVERSION)-dev \
-	   usr/lib/$(DEB_HOST_MULTIARCH)/libboost_mpi_python3-py$(py3default).a \
-	   usr/lib/$(DEB_HOST_MULTIARCH)/libboost_mpi_python-py$(py3default).a
+	   usr/lib/$(DEB_HOST_MULTIARCH)/libboost_mpi_python-py$(py3default).a \
+	   usr/lib/$(DEB_HOST_MULTIARCH)/libboost_mpi_python3-py$(py3default).a
 	dh_link -plibboost-mpi-python$(PKGVERSION)-dev \
-	   usr/lib/$(DEB_HOST_MULTIARCH)/libboost_mpi_python3-py$(py3default).so \
-	   usr/lib/$(DEB_HOST_MULTIARCH)/libboost_mpi_python-py$(py3default).so
+	   usr/lib/$(DEB_HOST_MULTIARCH)/libboost_mpi_python-py$(py3default).so \
+	   usr/lib/$(DEB_HOST_MULTIARCH)/libboost_mpi_python3-py$(py3default).so
 
 	dh_installexamples -plibboost$(PKGVERSION)-doc debian/boost-build-examples
 	mkdir -p $(exampledir)
