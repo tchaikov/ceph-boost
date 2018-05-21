@@ -57,6 +57,8 @@ override_dh_auto_build: $(bjam) b2.1 bjam.1
 	cd tools/inspect/build && $(JAM)
 	cd tools/quickbook && $(JAM)
 
+	$(JAM_DOC) --build-dir=build-doc doc
+
 testsuite:
 	cd status && $(JAM) $(JAM_WITHOUT)
 
@@ -115,10 +117,8 @@ override_dh_install:
 	dh_installdocs -plibboost-date-time$(PKGVERSION)-dev libs/date_time/data
 
 	# package libboost-doc
-	rm -rf $(htmldir)
-	mkdir -p $(htmldir) 
-	#cat debian/documentation-files | xargs cp --parents --target-directory=$(htmldir)
-	#find doc libs -name doc | xargs -n1 cp --archive --parents --target-directory=$(htmldir)
+	mkdir -p debian/libboost$(PKGVERSION)-doc/usr/share/doc/libboost$(PKGVERSION)-doc
+	cp -av doc debian/libboost$(PKGVERSION)-doc/usr/share/doc/libboost$(PKGVERSION)-doc
 	rm -rf $(htmldir)/boost
 	dh_link -plibboost$(PKGVERSION)-doc \
 	   usr/include/boost \
@@ -380,6 +380,7 @@ bbv2dir = $(CURDIR)/tools/build
 
 # With --ignore-site-config, can probably drop Build-Conflicts on boost-build.
 JAM = $(bjam) $(JOBS) -d2 $(JAM_OPT) --layout=system --ignore-site-config --user-config=$(CURDIR)/user-config.jam debug-symbols=on
+JAM_DOC = $(bjam) $(JOBS) -d2 --ignore-site-config --user-config=$(CURDIR)/user-config-doc.jam
 
 
 
@@ -399,6 +400,9 @@ user-config.jam:
 		cp $@ user-config-$$pyver.jam; \
 		echo "using python : $$pyver : /usr ;" >> user-config-$$pyver.jam; \
 	done
+	echo "using boostbook ;" > user-config-doc.jam
+	echo "using quickbook ;" >> user-config-doc.jam
+	echo "using doxygen ;" >> user-config-doc.jam
 
 $(filtered_files): % : %.in
 	sed -e 's/@PKGVERSION@/$(PKGVERSION)/g' < $< > $@
