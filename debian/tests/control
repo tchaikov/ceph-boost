@@ -1,0 +1,11 @@
+Test-Command: debian/tests/simple_test libs/accumulators/example/main.cpp accumulators_test
+
+Test-Command: debian/tests/simple_test libs/algorithm/example/clamp_example.cpp algorithm_clamp_test
+
+Test-Command: debian/tests/simple_test libs/algorithm/example/is_palindrome_example.cpp algorithm_is_palindrome_test
+
+Test-Command: debian/tests/simple_test libs/algorithm/example/search_example.cpp algorithm_search_test
+
+Test-Command: debian/tests/simple_test debian/tests/test_align.cpp align_test
+
+Test-Command: debian/tests/simple_test debian/tests/test_any.cpp any_test

@@ -1,0 +1,11 @@
+#!/bin/bash
+
+set -e
+
+SOURCE_FILENAME="$1"
+EXEC_FILENAME="$2"
+
+cp "$SOURCE_FILENAME" "$AUTOPKGTEST_TMP"
+cd "$AUTOPKGTEST_TMP"
+g++ -o "$EXEC_FILENAME" `basename "$SOURCE_FILENAME"`
+./"$EXEC_FILENAME"
