@@ -1,6 +1,6 @@
 #! /usr/bin/make -f
 
-DEB_BUILD_MAINT_OPTIONS=hardening=+all
+DEB_BUILD_MAINT_OPTIONS = hardening=+all
 
 # Boost libraries for which we want separate packages
 # context is conditionally compiled because it is not supported yet on several architectures
@@ -60,7 +60,11 @@ override_dh_auto_build: $(bjam) b2.1 bjam.1
 	cd tools/inspect/build && $(JAM)
 	cd tools/quickbook && $(JAM)
 
+ifneq (,$(filter nodoc,$(DEB_BUILD_OPTIONS)))
+	mkdir -p doc
+else
 	$(JAM_DOC) --build-dir=build-doc doc
+endif
 
 testsuite:
 	cd status && $(JAM) $(JAM_WITHOUT)
