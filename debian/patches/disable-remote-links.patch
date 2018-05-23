@@ -1,0 +1,14 @@
+Index: boost1.67-1.67.0/tools/quickbook/doc/block.qbk
+===================================================================
+--- boost1.67-1.67.0.orig/tools/quickbook/doc/block.qbk
++++ boost1.67-1.67.0/tools/quickbook/doc/block.qbk
+@@ -563,9 +563,6 @@ sf_logo
+ 
+ Now everywhere the sf_logo is placed, the picture will be inlined.
+ 
+-[def sf_logo [$http://sourceforge.net/sflogo.php?group_id=28447&type=1]]
+-sf_logo
+-
+ [tip It's a good idea to use macro identifiers that are distinguishable.
+ For instance, in this document, macro identifiers have two leading and
+ trailing underscores (e.g. [^\__spirit__]). The reason is to avoid
