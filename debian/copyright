@@ -7,6 +7,8 @@ Files-Excluded:
  *.rc
  *.chm
  */resource.h
+ */.gitignore
+ */.gitattributes
  libs/gil/doc/html/*
  libs/locale/doc/html/*
  libs/sort/doc/doxygen/html/*
