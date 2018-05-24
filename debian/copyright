@@ -8,6 +8,8 @@ Files-Excluded:
  *.chm
  */resource.h
  libs/gil/doc/html/*
+ libs/locale/doc/html/*
+ libs/sort/doc/doxygen/html/*
  doc/images/valid-html401.png
  tools/build/src/engine/boehm_gc/config.guess
  tools/build/src/engine/boehm_gc/config.sub
