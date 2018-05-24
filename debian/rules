@@ -386,18 +386,9 @@ JAM_DOC = $(bjam) $(JOBS) -d2 --ignore-site-config --user-config=$(CURDIR)/user-
 
 
 $(bjam):
-	# Use toolset "cc" to build bjam, because this causes bootstrap.sh
-	# to honor CFLAGS; however, it still does not know about CPPFLAGS
-	# and LDFLAGS, so we have to cook up things a little bit
-	CFLAGS="$(CFLAGS) $(CPPFLAGS) $(LDFLAGS)" \
-		./bootstrap.sh --with-icu=/usr --prefix=$(CURDIR)/debian/tmp/usr \
+	./bootstrap.sh --with-icu=/usr --prefix=$(CURDIR)/debian/tmp/usr \
 		--libdir=$(CURDIR)/debian/tmp/usr/lib/$(DEB_HOST_MULTIARCH) \
-		--with-toolset=cc \
 	  || cat bootstrap.log
-	# However, cc is not supported in later stages, so we need to revert
-	# it back to gcc (but at this point the whole Boost.Build honors env
-	# vars)
-	sed -i -e 's|cc|gcc|g' project-config.jam
 
 b2.1 bjam.1: $(bjam)
 	help2man --name 'software build tool' --no-info ./bjam > $@
