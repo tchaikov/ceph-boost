@@ -6,6 +6,9 @@ Files-Excluded:
  *.js
  *.rc
  *.chm
+ *.vcproj
+ *.vcxproj
+ *.vcxproj.filters
  */resource.h
  */.gitignore
  */.gitattributes
