@@ -12,6 +12,9 @@ Files-Excluded:
  */resource.h
  */.gitignore
  */.gitattributes
+ */.gitmodules
+ libs/beast/test/extern/zlib-1.2.11/contrib/*
+ libs/beast/test/extern/zlib-1.2.11/doc/*
  libs/gil/doc/html/*
  libs/locale/doc/html/*
  libs/sort/doc/doxygen/html/*
