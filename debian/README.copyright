@@ -1,0 +1,46 @@
+
+HOW TO GENERATE THE COPYRIGHT FILE
+----------------------------------
+
+The debian/copyright file for Boost is very complicated, because the
+library has accumulated a huge number of files and contributors over
+the years. It would be intractable to fill it by hand, and FTP masters
+do not like the previous choice to just generically indicate the Boost
+Software License and see each individual file for the differences.
+
+Fortunately Boost itself already contains a small program, called bcp,
+that searches for common regular expressions in each file to find the
+file's license and copyright holders. The program has some
+deficiencies, but is overall a good foundation to automatically
+generate a debian/copyright file.
+
+A patched fork of the bcp program is maintained by Giovanni Mascellani
+in the repository [1].
+
+ [1] https://salsa.debian.org/gio/boost-copyright
+
+It can be compiled with qmake and make. Then you change dir to where
+you have unpacked the Boost tarball and run something like:
+
+    find -type f | grep -v ^./debian/ | grep -v ^./.pc/ | bcp --report-debian --read-from-stdin debian/copyright
+
+This will erase and regenerate the debian/copyright file. The
+boost-copyright repository already contains a skeleton of the
+copyright file (called manual_copyright), which is automatically
+included at the beginning of the generated file.
+
+Since bcp cannot identify the copyright status for each single file,
+because some of them do not actually contain such information, the
+manual_copyright file contains some blanket stanzas for the main Boost
+directories, so that the copyright for each not better identified file
+is (reasonably) assigned to the people responsible for that
+subdirectory. The subdirectories loosely correspond to the individual
+Boost libraries. Also, a public domain dedication is presumed for the
+few and very simple files that are neither recognized by the program,
+neither contained in one of the well-known subdirectories.
+
+The script generator.py, in the boost-copyright repository, can be
+used to manually regenerate most of manual_copyright based on the
+meta/repositories.json files available in the Boost
+distribution. However it is recommended to carefully check its output,
+because there will be some inaccuracies.
