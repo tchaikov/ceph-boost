@@ -1,0 +1,47 @@
+
+HOW TO GENERATE THE SOURCE TARBALL
+---------------------------------
+
+The Debian package for Boost are not built from the tarballs
+officially published on the Boost website, but from the
+correspondingly named tags in the git project hosted at [1].
+
+ [1] https://github.com/boostorg/boost/
+
+This is because the distributed tarballs are already partially
+processed (for example, some documentation is already built and some
+files are organized in a different directory structure), while we want
+the Debian build process to start from the most unprocessed source
+distribution available.
+
+The git Boost project makes extensive use of git submodules to handle
+all its components. The git command itself is not able to dump a
+tarball that includes the submodules, but an auxiliary tool like
+git-archive-all[2] can be easily do its job.
+
+ [2] https://github.com/Kentzo/git-archive-all
+
+All in all, in order to create an upstream tarball you have to:
+
+ 1. Clone the git-archive-all repository:
+
+    git clone git@github.com:Kentzo/git-archive-all.git
+
+ 2. Clone the super-project, checkout the desired tag and initialize
+    all submodules:
+
+    git clone git@github.com:boostorg/boost.git upstream
+    cd upstream
+    git checkout boost-1.67.0
+    git submodule update --init --recursive
+
+ 3. Use git-archive-all to build the tarball:
+
+    ../git-archive-all/git_archive_all.py ../boost.tar.gz
+
+ 4. Filter the tarball content according to debian/copyright:
+
+    cd boost/packaging/directory
+    mk-origtargz ../where/you/put/boost.tar.gz
+
+And there it is you tarball ready for building. :-)
