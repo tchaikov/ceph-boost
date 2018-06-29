@@ -8,6 +8,7 @@ boost1.67 (1.67.0-1) UNRELEASED; urgency=medium
   * New upstream release.
   * Add myself as uploader.
   * Enable hardening flags.
+  * Rewrite debian/copyright in better detail.
 
  -- Dimitri John Ledkov <xnox@ubuntu.com>  Thu, 26 Oct 2017 10:14:47 +0100
 
