@@ -9,3 +9,4 @@ make-docs-use-offline-resources-only.patch
 fix-python-mpi.patch
 fix-examples.patch
 disable-remote-links.patch
+fix-mpi-python37.patch
