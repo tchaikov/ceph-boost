@@ -1,0 +1,60 @@
+From 7b0e7701da408759660fffaed733e38432747805 Mon Sep 17 00:00:00 2001
+From: Dimitri John Ledkov <xnox@ubuntu.com>
+Date: Wed, 4 Jul 2018 13:58:18 +0100
+Subject: [PATCH] Add PEP-3149 compliant extension suffix discovery.
+
+---
+ src/tools/python.jam | 35 +++++++++++++++++++++++++++--------
+ 1 file changed, 27 insertions(+), 8 deletions(-)
+
+--- a/tools/build/src/tools/python.jam
++++ b/tools/build/src/tools/python.jam
+@@ -711,12 +711,6 @@
+     target-os ?= [ feature.defaults target-os ] ;
+     target-os = $(target-os:G=) ;
+ 
+-    if $(target-os) = windows && <python-debugging>on in $(condition)
+-    {
+-        extension-suffix ?= _d ;
+-    }
+-    extension-suffix ?= "" ;
+-
+     local cmds-to-try ;
+ 
+     if ! $(cmd-or-prefix) || [ GLOB $(cmd-or-prefix) : * ]
+@@ -947,8 +941,33 @@
+     toolset.add-requirements
+         "$(target-requirements:J=,):<python.interpreter>$(interpreter-cmd)" ;
+ 
+-    # Register the right suffix for extensions.
+-    register-extension-suffix $(extension-suffix) : $(target-requirements) ;
++    #
++    # Discover and set extension suffix
++    #
++    debug-message "Checking for extension suffix..." ;
++    local full-cmd = "from __future__ import print_function; import sysconfig; print(sysconfig.get_config_var('SO'))" ;
++    local full-cmd = $(interpreter-cmd)" -c \"$(full-cmd)\"" ;
++    debug-message "running command '$(full-cmd)'" ;
++    local result = [ SHELL $(full-cmd) : strip-eol : exit-status ] ;
++    if $(result[2]) = 0
++    {
++        debug-message "Python extenssion suffix is $(result[1])" ;
++        type.set-generated-target-suffix PYTHON_EXTENSION : $(target-requirements) : <$(result[1])> ;
++    }
++    else
++    {
++        debug-message "Failed to determine python extension suffix" ;
++        debug-message "Falling back to old behaviour" ;
++        if $(target-os) = windows && <python-debugging>on in $(condition)
++        {
++            extension-suffix ?= _d ;
++        }
++        extension-suffix ?= "" ;
++
++        # Register the right suffix for extensions.
++        register-extension-suffix $(extension-suffix) : $(target-requirements) ;
++    }
++
+ 
+     #
+     # Declare the "python" target. This should really be called

@@ -4,6 +4,7 @@ boost1.67 (1.67.0-1) UNRELEASED; urgency=medium
   * coroutine2 is no longer excludable library, adjust debian/rules.
   * Cherrypick upstream patch to fix python module_init symbol visibility.
   * Further fixup boost-mpi-python library tag
+  * Correct mpi python extension suffix, as per PEP-3149.
 
   [ Giovanni Mascellani ]
   * New upstream release.
