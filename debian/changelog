@@ -3,8 +3,14 @@ boost1.67 (1.67.0-1) UNRELEASED; urgency=medium
   [ Dimitri John Ledkov ]
   * coroutine2 is no longer excludable library, adjust debian/rules.
   * Cherrypick upstream patch to fix python module_init symbol visibility.
-  * Further fixup boost-mpi-python library tag
+  * Further fixup boost-mpi-python library tag.
   * Correct mpi python extension suffix, as per PEP-3149.
+  * Use separate stagedirs for sub-builds
+  * Stop using pyid, which is now meant for python variants only
+    (e.g. debug)
+  * Switch to the new upstream python tags for python like libraries.
+  * Continue to provide old names, as compat symlinks in the -dev packages
+    only. This is to be dropped.
 
   [ Giovanni Mascellani ]
   * New upstream release.
