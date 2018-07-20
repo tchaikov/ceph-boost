@@ -1,0 +1,10 @@
+image: debian:buster
+
+build:
+  stage: build
+  before_script:
+    - apt-get update && apt-get -y install
+      autopkgtest
+      --no-install-recommends
+  script:
+    - autopkgtest -B . -- null
