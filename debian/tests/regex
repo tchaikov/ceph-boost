@@ -1,0 +1,27 @@
+#!/bin/sh
+# (C) 2018 Anton Gladky
+
+set -e
+
+WORKDIR=$(mktemp -d)
+trap "rm -rf $WORKDIR" 0 INT QUIT ABRT PIPE TERM
+mkdir -p $WORKDIR/src
+mkdir -p $WORKDIR/build
+
+cp debian/tests/srcs/regex/* $WORKDIR/src/
+
+cd $WORKDIR/build
+cmake ./../src
+make
+
+echo "build: OK"
+
+[ -x demo1 ]
+./demo1 $WORKDIR/src/demo1.cpp ; html2text $WORKDIR/src/demo1.cpp.htm
+
+echo "run: demo1 OK"
+
+[ -x demo2 ]
+./demo2 $WORKDIR/src/demo2.cpp ; html2text $WORKDIR/src/demo2.cpp.htm
+
+echo "run: demo2 OK"

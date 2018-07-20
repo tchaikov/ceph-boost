@@ -1,0 +1,49 @@
+#!/bin/sh
+# (C) 2018 Anton Gladky
+
+set -e
+
+export OMPI_MCA_plm_rsh_agent=/bin/false
+
+WORKDIR=$(mktemp -d)
+trap "rm -rf $WORKDIR" 0 INT QUIT ABRT PIPE TERM
+mkdir -p $WORKDIR/src
+mkdir -p $WORKDIR/build
+
+cp debian/tests/srcs/mpi/* $WORKDIR/src/
+
+cd $WORKDIR/build
+cmake ./../src
+make
+
+echo "build: OK"
+
+[ -x demo1 ]
+mpirun --oversubscribe --allow-run-as-root -np 8 ./demo1
+
+echo "run: demo1 OK"
+
+[ -x demo2 ]
+mpirun --oversubscribe --allow-run-as-root -np 2 ./demo2
+
+echo "run: demo2 OK"
+
+[ -x demo3 ]
+mpirun --oversubscribe --allow-run-as-root -np 2 ./demo3
+
+echo "run: demo3 OK"
+
+[ -x demo4 ]
+mpirun --oversubscribe --allow-run-as-root -np 8 ./demo4
+
+echo "run: demo4 OK"
+
+[ -x demo5 ]
+mpirun --oversubscribe --allow-run-as-root -np 8 ./demo5
+
+echo "run: demo5 OK"
+
+[ -x demo6 ]
+mpirun --oversubscribe --allow-run-as-root -np 8 ./demo6
+
+echo "run: demo6 OK"

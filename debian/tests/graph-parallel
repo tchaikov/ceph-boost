@@ -1,0 +1,31 @@
+#!/bin/sh
+# (C) 2018 Anton Gladky
+
+set -e
+
+export OMPI_MCA_plm_rsh_agent=/bin/false
+
+WORKDIR=$(mktemp -d)
+trap "rm -rf $WORKDIR" 0 INT QUIT ABRT PIPE TERM
+mkdir -p $WORKDIR/src
+mkdir -p $WORKDIR/build
+
+cp debian/tests/srcs/graph-parallel/* $WORKDIR/src/
+
+cd $WORKDIR/build
+cmake ./../src
+make
+
+echo "build: OK"
+
+[ -x demo1 ]
+mpirun --oversubscribe --allow-run-as-root -np 8 ./demo1 ; ls -l
+cat weighted_graph-bfs.dot | /usr/bin/graph-easy
+
+echo "run: demo1 OK"
+
+[ -x demo2 ]
+mpirun --oversubscribe --allow-run-as-root -np 8 ./demo2 ; ls -l
+cat weighted_graph-dijkstra.dot | /usr/bin/graph-easy
+
+echo "run: demo2 OK"

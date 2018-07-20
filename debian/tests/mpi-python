@@ -1,0 +1,19 @@
+#!/bin/sh
+# (C) 2018 Anton Gladky
+
+set -e
+
+export OMPI_MCA_plm_rsh_agent=/bin/false
+
+WORKDIR=$(mktemp -d)
+trap "rm -rf $WORKDIR" 0 INT QUIT ABRT PIPE TERM
+mkdir -p $WORKDIR/src
+
+cp debian/tests/srcs/mpi-python/* $WORKDIR/src/
+cd $WORKDIR/src
+
+mpirun --oversubscribe --allow-run-as-root -np 5 python ./demo1.py
+echo "run: demo1 OK"
+
+mpirun --oversubscribe --allow-run-as-root -np 2 python ./demo2.py
+echo "run: demo2 OK"

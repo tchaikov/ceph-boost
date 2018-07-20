@@ -1,0 +1,37 @@
+#!/bin/sh
+# (C) 2018 Anton Gladky
+
+set -e
+
+WORKDIR=$(mktemp -d)
+trap "rm -rf $WORKDIR" 0 INT QUIT ABRT PIPE TERM
+mkdir -p $WORKDIR/src
+mkdir -p $WORKDIR/build
+
+cp debian/tests/srcs/python/* $WORKDIR/src/
+
+cd $WORKDIR/build
+cmake ./../src
+make
+
+echo "build: OK"
+
+ls
+
+[ -x libdemo1.so ]
+python -c "import libdemo1 ; print(libdemo1.greet())"
+
+echo "run: demo1 OK"
+
+[ -x libdemo2.so ]
+python -c "\
+import libdemo2 ;\
+planet = libdemo2.World() ;\
+planet.set('howdy') ;\
+print(planet.greet());\
+x = libdemo2.Var('pi') ;\
+x.value = 3.14 ;\
+print (x.name, 'is around', x.value)
+"
+
+echo "run: demo2 OK"
