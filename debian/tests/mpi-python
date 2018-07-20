@@ -12,7 +12,7 @@ mkdir -p $WORKDIR/src
 cp debian/tests/srcs/mpi-python/* $WORKDIR/src/
 cd $WORKDIR/src
 
-mpirun --oversubscribe --allow-run-as-root -np 5 python ./demo1.py
+mpirun --oversubscribe --allow-run-as-root -np 3 python ./demo1.py
 echo "run: demo1 OK"
 
 mpirun --oversubscribe --allow-run-as-root -np 2 python ./demo2.py

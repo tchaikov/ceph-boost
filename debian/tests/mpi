@@ -34,16 +34,16 @@ mpirun --oversubscribe --allow-run-as-root -np 2 ./demo3
 echo "run: demo3 OK"
 
 [ -x demo4 ]
-mpirun --oversubscribe --allow-run-as-root -np 8 ./demo4
+mpirun --oversubscribe --allow-run-as-root -np 3 ./demo4
 
 echo "run: demo4 OK"
 
 [ -x demo5 ]
-mpirun --oversubscribe --allow-run-as-root -np 8 ./demo5
+mpirun --oversubscribe --allow-run-as-root -np 3 ./demo5
 
 echo "run: demo5 OK"
 
 [ -x demo6 ]
-mpirun --oversubscribe --allow-run-as-root -np 8 ./demo6
+mpirun --oversubscribe --allow-run-as-root -np 3 ./demo6
 
 echo "run: demo6 OK"
