@@ -1,3 +1,10 @@
+boost1.67 (1.67.0-3) unstable; urgency=medium
+
+  * [4675688] Add graphviz into the Build-Depends-Indep
+  * [5d193b8] Do not fail during copy on arch-indep build. (Closes: #904484)
+
+ -- Anton Gladky <gladk@debian.org>  Wed, 25 Jul 2018 22:38:55 +0200
+
 boost1.67 (1.67.0-2) unstable; urgency=medium
 
   * Add myself to uploaders
