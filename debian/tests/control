@@ -10,6 +10,9 @@ Depends: libboost-context1.67-dev, build-essential, cmake
 Tests: container
 Depends: libboost-container1.67-dev, build-essential, cmake
 
+Tests: coroutine
+Depends: libboost-coroutine1.67-dev, build-essential, cmake
+
 Tests: datetime
 Depends: libboost-date-time1.67-dev, build-essential, cmake
 

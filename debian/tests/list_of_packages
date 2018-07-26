@@ -3,7 +3,7 @@
 * libboost-chrono-dev
 * libboost-container-dev
 * libboost-context-dev
-libboost-coroutine-dev
+* libboost-coroutine-dev
 * libboost-date-time-dev
 * libboost-exception-dev
 * libboost-fiber-dev
