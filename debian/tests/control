@@ -7,6 +7,9 @@ Depends: libboost-chrono1.67-dev, libboost-system1.67-dev, build-essential, cmak
 Tests: context
 Depends: libboost-context1.67-dev, build-essential, cmake
 
+Tests: container
+Depends: libboost-container1.67-dev, build-essential, cmake
+
 Tests: datetime
 Depends: libboost-date-time1.67-dev, build-essential, cmake
 

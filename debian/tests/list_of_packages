@@ -1,7 +1,7 @@
 # List of packages with autopkgtests (marked with *)
 * libboost-atomic-dev
 * libboost-chrono-dev
-libboost-container-dev
+* libboost-container-dev
 * libboost-context-dev
 libboost-coroutine-dev
 * libboost-date-time-dev

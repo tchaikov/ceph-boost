@@ -1,4 +1,3 @@
-// boost1.67-1.67.0+dfsg/libs/fiber/examples/ping_pong.cpp
 
 //          Copyright Oliver Kowalke 2013.
 // Distributed under the Boost Software License, Version 1.0.
