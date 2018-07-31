@@ -68,6 +68,9 @@ Depends: libboost-serialization1.67-dev, libboost-random1.67-dev, build-essentia
 Tests: signals
 Depends: libboost-signals1.67-dev, build-essential, cmake
 
+Tests: stacktrace
+Depends: libboost-stacktrace1.67-dev, build-essential, cmake
+
 Tests: system
 Depends: libboost-system1.67-dev, build-essential, cmake
 Restrictions: allow-stderr
