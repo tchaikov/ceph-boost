@@ -1000,7 +1000,7 @@ Homepage: http://www.boost.org/libs/python/
 Architecture: any
 Section: libdevel
 Depends: ${misc:Depends},
- libboost-python1.67.0 (= ${binary:Version})
+ libboost-numpy1.67.0 (= ${binary:Version})
 Suggests: libboost1.67-doc
 Description: Boost.Python NumPy extensions development files
  This package forms part of the Boost C++ Libraries collection.

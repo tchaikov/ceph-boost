@@ -1,3 +1,9 @@
+boost1.67 (1.67.0-4) UNRELEASED; urgency=medium
+
+  * Fix dependency of libboost-numpy1.67-dev (closes: #905056).
+
+ -- Giovanni Mascellani <gio@debian.org>  Tue, 31 Jul 2018 15:41:42 +0200
+
 boost1.67 (1.67.0-3) unstable; urgency=medium
 
   * [4675688] Add graphviz into the Build-Depends-Indep
