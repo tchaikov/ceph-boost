@@ -23,7 +23,7 @@ libboost-numpy-dev
 * libboost-regex-dev
 * libboost-serialization-dev
 * libboost-signals-dev
-libboost-stacktrace-dev
+* libboost-stacktrace-dev
 * libboost-system-dev
 * libboost-test-dev
 * libboost-thread-dev
