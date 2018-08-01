@@ -1,3 +1,9 @@
+boost1.67 (1.67.0-5) unstable; urgency=medium
+
+  * [62204f4] Add missing dependencies for tests
+
+ -- Anton Gladky <gladk@debian.org>  Wed, 01 Aug 2018 19:17:49 +0200
+
 boost1.67 (1.67.0-4) unstable; urgency=medium
 
   [ Anton Gladky ]
