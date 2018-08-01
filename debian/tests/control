@@ -11,7 +11,7 @@ Tests: container
 Depends: libboost-container1.67-dev, build-essential, cmake
 
 Tests: coroutine
-Depends: libboost-coroutine1.67-dev, build-essential, cmake
+Depends: libboost-coroutine1.67-dev, libboost-system1.67-dev, build-essential, cmake
 
 Tests: datetime
 Depends: libboost-date-time1.67-dev, build-essential, cmake
@@ -69,7 +69,7 @@ Tests: signals
 Depends: libboost-signals1.67-dev, build-essential, cmake
 
 Tests: stacktrace
-Depends: libboost-stacktrace1.67-dev, build-essential, cmake
+Depends: libboost-stacktrace1.67-dev, libboost-system1.67-dev, build-essential, cmake
 
 Tests: system
 Depends: libboost-system1.67-dev, build-essential, cmake
