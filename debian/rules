@@ -1,6 +1,6 @@
 #! /usr/bin/make -f
 
-DEB_BUILD_MAINT_OPTIONS = hardening=+all
+# DEB_BUILD_MAINT_OPTIONS = hardening=+all
 
 # Boost libraries for which we want separate packages
 # context is conditionally compiled because it is not supported yet on several architectures
