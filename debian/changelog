@@ -1,3 +1,9 @@
+boost1.67 (1.67.0-7) unstable; urgency=medium
+
+  * generate PPA package for ceph building dependency
+
+ -- kefu chai <kefu@redhat.com>  Tue, 04 Sep 2018 15:22:43 +0800
+
 boost1.67 (1.67.0-6) unstable; urgency=medium
 
   * [d7d1d71] Add missing dependency in container-test

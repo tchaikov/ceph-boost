@@ -38,6 +38,11 @@ py3default = $(subst .,,$(shell py3versions -dv))
 filtered_files = 
 
 DPKG_EXPORT_BUILDFLAGS = 1
+# empty if not for ceph building dependency
+VENDOR := ceph-
+# "usr" if not for ceph building dependency
+install_prefix := opt/ceph
+
 include /usr/share/dpkg/buildflags.mk
 include /usr/share/dpkg/architecture.mk
 
@@ -81,142 +86,145 @@ override_dh_auto_clean: clean-debhelper
 	dh_auto_clean
 
 override_dh_compress:
-	dh_compress -Xlibboost$(PKGVERSION)-doc/doc
+	dh_compress -X$(VENDOR)libboost$(PKGVERSION)-doc/doc
 
 override_dh_install:
-	$(JAM) --prefix=$(CURDIR)/debian/tmp/usr $(JAM_WITHOUT) \
-		--libdir=$(CURDIR)/debian/tmp/usr/lib/$(DEB_HOST_MULTIARCH) \
+	$(JAM) --prefix=$(CURDIR)/debian/tmp/$(install_prefix) $(JAM_WITHOUT) \
+		--libdir=$(CURDIR)/debian/tmp/$(install_prefix)/lib/$(DEB_HOST_MULTIARCH) \
 		--without-python install
 	for pyver in $(pyversions); do \
-		$(JAM) --build-dir=build-$$pyver --stagedir=stage-$$pyver --user-config=$(CURDIR)/user-config-$$pyver.jam --prefix=$(CURDIR)/debian/tmp/usr \
-			--libdir=$(CURDIR)/debian/tmp/usr/lib/$(DEB_HOST_MULTIARCH) \
+		$(JAM) --build-dir=build-$$pyver --stagedir=stage-$$pyver --user-config=$(CURDIR)/user-config-$$pyver.jam --prefix=$(CURDIR)/debian/tmp/$(install_prefix) \
+			--libdir=$(CURDIR)/debian/tmp/$(install_prefix)/lib/$(DEB_HOST_MULTIARCH) \
 			install --with-python --with-mpi python=$$pyver; \
 	done
 
 	# Install Boost.Build v2 & jam
-	cd $(bbv2dir) && ./bjam install --prefix=$(CURDIR)/debian/tmp/usr --libdir=$(CURDIR)/debian/tmp/usr/lib/$(DEB_HOST_MULTIARCH)
-	mv debian/tmp/usr/share/boost-build/example debian/boost-build-examples
+	cd $(bbv2dir) && ./bjam install --prefix=$(CURDIR)/debian/tmp/$(install_prefix) --libdir=$(CURDIR)/debian/tmp/$(install_prefix)/lib/$(DEB_HOST_MULTIARCH)
+	mv debian/tmp/$(install_prefix)/share/boost-build/example debian/boost-build-examples
 
-	find debian/tmp/usr/include debian/tmp/usr/share/boost-build -type f | xargs chmod 644
+	find debian/tmp/$(install_prefix)/include debian/tmp/$(install_prefix)/share/boost-build -type f | xargs chmod 644
 	find debian/tmp -name .cvsignore | xargs rm -f
 	find debian -empty -type f | xargs rm -f
 
 	# package libboost$(PKGVERSION)-dev
-	dh_install -plibboost$(PKGVERSION)-dev \
-	   debian/tmp/usr/include/boost \
-	   usr/include
-	dh_install -plibboost$(PKGVERSION)-tools-dev \
-	   debian/tmp/usr/bin/bjam \
+	dh_install -p$(VENDOR)libboost$(PKGVERSION)-dev \
+	   debian/tmp/$(install_prefix)/include/boost \
+	   $(install_prefix)/include
+	dh_install -p$(VENDOR)libboost$(PKGVERSION)-tools-dev \
+	   debian/tmp/$(install_prefix)/bin/bjam \
 	   dist/bin/bcp \
 	   dist/bin/inspect \
 	   dist/bin/quickbook \
-	   usr/bin
-	dh_link -plibboost$(PKGVERSION)-tools-dev usr/bin/bjam usr/bin/b2
-	dh_installman -plibboost$(PKGVERSION)-tools-dev b2.1 bjam.1 debian/bcp.1 debian/inspect.1 debian/quickbook.1
-	dh_install -plibboost$(PKGVERSION)-tools-dev tools/boostbook/xsl/* usr/share/boostbook/xsl
-	dh_install -plibboost$(PKGVERSION)-tools-dev tools/boostbook/dtd/* usr/share/boostbook/dtd
-	dh_install -plibboost$(PKGVERSION)-tools-dev debian/tmp/usr/share/boost-build
+	   $(install_prefix)/bin
+	dh_link -p$(VENDOR)libboost$(PKGVERSION)-tools-dev $(install_prefix)/bin/bjam $(install_prefix)/bin/b2
+	dh_installman -p$(VENDOR)libboost$(PKGVERSION)-tools-dev b2.1 bjam.1 debian/bcp.1 debian/inspect.1 debian/quickbook.1
+	dh_install -p$(VENDOR)libboost$(PKGVERSION)-tools-dev tools/boostbook/xsl/* $(install_prefix)/share/boostbook/xsl
+	dh_install -p$(VENDOR)libboost$(PKGVERSION)-tools-dev tools/boostbook/dtd/* $(install_prefix)/share/boostbook/dtd
+	dh_install -p$(VENDOR)libboost$(PKGVERSION)-tools-dev debian/tmp/$(install_prefix)/share/boost-build
 
 	# package libboost-date-time$(PKGVERSION)-dev
-	dh_installdocs -plibboost-date-time$(PKGVERSION)-dev libs/date_time/data
+	dh_installdocs -p$(VENDOR)libboost-date-time$(PKGVERSION)-dev libs/date_time/data
 
 	# package libboost-doc
-	mkdir -p debian/libboost$(PKGVERSION)-doc/usr/share/doc/libboost$(PKGVERSION)-doc
-	cp -a doc debian/libboost$(PKGVERSION)-doc/usr/share/doc/libboost$(PKGVERSION)-doc
+	mkdir -p debian/libboost$(PKGVERSION)-doc/$(install_prefix)/share/doc/libboost$(PKGVERSION)-doc
+	cp -a doc debian/libboost$(PKGVERSION)-doc/$(install_prefix)/share/doc/libboost$(PKGVERSION)-doc
 	# provide a constant symlink to the latest documents and examples
-	dh_link -plibboost$(PKGVERSION)-doc \
-	   usr/share/doc/libboost$(PKGVERSION)-doc/doc \
-	   usr/share/doc/libboost-doc/doc
-	dh_link -plibboost$(PKGVERSION)-doc \
-	   usr/share/doc/libboost$(PKGVERSION)-doc/examples \
-	   usr/share/doc/libboost-doc/examples
+	dh_link -p$(VENDOR)libboost$(PKGVERSION)-doc \
+	   $(install_prefix)/share/doc/libboost$(PKGVERSION)-doc/doc \
+	   $(install_prefix)/share/doc/libboost-doc/doc
+	dh_link -p$(VENDOR)libboost$(PKGVERSION)-doc \
+	   $(install_prefix)/share/doc/libboost$(PKGVERSION)-doc/examples \
+	   $(install_prefix)/share/doc/libboost-doc/examples
 
 # Debian decorates the python-using libraries with a python version suffix ("-py27")
 # Create symlinks for the upstream name to the default python version.
 # There is a separate set of links for each Python major version.
 
 	# Python2 compatibility links
-	dh_link -plibboost-numpy$(PKGVERSION)-dev \
-	   usr/lib/$(DEB_HOST_MULTIARCH)/libboost_numpy$(py2default).a \
-	   usr/lib/$(DEB_HOST_MULTIARCH)/libboost_numpy.a
-	dh_link -plibboost-numpy$(PKGVERSION)-dev \
-	   usr/lib/$(DEB_HOST_MULTIARCH)/libboost_numpy$(py2default).so \
-	   usr/lib/$(DEB_HOST_MULTIARCH)/libboost_numpy.so
+	dh_link -p$(VENDOR)libboost-numpy$(PKGVERSION)-dev \
+	   $(install_prefix)/lib/$(DEB_HOST_MULTIARCH)/libboost_numpy$(py2default).a \
+	   $(install_prefix)/lib/$(DEB_HOST_MULTIARCH)/libboost_numpy.a
+	dh_link -p$(VENDOR)libboost-numpy$(PKGVERSION)-dev \
+	   $(install_prefix)/lib/$(DEB_HOST_MULTIARCH)/libboost_numpy$(py2default).so \
+	   $(install_prefix)/lib/$(DEB_HOST_MULTIARCH)/libboost_numpy.so
 
-	dh_link -plibboost-python$(PKGVERSION)-dev \
-	   usr/lib/$(DEB_HOST_MULTIARCH)/libboost_python$(py2default).a \
-	   usr/lib/$(DEB_HOST_MULTIARCH)/libboost_python.a
-	dh_link -plibboost-python$(PKGVERSION)-dev \
-	   usr/lib/$(DEB_HOST_MULTIARCH)/libboost_python$(py2default).so \
-	   usr/lib/$(DEB_HOST_MULTIARCH)/libboost_python.so
+	dh_link -p$(VENDOR)libboost-python$(PKGVERSION)-dev \
+	   $(install_prefix)/lib/$(DEB_HOST_MULTIARCH)/libboost_python$(py2default).a \
+	   $(install_prefix)/lib/$(DEB_HOST_MULTIARCH)/libboost_python.a
+	dh_link -p$(VENDOR)libboost-python$(PKGVERSION)-dev \
+	   $(install_prefix)/lib/$(DEB_HOST_MULTIARCH)/libboost_python$(py2default).so \
+	   $(install_prefix)/lib/$(DEB_HOST_MULTIARCH)/libboost_python.so
 
-	dh_link -plibboost-mpi-python$(PKGVERSION)-dev \
-	   usr/lib/$(DEB_HOST_MULTIARCH)/libboost_mpi_python$(py2default).a \
-	   usr/lib/$(DEB_HOST_MULTIARCH)/libboost_mpi_python.a
-	dh_link -plibboost-mpi-python$(PKGVERSION)-dev \
-	   usr/lib/$(DEB_HOST_MULTIARCH)/libboost_mpi_python$(py2default).so \
-	   usr/lib/$(DEB_HOST_MULTIARCH)/libboost_mpi_python.so
+	dh_link -p$(VENDOR)libboost-mpi-python$(PKGVERSION)-dev \
+	   $(install_prefix)/lib/$(DEB_HOST_MULTIARCH)/libboost_mpi_python$(py2default).a \
+	   $(install_prefix)/lib/$(DEB_HOST_MULTIARCH)/libboost_mpi_python.a
+	dh_link -p$(VENDOR)libboost-mpi-python$(PKGVERSION)-dev \
+	   $(install_prefix)/lib/$(DEB_HOST_MULTIARCH)/libboost_mpi_python$(py2default).so \
+	   $(install_prefix)/lib/$(DEB_HOST_MULTIARCH)/libboost_mpi_python.so
 
 	# Python3 compatibility links
-	dh_link -plibboost-numpy$(PKGVERSION)-dev \
-	   usr/lib/$(DEB_HOST_MULTIARCH)/libboost_numpy$(py3default).a \
-	   usr/lib/$(DEB_HOST_MULTIARCH)/libboost_numpy3.a
-	dh_link -plibboost-numpy$(PKGVERSION)-dev \
-	   usr/lib/$(DEB_HOST_MULTIARCH)/libboost_numpy$(py3default).so \
-	   usr/lib/$(DEB_HOST_MULTIARCH)/libboost_numpy3.so
+	dh_link -p$(VENDOR)libboost-numpy$(PKGVERSION)-dev \
+	   $(install_prefix)/lib/$(DEB_HOST_MULTIARCH)/libboost_numpy$(py3default).a \
+	   $(install_prefix)/lib/$(DEB_HOST_MULTIARCH)/libboost_numpy3.a
+	dh_link -p$(VENDOR)libboost-numpy$(PKGVERSION)-dev \
+	   $(install_prefix)/lib/$(DEB_HOST_MULTIARCH)/libboost_numpy$(py3default).so \
+	   $(install_prefix)/lib/$(DEB_HOST_MULTIARCH)/libboost_numpy3.so
 
-	dh_link -plibboost-python$(PKGVERSION)-dev \
-	   usr/lib/$(DEB_HOST_MULTIARCH)/libboost_python$(py3default).a \
-	   usr/lib/$(DEB_HOST_MULTIARCH)/libboost_python3.a
-	dh_link -plibboost-python$(PKGVERSION)-dev \
-	   usr/lib/$(DEB_HOST_MULTIARCH)/libboost_python$(py3default).so \
-	   usr/lib/$(DEB_HOST_MULTIARCH)/libboost_python3.so
+	dh_link -p$(VENDOR)libboost-python$(PKGVERSION)-dev \
+	   $(install_prefix)/lib/$(DEB_HOST_MULTIARCH)/libboost_python$(py3default).a \
+	   $(install_prefix)/lib/$(DEB_HOST_MULTIARCH)/libboost_python3.a
+	dh_link -p$(VENDOR)libboost-python$(PKGVERSION)-dev \
+	   $(install_prefix)/lib/$(DEB_HOST_MULTIARCH)/libboost_python$(py3default).so \
+	   $(install_prefix)/lib/$(DEB_HOST_MULTIARCH)/libboost_python3.so
 
-	dh_link -plibboost-mpi-python$(PKGVERSION)-dev \
-	   usr/lib/$(DEB_HOST_MULTIARCH)/libboost_mpi_python$(py3default).a \
-	   usr/lib/$(DEB_HOST_MULTIARCH)/libboost_mpi_python3.a
-	dh_link -plibboost-mpi-python$(PKGVERSION)-dev \
-	   usr/lib/$(DEB_HOST_MULTIARCH)/libboost_mpi_python$(py3default).so \
-	   usr/lib/$(DEB_HOST_MULTIARCH)/libboost_mpi_python3.so
+	dh_link -p$(VENDOR)libboost-mpi-python$(PKGVERSION)-dev \
+	   $(install_prefix)/lib/$(DEB_HOST_MULTIARCH)/libboost_mpi_python$(py3default).a \
+	   $(install_prefix)/lib/$(DEB_HOST_MULTIARCH)/libboost_mpi_python3.a
+	dh_link -p$(VENDOR)libboost-mpi-python$(PKGVERSION)-dev \
+	   $(install_prefix)/lib/$(DEB_HOST_MULTIARCH)/libboost_mpi_python$(py3default).so \
+	   $(install_prefix)/lib/$(DEB_HOST_MULTIARCH)/libboost_mpi_python3.so
 
 	# Python3 old debian compat links
-	dh_link -plibboost-python$(PKGVERSION)-dev \
-	   usr/lib/$(DEB_HOST_MULTIARCH)/libboost_python$(py3default).a \
-	   usr/lib/$(DEB_HOST_MULTIARCH)/libboost_python3-py$(py3default).a
-	dh_link -plibboost-python$(PKGVERSION)-dev \
-	   usr/lib/$(DEB_HOST_MULTIARCH)/libboost_python$(py3default).so \
-	   usr/lib/$(DEB_HOST_MULTIARCH)/libboost_python3-py$(py3default).so
+	dh_link -p$(VENDOR)libboost-python$(PKGVERSION)-dev \
+	   $(install_prefix)/lib/$(DEB_HOST_MULTIARCH)/libboost_python$(py3default).a \
+	   $(install_prefix)/lib/$(DEB_HOST_MULTIARCH)/libboost_python3-py$(py3default).a
+	dh_link -p$(VENDOR)libboost-python$(PKGVERSION)-dev \
+	   $(install_prefix)/lib/$(DEB_HOST_MULTIARCH)/libboost_python$(py3default).so \
+	   $(install_prefix)/lib/$(DEB_HOST_MULTIARCH)/libboost_python3-py$(py3default).so
 
-	dh_link -plibboost-mpi-python$(PKGVERSION)-dev \
-	   usr/lib/$(DEB_HOST_MULTIARCH)/libboost_mpi_python$(py3default).a \
-	   usr/lib/$(DEB_HOST_MULTIARCH)/libboost_mpi_python3-py$(py3default).a
-	dh_link -plibboost-mpi-python$(PKGVERSION)-dev \
-	   usr/lib/$(DEB_HOST_MULTIARCH)/libboost_mpi_python$(py3default).so \
-	   usr/lib/$(DEB_HOST_MULTIARCH)/libboost_mpi_python3-py$(py3default).so
+	dh_link -p$(VENDOR)libboost-mpi-python$(PKGVERSION)-dev \
+	   $(install_prefix)/lib/$(DEB_HOST_MULTIARCH)/libboost_mpi_python$(py3default).a \
+	   $(install_prefix)/lib/$(DEB_HOST_MULTIARCH)/libboost_mpi_python3-py$(py3default).a
+	dh_link -p$(VENDOR)libboost-mpi-python$(PKGVERSION)-dev \
+	   $(install_prefix)/lib/$(DEB_HOST_MULTIARCH)/libboost_mpi_python$(py3default).so \
+	   $(install_prefix)/lib/$(DEB_HOST_MULTIARCH)/libboost_mpi_python3-py$(py3default).so
 
-	dh_installexamples -plibboost$(PKGVERSION)-doc debian/boost-build-examples
+	dh_installexamples -p$(VENDOR)libboost$(PKGVERSION)-doc debian/boost-build-examples
 	mkdir -p $(exampledir)
 	cat debian/example-files | xargs cp -a --parents --target-directory=$(exampledir)
 	find $(exampledir) -type f | xargs chmod 644
 
 	# package libboost-mpi-python$(SOVERSION)
-	dh_install -plibboost-mpi-python$(SOVERSION)
+	dh_install -p$(VENDOR)libboost-mpi-python$(SOVERSION)
 
 	# python2 install
-	dh_installdirs -plibboost-mpi-python$(SOVERSION) usr/lib/python2.7/dist-packages/boost
-	dh_install -plibboost-mpi-python$(SOVERSION) libs/mpi/build/__init__.py usr/lib/python2.7/dist-packages/boost/
-	cp stage-2.7/lib/mpi.so debian/libboost-mpi-python$(SOVERSION)/usr/lib/python2.7/dist-packages/boost/ || true
+	dh_installdirs -p$(VENDOR)libboost-mpi-python$(SOVERSION) $(install_prefix)/lib/python2.7/dist-packages/boost
+	dh_install -p$(VENDOR)libboost-mpi-python$(SOVERSION) libs/mpi/build/__init__.py $(install_prefix)/lib/python2.7/dist-packages/boost/
+	cp stage-2.7/lib/mpi.so debian/libboost-mpi-python$(SOVERSION)/$(install_prefix)/lib/python2.7/dist-packages/boost/ || true
 
 	# python3 install
-	dh_installdirs -plibboost-mpi-python$(SOVERSION) usr/lib/python3/dist-packages/boost
-	dh_install -plibboost-mpi-python$(SOVERSION) libs/mpi/build/__init__.py usr/lib/python3/dist-packages/boost/
-	cp stage-3*/lib/mpi.*.so debian/libboost-mpi-python$(SOVERSION)/usr/lib/python3/dist-packages/boost/ || true
+	dh_installdirs -p$(VENDOR)libboost-mpi-python$(SOVERSION) $(install_prefix)/lib/python3/dist-packages/boost
+	dh_install -p$(VENDOR)libboost-mpi-python$(SOVERSION) libs/mpi/build/__init__.py $(install_prefix)/lib/python3/dist-packages/boost/
+	cp stage-3*/lib/mpi.*.so debian/libboost-mpi-python$(SOVERSION)/$(install_prefix)/lib/python3/dist-packages/boost/ || true
 
 	find debian -iname '*.so.*' -type f -print0 | xargs -0 chrpath --delete
 	dh_install --list-missing
 
 override_dh_strip:
 	dh_strip --dbgsym-migration='libboost1.55-dbg, libboost1.58-dbg, libboost1.61-dbg'
+
+override_dh_shlibdeps:
+	dh_shlibdeps -l"$(install_prefix)/lib/$(DEB_HOST_MULTIARCH)"
 
 # set the number of build jobs
 ifneq (,$(filter parallel=%,$(DEB_BUILD_OPTIONS)))
@@ -244,12 +252,12 @@ boost_suffixes = $(if $(boost_suffixes_$(1)), $(boost_suffixes_$(1)),"")
 # Helpers to make basic and decorated library names
 # Input: library, suffix
 # Return: base library filename for short or full name
-mk_base_name = usr/lib/$(DEB_HOST_MULTIARCH)/libboost_$(subst -,_,$(1))$(2)
+mk_base_name = $(install_prefix)/lib/$(DEB_HOST_MULTIARCH)/libboost_$(subst -,_,$(1))$(2)
 
 # Input: component
 # Return: package name for shared library or development
-mk_pkg_lib = libboost-$(1)$(SOVERSION)
-mk_pkg_dev = libboost-$(1)$(PKGVERSION)-dev
+mk_pkg_lib = $(VENDOR)libboost-$(1)$(SOVERSION)
+mk_pkg_dev = $(VENDOR)libboost-$(1)$(PKGVERSION)-dev
 
 # Helpers to generate debhelper input filenames.
 # Input: component
@@ -281,8 +289,8 @@ mk_files = $(foreach fn,$(call boost_filetypes,$(2)),$(call mk_$(fn)_files,$(1),
 add_override = echo $(1): $(2) >> debian/$(1).lintian-overrides;
 
 # Input: override
-add_dev_override = $(call add_override,libboost$(PKGVERSION)-dev,$(1))
-add_doc_override = $(call add_override,libboost$(PKGVERSION)-doc,$(1))
+add_dev_override = $(call add_override,$(VENDOR)libboost$(PKGVERSION)-dev,$(1))
+add_doc_override = $(call add_override,$(VENDOR)libboost$(PKGVERSION)-doc,$(1))
 
 # Input: component, lintian-warning
 add_lib_override = $(call add_override,$(call mk_pkg_lib,$(1)),$(2))
@@ -306,7 +314,7 @@ mk_debhelper_files = \
 		) \
 	)
 
-TOOLSET_CONFIG = 'using gcc : : : <compileflags>"$(CPPFLAGS)" <cflags>"$(CFLAGS)" <cxxflags>"$(CXXFLAGS) -Wno-unused-local-typedefs" <linkflags>"$(LDFLAGS)" ;'
+TOOLSET_CONFIG = 'using gcc : : /usr/bin/g++-7 : <compileflags>"$(CPPFLAGS)" <cflags>"$(CFLAGS)" <cxxflags>"$(CXXFLAGS) -Wno-unused-local-typedefs" <linkflags>"$(LDFLAGS)" ;'
 BUILD_CONTEXT = yes
 BUILD_LONG_DOUBLE = yes
 
@@ -371,7 +379,7 @@ else
 JAM_OPT += --disable-long-double
 endif
 
-exampledir = debian/libboost$(PKGVERSION)-doc/usr/share/doc/libboost$(PKGVERSION)-doc/examples
+exampledir = debian/$(VENDOR)libboost${PKGVERSION}-doc/$(install_prefix)/share/doc/libboost$(PKGVERSION)-doc/examples
 bjam = $(CURDIR)/bjam
 bbv2dir = $(CURDIR)/tools/build
 
@@ -383,8 +391,8 @@ JAM_DOC = $(bjam) $(JOBS) -d2 --ignore-site-config --user-config=$(CURDIR)/user-
 
 
 $(bjam):
-	./bootstrap.sh --with-icu=/usr --prefix=$(CURDIR)/debian/tmp/usr \
-		--libdir=$(CURDIR)/debian/tmp/usr/lib/$(DEB_HOST_MULTIARCH) \
+	./bootstrap.sh --with-icu=/usr --prefix=$(CURDIR)/debian/tmp/$(install_prefix) \
+		--libdir=$(CURDIR)/debian/tmp/$(install_prefix)/lib/$(DEB_HOST_MULTIARCH) \
 	  || cat bootstrap.log
 
 b2.1 bjam.1: $(bjam)
@@ -412,8 +420,8 @@ clean-debhelper:
 # Make all the generated debhelper files.
 make-debhelper: clean-debhelper $(filtered_files)
 	@$(call mk_debhelper_files)
-	@$(call cp_debhelper,libboost-dev,libboost$(PKGVERSION)-dev)
-	@$(call cp_debhelper,libboost-doc,libboost$(PKGVERSION)-doc)
-	@$(call cp_debhelper,libboost-python-dev,libboost-python$(PKGVERSION)-dev)
-	@$(call cp_debhelper,libboost-mpi-python-dev,libboost-mpi-python$(PKGVERSION)-dev)
+	@$(call cp_debhelper,libboost-dev,${VENDOR}libboost${PKGVERSION}-dev)
+	@$(call cp_debhelper,libboost-doc,${VENDOR}libboost${PKGVERSION}-doc)
+	@$(call cp_debhelper,libboost-python-dev,$(VENDOR)libboost-python$(PKGVERSION)-dev)
+	@$(call cp_debhelper,libboost-mpi-python-dev,$(VENDOR)libboost-mpi-python$(PKGVERSION)-dev)
 
