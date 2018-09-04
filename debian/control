@@ -9,7 +9,7 @@ Uploaders:
  Dimitri John Ledkov <xnox@ubuntu.com>,
  Anton Gladky <gladk@debian.org>
 Build-Depends: debhelper (>= 9), dpkg-dev (>= 1.16.1~), dctrl-tools, chrpath,
- zlib1g-dev, libbz2-dev, libicu-dev (>= 57), mpi-default-dev,
+ zlib1g-dev, libbz2-dev, libicu-dev (>= 55), mpi-default-dev,
  bison, flex, docbook-to-man, help2man, xsltproc, doxygen,
  docbook-xsl, docbook-xml, texlive-latex-base, ghostscript,
  dh-python,
