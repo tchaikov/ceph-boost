@@ -1,5 +1,5 @@
 fix-ftbfs-python-3.3.patch
-hppa-long-double-config.patch
+# no longer applies; hppa-long-double-config.patch
 # No longer applies; may not be needed boost-python-examples.patch
 ppc64el-fp_traits-ibm-long-double.patch
 no-gcc-m-options.diff
