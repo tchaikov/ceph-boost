@@ -314,7 +314,15 @@ mk_debhelper_files = \
 		) \
 	)
 
-TOOLSET_CONFIG = 'using gcc : : /usr/bin/g++-7 : <compileflags>"$(CPPFLAGS)" <cflags>"$(CFLAGS)" <cxxflags>"$(CXXFLAGS) -Wno-unused-local-typedefs" <linkflags>"$(LDFLAGS)" ;'
+# use g++-7 by default
+ifeq (,$(filter gcc=%,$(DEB_BUILD_OPTIONS)))
+  gcc := /usr/bin/g++-7
+else
+  gcc := /usr/bin/g++-$(patsubst gcc=%,%,$(filter gcc=%,$(DEB_BUILD_OPTIONS)))
+endif
+
+toolset = 'using gcc : : @gcc@ : <compileflags>"$(CPPFLAGS)" <cflags>"$(CFLAGS)" <cxxflags>"$(CXXFLAGS) -Wno-unused-local-typedefs" <linkflags>"$(LDFLAGS)" ;'
+TOOLSET_CONFIG = $(subst @gcc@,$(gcc),$(toolset))
 BUILD_CONTEXT = yes
 BUILD_LONG_DOUBLE = yes
 
