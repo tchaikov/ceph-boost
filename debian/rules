@@ -110,6 +110,12 @@ override_dh_install:
 	dh_install -p$(VENDOR)libboost$(PKGVERSION)-dev \
 	   debian/tmp/$(install_prefix)/include/boost \
 	   $(install_prefix)/include
+
+	if test $(install_prefix) != usr; then \
+	   echo /$(install_prefix)/lib/$(DEB_HOST_MULTIARCH) > \
+	      debian/$(VENDOR)libboost$(PKGVERSION)-dev/etc/ld.so.conf.d/$(VENDOR)libboost$(PKGVERSION)-$(DEB_HOST_MULTIARCH).conf; \
+	fi
+
 	dh_install -p$(VENDOR)libboost$(PKGVERSION)-tools-dev \
 	   debian/tmp/$(install_prefix)/bin/bjam \
 	   dist/bin/bcp \
