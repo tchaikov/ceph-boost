@@ -9,19 +9,6 @@ Subject: [PATCH] Add PEP-3149 compliant extension suffix discovery.
 
 --- a/tools/build/src/tools/python.jam
 +++ b/tools/build/src/tools/python.jam
-@@ -711,12 +711,6 @@
-     target-os ?= [ feature.defaults target-os ] ;
-     target-os = $(target-os:G=) ;
- 
--    if $(target-os) = windows && <python-debugging>on in $(condition)
--    {
--        extension-suffix ?= _d ;
--    }
--    extension-suffix ?= "" ;
--
-     local cmds-to-try ;
- 
-     if ! $(cmd-or-prefix) || [ GLOB $(cmd-or-prefix) : * ]
 @@ -947,8 +941,33 @@
      toolset.add-requirements
          "$(target-requirements:J=,):<python.interpreter>$(interpreter-cmd)" ;
