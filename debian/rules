@@ -51,7 +51,7 @@ include /usr/share/dpkg/architecture.mk
 
 override_dh_auto_configure: user-config.jam make-debhelper
 
-override_dh_auto_build: $(bjam) b2.1 bjam.1
+override_dh_auto_build: $(b2) b2.1 bjam.1
 	$(JAM) $(JAM_WITHOUT) --without-python
 	for pyver in $(pyversions); do \
 		echo "Building Boost.Python for python version $$pyver"; \
@@ -77,7 +77,7 @@ override_dh_auto_clean: clean-debhelper
 	-$(JAM) clean
 	rm -rf tools/jam/src/bootstrap
 	rm -rf tools/jam/src/bin.*
-	rm -ff tools/jam/src/bjam
+	rm -ff tools/jam/src/b2
 	rm -rf tools/regression/build/bin
 	rm -rf bin.v2 dist
 	rm -rf user-config.jam
@@ -99,7 +99,7 @@ override_dh_install:
 	done
 
 	# Install Boost.Build v2 & jam
-	cd $(bbv2dir) && ./bjam install --prefix=$(CURDIR)/debian/tmp/$(install_prefix) --libdir=$(CURDIR)/debian/tmp/$(install_prefix)/lib/$(DEB_HOST_MULTIARCH)
+	cd $(bbv2dir) && $(b2) install --with-examples --prefix=$(CURDIR)/debian/tmp/$(install_prefix) --libdir=$(CURDIR)/debian/tmp/$(install_prefix)/lib/$(DEB_HOST_MULTIARCH)
 	mv debian/tmp/$(install_prefix)/share/boost-build/example debian/boost-build-examples
 
 	find debian/tmp/$(install_prefix)/include debian/tmp/$(install_prefix)/share/boost-build -type f | xargs chmod 644
@@ -394,23 +394,23 @@ JAM_OPT += --disable-long-double
 endif
 
 exampledir = debian/$(VENDOR)libboost${PKGVERSION}-doc/$(install_prefix)/share/doc/libboost$(PKGVERSION)-doc/examples
-bjam = $(CURDIR)/bjam
+b2 = $(CURDIR)/b2
 bbv2dir = $(CURDIR)/tools/build
 
 # With --ignore-site-config, can probably drop Build-Conflicts on boost-build.
-JAM = $(bjam) $(JOBS) -d2 $(JAM_OPT) --layout=system --ignore-site-config --user-config=$(CURDIR)/user-config.jam debug-symbols=on
-JAM_DOC = $(bjam) $(JOBS) -d2 --ignore-site-config --user-config=$(CURDIR)/user-config-doc.jam
+JAM = $(b2) $(JOBS) -d2 $(JAM_OPT) --layout=system --ignore-site-config --user-config=$(CURDIR)/user-config.jam debug-symbols=on
+JAM_DOC = $(b2) $(JOBS) -d2 --ignore-site-config --user-config=$(CURDIR)/user-config-doc.jam
 
 
 
 
-$(bjam):
+$(b2):
 	./bootstrap.sh --with-icu=/usr --prefix=$(CURDIR)/debian/tmp/$(install_prefix) \
 		--libdir=$(CURDIR)/debian/tmp/$(install_prefix)/lib/$(DEB_HOST_MULTIARCH) \
 	  || cat bootstrap.log
 
-b2.1 bjam.1: $(bjam)
-	help2man --name 'software build tool' --no-info ./bjam > $@
+b2.1 bjam.1: $(b2)
+	help2man --name 'software build tool' --no-info $(b2) > $@
 
 user-config.jam:
 	echo $(TOOLSET_CONFIG) > $@
