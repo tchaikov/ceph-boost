@@ -1,3 +1,10 @@
+boost1.71 (1.71.0-1) unstable; urgency=medium
+
+  * Non-maintainer upload.
+  * New upstream.
+
+ -- kefu chai <kefu@redhat.com>  Thu, 14 Nov 2019 12:39:10 +0800
+
 boost1.67 (1.67.0-7) unstable; urgency=medium
 
   * generate PPA package for ceph building dependency
