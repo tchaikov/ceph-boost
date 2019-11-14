@@ -8,7 +8,7 @@
 boost_libs := atomic chrono container contract date-time exception filesystem	\
               graph iostreams locale log math \
               program-options python random regex	\
-              serialization signals stacktrace system test thread timer \
+              serialization stacktrace system test thread timer \
               type-erasure wave
 
 # these are special cases, where /usr/lib name differs from Boost library name

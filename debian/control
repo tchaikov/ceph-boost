@@ -48,7 +48,6 @@ Suggests: ceph-libboost1.71-doc,
  ceph-libboost-random1.71-dev,
  ceph-libboost-regex1.71-dev,
  ceph-libboost-serialization1.71-dev,
- ceph-libboost-signals1.71-dev,
  ceph-libboost-stacktrace1.71-dev,
  ceph-libboost-system1.71-dev,
  ceph-libboost-test1.71-dev,
@@ -122,7 +121,6 @@ Depends: ${misc:Depends},
  ceph-libboost-random1.71-dev,
  ceph-libboost-regex1.71-dev,
  ceph-libboost-serialization1.71-dev,
- ceph-libboost-signals1.71-dev,
  ceph-libboost-stacktrace1.71-dev,
  ceph-libboost-system1.71-dev,
  ceph-libboost-test1.71-dev,
@@ -1074,39 +1072,6 @@ Description: serialization library for C++
  Here, "serialization" means the reversible deconstruction of an
  arbitrary set of C++ data structures to a sequence of bytes.
  archive: to refer to a specific rendering of this stream of bytes.
-
-Package: ceph-libboost-signals1.71.0
-Homepage: http://www.boost.org/libs/signals/
-Architecture: any
-Multi-Arch: same
-Section: libs
-Depends: ${misc:Depends}, ${shlibs:Depends}
-Pre-Depends: ${misc:Pre-Depends}
-Description: managed signals and slots library for C++
- This package forms part of the Boost C++ Libraries collection.
- .
- Signals represent callbacks with multiple targets, and are also
- called publishers or events in similar systems. Signals are connected
- to some set of slots, which are callback receivers (also called event
- targets or subscribers), which are called when the signal is
- "emitted."
-
-Package: ceph-libboost-signals1.71-dev
-Homepage: http://www.boost.org/libs/signals/
-Architecture: any
-Multi-Arch: same
-Section: libdevel
-Depends: ${misc:Depends},
- ceph-libboost1.71-dev (= ${binary:Version}),
- ceph-libboost-signals1.71.0 (= ${binary:Version})
-Description: managed signals and slots library for C++
- This package forms part of the Boost C++ Libraries collection.
- .
- Signals represent callbacks with multiple targets, and are also
- called publishers or events in similar systems. Signals are connected
- to some set of slots, which are callback receivers (also called event
- targets or subscribers), which are called when the signal is
- "emitted."
 
 Package: ceph-libboost-stacktrace1.71.0
 Homepage: http://boost.org/libs/stacktrace/
