@@ -51,7 +51,7 @@ include /usr/share/dpkg/architecture.mk
 
 override_dh_auto_configure: user-config.jam make-debhelper
 
-override_dh_auto_build: $(b2) b2.1 bjam.1
+override_dh_auto_build: $(b2) b2.1
 	$(JAM) $(JAM_WITHOUT) --without-python
 	for pyver in $(pyversions); do \
 		echo "Building Boost.Python for python version $$pyver"; \
@@ -82,7 +82,7 @@ override_dh_auto_clean: clean-debhelper
 	rm -rf bin.v2 dist
 	rm -rf user-config.jam
 	rm -rf build-* user-config-*.jam stage-*
-	rm -rf b2.1 bjam.1
+	rm -rf b2.1
 	dh_auto_clean
 
 override_dh_compress:
@@ -117,13 +117,12 @@ override_dh_install:
 	fi
 
 	dh_install -p$(VENDOR)libboost$(PKGVERSION)-tools-dev \
-	   debian/tmp/$(install_prefix)/bin/bjam \
+	   debian/tmp/$(install_prefix)/bin/b2 \
 	   dist/bin/bcp \
 	   dist/bin/inspect \
 	   dist/bin/quickbook \
 	   $(install_prefix)/bin
-	dh_link -p$(VENDOR)libboost$(PKGVERSION)-tools-dev $(install_prefix)/bin/bjam $(install_prefix)/bin/b2
-	dh_installman -p$(VENDOR)libboost$(PKGVERSION)-tools-dev b2.1 bjam.1 debian/bcp.1 debian/inspect.1 debian/quickbook.1
+	dh_installman -p$(VENDOR)libboost$(PKGVERSION)-tools-dev b2.1 debian/bcp.1 debian/inspect.1 debian/quickbook.1
 	dh_install -p$(VENDOR)libboost$(PKGVERSION)-tools-dev tools/boostbook/xsl/* $(install_prefix)/share/boostbook/xsl
 	dh_install -p$(VENDOR)libboost$(PKGVERSION)-tools-dev tools/boostbook/dtd/* $(install_prefix)/share/boostbook/dtd
 	dh_install -p$(VENDOR)libboost$(PKGVERSION)-tools-dev debian/tmp/$(install_prefix)/share/boost-build
@@ -409,7 +408,7 @@ $(b2):
 		--libdir=$(CURDIR)/debian/tmp/$(install_prefix)/lib/$(DEB_HOST_MULTIARCH) \
 	  || cat bootstrap.log
 
-b2.1 bjam.1: $(b2)
+b2.1: $(b2)
 	help2man --name 'software build tool' --no-info $(b2) > $@
 
 user-config.jam:
