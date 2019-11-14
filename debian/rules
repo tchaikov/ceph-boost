@@ -6,8 +6,8 @@
 # context is conditionally compiled because it is not supported yet on several architectures
 # coroutine, and fiber depend on context, so they are also conditionally compiled
 boost_libs := atomic chrono container contract date-time exception filesystem	\
-              graph graph-parallel iostreams locale log math mpi	\
-              mpi-python program-options python random regex	\
+              graph iostreams locale log math \
+              program-options python random regex	\
               serialization signals stacktrace system test thread timer \
               type-erasure wave
 
@@ -28,7 +28,6 @@ pyverids = $(py2verids) $(py3verids)
 
 # These are special cases for suffixes.  Generally come from --python-buildid, so begin with a dash.
 boost_suffixes_python := $(pyverids)
-boost_suffixes_mpi-python := $(pyverids)
 
 py2default = $(subst .,,$(shell pyversions -dv))
 py3default = $(subst .,,$(shell py3versions -dv))
@@ -54,7 +53,7 @@ override_dh_auto_build: $(b2) b2.1
 	$(JAM) $(JAM_WITHOUT) --without-python
 	for pyver in $(pyversions); do \
 		echo "Building Boost.Python for python version $$pyver"; \
-		$(JAM) --build-dir=build-$$pyver --stagedir=stage-$$pyver --user-config=$(CURDIR)/user-config-$$pyver.jam --with-python --with-mpi python=$$pyver; \
+		$(JAM) --build-dir=build-$$pyver --stagedir=stage-$$pyver --user-config=$(CURDIR)/user-config-$$pyver.jam --with-python python=$$pyver; \
 	done
 
 	cd $(bbv2dir) && ./bootstrap.sh --with-toolset=gcc
@@ -94,7 +93,7 @@ override_dh_install:
 	for pyver in $(pyversions); do \
 		$(JAM) --build-dir=build-$$pyver --stagedir=stage-$$pyver --user-config=$(CURDIR)/user-config-$$pyver.jam --prefix=$(CURDIR)/debian/tmp/$(install_prefix) \
 			--libdir=$(CURDIR)/debian/tmp/$(install_prefix)/lib/$(DEB_HOST_MULTIARCH) \
-			install --with-python --with-mpi python=$$pyver; \
+			install --with-python python=$$pyver; \
 	done
 
 	# Install Boost.Build v2 & jam
@@ -152,13 +151,6 @@ override_dh_install:
 	   $(install_prefix)/lib/$(DEB_HOST_MULTIARCH)/libboost_python$(py2default).so \
 	   $(install_prefix)/lib/$(DEB_HOST_MULTIARCH)/libboost_python.so
 
-	dh_link -p$(VENDOR)libboost-mpi-python$(PKGVERSION)-dev \
-	   $(install_prefix)/lib/$(DEB_HOST_MULTIARCH)/libboost_mpi_python$(py2default).a \
-	   $(install_prefix)/lib/$(DEB_HOST_MULTIARCH)/libboost_mpi_python.a
-	dh_link -p$(VENDOR)libboost-mpi-python$(PKGVERSION)-dev \
-	   $(install_prefix)/lib/$(DEB_HOST_MULTIARCH)/libboost_mpi_python$(py2default).so \
-	   $(install_prefix)/lib/$(DEB_HOST_MULTIARCH)/libboost_mpi_python.so
-
 	# Python3 compatibility links
 	dh_link -p$(VENDOR)libboost-python$(PKGVERSION)-dev \
 	   $(install_prefix)/lib/$(DEB_HOST_MULTIARCH)/libboost_python$(py3default).a \
@@ -166,13 +158,6 @@ override_dh_install:
 	dh_link -p$(VENDOR)libboost-python$(PKGVERSION)-dev \
 	   $(install_prefix)/lib/$(DEB_HOST_MULTIARCH)/libboost_python$(py3default).so \
 	   $(install_prefix)/lib/$(DEB_HOST_MULTIARCH)/libboost_python3.so
-
-	dh_link -p$(VENDOR)libboost-mpi-python$(PKGVERSION)-dev \
-	   $(install_prefix)/lib/$(DEB_HOST_MULTIARCH)/libboost_mpi_python$(py3default).a \
-	   $(install_prefix)/lib/$(DEB_HOST_MULTIARCH)/libboost_mpi_python3.a
-	dh_link -p$(VENDOR)libboost-mpi-python$(PKGVERSION)-dev \
-	   $(install_prefix)/lib/$(DEB_HOST_MULTIARCH)/libboost_mpi_python$(py3default).so \
-	   $(install_prefix)/lib/$(DEB_HOST_MULTIARCH)/libboost_mpi_python3.so
 
 	# Python3 old debian compat links
 	dh_link -p$(VENDOR)libboost-python$(PKGVERSION)-dev \
@@ -182,30 +167,10 @@ override_dh_install:
 	   $(install_prefix)/lib/$(DEB_HOST_MULTIARCH)/libboost_python$(py3default).so \
 	   $(install_prefix)/lib/$(DEB_HOST_MULTIARCH)/libboost_python3-py$(py3default).so
 
-	dh_link -p$(VENDOR)libboost-mpi-python$(PKGVERSION)-dev \
-	   $(install_prefix)/lib/$(DEB_HOST_MULTIARCH)/libboost_mpi_python$(py3default).a \
-	   $(install_prefix)/lib/$(DEB_HOST_MULTIARCH)/libboost_mpi_python3-py$(py3default).a
-	dh_link -p$(VENDOR)libboost-mpi-python$(PKGVERSION)-dev \
-	   $(install_prefix)/lib/$(DEB_HOST_MULTIARCH)/libboost_mpi_python$(py3default).so \
-	   $(install_prefix)/lib/$(DEB_HOST_MULTIARCH)/libboost_mpi_python3-py$(py3default).so
-
 	dh_installexamples -p$(VENDOR)libboost$(PKGVERSION)-doc debian/boost-build-examples
 	mkdir -p $(exampledir)
 	cat debian/example-files | xargs cp -a --parents --target-directory=$(exampledir)
 	find $(exampledir) -type f | xargs chmod 644
-
-	# package libboost-mpi-python$(SOVERSION)
-	dh_install -p$(VENDOR)libboost-mpi-python$(SOVERSION)
-
-	# python2 install
-	dh_installdirs -p$(VENDOR)libboost-mpi-python$(SOVERSION) $(install_prefix)/lib/python2.7/dist-packages/boost
-	dh_install -p$(VENDOR)libboost-mpi-python$(SOVERSION) libs/mpi/build/__init__.py $(install_prefix)/lib/python2.7/dist-packages/boost/
-	cp stage-2.7/lib/mpi.so debian/libboost-mpi-python$(SOVERSION)/$(install_prefix)/lib/python2.7/dist-packages/boost/ || true
-
-	# python3 install
-	dh_installdirs -p$(VENDOR)libboost-mpi-python$(SOVERSION) $(install_prefix)/lib/python3/dist-packages/boost
-	dh_install -p$(VENDOR)libboost-mpi-python$(SOVERSION) libs/mpi/build/__init__.py $(install_prefix)/lib/python3/dist-packages/boost/
-	cp stage-3*/lib/mpi.*.so debian/libboost-mpi-python$(SOVERSION)/$(install_prefix)/lib/python3/dist-packages/boost/ || true
 
 	find debian -iname '*.so.*' -type f -print0 | xargs -0 chrpath --delete
 	dh_install --list-missing
@@ -398,7 +363,6 @@ b2.1: $(b2)
 
 user-config.jam:
 	echo $(TOOLSET_CONFIG) > $@
-	echo "using mpi ;"     >> $@
 	for pyver in $(pyversions); do \
 		cp $@ user-config-$$pyver.jam; \
 		echo "using python : $$pyver : /usr ;" >> user-config-$$pyver.jam; \
@@ -421,5 +385,4 @@ make-debhelper: clean-debhelper $(filtered_files)
 	@$(call cp_debhelper,libboost-dev,${VENDOR}libboost${PKGVERSION}-dev)
 	@$(call cp_debhelper,libboost-doc,${VENDOR}libboost${PKGVERSION}-doc)
 	@$(call cp_debhelper,libboost-python-dev,$(VENDOR)libboost-python$(PKGVERSION)-dev)
-	@$(call cp_debhelper,libboost-mpi-python-dev,$(VENDOR)libboost-mpi-python$(PKGVERSION)-dev)
 

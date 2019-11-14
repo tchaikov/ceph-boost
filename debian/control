@@ -9,7 +9,7 @@ Uploaders:
  Dimitri John Ledkov <xnox@ubuntu.com>,
  Anton Gladky <gladk@debian.org>
 Build-Depends: debhelper (>= 9), dpkg-dev (>= 1.16.1~), dctrl-tools, chrpath,
- zlib1g-dev, libbz2-dev, libicu-dev (>= 55), mpi-default-dev,
+ zlib1g-dev, libbz2-dev, libicu-dev (>= 55),
  bison, flex, docbook-to-man, help2man, xsltproc, doxygen,
  dh-python,
  g++ (>= 7),
@@ -43,8 +43,6 @@ Suggests: ceph-libboost1.71-doc,
  ceph-libboost-locale1.71-dev,
  ceph-libboost-log1.71-dev,
  ceph-libboost-math1.71-dev,
- ceph-libboost-mpi1.71-dev,
- ceph-libboost-mpi-python1.71-dev,
  ceph-libboost-program-options1.71-dev,
  ceph-libboost-python1.71-dev,
  ceph-libboost-random1.71-dev,
@@ -119,8 +117,6 @@ Depends: ${misc:Depends},
  ceph-libboost-locale1.71-dev,
  ceph-libboost-log1.71-dev,
  ceph-libboost-math1.71-dev,
- ceph-libboost-mpi1.71-dev,
- ceph-libboost-mpi-python1.71-dev,
  ceph-libboost-program-options1.71-dev,
  ceph-libboost-python1.71-dev,
  ceph-libboost-random1.71-dev,
@@ -878,79 +874,6 @@ Description: Boost.Math Library development files
     C++ Library Extensions.
   * Implementation Toolkit: Provides many of the tools required to implement
     mathematical special functions.
-
-Package: ceph-libboost-mpi1.71.0
-Homepage: http://www.boost.org/doc/html/mpi.html
-Architecture: any
-Section: libs
-Depends: ${misc:Depends}, ${shlibs:Depends}
-Pre-Depends: ${misc:Pre-Depends}
-Description: C++ interface to the Message Passing Interface (MPI)
- This package forms part of the Boost C++ Libraries collection.
- .
- The Boost.MPI library provides a C++ interface to MPI that
- supports modern C++ development styles, including complete support for
- user-defined data types and C++ Standard Library types, arbitrary function
- objects for collective algorithms, and the use of modern C++ library
- techniques to maintain maximal efficiency.
-
-Package: ceph-libboost-mpi1.71-dev
-Homepage: http://www.boost.org/doc/html/mpi.html
-Architecture: any
-Section: libdevel
-Depends: ${misc:Depends},
- ceph-libboost1.71-dev (= ${binary:Version}),
- ceph-libboost-serialization1.71-dev (= ${binary:Version}),
- ceph-libboost-mpi1.71.0 (= ${binary:Version}),
- mpi-default-dev
-Suggests: ceph-libboost-graph1.71-dev
-Description: C++ interface to the Message Passing Interface (MPI)
- This package forms part of the Boost C++ Libraries collection.
- .
- The Boost.MPI library provides a C++ interface to MPI that
- supports modern C++ development styles, including complete support for
- user-defined data types and C++ Standard Library types, arbitrary function
- objects for collective algorithms, and the use of modern C++ library
- techniques to maintain maximal efficiency.
-
-Package: ceph-libboost-mpi-python1.71.0
-Homepage: http://www.boost.org/doc/html/mpi/python.html
-Architecture: any
-Section: libs
-Depends: ${misc:Depends}, ${shlibs:Depends}, ${python:Depends}, ${python3:Depends}, mpi-default-bin
-Pre-Depends: ${misc:Pre-Depends}
-Suggests: python, python3
-Breaks: ${python:Breaks}
-Description: C++ interface to the Message Passing Interface (MPI), Python Bindings
- This package forms part of the Boost C++ Libraries collection.
- .
- The Boost.MPI library provides a C++ interface to MPI that
- supports modern C++ development styles, including complete support for
- user-defined data types and C++ Standard Library types, arbitrary function
- objects for collective algorithms, and the use of modern C++ library
- techniques to maintain maximal efficiency.
- .
- This package provides Python Bindings to the C++ interface.
- .
- One of the python interpreter packages is required to use the bindings.
-
-Package: ceph-libboost-mpi-python1.71-dev
-Homepage: http://www.boost.org/doc/html/mpi/python.html
-Architecture: any
-Section: libdevel
-Depends: ${misc:Depends},
- ceph-libboost-mpi1.71-dev (= ${binary:Version}),
- ceph-libboost-mpi-python1.71.0 (= ${binary:Version})
-Description: C++ interface to the Message Passing Interface (MPI), Python Bindings
- This package forms part of the Boost C++ Libraries collection.
- .
- The Boost.MPI library provides a C++ interface to MPI that
- supports modern C++ development styles, including complete support for
- user-defined data types and C++ Standard Library types, arbitrary function
- objects for collective algorithms, and the use of modern C++ library
- techniques to maintain maximal efficiency.
- .
- This package provides Python Bindings to the C++ interface.
 
 Package: ceph-libboost-program-options1.71.0
 Homepage: http://www.boost.org/libs/program_options/
