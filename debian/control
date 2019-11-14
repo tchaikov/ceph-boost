@@ -71,6 +71,8 @@ Description: Boost C++ Libraries development files
  Extended precision arithmetic package libmpfrc++-dev or libntl-dev is
  required to use the Boost.Multiprecision wrapping of the respective
  library.
+Conflicts: ceph-libboost1.67-dev
+Replaces: ceph-libboost1.67-dev
 
 Package: ceph-libboost1.71-tools-dev
 Architecture: any
@@ -94,6 +96,8 @@ Description: Boost C++ Libraries development tools
  .
  This package provides the auxiliary tools bjam, Boost.Build, bcp,
  inspect, boostbook and quickbook.
+Conflicts: ceph-libboost1.67-tools-dev
+Replaces: ceph-libboost1.67-tools-dev
 
 Package: ceph-libboost1.71-all-dev
 Architecture: any
@@ -201,6 +205,8 @@ Description: atomic data types, operations, and memory ordering constraints
  possible (via inline assembler, platform libraries or compiler
  intrinsics), and falls back to "emulating" atomic operations through
  locking.
+Conflicts: ceph-libboost-atomic1.71-dev
+Replaces: ceph-libboost-atomic1.71-dev
 
 Package: ceph-libboost-chrono1.71.0
 Homepage: http://www.boost.org/libs/chrono/
@@ -291,6 +297,8 @@ Description: C++ representation of time duration, time point, and clocks
  .
  Lastly, Boost.Chrono includes typeof registration for duration and
  time_point to permit using emulated auto with C++03 compilers.
+Conflicts: ceph-libboost-chrono1.67-dev
+Replaces: ceph-libboost-chrono1.67-dev
 
 Package: ceph-libboost-container1.71.0
 Homepage: http://boost.org/libs/container/
@@ -360,6 +368,8 @@ Description: C++ library that implements several well-known containers - dev fil
       stability in insertions and erasures.
     * slist: the classic pre-standard singly linked list implementation
       offering constant-time size(). Note that C++11 forward_list has no size().
+Conflicts: ceph-libboost-container1.67-dev
+Replaces: ceph-libboost-container1.67-dev
 
 Package: ceph-libboost-context1.71.0
 Homepage: http://www.boost.org/libs/context/
@@ -401,6 +411,8 @@ Description: provides a sort of cooperative multitasking on a single thread
  path. This is useful for building higher-level abstractions, like
  coroutines, cooperative threads (userland threads) or an equivalent
  to C# keyword yield in C++.
+Conflicts: ceph-libboost-context1.67-dev
+Replaces: ceph-libboost-context1.67-dev
 
 Package: ceph-libboost-contract1.71.0
 Homepage: http://boost.org/libs/contract/
@@ -434,6 +446,8 @@ Description: Contract library for C++ - dev files
  preconditions, customizable actions on assertion failure (e.g.,
  terminate or throw), optional compilation and checking of assertions,
  etc.
+Conflicts: ceph-libboost-contract1.67-dev
+Replaces: ceph-libboost-contract1.67-dev
 
 Package: ceph-libboost-coroutine1.71.0
 Homepage: http://www.boost.org/libs/coroutine/
@@ -486,6 +500,8 @@ Description: provides a sort of cooperative multitasking on a single thread
  kernel is not involved in the coroutine switches.
  .
  The implementation uses Boost.Context for context switching.
+Conflicts: ceph-libboost-coroutine1.67-dev
+Replaces: ceph-libboost-coroutine1.67-dev
 
 Package: ceph-libboost-date-time1.71.0
 Homepage: http://www.boost.org/libs/date_time/
@@ -514,6 +530,8 @@ Description: set of date-time libraries based on generic programming concepts
  .
  These libraries are intended to make programming with dates and times
  almost as simple and natural as programming with strings and integers.
+Conflicts: ceph-libboost-date-time1.67-dev
+Replaces: ceph-libboost-date-time1.67-dev
 
 Package: ceph-libboost-exception1.71-dev
 Homepage: http://www.boost.org/libs/exception/
@@ -528,6 +546,8 @@ Description: library to help write exceptions and handlers
  The purpose of Boost Exception is to ease the design of exception
  class hierarchies and to help write exception handling and error
  reporting code.
+Conflicts: ceph-libboost-exception1.67-dev
+Replaces: ceph-libboost-exception1.67-dev
 
 Package: ceph-libboost-fiber1.71.0
 Homepage: http://www.boost.org/libs/fiber/
@@ -590,6 +610,8 @@ Description: cooperatively-scheduled micro-/userland-threads
  between threads usually costs thousands of CPU cycles on x86,
  compared to a fiber switch with less than a hundred cycles. A fiber
  runs on a single thread at any point in time.
+Conflicts: ceph-libboost-fiber1.67-dev
+Replaces: ceph-libboost-fiber1.67-dev
 
 Package: ceph-libboost-filesystem1.71.0
 Homepage: http://boost.org/libs/filesystem/
@@ -620,6 +642,8 @@ Description: filesystem operations (portable paths, iteration over directories, 
  The Boost Filesystem Library provides portable facilities to query and
  manipulate paths, files, and directories.  The goal is to
  facilitate portable script-like operations from within C++ programs.
+Conflicts: ceph-libboost-filesystem1.67-dev
+Replaces: ceph-libboost-filesystem1.67-dev
 
 Package: ceph-libboost-graph1.71.0
 Homepage: http://www.boost.org/libs/graph/
@@ -656,6 +680,8 @@ Description: generic graph components and algorithms in C++
  abstractions must also be represented in computer programs. A
  standardized generic interface for traversing graphs is of utmost
  importance to encourage reuse of graph algorithms and data structures.
+Conflicts: ceph-libboost-graph1.67-dev
+Replaces: ceph-libboost-graph1.67-dev
 
 Package: ceph-libboost-graph-parallel1.71.0
 Homepage: http://www.boost.org/libs/graph_parallel/
@@ -692,6 +718,8 @@ Description: generic graph components and algorithms in C++
  parallel algorithms that exploit fine-grained parallelism, while retaining
  the same interfaces as the (sequential) BGL. Code written using the sequential
  BGL should be easy to parallelize with the parallel BGL.
+Conflicts: ceph-libboost-graph-parallel1.67-dev
+Replaces: ceph-libboost-graph-parallel1.67-dev
 
 Package: ceph-libboost-iostreams1.71.0
 Homepage: http://www.boost.org/libs/iostreams/
@@ -722,6 +750,8 @@ Description: Boost.Iostreams Library development files
  Boost.Iostreams are a collection of concepts and a set of templates
  which turn models of these concepts into C++ standard library streams
  and stream buffers.
+Conflicts: ceph-libboost-iostreams1.67-dev
+Replaces: ceph-libboost-iostreams1.67-dev
 
 Package: ceph-libboost-locale1.71.0
 Homepage: http://www.boost.org/libs/locale/
@@ -783,6 +813,8 @@ Description: C++ facilities for localization
   * Transparent support for 8-bit character sets like Latin1
   * Support for char and wchar_t
   * Experimental support for C++0x char16_t and char32_t strings and streams.
+Conflicts: ceph-libboost-locale1.67-dev
+Replaces: ceph-libboost-locale1.67-dev
 
 Package: ceph-libboost-log1.71.0
 Homepage: http://www.boost.org/libs/log/
@@ -829,6 +861,8 @@ Description: C++ logging library
  library for collecting and storing information into logs.
   * Performance. The library should have as little performance impact on
  the user's application as possible.
+Conflicts: ceph-libboost-log1.67-dev
+Replaces: ceph-libboost-log1.67-dev
 
 Package: ceph-libboost-math1.71.0
 Homepage: http://www.boost.org/libs/math/
@@ -872,6 +906,8 @@ Description: Boost.Math Library development files
     C++ Library Extensions.
   * Implementation Toolkit: Provides many of the tools required to implement
     mathematical special functions.
+Conflicts: ceph-libboost-math1.67-dev
+Replaces: ceph-libboost-math1.67-dev
 
 Package: ceph-libboost-program-options1.71.0
 Homepage: http://www.boost.org/libs/program_options/
@@ -901,6 +937,8 @@ Description: program options library for C++
  Library to let program developers obtain program options, that is
  (name, value) pairs from the user, via conventional methods such as
  command line and config file.
+Conflicts: ceph-libboost-program-options1.67-dev
+Replaces: ceph-libboost-program-options1.67-dev
 
 Package: ceph-libboost-python1.71.0
 Homepage: http://www.boost.org/libs/python/
@@ -954,6 +992,8 @@ Description: Boost.Python Library development files
  This package allows development of a Python interface for all current
  versions of Python in Debian.  Code using this library will need also
  one of the Python development packages.
+Conflicts: ceph-libboost-python1.67-dev
+Replaces: ceph-libboost-python1.67-dev
 
 Package: ceph-libboost-random1.71.0
 Homepage: http://www.boost.org/libs/random/
@@ -983,6 +1023,8 @@ Description: Boost Random Number Library
  The Boost Random Number Library (Boost.Random for short) provides a
  variety of generators and distributions to produce random numbers
  having useful properties, such as uniform distribution.
+Conflicts: ceph-libboost-random1.67-dev
+Replaces: ceph-libboost-random1.67-dev
 
 Package: ceph-libboost-regex1.71.0
 Homepage: http://www.boost.org/libs/regex/
@@ -1027,6 +1069,8 @@ Description: regular expression library for C++
  with wide character strings, or search and replace operations (in a
  manner analogous to either sed or perl), something that traditional C
  libraries can not do.
+Conflicts: ceph-libboost-regex1.67-dev
+Replaces: ceph-libboost-regex1.67-dev
 
 Package: ceph-libboost-serialization1.71.0
 Homepage: http://www.boost.org/libs/serialization/
@@ -1072,6 +1116,8 @@ Description: serialization library for C++
  Here, "serialization" means the reversible deconstruction of an
  arbitrary set of C++ data structures to a sequence of bytes.
  archive: to refer to a specific rendering of this stream of bytes.
+Conflicts: ceph-libboost-serialization1.67-dev
+Replaces: ceph-libboost-serialization1.67-dev
 
 Package: ceph-libboost-stacktrace1.71.0
 Homepage: http://boost.org/libs/stacktrace/
@@ -1099,6 +1145,8 @@ Description: library to capture and print stack traces - development files
  .
  Boost.Stacktrace library is a simple C++03 library that provides
  information about call sequence in a human-readable form.
+Conflicts: ceph-libboost-stacktrace1.67-dev
+Replaces: ceph-libboost-stacktrace1.67-dev
 
 Package: ceph-libboost-system1.71.0
 Homepage: http://www.boost.org/libs/system/
@@ -1136,6 +1184,8 @@ Description: Operating system (e.g. diagnostics support) library
  errors from sources other than the operating system, including
  user-defined sources, each error_code and error_condition has an
  associated error_category.
+Conflicts: ceph-libboost-system1.67-dev
+Replaces: ceph-libboost-system1.67-dev
 
 Package: ceph-libboost-test1.71.0
 Homepage: http://www.boost.org/libs/test/
@@ -1167,6 +1217,8 @@ Description: components for writing and executing test suites
   * Basic execution, error detection, and reporting facility.
   * Facilities to monitor program execution and produce error reports.
   * Unit test framework to simplify writing test cases.
+Conflicts: ceph-libboost-test1.67-dev
+Replaces: ceph-libboost-test1.67-dev
 
 Package: ceph-libboost-thread1.71.0
 Homepage: http://www.boost.org/libs/thread/
@@ -1202,6 +1254,8 @@ Description: portable C++ multi-threading
  asynchronous, independent, threads-of-execution. Each thread has its
  own machine state including program instruction counter and
  registers.
+Conflicts: ceph-libboost-thread1.67-dev
+Replaces: ceph-libboost-thread1.67-dev
 
 Package: ceph-libboost-timer1.71.0
 Homepage: http://www.boost.org/libs/timer/
@@ -1241,6 +1295,8 @@ Description: C++ wall clock and CPU process timers
  system CPU process time. Class auto_cpu_timer is a refinement of
  cpu_timer that automatically reports the elapsed times when an
  auto_cpu_timer object is destroyed.
+Conflicts: ceph-libboost-timer1.67-dev
+Replaces: ceph-libboost-timer1.67-dev
 
 Package: ceph-libboost-type-erasure1.71.0
 Homepage: http://www.boost.org/doc/libs/1_60_0/doc/html/boost_typeerasure.html
@@ -1272,6 +1328,8 @@ Description: C++ runtime polymorphism based on concepts
  each of which has its own advantages and disadvantages.  The Boost.TypeErasure
  library combines the superior abstraction capabilities of templates, with the
  runtime flexibility of virtual functions.
+Conflicts: ceph-libboost-type-erasure1.67-dev
+Replaces: ceph-libboost-type-erasure1.67-dev
 
 Package: ceph-libboost-wave1.71.0
 Homepage: http://www.boost.org/libs/wave/
@@ -1305,3 +1363,5 @@ Description: C99/C++ preprocessor library
  implementation of the mandated C99/C++ preprocessor functionality
  packed behind a simple to use interface, which integrates well with
  the well known idioms of the Standard Template Library (STL).
+Conflicts: ceph-libboost-wave1.67-dev
+Replaces: ceph-libboost-wave1.67-dev
