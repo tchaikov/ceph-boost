@@ -7,7 +7,7 @@
 # coroutine, and fiber depend on context, so they are also conditionally compiled
 boost_libs := atomic chrono container contract date-time exception filesystem	\
               graph graph-parallel iostreams locale log math mpi	\
-              mpi-python numpy program-options python random regex	\
+              mpi-python program-options python random regex	\
               serialization signals stacktrace system test thread timer \
               type-erasure wave
 
@@ -28,7 +28,6 @@ pyverids = $(py2verids) $(py3verids)
 
 # These are special cases for suffixes.  Generally come from --python-buildid, so begin with a dash.
 boost_suffixes_python := $(pyverids)
-boost_suffixes_numpy := $(pyverids)
 boost_suffixes_mpi-python := $(pyverids)
 
 py2default = $(subst .,,$(shell pyversions -dv))
@@ -146,13 +145,6 @@ override_dh_install:
 # There is a separate set of links for each Python major version.
 
 	# Python2 compatibility links
-	dh_link -p$(VENDOR)libboost-numpy$(PKGVERSION)-dev \
-	   $(install_prefix)/lib/$(DEB_HOST_MULTIARCH)/libboost_numpy$(py2default).a \
-	   $(install_prefix)/lib/$(DEB_HOST_MULTIARCH)/libboost_numpy.a
-	dh_link -p$(VENDOR)libboost-numpy$(PKGVERSION)-dev \
-	   $(install_prefix)/lib/$(DEB_HOST_MULTIARCH)/libboost_numpy$(py2default).so \
-	   $(install_prefix)/lib/$(DEB_HOST_MULTIARCH)/libboost_numpy.so
-
 	dh_link -p$(VENDOR)libboost-python$(PKGVERSION)-dev \
 	   $(install_prefix)/lib/$(DEB_HOST_MULTIARCH)/libboost_python$(py2default).a \
 	   $(install_prefix)/lib/$(DEB_HOST_MULTIARCH)/libboost_python.a
@@ -168,13 +160,6 @@ override_dh_install:
 	   $(install_prefix)/lib/$(DEB_HOST_MULTIARCH)/libboost_mpi_python.so
 
 	# Python3 compatibility links
-	dh_link -p$(VENDOR)libboost-numpy$(PKGVERSION)-dev \
-	   $(install_prefix)/lib/$(DEB_HOST_MULTIARCH)/libboost_numpy$(py3default).a \
-	   $(install_prefix)/lib/$(DEB_HOST_MULTIARCH)/libboost_numpy3.a
-	dh_link -p$(VENDOR)libboost-numpy$(PKGVERSION)-dev \
-	   $(install_prefix)/lib/$(DEB_HOST_MULTIARCH)/libboost_numpy$(py3default).so \
-	   $(install_prefix)/lib/$(DEB_HOST_MULTIARCH)/libboost_numpy3.so
-
 	dh_link -p$(VENDOR)libboost-python$(PKGVERSION)-dev \
 	   $(install_prefix)/lib/$(DEB_HOST_MULTIARCH)/libboost_python$(py3default).a \
 	   $(install_prefix)/lib/$(DEB_HOST_MULTIARCH)/libboost_python3.a
