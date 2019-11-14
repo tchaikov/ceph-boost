@@ -327,7 +327,7 @@ else
   gcc := /usr/bin/g++-$(patsubst gcc=%,%,$(filter gcc=%,$(DEB_BUILD_OPTIONS)))
 endif
 
-toolset = 'using gcc : : @gcc@ : <compileflags>"$(CPPFLAGS)" <cflags>"$(CFLAGS)" <cxxflags>"$(CXXFLAGS) -Wno-unused-local-typedefs" <linkflags>"$(LDFLAGS)" ;'
+toolset = 'using gcc : : @gcc@ : <compileflags>"$(CPPFLAGS)" <cflags>"$(CFLAGS)" <cxxflags>"$(CXXFLAGS) -Wno-unused-local-typedefs -std=c++17" <linkflags>"$(LDFLAGS)" ;'
 TOOLSET_CONFIG = $(subst @gcc@,$(gcc),$(toolset))
 BUILD_CONTEXT = yes
 BUILD_LONG_DOUBLE = yes
