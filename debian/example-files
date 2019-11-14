@@ -6,7 +6,6 @@ libs/asio/example
 libs/bimap/doc/html/boost_bimap/examples
 libs/bimap/example
 libs/chrono/example
-libs/chrono/stopwatches/example
 libs/circular_buffer/example
 libs/compute/example
 libs/container/example
@@ -80,7 +79,6 @@ libs/regex/example
 libs/scope_exit/example
 libs/serialization/example
 libs/signals2/example
-libs/signals/example
 libs/smart_ptr/example
 libs/sort/example
 libs/spirit/classic/example
