@@ -1,4 +1,4 @@
-Source: boost1.71
+Source: boost1.72
 Homepage: http://www.boost.org/
 Section: libs
 Priority: optional
@@ -13,7 +13,6 @@ Build-Depends: debhelper (>= 9), dpkg-dev (>= 1.16.1~), dctrl-tools, chrpath,
  bison, flex, docbook-to-man, help2man, xsltproc, doxygen,
  dh-python,
  g++ (>= 7),
- python, python-all-dev, python-numpy,
  python3, python3-all-dev (>= 3.1)
 Build-Depends-Indep: graphviz
 Build-Conflicts: libopenmpi-dev (= 1.3.2-2)
@@ -22,40 +21,40 @@ Vcs-Browser: https://salsa.debian.org/debian/boost
 Vcs-Git: https://salsa.debian.org/debian/boost.git
 Standards-Version: 4.1.1
 
-Package: ceph-libboost1.71-dev
+Package: ceph-libboost1.72-dev
 Architecture: any
 Multi-Arch: same
 Section: libdevel
 Depends: ${misc:Depends}, ${shlibs:Depends}, libstdc++-4.8-dev | libstdc++-dev
-Suggests: ceph-libboost1.71-doc,
- ceph-libboost-atomic1.71-dev,
- ceph-libboost-chrono1.71-dev,
- ceph-libboost-container1.71-dev,
- ceph-libboost-context1.71-dev [any-i386 any-amd64 armel armhf arm64 mips mipsel powerpc ppc64el],
- ceph-libboost-coroutine1.71-dev [any-i386 any-amd64 armel armhf arm64 mips mipsel powerpc ppc64el],
- ceph-libboost-date-time1.71-dev,
- ceph-libboost-exception1.71-dev,
- ceph-libboost-fiber1.71-dev [any-i386 any-amd64 armel armhf arm64 mips mipsel powerpc ppc64el],
- ceph-libboost-filesystem1.71-dev,
- ceph-libboost-graph1.71-dev,
- ceph-libboost-graph-parallel1.71-dev,
- ceph-libboost-iostreams1.71-dev,
- ceph-libboost-locale1.71-dev,
- ceph-libboost-log1.71-dev,
- ceph-libboost-math1.71-dev,
- ceph-libboost-program-options1.71-dev,
- ceph-libboost-python1.71-dev,
- ceph-libboost-random1.71-dev,
- ceph-libboost-regex1.71-dev,
- ceph-libboost-serialization1.71-dev,
- ceph-libboost-stacktrace1.71-dev,
- ceph-libboost-system1.71-dev,
- ceph-libboost-test1.71-dev,
- ceph-libboost-thread1.71-dev,
- ceph-libboost-timer1.71-dev,
- ceph-libboost-type-erasure1.71-dev,
- ceph-libboost-wave1.71-dev,
- ceph-libboost1.71-tools-dev,
+Suggests: ceph-libboost1.72-doc,
+ ceph-libboost-atomic1.72-dev,
+ ceph-libboost-chrono1.72-dev,
+ ceph-libboost-container1.72-dev,
+ ceph-libboost-context1.72-dev [any-i386 any-amd64 armel armhf arm64 mips mipsel powerpc ppc64el],
+ ceph-libboost-coroutine1.72-dev [any-i386 any-amd64 armel armhf arm64 mips mipsel powerpc ppc64el],
+ ceph-libboost-date-time1.72-dev,
+ ceph-libboost-exception1.72-dev,
+ ceph-libboost-fiber1.72-dev [any-i386 any-amd64 armel armhf arm64 mips mipsel powerpc ppc64el],
+ ceph-libboost-filesystem1.72-dev,
+ ceph-libboost-graph1.72-dev,
+ ceph-libboost-graph-parallel1.72-dev,
+ ceph-libboost-iostreams1.72-dev,
+ ceph-libboost-locale1.72-dev,
+ ceph-libboost-log1.72-dev,
+ ceph-libboost-math1.72-dev,
+ ceph-libboost-program-options1.72-dev,
+ ceph-libboost-python1.72-dev,
+ ceph-libboost-random1.72-dev,
+ ceph-libboost-regex1.72-dev,
+ ceph-libboost-serialization1.72-dev,
+ ceph-libboost-stacktrace1.72-dev,
+ ceph-libboost-system1.72-dev,
+ ceph-libboost-test1.72-dev,
+ ceph-libboost-thread1.72-dev,
+ ceph-libboost-timer1.72-dev,
+ ceph-libboost-type-erasure1.72-dev,
+ ceph-libboost-wave1.72-dev,
+ ceph-libboost1.72-tools-dev,
  libmpfrc++-dev, libntl-dev
 Description: Boost C++ Libraries development files
  The Boost web site provides free, peer-reviewed, portable C++ source
@@ -74,7 +73,7 @@ Description: Boost C++ Libraries development files
 Conflicts: ceph-libboost1.67-dev
 Replaces: ceph-libboost1.67-dev
 
-Package: ceph-libboost1.71-tools-dev
+Package: ceph-libboost1.72-tools-dev
 Architecture: any
 Multi-Arch: foreign
 Section: libdevel
@@ -99,39 +98,39 @@ Description: Boost C++ Libraries development tools
 Conflicts: ceph-libboost1.67-tools-dev
 Replaces: ceph-libboost1.67-tools-dev
 
-Package: ceph-libboost1.71-all-dev
+Package: ceph-libboost1.72-all-dev
 Architecture: any
 Section: libdevel
 Depends: ${misc:Depends},
- ceph-libboost1.71-dev,
- ceph-libboost1.71-tools-dev,
- ceph-libboost-atomic1.71-dev,
- ceph-libboost-chrono1.71-dev,
- ceph-libboost-container1.71-dev,
- ceph-libboost-context1.71-dev [any-i386 any-amd64 armel armhf arm64 mips mipsel powerpc ppc64el],
- ceph-libboost-coroutine1.71-dev [any-i386 any-amd64 armel armhf arm64 mips mipsel powerpc ppc64el],
- ceph-libboost-date-time1.71-dev,
- ceph-libboost-exception1.71-dev,
- ceph-libboost-fiber1.71-dev [any-i386 any-amd64 armel armhf arm64 mips mipsel powerpc ppc64el],
- ceph-libboost-filesystem1.71-dev,
- ceph-libboost-graph1.71-dev,
- ceph-libboost-graph-parallel1.71-dev,
- ceph-libboost-iostreams1.71-dev,
- ceph-libboost-locale1.71-dev,
- ceph-libboost-log1.71-dev,
- ceph-libboost-math1.71-dev,
- ceph-libboost-program-options1.71-dev,
- ceph-libboost-python1.71-dev,
- ceph-libboost-random1.71-dev,
- ceph-libboost-regex1.71-dev,
- ceph-libboost-serialization1.71-dev,
- ceph-libboost-stacktrace1.71-dev,
- ceph-libboost-system1.71-dev,
- ceph-libboost-test1.71-dev,
- ceph-libboost-thread1.71-dev,
- ceph-libboost-timer1.71-dev,
- ceph-libboost-type-erasure1.71-dev,
- ceph-libboost-wave1.71-dev
+ ceph-libboost1.72-dev,
+ ceph-libboost1.72-tools-dev,
+ ceph-libboost-atomic1.72-dev,
+ ceph-libboost-chrono1.72-dev,
+ ceph-libboost-container1.72-dev,
+ ceph-libboost-context1.72-dev [any-i386 any-amd64 armel armhf arm64 mips mipsel powerpc ppc64el],
+ ceph-libboost-coroutine1.72-dev [any-i386 any-amd64 armel armhf arm64 mips mipsel powerpc ppc64el],
+ ceph-libboost-date-time1.72-dev,
+ ceph-libboost-exception1.72-dev,
+ ceph-libboost-fiber1.72-dev [any-i386 any-amd64 armel armhf arm64 mips mipsel powerpc ppc64el],
+ ceph-libboost-filesystem1.72-dev,
+ ceph-libboost-graph1.72-dev,
+ ceph-libboost-graph-parallel1.72-dev,
+ ceph-libboost-iostreams1.72-dev,
+ ceph-libboost-locale1.72-dev,
+ ceph-libboost-log1.72-dev,
+ ceph-libboost-math1.72-dev,
+ ceph-libboost-program-options1.72-dev,
+ ceph-libboost-python1.72-dev,
+ ceph-libboost-random1.72-dev,
+ ceph-libboost-regex1.72-dev,
+ ceph-libboost-serialization1.72-dev,
+ ceph-libboost-stacktrace1.72-dev,
+ ceph-libboost-system1.72-dev,
+ ceph-libboost-test1.72-dev,
+ ceph-libboost-thread1.72-dev,
+ ceph-libboost-timer1.72-dev,
+ ceph-libboost-type-erasure1.72-dev,
+ ceph-libboost-wave1.72-dev
 Description: Boost C++ Libraries development files (ALL)
  The Boost web site provides free, peer-reviewed, portable C++ source
  libraries. The emphasis is on libraries which work well with the C++
@@ -144,18 +143,18 @@ Description: Boost C++ Libraries development files (ALL)
  This metapackage provides the complete Boost development environment,
  including all separately-packaged libraries.
 
-Package: ceph-libboost1.71-doc
+Package: ceph-libboost1.72-doc
 Homepage: http://www.boost.org/libs/
 Architecture: all
 Section: doc
 Depends: ${misc:Depends}, libjs-mathjax
-Suggests: ceph-libboost1.71-dev (>= ${source:Version})
+Suggests: ceph-libboost1.72-dev (>= ${source:Version})
 Description: Boost.org libraries documentation placeholder
  This package originally provided documentation, but has since fallen
  into disrepair and presently provides no documentation.  Please
  use documentation at www.boost.org.
 
-Package: ceph-libboost-atomic1.71.0
+Package: ceph-libboost-atomic1.72.0
 Homepage: http://www.boost.org/libs/atomic/
 Architecture: any
 Multi-Arch: same
@@ -180,14 +179,14 @@ Description: atomic data types, operations, and memory ordering constraints
  intrinsics), and falls back to "emulating" atomic operations through
  locking.
 
-Package: ceph-libboost-atomic1.71-dev
+Package: ceph-libboost-atomic1.72-dev
 Homepage: http://www.boost.org/libs/atomic/
 Architecture: any
 Multi-Arch: same
 Section: libdevel
 Depends: ${misc:Depends},
- ceph-libboost1.71-dev (= ${binary:Version}),
- ceph-libboost-atomic1.71.0 (= ${binary:Version})
+ ceph-libboost1.72-dev (= ${binary:Version}),
+ ceph-libboost-atomic1.72.0 (= ${binary:Version})
 Description: atomic data types, operations, and memory ordering constraints
  This package forms part of the Boost C++ Libraries collection.
  .
@@ -205,10 +204,10 @@ Description: atomic data types, operations, and memory ordering constraints
  possible (via inline assembler, platform libraries or compiler
  intrinsics), and falls back to "emulating" atomic operations through
  locking.
-Conflicts: ceph-libboost-atomic1.71-dev
-Replaces: ceph-libboost-atomic1.71-dev
+Conflicts: ceph-libboost-atomic1.72-dev
+Replaces: ceph-libboost-atomic1.72-dev
 
-Package: ceph-libboost-chrono1.71.0
+Package: ceph-libboost-chrono1.72.0
 Homepage: http://www.boost.org/libs/chrono/
 Architecture: any
 Multi-Arch: same
@@ -252,14 +251,14 @@ Description: C++ representation of time duration, time point, and clocks
  Lastly, Boost.Chrono includes typeof registration for duration and
  time_point to permit using emulated auto with C++03 compilers.
 
-Package: ceph-libboost-chrono1.71-dev
+Package: ceph-libboost-chrono1.72-dev
 Homepage: http://www.boost.org/libs/chrono/
 Architecture: any
 Multi-Arch: same
 Section: libdevel
 Depends: ${misc:Depends},
- ceph-libboost1.71-dev (= ${binary:Version}),
- ceph-libboost-chrono1.71.0 (= ${binary:Version})
+ ceph-libboost1.72-dev (= ${binary:Version}),
+ ceph-libboost-chrono1.72.0 (= ${binary:Version})
 Description: C++ representation of time duration, time point, and clocks
  This package forms part of the Boost C++ Libraries collection.
  .
@@ -300,7 +299,7 @@ Description: C++ representation of time duration, time point, and clocks
 Conflicts: ceph-libboost-chrono1.67-dev
 Replaces: ceph-libboost-chrono1.67-dev
 
-Package: ceph-libboost-container1.71.0
+Package: ceph-libboost-container1.72.0
 Homepage: http://boost.org/libs/container/
 Architecture: any
 Multi-Arch: same
@@ -334,14 +333,14 @@ Description: C++ library that implements several well-known containers
     * slist: the classic pre-standard singly linked list implementation
       offering constant-time size(). Note that C++11 forward_list has no size().
 
-Package: ceph-libboost-container1.71-dev
+Package: ceph-libboost-container1.72-dev
 Homepage: http://boost.org/libs/container/
 Architecture: any
 Multi-Arch: same
 Section: libdevel
 Depends: ${misc:Depends},
- ceph-libboost1.71-dev (= ${binary:Version}),
- ceph-libboost-container1.71.0 (= ${binary:Version})
+ ceph-libboost1.72-dev (= ${binary:Version}),
+ ceph-libboost-container1.72.0 (= ${binary:Version})
 Description: C++ library that implements several well-known containers - dev files
  This package forms part of the Boost C++ Libraries collection.
  .
@@ -371,7 +370,7 @@ Description: C++ library that implements several well-known containers - dev fil
 Conflicts: ceph-libboost-container1.67-dev
 Replaces: ceph-libboost-container1.67-dev
 
-Package: ceph-libboost-context1.71.0
+Package: ceph-libboost-context1.72.0
 Homepage: http://www.boost.org/libs/context/
 Architecture: any-i386 any-amd64 armel armhf arm64 mips mipsel powerpc ppc64el
 Multi-Arch: same
@@ -391,14 +390,14 @@ Description: provides a sort of cooperative multitasking on a single thread
  coroutines, cooperative threads (userland threads) or an equivalent
  to C# keyword yield in C++.
 
-Package: ceph-libboost-context1.71-dev
+Package: ceph-libboost-context1.72-dev
 Homepage: http://www.boost.org/libs/context/
 Architecture: any-i386 any-amd64 armel armhf arm64 mips mipsel powerpc ppc64el
 Multi-Arch: same
 Section: libdevel
 Depends: ${misc:Depends},
- ceph-libboost1.71-dev (= ${binary:Version}),
- ceph-libboost-context1.71.0 (= ${binary:Version})
+ ceph-libboost1.72-dev (= ${binary:Version}),
+ ceph-libboost-context1.72.0 (= ${binary:Version})
 Description: provides a sort of cooperative multitasking on a single thread
  This package forms part of the Boost C++ Libraries collection.
  .
@@ -414,7 +413,7 @@ Description: provides a sort of cooperative multitasking on a single thread
 Conflicts: ceph-libboost-context1.67-dev
 Replaces: ceph-libboost-context1.67-dev
 
-Package: ceph-libboost-contract1.71.0
+Package: ceph-libboost-contract1.72.0
 Homepage: http://boost.org/libs/contract/
 Architecture: any
 Multi-Arch: same
@@ -430,14 +429,14 @@ Description: Contract library for C++
  terminate or throw), optional compilation and checking of assertions,
  etc.
 
-Package: ceph-libboost-contract1.71-dev
+Package: ceph-libboost-contract1.72-dev
 Homepage: http://boost.org/libs/contract/
 Architecture: any
 Multi-Arch: same
 Section: libdevel
 Depends: ${misc:Depends},
- ceph-libboost1.71-dev (= ${binary:Version}),
- ceph-libboost-contract1.71.0 (= ${binary:Version})
+ ceph-libboost1.72-dev (= ${binary:Version}),
+ ceph-libboost-contract1.72.0 (= ${binary:Version})
 Description: Contract library for C++ - dev files
  This package forms part of the Boost C++ Libraries collection.
  .
@@ -449,7 +448,7 @@ Description: Contract library for C++ - dev files
 Conflicts: ceph-libboost-contract1.67-dev
 Replaces: ceph-libboost-contract1.67-dev
 
-Package: ceph-libboost-coroutine1.71.0
+Package: ceph-libboost-coroutine1.72.0
 Homepage: http://www.boost.org/libs/coroutine/
 Architecture: any-i386 any-amd64 armel armhf arm64 mips mipsel powerpc ppc64el
 Multi-Arch: same
@@ -474,15 +473,15 @@ Description: provides a sort of cooperative multitasking on a single thread
  .
  The implementation uses Boost.Context for context switching.
 
-Package: ceph-libboost-coroutine1.71-dev
+Package: ceph-libboost-coroutine1.72-dev
 Homepage: http://www.boost.org/libs/coroutine/
 Architecture: any-i386 any-amd64 armel armhf arm64 mips mipsel powerpc ppc64el
 Multi-Arch: same
 Section: libdevel
 Depends: ${misc:Depends},
- ceph-libboost1.71-dev (= ${binary:Version}),
- ceph-libboost-context1.71-dev (= ${binary:Version}),
- ceph-libboost-coroutine1.71.0 (= ${binary:Version})
+ ceph-libboost1.72-dev (= ${binary:Version}),
+ ceph-libboost-context1.72-dev (= ${binary:Version}),
+ ceph-libboost-coroutine1.72.0 (= ${binary:Version})
 Description: provides a sort of cooperative multitasking on a single thread
  This package forms part of the Boost C++ Libraries collection.
  .
@@ -503,7 +502,7 @@ Description: provides a sort of cooperative multitasking on a single thread
 Conflicts: ceph-libboost-coroutine1.67-dev
 Replaces: ceph-libboost-coroutine1.67-dev
 
-Package: ceph-libboost-date-time1.71.0
+Package: ceph-libboost-date-time1.72.0
 Homepage: http://www.boost.org/libs/date_time/
 Architecture: any
 Multi-Arch: same
@@ -516,15 +515,15 @@ Description: set of date-time libraries based on generic programming concepts
  These libraries are intended to make programming with dates and times
  almost as simple and natural as programming with strings and integers.
 
-Package: ceph-libboost-date-time1.71-dev
+Package: ceph-libboost-date-time1.72-dev
 Homepage: http://www.boost.org/libs/date_time/
 Architecture: any
 Multi-Arch: same
 Section: libdevel
 Depends: ${misc:Depends},
- ceph-libboost1.71-dev (= ${binary:Version}),
- ceph-libboost-date-time1.71.0 (= ${binary:Version}),
- ceph-libboost-serialization1.71-dev (= ${binary:Version})
+ ceph-libboost1.72-dev (= ${binary:Version}),
+ ceph-libboost-date-time1.72.0 (= ${binary:Version}),
+ ceph-libboost-serialization1.72-dev (= ${binary:Version})
 Description: set of date-time libraries based on generic programming concepts
  This package forms part of the Boost C++ Libraries collection.
  .
@@ -533,13 +532,13 @@ Description: set of date-time libraries based on generic programming concepts
 Conflicts: ceph-libboost-date-time1.67-dev
 Replaces: ceph-libboost-date-time1.67-dev
 
-Package: ceph-libboost-exception1.71-dev
+Package: ceph-libboost-exception1.72-dev
 Homepage: http://www.boost.org/libs/exception/
 Architecture: any
 Multi-Arch: same
 Section: libdevel
 Depends: ${misc:Depends},
- ceph-libboost1.71-dev (= ${binary:Version})
+ ceph-libboost1.72-dev (= ${binary:Version})
 Description: library to help write exceptions and handlers
  This package forms part of the Boost C++ Libraries collection.
  .
@@ -549,7 +548,7 @@ Description: library to help write exceptions and handlers
 Conflicts: ceph-libboost-exception1.67-dev
 Replaces: ceph-libboost-exception1.67-dev
 
-Package: ceph-libboost-fiber1.71.0
+Package: ceph-libboost-fiber1.72.0
 Homepage: http://www.boost.org/libs/fiber/
 Architecture: any-i386 any-amd64 armel armhf arm64 mips mipsel powerpc ppc64el
 Multi-Arch: same
@@ -579,15 +578,15 @@ Description: cooperatively-scheduled micro-/userland-threads
  compared to a fiber switch with less than a hundred cycles. A fiber
  runs on a single thread at any point in time.
 
-Package: ceph-libboost-fiber1.71-dev
+Package: ceph-libboost-fiber1.72-dev
 Homepage: http://www.boost.org/libs/fiber/
 Architecture: any-i386 any-amd64 armel armhf arm64 mips mipsel powerpc ppc64el
 Multi-Arch: same
 Section: libdevel
 Depends: ${misc:Depends},
- ceph-libboost1.71-dev (= ${binary:Version}),
- ceph-libboost-context1.71-dev (= ${binary:Version}),
- ceph-libboost-fiber1.71.0 (= ${binary:Version})
+ ceph-libboost1.72-dev (= ${binary:Version}),
+ ceph-libboost-context1.72-dev (= ${binary:Version}),
+ ceph-libboost-fiber1.72.0 (= ${binary:Version})
 Description: cooperatively-scheduled micro-/userland-threads
  This package forms part of the Boost C++ Libraries collection.
  .
@@ -613,7 +612,7 @@ Description: cooperatively-scheduled micro-/userland-threads
 Conflicts: ceph-libboost-fiber1.67-dev
 Replaces: ceph-libboost-fiber1.67-dev
 
-Package: ceph-libboost-filesystem1.71.0
+Package: ceph-libboost-filesystem1.72.0
 Homepage: http://boost.org/libs/filesystem/
 Architecture: any
 Multi-Arch: same
@@ -627,15 +626,15 @@ Description: filesystem operations (portable paths, iteration over directories, 
  manipulate paths, files, and directories.  The goal is to
  facilitate portable script-like operations from within C++ programs.
 
-Package: ceph-libboost-filesystem1.71-dev
+Package: ceph-libboost-filesystem1.72-dev
 Homepage: http://boost.org/libs/filesystem/
 Architecture: any
 Multi-Arch: same
 Section: libdevel
 Depends: ${misc:Depends},
- ceph-libboost1.71-dev (= ${binary:Version}),
- ceph-libboost-filesystem1.71.0 (= ${binary:Version}),
- ceph-libboost-system1.71-dev (= ${binary:Version})
+ ceph-libboost1.72-dev (= ${binary:Version}),
+ ceph-libboost-filesystem1.72.0 (= ${binary:Version}),
+ ceph-libboost-system1.72-dev (= ${binary:Version})
 Description: filesystem operations (portable paths, iteration over directories, etc) in C++
  This package forms part of the Boost C++ Libraries collection.
  .
@@ -645,7 +644,7 @@ Description: filesystem operations (portable paths, iteration over directories, 
 Conflicts: ceph-libboost-filesystem1.67-dev
 Replaces: ceph-libboost-filesystem1.67-dev
 
-Package: ceph-libboost-graph1.71.0
+Package: ceph-libboost-graph1.72.0
 Homepage: http://www.boost.org/libs/graph/
 Architecture: any
 Multi-Arch: same
@@ -662,16 +661,16 @@ Description: generic graph components and algorithms in C++
  standardized generic interface for traversing graphs is of utmost
  importance to encourage reuse of graph algorithms and data structures.
 
-Package: ceph-libboost-graph1.71-dev
+Package: ceph-libboost-graph1.72-dev
 Homepage: http://www.boost.org/libs/graph/
 Architecture: any
 Multi-Arch: same
 Section: libdevel
 Depends: ${misc:Depends},
- ceph-libboost1.71-dev (= ${binary:Version}),
- ceph-libboost-graph1.71.0 (= ${binary:Version}),
- ceph-libboost-serialization1.71-dev (= ${binary:Version}),
- ceph-libboost-test1.71-dev (= ${binary:Version})
+ ceph-libboost1.72-dev (= ${binary:Version}),
+ ceph-libboost-graph1.72.0 (= ${binary:Version}),
+ ceph-libboost-serialization1.72-dev (= ${binary:Version}),
+ ceph-libboost-test1.72-dev (= ${binary:Version})
 Description: generic graph components and algorithms in C++
  This package forms part of the Boost C++ Libraries collection.
  .
@@ -683,7 +682,7 @@ Description: generic graph components and algorithms in C++
 Conflicts: ceph-libboost-graph1.67-dev
 Replaces: ceph-libboost-graph1.67-dev
 
-Package: ceph-libboost-graph-parallel1.71.0
+Package: ceph-libboost-graph-parallel1.72.0
 Homepage: http://www.boost.org/libs/graph_parallel/
 Architecture: any
 Section: libs
@@ -700,15 +699,15 @@ Description: generic graph components and algorithms in C++
  the same interfaces as the (sequential) BGL. Code written using the sequential
  BGL should be easy to parallelize with the parallel BGL.
 
-Package: ceph-libboost-graph-parallel1.71-dev
+Package: ceph-libboost-graph-parallel1.72-dev
 Homepage: http://www.boost.org/libs/graph_parallel/
 Architecture: any
 Section: libdevel
 Depends: ${misc:Depends},
- ceph-libboost1.71-dev (= ${binary:Version}),
- ceph-libboost-graph-parallel1.71.0 (= ${binary:Version}),
- ceph-libboost-serialization1.71-dev (= ${binary:Version}),
- ceph-libboost-test1.71-dev (= ${binary:Version})
+ ceph-libboost1.72-dev (= ${binary:Version}),
+ ceph-libboost-graph-parallel1.72.0 (= ${binary:Version}),
+ ceph-libboost-serialization1.72-dev (= ${binary:Version}),
+ ceph-libboost-test1.72-dev (= ${binary:Version})
 Description: generic graph components and algorithms in C++
  This package forms part of the Boost C++ Libraries collection.
  .
@@ -721,7 +720,7 @@ Description: generic graph components and algorithms in C++
 Conflicts: ceph-libboost-graph-parallel1.67-dev
 Replaces: ceph-libboost-graph-parallel1.67-dev
 
-Package: ceph-libboost-iostreams1.71.0
+Package: ceph-libboost-iostreams1.72.0
 Homepage: http://www.boost.org/libs/iostreams/
 Architecture: any
 Multi-Arch: same
@@ -735,15 +734,15 @@ Description: Boost.Iostreams Library
  which turn models of these concepts into C++ standard library streams
  and stream buffers.
 
-Package: ceph-libboost-iostreams1.71-dev
+Package: ceph-libboost-iostreams1.72-dev
 Homepage: http://www.boost.org/libs/iostreams/
 Architecture: any
 Multi-Arch: same
 Section: libdevel
 Depends: ${misc:Depends},
- ceph-libboost1.71-dev (= ${binary:Version}),
- ceph-libboost-regex1.71-dev (= ${binary:Version}),
- ceph-libboost-iostreams1.71.0 (= ${binary:Version})
+ ceph-libboost1.72-dev (= ${binary:Version}),
+ ceph-libboost-regex1.72-dev (= ${binary:Version}),
+ ceph-libboost-iostreams1.72.0 (= ${binary:Version})
 Description: Boost.Iostreams Library development files
  This package forms part of the Boost C++ Libraries collection.
  .
@@ -753,7 +752,7 @@ Description: Boost.Iostreams Library development files
 Conflicts: ceph-libboost-iostreams1.67-dev
 Replaces: ceph-libboost-iostreams1.67-dev
 
-Package: ceph-libboost-locale1.71.0
+Package: ceph-libboost-locale1.72.0
 Homepage: http://www.boost.org/libs/locale/
 Architecture: any
 Multi-Arch: same
@@ -783,14 +782,14 @@ Description: C++ facilities for localization
   * Support for char and wchar_t
   * Experimental support for C++0x char16_t and char32_t strings and streams.
 
-Package: ceph-libboost-locale1.71-dev
+Package: ceph-libboost-locale1.72-dev
 Homepage: http://www.boost.org/libs/math/
 Architecture: any
 Multi-Arch: same
 Section: libdevel
 Depends: ${misc:Depends},
- ceph-libboost1.71-dev (= ${binary:Version}),
- ceph-libboost-locale1.71.0 (= ${binary:Version})
+ ceph-libboost1.72-dev (= ${binary:Version}),
+ ceph-libboost-locale1.72.0 (= ${binary:Version})
 Description: C++ facilities for localization
  This package forms part of the Boost C++ Libraries collection.
  .
@@ -816,7 +815,7 @@ Description: C++ facilities for localization
 Conflicts: ceph-libboost-locale1.67-dev
 Replaces: ceph-libboost-locale1.67-dev
 
-Package: ceph-libboost-log1.71.0
+Package: ceph-libboost-log1.72.0
 Homepage: http://www.boost.org/libs/log/
 Architecture: any
 Section: libs
@@ -836,17 +835,17 @@ Description: C++ logging library
   * Performance. The library should have as little performance impact on
  the user's application as possible.
 
-Package: ceph-libboost-log1.71-dev
+Package: ceph-libboost-log1.72-dev
 Homepage: http://www.boost.org/libs/log/
 Architecture: any
 Section: libdevel
 Depends: ${misc:Depends},
- ceph-libboost-log1.71.0 (= ${binary:Version}),
- ceph-libboost1.71-dev (= ${binary:Version}),
- ceph-libboost-filesystem1.71-dev (= ${binary:Version}),
- ceph-libboost-system1.71-dev (= ${binary:Version}),
- ceph-libboost-date-time1.71-dev (= ${binary:Version}),
- ceph-libboost-thread1.71-dev (= ${binary:Version})
+ ceph-libboost-log1.72.0 (= ${binary:Version}),
+ ceph-libboost1.72-dev (= ${binary:Version}),
+ ceph-libboost-filesystem1.72-dev (= ${binary:Version}),
+ ceph-libboost-system1.72-dev (= ${binary:Version}),
+ ceph-libboost-date-time1.72-dev (= ${binary:Version}),
+ ceph-libboost-thread1.72-dev (= ${binary:Version})
 Description: C++ logging library
  This package forms part of the Boost C++ Libraries collection.
  .
@@ -864,7 +863,7 @@ Description: C++ logging library
 Conflicts: ceph-libboost-log1.67-dev
 Replaces: ceph-libboost-log1.67-dev
 
-Package: ceph-libboost-math1.71.0
+Package: ceph-libboost-math1.72.0
 Homepage: http://www.boost.org/libs/math/
 Architecture: any
 Multi-Arch: same
@@ -885,14 +884,14 @@ Description: Boost.Math Library
   * Implementation Toolkit: Provides many of the tools required to implement
     mathematical special functions.
 
-Package: ceph-libboost-math1.71-dev
+Package: ceph-libboost-math1.72-dev
 Homepage: http://www.boost.org/libs/math/
 Architecture: any
 Multi-Arch: same
 Section: libdevel
 Depends: ${misc:Depends},
- ceph-libboost1.71-dev (= ${binary:Version}),
- ceph-libboost-math1.71.0 (= ${binary:Version})
+ ceph-libboost1.72-dev (= ${binary:Version}),
+ ceph-libboost-math1.72.0 (= ${binary:Version})
 Description: Boost.Math Library development files
  This package forms part of the Boost C++ Libraries collection.
  .
@@ -909,7 +908,7 @@ Description: Boost.Math Library development files
 Conflicts: ceph-libboost-math1.67-dev
 Replaces: ceph-libboost-math1.67-dev
 
-Package: ceph-libboost-program-options1.71.0
+Package: ceph-libboost-program-options1.72.0
 Homepage: http://www.boost.org/libs/program_options/
 Architecture: any
 Multi-Arch: same
@@ -923,14 +922,14 @@ Description: program options library for C++
  (name, value) pairs from the user, via conventional methods such as
  command line and config file.
 
-Package: ceph-libboost-program-options1.71-dev
+Package: ceph-libboost-program-options1.72-dev
 Homepage: http://www.boost.org/libs/program_options/
 Architecture: any
 Multi-Arch: same
 Section: libdevel
 Depends: ${misc:Depends},
- ceph-libboost1.71-dev (= ${binary:Version}),
- ceph-libboost-program-options1.71.0 (= ${binary:Version})
+ ceph-libboost1.72-dev (= ${binary:Version}),
+ ceph-libboost-program-options1.72.0 (= ${binary:Version})
 Description: program options library for C++
  This package forms part of the Boost C++ Libraries collection.
  .
@@ -940,13 +939,13 @@ Description: program options library for C++
 Conflicts: ceph-libboost-program-options1.67-dev
 Replaces: ceph-libboost-program-options1.67-dev
 
-Package: ceph-libboost-python1.71.0
+Package: ceph-libboost-python1.72.0
 Homepage: http://www.boost.org/libs/python/
 Architecture: any
 Section: libs
 Depends: ${misc:Depends}, ${shlibs:Depends}, ${python:Depends}
 Pre-Depends: ${misc:Pre-Depends}
-Suggests: python, python3
+Suggests: python3
 Breaks: ${python:Breaks}
 Description: Boost.Python Library
  This package forms part of the Boost C++ Libraries collection.
@@ -965,16 +964,15 @@ Description: Boost.Python Library
  One of the python interpreter packages is required to use the
  created extensions.
 
-Package: ceph-libboost-python1.71-dev
+Package: ceph-libboost-python1.72-dev
 Homepage: http://www.boost.org/libs/python/
 Architecture: any
 Section: libdevel
 Depends: ${misc:Depends},
- ceph-libboost1.71-dev (= ${binary:Version}),
- ceph-libboost-python1.71.0 (= ${binary:Version}),
- python-dev, ${python:Depends},
+ ceph-libboost1.72-dev (= ${binary:Version}),
+ ceph-libboost-python1.72.0 (= ${binary:Version}),
  python3-dev, ${python3:Depends},
-Suggests: ceph-libboost1.71-doc, gccxml
+Suggests: ceph-libboost1.72-doc, gccxml
 Description: Boost.Python Library development files
  This package forms part of the Boost C++ Libraries collection.
  .
@@ -995,7 +993,7 @@ Description: Boost.Python Library development files
 Conflicts: ceph-libboost-python1.67-dev
 Replaces: ceph-libboost-python1.67-dev
 
-Package: ceph-libboost-random1.71.0
+Package: ceph-libboost-random1.72.0
 Homepage: http://www.boost.org/libs/random/
 Architecture: any
 Multi-Arch: same
@@ -1009,14 +1007,14 @@ Description: Boost Random Number Library
  variety of generators and distributions to produce random numbers
  having useful properties, such as uniform distribution.
 
-Package: ceph-libboost-random1.71-dev
+Package: ceph-libboost-random1.72-dev
 Homepage: http://www.boost.org/libs/random/
 Architecture: any
 Multi-Arch: same
 Section: libdevel
 Depends: ${misc:Depends},
- ceph-libboost1.71-dev (= ${binary:Version}),
- ceph-libboost-random1.71.0 (= ${binary:Version})
+ ceph-libboost1.72-dev (= ${binary:Version}),
+ ceph-libboost-random1.72.0 (= ${binary:Version})
 Description: Boost Random Number Library
  This package forms part of the Boost C++ Libraries collection.
  .
@@ -1026,7 +1024,7 @@ Description: Boost Random Number Library
 Conflicts: ceph-libboost-random1.67-dev
 Replaces: ceph-libboost-random1.67-dev
 
-Package: ceph-libboost-regex1.71.0
+Package: ceph-libboost-regex1.72.0
 Homepage: http://www.boost.org/libs/regex/
 Architecture: any
 Multi-Arch: same
@@ -1047,14 +1045,14 @@ Description: regular expression library for C++
  manner analogous to either sed or perl), something that traditional C
  libraries can not do.
 
-Package: ceph-libboost-regex1.71-dev
+Package: ceph-libboost-regex1.72-dev
 Homepage: http://www.boost.org/libs/regex/
 Architecture: any
 Multi-Arch: same
 Section: libdevel
 Depends: ${misc:Depends},
- ceph-libboost1.71-dev (= ${binary:Version}),
- ceph-libboost-regex1.71.0 (= ${binary:Version}),
+ ceph-libboost1.72-dev (= ${binary:Version}),
+ ceph-libboost-regex1.72.0 (= ${binary:Version}),
  libicu-dev
 Description: regular expression library for C++
  This package forms part of the Boost C++ Libraries collection.
@@ -1072,7 +1070,7 @@ Description: regular expression library for C++
 Conflicts: ceph-libboost-regex1.67-dev
 Replaces: ceph-libboost-regex1.67-dev
 
-Package: ceph-libboost-serialization1.71.0
+Package: ceph-libboost-serialization1.72.0
 Homepage: http://www.boost.org/libs/serialization/
 Architecture: any
 Multi-Arch: same
@@ -1094,14 +1092,14 @@ Description: serialization library for C++
  arbitrary set of C++ data structures to a sequence of bytes.
  archive: to refer to a specific rendering of this stream of bytes.
 
-Package: ceph-libboost-serialization1.71-dev
+Package: ceph-libboost-serialization1.72-dev
 Homepage: http://www.boost.org/libs/serialization/
 Architecture: any
 Multi-Arch: same
 Section: libdevel
 Depends: ${misc:Depends},
- ceph-libboost1.71-dev (= ${binary:Version}),
- ceph-libboost-serialization1.71.0 (= ${binary:Version})
+ ceph-libboost1.72-dev (= ${binary:Version}),
+ ceph-libboost-serialization1.72.0 (= ${binary:Version})
 Description: serialization library for C++
  This package forms part of the Boost C++ Libraries collection,
  containing the following functionalities:
@@ -1119,7 +1117,7 @@ Description: serialization library for C++
 Conflicts: ceph-libboost-serialization1.67-dev
 Replaces: ceph-libboost-serialization1.67-dev
 
-Package: ceph-libboost-stacktrace1.71.0
+Package: ceph-libboost-stacktrace1.72.0
 Homepage: http://boost.org/libs/stacktrace/
 Architecture: any
 Multi-Arch: same
@@ -1132,14 +1130,14 @@ Description: library to capture and print stack traces
  Boost.Stacktrace library is a simple C++03 library that provides
  information about call sequence in a human-readable form.
 
-Package: ceph-libboost-stacktrace1.71-dev
+Package: ceph-libboost-stacktrace1.72-dev
 Homepage: http://boost.org/libs/stacktrace/
 Architecture: any
 Multi-Arch: same
 Section: libdevel
 Depends: ${misc:Depends},
- ceph-libboost1.71-dev (= ${binary:Version}),
- ceph-libboost-stacktrace1.71.0 (= ${binary:Version})
+ ceph-libboost1.72-dev (= ${binary:Version}),
+ ceph-libboost-stacktrace1.72.0 (= ${binary:Version})
 Description: library to capture and print stack traces - development files
  This package forms part of the Boost C++ Libraries collection.
  .
@@ -1148,7 +1146,7 @@ Description: library to capture and print stack traces - development files
 Conflicts: ceph-libboost-stacktrace1.67-dev
 Replaces: ceph-libboost-stacktrace1.67-dev
 
-Package: ceph-libboost-system1.71.0
+Package: ceph-libboost-system1.72.0
 Homepage: http://www.boost.org/libs/system/
 Architecture: any
 Multi-Arch: same
@@ -1166,14 +1164,14 @@ Description: Operating system (e.g. diagnostics support) library
  user-defined sources, each error_code and error_condition has an
  associated error_category.
 
-Package: ceph-libboost-system1.71-dev
+Package: ceph-libboost-system1.72-dev
 Homepage: http://www.boost.org/libs/system/
 Architecture: any
 Multi-Arch: same
 Section: libdevel
 Depends: ${misc:Depends},
- ceph-libboost1.71-dev (= ${binary:Version}),
- ceph-libboost-system1.71.0 (= ${binary:Version})
+ ceph-libboost1.72-dev (= ${binary:Version}),
+ ceph-libboost-system1.72.0 (= ${binary:Version})
 Description: Operating system (e.g. diagnostics support) library
  This package forms part of the Boost C++ Libraries collection.
  .
@@ -1187,7 +1185,7 @@ Description: Operating system (e.g. diagnostics support) library
 Conflicts: ceph-libboost-system1.67-dev
 Replaces: ceph-libboost-system1.67-dev
 
-Package: ceph-libboost-test1.71.0
+Package: ceph-libboost-test1.72.0
 Homepage: http://www.boost.org/libs/test/
 Architecture: any
 Multi-Arch: same
@@ -1202,14 +1200,14 @@ Description: components for writing and executing test suites
   * Facilities to monitor program execution and produce error reports.
   * Unit test framework to simplify writing test cases.
 
-Package: ceph-libboost-test1.71-dev
+Package: ceph-libboost-test1.72-dev
 Homepage: http://www.boost.org/libs/test/
 Architecture: any
 Multi-Arch: same
 Section: libdevel
 Depends: ${misc:Depends},
- ceph-libboost1.71-dev (= ${binary:Version}),
- ceph-libboost-test1.71.0 (= ${binary:Version})
+ ceph-libboost1.72-dev (= ${binary:Version}),
+ ceph-libboost-test1.72.0 (= ${binary:Version})
 Description: components for writing and executing test suites
  This package forms part of the Boost C++ Libraries collection.  The
  library contains several components.
@@ -1220,7 +1218,7 @@ Description: components for writing and executing test suites
 Conflicts: ceph-libboost-test1.67-dev
 Replaces: ceph-libboost-test1.67-dev
 
-Package: ceph-libboost-thread1.71.0
+Package: ceph-libboost-thread1.72.0
 Homepage: http://www.boost.org/libs/thread/
 Architecture: any
 Multi-Arch: same
@@ -1235,18 +1233,18 @@ Description: portable C++ multi-threading
  own machine state including program instruction counter and
  registers.
 
-Package: ceph-libboost-thread1.71-dev
+Package: ceph-libboost-thread1.72-dev
 Homepage: http://www.boost.org/libs/thread/
 Architecture: any
 Multi-Arch: same
 Section: libdevel
 Depends: ${misc:Depends},
- ceph-libboost1.71-dev (= ${binary:Version}),
- ceph-libboost-atomic1.71-dev (= ${binary:Version}),
- ceph-libboost-chrono1.71-dev (= ${binary:Version}),
- ceph-libboost-date-time1.71-dev (= ${binary:Version}),
- ceph-libboost-system1.71-dev (= ${binary:Version}),
- ceph-libboost-thread1.71.0 (= ${binary:Version})
+ ceph-libboost1.72-dev (= ${binary:Version}),
+ ceph-libboost-atomic1.72-dev (= ${binary:Version}),
+ ceph-libboost-chrono1.72-dev (= ${binary:Version}),
+ ceph-libboost-date-time1.72-dev (= ${binary:Version}),
+ ceph-libboost-system1.72-dev (= ${binary:Version}),
+ ceph-libboost-thread1.72.0 (= ${binary:Version})
 Description: portable C++ multi-threading
  This package forms part of the Boost C++ Libraries collection.
  .
@@ -1257,7 +1255,7 @@ Description: portable C++ multi-threading
 Conflicts: ceph-libboost-thread1.67-dev
 Replaces: ceph-libboost-thread1.67-dev
 
-Package: ceph-libboost-timer1.71.0
+Package: ceph-libboost-timer1.72.0
 Homepage: http://www.boost.org/libs/timer/
 Architecture: any
 Multi-Arch: same
@@ -1276,14 +1274,14 @@ Description: C++ wall clock and CPU process timers
  cpu_timer that automatically reports the elapsed times when an
  auto_cpu_timer object is destroyed.
 
-Package: ceph-libboost-timer1.71-dev
+Package: ceph-libboost-timer1.72-dev
 Homepage: http://www.boost.org/libs/timer/
 Architecture: any
 Multi-Arch: same
 Section: libdevel
 Depends: ${misc:Depends},
- ceph-libboost1.71-dev (= ${binary:Version}),
- ceph-libboost-timer1.71.0 (= ${binary:Version})
+ ceph-libboost1.72-dev (= ${binary:Version}),
+ ceph-libboost-timer1.72.0 (= ${binary:Version})
 Description: C++ wall clock and CPU process timers
  This package forms part of the Boost C++ Libraries collection.
  .
@@ -1298,7 +1296,7 @@ Description: C++ wall clock and CPU process timers
 Conflicts: ceph-libboost-timer1.67-dev
 Replaces: ceph-libboost-timer1.67-dev
 
-Package: ceph-libboost-type-erasure1.71.0
+Package: ceph-libboost-type-erasure1.72.0
 Homepage: http://www.boost.org/doc/libs/1_60_0/doc/html/boost_typeerasure.html
 Architecture: any
 Multi-Arch: same
@@ -1313,14 +1311,14 @@ Description: C++ runtime polymorphism based on concepts
  library combines the superior abstraction capabilities of templates, with the
  runtime flexibility of virtual functions.
 
-Package: ceph-libboost-type-erasure1.71-dev
+Package: ceph-libboost-type-erasure1.72-dev
 Homepage: http://www.boost.org/doc/libs/1_60_0/doc/html/boost_typeerasure.html
 Architecture: any
 Multi-Arch: same
 Section: libdevel
 Depends: ${misc:Depends},
- ceph-libboost1.71-dev (= ${binary:Version}),
- ceph-libboost-type-erasure1.71.0 (= ${binary:Version})
+ ceph-libboost1.72-dev (= ${binary:Version}),
+ ceph-libboost-type-erasure1.72.0 (= ${binary:Version})
 Description: C++ runtime polymorphism based on concepts
  This package forms part of the Boost C++ Libraries collection.
  .
@@ -1331,7 +1329,7 @@ Description: C++ runtime polymorphism based on concepts
 Conflicts: ceph-libboost-type-erasure1.67-dev
 Replaces: ceph-libboost-type-erasure1.67-dev
 
-Package: ceph-libboost-wave1.71.0
+Package: ceph-libboost-wave1.72.0
 Homepage: http://www.boost.org/libs/wave/
 Architecture: any
 Multi-Arch: same
@@ -1346,16 +1344,16 @@ Description: C99/C++ preprocessor library
  packed behind a simple to use interface, which integrates well with
  the well known idioms of the Standard Template Library (STL).
 
-Package: ceph-libboost-wave1.71-dev
+Package: ceph-libboost-wave1.72-dev
 Homepage: http://www.boost.org/libs/wave/
 Architecture: any
 Multi-Arch: same
 Section: libdevel
 Depends: ${misc:Depends},
- ceph-libboost1.71-dev (= ${binary:Version}),
- ceph-libboost-serialization1.71-dev (= ${binary:Version}),
- ceph-libboost-wave1.71.0 (= ${binary:Version}),
- ceph-libboost-filesystem1.71-dev (= ${binary:Version})
+ ceph-libboost1.72-dev (= ${binary:Version}),
+ ceph-libboost-serialization1.72-dev (= ${binary:Version}),
+ ceph-libboost-wave1.72.0 (= ${binary:Version}),
+ ceph-libboost-filesystem1.72-dev (= ${binary:Version})
 Description: C99/C++ preprocessor library
  This package forms part of the Boost C++ Libraries collection.
  .

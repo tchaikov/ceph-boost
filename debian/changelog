@@ -1,3 +1,10 @@
+boost1.72 (1.72.0-1) unstable; urgency=medium
+
+  * Non-maintainer upload.
+  * New upstream.
+
+ -- kefu chai <kefu@redhat.com>  Sun, 22 Dec 2019 21:08:21 +0800
+
 boost1.71 (1.71.0-1) unstable; urgency=medium
 
   * Non-maintainer upload.
