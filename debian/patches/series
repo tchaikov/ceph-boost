@@ -7,8 +7,5 @@ no-gcc-march-options.patch
 make-docs-use-offline-resources-only.patch
 #83ab00c067d4111496f760c144d323ac311b7f2c.patch
 # No longer applies; fix-python-mpi.patch
-fix-examples.patch
 disable-remote-links.patch
 fix-mpi-python37.patch
-0001-Add-PEP-3149-compliant-extension-suffix-discovery.patch
-ignore-mpl-gcc-8-warnings.patch
