@@ -9,3 +9,4 @@ make-docs-use-offline-resources-only.patch
 # No longer applies; fix-python-mpi.patch
 disable-remote-links.patch
 fix-mpi-python37.patch
+coroutine-revert-0c556bb.patch
