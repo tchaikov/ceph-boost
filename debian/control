@@ -397,6 +397,7 @@ Multi-Arch: same
 Section: libdevel
 Depends: ${misc:Depends},
  ceph-libboost1.72-dev (= ${binary:Version}),
+ ceph-libboost-thread1.72-dev (= ${binary:Version}),
  ceph-libboost-context1.72.0 (= ${binary:Version})
 Description: provides a sort of cooperative multitasking on a single thread
  This package forms part of the Boost C++ Libraries collection.
@@ -586,6 +587,7 @@ Section: libdevel
 Depends: ${misc:Depends},
  ceph-libboost1.72-dev (= ${binary:Version}),
  ceph-libboost-context1.72-dev (= ${binary:Version}),
+ ceph-libboost-filesystem1.72-dev (= ${binary:Version}),
  ceph-libboost-fiber1.72.0 (= ${binary:Version})
 Description: cooperatively-scheduled micro-/userland-threads
  This package forms part of the Boost C++ Libraries collection.
@@ -669,6 +671,7 @@ Section: libdevel
 Depends: ${misc:Depends},
  ceph-libboost1.72-dev (= ${binary:Version}),
  ceph-libboost-graph1.72.0 (= ${binary:Version}),
+ ceph-libboost-regex1.72-dev (= ${binary:Version}),
  ceph-libboost-serialization1.72-dev (= ${binary:Version}),
  ceph-libboost-test1.72-dev (= ${binary:Version})
 Description: generic graph components and algorithms in C++
@@ -789,6 +792,7 @@ Multi-Arch: same
 Section: libdevel
 Depends: ${misc:Depends},
  ceph-libboost1.72-dev (= ${binary:Version}),
+ ceph-libboost-thread1.72-dev (= ${binary:Version}),
  ceph-libboost-locale1.72.0 (= ${binary:Version})
 Description: C++ facilities for localization
  This package forms part of the Boost C++ Libraries collection.
@@ -842,9 +846,11 @@ Section: libdevel
 Depends: ${misc:Depends},
  ceph-libboost-log1.72.0 (= ${binary:Version}),
  ceph-libboost1.72-dev (= ${binary:Version}),
+ ceph-libboost-atomic1.72-dev (= ${binary:Version}),
+ ceph-libboost-date-time1.72-dev (= ${binary:Version}),
  ceph-libboost-filesystem1.72-dev (= ${binary:Version}),
  ceph-libboost-system1.72-dev (= ${binary:Version}),
- ceph-libboost-date-time1.72-dev (= ${binary:Version}),
+ ceph-libboost-regex1.72-dev (= ${binary:Version}),
  ceph-libboost-thread1.72-dev (= ${binary:Version})
 Description: C++ logging library
  This package forms part of the Boost C++ Libraries collection.
@@ -1014,6 +1020,7 @@ Multi-Arch: same
 Section: libdevel
 Depends: ${misc:Depends},
  ceph-libboost1.72-dev (= ${binary:Version}),
+ ceph-libboost-system1.72-dev (= ${binary:Version}),
  ceph-libboost-random1.72.0 (= ${binary:Version})
 Description: Boost Random Number Library
  This package forms part of the Boost C++ Libraries collection.
@@ -1281,6 +1288,7 @@ Multi-Arch: same
 Section: libdevel
 Depends: ${misc:Depends},
  ceph-libboost1.72-dev (= ${binary:Version}),
+ ceph-libboost-chrono1.72-dev (= ${binary:Version}),
  ceph-libboost-timer1.72.0 (= ${binary:Version})
 Description: C++ wall clock and CPU process timers
  This package forms part of the Boost C++ Libraries collection.
@@ -1318,6 +1326,8 @@ Multi-Arch: same
 Section: libdevel
 Depends: ${misc:Depends},
  ceph-libboost1.72-dev (= ${binary:Version}),
+ ceph-libboost-system1.72-dev (= ${binary:Version}),
+ ceph-libboost-thread1.72-dev (= ${binary:Version}),
  ceph-libboost-type-erasure1.72.0 (= ${binary:Version})
 Description: C++ runtime polymorphism based on concepts
  This package forms part of the Boost C++ Libraries collection.
