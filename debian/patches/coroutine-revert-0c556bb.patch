@@ -1,7 +1,7 @@
-diff --git a/include/boost/coroutine/asymmetric_coroutine.hpp b/include/boost/coroutine/asymmetric_coroutine.hpp
+diff --git a/boost/coroutine/asymmetric_coroutine.hpp b/boost/coroutine/asymmetric_coroutine.hpp
 index ea96981..640896f 100644
---- a/include/boost/coroutine/asymmetric_coroutine.hpp
-+++ b/include/boost/coroutine/asymmetric_coroutine.hpp
+--- a/boost/coroutine/asymmetric_coroutine.hpp
++++ b/boost/coroutine/asymmetric_coroutine.hpp
 @@ -14,6 +14,7 @@
  #include <boost/assert.hpp>
  #include <boost/config.hpp>
