@@ -109,7 +109,7 @@ override_dh_install:
 	   $(install_prefix)/include
 
 	if test $(install_prefix) != usr; then \
-	   mkdir -p debian/$(VENDOR)libboost$(PKGVERSION)-dev/etc/ld.so.conf.d \
+	   mkdir -p debian/$(VENDOR)libboost$(PKGVERSION)-dev/etc/ld.so.conf.d; \
 	   echo /$(install_prefix)/lib/$(DEB_HOST_MULTIARCH) > \
 	      debian/$(VENDOR)libboost$(PKGVERSION)-dev/etc/ld.so.conf.d/$(VENDOR)libboost$(PKGVERSION)-$(DEB_HOST_MULTIARCH).conf; \
 	fi
