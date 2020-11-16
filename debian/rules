@@ -97,7 +97,7 @@ override_dh_install:
 
 	# Install Boost.Build v2 & jam
 	cd $(bbv2dir) && $(b2) install --with-examples --prefix=$(CURDIR)/debian/tmp/$(install_prefix) --libdir=$(CURDIR)/debian/tmp/$(install_prefix)/lib/$(DEB_HOST_MULTIARCH)
-	mv debian/tmp/$(install_prefix)/share/boost-build/example debian/boost-build-examples
+	mv debian/tmp/$(install_prefix)/share/boost-build/examples debian/boost-build-examples
 
 	find debian/tmp/$(install_prefix)/include debian/tmp/$(install_prefix)/share/boost-build -type f | xargs chmod 644
 	find debian/tmp -name .cvsignore | xargs rm -f
