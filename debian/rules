@@ -165,7 +165,7 @@ override_dh_install:
 	find $(exampledir) -type f | xargs chmod 644
 
 	find debian -iname '*.so.*' -type f -print0 | xargs -0 chrpath --delete
-	dh_install --list-missing
+	dh_missing --list-missing
 
 override_dh_strip:
 	dh_strip --dbgsym-migration='libboost1.55-dbg, libboost1.58-dbg, libboost1.61-dbg'
