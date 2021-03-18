@@ -107,6 +107,8 @@ override_dh_install: override_dh_install-common
 
 	# Write substvars for Python packages
 	echo 'boost:Provides=' $(foreach verid,$(pyverids),libboost-python$(SOVERSION)-py$(verid),) >> debian/libboost-python$(SOVERSION).substvars
+	# Write substvars for Regex (icu abi)
+	echo 'boost:Provides=$(regexicuabi)' >> debian/libboost-regex$(SOVERSION).substvars
 
 	# package libboost$(PKGVERSION)-dev
 	dh_install -p$(VENDOR)libboost$(PKGVERSION)-dev \
@@ -170,6 +172,8 @@ version_major := $(shell echo $(version_upstream) | cut -d'.' -f1,2)
 PKGVERSION = $(version_major)
 SOVERSION = $(version_upstream)
 
+icuabi = $(shell apt show libicu-dev 2>/dev/null | sed -n 's/Depends: .*libicu\([0-9]*\) .*/\1/p')
+regexicuabi = libboost-regex$(SOVERSION)-icu$(icuabi)
 
 # Function to map Boost component name to set of shared library names
 # Input: Boost component name
