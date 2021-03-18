@@ -83,7 +83,13 @@ override_dh_auto_clean: clean-debhelper
 override_dh_compress:
 	dh_compress -X$(VENDOR)libboost$(PKGVERSION)-doc/doc
 
-override_dh_install:
+override_dh_install-common:
+	# Install Boost.Build v2 & jam
+	cd $(bbv2dir) && ./b2 install --prefix=$(CURDIR)/debian/tmp/$(install_prefix) --libdir=$(CURDIR)/debian/tmp/$(install_prefix)/lib/$(DEB_HOST_MULTIARCH)
+
+	touch $@
+
+override_dh_install: override_dh_install-common
 	$(JAM) --prefix=$(CURDIR)/debian/tmp/$(install_prefix) $(JAM_WITHOUT) \
 		--libdir=$(CURDIR)/debian/tmp/$(install_prefix)/lib/$(DEB_HOST_MULTIARCH) \
 		--without-python install
@@ -93,8 +99,6 @@ override_dh_install:
 			install --with-python python=$$pyver; \
 	done
 
-	# Install Boost.Build v2 & jam
-	cd $(bbv2dir) && $(b2) install --with-examples --prefix=$(CURDIR)/debian/tmp/$(install_prefix) --libdir=$(CURDIR)/debian/tmp/$(install_prefix)/lib/$(DEB_HOST_MULTIARCH)
 	mv debian/tmp/$(install_prefix)/share/boost-build/examples debian/boost-build-examples
 
 	find debian/tmp/$(install_prefix)/include debian/tmp/$(install_prefix)/share/boost-build -type f -print0 | xargs -0 chmod 644
