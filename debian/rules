@@ -99,7 +99,7 @@ override_dh_install:
 	cd $(bbv2dir) && $(b2) install --with-examples --prefix=$(CURDIR)/debian/tmp/$(install_prefix) --libdir=$(CURDIR)/debian/tmp/$(install_prefix)/lib/$(DEB_HOST_MULTIARCH)
 	mv debian/tmp/$(install_prefix)/share/boost-build/examples debian/boost-build-examples
 
-	find debian/tmp/$(install_prefix)/include debian/tmp/$(install_prefix)/share/boost-build -type f | xargs chmod 644
+	find debian/tmp/$(install_prefix)/include debian/tmp/$(install_prefix)/share/boost-build -type f -print0 | xargs -0 chmod 644
 	find debian/tmp -name .cvsignore | xargs rm -f
 	find debian -empty -type f | xargs rm -f
 
