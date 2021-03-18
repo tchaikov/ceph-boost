@@ -19,12 +19,10 @@ boost_lib_serialization := serialization wserialization
 boost_lib_stacktrace := stacktrace_noop stacktrace_addr2line stacktrace_backtrace stacktrace_basic
 boost_lib_test := prg_exec_monitor test_exec_monitor unit_test_framework
 
-py2versions = $(shell pyversions -rv)
 py3versions = $(shell py3versions -rv)
-py2verids = $(subst .,,$(py2versions))
 py3verids = $(subst .,,$(py3versions))
-pyversions = $(py2versions) $(py3versions)
-pyverids = $(py2verids) $(py3verids)
+pyversions = $(py3versions)
+pyverids = $(py3verids)
 
 # These are special cases for suffixes.  Generally come from --python-buildid, so begin with a dash.
 boost_suffixes_python := $(pyverids)
