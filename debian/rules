@@ -137,26 +137,6 @@ override_dh_install:
 	   $(install_prefix)/share/doc/libboost$(PKGVERSION)-doc/examples \
 	   $(install_prefix)/share/doc/libboost-doc/examples
 
-# Debian decorates the python-using libraries with a python version suffix ("-py27")
-# Create symlinks for the upstream name to the default python version.
-# There is a separate set of links for each Python major version.
-
-	# Python3 compatibility links
-	dh_link -p$(VENDOR)libboost-python$(PKGVERSION)-dev \
-	   $(install_prefix)/lib/$(DEB_HOST_MULTIARCH)/libboost_python$(py3default).a \
-	   $(install_prefix)/lib/$(DEB_HOST_MULTIARCH)/libboost_python3.a
-	dh_link -p$(VENDOR)libboost-python$(PKGVERSION)-dev \
-	   $(install_prefix)/lib/$(DEB_HOST_MULTIARCH)/libboost_python$(py3default).so \
-	   $(install_prefix)/lib/$(DEB_HOST_MULTIARCH)/libboost_python3.so
-
-	# Python3 old debian compat links
-	dh_link -p$(VENDOR)libboost-python$(PKGVERSION)-dev \
-	   $(install_prefix)/lib/$(DEB_HOST_MULTIARCH)/libboost_python$(py3default).a \
-	   $(install_prefix)/lib/$(DEB_HOST_MULTIARCH)/libboost_python3-py$(py3default).a
-	dh_link -p$(VENDOR)libboost-python$(PKGVERSION)-dev \
-	   $(install_prefix)/lib/$(DEB_HOST_MULTIARCH)/libboost_python$(py3default).so \
-	   $(install_prefix)/lib/$(DEB_HOST_MULTIARCH)/libboost_python3-py$(py3default).so
-
 	dh_installexamples -p$(VENDOR)libboost$(PKGVERSION)-doc debian/boost-build-examples
 	mkdir -p $(exampledir)
 	cat debian/example-files | xargs cp -a --parents --target-directory=$(exampledir)
@@ -198,6 +178,7 @@ boost_suffixes = $(if $(boost_suffixes_$(1)), $(boost_suffixes_$(1)),"")
 # Input: library, suffix
 # Return: base library filename for short or full name
 mk_base_name = $(install_prefix)/lib/$(DEB_HOST_MULTIARCH)/libboost_$(subst -,_,$(1))$(2)
+mk_cmake_name = $(install_prefix)/lib/$(DEB_HOST_MULTIARCH)/cmake/boost_$(subst -,_,$(1))-$(SOVERSION)/
 
 # Input: component
 # Return: package name for shared library or development
@@ -216,12 +197,13 @@ mk_deb_dev = debian/$(call mk_pkg_dev,$(1))
 mk_so_files = $(shell echo debian/tmp/$(call mk_base_name,$(2),$(3)).so.$(SOVERSION) >> $(call mk_deb_lib,$(1)).install)
 mk_a_files = $(shell echo debian/tmp/$(call mk_base_name,$(2),$(3)).a >> $(call mk_deb_dev,$(1)).install)
 mk_ln_files = $(shell echo $(call mk_base_name,$(2),$(3)).so.$(SOVERSION) $(call mk_base_name,$(2),$(3)).so >> $(call mk_deb_dev,$(1)).links)
+mk_cmake_files = $(shell echo debian/tmp/$(call mk_cmake_name,$(2),$(3)) >> $(call mk_deb_dev,$(1)).install)
 
 # Specify the type of files/links to install.
 # Special cases first, then general rule
-boost_filetypes_exception = a
-boost_filetypes_test_exec_monitor = a
-boost_filetypes = $(if $(boost_filetypes_$(1)), $(boost_filetypes_$(1)),a so ln)
+boost_filetypes_exception = a cmake
+boost_filetypes_test_exec_monitor = a cmake
+boost_filetypes = $(if $(boost_filetypes_$(1)), $(boost_filetypes_$(1)),a so ln cmake)
 
 # Function that updates debhelper files for a given library
 # Input: component, library, suffix
@@ -373,6 +355,7 @@ clean-debhelper:
 make-debhelper: clean-debhelper $(filtered_files)
 	@$(call mk_debhelper_files)
 	@$(call cp_debhelper,libboost-dev,${VENDOR}libboost${PKGVERSION}-dev)
+	@echo $(install_prefix)/lib/$(DEB_HOST_MULTIARCH)/cmake/Boost*-$(SOVERSION)* >> debian/libboost$(PKGVERSION)-dev.install
+	@echo $(install_prefix)/lib/$(DEB_HOST_MULTIARCH)/cmake/boost_headers-$(SOVERSION)* >> debian/libboost$(PKGVERSION)-dev.install
 	@$(call cp_debhelper,libboost-doc,${VENDOR}libboost${PKGVERSION}-doc)
 	@$(call cp_debhelper,libboost-python-dev,$(VENDOR)libboost-python$(PKGVERSION)-dev)
-
