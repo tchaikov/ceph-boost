@@ -98,7 +98,7 @@ override_dh_install-arch: override_dh_install-common
 	$(JAM) --prefix=$(CURDIR)/debian/tmp/$(install_prefix) $(JAM_WITHOUT) \
 		--libdir=$(CURDIR)/debian/tmp/$(install_prefix)/lib/$(DEB_HOST_MULTIARCH) \
 		--without-python install
-	for pyver in $(pyversions); do \
+	set -e ; for pyver in $(pyversions); do \
 		$(JAM) --build-dir=build-$$pyver --stagedir=stage-$$pyver --user-config=$(CURDIR)/user-config-$$pyver.jam --prefix=$(CURDIR)/debian/tmp/$(install_prefix) \
 			--libdir=$(CURDIR)/debian/tmp/$(install_prefix)/lib/$(DEB_HOST_MULTIARCH) \
 			install --with-python python=$$pyver; \
