@@ -17,6 +17,12 @@ boost_lib_math := math_c99 math_c99f math_tr1 math_tr1f
 boost_lib_math_long_double := math_c99l math_tr1l
 boost_lib_serialization := serialization wserialization
 boost_lib_stacktrace := stacktrace_noop stacktrace_addr2line stacktrace_backtrace stacktrace_basic
+ifeq ($(DEB_BUILD_ARCH), m68k)
+# See https://bugs.debian.org/cgi-bin/bugreport.cgi?bug=962072
+boost_lib_stacktrace := stacktrace_noop stacktrace_addr2line stacktrace_basic
+else
+boost_lib_stacktrace := stacktrace_noop stacktrace_addr2line stacktrace_backtrace stacktrace_basic
+endif
 boost_lib_test := prg_exec_monitor test_exec_monitor unit_test_framework
 
 py3versions = $(shell py3versions -rv)
