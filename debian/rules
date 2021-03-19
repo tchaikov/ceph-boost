@@ -375,7 +375,7 @@ clean-debhelper:
 make-debhelper: clean-debhelper $(filtered_files)
 	@$(call mk_debhelper_files)
 	@$(call cp_debhelper,libboost-dev,${VENDOR}libboost${PKGVERSION}-dev)
-	@echo $(install_prefix)/lib/$(DEB_HOST_MULTIARCH)/cmake/Boost*-$(SOVERSION)* >> debian/libboost$(PKGVERSION)-dev.install
-	@echo $(install_prefix)/lib/$(DEB_HOST_MULTIARCH)/cmake/boost_headers-$(SOVERSION)* >> debian/libboost$(PKGVERSION)-dev.install
+	@echo $(install_prefix)/lib/$(DEB_HOST_MULTIARCH)/cmake/Boost*-$(SOVERSION)* >> debian/$(VENDOR)libboost$(PKGVERSION)-dev.install
+	@echo $(install_prefix)/lib/$(DEB_HOST_MULTIARCH)/cmake/boost_headers-$(SOVERSION)* >> debian/$(VENDOR)libboost$(PKGVERSION)-dev.install
 	@$(call cp_debhelper,libboost-doc,${VENDOR}libboost${PKGVERSION}-doc)
 	@$(call cp_debhelper,libboost-python-dev,$(VENDOR)libboost-python$(PKGVERSION)-dev)
