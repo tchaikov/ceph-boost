@@ -104,8 +104,6 @@ override_dh_install-arch: override_dh_install-common
 			install --with-python python=$$pyver; \
 	done
 
-	mv debian/tmp/$(install_prefix)/share/boost-build/examples debian/boost-build-examples
-
 	find debian/tmp/$(install_prefix)/include debian/tmp/$(install_prefix)/share/boost-build -type f -print0 | xargs -0 chmod 644
 	find debian/tmp -name .cvsignore | xargs rm -f
 	find debian -empty -type f | xargs rm -f
@@ -156,7 +154,6 @@ override_dh_install-indep: override_dh_install-common
 	   $(install_prefix)/share/doc/libboost$(PKGVERSION)-doc/examples \
 	   $(install_prefix)/share/doc/libboost-doc/examples
 
-	dh_installexamples -p$(VENDOR)libboost$(PKGVERSION)-doc debian/boost-build-examples
 	mkdir -p $(exampledir)
 	cat debian/example-files | xargs cp -a --parents --target-directory=$(exampledir)
 	find $(exampledir) -type f | xargs chmod 644
