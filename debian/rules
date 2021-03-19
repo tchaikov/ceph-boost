@@ -39,139 +39,6 @@ filtered_files =
 DPKG_EXPORT_BUILDFLAGS = 1
 include /usr/share/dpkg/default.mk
 
-# empty if not for ceph building dependency
-VENDOR := ceph-
-# "usr" if not for ceph building dependency
-install_prefix := opt/ceph
-
-%:
-	dh $@ --with python3
-
-override_dh_auto_configure: user-config.jam make-debhelper
-
-override_dh_auto_build: $(b2) b2.1
-	$(JAM) $(JAM_WITHOUT) --without-python
-	for pyver in $(pyversions); do \
-		echo "Building Boost.Python for python version $$pyver"; \
-		$(JAM) --build-dir=build-$$pyver --stagedir=stage-$$pyver --user-config=$(CURDIR)/user-config-$$pyver.jam --with-python python=$$pyver; \
-	done
-
-	cd $(bbv2dir) && ./bootstrap.sh --with-toolset=gcc
-	cd tools/bcp && $(JAM)
-	cd tools/inspect/build && $(JAM)
-	cd tools/quickbook && $(JAM)
-
-ifneq (,$(filter nodoc,$(DEB_BUILD_OPTIONS)))
-	mkdir -p doc
-else
-	$(JAM_DOC) --build-dir=build-doc doc
-endif
-
-testsuite:
-	cd status && $(JAM) $(JAM_WITHOUT)
-
-override_dh_auto_clean: clean-debhelper
-	-cd tools && $(JAM) clean
-	-$(JAM) clean
-	rm -fr tools/build/src/engine/jamgram.{ch}pp
-	rm -rf tools/jam/src/bootstrap
-	rm -rf tools/jam/src/bin.*
-	rm -ff tools/jam/src/b2
-	rm -rf tools/regression/build/bin
-	rm -rf bin.v2 dist
-	rm -rf user-config.jam
-	rm -rf build-* user-config-*.jam stage-*
-	rm -rf b2.1 bjam.1
-	rm -rf override_dh_auto_build-common override_dh_install-common
-	dh_auto_clean
-
-override_dh_compress:
-	dh_compress -X$(VENDOR)libboost$(PKGVERSION)-doc/doc
-
-override_dh_install-common:
-	# Install Boost.Build v2 & jam
-	cd $(bbv2dir) && ./b2 install --prefix=$(CURDIR)/debian/tmp/$(install_prefix) --libdir=$(CURDIR)/debian/tmp/$(install_prefix)/lib/$(DEB_HOST_MULTIARCH)
-
-	touch $@
-
-override_dh_install-arch: override_dh_install-common
-	$(JAM) --prefix=$(CURDIR)/debian/tmp/$(install_prefix) $(JAM_WITHOUT) \
-		--libdir=$(CURDIR)/debian/tmp/$(install_prefix)/lib/$(DEB_HOST_MULTIARCH) \
-		--without-python install
-	set -e ; for pyver in $(pyversions); do \
-		$(JAM) --build-dir=build-$$pyver --stagedir=stage-$$pyver --user-config=$(CURDIR)/user-config-$$pyver.jam --prefix=$(CURDIR)/debian/tmp/$(install_prefix) \
-			--libdir=$(CURDIR)/debian/tmp/$(install_prefix)/lib/$(DEB_HOST_MULTIARCH) \
-			install --with-python python=$$pyver; \
-	done
-
-	find debian/tmp/$(install_prefix)/include debian/tmp/$(install_prefix)/share/boost-build -type f -print0 | xargs -0 chmod 644
-	find debian/tmp -name .cvsignore | xargs rm -f
-	find debian -empty -type f | xargs rm -f
-
-	# Write substvars for Python packages
-	echo 'boost:Provides=' $(foreach verid,$(pyverids),libboost-python$(SOVERSION)-py$(verid),) >> debian/libboost-python$(SOVERSION).substvars
-	# Write substvars for Regex (icu abi)
-	echo 'boost:Provides=$(regexicuabi)' >> debian/libboost-regex$(SOVERSION).substvars
-
-	# package libboost$(PKGVERSION)-dev
-	dh_install -p$(VENDOR)libboost$(PKGVERSION)-dev \
-	   debian/tmp/$(install_prefix)/include/boost \
-	   $(install_prefix)/include
-
-	if test $(install_prefix) != usr; then \
-	   mkdir -p debian/$(VENDOR)libboost$(PKGVERSION)-dev/etc/ld.so.conf.d; \
-	   echo /$(install_prefix)/lib/$(DEB_HOST_MULTIARCH) > \
-	      debian/$(VENDOR)libboost$(PKGVERSION)-dev/etc/ld.so.conf.d/$(VENDOR)libboost$(PKGVERSION)-$(DEB_HOST_MULTIARCH).conf; \
-	fi
-
-	dh_install -p$(VENDOR)libboost$(PKGVERSION)-tools-dev \
-	   debian/tmp/$(install_prefix)/bin/b2 \
-	   dist/bin/bcp \
-	   dist/bin/inspect \
-	   dist/bin/quickbook \
-	   $(install_prefix)/bin
-	dh_installman -p$(VENDOR)libboost$(PKGVERSION)-tools-dev b2.1 debian/bcp.1 debian/inspect.1 debian/quickbook.1
-	dh_install -p$(VENDOR)libboost$(PKGVERSION)-tools-dev tools/boostbook/xsl/* $(install_prefix)/share/boostbook/xsl
-	dh_install -p$(VENDOR)libboost$(PKGVERSION)-tools-dev tools/boostbook/dtd/* $(install_prefix)/share/boostbook/dtd
-	dh_install -p$(VENDOR)libboost$(PKGVERSION)-tools-dev debian/tmp/$(install_prefix)/share/boost-build
-
-	# package libboost-date-time$(PKGVERSION)-dev
-	dh_installdocs -p$(VENDOR)libboost-date-time$(PKGVERSION)-dev libs/date_time/data
-
-	find debian -iname '*.so.*' -type f -print0 | xargs -0 chrpath --delete
-	dh_install
-	dh_missing --list-missing
-
-override_dh_install-indep: override_dh_install-common
-	# package libboost-doc
-	mkdir -p debian/libboost$(PKGVERSION)-doc/$(install_prefix)/share/doc/libboost$(PKGVERSION)-doc
-	cp -a doc debian/libboost$(PKGVERSION)-doc/$(install_prefix)/share/doc/libboost$(PKGVERSION)-doc
-	# provide a constant symlink to the latest documents and examples
-	dh_link -p$(VENDOR)libboost$(PKGVERSION)-doc \
-	   $(install_prefix)/share/doc/libboost$(PKGVERSION)-doc/doc \
-	   $(install_prefix)/share/doc/libboost-doc/doc
-	dh_link -p$(VENDOR)libboost$(PKGVERSION)-doc \
-	   $(install_prefix)/share/doc/libboost$(PKGVERSION)-doc/examples \
-	   $(install_prefix)/share/doc/libboost-doc/examples
-
-	mkdir -p $(exampledir)
-	cat debian/example-files | xargs cp -a --parents --target-directory=$(exampledir)
-	find $(exampledir) -type f | xargs chmod 644
-
-override_dh_makeshlibs:
-	dh_makeshlibs -p$(VENDOR)libboost-regex$(SOVERSION) -V '$(regexicuabi)'
-	dh_makeshlibs --remaining-packages
-	sed -i -r 's/^(libboost_python([0-9]{2}) \S+ (\S+).*)$$/\1, \3-py\2/' debian/$(VENDOR)libboost-python$(SOVERSION)/DEBIAN/shlibs
-
-override_dh_gencontrol:
-	dh_gencontrol -- -V'gxx:major=$(shell dpkg-query -f '$${version}' -W g++ | sed 's/.*://;s/\..*//')'
-
-override_dh_strip:
-	dh_strip --dbgsym-migration='libboost1.55-dbg, libboost1.58-dbg, libboost1.61-dbg'
-
-override_dh_shlibdeps:
-	dh_shlibdeps -l"$(install_prefix)/lib/$(DEB_HOST_MULTIARCH)"
-
 # set the number of build jobs
 ifneq (,$(filter parallel=%,$(DEB_BUILD_OPTIONS)))
   JOBS := -j$(patsubst parallel=%,%,$(filter parallel=%,$(DEB_BUILD_OPTIONS)))
@@ -184,8 +51,13 @@ version_major := $(shell echo $(version_upstream) | cut -d'.' -f1,2)
 PKGVERSION = $(version_major)
 SOVERSION = $(version_upstream)
 
+# empty if not for ceph building dependency
+VENDOR := ceph-
+# "usr" if not for ceph building dependency
+install_prefix := opt/ceph
+
 icuabi = $(shell apt show libicu-dev 2>/dev/null | sed -n 's/Depends: .*libicu\([0-9]*\) .*/\1/p')
-regexicuabi = libboost-regex$(SOVERSION)-icu$(icuabi)
+regexicuabi = $(VENDOR)libboost-regex$(SOVERSION)-icu$(icuabi)
 
 # Function to map Boost component name to set of shared library names
 # Input: Boost component name
@@ -345,8 +217,130 @@ bbv2dir = $(CURDIR)/tools/build
 JAM = $(b2) $(JOBS) -d2 $(JAM_OPT) --layout=system --ignore-site-config --user-config=$(CURDIR)/user-config.jam debug-symbols=on
 JAM_DOC = $(b2) $(JOBS) -d2 --ignore-site-config --user-config=$(CURDIR)/user-config-doc.jam
 
+%:
+	dh $@ --with python3
 
+override_dh_auto_configure: user-config.jam make-debhelper
 
+override_dh_auto_build: $(b2) b2.1
+	$(JAM) $(JAM_WITHOUT) --without-python
+	for pyver in $(pyversions); do \
+		echo "Building Boost.Python for python version $$pyver"; \
+		$(JAM) --build-dir=build-$$pyver --stagedir=stage-$$pyver --user-config=$(CURDIR)/user-config-$$pyver.jam --with-python python=$$pyver; \
+	done
+
+	cd $(bbv2dir) && ./bootstrap.sh --with-toolset=gcc
+	cd tools/bcp && $(JAM)
+	cd tools/inspect/build && $(JAM)
+	cd tools/quickbook && $(JAM)
+
+ifneq (,$(filter nodoc,$(DEB_BUILD_OPTIONS)))
+	mkdir -p doc
+else
+	$(JAM_DOC) --build-dir=build-doc doc
+endif
+
+testsuite:
+	cd status && $(JAM) $(JAM_WITHOUT)
+
+override_dh_auto_clean: clean-debhelper
+	-cd tools && $(JAM) clean
+	-$(JAM) clean
+	rm -fr tools/build/src/engine/jamgram.{ch}pp
+	rm -rf tools/jam/src/bootstrap
+	rm -rf tools/jam/src/bin.*
+	rm -ff tools/jam/src/b2
+	rm -rf tools/regression/build/bin
+	rm -rf bin.v2 dist
+	rm -rf user-config.jam
+	rm -rf build-* user-config-*.jam stage-*
+	rm -rf b2.1 bjam.1
+	rm -rf override_dh_auto_build-common override_dh_install-common
+	dh_auto_clean
+
+override_dh_compress:
+	dh_compress -X$(VENDOR)libboost$(PKGVERSION)-doc/doc
+
+override_dh_install-common:
+	# Install Boost.Build v2 & jam
+	cd $(bbv2dir) && ./b2 install --prefix=$(CURDIR)/debian/tmp/$(install_prefix) --libdir=$(CURDIR)/debian/tmp/$(install_prefix)/lib/$(DEB_HOST_MULTIARCH)
+
+	touch $@
+
+override_dh_install-arch: override_dh_install-common
+	$(JAM) --prefix=$(CURDIR)/debian/tmp/$(install_prefix) $(JAM_WITHOUT) \
+		--libdir=$(CURDIR)/debian/tmp/$(install_prefix)/lib/$(DEB_HOST_MULTIARCH) \
+		--without-python install
+	set -e ; for pyver in $(pyversions); do \
+		$(JAM) --build-dir=build-$$pyver --stagedir=stage-$$pyver --user-config=$(CURDIR)/user-config-$$pyver.jam --prefix=$(CURDIR)/debian/tmp/$(install_prefix) \
+			--libdir=$(CURDIR)/debian/tmp/$(install_prefix)/lib/$(DEB_HOST_MULTIARCH) \
+			install --with-python python=$$pyver; \
+	done
+
+	find debian/tmp/$(install_prefix)/include debian/tmp/$(install_prefix)/share/boost-build -type f -print0 | xargs -0 chmod 644
+	find debian/tmp -name .cvsignore | xargs rm -f
+	find debian -empty -type f | xargs rm -f
+
+	# Write substvars for Python packages
+	echo 'boost:Provides=' $(foreach verid,$(pyverids),libboost-python$(SOVERSION)-py$(verid),) >> debian/libboost-python$(SOVERSION).substvars
+	# Write substvars for Regex (icu abi)
+	echo 'boost:Provides=$(regexicuabi)' >> debian/libboost-regex$(SOVERSION).substvars
+
+	# package libboost$(PKGVERSION)-dev
+	dh_install -p$(VENDOR)libboost$(PKGVERSION)-dev \
+	   debian/tmp/$(install_prefix)/include/boost \
+	   $(install_prefix)/include
+
+	if test $(install_prefix) != usr; then \
+	   mkdir -p debian/$(VENDOR)libboost$(PKGVERSION)-dev/etc/ld.so.conf.d; \
+	   echo /$(install_prefix)/lib/$(DEB_HOST_MULTIARCH) > \
+	      debian/$(VENDOR)libboost$(PKGVERSION)-dev/etc/ld.so.conf.d/$(VENDOR)libboost$(PKGVERSION)-$(DEB_HOST_MULTIARCH).conf; \
+	fi
+
+	dh_install -p$(VENDOR)libboost$(PKGVERSION)-tools-dev \
+	   debian/tmp/$(install_prefix)/bin/b2 \
+	   dist/bin/bcp \
+	   dist/bin/inspect \
+	   dist/bin/quickbook \
+	   $(install_prefix)/bin
+	dh_installman -p$(VENDOR)libboost$(PKGVERSION)-tools-dev b2.1 debian/bcp.1 debian/inspect.1 debian/quickbook.1
+	dh_install -p$(VENDOR)libboost$(PKGVERSION)-tools-dev tools/boostbook/xsl/* $(install_prefix)/share/boostbook/xsl
+	dh_install -p$(VENDOR)libboost$(PKGVERSION)-tools-dev tools/boostbook/dtd/* $(install_prefix)/share/boostbook/dtd
+	dh_install -p$(VENDOR)libboost$(PKGVERSION)-tools-dev debian/tmp/$(install_prefix)/share/boost-build
+
+	# package libboost-date-time$(PKGVERSION)-dev
+	dh_installdocs -p$(VENDOR)libboost-date-time$(PKGVERSION)-dev libs/date_time/data
+
+	find debian -iname '*.so.*' -type f -print0 | xargs -0 chrpath --delete
+	dh_install
+	dh_missing --list-missing
+
+override_dh_install-indep: override_dh_install-common
+	# package libboost-doc
+	mkdir -p debian/libboost$(PKGVERSION)-doc/$(install_prefix)/share/doc/libboost$(PKGVERSION)-doc
+	cp -a doc debian/libboost$(PKGVERSION)-doc/$(install_prefix)/share/doc/libboost$(PKGVERSION)-doc
+	# provide a constant symlink to the latest documents and examples
+	dh_link -p$(VENDOR)libboost$(PKGVERSION)-doc \
+	   $(install_prefix)/share/doc/libboost$(PKGVERSION)-doc/doc \
+	   $(install_prefix)/share/doc/libboost-doc/doc
+	dh_link -p$(VENDOR)libboost$(PKGVERSION)-doc \
+	   $(install_prefix)/share/doc/libboost$(PKGVERSION)-doc/examples \
+	   $(install_prefix)/share/doc/libboost-doc/examples
+
+	mkdir -p $(exampledir)
+	cat debian/example-files | xargs cp -a --parents --target-directory=$(exampledir)
+	find $(exampledir) -type f | xargs chmod 644
+
+override_dh_makeshlibs:
+	dh_makeshlibs -p$(VENDOR)libboost-regex$(SOVERSION) -V '$(regexicuabi)'
+	dh_makeshlibs --remaining-packages
+	sed -i -r 's/^(libboost_python([0-9]{2}) \S+ (\S+).*)$$/\1, \3-py\2/' debian/$(VENDOR)libboost-python$(SOVERSION)/DEBIAN/shlibs
+
+override_dh_gencontrol:
+	dh_gencontrol -- -V'gxx:major=$(shell dpkg-query -f '$${version}' -W g++ | sed 's/.*://;s/\..*//')'
+
+override_dh_shlibdeps:
+	dh_shlibdeps -l"$(install_prefix)/lib/$(DEB_HOST_MULTIARCH)"
 
 $(b2):
 	./bootstrap.sh --with-icu=/usr --prefix=$(CURDIR)/debian/tmp/$(install_prefix) \
