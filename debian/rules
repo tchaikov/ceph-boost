@@ -25,10 +25,8 @@ boost_lib_stacktrace := stacktrace_noop stacktrace_addr2line stacktrace_backtrac
 endif
 boost_lib_test := prg_exec_monitor test_exec_monitor unit_test_framework
 
-py3versions = $(shell py3versions -rv)
-py3verids = $(subst .,,$(py3versions))
-pyversions = $(py3versions)
-pyverids = $(py3verids)
+pyversions = $(shell py3versions -rv)
+pyverids = $(subst .,,$(pyversions))
 
 # These are special cases for suffixes.  Generally come from --python-buildid, so begin with a dash.
 boost_suffixes_python := $(pyverids)
