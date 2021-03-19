@@ -94,7 +94,7 @@ override_dh_install-common:
 
 	touch $@
 
-override_dh_install: override_dh_install-common
+override_dh_install-arch: override_dh_install-common
 	$(JAM) --prefix=$(CURDIR)/debian/tmp/$(install_prefix) $(JAM_WITHOUT) \
 		--libdir=$(CURDIR)/debian/tmp/$(install_prefix)/lib/$(DEB_HOST_MULTIARCH) \
 		--without-python install
@@ -140,6 +140,11 @@ override_dh_install: override_dh_install-common
 	# package libboost-date-time$(PKGVERSION)-dev
 	dh_installdocs -p$(VENDOR)libboost-date-time$(PKGVERSION)-dev libs/date_time/data
 
+	find debian -iname '*.so.*' -type f -print0 | xargs -0 chrpath --delete
+	dh_install
+	dh_missing --list-missing
+
+override_dh_install-indep: override_dh_install-common
 	# package libboost-doc
 	mkdir -p debian/libboost$(PKGVERSION)-doc/$(install_prefix)/share/doc/libboost$(PKGVERSION)-doc
 	cp -a doc debian/libboost$(PKGVERSION)-doc/$(install_prefix)/share/doc/libboost$(PKGVERSION)-doc
@@ -155,10 +160,6 @@ override_dh_install: override_dh_install-common
 	mkdir -p $(exampledir)
 	cat debian/example-files | xargs cp -a --parents --target-directory=$(exampledir)
 	find $(exampledir) -type f | xargs chmod 644
-
-	find debian -iname '*.so.*' -type f -print0 | xargs -0 chrpath --delete
-	dh_install
-	dh_missing --list-missing
 
 override_dh_strip:
 	dh_strip --dbgsym-migration='libboost1.55-dbg, libboost1.58-dbg, libboost1.61-dbg'
