@@ -73,6 +73,7 @@ testsuite:
 override_dh_auto_clean: clean-debhelper
 	-cd tools && $(JAM) clean
 	-$(JAM) clean
+	rm -fr tools/build/src/engine/jamgram.{ch}pp
 	rm -rf tools/jam/src/bootstrap
 	rm -rf tools/jam/src/bin.*
 	rm -ff tools/jam/src/b2
@@ -80,7 +81,8 @@ override_dh_auto_clean: clean-debhelper
 	rm -rf bin.v2 dist
 	rm -rf user-config.jam
 	rm -rf build-* user-config-*.jam stage-*
-	rm -rf b2.1
+	rm -rf b2.1 bjam.1
+	rm -rf override_dh_auto_build-common override_dh_install-common
 	dh_auto_clean
 
 override_dh_compress:
