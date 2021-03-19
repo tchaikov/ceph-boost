@@ -37,13 +37,12 @@ py3default = $(subst .,,$(shell py3versions -dv))
 filtered_files = 
 
 DPKG_EXPORT_BUILDFLAGS = 1
+include /usr/share/dpkg/default.mk
+
 # empty if not for ceph building dependency
 VENDOR := ceph-
 # "usr" if not for ceph building dependency
 install_prefix := opt/ceph
-
-include /usr/share/dpkg/buildflags.mk
-include /usr/share/dpkg/architecture.mk
 
 %:
 	dh $@ --with python3
