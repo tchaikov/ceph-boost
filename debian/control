@@ -953,6 +953,7 @@ Depends: ${misc:Depends}, ${shlibs:Depends}, ${python:Depends}
 Pre-Depends: ${misc:Pre-Depends}
 Suggests: python3
 Breaks: ${python:Breaks}
+Provides: ${boost:Provides}
 Description: Boost.Python Library
  This package forms part of the Boost C++ Libraries collection.
  .
@@ -1038,6 +1039,7 @@ Multi-Arch: same
 Section: libs
 Depends: ${misc:Depends}, ${shlibs:Depends}
 Pre-Depends: ${misc:Pre-Depends}
+Provides: ${boost:Provides}
 Description: regular expression library for C++
  This package forms part of the Boost C++ Libraries collection.
  .

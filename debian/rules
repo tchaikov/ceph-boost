@@ -282,7 +282,7 @@ override_dh_install-arch: override_dh_install-common
 	find debian -empty -type f | xargs rm -f
 
 	# Write substvars for Python packages
-	echo 'boost:Provides=' $(foreach verid,$(pyverids),libboost-python$(SOVERSION)-py$(verid),) >> debian/$(VENDOR)libboost-python$(SOVERSION).substvars
+	echo 'boost:Provides=' $(foreach verid,$(pyverids),$(VENDOR)libboost-python$(SOVERSION)-py$(verid),) >> debian/$(VENDOR)libboost-python$(SOVERSION).substvars
 	# Write substvars for Regex (icu abi)
 	echo 'boost:Provides=$(regexicuabi)' >> debian/$(VENDOR)libboost-regex$(SOVERSION).substvars
 
