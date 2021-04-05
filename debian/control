@@ -745,7 +745,8 @@ Section: libdevel
 Depends: ${misc:Depends},
  ceph-libboost1.75-dev (= ${binary:Version}),
  ceph-libboost-regex1.75-dev (= ${binary:Version}),
- ceph-libboost-iostreams1.75.0 (= ${binary:Version})
+ ceph-libboost-iostreams1.75.0 (= ${binary:Version}),
+ libbz2-dev, liblzma-dev, zlib1g-dev
 Description: Boost.Iostreams Library development files
  This package forms part of the Boost C++ Libraries collection.
  .
